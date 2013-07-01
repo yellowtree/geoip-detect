@@ -1,0 +1,48 @@
+[
+    {
+        "name": "geoip/geoip",
+        "version": "v1.13",
+        "version_normalized": "1.13.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/maxmind/geoip-api-php.git",
+            "reference": "v1.13"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/maxmind/geoip-api-php/zipball/v1.13",
+            "reference": "v1.13",
+            "shasum": ""
+        },
+        "conflict": {
+            "ext-geoip": "*"
+        },
+        "time": "2013-05-27 20:30:01",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "geoip.inc",
+                "geoipcity.inc"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL 2.1+"
+        ],
+        "authors": [
+            {
+                "name": "MaxMind, Inc.",
+                "email": "support@maxmind.com",
+                "homepage": "http://www.maxmind.com/"
+            }
+        ],
+        "description": "MaxMind GeoIP PHP API",
+        "homepage": "http://dev.maxmind.com/geoip/legacy/downloadable",
+        "keywords": [
+            "geoip",
+            "geolocation",
+            "maxmind"
+        ]
+    }
+]
