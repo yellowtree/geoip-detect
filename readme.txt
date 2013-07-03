@@ -30,12 +30,12 @@ This plugin does not contain the database itself, so it has to be loaded before 
 
 = Automatic Installation =
 
-Go to Tools > GeoIP Detect and click on the button "Update now".
-The database is written into the /uploads-Folder.
+Go to Tools > GeoIP Detect and click on the button `"Update now"`.
+The database is written into the `/uploads`-Folder.
 
 = Manual Installation =
 
-1. Download the database at [http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz]
+1. Download the database at http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
 2. extract it and 
 3. put it into the plugin directory.
 
