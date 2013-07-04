@@ -26,7 +26,7 @@ echo ".........................................."
 echo 
 
 # Check version in readme.txt is the same as plugin file
-#NEWVERSION1=`grep "^Stable tag" $GITPATH/readme.txt | awk -F' ' '{print $3}'`
+NEWVERSION1=`grep "^Stable tag" $GITPATH/readme.txt | awk -F' ' '{print $3}'`
 #echo "readme version: $NEWVERSION1"
 #NEWVERSION2=`grep "^Version" $GITPATH/$MAINFILE | awk -F' ' '{print $2}'`
 #echo "$MAINFILE version: $NEWVERSION2"
@@ -36,7 +36,7 @@ echo
 # if [ "$NEWVERSION1" != "$NEWVERSION2" ] || [ "$NEWVERSION1" != "$NEWVERSION3" ]; then echo "Versions don't match. Exiting...."; exit 1; fi
 #if [ "$NEWVERSION2" != "$NEWVERSION3" ]; then echo "Versions don't match. (php: '$NEWVERSION2', define: #'$NEWVERSION3') Exiting...."; exit 1; fi
 
-echo "Versions match in readme.txt and PHP file. Let's proceed..."
+#echo "Versions match in readme.txt and PHP file. Let's proceed..."
 
 #echo "Compressing JS files..."
 #java -jar ~/bin/yuicompressor.jar --nomunge --preserve-semi -o "$GITPATH/tinymce/editor_plugin.js" $GITPATH/tinymce/editor_plugin_src.js
