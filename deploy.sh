@@ -26,9 +26,11 @@ echo ".........................................."
 echo 
 
 # Check version in readme.txt is the same as plugin file
-NEWVERSION1=`grep "^Stable tag" $GITPATH/readme.txt | awk -F' ' '{print $3}'`
+#NEWVERSION1=`grep "^Stable tag" $GITPATH/readme.txt | awk -F' ' '{print $3}'`
 #echo "readme version: $NEWVERSION1"
-#NEWVERSION2=`grep "^Version" $GITPATH/$MAINFILE | awk -F' ' '{print $2}'`
+NEWVERSION2=`grep "^Version" $GITPATH/$MAINFILE | awk -F' ' '{print $2}'`
+NEWVERSION="$NEWVERSION2"
+
 #echo "$MAINFILE version: $NEWVERSION2"
 #NEWVERSION3=`grep "^define.*VERSION" $GITPATH/$MAINFILE | awk -F"'" '{print $4}'`
 #echo "$MAINFILE define version: $NEWVERSION3"
@@ -88,12 +90,12 @@ svn commit --username=$SVNUSER -m "$COMMITMSG"
 
 echo "Creating new SVN tag & committing it"
 cd $SVNPATH
-svn copy trunk/ tags/$NEWVERSION1/
-cd $SVNPATH/tags/$NEWVERSION1
-svn commit --username=$SVNUSER -m "Tagging version $NEWVERSION1"
+svn copy trunk/ tags/$NEWVERSION/
+cd $SVNPATH/tags/$NEWVERSION
+svn commit --username=$SVNUSER -m "Tagging version $NEWVERSION"
 
 # echo "Removing temporary directory $SVNPATH"
-# rm -fr $SVNPATH/
+rm -fr $SVNPATH/
 
 echo "*** FIN ***"
 
