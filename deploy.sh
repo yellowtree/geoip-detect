@@ -50,7 +50,7 @@ read COMMITMSG
 git commit -am "$COMMITMSG"
 
 echo "Tagging new version in git"
-git tag -a "$NEWVERSION1" -m "Tagging version $NEWVERSION1"
+git tag -a "$NEWVERSION" -m "Tagging version $NEWVERSION"
 
 echo "Pushing latest commit to origin, with tags"
 git push origin --all
@@ -59,8 +59,6 @@ git push origin master --tags
 echo 
 echo "Creating local copy of SVN repo ..."
 svn co $SVNURL $SVNPATH
-
-sleep 5
 
 echo "Exporting the HEAD of master from git to the trunk of SVN"
 git checkout-index -a -f --prefix=$SVNPATH/trunk/
