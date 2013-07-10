@@ -12,6 +12,9 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 require_once(dirname(__FILE__) . '/vendor/geoip/geoip/geoipcity.inc');
 
+require_once(dirname(__FILE__) . '/api.php');
+require_once(dirname(__FILE__) . '/filter.php');
+
 define('GEOIP_DETECT_DATA_FOLDER', ABSPATH . '/wp-content/uploads/');
 define('GEOIP_DETECT_DATA_FILENAME', 'GeoLiteCity.dat');
 
@@ -25,75 +28,6 @@ function geoip_detect_get_abs_db_filename()
 	
 	return $data_file;
 }
-
-/**
- * Get Geo-Information for a specific IP
- * @param string $ip (IPv4)
- * @return geoiprecord	GeoInformation. (0 / NULL: no infos found.)
- */
-function geoip_detect_get_info_from_ip($ip)
-{
-	$data_file = geoip_detect_get_abs_db_filename();
-	
-	$gi = geoip_open($data_file, GEOIP_STANDARD);
-	
-	$record = geoip_record_by_addr($gi, $ip);
-	
-	geoip_close($gi);
-
-	$record = apply_filters('geoip_detect_record_information', $record);
-	
-	if ($record && $record->latitude < -90 || $record && $record->longitude < -90)
-	{
-		// File corrupted? Use empty defaults
-		$record->latitude = 0;
-		$record->longitude = 0;
-		$record->city = 'Unknown';
-	}
-	
-	return $record;
-}
-
-/**
- * Get Geo-Information for the current IP
- * @param string $ip (IPv4)
- * @return geoiprecord	GeoInformation. (0 / NULL: no infos found.)
- */
-function geoip_detect_get_info_from_current_ip()
-{
-	// TODO: Use Proxy IP if available
-	return geoip_detect_get_info_from_ip($_SERVER['REMOTE_ADDR']);
-}
-
-function geoip_detect_add_verbose_information_to_record($record)
-{
-	require_once(dirname(__FILE__) . '/vendor/geoip/geoip/geoipregionvars.php');
-	
-	if ($record)
-	{
-		global $GEOIP_REGION_NAME;
-		$record->region_name = $GEOIP_REGION_NAME[$record->country_code][$record->region];
-	}
-	
-	return $record;
-}
-add_filter('geoip_detect_record_information', 'geoip_detect_add_verbose_information_to_record');
-
-function geoip_detect_add_timezone_information_to_record($record)
-{
-	require_once(dirname(__FILE__) . '/vendor/geoip/geoip/timezone/timezone.php');
-
-	if ($record)
-	{
-		global $GEOIP_REGION_NAME;
-		$record->timezone =  get_time_zone($record->country_code, $record->region);
-	}
-
-	return $record;
-}
-add_filter('geoip_detect_record_information', 'geoip_detect_add_timezone_information_to_record');
-
-
 
 function geoip_detect_update()
 {
@@ -113,16 +47,10 @@ function geoip_detect_update()
 	$h = fopen($outFile, 'w');
 	
 	if (!$zh)
-		return __('Downloaded file could not be opened for reading.');
+		return __('Downloaded file could not be opened for reading.', 'geoip-detect');
 	if (!$h)
-		return sprintf(__('Database could not be written (%s).'), $outFile);
+		return sprintf(__('Database could not be written (%s).', 'geoip-detect'), $outFile);
 
-	/*
-	while (!gzeof($h)) {
-		$string = gzgets($h, 4096);
-		fwrite($h, $string, strlen($string));
-	}
-	*/
 	while ( ($string = gzread($zh, 4096)) != false )
 		fwrite($h, $string, strlen($string));
 	
@@ -151,9 +79,9 @@ function geoip_detect_plugin_page()
 		case 'update':
 			$ret = geoip_detect_update();
 			if ($ret === true)
-				$message .= __('Updated successfully.');
+				$message .= __('Updated successfully.', 'geoip-detect');
 			else
-				$message .= __('Update failed.') .' '. $ret;
+				$message .= __('Update failed.', 'geoip-detect') .' '. $ret;
 
 			break;
 			
@@ -172,7 +100,7 @@ function geoip_detect_plugin_page()
 	}
 	else 
 	{
-		$message .= __('No GeoIP Database found. Click on the button "Update now" or follow the installation instructions.');
+		$message .= __('No GeoIP Database found. Click on the button "Update now" or follow the installation instructions.', 'geoip-detect');
 		$last_update = 0;
 	}
 	
@@ -186,7 +114,7 @@ function geoip_detect_menu() {
 add_action('admin_menu', 'geoip_detect_menu');
 
 function geoip_detect_add_settings_link( $links ) {
-	$settings_link = '<a href="tools.php?page=geoip-detect/geoip-detect.php">Plugin page</a>';
+	$settings_link = '<a href="tools.php?page=geoip-detect/geoip-detect.php">' . __('Plugin page', 'geoip-detect') . '</a>';
 	array_push( $links, $settings_link );
 	return $links;
 }
