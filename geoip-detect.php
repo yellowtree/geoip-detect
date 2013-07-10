@@ -111,7 +111,7 @@ function geoip_detect_plugin_page()
 
 function geoip_detect_menu() {
 	require_once ABSPATH . '/wp-admin/admin.php';
-	add_submenu_page('tools.php', 'GeoIP Detect', 'GeoIP Detect', 'activate_plugins', __FILE__, 'geoip_detect_plugin_page');
+	add_submenu_page('tools.php', __('GeoIP Detection', 'geoip-detect'), __('GeoIP Detection', 'geoip-detect'), 'activate_plugins', __FILE__, 'geoip_detect_plugin_page');
 }
 add_action('admin_menu', 'geoip_detect_menu');
 

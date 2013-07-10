@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 # Original of this script: https://github.com/thenbrent/multisite-user-management/blob/master/deploy.sh
 # A modification of Dean Clatworthy's deploy script as found here: https://github.com/deanc/wordpress-plugin-git-svn
 # The difference is that this script lives in the plugin's git repo & doesn't require an existing SVN repo.
@@ -68,7 +68,8 @@ svn propset svn:ignore "deploy.sh
 README.md
 .git
 .gitignore
-tests" "$SVNPATH/trunk/"
+tests
+test" "$SVNPATH/trunk/"
 
 #if submodule exist, recursively check out their indexes (from benbalter)
 if [ -f ".gitmodules" ]

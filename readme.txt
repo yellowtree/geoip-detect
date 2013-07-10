@@ -15,11 +15,12 @@ Provide geographic information detected by an IP adress. This can be used in the
 
 **Features:**
 
-* Provide 2 functions to lookup Geo-Information: 
-  * geoip_detect_get_info_from_ip($ip)
-  * geoip_detect_get_info_from_current_ip()
+* Provides 3 functions: 
+  * `geoip_detect_get_info_from_ip($ip)`: Lookup Geo-Information of the specified IP 
+  * `geoip_detect_get_info_from_current_ip()`: Lookup Geo-Information of the current website user
+  * `geoip_detect_get_external_ip_adress()`: Fetch the internet adress of the webserver
 * Auto-Update the GeoIP database once a week
-* See results of a specific IP in the wordpress backend.
+* See the results of a specific IP in the wordpress backend (under Tools > GeoIP Detection).
 
 This product includes GeoLite data created by MaxMind, available from http://www.maxmind.com.
 
@@ -41,7 +42,7 @@ The database is written into the `/uploads`-Folder.
 
 == Screenshots ==
 
-1. Backend options
+1. Backend page (under Tools > GeoIP Detection)
 
 == Changelog ==
 
