@@ -7,8 +7,9 @@ class ApiTest extends WP_UnitTestCase {
 		$this->assertTrue( geoip_detect_update() );
 		
 		$record = geoip_detect_get_info_from_ip('47.64.121.17');
-		$this->assertObject($record);
-		$this->assertIsString($record->country_code);
+		$this->assertInstanceOf('geoiprecord', $record);
+		$this->assertInternalType('string', $record->country_code);
+		$this->assertNotSame('', $record->country_code);
 	}
 	
 	function testExternalIp() {
