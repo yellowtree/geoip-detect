@@ -38,9 +38,9 @@ function geoip_detect_get_info_from_current_ip()
 function geoip_detect_get_external_ip_adress()
 {
 	$ipservices = array(
-		'ipecho.info',
-		'ipecho.info',
-		'ipecho.info',
+		'http://ipecho.net/plain',
+		'http://ipv4.icanhazip.com',
+		'http://ifconfig.me',
 	);
 	
 	foreach ($ipservices as $url)

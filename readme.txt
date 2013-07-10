@@ -11,7 +11,7 @@ Retrieving Geo-Information using the Maxmind GeoIP (Lite) Database.
 
 == Description ==
 
-Provide GeoIP information for use in themes or other plugins.
+Provide geographic information detected by an IP adress. This can be used in themes or other plugins.
 
 **Features:**
 
@@ -44,6 +44,10 @@ The database is written into the `/uploads`-Folder.
 1. Backend options
 
 == Changelog ==
+
+= 1.1 =
+* Add function geoip_detect_get_external_ip_adress(): Ask a webservice to tell me the external IP of the webserver.
+* New filter: When developing locally, the external IP is used to determine the geographic location.
 
 = 1.0 =
 

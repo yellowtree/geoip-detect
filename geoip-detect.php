@@ -8,6 +8,8 @@ Author URI: http://www.yellowtree.de
 Version: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: geoip-detect
+Domain Path: /languages
 */
 
 require_once(dirname(__FILE__) . '/vendor/geoip/geoip/geoipcity.inc');

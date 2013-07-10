@@ -60,6 +60,6 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 	
 	<p>
 		<br />
-		<small><em>This product includes GeoLite data created by MaxMind, available from <a href="http://www.maxmind.com">http://www.maxmind.com</a>.</em></small>
+		<small><em>This product includes GeoLite data created by MaxMind, available from <a href="http://www.maxmind.com/">http://www.maxmind.com</a>.</em></small>
 	</p>
 </div>
