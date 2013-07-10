@@ -48,6 +48,7 @@ function geoip_detect_fix_corrupt_info($record)
 		$record->longitude = 0;
 		$record->city = 'Unknown';
 	}
+	return $record;
 }
 add_filter('geoip_detect_record_information', 'geoip_detect_fix_corrupt_info', 101);
 
@@ -64,7 +65,7 @@ function geoip_detect_add_external_ip($record)
 	if ($avoid_recursion)
 		return $record; // This is the retry with the external adress, so don't do anything
 	
-	if ($record === 0)
+	if ($record === null)
 	{
 		$external_ip = geoip_detect_get_external_ip_adress();
 		
