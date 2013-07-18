@@ -11,9 +11,9 @@ Retrieving Geo-Information using the Maxmind GeoIP (Lite) Database.
 
 == Description ==
 
-Provide geographic information detected by an IP adress. This can be used in themes or other plugins.
+Provides geographic information detected by an IP adress. This can be used in themes or other plugins.
 
-**Features:**
+=Features:=
 
 * Provides 3 functions: 
   * `geoip_detect_get_info_from_ip($ip)`: Lookup Geo-Information of the specified IP 
@@ -22,7 +22,14 @@ Provide geographic information detected by an IP adress. This can be used in the
 * Auto-Update the GeoIP database once a week
 * See the results of a specific IP in the wordpress backend (under Tools > GeoIP Detection).
 
-This product includes GeoLite data created by MaxMind, available from http://www.maxmind.com.
+= How can I use these functions? =
+
+* You could choose the currency of the store based on the country name
+* You could suggest an timezone to use when displaying dates
+* You could show the store nearest to your customer
+* Etc. ... You tell me! I'm rather curious what you'll do with this plugin!
+
+*This product includes GeoLite data created by MaxMind, available from http://www.maxmind.com.*
 
 == Installation ==
 
@@ -40,6 +47,24 @@ The database is written into the `/uploads`-Folder.
 2. extract it and 
 3. put it into the plugin directory.
 
+== Frequently Asked Questions ==
+
+= How exact is this data? =
+
+Think of it as an "educated guess": IP adresses and their allocation change on a frequent basis.
+If you need [more exact data](http://www.maxmind.com/en/geolite_city_accuracy "GeoLiteCity Accuracy"), consider purchasing the commercial version of the data.
+
+
+= Technically speaking, how could I verify if my visitor comes from Germany? =
+
+Put this code somewhere in your template files:
+
+`$userInfo = geoip_detect_get_info_from_current_ip();
+if ($userInfo && $userInfo->country_code == 'DE')
+   echo 'Hallo! Schön dass Sie hier sind!';`
+   
+To see which property names are supported, refer to the [Plugin Backend](http://wordpress.org/plugins/geoip-detect/screenshots/).
+
 == Screenshots ==
 
 1. Backend page (under Tools > GeoIP Detection)
@@ -47,7 +72,7 @@ The database is written into the `/uploads`-Folder.
 == Changelog ==
 
 = 1.1 =
-* Add function geoip_detect_get_external_ip_adress(): Ask a webservice to tell me the external IP of the webserver.
+* Add function `geoip_detect_get_external_ip_adress()`: Ask a webservice to tell me the external IP of the webserver.
 * New filter: When developing locally, the external IP is used to determine the geographic location.
 
 = 1.0 =

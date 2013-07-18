@@ -16,7 +16,7 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 
 	<?php if (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED')) : ?>
 	<p>
-		<em><?php _e('(The file is updated automatically once a week.)'); ?></em>
+		<em><?php _e('(The file is updated automatically once a week.)', 'geoip-detect'); ?></em>
 	</p>
 	<?php endif; ?>
 	
