@@ -71,6 +71,9 @@ To see which property names are supported, refer to the [Plugin Backend](http://
 
 == Changelog ==
 
+= 1.2 =
+* FIX: property region_name is now filled again (broken since 1.1) 
+
 = 1.1 =
 * Add function `geoip_detect_get_external_ip_adress()`: Ask a webservice to tell me the external IP of the webserver.
 * New filter: When developing locally, the external IP is used to determine the geographic location.
