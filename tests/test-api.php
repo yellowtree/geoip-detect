@@ -1,5 +1,11 @@
 <?php
 
+function geoip_detetect_test_set_test_database()
+{
+	return dirname(__FILE__) . '/GeoLiteCity.dat';
+}
+//add_filter('geoip_detect_get_abs_db_filename', 'geoip_detetect_test_set_test_database', 101);
+
 class ApiTest extends WP_UnitTestCase {
 
 	function testUpdate() {
@@ -7,10 +13,10 @@ class ApiTest extends WP_UnitTestCase {
 		$this->assertTrue( geoip_detect_update() );
 		
 		$record = geoip_detect_get_info_from_ip('47.64.121.17');
-		$this->assertValidGeoIPRecord($record);
+		$this->assertValidGeoIPRecord($record, '47.64.121.17');
 		
 		$record = geoip_detect_get_info_from_ip('192.168.1.1');
-		$this->assertValidGeoIPRecord($record);
+		$this->assertValidGeoIPRecord($record, '192.168.1.1');
 	}
 	
 	function testExternalIp() {
@@ -18,7 +24,7 @@ class ApiTest extends WP_UnitTestCase {
 		$this->assertNotEquals('0.0.0.0', $ip);
 	}
 	
-	protected function assertValidGeoIPRecord($record)
+	protected function assertValidGeoIPRecord($record, $ip)
 	{
 		$this->assertInstanceOf('geoiprecord', $record);
 		$this->assertInternalType('string', $record->country_code);

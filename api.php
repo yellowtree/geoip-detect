@@ -2,7 +2,7 @@
 
 /**
  * Get Geo-Information for a specific IP
- * @param string $ip IP-Adress (currently only IPv4)
+ * @param string 		$ip IP-Adress (currently only IPv4)
  * @return geoiprecord	GeoInformation. (0 / NULL: no infos found.)
  */
 function geoip_detect_get_info_from_ip($ip)
@@ -20,7 +20,7 @@ function geoip_detect_get_info_from_ip($ip)
 
 /**
  * Get Geo-Information for the current IP
- * @param string $ip (IPv4)
+ * @param string 		$ip (IPv4)
  * @return geoiprecord	GeoInformation. (0 / NULL: no infos found.)
  */
 function geoip_detect_get_info_from_current_ip()

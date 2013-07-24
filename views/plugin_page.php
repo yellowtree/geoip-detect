@@ -34,6 +34,9 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 	</form>
 	<?php if ($ip_lookup_result !== false) :
 			if (is_object($ip_lookup_result)) : ?>
+	<p>
+		<?php printf(__('The function %s returns an object:', 'geoip-detect'), "<code>geoip_detect_get_info_from_ip('" . esc_html($_POST['ip']) . "')</code>"); ?>
+	</p>
 	<table>
 		<thead>
 			<th><?php _e('Key', 'geoip-detect'); ?></th>

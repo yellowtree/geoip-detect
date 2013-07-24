@@ -2,7 +2,7 @@
 Contributors: benjaminpick
 Tags: geoip, ip, locator, latitude, longitude
 Requires at least: 3.5
-Tested up to: 3.5.2
+Tested up to: 3.6
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,7 +13,7 @@ Retrieving Geo-Information using the Maxmind GeoIP (Lite) Database.
 
 Provides geographic information detected by an IP adress. This can be used in themes or other plugins.
 
-=Features:=
+= Features: =
 
 * Provides 3 functions: 
   * `geoip_detect_get_info_from_ip($ip)`: Lookup Geo-Information of the specified IP 

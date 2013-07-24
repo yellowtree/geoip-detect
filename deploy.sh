@@ -17,6 +17,17 @@ SVNURL="http://plugins.svn.wordpress.org/geoip-detect/" # Remote SVN repo on wor
 SVNUSER="benjaminpick" # your svn username
 
 
+if [ "$1" = "checkout" ] ; then
+	echo "Only Checkout"
+
+echo 
+echo "Creating local copy of SVN repo ..."
+svn co $SVNURL $SVNPATH
+
+echo "SVN Repo was checked out to $SVNPATH"
+	exit 0;
+fi
+
 # Let's begin...
 echo ".........................................."
 echo 
