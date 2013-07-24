@@ -13,25 +13,26 @@
 
 function geoip_detect_add_verbose_information_to_record($record)
 {
-	require_once(dirname(__FILE__) . '/vendor/geoip/geoip/geoipregionvars.php');
-
+	static $GEOIP_REGION_NAME_COPY;
+	if (is_null($GEOIP_REGION_NAME_COPY))
+	{
+		require(dirname(__FILE__) . '/vendor/geoip/geoip/geoipregionvars.php');
+		$GEOIP_REGION_NAME_COPY = $GEOIP_REGION_NAME;
+	}
 	if ($record)
 	{
-		global $GEOIP_REGION_NAME;
-		$record->region_name = $GEOIP_REGION_NAME[$record->country_code][$record->region];
+		$record->region_name = $GEOIP_REGION_NAME_COPY[$record->country_code][$record->region];
 	}
 
 	return $record;
 }
 add_filter('geoip_detect_record_information', 'geoip_detect_add_verbose_information_to_record');
 
+require_once(dirname(__FILE__) . '/vendor/geoip/geoip/timezone/timezone.php');
 function geoip_detect_add_timezone_information_to_record($record)
 {
-	require_once(dirname(__FILE__) . '/vendor/geoip/geoip/timezone/timezone.php');
-
 	if ($record)
 	{
-		global $GEOIP_REGION_NAME;
 		$record->timezone =  get_time_zone($record->country_code, $record->region);
 	}
 
