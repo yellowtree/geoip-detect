@@ -30,6 +30,9 @@ function geoip_detect_get_abs_db_filename()
 	
 	$data_filename = apply_filters('geoip_detect_get_abs_db_filename', $data_filename);
 	
+	if (!$data_filename && (WP_DEBUG || defined('WP_TESTS_TITLE')))
+		trigger_error(__('No GeoIP Database file found. Please refer to the installation instructions in readme.txt.', 'geoip-detect'), E_USER_NOTICE);
+
 	return $data_filename;
 }
 

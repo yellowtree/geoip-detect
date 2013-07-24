@@ -9,7 +9,6 @@ function geoip_detetect_test_set_test_database()
 class ApiTest extends WP_UnitTestCase {
 
 	function testUpdate() {
-		
 		$this->assertTrue( geoip_detect_update() );
 		
 		$record = geoip_detect_get_info_from_ip('47.64.121.17');
@@ -22,6 +21,12 @@ class ApiTest extends WP_UnitTestCase {
 	function testExternalIp() {
 		$ip = geoip_detect_get_external_ip_adress();
 		$this->assertNotEquals('0.0.0.0', $ip);
+	}
+	
+	function testUpdaterFileFilter() {
+		//$this->assertEquals('', geoip_detect_get_database_upload_filename_filter());
+		$this->assertContains('/upload', geoip_detect_get_database_upload_filename());
+		
 	}
 	
 	protected function assertValidGeoIPRecord($record, $ip)

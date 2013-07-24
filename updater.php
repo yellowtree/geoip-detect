@@ -8,11 +8,18 @@ function geoip_detect_get_database_upload_filename()
 	$dir = $upload_dir['basedir'];
 
 	$filename = $dir . '/' . GEOIP_DETECT_DATA_FILENAME;
+	return $filename;
+}
+
+function geoip_detect_get_database_upload_filename_filter()
+{
+	$filename = geoip_detect_get_database_upload_filename();
 	if (!file_exists($filename))
 		return '';
 	return $filename;
 }
-add_filter('geoip_detect_get_abs_db_filename', 'geoip_detect_get_database_upload_filename');
+
+add_filter('geoip_detect_get_abs_db_filename', 'geoip_detect_get_database_upload_filename_filter');
 
 function geoip_detect_update()
 {

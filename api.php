@@ -8,6 +8,8 @@
 function geoip_detect_get_info_from_ip($ip)
 {
 	$data_file = geoip_detect_get_abs_db_filename();
+	if (!$data_file)
+		return 0;
 
 	$gi = geoip_open($data_file, GEOIP_STANDARD);
 	$record = geoip_record_by_addr($gi, $ip);
