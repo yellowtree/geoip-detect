@@ -22,6 +22,5 @@ class UpdateTest extends WP_UnitTestCase_GeoIP_Detect {
 	function testUpdaterFileFilter() {
 		$this->assertEquals('', geoip_detect_get_database_upload_filename_filter(''));
 		$this->assertContains('/upload', geoip_detect_get_database_upload_filename());
-
 	}
 }

@@ -19,12 +19,11 @@ SVNUSER="benjaminpick" # your svn username
 
 if [ "$1" = "checkout" ] ; then
 	echo "Only Checkout"
+	echo 
+	echo "Creating local copy of SVN repo ..."
+	svn co $SVNURL $SVNPATH
 
-echo 
-echo "Creating local copy of SVN repo ..."
-svn co $SVNURL $SVNPATH
-
-echo "SVN Repo was checked out to $SVNPATH"
+	echo "SVN Repo was checked out to $SVNPATH"
 	exit 0;
 fi
 
@@ -56,6 +55,10 @@ NEWVERSION="$NEWVERSION2"
 #java -jar ~/bin/yuicompressor.jar --nomunge --preserve-semi -o "$GITPATH/tinymce/wpcf-select-box.js" $GITPATH/tinymce/wpcf-select-box_src.js
 
 cd $GITPATH
+
+echo "Generate README.md from readme.txt"
+bin/readme.sh "$SVNURL"
+
 echo -e "Enter a commit message for this new version: \c"
 read COMMITMSG
 git commit -am "$COMMITMSG"
@@ -76,11 +79,13 @@ git checkout-index -a -f --prefix=$SVNPATH/trunk/
 
 echo "Ignoring github specific files, tests and deployment script"
 svn propset svn:ignore "deploy.sh
+bin
 README.md
 .git
 .gitignore
 tests
-test" "$SVNPATH/trunk/"
+test
+phpunit.xml" "$SVNPATH/trunk/"
 
 #if submodule exist, recursively check out their indexes (from benbalter)
 if [ -f ".gitmodules" ]
