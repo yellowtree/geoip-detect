@@ -4,9 +4,18 @@ function geoip_detetect_test_set_test_database()
 {
 	return GEOIP_DETECT_TEST_DB_FILENAME;
 }
-add_filter('geoip_detect_get_abs_db_filename', 'geoip_detetect_test_set_test_database', 101);
 
 class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
+	
+	function setUp()
+	{
+		add_filter('geoip_detect_get_abs_db_filename', 'geoip_detetect_test_set_test_database', 101);
+	}
+	
+	function tearDown()
+	{
+		remove_filter('geoip_detect_get_abs_db_filename', 'geoip_detetect_test_set_test_database', 101);
+	}
 	
 	function testLookup() {
 		$record = geoip_detect_get_info_from_ip(GEOIP_DETECT_TEST_IP);
