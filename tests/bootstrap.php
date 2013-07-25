@@ -9,6 +9,9 @@ tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
 require getenv( 'WP_TESTS_DIR' ) . '/includes/bootstrap.php';
 
+define('GEOIP_DETECT_TEST_DB_FILENAME', dirname(__FILE__) . '/' . GEOIP_DETECT_DATA_FILENAME);
+define('GEOIP_DETECT_TEST_IP', '47.64.121.17');
+
 class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 {
 	protected function assertValidGeoIPRecord($record, $ip)
