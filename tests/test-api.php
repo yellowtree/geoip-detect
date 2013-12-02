@@ -9,6 +9,7 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	function setUp()
 	{
+		// Use Test File
 		add_filter('geoip_detect_get_abs_db_filename', 'geoip_detetect_test_set_test_database', 101);
 	}
 	
@@ -21,6 +22,7 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$record = geoip_detect_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		$this->assertValidGeoIPRecord($record, GEOIP_DETECT_TEST_IP);
 		
+		// When internal IP adress, then return the content of the external IP of the server
 		$record = geoip_detect_get_info_from_ip('192.168.1.1');
 		$this->assertValidGeoIPRecord($record, '192.168.1.1');
 	}
@@ -46,6 +48,15 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	function testExternalIp() {
 		$ip = geoip_detect_get_external_ip_adress();
 		$this->assertNotEquals('0.0.0.0', $ip);
+	}
+	
+	function testShortcode() {
+		$string = do_shortcode('[geoip_detect property="country_name"]');
+		$this->assertNotEquals($string, '[geoip_detect property="country_name"]', "The Geoip Detect shortcode does not seem to be called");
+		$this->assertNotContains('<!--', $string, "Geoip Detect shortcode threw an error: " . $string);
+		
+		$string = do_shortcode('[geoip_detect property="INVALID"]');
+		$this->assertContains('<!--', $string, "Geoip Detect Shortcode threw no error in spite of invalid property name: " . $string);
 	}
 }
 

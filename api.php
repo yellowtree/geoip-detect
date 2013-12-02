@@ -39,10 +39,21 @@ function geoip_detect_get_info_from_current_ip()
  */
 function geoip_detect_get_external_ip_adress()
 {
+	static $ip_cache = null;
+
+	if (!is_null($ip_cache))
+		return $ip_cache;
+	
+	$ip_cache = _geoip_detect_get_external_ip_adress_without_cache();
+	return $ip_cache;
+}
+
+function _geoip_detect_get_external_ip_adress_without_cache()
+{
 	$ipservices = array(
-		'http://ipecho.net/plain',
-		'http://ipv4.icanhazip.com',
-		'http://ifconfig.me',
+			'http://ipecho.net/plain',
+			'http://ipv4.icanhazip.com',
+			'http://ifconfig.me',
 	);
 	
 	foreach ($ipservices as $url)

@@ -2,7 +2,7 @@
 Contributors: benjaminpick
 Tags: geoip, ip, locator, latitude, longitude
 Requires at least: 3.5
-Tested up to: 3.6
+Tested up to: 3.7.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -20,7 +20,8 @@ Provides geographic information detected by an IP adress. This can be used in th
   * `geoip_detect_get_info_from_current_ip()`: Lookup Geo-Information of the current website user
   * `geoip_detect_get_external_ip_adress()`: Fetch the internet adress of the webserver
 * Auto-Update the GeoIP database once a week
-* See the results of a specific IP in the wordpress backend (under Tools > GeoIP Detection).
+* For the property names, see the results of a specific IP in the wordpress backend (under Tools > GeoIP Detection).
+* You can include these properties into your posts and pages by using the shortcode `[geoip_detect property="country_name"]` (where 'country_name' can be one of the other property names as well).
 
 = How can I use these functions? =
 
@@ -54,7 +55,6 @@ The database is written into the `/uploads`-Folder.
 Think of it as an "educated guess": IP adresses and their allocation change on a frequent basis.
 If you need [more exact data](http://www.maxmind.com/en/geolite_city_accuracy "GeoLiteCity Accuracy"), consider purchasing the commercial version of the data.
 
-
 = Technically speaking, how could I verify if my visitor comes from Germany? =
 
 Put this code somewhere in your template files:
@@ -75,6 +75,9 @@ To see which property names are supported, refer to the [Plugin Backend](http://
 1. Backend page (under Tools > GeoIP Detection)
 
 == Changelog ==
+
+= 1.4 =
+* Feature: Add shortcode [geoip_detect property="(property name)"] for direct use in posts/pages
 
 = 1.3 =
 * FIX: Manual install works again (was broken since 1.2)
