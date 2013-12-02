@@ -47,19 +47,21 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	function testRegionName() {
 		$record = geoip_detect_get_info_from_ip(GEOIP_DETECT_TEST_IP);
-		
 		$this->assertGreaterThan(1, strlen($record->region_name), 'Region Name: "' . $record->region_name);
 	}
 	
 	function testExternalIp() {
-		$ip = geoip_detect_get_external_ip_adress();
+		$ip = _geoip_detect_get_external_ip_adress_without_cache();
 		$this->assertNotEquals('0.0.0.0', $ip);
 	}
 	
 	function testShortcode() {
 		add_filter('geoip_detect_get_external_ip_adress', 'geoip_detect_get_external_ip_adress_test_set_test_ip', 101);
+		$this->assertEquals(GEOIP_DETECT_TEST_IP, geoip_detect_get_external_ip_adress());
 		
 		$string = do_shortcode('[geoip_detect property="country_name"]');
+		var_dump(geoip_detect_get_info_from_current_ip());
+		$this->assertNotEmpty($string, '[geoip_detect property="country_name"]', "The Geoip Detect shortcode did not generate any output");
 		$this->assertNotEquals($string, '[geoip_detect property="country_name"]', "The Geoip Detect shortcode does not seem to be called");
 		$this->assertNotContains('<!--', $string, "Geoip Detect shortcode threw an error: " . $string);
 		

@@ -3,7 +3,7 @@
 /**
  * Get Geo-Information for a specific IP
  * @param string 		$ip IP-Adress (currently only IPv4)
- * @return geoiprecord	GeoInformation. (0 / NULL: no infos found.)
+ * @return geoiprecord	GeoInformation. (0 or NULL: no infos found.)
  */
 function geoip_detect_get_info_from_ip($ip)
 {
@@ -42,10 +42,11 @@ function geoip_detect_get_external_ip_adress()
 	static $ip_cache = null;
 
 	if (!is_null($ip_cache))
-		return $ip_cache;
+		return apply_filters('geoip_detect_get_external_ip_adress', $ip_cache);
 	
 	$ip_cache = _geoip_detect_get_external_ip_adress_without_cache();
 	$ip_cache = apply_filters('geoip_detect_get_external_ip_adress', $ip_cache);
+	
 	return $ip_cache;
 }
 

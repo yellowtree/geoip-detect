@@ -5,7 +5,7 @@ function geoip_detect_shortcode($attr)
 {
 	$userInfo = geoip_detect_get_info_from_current_ip();
 
-	if (!$userInfo)
+	if (!is_object($userInfo))
 		return '<!-- GeoIP Detect: No info found for this IP. -->';
 
 	$propertyName = $attr['property'];
