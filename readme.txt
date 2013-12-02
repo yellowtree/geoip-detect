@@ -68,7 +68,6 @@ To see which property names are supported, refer to the [Plugin Backend](http://
 = Wishlist of new Features =
 
 - use APIv2
-- Shortcodes for the detected properties of current user
 
 == Screenshots ==
 
