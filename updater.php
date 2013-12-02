@@ -56,6 +56,20 @@ function geoip_detect_update()
 if (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED'))
 	add_action('geoipdetectupdate', 'geoip_detect_update');
 
+
+add_filter( 'cron_schedules', 'cron_add_weekly' );
+function cron_add_weekly( $schedules ) {
+	// Adds once weekly to the existing schedules.
+	if (!isset($schedules['weekly']))
+	{
+		$schedules['weekly'] = array(
+				'interval' => 604800,
+				'display' => __( 'Once Weekly' )
+		);
+	}
+	return $schedules;
+}
+
 function geoip_detect_activate()
 {
 	if ( !wp_next_scheduled( 'geoipdetectupdate' ) )
