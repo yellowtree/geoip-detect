@@ -65,6 +65,11 @@ Put this code somewhere in your template files:
    
 To see which property names are supported, refer to the [Plugin Backend](http://wordpress.org/plugins/geoip-detect/screenshots/).
 
+= Wishlist of new Features =
+
+- use APIv2
+- Shortcodes for the detected properties of current user
+
 == Screenshots ==
 
 1. Backend page (under Tools > GeoIP Detection)

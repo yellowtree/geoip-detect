@@ -63,7 +63,7 @@ function geoip_detect_plugin_page()
 	$last_update = 0;
 	$message = '';
 	
-	switch($_POST['action'])
+	switch(@$_POST['action'])
 	{
 		case 'update':
 			$ret = geoip_detect_update();
