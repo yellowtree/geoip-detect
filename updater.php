@@ -57,8 +57,8 @@ if (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED'))
 	add_action('geoipdetectupdate', 'geoip_detect_update');
 
 
-add_filter( 'cron_schedules', 'cron_add_weekly' );
-function cron_add_weekly( $schedules ) {
+add_filter( 'cron_schedules', 'geoip_detect_cron_add_weekly' );
+function geoip_detect_cron_add_weekly( $schedules ) {
 	// Adds once weekly to the existing schedules.
 	if (!isset($schedules['weekly']))
 	{
