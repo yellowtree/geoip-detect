@@ -5,6 +5,11 @@ function geoip_detetect_test_set_test_database()
 	return GEOIP_DETECT_TEST_DB_FILENAME;
 }
 
+function geoip_detect_get_external_ip_adress_test_set_test_ip()
+{
+	return GEOIP_DETECT_TEST_IP;
+}
+
 class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	function setUp()
@@ -16,6 +21,7 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	function tearDown()
 	{
 		remove_filter('geoip_detect_get_abs_db_filename', 'geoip_detetect_test_set_test_database', 101);
+		remove_filter('geoip_detect_get_external_ip_adress', 'geoip_detect_get_external_ip_adress_test_set_test_ip', 101);
 	}
 	
 	function testLookup() {
@@ -51,6 +57,8 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	function testShortcode() {
+		add_filter('geoip_detect_get_external_ip_adress', 'geoip_detect_get_external_ip_adress_test_set_test_ip', 101);
+		
 		$string = do_shortcode('[geoip_detect property="country_name"]');
 		$this->assertNotEquals($string, '[geoip_detect property="country_name"]', "The Geoip Detect shortcode does not seem to be called");
 		$this->assertNotContains('<!--', $string, "Geoip Detect shortcode threw an error: " . $string);

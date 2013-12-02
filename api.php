@@ -45,6 +45,7 @@ function geoip_detect_get_external_ip_adress()
 		return $ip_cache;
 	
 	$ip_cache = _geoip_detect_get_external_ip_adress_without_cache();
+	$ip_cache = apply_filters('geoip_detect_get_external_ip_adress', $ip_cache);
 	return $ip_cache;
 }
 
