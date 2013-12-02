@@ -60,7 +60,6 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertEquals(GEOIP_DETECT_TEST_IP, geoip_detect_get_external_ip_adress());
 		
 		$string = do_shortcode('[geoip_detect property="country_name"]');
-		var_dump(geoip_detect_get_info_from_current_ip());
 		$this->assertNotEmpty($string, '[geoip_detect property="country_name"]', "The Geoip Detect shortcode did not generate any output");
 		$this->assertNotEquals($string, '[geoip_detect property="country_name"]', "The Geoip Detect shortcode does not seem to be called");
 		$this->assertNotContains('<!--', $string, "Geoip Detect shortcode threw an error: " . $string);

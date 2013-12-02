@@ -15,7 +15,7 @@ function geoip_detect_get_info_from_ip($ip)
 	$record = geoip_record_by_addr($gi, $ip);
 	geoip_close($gi);
 
-	$record = apply_filters('geoip_detect_record_information', $record);
+	$record = apply_filters('geoip_detect_record_information', $record, $ip);
 
 	return $record;
 }
@@ -28,7 +28,7 @@ function geoip_detect_get_info_from_ip($ip)
 function geoip_detect_get_info_from_current_ip()
 {
 	// TODO: Use Proxy IP if available
-	return geoip_detect_get_info_from_ip($_SERVER['REMOTE_ADDR']);
+	return geoip_detect_get_info_from_ip(@$_SERVER['REMOTE_ADDR']);
 }
 
 /**

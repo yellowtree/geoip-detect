@@ -66,7 +66,7 @@ function geoip_detect_add_external_ip($record)
 	if ($avoid_recursion)
 		return $record; // This is the retry with the external adress, so don't do anything
 	
-	if ($record === null)
+	if (!is_object($record))
 	{
 		$external_ip = geoip_detect_get_external_ip_adress();
 		
