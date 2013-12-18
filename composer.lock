@@ -7,16 +7,16 @@
     "packages": [
         {
             "name": "geoip/geoip",
-            "version": "v1.13",
+            "version": "v1.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maxmind/geoip-api-php.git",
-                "reference": "v1.13"
+                "reference": "465fe4d7e581871e9c8594adf3fb52268b253312"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maxmind/geoip-api-php/zipball/v1.13",
-                "reference": "v1.13",
+                "url": "https://api.github.com/repos/maxmind/geoip-api-php/zipball/465fe4d7e581871e9c8594adf3fb52268b253312",
+                "reference": "465fe4d7e581871e9c8594adf3fb52268b253312",
                 "shasum": ""
             },
             "conflict": {
@@ -25,8 +25,8 @@
             "type": "library",
             "autoload": {
                 "files": [
-                    "geoip.inc",
-                    "geoipcity.inc"
+                    "src/geoip.inc",
+                    "src/geoipcity.inc"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -47,7 +47,7 @@
                 "geolocation",
                 "maxmind"
             ],
-            "time": "2013-05-27 20:30:01"
+            "time": "2013-11-05 21:52:33"
         }
     ],
     "packages-dev": [
