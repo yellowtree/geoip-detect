@@ -62,6 +62,8 @@ function geoip_detect_get_abs_db_filename()
 
 function geoip_detect_plugin_page()
 {
+	geoip_detect_set_cron_schedule();
+	
 	$ip_lookup_result = false;
 	$last_update = 0;
 	$message = '';
@@ -96,6 +98,7 @@ function geoip_detect_plugin_page()
 		$message .= __('No GeoIP Database found. Click on the button "Update now" or follow the installation instructions.', 'geoip-detect');
 		$last_update = 0;
 	}
+	$next_cron_update = wp_next_scheduled( 'geoipdetectupdate' );
 	
 	include_once(dirname(__FILE__) . '/views/plugin_page.php');	
 }

@@ -70,10 +70,15 @@ function geoip_detect_cron_add_weekly( $schedules ) {
 	return $schedules;
 }
 
-function geoip_detect_activate()
+function geoip_detect_set_cron_schedule()
 {
 	if ( !wp_next_scheduled( 'geoipdetectupdate' ) )
 		wp_schedule_event(time() + 7*24*60*60, 'weekly', 'geoipdetectupdate');
+}
+
+function geoip_detect_activate()
+{
+	geoip_detect_set_cron_schedule();
 }
 register_activation_hook(__FILE__, 'geoip_detect_activate');
 
