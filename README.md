@@ -72,7 +72,14 @@ To see which property names are supported, refer to the [Plugin Backend](http://
 
 1. Backend page (under Tools > GeoIP Detection)
 
+#### 1.5 ####
+
+Fixing automatic weekly updates.
+
 ## Changelog ##
+
+#### 1.5 ####
+* FIX: Automatic weekly update. Go to the plugin page (Tools menu) to verify that an update is planned.
 
 #### 1.4 ####
 * Feature: Add shortcode [geoip_detect property####"(property name)"] for direct use in posts/pages
