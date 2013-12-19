@@ -1,82 +1,114 @@
+# Copyright (C) 2013 GeoIP Detection
+# This file is distributed under the same license as the GeoIP Detection package.
 msgid ""
 msgstr ""
-"Project-Id-Version: geoip-detect\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-10 17:28+0100\n"
-"PO-Revision-Date: 2013-07-10 17:28+0100\n"
-"Last-Translator: Benjamin Pick <b.pick@yellowtree.de>\n"
-"Language-Team: \n"
-"Language: \n"
+"Project-Id-Version: GeoIP Detection 1.5\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/geoip-detect\n"
+"POT-Creation-Date: 2013-12-19 10:23:18+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
-"X-Poedit-Basepath: .\n"
-"X-Poedit-SearchPath-0: ..\n"
+"PO-Revision-Date: 2013-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: ../geoip-detect.php:52
-msgid "Downloaded file could not be opened for reading."
+#: geoip-detect.php:54
+msgid ""
+"No GeoIP Database file found. Please refer to the installation instructions "
+"in readme.txt."
 msgstr ""
 
-#: ../geoip-detect.php:54
-#, php-format
-msgid "Database could not be written (%s)."
-msgstr ""
-
-#: ../geoip-detect.php:84
+#: geoip-detect.php:76
 msgid "Updated successfully."
 msgstr ""
 
-#: ../geoip-detect.php:86
+#: geoip-detect.php:78
 msgid "Update failed."
 msgstr ""
 
-#: ../geoip-detect.php:105
-msgid "No GeoIP Database found. Click on the button \"Update now\" or follow the installation instructions."
+#: geoip-detect.php:98
+msgid ""
+"No GeoIP Database found. Click on the button \"Update now\" or follow the "
+"installation instructions."
 msgstr ""
 
-#: ../geoip-detect.php:114
+#. #-#-#-#-#  plugin.pot (GeoIP Detection 1.5)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: geoip-detect.php:108
 msgid "GeoIP Detection"
 msgstr ""
 
-#: ../geoip-detect.php:119
+#: geoip-detect.php:113
 msgid "Plugin page"
 msgstr ""
 
-#: ../views/plugin_page.php:5
+#: updater.php:41
+msgid "Downloaded file could not be opened for reading."
+msgstr ""
+
+#: updater.php:43
+msgid "Database could not be written (%s)."
+msgstr ""
+
+#: updater.php:67
+msgid "Once Weekly"
+msgstr ""
+
+#: views/plugin_page.php:5
 msgid "GeoIP Detect"
 msgstr ""
 
-#: ../views/plugin_page.php:14
-#, php-format
+#: views/plugin_page.php:14
 msgid "Last updated: %s"
 msgstr ""
 
-#: ../views/plugin_page.php:14
+#: views/plugin_page.php:14 views/plugin_page.php:19
 msgid "Never"
 msgstr ""
 
-#: ../views/plugin_page.php:19
+#: views/plugin_page.php:19
+msgid "Next update: %s"
+msgstr ""
+
+#: views/plugin_page.php:20
 msgid "(The file is updated automatically once a week.)"
 msgstr ""
 
-#: ../views/plugin_page.php:25
+#: views/plugin_page.php:26
 msgid "Update now"
 msgstr ""
 
-#: ../views/plugin_page.php:33
+#: views/plugin_page.php:34
 msgid "Lookup"
 msgstr ""
 
-#: ../views/plugin_page.php:39
+#: views/plugin_page.php:39
+msgid "The function %s returns an object:"
+msgstr ""
+
+#: views/plugin_page.php:43
 msgid "Key"
 msgstr ""
 
-#: ../views/plugin_page.php:40
+#: views/plugin_page.php:44
 msgid "Property Value"
 msgstr ""
 
-#: ../views/plugin_page.php:56
+#: views/plugin_page.php:60
 msgid "No information found about this IP."
 msgstr ""
 
+#. #-#-#-#-#  plugin.pot (GeoIP Detection 1.5)  #-#-#-#-#
+#. Plugin URI of the plugin/theme
+#. #-#-#-#-#  plugin.pot (GeoIP Detection 1.5)  #-#-#-#-#
+#. Author URI of the plugin/theme
+msgid "http://www.yellowtree.de"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Retrieving Geo-Information using the Maxmind GeoIP (Lite) Database."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "YellowTree (Benjamin Pick)"
+msgstr ""
