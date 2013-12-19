@@ -36,7 +36,7 @@ function geoip_detect_add_timezone_information_to_record($record)
 {
 	if ($record)
 	{
-		$record->timezone =  get_time_zone($record->country_code, $record->region);
+		$record->timezone = get_time_zone($record->country_code, $record->region);
 	}
 
 	return $record;
@@ -45,7 +45,7 @@ add_filter('geoip_detect_record_information', 'geoip_detect_add_timezone_informa
 
 function geoip_detect_fix_corrupt_info($record)
 {
-	if ($record && $record->latitude < -90 || $record && $record->longitude < -90)
+	if ($record && ($record->latitude < -90 || $record->longitude < -90) )
 	{
 		// File corrupted? Use empty defaults
 		$record->latitude = 0;
