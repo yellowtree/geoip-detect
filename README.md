@@ -58,9 +58,13 @@ If you need [more exact data](http://www.maxmind.com/en/geolite_city_accuracy "G
 
 Put this code somewhere in your template files:
 
-    $userInfo #### geoip_detect_get_info_from_current_ip();`
-    if ($userInfo && $userInfo->country_code ## 'DE')`
+    $userInfo #### geoip_detect_get_info_from_current_ip();
+    if ($userInfo && $userInfo->country_code ## 'DE')
         echo 'Hallo! Schön dass Sie hier sind!';
+
+Or, add the plugin shortcode somewhere in a page content:
+
+    Heyo, over there in [geoip_detect property####"country_name"] !
    
 To see which property names are supported, refer to the [Plugin Backend](http://wordpress.org/plugins/geoip-detect/screenshots/).
 
