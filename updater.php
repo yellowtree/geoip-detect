@@ -1,5 +1,6 @@
 <?php
 //define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', true);
+
 require_once(ABSPATH.'/wp-admin/includes/file.php');
 
 function geoip_detect_get_database_upload_filename()
