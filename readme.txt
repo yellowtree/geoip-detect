@@ -91,6 +91,7 @@ Fixing automatic weekly updates.
 == Changelog ==
 
 = 1.6 =
+* NEW: Can add a country- and continent-specific class on the body tag. You need to activate this in the options.
 * FIX: Automatic weekly update. (Didn't work on all installations).
 * FIX: Do not include Maxmind Libraries again if already included by another plugin/theme
 

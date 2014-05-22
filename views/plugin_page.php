@@ -62,6 +62,18 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 		<?php endif; ?>
 	<?php endif; ?>
 	
+	<br /><br />
+	<h3>Options</h3>
+	<form method="post" action="#">
+		<input type="hidden" name="action" value="options" />
+	
+		<p>
+			<input type="checkbox" name="options[set_css_country]" value="1" <?php if ($options['set_css_country']) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Add a country-specific CSS class to the &lt;body&gt;-Tag.', 'geoip-detect'); ?><br />
+		</p>
+		<p>
+			<input type="submit" value="<?php _e('Save', 'geoip-detect'); ?>" />
+		</p>
+	</form>
 	<p>
 		<br />
 		<small><em>This product includes GeoLite data created by MaxMind, available from <a href="http://www.maxmind.com/">http://www.maxmind.com</a>.</em></small>

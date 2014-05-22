@@ -81,13 +81,18 @@ function geoip_detect_plugin_page()
 				$message .= __('Update failed.', 'geoip-detect') .' '. $ret;
 
 			break;
-			
+
 		case 'lookup':
 			if (isset($_POST['ip']))
 			{
 				$ip = $_POST['ip'];
 				$ip_lookup_result = geoip_detect_get_info_from_ip($ip);
 			}
+			break;
+
+		case 'options':
+			$opt_value = isset($_POST['options']['set_css_country']) ? (int) $_POST['options']['set_css_country'] : 0;
+			update_option('geoip-detect-set_css_country', $opt_value);
 			break;
 	}
 	
@@ -103,6 +108,9 @@ function geoip_detect_plugin_page()
 	}
 	$next_cron_update = wp_next_scheduled( 'geoipdetectupdate' );
 	
+	$options = array();
+	$options['set_css_country'] = (int) get_option('geoip-detect-set_css_country');
+
 	include_once(dirname(__FILE__) . '/views/plugin_page.php');	
 }
 
