@@ -10,7 +10,7 @@ Retrieving Geo-Information using the Maxmind GeoIP (Lite) Database.
 
 ## Description ##
 
-Provides geographic information detected by an IP adress. This can be used in themes or other plugins.
+Provides geographic information detected by an IP adress. This can be used in themes or other plugins, or via CSS body classes.
 
 #### Features: ####
 
@@ -21,6 +21,7 @@ Provides geographic information detected by an IP adress. This can be used in th
 * Auto-Update the GeoIP database once a week
 * For the property names, see the results of a specific IP in the wordpress backend (under Tools > GeoIP Detection).
 * You can include these properties into your posts and pages by using the shortcode `[geoip_detect property####"country_name"]` (where 'country_name' can be one of the other property names as well).
+* When enabled on the plugin page, it adds CSS classes to the body tag such as `geoip-country-DE` and `geoip-continent-EU`.
 
 #### How can I use these functions? ####
 
@@ -62,25 +63,35 @@ Put this code somewhere in your template files:
     if ($userInfo && $userInfo->country_code ## 'DE')
         echo 'Hallo! Schön dass Sie hier sind!';
 
-Or, add the plugin shortcode somewhere in a page content:
+Or, add the plugin shortcode somewhere in the page or post content:
 
     Heyo, over there in [geoip_detect property####"country_name"] !
    
 To see which property names are supported, refer to the [Plugin Backend](http://wordpress.org/plugins/geoip-detect/screenshots/).
 
-#### Wishlist of new Features ####
+#### What is planned to be implemented? ####
 
-- use APIv2
+Maxmind released a new API version (v2) with localized country names and a accuracy percentage. We will add it when it is out of beta.
 
 ## Screenshots ##
 
 1. Backend page (under Tools > GeoIP Detection)
 
+#### 1.6 ####
+
+Automatic weekly update didn't work in all installations.
+
 #### 1.5 ####
 
 Fixing automatic weekly updates.
 
+
 ## Changelog ##
+
+#### 1.6 ####
+* NEW: Can add a country- and continent-specific class on the body tag. You need to activate this in the options.
+* FIX: Automatic weekly update. (Didn't work on all installations).
+* FIX: Do not include Maxmind Libraries again if already included by another plugin/theme
 
 #### 1.5 ####
 * FIX: Automatic weekly update. Go to the plugin page (Tools menu) to verify that an update is planned.
