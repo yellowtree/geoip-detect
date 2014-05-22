@@ -2,7 +2,7 @@
 Contributors: benjaminpick
 Tags: geoip, ip, locator, latitude, longitude
 Requires at least: 3.5
-Tested up to: 3.7.1
+Tested up to: 3.8.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -63,15 +63,15 @@ Put this code somewhere in your template files:
     if ($userInfo && $userInfo->country_code == 'DE')
         echo 'Hallo! Schön dass Sie hier sind!';
 
-Or, add the plugin shortcode somewhere in a page content:
+Or, add the plugin shortcode somewhere in the page or post content:
 
     Heyo, over there in [geoip_detect property="country_name"] !
    
 To see which property names are supported, refer to the [Plugin Backend](http://wordpress.org/plugins/geoip-detect/screenshots/).
 
-= Wishlist of new Features =
+= What is planned to be implemented? =
 
-- use APIv2
+Maxmind released a new API version (v2) with localized country names and a accuracy percentage. We will add it when it is out of beta.
 
 == Screenshots ==
 

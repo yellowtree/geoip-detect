@@ -60,9 +60,10 @@ function _geoip_detect_get_external_ip_adress_without_cache()
 	
 	foreach ($ipservices as $url)
 	{
-		$result = wp_remote_retrieve_body(wp_remote_get($url, array('timeout' => 1)));
-		if ($result)
-			return $result;
+		$ret = wp_remote_get($url, array('timeout' => 1));
+		$body = wp_remote_retrieve_body($ret);
+		if ($body)
+			return $body;
 	}
 	return '0.0.0.0';
 }
