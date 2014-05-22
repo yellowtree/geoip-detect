@@ -11,7 +11,7 @@ Retrieving Geo-Information using the Maxmind GeoIP (Lite) Database.
 
 == Description ==
 
-Provides geographic information detected by an IP adress. This can be used in themes or other plugins.
+Provides geographic information detected by an IP adress. This can be used in themes or other plugins, or via CSS body classes.
 
 = Features: =
 
@@ -22,6 +22,7 @@ Provides geographic information detected by an IP adress. This can be used in th
 * Auto-Update the GeoIP database once a week
 * For the property names, see the results of a specific IP in the wordpress backend (under Tools > GeoIP Detection).
 * You can include these properties into your posts and pages by using the shortcode `[geoip_detect property="country_name"]` (where 'country_name' can be one of the other property names as well).
+* When enabled on the plugin page, it adds CSS classes to the body tag such as `geoip-country-DE` and `geoip-continent-EU`.
 
 = How can I use these functions? =
 
