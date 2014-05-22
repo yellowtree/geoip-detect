@@ -14,14 +14,16 @@
 function geoip_detect_add_verbose_information_to_record($record)
 {
 	static $GEOIP_REGION_NAME_COPY;
+
 	if (is_null($GEOIP_REGION_NAME_COPY))
 	{
 		require(dirname(__FILE__) . '/vendor/geoip/geoip/src/geoipregionvars.php');
 		$GEOIP_REGION_NAME_COPY = $GEOIP_REGION_NAME;
 	}
+
 	if ($record)
 	{
-		if (!empty($record->country_code) && !empty($record->region))
+		if (!empty($record->country_code) && !empty($record->region) && !empty($GEOIP_REGION_NAME_COPY[$record->country_code][$record->region]))
 			$record->region_name = @$GEOIP_REGION_NAME_COPY[$record->country_code][$record->region];
 		else
 			$record->region_name = null;
