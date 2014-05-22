@@ -2,7 +2,7 @@
 Contributors: benjaminpick
 Tags: geoip, ip, locator, latitude, longitude
 Requires at least: 3.5
-Tested up to: 3.8.1
+Tested up to: 3.9.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -79,11 +79,20 @@ Maxmind released a new API version (v2) with localized country names and a accur
 
 == Upgrade Notice == 
 
+= 1.6 =
+
+Automatic weekly update didn't work in all installations.
+
 = 1.5 =
 
 Fixing automatic weekly updates.
 
+
 == Changelog ==
+
+= 1.6 =
+* FIX: Automatic weekly update. (Didn't work on all installations).
+* FIX: Do not include Maxmind Libraries again if already included by another plugin/theme
 
 = 1.5 =
 * FIX: Automatic weekly update. Go to the plugin page (Tools menu) to verify that an update is planned.

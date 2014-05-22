@@ -22,7 +22,7 @@ function geoip_detect_add_verbose_information_to_record($record)
 	if ($record)
 	{
 		if (!empty($record->country_code) && !empty($record->region))
-			$record->region_name = $GEOIP_REGION_NAME_COPY[$record->country_code][$record->region];
+			$record->region_name = @$GEOIP_REGION_NAME_COPY[$record->country_code][$record->region];
 		else
 			$record->region_name = null;
 	}
