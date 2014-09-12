@@ -42,7 +42,12 @@ require_once(dirname(__FILE__) . '/updater.php');
 require_once(dirname(__FILE__) . '/shortcode.php');
 
 
-define('GEOIP_DETECT_DATA_FILENAME', 'GeoLiteCity.dat');
+$custom_filename = get_option('geoip-detect-data_filename');
+if(!empty($custom_filename)){
+	define('GEOIP_DETECT_DATA_FILENAME', $custom_filename);
+} else {
+	define('GEOIP_DETECT_DATA_FILENAME', 'GeoLiteCity.dat');
+}
 
 
 function geoip_detect_get_abs_db_filename()
@@ -93,6 +98,8 @@ function geoip_detect_plugin_page()
 		case 'options':
 			$opt_value = isset($_POST['options']['set_css_country']) ? (int) $_POST['options']['set_css_country'] : 0;
 			update_option('geoip-detect-set_css_country', $opt_value);
+			$opt_value = isset($_POST['options']['data_filename']) ? $_POST['options']['data_filename'] : 'GeoLiteCity.dat';
+			update_option('geoip-detect-data_filename', $opt_value);
 			break;
 	}
 	
@@ -106,10 +113,13 @@ function geoip_detect_plugin_page()
 		$message .= __('No GeoIP Database found. Click on the button "Update now" or follow the installation instructions.', 'geoip-detect');
 		$last_update = 0;
 	}
-	$next_cron_update = wp_next_scheduled( 'geoipdetectupdate' );
+	if(empty($custom_filename)){
+		$next_cron_update = wp_next_scheduled( 'geoipdetectupdate' );
+	}
 	
 	$options = array();
 	$options['set_css_country'] = (int) get_option('geoip-detect-set_css_country');
+	$options['data_filename'] = get_option('geoip-detect-data_filename');
 
 	include_once(dirname(__FILE__) . '/views/plugin_page.php');	
 }
