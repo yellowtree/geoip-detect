@@ -68,7 +68,8 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 		<input type="hidden" name="action" value="options" />
 	
 		<p>
-			<input type="checkbox" name="options[set_css_country]" value="1" <?php if ($options['set_css_country']) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Add a country-specific CSS class to the &lt;body&gt;-Tag.', 'geoip-detect'); ?><br />
+			<input type="checkbox" name="options[set_css_country]" value="1" <?php if ($options['set_css_country']) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Add a country-specific CSS class to the &lt;body&gt;-Tag.', 'geoip-detect'); ?><br /><br />
+			<input type="text" name="options[data_filename]" value="<?php echo $options['data_filename']; ?>">&nbsp;<?php _e('(Optional) Enter a custom database file name', 'geoip-detect'); ?>
 		</p>
 		<p>
 			<input type="submit" value="<?php _e('Save', 'geoip-detect'); ?>" />
