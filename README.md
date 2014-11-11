@@ -71,7 +71,7 @@ To see which property names are supported, refer to the [Plugin Backend](http://
 
 #### What is planned to be implemented? ####
 
-Maxmind released a new API version (v2) with localized country names and a accuracy percentage. We will add it when it is out of beta.
+Maxmind released a new API version (v2) with localized country names and a accuracy percentage.
 
 ## Screenshots ##
 
@@ -89,7 +89,7 @@ Fixing automatic weekly updates.
 ## Changelog ##
 
 #### 1.7 ####
-* FIX: Schedule Database update on immediately after plugin activation.
+* FIX: Schedule Database update to do in background immediately after plugin installation/re-activation.
 
 #### 1.6 ####
 * NEW: Can add a country- and continent-specific class on the body tag. You need to activate this in the options.
