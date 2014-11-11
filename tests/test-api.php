@@ -33,6 +33,20 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertValidGeoIPRecord($record, '192.168.1.1');
 	}
 	
+	function testLegacyApi() {
+		$actualRecord = geoip_detect_get_info_from_ip(GEOIP_DETECT_TEST_IP);
+		
+		$record->country_code 	= 'DE';
+		$record->country_code3 	= 'DEU';
+		$record->country_name 	= 'Germany';
+		$record->latitude 		= '51';
+		$record->longitude 		= '9';
+		$record->continent_code = 'EU';
+		$record->timezone 		= 'Europe/Berlin';
+		
+		$this->assertAtLeastTheseProperties($record, $actualRecord);
+	}
+	
 	function testTimezone()
 	{
 		$record = geoip_detect_get_info_from_ip(GEOIP_DETECT_TEST_IP);
