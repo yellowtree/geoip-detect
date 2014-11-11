@@ -54,6 +54,9 @@ function geoip_detect_update()
 	return true;
 }
 
+// ------------------ CRON Hooks --------------------------
+
+
 if (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED'))
 	add_action('geoipdetectupdate', 'geoip_detect_update');
 
@@ -71,21 +74,25 @@ function geoip_detect_cron_add_weekly( $schedules ) {
 	return $schedules;
 }
 
-function geoip_detect_set_cron_schedule()
+function geoip_detect_set_cron_schedule($now = false)
 {
-	if ( !wp_next_scheduled( 'geoipdetectupdate' ) )
-		wp_schedule_event(time() + 7*24*60*60, 'weekly', 'geoipdetectupdate');
+	if ( !wp_next_scheduled( 'geoipdetectupdate' ) ) {
+		wp_schedule_event(time() + WEEK_IN_SECONDS, 'weekly', 'geoipdetectupdate');
+	}
+
+	if ($now)
+		wp_schedule_single_event(time(), 'geoipdetectupdate');
 }
 
 function geoip_detect_activate()
 {
-	geoip_detect_set_cron_schedule();
+	geoip_detect_set_cron_schedule(true);
 }
-register_activation_hook(__FILE__, 'geoip_detect_activate');
+register_activation_hook(GEOIP_PLUGIN_FILE, 'geoip_detect_activate');
 
 
 function geoip_detect_deactivate()
 {
 	wp_clear_scheduled_hook('geoipdetectupdate');
 }
-register_deactivation_hook(__FILE__, 'geoip_detect_deactivate');
+register_deactivation_hook(GEOIP_PLUGIN_FILE, 'geoip_detect_deactivate');

@@ -88,6 +88,9 @@ Fixing automatic weekly updates.
 
 ## Changelog ##
 
+#### 1.7 ####
+* FIX: Schedule Database update on immediately after plugin activation.
+
 #### 1.6 ####
 * NEW: Can add a country- and continent-specific class on the body tag. You need to activate this in the options.
 * FIX: Automatic weekly update. (Didn't work on all installations).
