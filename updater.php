@@ -86,7 +86,7 @@ function geoip_detect_set_cron_schedule($now = false)
 
 function geoip_detect_activate()
 {
-	geoip_detect_set_cron_schedule(true);
+	geoip_detect_set_cron_schedule(true && !defined('GEOIP_DETECT_TEST_DB_FILENAME'));
 }
 register_activation_hook(GEOIP_PLUGIN_FILE, 'geoip_detect_activate');
 

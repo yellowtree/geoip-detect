@@ -35,7 +35,9 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	function testLegacyApi() {
 		$actualRecord = geoip_detect_get_info_from_ip(GEOIP_DETECT_TEST_IP);
+		$this->assertValidGeoIPRecord($actualRecord, GEOIP_DETECT_TEST_IP);
 		
+		$record = new stdClass();
 		$record->country_code 	= 'DE';
 		$record->country_code3 	= 'DEU';
 		$record->country_name 	= 'Germany';
