@@ -21,4 +21,15 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 		$this->assertInternalType('string', $record->country_code, $assert_text);
 		$this->assertEquals(2, strlen($record->country_code), $assert_text);
 	}
+	
+	protected function assertAtLeastTheseProperties($expected, $actual) {
+		$this->assertType('object', $actual);
+		
+		$checkObject = new stdClass;
+		foreach ($expected as $name => $value) {
+			$checkObject->$name = $actual->$name;
+		}
+		
+		$this->assertEquals($expected, $checkObject);
+	}
 } 
