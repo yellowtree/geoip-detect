@@ -1,18 +1,19 @@
 {
-	"name" : "GeoIP Detection",
-	"description" : "Retrieving Geo-Information using the Maxmind GeoIP (Lite) Database.",
-	"type" : "wordpress-plugin",
-	"authors" : [{
-			"name" : "Benjamin Pick",
-			"email" : "b.pick@yellowtree.de"
-		}
-	],
-	"keywords" : [],
-	"homepage" : "http://www.yellowtree.de",
-	"license" : [
-		"GPL-2.0+"
-	],
-	"require" : {
-		"geoip/geoip" : "~1"
-	}
+    "name": "GeoIP Detection",
+    "description": "Retrieving Geo-Information using the Maxmind GeoIP (Lite) Database.",
+    "type": "wordpress-plugin",
+    "authors": [
+        {
+            "name": "Benjamin Pick",
+            "email": "b.pick@yellowtree.de"
+        }
+    ],
+    "keywords": [],
+    "homepage": "http://www.yellowtree.de",
+    "license": [
+        "GPL-2.0+"
+    ],
+    "require": {
+        "geoip2/geoip2": "~2.0"
+    }
 }
