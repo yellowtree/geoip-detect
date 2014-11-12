@@ -20,6 +20,12 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 		$this->assertInstanceOf('geoiprecord', $record, $assert_text);
 		$this->assertInternalType('string', $record->country_code, $assert_text);
 		$this->assertEquals(2, strlen($record->country_code), $assert_text);
+		
+		$properties = array('country_code', 'country_code3', 'country_name', 'latitude', 'longitude', 'continent_code');
+
+		foreach ($properties as $name) {
+			$this->assertObjectHasAttribute($name, $record);
+		}
 	}
 	
 	protected function assertAtLeastTheseProperties($expected, $actual) {
