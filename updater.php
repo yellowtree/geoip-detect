@@ -2,11 +2,7 @@
 // You can use this in your theme/plugin to deactivate the auto-update
 //define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', true);
 
-function geoip_detect_uploader_define() {
-	if (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED'))
-		define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', false);
-}
-add_action('plugins_loaded', 'geoip_detect_uploader_define');
+
 
 // Needed for WP File functions. Cron doesn't work without it.
 require_once(ABSPATH.'/wp-admin/includes/file.php');

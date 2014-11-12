@@ -45,7 +45,7 @@ function geoip_detect_get_external_ip_adress()
 		return apply_filters('geoip_detect_get_external_ip_adress', $ip_cache);
 	
 	$ip_cache = _geoip_detect_get_external_ip_adress_without_cache();
-	set_transient('geoip_detect_external_ip', $ip_cache, 15 * MINUTE_IN_SECONDS);
+	set_transient('geoip_detect_external_ip', $ip_cache, GEOIP_DETECT_IP_CACHE_TIME);
 	
 	$ip_cache = apply_filters('geoip_detect_get_external_ip_adress', $ip_cache);
 	return $ip_cache;
@@ -54,9 +54,16 @@ function geoip_detect_get_external_ip_adress()
 function _geoip_detect_get_external_ip_adress_without_cache()
 {
 	$ipservices = array(
-			'http://ipv4.icanhazip.com',
-			'http://ifconfig.me/ip',
+		'http://ipv4.icanhazip.com',
+		'http://ifconfig.me/ip',
+		'http://ipecho.net/plain',
+		'http://v4.ident.me',
+		'http://bot.whatismyipaddress.com',
+		'http://ipv4.ipogre.com',
 	);
+	
+	// Randomizing to avoid querying the same service each time
+	shuffle($ipservices);
 	
 	foreach ($ipservices as $url)
 	{
