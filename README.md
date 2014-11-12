@@ -71,7 +71,7 @@ To see which property names are supported, refer to the [Plugin Backend](http://
 
 #### What is planned to be implemented? ####
 
-Maxmind released a new API version (v2) with localized country names and a accuracy percentage.
+Maxmind released a new API version (v2) with localized country names and a accuracy percentage. Work in Progress.
 
 ## Screenshots ##
 

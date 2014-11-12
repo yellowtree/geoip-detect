@@ -2,7 +2,7 @@
 Contributors: benjaminpick
 Tags: geoip, ip, locator, latitude, longitude
 Requires at least: 3.5
-Tested up to: 3.9.1
+Tested up to: 4.0
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -70,9 +70,9 @@ Or, add the plugin shortcode somewhere in the page or post content:
    
 To see which property names are supported, refer to the [Plugin Backend](http://wordpress.org/plugins/geoip-detect/screenshots/).
 
-= What is planned to be implemented? =
+#### What is planned to be implemented? ####
 
-Maxmind released a new API version (v2) with localized country names and a accuracy percentage. We will add it when it is out of beta.
+Maxmind released a new API version (v2) with localized country names and a accuracy percentage. Work in Progress.
 
 == Screenshots ==
 
@@ -90,6 +90,10 @@ Fixing automatic weekly updates.
 
 
 == Changelog ==
+
+= 1.7 =
+* FIX: Schedule Database update to do in background immediately after plugin installation/re-activation.
+* FIX: Longitude can be smaller than -90
 
 = 1.6 =
 * NEW: Can add a country- and continent-specific class on the body tag. You need to activate this in the options.
