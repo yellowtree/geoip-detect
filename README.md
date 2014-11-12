@@ -90,6 +90,7 @@ Fixing automatic weekly updates.
 
 #### 1.7 ####
 * FIX: Schedule Database update to do in background immediately after plugin installation/re-activation.
+* FIX: Longitude can be smaller than -90
 
 #### 1.6 ####
 * NEW: Can add a country- and continent-specific class on the body tag. You need to activate this in the options.
