@@ -20,6 +20,9 @@ function geoip_detect_get_info_from_ip($ip)
 	$record = $reader->city($ip);
 	var_dump(array_keys((array) $record));
 	
+	// Funktioniert nicht. Proxy object?
+	//var_dump((string) $record->city);
+	
 /*
 object(GeoIp2\Model\City)#276 (12) {
   ["city":protected]=>
