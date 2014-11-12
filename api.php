@@ -39,14 +39,15 @@ function geoip_detect_get_info_from_current_ip()
  */
 function geoip_detect_get_external_ip_adress()
 {
-	static $ip_cache = null;
+	$ip_cache = get_transient('geoip_detect_external_ip');
 
-	if (!is_null($ip_cache))
+	if ($ip_cache)
 		return apply_filters('geoip_detect_get_external_ip_adress', $ip_cache);
 	
 	$ip_cache = _geoip_detect_get_external_ip_adress_without_cache();
+	set_transient('geoip_detect_external_ip', $ip_cache, 15 * MINUTE_IN_SECONDS);
+	
 	$ip_cache = apply_filters('geoip_detect_get_external_ip_adress', $ip_cache);
-
 	return $ip_cache;
 }
 
@@ -60,9 +61,12 @@ function _geoip_detect_get_external_ip_adress_without_cache()
 	foreach ($ipservices as $url)
 	{
 		$ret = wp_remote_get($url, array('timeout' => 1));
-		$body = wp_remote_retrieve_body($ret);
-		if ($body)
-			return $body;
+		if (is_wp_error($ret)) {
+			if (WP_DEBUG)
+				echo 'Curl error: ' . $ret;
+		} else if (isset($ret['body'])) {
+			return trim($ret['body']);
+		}
 	}
 	return '0.0.0.0';
 }

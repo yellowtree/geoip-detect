@@ -1,5 +1,7 @@
 <?php
 
+//define('WP_DEBUG', true);
+
 require_once getenv( 'WP_TESTS_DIR' ) . '/includes/functions.php';
 
 function _manually_load_plugin() {

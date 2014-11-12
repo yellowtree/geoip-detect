@@ -37,8 +37,8 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$actualRecord = geoip_detect_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		$this->assertValidGeoIPRecord($actualRecord, GEOIP_DETECT_TEST_IP);
 
-		$this->assertEquals(51, $record->latitude, 'Record is not in Germany', 5);
-		$this->assertEquals(10, $record->longitude, 'Record is not in Germany', 7);
+		$this->assertEquals(51, $actualRecord->latitude, 'Record is not in Germany', 5);
+		$this->assertEquals(10, $actualRecord->longitude, 'Record is not in Germany', 7);
 		
 		$record = new stdClass();
 		$record->country_code 	= 'DE';
@@ -68,7 +68,7 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	function testExternalIp() {
-		$ip = _geoip_detect_get_external_ip_adress_without_cache();
+		$ip = geoip_detect_get_external_ip_adress();
 		$this->assertNotEquals('0.0.0.0', $ip);
 	}
 	
