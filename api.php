@@ -18,7 +18,371 @@ function geoip_detect_get_info_from_ip($ip)
 	}
 
 	$record = $reader->city($ip);
-	var_dump($record);
+	var_dump(array_keys((array) $record));
+	
+/*
+object(GeoIp2\Model\City)#276 (12) {
+  ["city":protected]=>
+  object(GeoIp2\Record\City)#269 (3) {
+    ["validAttributes":protected]=>
+    array(3) {
+      [0]=>
+      string(10) "confidence"
+      [1]=>
+      string(9) "geonameId"
+      [2]=>
+      string(5) "names"
+    }
+    ["locales":"GeoIp2\Record\AbstractPlaceRecord":private]=>
+    array(1) {
+      [0]=>
+      string(2) "en"
+    }
+    ["record":"GeoIp2\Record\AbstractRecord":private]=>
+    array(0) {
+    }
+  }
+  ["location":protected]=>
+  object(GeoIp2\Record\Location)#268 (2) {
+    ["validAttributes":protected]=>
+    array(7) {
+      [0]=>
+      string(14) "accuracyRadius"
+      [1]=>
+      string(8) "latitude"
+      [2]=>
+      string(9) "longitude"
+      [3]=>
+      string(9) "metroCode"
+      [4]=>
+      string(10) "postalCode"
+      [5]=>
+      string(16) "postalConfidence"
+      [6]=>
+      string(8) "timeZone"
+    }
+    ["record":"GeoIp2\Record\AbstractRecord":private]=>
+    array(2) {
+      ["latitude"]=>
+      float(51)
+      ["longitude"]=>
+      float(9)
+    }
+  }
+  ["postal":protected]=>
+  object(GeoIp2\Record\Postal)#267 (2) {
+    ["validAttributes":protected]=>
+    array(2) {
+      [0]=>
+      string(4) "code"
+      [1]=>
+      string(10) "confidence"
+    }
+    ["record":"GeoIp2\Record\AbstractRecord":private]=>
+    array(0) {
+    }
+  }
+  ["subdivisions":protected]=>
+  array(0) {
+  }
+  ["continent":protected]=>
+  object(GeoIp2\Record\Continent)#275 (3) {
+    ["validAttributes":protected]=>
+    array(3) {
+      [0]=>
+      string(4) "code"
+      [1]=>
+      string(9) "geonameId"
+      [2]=>
+      string(5) "names"
+    }
+    ["locales":"GeoIp2\Record\AbstractPlaceRecord":private]=>
+    array(1) {
+      [0]=>
+      string(2) "en"
+    }
+    ["record":"GeoIp2\Record\AbstractRecord":private]=>
+    array(3) {
+      ["code"]=>
+      string(2) "EU"
+      ["geoname_id"]=>
+      int(6255148)
+      ["names"]=>
+      array(8) {
+        ["de"]=>
+        string(6) "Europa"
+        ["en"]=>
+        string(6) "Europe"
+        ["es"]=>
+        string(6) "Europa"
+        ["fr"]=>
+        string(6) "Europe"
+        ["ja"]=>
+        string(15) "ヨーロッパ"
+        ["pt-BR"]=>
+        string(6) "Europa"
+        ["ru"]=>
+        string(12) "Европа"
+        ["zh-CN"]=>
+        string(6) "欧洲"
+      }
+    }
+  }
+  ["country":protected]=>
+  object(GeoIp2\Record\Country)#274 (3) {
+    ["validAttributes":protected]=>
+    array(4) {
+      [0]=>
+      string(10) "confidence"
+      [1]=>
+      string(9) "geonameId"
+      [2]=>
+      string(7) "isoCode"
+      [3]=>
+      string(5) "names"
+    }
+    ["locales":"GeoIp2\Record\AbstractPlaceRecord":private]=>
+    array(1) {
+      [0]=>
+      string(2) "en"
+    }
+    ["record":"GeoIp2\Record\AbstractRecord":private]=>
+    array(3) {
+      ["geoname_id"]=>
+      int(2921044)
+      ["iso_code"]=>
+      string(2) "DE"
+      ["names"]=>
+      array(8) {
+        ["de"]=>
+        string(11) "Deutschland"
+        ["en"]=>
+        string(7) "Germany"
+        ["es"]=>
+        string(8) "Alemania"
+        ["fr"]=>
+        string(9) "Allemagne"
+        ["ja"]=>
+        string(24) "ドイツ連邦共和国"
+        ["pt-BR"]=>
+        string(8) "Alemanha"
+        ["ru"]=>
+        string(16) "Германия"
+        ["zh-CN"]=>
+        string(6) "德国"
+      }
+    }
+  }
+  ["locales":protected]=>
+  array(1) {
+    [0]=>
+    string(2) "en"
+  }
+  ["maxmind":protected]=>
+  object(GeoIp2\Record\MaxMind)#273 (2) {
+    ["validAttributes":protected]=>
+    array(1) {
+      [0]=>
+      string(16) "queriesRemaining"
+    }
+    ["record":"GeoIp2\Record\AbstractRecord":private]=>
+    array(0) {
+    }
+  }
+  ["registeredCountry":protected]=>
+  object(GeoIp2\Record\Country)#272 (3) {
+    ["validAttributes":protected]=>
+    array(4) {
+      [0]=>
+      string(10) "confidence"
+      [1]=>
+      string(9) "geonameId"
+      [2]=>
+      string(7) "isoCode"
+      [3]=>
+      string(5) "names"
+    }
+    ["locales":"GeoIp2\Record\AbstractPlaceRecord":private]=>
+    array(1) {
+      [0]=>
+      string(2) "en"
+    }
+    ["record":"GeoIp2\Record\AbstractRecord":private]=>
+    array(3) {
+      ["geoname_id"]=>
+      int(6252001)
+      ["iso_code"]=>
+      string(2) "US"
+      ["names"]=>
+      array(8) {
+        ["de"]=>
+        string(3) "USA"
+        ["en"]=>
+        string(13) "United States"
+        ["es"]=>
+        string(14) "Estados Unidos"
+        ["fr"]=>
+        string(11) "États-Unis"
+        ["ja"]=>
+        string(21) "アメリカ合衆国"
+        ["pt-BR"]=>
+        string(14) "Estados Unidos"
+        ["ru"]=>
+        string(6) "Сша"
+        ["zh-CN"]=>
+        string(6) "美国"
+      }
+    }
+  }
+  ["representedCountry":protected]=>
+  object(GeoIp2\Record\RepresentedCountry)#271 (3) {
+    ["validAttributes":protected]=>
+    array(5) {
+      [0]=>
+      string(10) "confidence"
+      [1]=>
+      string(9) "geonameId"
+      [2]=>
+      string(7) "isoCode"
+      [3]=>
+      string(5) "names"
+      [4]=>
+      string(4) "type"
+    }
+    ["locales":"GeoIp2\Record\AbstractPlaceRecord":private]=>
+    array(1) {
+      [0]=>
+      string(2) "en"
+    }
+    ["record":"GeoIp2\Record\AbstractRecord":private]=>
+    array(0) {
+    }
+  }
+  ["traits":protected]=>
+  object(GeoIp2\Record\Traits)#270 (2) {
+    ["validAttributes":protected]=>
+    array(9) {
+      [0]=>
+      string(22) "autonomousSystemNumber"
+      [1]=>
+      string(28) "autonomousSystemOrganization"
+      [2]=>
+      string(6) "domain"
+      [3]=>
+      string(16) "isAnonymousProxy"
+      [4]=>
+      string(19) "isSatelliteProvider"
+      [5]=>
+      string(3) "isp"
+      [6]=>
+      string(9) "ipAddress"
+      [7]=>
+      string(12) "organization"
+      [8]=>
+      string(8) "userType"
+    }
+    ["record":"GeoIp2\Record\AbstractRecord":private]=>
+    array(1) {
+      ["ip_address"]=>
+      string(12) "47.64.121.17"
+    }
+  }
+  ["raw":protected]=>
+  array(5) {
+    ["continent"]=>	
+    array(3) {
+      ["code"]=>
+      string(2) "EU"
+      ["geoname_id"]=>
+      int(6255148)
+      ["names"]=>
+      array(8) {
+        ["de"]=>
+        string(6) "Europa"
+        ["en"]=>
+        string(6) "Europe"
+        ["es"]=>
+        string(6) "Europa"
+        ["fr"]=>
+        string(6) "Europe"
+        ["ja"]=>
+        string(15) "ヨーロッパ"
+        ["pt-BR"]=>
+        string(6) "Europa"
+        ["ru"]=>
+        string(12) "Европа"
+        ["zh-CN"]=>
+        string(6) "欧洲"
+      }
+    }
+    ["country"]=>
+    array(3) {
+      ["geoname_id"]=>
+      int(2921044)
+      ["iso_code"]=>
+      string(2) "DE"
+      ["names"]=>
+      array(8) {
+        ["de"]=>
+        string(11) "Deutschland"
+        ["en"]=>
+        string(7) "Germany"
+        ["es"]=>
+        string(8) "Alemania"
+        ["fr"]=>
+        string(9) "Allemagne"
+        ["ja"]=>
+        string(24) "ドイツ連邦共和国"
+        ["pt-BR"]=>
+        string(8) "Alemanha"
+        ["ru"]=>
+        string(16) "Германия"
+        ["zh-CN"]=>
+        string(6) "德国"
+      }
+    }
+    ["location"]=>
+    array(2) {
+      ["latitude"]=>
+      float(51)
+      ["longitude"]=>
+      float(9)
+    }
+    ["registered_country"]=>
+    array(3) {
+      ["geoname_id"]=>
+      int(6252001)
+      ["iso_code"]=>
+      string(2) "US"
+      ["names"]=>
+      array(8) {
+        ["de"]=>
+        string(3) "USA"
+        ["en"]=>
+        string(13) "United States"
+        ["es"]=>
+        string(14) "Estados Unidos"
+        ["fr"]=>
+        string(11) "États-Unis"
+        ["ja"]=>
+        string(21) "アメリカ合衆国"
+        ["pt-BR"]=>
+        string(14) "Estados Unidos"
+        ["ru"]=>
+        string(6) "Сша"
+        ["zh-CN"]=>
+        string(6) "美国"
+      }
+    }
+    ["traits"]=>
+    array(1) {
+      ["ip_address"]=>
+      string(12) "47.64.121.17"
+    }
+  }
+}
+
+ */
 
 	$record = apply_filters('geoip_detect_record_information', $record, $ip);
 

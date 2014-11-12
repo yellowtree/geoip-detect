@@ -1,5 +1,6 @@
 <?php
-function geoip_detect_add_v1_compat($record) {
+function geoip_detect_add_v1_compability($record) {
+	
 	return $record;
 }
 add_filter('geoip_detect_record_information', 'geoip_detect_add_v1_compability', 1);
@@ -52,7 +53,7 @@ function geoip_detect_add_timezone_information_to_record($record)
 
 	return $record;
 }
-add_filter('geoip_detect_record_information', 'geoip_detect_add_timezone_information_to_record');
+//add_filter('geoip_detect_record_information', 'geoip_detect_add_timezone_information_to_record');
 
 function geoip_detect_fix_corrupt_info($record)
 {
