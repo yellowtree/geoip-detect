@@ -32,9 +32,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 define('GEOIP_PLUGIN_FILE', __FILE__);
 
-if (!class_exists('geoiprecord') && !class_exists('geoiprecord')) {
-	require_once(dirname(__FILE__) . '/vendor/geoip/geoip/src/geoipcity.inc');
-}
+require_once(dirname(__FILE__) . '/vendor/autoload.php');
 
 require_once(dirname(__FILE__) . '/api.php');
 require_once(dirname(__FILE__) . '/filter.php');
@@ -45,6 +43,9 @@ require_once(dirname(__FILE__) . '/shortcode.php');
 
 
 define('GEOIP_DETECT_DATA_FILENAME', 'GeoLiteCity.dat');
+define('GEOIP_REQUIRED_PHP_VERSION', '5.3.1');
+define('GEOIP_REQUIRED_WP_VERSION', '3.5');
+
 
 function geoip_detect_defines() {
 	if (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED'))
@@ -54,6 +55,25 @@ function geoip_detect_defines() {
 }
 add_action('plugins_loaded', 'geoip_detect_defines');
 
+register_activation_hook( __FILE__, 'geoip_detect_version_check' );
+
+function geoip_detect_version_check() {
+   global $wp_version;
+   
+    if ( version_compare( PHP_VERSION, GEOIP_REQUIRED_PHP_VERSION, '<' ) ) {
+        $flag = 'PHP';
+    	$min = GEOIP_REQUIRED_PHP_VERSION;
+    }
+    elseif ( version_compare( $wp_version, GEOIP_REQUIRED_WP_VERSION, '<' ) ) {
+        $flag = 'WordPress';
+   		$min = GEOIP_REQUIRED_WP_VERSION;
+    }
+    else
+        return;
+        
+    deactivate_plugins( basename( __FILE__ ) );
+    wp_die('<p>The <strong>GeoIP Detect</strong> plugin requires '.$flag.'  version '.$min.' or greater.</p><p>You can try to install an 1.x version of this plugin.</p>','Plugin Activation Error',  array( 'response'=>200, 'back_link'=>TRUE ) );
+}
 
 function geoip_detect_get_abs_db_filename()
 {

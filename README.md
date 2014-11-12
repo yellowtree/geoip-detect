@@ -69,13 +69,14 @@ Or, add the plugin shortcode somewhere in the page or post content:
    
 To see which property names are supported, refer to the [Plugin Backend](http://wordpress.org/plugins/geoip-detect/screenshots/).
 
-#### What is planned to be implemented? ####
-
-Maxmind released a new API version (v2) with localized country names and a accuracy percentage.
-
 ## Screenshots ##
 
 1. Backend page (under Tools > GeoIP Detection)
+
+#### 2.0.0 ####
+
+This updates to the new Maxmind API (v2). 
+At least PHP 5.3.1 is required now.
 
 #### 1.6 ####
 
@@ -87,6 +88,9 @@ Fixing automatic weekly updates.
 
 
 ## Changelog ##
+
+#### 2.0.0 ####
+* NEW: Using v2 version of the API.
 
 #### 1.7 ####
 * FIX: Schedule Database update to do in background immediately after plugin installation/re-activation.

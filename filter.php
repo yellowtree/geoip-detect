@@ -17,7 +17,7 @@ function geoip_detect_add_verbose_information_to_record($record)
 
 	if (is_null($GEOIP_REGION_NAME_COPY))
 	{
-		require(dirname(__FILE__) . '/vendor/geoip/geoip/src/geoipregionvars.php');
+		//require(dirname(__FILE__) . '/vendor/geoip/geoip/src/geoipregionvars.php');
 		$GEOIP_REGION_NAME_COPY = $GEOIP_REGION_NAME;
 	}
 
@@ -33,9 +33,11 @@ function geoip_detect_add_verbose_information_to_record($record)
 }
 add_filter('geoip_detect_record_information', 'geoip_detect_add_verbose_information_to_record');
 
+/*
 if (!function_exists('get_time_zone')) {
 	require_once(dirname(__FILE__) . '/vendor/geoip/geoip/src/timezone.php');
 }
+*/
 
 function geoip_detect_add_timezone_information_to_record($record)
 {
