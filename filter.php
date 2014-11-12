@@ -1,4 +1,8 @@
 <?php
+function geoip_detect_add_v1_compat($record) {
+	return $record;
+}
+add_filter('geoip_detect_record_information', 'geoip_detect_add_v1_compability', 1);
 
 /*
  * Filter: geoip_detect_record_information

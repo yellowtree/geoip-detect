@@ -1,4 +1,5 @@
 <?php
+use GeoIp2\Database\Reader;
 
 /**
  * Get Geo-Information for a specific IP
@@ -7,13 +8,17 @@
  */
 function geoip_detect_get_info_from_ip($ip)
 {
-	$data_file = geoip_detect_get_abs_db_filename();
-	if (!$data_file)
-		return 0;
+	static $reader = null;
+	if (is_null($reader)) {
+		$data_file = geoip_detect_get_abs_db_filename();
+		if (!$data_file)
+			return 0;
+		
+		$reader = new GeoIp2\Database\Reader($data_file);
+	}
 
-	$gi = geoip_open($data_file, GEOIP_STANDARD);
-	$record = geoip_record_by_addr($gi, $ip);
-	geoip_close($gi);
+	$record = $reader->city($ip);
+	var_dump($record);
 
 	$record = apply_filters('geoip_detect_record_information', $record, $ip);
 

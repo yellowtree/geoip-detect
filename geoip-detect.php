@@ -42,7 +42,7 @@ require_once(dirname(__FILE__) . '/updater.php');
 require_once(dirname(__FILE__) . '/shortcode.php');
 
 
-define('GEOIP_DETECT_DATA_FILENAME', 'GeoLiteCity.dat');
+define('GEOIP_DETECT_DATA_FILENAME', 'GeoLite2-City.mmdb');
 define('GEOIP_REQUIRED_PHP_VERSION', '5.3.1');
 define('GEOIP_REQUIRED_WP_VERSION', '3.5');
 
