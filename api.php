@@ -64,6 +64,7 @@ function _geoip_detect_get_external_ip_adress_without_cache()
 	
 	// Randomizing to avoid querying the same service each time
 	shuffle($ipservices);
+	$ipservices = array_slice($ipservices, 0, 3);
 	
 	foreach ($ipservices as $url)
 	{
