@@ -14,9 +14,6 @@ class UpdateTest extends WP_UnitTestCase_GeoIP_Detect {
 
 		$record = geoip_detect_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		$this->assertValidGeoIPRecord($record, GEOIP_DETECT_TEST_IP);
-
-		$record = geoip_detect_get_info_from_ip('192.168.1.1');
-		$this->assertValidGeoIPRecord($record, '192.168.1.1');
 	}
 
 	function testUpdaterFileFilter() {

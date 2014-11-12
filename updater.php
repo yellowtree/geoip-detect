@@ -1,6 +1,10 @@
 <?php
+// You can use this in your theme/plugin to deactivate the auto-update
 //define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', true);
 
+
+
+// Needed for WP File functions. Cron doesn't work without it.
 require_once(ABSPATH.'/wp-admin/includes/file.php');
 
 function geoip_detect_get_database_upload_filename()
@@ -56,9 +60,22 @@ function geoip_detect_update()
 
 // ------------------ CRON Hooks --------------------------
 
+function geoip_detect_update_cron($immediately_after_activation = false) {
+	/**
+	 * Filter:
+	 * Cron has fired.
+	 * Find out if file should be updated now.
+	 * 
+	 * @param $do_it False if deactivated by define
+	 * @param $immediately_after_activation True if this is fired because the plugin was recently activated
+	 */
+	$do_it = apply_filter('geoip_detect_cron_do_update', !GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED, $immediately_after_activation);	
+	
+	if ($do_it)
+		geoip_detect_update();
+}
 
-if (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED'))
-	add_action('geoipdetectupdate', 'geoip_detect_update');
+add_action('geoipdetectupdate', 'geoip_detect_update_cron', 10, 1);
 
 
 add_filter( 'cron_schedules', 'geoip_detect_cron_add_weekly' );
@@ -81,7 +98,7 @@ function geoip_detect_set_cron_schedule($now = false)
 	}
 
 	if ($now)
-		wp_schedule_single_event(time(), 'geoipdetectupdate');
+		wp_schedule_single_event(time(), 'geoipdetectupdate', array(true));
 }
 
 function geoip_detect_activate()
@@ -94,5 +111,6 @@ register_activation_hook(GEOIP_PLUGIN_FILE, 'geoip_detect_activate');
 function geoip_detect_deactivate()
 {
 	wp_clear_scheduled_hook('geoipdetectupdate');
+	wp_clear_scheduled_hook('geoipdetectupdate', array(true));
 }
 register_deactivation_hook(GEOIP_PLUGIN_FILE, 'geoip_detect_deactivate');

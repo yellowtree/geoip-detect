@@ -1,5 +1,7 @@
 <?php
 
+//define('WP_DEBUG', true);
+
 require_once getenv( 'WP_TESTS_DIR' ) . '/includes/functions.php';
 
 function _manually_load_plugin() {
@@ -20,13 +22,21 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 		$this->assertInstanceOf('geoiprecord', $record, $assert_text);
 		$this->assertInternalType('string', $record->country_code, $assert_text);
 		$this->assertEquals(2, strlen($record->country_code), $assert_text);
+		$this->assertEquals(3, strlen($record->country_code3), $assert_text);
+		$this->assertEquals(2, strlen($record->continent_code), $assert_text);
+		
+		$properties = array('country_code', 'country_code3', 'country_name', 'latitude', 'longitude', 'continent_code');
+
+		foreach ($properties as $name) {
+			$this->assertObjectHasAttribute($name, $record);
+		}
 	}
 	
 	protected function assertAtLeastTheseProperties($expected, $actual) {
-		$this->assertType('object', $actual);
-		
 		$checkObject = new stdClass;
 		foreach ($expected as $name => $value) {
+			$this->assertObjectHasAttribute($name, $actual);
+			
 			$checkObject->$name = $actual->$name;
 		}
 		

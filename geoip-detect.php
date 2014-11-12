@@ -32,7 +32,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 define('GEOIP_PLUGIN_FILE', __FILE__);
 
-
 if (!class_exists('geoiprecord') && !class_exists('geoiprecord')) {
 	require_once(dirname(__FILE__) . '/vendor/geoip/geoip/src/geoipcity.inc');
 }
@@ -46,6 +45,14 @@ require_once(dirname(__FILE__) . '/shortcode.php');
 
 
 define('GEOIP_DETECT_DATA_FILENAME', 'GeoLiteCity.dat');
+
+function geoip_detect_defines() {
+	if (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED'))
+		define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', false);
+	if (!defined('GEOIP_DETECT_IP_CACHE_TIME'))
+		define('GEOIP_DETECT_IP_CACHE_TIME', 2 * HOUR_IN_SECONDS);
+}
+add_action('plugins_loaded', 'geoip_detect_defines');
 
 
 function geoip_detect_get_abs_db_filename()
