@@ -15,6 +15,7 @@ function geoip_detect_get_info_from_ip($ip)
 			return 0;
 		
 		$reader = new GeoIp2\Database\Reader($data_file);
+		$reader = apply_filter('geoip_detect_reader', $reader);
 	}
 
 	$record = $reader->city($ip);
