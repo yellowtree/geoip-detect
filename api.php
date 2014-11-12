@@ -60,6 +60,7 @@ function _geoip_detect_get_external_ip_adress_without_cache()
 		'http://v4.ident.me',
 		'http://bot.whatismyipaddress.com',
 		'http://ipv4.ipogre.com',
+		'http://ip.appspot.com',
 	);
 	
 	// Randomizing to avoid querying the same service each time
