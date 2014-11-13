@@ -77,6 +77,10 @@ Maxmind released a new API version (v2) with localized country names and a accur
 
 1. Backend page (under Tools > GeoIP Detection)
 
+#### 1.7.1 ####
+
+Cron update was broken again ...
+
 #### 1.6 ####
 
 Automatic weekly update didn't work in all installations.
@@ -87,6 +91,9 @@ Fixing automatic weekly updates.
 
 
 ## Changelog ##
+
+#### 1.7.1 ####
+* FIX: Fatal error on cron run
 
 #### 1.7 ####
 * FIX: Schedule Database update to do in background immediately after plugin installation/re-activation.
