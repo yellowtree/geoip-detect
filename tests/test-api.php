@@ -68,7 +68,7 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	function testExternalIp() {
-		$ip = geoip_detect_get_external_ip_adress();
+		$ip = _geoip_detect_get_external_ip_adress_without_cache();
 		$this->assertNotEquals('0.0.0.0', $ip);
 	}
 	

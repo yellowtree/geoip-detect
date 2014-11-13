@@ -70,6 +70,7 @@ function _geoip_detect_get_external_ip_adress_without_cache()
 	foreach ($ipservices as $url)
 	{
 		$ret = wp_remote_get($url, array('timeout' => 1));
+
 		if (is_wp_error($ret)) {
 			if (WP_DEBUG)
 				echo 'Curl error: ' . $ret;
