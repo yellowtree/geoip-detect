@@ -83,6 +83,8 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		
 		$string = do_shortcode('[geoip_detect property="INVALID"]');
 		$this->assertContains('<!--', $string, "Geoip Detect Shortcode threw no error in spite of invalid property name: " . $string);
+		$string = do_shortcode('[geoip_detect property="INVALID" default="here"]');
+		$this->assertContains('here', $string, "Geoip Detect Shortcode does not contain default value: " . $string);
 	}
 }
 
