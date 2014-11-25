@@ -73,7 +73,7 @@ function _geoip_detect_get_external_ip_adress_without_cache()
 
 		if (is_wp_error($ret)) {
 			if (WP_DEBUG)
-				echo 'Curl error: ' . $ret;
+				echo 'Curl error: ' . $ret->get_error_message();
 		} else if (isset($ret['body'])) {
 			return trim($ret['body']);
 		}
