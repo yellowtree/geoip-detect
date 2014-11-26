@@ -23,7 +23,7 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 	
 	<form method="post" action="#">
 		<input type="hidden" name="action" value="update" />
-		<input type="submit" value="<?php _e('Update now'); ?>" />
+		<input type="submit" class="button button-primary" value="<?php _e('Update now'); ?>" />
 	</form>
 	
 	<br/>
@@ -31,7 +31,7 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 	<form method="post" action="#">
 		<input type="hidden" name="action" value="lookup" />
 		<input type="text" name="ip" value="<?php echo isset($_REQUEST['ip']) ? esc_attr($_REQUEST['ip']) : esc_attr($_SERVER['REMOTE_ADDR']); ?>" />
-		<input type="submit" value="<?php _e('Lookup', 'geoip-detect'); ?>" />
+		<input type="submit" class="button button-secondary" value="<?php _e('Lookup', 'geoip-detect'); ?>" />
 	</form>
 	<?php if ($ip_lookup_result !== false) :
 			if (is_object($ip_lookup_result)) : ?>
@@ -71,7 +71,7 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 			<input type="checkbox" name="options[set_css_country]" value="1" <?php if ($options['set_css_country']) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Add a country-specific CSS class to the &lt;body&gt;-Tag.', 'geoip-detect'); ?><br />
 		</p>
 		<p>
-			<input type="submit" value="<?php _e('Save', 'geoip-detect'); ?>" />
+			<input type="submit" class="button button-primary" value="<?php _e('Save', 'geoip-detect'); ?>" />
 		</p>
 	</form>
 	<p>
