@@ -77,6 +77,8 @@ Maxmind released a new API version (v2) with localized country names and a accur
 
 1. Backend page (under Tools > GeoIP Detection)
 
+## Upgrade Notice ##
+
 #### 1.7.1 ####
 
 Cron update was broken again ...
