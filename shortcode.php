@@ -5,13 +5,19 @@ function geoip_detect_shortcode($attr)
 {
 	$userInfo = geoip_detect_get_info_from_current_ip();
 
+	$defaultValue = isset($attr['default']) ? $attr['default'] : ''; 
+	
 	if (!is_object($userInfo))
-		return '<!-- GeoIP Detect: No info found for this IP. -->';
+		return $defaultValue . '<!-- GeoIP Detect: No info found for this IP. -->';
 
 	$propertyName = $attr['property'];
 	
-	if (property_exists($userInfo, $propertyName))
-		return $userInfo->$propertyName;
+	if (property_exists($userInfo, $propertyName)) {
+		if ($userInfo->$propertyName)
+			return $userInfo->$propertyName;
+		else
+			return $defaultValue;
+	}
 	
-	return '<!-- GeoIP Detect: Invalid property name. -->';
+	return $defaultValue . '<!-- GeoIP Detect: Invalid property name. -->';
 }

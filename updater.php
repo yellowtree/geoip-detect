@@ -69,7 +69,7 @@ function geoip_detect_update_cron($immediately_after_activation = false) {
 	 * @param $do_it False if deactivated by define
 	 * @param $immediately_after_activation True if this is fired because the plugin was recently activated
 	 */
-	$do_it = apply_filter('geoip_detect_cron_do_update', !GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED, $immediately_after_activation);	
+	$do_it = apply_filters('geoip_detect_cron_do_update', !GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED, $immediately_after_activation);	
 	
 	if ($do_it)
 		geoip_detect_update();

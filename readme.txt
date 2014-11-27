@@ -2,7 +2,7 @@
 Contributors: benjaminpick
 Tags: geoip, ip, locator, latitude, longitude
 Requires at least: 3.5
-Tested up to: 3.9.1
+Tested up to: 4.0
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -21,7 +21,7 @@ Provides geographic information detected by an IP adress. This can be used in th
   * `geoip_detect_get_external_ip_adress()`: Fetch the internet adress of the webserver
 * Auto-Update the GeoIP database once a week
 * For the property names, see the results of a specific IP in the wordpress backend (under Tools > GeoIP Detection).
-* You can include these properties into your posts and pages by using the shortcode `[geoip_detect property="country_name"]` (where 'country_name' can be one of the other property names as well).
+* You can include these properties into your posts and pages by using the shortcode `[geoip_detect property="country_name" default="(country could not be detected)"]` (where 'country_name' can be one of the other property names as well, and 'default' can be used (optionally) to show a different text when no information was found for this IP).
 * When enabled on the plugin page, it adds CSS classes to the body tag such as `geoip-country-DE` and `geoip-continent-EU`.
 
 = How can I use these functions? =
@@ -29,6 +29,7 @@ Provides geographic information detected by an IP adress. This can be used in th
 * You could choose the currency of the store based on the country name
 * You could suggest an timezone to use when displaying dates
 * You could show the store nearest to your customer
+* You show or hide content specific to a geographic target group
 * Etc. ... You tell me! I'm rather curious what you'll do with this plugin!
 
 *This product includes GeoLite data created by MaxMind, available from http://www.maxmind.com.*
@@ -70,15 +71,19 @@ Or, add the plugin shortcode somewhere in the page or post content:
    
 To see which property names are supported, refer to the [Plugin Backend](http://wordpress.org/plugins/geoip-detect/screenshots/).
 
-= What is planned to be implemented? =
+#### What is planned to be implemented? ####
 
-Maxmind released a new API version (v2) with localized country names and a accuracy percentage. We will add it when it is out of beta.
+Maxmind released a new API version (v2) with localized country names and a accuracy percentage. Work in Progress.
 
 == Screenshots ==
 
 1. Backend page (under Tools > GeoIP Detection)
 
 == Upgrade Notice == 
+
+= 1.7.1 =
+
+Cron update was broken again ...
 
 = 1.6 =
 
@@ -90,6 +95,16 @@ Fixing automatic weekly updates.
 
 
 == Changelog ==
+
+= 1.8 =
+* NEW: Shortcode now has a default value when no information for this IP found.
+
+= 1.7.1 =
+* FIX: Fatal error on cron run
+
+= 1.7 =
+* FIX: Schedule Database update to do in background immediately after plugin installation/re-activation.
+* FIX: Longitude can be smaller than -90
 
 = 1.6 =
 * NEW: Can add a country- and continent-specific class on the body tag. You need to activate this in the options.

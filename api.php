@@ -433,17 +433,20 @@ function _geoip_detect_get_external_ip_adress_without_cache()
 		'http://v4.ident.me',
 		'http://bot.whatismyipaddress.com',
 		'http://ipv4.ipogre.com',
+		'http://ip.appspot.com',
 	);
 	
 	// Randomizing to avoid querying the same service each time
 	shuffle($ipservices);
+	$ipservices = array_slice($ipservices, 0, 3);
 	
 	foreach ($ipservices as $url)
 	{
 		$ret = wp_remote_get($url, array('timeout' => 1));
+
 		if (is_wp_error($ret)) {
 			if (WP_DEBUG)
-				echo 'Curl error: ' . $ret;
+				echo 'Curl error: ' . $ret->get_error_message();
 		} else if (isset($ret['body'])) {
 			return trim($ret['body']);
 		}

@@ -5,7 +5,7 @@ Plugin URI: http://www.yellowtree.de
 Description: Retrieving Geo-Information using the Maxmind GeoIP (Lite) Database.
 Author: YellowTree (Benjamin Pick)
 Author URI: http://www.yellowtree.de
-Version: 1.6
+Version: 1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: geoip-detect
