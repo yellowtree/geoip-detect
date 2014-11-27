@@ -29,7 +29,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
+$_SERVER['HTTP_X_FORWARDED_FOR'] = '1.1.1.1';
 define('GEOIP_PLUGIN_FILE', __FILE__);
 
 require_once(dirname(__FILE__) . '/vendor/autoload.php');
@@ -102,6 +102,8 @@ function geoip_detect_plugin_page()
 	$last_update = 0;
 	$message = '';
 	
+	$option_names = array('set_css_country', 'has_reverse_proxy');
+	
 	switch(@$_POST['action'])
 	{
 		case 'update':
@@ -122,8 +124,11 @@ function geoip_detect_plugin_page()
 			break;
 
 		case 'options':
-			$opt_value = isset($_POST['options']['set_css_country']) ? (int) $_POST['options']['set_css_country'] : 0;
-			update_option('geoip-detect-set_css_country', $opt_value);
+			foreach ($option_names as $opt_name) {
+				$opt_value = isset($_POST['options'][$opt_name]) ? (int) $_POST['options'][$opt_name] : 0;
+				update_option('geoip-detect-' . $opt_name, $opt_value);
+			}
+			
 			break;
 	}
 	
@@ -140,7 +145,10 @@ function geoip_detect_plugin_page()
 	$next_cron_update = wp_next_scheduled( 'geoipdetectupdate' );
 	
 	$options = array();
-	$options['set_css_country'] = (int) get_option('geoip-detect-set_css_country');
+	
+	foreach ($option_names as $opt_name) {
+		$options[$opt_name] = (int) get_option('geoip-detect-'. $opt_name);
+	}
 
 	include_once(dirname(__FILE__) . '/views/plugin_page.php');	
 }

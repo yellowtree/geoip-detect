@@ -97,6 +97,7 @@ Fixing automatic weekly updates.
 == Changelog ==
 
 = 1.8 =
+* NEW: Support reverse proxies
 * NEW: Shortcode now has a default value when no information for this IP found.
 
 = 1.7.1 =

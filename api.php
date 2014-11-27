@@ -37,13 +37,28 @@ function geoip_detect2_get_info_from_ip($ip)
 
 /**
  * Get Geo-Information for the current IP
- * @return geoiprecord	GeoInformation. (0 / NULL: no infos found.)
+ * @return GeoIp2\Model\City	GeoInformation. (0 / NULL: no infos found.)
  */
 function geoip_detect2_get_info_from_current_ip()
 {
-	// Does this work with local file? geoip_detect2_get_info_from_ip('me');
-	// TODO: Use Proxy IP if available
-	return geoip_detect2_get_info_from_ip(@$_SERVER['REMOTE_ADDR']);
+	$ip = geoip_detect_get_client_ip();
+	
+	return geoip_detect_get_info_from_ip($ip);
+}
+
+/**
+ * Get client IP (even if it is behind a reverse proxy)
+ * @return string Client Ip
+ */
+function geoip_detect_get_client_ip() {
+	if (get_option('geoip-detect-has_reverse_proxy', 0))
+	{
+		$ip = @$_SERVER["HTTP_X_FORWARDED_FOR"];
+	} else {
+		$ip = @$_SERVER['REMOTE_ADDR'];
+	}
+	
+	return $ip;
 }
 
 /**
