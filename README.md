@@ -75,6 +75,7 @@ To see which property names are supported, refer to the [Plugin Backend](http://
 
 ## Upgrade Notice ##
 
+
 #### 2.0.0 ####
 
 This updates to the new Maxmind API (v2). 
