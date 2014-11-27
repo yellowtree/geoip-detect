@@ -2,7 +2,7 @@
 
 /**
  * Get Geo-Information for a specific IP
- * @param string 				$ip IP-Adress (currently only IPv4)
+ * @param string 				$ip IP-Adress (IPv4 or IPv6)
  * @return GeoIp2\Model\City	GeoInformation. (0 or NULL: no infos found.)
  * 
  * @see https://github.com/maxmind/GeoIP2-php				API Usage
@@ -21,7 +21,8 @@ function geoip_detect2_get_info_from_ip($ip)
 	}
 
 	$record = $reader->city($ip);
-
+	// Handle not found: http://dev.maxmind.com/geoip/geoip2/web-services/#Errors
+	
 	/**
 	 * Filter: geoip_detect_record_information
 	 * After loading the information from the GeoIP-Database, you can add or remove information from it.
@@ -36,13 +37,13 @@ function geoip_detect2_get_info_from_ip($ip)
 
 /**
  * Get Geo-Information for the current IP
- * @param string 		$ip (IPv4)
  * @return geoiprecord	GeoInformation. (0 / NULL: no infos found.)
  */
 function geoip_detect2_get_info_from_current_ip()
 {
+	// Does this work with local file? geoip_detect2_get_info_from_ip('me');
 	// TODO: Use Proxy IP if available
-	return geoip_detect_get_info_from_ip(@$_SERVER['REMOTE_ADDR']);
+	return geoip_detect2_get_info_from_ip(@$_SERVER['REMOTE_ADDR']);
 }
 
 /**

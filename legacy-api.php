@@ -29,17 +29,19 @@ function geoip_detect_get_info_from_ip($ip)
 	$ret = geoip_detect2_get_info_from_ip($ip);
 	
 	$record = new geoiprecord();
-	$record->country_code = $ret->country->isoCode;
-	$record->country_code3 = $ret->country->isoCode; /* TODO: Mapping table? */
-	$record->country_name = $ret->country->name;
-	$record->region = $ret->mostSpecificSubdivision->isoCode;
-	$record->region_name = $ret->mostSpecificSubdivision->name;
-	$record->city = $ret->city->name;
-	$record->postal_code = $ret->postal->code;
-	$record->latitude = $ret->location->latitude;
-	$record->longitude = $ret->location->longitude;
-	$record->continent_code = $ret->continent->code;
-	$record->timezone = $ret->location->timeZone;
+	// TODO: What happens if any value is not defined? Muss ich hier mit isset arbeiten?
+	$record->country_code = 	$ret->country->isoCode;
+	$record->country_code3 = 	$ret->country->isoCode; /* TODO: Mapping table? */
+	$record->country_name = 	$ret->country->name;
+	$record->region = 			$ret->mostSpecificSubdivision->isoCode;
+	$record->region_name = 		$ret->mostSpecificSubdivision->name;
+	$record->city = 			$ret->city->name;
+	$record->postal_code = 		$ret->postal->code;
+	$record->latitude = 		$ret->location->latitude;
+	$record->longitude = 		$ret->location->longitude;
+	$record->continent_code = 	$ret->continent->code;
+	$record->metro_code = 		$ret->location->metroCode;
+	$record->timezone = 		$ret->location->timeZone;
 	
 	
 	/**
