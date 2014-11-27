@@ -37,7 +37,7 @@ function geoip_detect_get_info_from_current_ip()
  * Get client IP (even if it is behind a reverse proxy)
  */
 function geoip_detect_get_client_ip() {
-	if (get_option('geoip-detect-has_reverse_proxy', 0))
+	if (get_option('geoip-detect-has_reverse_proxy', 0) && isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
 	{
 		$ip = @$_SERVER["HTTP_X_FORWARDED_FOR"];
 	} else {

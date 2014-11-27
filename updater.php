@@ -93,6 +93,7 @@ function geoip_detect_cron_add_weekly( $schedules ) {
 
 function geoip_detect_set_cron_schedule($now = false)
 {
+	// TODO GeoLite2 databases are updated on the first Tuesday of each month.
 	if ( !wp_next_scheduled( 'geoipdetectupdate' ) ) {
 		wp_schedule_event(time() + WEEK_IN_SECONDS, 'weekly', 'geoipdetectupdate');
 	}

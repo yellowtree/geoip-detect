@@ -12,7 +12,7 @@ Text Domain: geoip-detect
 Domain Path: /languages
 */
 /*
-Copyright 2013 YellowTree, Siegen, Germany
+Copyright 2013-2014 YellowTree, Siegen, Germany
 Author: Benjamin Pick (b.pick@yellowtree.de)
 
 This program is free software; you can redistribute it and/or modify
@@ -29,7 +29,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-$_SERVER['HTTP_X_FORWARDED_FOR'] = '1.1.1.1';
+
 define('GEOIP_PLUGIN_FILE', __FILE__);
 
 if (!class_exists('geoiprecord') && !class_exists('geoiprecord')) {
