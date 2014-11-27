@@ -32,7 +32,7 @@ Provides geographic information detected by an IP adress. This can be used in th
 * You show or hide content specific to a geographic target group
 * Etc. ... You tell me! I'm rather curious what you'll do with this plugin!
 
-*This product includes GeoLite data created by MaxMind, available from http://www.maxmind.com.*
+*This product includes GeoLite2 data created by MaxMind, available from http://www.maxmind.com.*
 
 == Installation ==
 
