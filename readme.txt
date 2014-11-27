@@ -81,6 +81,11 @@ Maxmind released a new API version (v2) with localized country names and a accur
 
 == Upgrade Notice == 
 
+= 2.0.0 =
+
+This updates to the new Maxmind API (v2). 
+At least PHP 5.3.1 is required now.
+
 = 1.7.1 =
 
 Cron update was broken again ...
@@ -95,6 +100,9 @@ Fixing automatic weekly updates.
 
 
 == Changelog ==
+
+= 2.0.0 =
+* NEW: Using v2 version of the API.
 
 = 1.8 =
 * NEW: Support reverse proxies
