@@ -1,12 +1,11 @@
 <?php
-use GeoIp2\Database\Reader;
 
 /**
  * Get Geo-Information for a specific IP
  * @param string 		$ip IP-Adress (currently only IPv4)
- * @return geoiprecord	GeoInformation. (0 or NULL: no infos found.)
+ * @return GeoIp2\Model\City	GeoInformation. (0 or NULL: no infos found.)
  */
-function geoip_detect_get_info_from_ip($ip)
+function geoip_detect2_get_info_from_ip($ip)
 {
 	static $reader = null;
 	if (is_null($reader)) {
@@ -388,7 +387,7 @@ object(GeoIp2\Model\City)#276 (12) {
 
  */
 
-	$record = apply_filters('geoip_detect_record_information', $record, $ip);
+	$record = apply_filters('geoip_detect2_record_information', $record, $ip);
 
 	return $record;
 }
@@ -398,7 +397,7 @@ object(GeoIp2\Model\City)#276 (12) {
  * @param string 		$ip (IPv4)
  * @return geoiprecord	GeoInformation. (0 / NULL: no infos found.)
  */
-function geoip_detect_get_info_from_current_ip()
+function geoip_detect2_get_info_from_current_ip()
 {
 	// TODO: Use Proxy IP if available
 	return geoip_detect_get_info_from_ip(@$_SERVER['REMOTE_ADDR']);
@@ -410,7 +409,7 @@ function geoip_detect_get_info_from_current_ip()
  * 
  * @return string The detected IP Adress. If none is found, '0.0.0.0' is returned instead.
  */
-function geoip_detect_get_external_ip_adress()
+function geoip_detect2_get_external_ip_adress()
 {
 	$ip_cache = get_transient('geoip_detect_external_ip');
 
