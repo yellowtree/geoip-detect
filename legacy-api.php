@@ -45,7 +45,8 @@ function geoip_detect_get_info_from_ip($ip)
 	/**
 	 * Filter: geoip_detect_record_information
 	 * After loading the information from the GeoIP-Database, you can add or remove information from it.
-	 * @param geoiprecord $record Information found.
+	 * @param geoiprecord 	$record	Information found.
+	 * @param string		$ip		IP that was looked up
 	 * @return geoiprecord
 	 * @deprecated since v2.0
 	 */
