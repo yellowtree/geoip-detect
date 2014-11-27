@@ -30,7 +30,7 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 	<h3>GeoIP Lookup</h3>
 	<form method="post" action="#">
 		<input type="hidden" name="action" value="lookup" />
-		<input type="text" name="ip" value="<?php echo isset($_REQUEST['ip']) ? esc_attr($_REQUEST['ip']) : esc_attr($_SERVER['REMOTE_ADDR']); ?>" />
+		<input type="text" name="ip" value="<?php echo isset($_REQUEST['ip']) ? esc_attr($_REQUEST['ip']) : esc_attr(geoip_detect_get_client_ip()); ?>" />
 		<input type="submit" class="button button-secondary" value="<?php _e('Lookup', 'geoip-detect'); ?>" />
 	</form>
 	<?php if ($ip_lookup_result !== false) :
@@ -70,6 +70,11 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 		<p>
 			<input type="checkbox" name="options[set_css_country]" value="1" <?php if ($options['set_css_country']) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Add a country-specific CSS class to the &lt;body&gt;-Tag.', 'geoip-detect'); ?><br />
 		</p>
+		<?php if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) : ?>
+		<p>
+			<input type="checkbox" name="options[has_reverse_proxy]" value="1" <?php if ($options['has_reverse_proxy']) { echo 'checked="checked"'; } ?>>&nbsp;<?php printf(__('The server is behind a reverse proxy (With Proxy: %s - Without Proxy: %s)', 'geoip-detect'), $_SERVER['HTTP_X_FORWARDED_FOR'], $_SERVER['REMOTE_ADDR']); ?><br />
+		</p>
+		<?php endif; ?>
 		<p>
 			<input type="submit" class="button button-primary" value="<?php _e('Save', 'geoip-detect'); ?>" />
 		</p>

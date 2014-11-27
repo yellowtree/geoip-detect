@@ -27,8 +27,24 @@ function geoip_detect_get_info_from_ip($ip)
  */
 function geoip_detect_get_info_from_current_ip()
 {
+	$ip = geoip_detect_get_client_ip();
+	
 	// TODO: Use Proxy IP if available
-	return geoip_detect_get_info_from_ip(@$_SERVER['REMOTE_ADDR']);
+	return geoip_detect_get_info_from_ip($ip);
+}
+
+/**
+ * Get client IP (even if it is behind a reverse proxy)
+ */
+function geoip_detect_get_client_ip() {
+	if (get_option('geoip-detect-has_reverse_proxy', 0))
+	{
+		$ip = @$_SERVER["HTTP_X_FORWARDED_FOR"];
+	} else {
+		$ip = @$_SERVER['REMOTE_ADDR'];
+	}
+	
+	return $ip;
 }
 
 /**
