@@ -67,11 +67,6 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertGreaterThan(1, strlen($record->region_name), 'Region Name: "' . $record->region_name);
 	}
 	
-	function testExternalIp() {
-		$ip = _geoip_detect_get_external_ip_adress_without_cache();
-		$this->assertNotEquals('0.0.0.0', $ip);
-	}
-	
 	function testShortcode() {
 		add_filter('geoip_detect_get_external_ip_adress', 'geoip_detect_get_external_ip_adress_test_set_test_ip', 101);
 		$this->assertEquals(GEOIP_DETECT_TEST_IP, geoip_detect_get_external_ip_adress());

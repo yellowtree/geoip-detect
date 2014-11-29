@@ -9,6 +9,9 @@ class UpdateTest extends WP_UnitTestCase_GeoIP_Detect {
 			@unlink($filename);
 	}
 	
+	/**
+	 * @group ajax
+	 */
 	function testUpdate() {
 		$this->assertTrue( geoip_detect_update() );
 

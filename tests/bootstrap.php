@@ -11,8 +11,12 @@ tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
 require getenv( 'WP_TESTS_DIR' ) . '/includes/bootstrap.php';
 
+ini_set('error_reporting', ini_get('error_reporting') | E_USER_NOTICE);
+
+
 define('GEOIP_DETECT_TEST_DB_FILENAME', dirname(__FILE__) . '/' . GEOIP_DETECT_DATA_FILENAME);
 define('GEOIP_DETECT_TEST_IP', '47.64.121.17');
+define('GEOIP_DETECT_TEST_IP_SERIVCE_PROVIDER', 'https://raw.githubusercontent.com/yellowtree/wp-geoip-detect/master/tests/html/ipv4.txt');
 
 class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 {
