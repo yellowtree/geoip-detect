@@ -45,7 +45,7 @@ class ExternalIpTest extends WP_UnitTestCase_GeoIP_Detect {
 	 * @group external-http
 	 */
 	function testExternalIpProviders() {
-		$this->skip('This test should not be executed by Travis.');
+		$this->markTestSkipped('This test should not be executed by Travis.');
 		
 		add_filter('geiop_detect_ipservices', array($this, 'externalIpProvidersFilter'), 101);
 		

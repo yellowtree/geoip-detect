@@ -13,7 +13,7 @@ class UpdateTest extends WP_UnitTestCase_GeoIP_Detect {
 	 * @group external-http
 	 */
 	function testUpdate() {
-		$this->skip('This test should not be executed by Travis.');
+		$this->markTestSkipped('This test should not be executed by Travis.');
 		
 		$this->assertTrue( geoip_detect_update() );
 
