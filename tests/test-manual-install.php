@@ -30,8 +30,6 @@ class ManualInstallTest extends WP_UnitTestCase_GeoIP_Detect {
 		}
 		if (!$thrown)
 			$this->fail('geoip_detect_get_info_from_ip(): No database missing exception was thrown.');
-		
-		$this->assertEquals(0, $record);
 	}
 
 	function testManualInstall() {
