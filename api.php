@@ -3,12 +3,14 @@
 /**
  * Get Geo-Information for a specific IP
  * @param string 				$ip IP-Adress (IPv4 or IPv6)
+ * @param array(string)			List of locale codes to use in name property
+ * 								from most preferred to least preferred.
  * @return GeoIp2\Model\City	GeoInformation. (0 or NULL: no infos found.)
  * 
  * @see https://github.com/maxmind/GeoIP2-php				API Usage
  * @see http://dev.maxmind.com/geoip/geoip2/web-services/	API Documentation
  */
-function geoip_detect2_get_info_from_ip($ip)
+function geoip_detect2_get_info_from_ip($ip, $locales = array('en'))
 {
 	static $reader = null;
 	if (is_null($reader)) {
@@ -16,18 +18,33 @@ function geoip_detect2_get_info_from_ip($ip)
 		if (!$data_file)
 			return 0;
 		
-		$reader = new GeoIp2\Database\Reader($data_file);
+		$reader = new GeoIp2\Database\Reader($data_file, $locales);
 		$reader = apply_filters('geoip_detect_reader', $reader);
 	}
 
-	$record = $reader->city($ip);
-	// Handle not found: http://dev.maxmind.com/geoip/geoip2/web-services/#Errors
+	try {
+		if ($ip == 'me')
+			throw new GeoIp2\Exception\AddressNotFoundException();
+
+		$record = $reader->city($ip);
+	} catch(GeoIp2\Exception\AddressNotFoundException $e) {
+		// Try again with external adress
+		$ip = geoip_detect2_get_external_ip_adress();
+		
+		try {
+			$record = $reader->city($ip);
+		} catch(GeoIp2\Exception\GeoIp2Exception $e) {
+			
+		}
+	} catch(GeoIp2\Exception\GeoIp2Exception $e) {
+		
+	}
 	
 	/**
 	 * Filter: geoip_detect_record_information
 	 * After loading the information from the GeoIP-Database, you can add or remove information from it.
 	 * @param GeoIp2\Model\City $record Information found.
-	 * @param string			 $ip	 IP that was looked up
+	 * @param string			 $ip	 IP that was looked up. If original IP did not retrieve anything (probably intranet) then this is the internet IP of the server.
 	 * @return GeoIp2\Model\City
 	 */
 	$record = apply_filters('geoip_detect2_record_information', $record, $ip);
@@ -37,13 +54,13 @@ function geoip_detect2_get_info_from_ip($ip)
 
 /**
  * Get Geo-Information for the current IP
+ * @param array(string)			List of locale codes to use in name property
+ * 								from most preferred to least preferred.
  * @return GeoIp2\Model\City	GeoInformation. (0 / NULL: no infos found.)
  */
-function geoip_detect2_get_info_from_current_ip()
+function geoip_detect2_get_info_from_current_ip($locales = array('en'))
 {
-	$ip = geoip_detect_get_client_ip();
-	
-	return geoip_detect_get_info_from_ip($ip);
+	return geoip_detect2_get_info_from_ip('me', $locales);
 }
 
 /**

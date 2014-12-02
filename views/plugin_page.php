@@ -13,7 +13,7 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 	<p>
 		<?php printf(__('Last updated: %s', 'geoip-detect'), $last_update ? date_i18n($date_format, $last_update) : __('Never', 'geoip-detect')); ?>
 	</p>
-
+<?php var_dump(geoip_detect_get_info_from_current_ip()); ?>
 	<?php if (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED')) : ?>
 	<p>
 		<?php printf(__('Next update: %s', 'geoip-detect'), $next_cron_update ? date_i18n($date_format, $next_cron_update) : __('Never', 'geoip-detect')); ?><br />
