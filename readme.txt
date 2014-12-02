@@ -2,7 +2,7 @@
 Contributors: benjaminpick
 Tags: geoip, ip, locator, latitude, longitude
 Requires at least: 3.5
-Tested up to: 4.0
+Tested up to: 4.0.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -86,7 +86,7 @@ Fixing automatic weekly updates.
 == Changelog ==
 
 = 1.8 =
-* NEW: Support reverse proxies
+* NEW: Support reverse proxies (you have to enable it in the plugin options.)
 * NEW: Shortcode now has a default value when no information for this IP found.
 
 = 1.7.1 =
