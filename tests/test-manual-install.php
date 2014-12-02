@@ -10,10 +10,26 @@ class ManualInstallTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	function testNoDatabaseFound() {
-		$this->assertSame('', geoip_detect_get_abs_db_filename() );
+		if (file_exists(TEST_GEOIP_PLUGIN_DATA_FILENAME))
+			$this->skip('Test could not be executed: ' . TEST_GEOIP_PLUGIN_DATA_FILENAME . ' could not be deleted.');
+		
+		$thrown = false;
+		try {
+			$this->assertSame('', geoip_detect_get_abs_db_filename() );
+		} catch(Exception $e) {
+			$thrown = true;
+		}
+		if (!$thrown)
+			$this->fail('geoip_detect_get_abs_db_filename(): No database missing exception was thrown.');
 
-		$record = geoip_detect_get_info_from_ip(GEOIP_DETECT_TEST_IP);
-		$this->assertSame(0, $record);
+		$thrown = false;
+		try {
+			$record = geoip_detect_get_info_from_ip(GEOIP_DETECT_TEST_IP);
+		} catch(Exception $e) {
+			$thrown = true;
+		}
+		if (!$thrown)
+			$this->fail('geoip_detect_get_info_from_ip(): No database missing exception was thrown.');
 	}
 
 	function testManualInstall() {

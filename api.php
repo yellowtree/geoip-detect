@@ -51,7 +51,7 @@ function geoip_detect2_get_info_from_current_ip()
  * @return string Client Ip
  */
 function geoip_detect_get_client_ip() {
-	if (get_option('geoip-detect-has_reverse_proxy', 0))
+	if (get_option('geoip-detect-has_reverse_proxy', 0) && isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
 	{
 		$ip = @$_SERVER["HTTP_X_FORWARDED_FOR"];
 	} else {
@@ -85,16 +85,16 @@ function _geoip_detect_get_external_ip_adress_without_cache()
 {
 	$ipservices = array(
 		'http://ipv4.icanhazip.com',
-		'http://ifconfig.me/ip',
+//		'http://ifconfig.me/ip', // seems to be slow
 		'http://ipecho.net/plain',
 		'http://v4.ident.me',
 		'http://bot.whatismyipaddress.com',
-		'http://ipv4.ipogre.com',
 		'http://ip.appspot.com',
 	);
 	
 	// Randomizing to avoid querying the same service each time
 	shuffle($ipservices);
+	$ipservices = apply_filters('geiop_detect_ipservices', $ipservices);
 	$ipservices = array_slice($ipservices, 0, 3);
 	
 	foreach ($ipservices as $url)
@@ -102,10 +102,17 @@ function _geoip_detect_get_external_ip_adress_without_cache()
 		$ret = wp_remote_get($url, array('timeout' => 1));
 
 		if (is_wp_error($ret)) {
-			if (WP_DEBUG)
-				echo 'Curl error: ' . $ret->get_error_message();
+			if (WP_DEBUG || defined('WP_TESTS_TITLE')) {
+				trigger_error('_geoip_detect_get_external_ip_adress_without_cache(): Curl error (' . $url . '): ' . $ret->get_error_message(), E_USER_NOTICE);
+			}
+		} else if (isset($ret['response']['code']) && $ret['response']['code'] != 200) {
+			if (WP_DEBUG || defined('WP_TESTS_TITLE')) {
+				trigger_error('_geoip_detect_get_external_ip_adress_without_cache(): HTTP error (' . $url . '): Returned code ' . $ret['response']['code'], E_USER_NOTICE);
+			}			
 		} else if (isset($ret['body'])) {
-			return trim($ret['body']);
+			$ip = trim($ret['body']);
+			if (preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/', $ip))
+				return $ip;
 		}
 	}
 	return '0.0.0.0';
