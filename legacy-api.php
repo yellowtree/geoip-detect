@@ -27,7 +27,7 @@ if (!class_exists('geoiprecord')) {
 function geoip_detect_get_info_from_ip($ip)
 {
 	$ret = geoip_detect2_get_info_from_ip($ip);
-	
+var_dump($ret);	
 	$record = new geoiprecord();
 	// TODO: What happens if any value is not defined? Muss ich hier mit isset arbeiten?
 	$record->country_code = 	$ret->country->isoCode;
@@ -53,6 +53,8 @@ function geoip_detect_get_info_from_ip($ip)
 	 * @deprecated since v2.0
 	 */
 	$record = apply_filters('geoip_detect_record_information', $record, $ip);
+	
+	return $record;
 }
 
 /**

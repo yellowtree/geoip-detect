@@ -19,7 +19,15 @@ function geoip_detect2_get_info_from_ip($ip, $locales = array('en'))
 			return 0;
 		
 		$reader = new GeoIp2\Database\Reader($data_file, $locales);
-		$reader = apply_filters('geoip_detect_reader', $reader);
+		
+		/**
+		 * Filter: geoip_detect2_reader
+		 * You can customize your reader here.
+		 * This filter will only be called once per request.
+		 * 
+		 * @param GeoIp2\Database\ProviderInterface  Reader (by default: GeoLite City)
+		 */
+		$reader = apply_filters('geoip_detect2_reader', $reader);
 	}
 
 	try {
@@ -34,12 +42,14 @@ function geoip_detect2_get_info_from_ip($ip, $locales = array('en'))
 		try {
 			$record = $reader->city($ip);
 		} catch(GeoIp2\Exception\GeoIp2Exception $e) {
-			
+			if (WP_DEBUG)
+				throw $e;
 		}
 	} catch(GeoIp2\Exception\GeoIp2Exception $e) {
-		
+		if (WP_DEBUG)
+				throw $e;
 	}
-	
+
 	/**
 	 * Filter: geoip_detect_record_information
 	 * After loading the information from the GeoIP-Database, you can add or remove information from it.
