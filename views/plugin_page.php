@@ -55,7 +55,7 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 		}
 	?>
 	</table>
-		<?php elseif ($ip_lookup_result == 0) : ?>
+		<?php elseif ($ip_lookup_result === 0 || is_null($ip_lookup_result)) : ?>
 			<p>
 				<?php _e('No information found about this IP.', 'geoip-detect')?>
 			</p>

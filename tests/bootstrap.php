@@ -18,7 +18,7 @@ ini_set('error_reporting', ini_get('error_reporting') | E_USER_NOTICE);
 
 
 define('GEOIP_DETECT_TEST_DB_FILENAME', dirname(__FILE__) . '/' . GEOIP_DETECT_DATA_FILENAME);
-define('GEOIP_DETECT_TEST_IP', '47.64.121.17');
+define('GEOIP_DETECT_TEST_IP', '88.64.140.3');
 define('GEOIP_DETECT_TEST_IP_SERIVCE_PROVIDER', 'https://raw.githubusercontent.com/yellowtree/wp-geoip-detect/master/tests/html/ipv4.txt');
 
 class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase

@@ -27,12 +27,12 @@ if (!class_exists('geoiprecord')) {
 function geoip_detect_get_info_from_ip($ip)
 {
 	$ret = geoip_detect2_get_info_from_ip($ip);
-//var_dump($ret);	
+//var_dump($ret);
 	$record = new geoiprecord();
 	
-	$mapping = _geoip_detect_get_country_code_mapping();
-	
 	if (is_object($ret)) {
+		$mapping = _geoip_detect_get_country_code_mapping();
+	
 		$record->country_code = 	$ret->country->isoCode;
 		$record->country_code3 = 	$mapping[$record->country_code];
 		$record->country_name = 	$ret->country->name;
@@ -46,6 +46,7 @@ function geoip_detect_get_info_from_ip($ip)
 		$record->metro_code = 		$ret->location->metroCode;
 		$record->timezone = 		$ret->location->timeZone;
 	}
+	
 	/**
 	 * Filter: geoip_detect_record_information
 	 * After loading the information from the GeoIP-Database, you can add or remove information from it.
@@ -66,7 +67,7 @@ function geoip_detect_get_info_from_ip($ip)
  */
 function _try_to_fix_timezone($record) {
 	if (!empty($record->timezone))
-		return;
+		return $record;
 	
 	if (!function_exists('_geoip_detect_get_time_zone')) {
 		require_once(__DIR__ . '/vendor/timezone.php');
