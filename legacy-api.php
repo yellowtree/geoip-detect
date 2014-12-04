@@ -45,8 +45,7 @@ var_dump($ret);
 	$record->continent_code = 	$ret->continent->code;
 	$record->metro_code = 		$ret->location->metroCode;
 	$record->timezone = 		$ret->location->timeZone;
-	
-	
+		
 	/**
 	 * Filter: geoip_detect_record_information
 	 * After loading the information from the GeoIP-Database, you can add or remove information from it.
@@ -59,6 +58,24 @@ var_dump($ret);
 	
 	return $record;
 }
+
+/**
+ * GeoIPv2 doesn't always include a timezone when v1 did.
+ * @todo is it possible to do this in v2 as well?
+ * @param geoiprecord $record
+ */
+function _try_to_fix_timezone($record) {
+	if ($record->timezone)
+		return;
+	
+	if (!function_exists('_geoip_detect_get_time_zone')) {
+		require_once(__DIR__ . '/vendor/timezone.php');
+	}
+	
+	$record->timezone = _geoip_detect_get_time_zone($record->country_code, $record->region);
+	return $record;
+}
+add_filter('geoip_detect_record_information', '_try_to_fix_timezone');
 
 /**
  * Get Geo-Information for the current IP
