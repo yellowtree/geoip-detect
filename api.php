@@ -28,6 +28,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = array('en'))
 	 */
 	$reader = apply_filters('geoip_detect2_reader', $reader, $locales);
 
+	$record = null;
 	try {
 		if ($ip == 'me')
 			throw new GeoIp2\Exception\AddressNotFoundException();
@@ -45,7 +46,10 @@ function geoip_detect2_get_info_from_ip($ip, $locales = array('en'))
 		}
 	} catch(GeoIp2\Exception\GeoIp2Exception $e) {
 		if (WP_DEBUG)
-				throw $e;
+				echo $e->getMessage();
+	} catch(Exception $e) {
+		if (WP_DEBUG)
+				echo $e->getMessage();		
 	}
 
 	$reader->close();

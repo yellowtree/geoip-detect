@@ -20,6 +20,9 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	function testLookup() {
 		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
+		
+		$record = geoip_detect2_get_info_from_current_ip();
+		$this->assertValidGeoIP2Record($record, 'me');
 	}
 	
 	function testLocale() {

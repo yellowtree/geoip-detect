@@ -32,20 +32,20 @@ function geoip_detect_get_info_from_ip($ip)
 	
 	$mapping = _geoip_detect_get_country_code_mapping();
 	
-	// TODO: What happens if any value is not defined? Muss ich hier mit isset arbeiten?
-	$record->country_code = 	$ret->country->isoCode;
-	$record->country_code3 = 	$mapping[$record->country_code];
-	$record->country_name = 	$ret->country->name;
-	$record->region = 			$ret->mostSpecificSubdivision->isoCode;
-	$record->region_name = 		$ret->mostSpecificSubdivision->name;
-	$record->city = 			$ret->city->name;
-	$record->postal_code = 		$ret->postal->code;
-	$record->latitude = 		$ret->location->latitude;
-	$record->longitude = 		$ret->location->longitude;
-	$record->continent_code = 	$ret->continent->code;
-	$record->metro_code = 		$ret->location->metroCode;
-	$record->timezone = 		$ret->location->timeZone;
-		
+	if (is_object($ret)) {
+		$record->country_code = 	$ret->country->isoCode;
+		$record->country_code3 = 	$mapping[$record->country_code];
+		$record->country_name = 	$ret->country->name;
+		$record->region = 			$ret->mostSpecificSubdivision->isoCode;
+		$record->region_name = 		$ret->mostSpecificSubdivision->name;
+		$record->city = 			$ret->city->name;
+		$record->postal_code = 		$ret->postal->code;
+		$record->latitude = 		$ret->location->latitude;
+		$record->longitude = 		$ret->location->longitude;
+		$record->continent_code = 	$ret->continent->code;
+		$record->metro_code = 		$ret->location->metroCode;
+		$record->timezone = 		$ret->location->timeZone;
+	}
 	/**
 	 * Filter: geoip_detect_record_information
 	 * After loading the information from the GeoIP-Database, you can add or remove information from it.
@@ -65,14 +65,18 @@ function geoip_detect_get_info_from_ip($ip)
  * @param geoiprecord $record
  */
 function _try_to_fix_timezone($record) {
-	if ($record->timezone)
+	if (!empty($record->timezone))
 		return;
 	
 	if (!function_exists('_geoip_detect_get_time_zone')) {
 		require_once(__DIR__ . '/vendor/timezone.php');
 	}
 	
-	$record->timezone = _geoip_detect_get_time_zone($record->country_code, $record->region);
+	if (!empty($record->country_code))
+		$record->timezone = _geoip_detect_get_time_zone($record->country_code, $record->region);
+	else
+		$record->timezone = null;
+
 	return $record;
 }
 add_filter('geoip_detect_record_information', '_try_to_fix_timezone');
