@@ -5,7 +5,7 @@
  * @param string 				$ip IP-Adress (IPv4 or IPv6)
  * @param array(string)			List of locale codes to use in name property
  * 								from most preferred to least preferred.
- * @return GeoIp2\Model\City	GeoInformation. (0 or NULL: no infos found.)
+ * @return GeoIp2\Model\City	GeoInformation. (NULL: no infos found.)
  * 
  * @see https://github.com/maxmind/GeoIP2-php				API Usage
  * @see http://dev.maxmind.com/geoip/geoip2/web-services/	API Documentation
@@ -42,7 +42,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = array('en'))
 			$record = $reader->city($ip);
 		} catch(GeoIp2\Exception\GeoIp2Exception $e) {
 			if (WP_DEBUG)
-				throw $e;
+				echo $e->getMessage();
 		}
 	} catch(GeoIp2\Exception\GeoIp2Exception $e) {
 		if (WP_DEBUG)
@@ -57,7 +57,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = array('en'))
 	/**
 	 * Filter: geoip_detect_record_information
 	 * After loading the information from the GeoIP-Database, you can add or remove information from it.
-	 * @param GeoIp2\Model\City $record Information found.
+	 * @param GeoIp2\Model\City $record Information found (or NULL if not found)
 	 * @param string			 $ip	 IP that was looked up. If original IP did not retrieve anything (probably intranet) then this is the internet IP of the server.
 	 * @return GeoIp2\Model\City
 	 */

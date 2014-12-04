@@ -9,7 +9,6 @@ function geoip_detect_get_external_ip_adress_test_set_test_ip()
 {
 	return GEOIP_DETECT_TEST_IP;
 }
-// TODO : Write test for new locale functionality
 
 class LegacyApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	

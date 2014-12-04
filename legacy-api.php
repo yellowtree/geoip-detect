@@ -27,12 +27,14 @@ if (!class_exists('geoiprecord')) {
 function geoip_detect_get_info_from_ip($ip)
 {
 	$ret = geoip_detect2_get_info_from_ip($ip);
-//var_dump($ret);
-	$record = new geoiprecord();
+
+	$record = null;
 	
 	if (is_object($ret)) {
 		$mapping = _geoip_detect_get_country_code_mapping();
 	
+		$record = new geoiprecord();
+
 		$record->country_code = 	$ret->country->isoCode;
 		$record->country_code3 = 	$mapping[$record->country_code];
 		$record->country_name = 	$ret->country->name;
