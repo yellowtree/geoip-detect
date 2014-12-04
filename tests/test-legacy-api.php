@@ -11,7 +11,7 @@ function geoip_detect_get_external_ip_adress_test_set_test_ip()
 }
 // TODO : Write test for new locale functionality
 
-class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
+class LegacyApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	function setUp()
 	{

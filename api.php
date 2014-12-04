@@ -12,23 +12,21 @@
  */
 function geoip_detect2_get_info_from_ip($ip, $locales = array('en'))
 {
-	static $reader = null;
-	if (is_null($reader)) {
-		$data_file = geoip_detect_get_abs_db_filename();
-		if (!$data_file)
-			return 0;
-		
-		$reader = new GeoIp2\Database\Reader($data_file, $locales);
-		
-		/**
-		 * Filter: geoip_detect2_reader
-		 * You can customize your reader here.
-		 * This filter will only be called once per request.
-		 * 
-		 * @param GeoIp2\Database\ProviderInterface  Reader (by default: GeoLite City)
-		 */
-		$reader = apply_filters('geoip_detect2_reader', $reader);
-	}
+	$data_file = geoip_detect_get_abs_db_filename();
+	if (!$data_file)
+		return 0;
+	
+	$reader = new GeoIp2\Database\Reader($data_file, $locales);
+	
+	/**
+	 * Filter: geoip_detect2_reader
+	 * You can customize your reader here.
+	 * This filter will be called for every IP request.
+	 * 
+	 * @param GeoIp2\Database\ProviderInterface  Reader (by default: GeoLite City)
+	 * @param array(string)							Locale precedence
+	 */
+	$reader = apply_filters('geoip_detect2_reader', $reader, $locales);
 
 	try {
 		if ($ip == 'me')
@@ -50,6 +48,8 @@ function geoip_detect2_get_info_from_ip($ip, $locales = array('en'))
 				throw $e;
 	}
 
+	$reader->close();
+	
 	/**
 	 * Filter: geoip_detect_record_information
 	 * After loading the information from the GeoIP-Database, you can add or remove information from it.
