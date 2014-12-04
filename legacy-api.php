@@ -27,7 +27,7 @@ if (!class_exists('geoiprecord')) {
 function geoip_detect_get_info_from_ip($ip)
 {
 	$ret = geoip_detect2_get_info_from_ip($ip);
-var_dump($ret);	
+//var_dump($ret);	
 	$record = new geoiprecord();
 	
 	$mapping = _geoip_detect_get_country_code_mapping();

@@ -44,19 +44,19 @@ You can try it out on the plugin page.
 = How exact is this data? =
 
 Think of it as an "educated guess": IP adresses and their allocation change on a frequent basis.
-If you need [more exact data](http://www.maxmind.com/en/geolite_city_accuracy "GeoLiteCity Accuracy"), consider purchasing the commercial version of the data.
+If you need more exact data, consider purchasing the [commercial version of the data](https://www.maxmind.com/en/geoip2-city).
 
 = Technically speaking, how could I verify if my visitor comes from Germany? =
 
 Put this code somewhere in your template files:
 
-    $userInfo = geoip_detect_get_info_from_current_ip();
-    if ($userInfo && $userInfo->country_code == 'DE')
+    $userInfo = geoip_detect2_get_info_from_current_ip();
+    if ($userInfo && $userInfo->country->isoCode == 'de')
         echo 'Hallo! Schön dass Sie hier sind!';
 
 Or, add the plugin shortcode somewhere in the page or post content:
 
-    Heyo, over there in [geoip_detect property="country_name" lang="de"] !
+    Wie ist das Wetter in [geoip_detect property="country_name" lang="de"] ?
    
 To see which property names are supported, refer to the [Plugin Backend](http://wordpress.org/plugins/geoip-detect/screenshots/).
 
