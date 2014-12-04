@@ -16,9 +16,9 @@ Provides geographic information detected by an IP adress. This can be used in th
 = Features: =
 
 * Provides 3 functions: 
-  * `geoip_detect_get_info_from_ip($ip)`: Lookup Geo-Information of the specified IP 
-  * `geoip_detect_get_info_from_current_ip()`: Lookup Geo-Information of the current website user
-  * `geoip_detect_get_external_ip_adress()`: Fetch the internet adress of the webserver
+  * `geoip_detect2_get_info_from_ip($ip, $locales = array('en'))`: Lookup Geo-Information of the specified IP 
+  * `geoip_detect2_get_info_from_current_ip($locales = array('en'))`: Lookup Geo-Information of the current website user
+  * `geoip_detect2_get_external_ip_adress()`: Fetch the internet adress of the webserver
 * Auto-Update the GeoIP database once a week
 * For the property names, see the results of a specific IP in the wordpress backend (under Tools > GeoIP Detection).
 * You can include these properties into your posts and pages by using the shortcode `[geoip_detect property="country_name" default="(country could not be detected)" lang="en"]` (where 'country_name' can be one of the other property names as well, and 'default' can be used (optionally) to show a different text when no information was found for this IP).
@@ -56,7 +56,7 @@ Put this code somewhere in your template files:
 
 Or, add the plugin shortcode somewhere in the page or post content:
 
-    Heyo, over there in [geoip_detect property="country_name"] !
+    Heyo, over there in [geoip_detect property="country_name" lang="de"] !
    
 To see which property names are supported, refer to the [Plugin Backend](http://wordpress.org/plugins/geoip-detect/screenshots/).
 
@@ -72,7 +72,7 @@ Maxmind released a new API version (v2) with localized country names and a accur
 
 = 2.0.0 =
 
-This updates to the new Maxmind API (v2). 
+This major update uses the new Maxmind API (v2). 
 At least PHP 5.3.1 is required now.
 
 = 1.7.1 =
@@ -92,6 +92,11 @@ Fixing automatic weekly updates.
 
 = 2.0.0 =
 * NEW: Using v2 version of the API.
+See Migration Guide at https://github.com/yellowtree/wp-geoip-detect/wiki/How-to-migrate-from-v1-to-v2
+
+Other changes:
+* NEW: The v2-functions now support names in other locales.
+* NEW: The shortcode also supports a "lang"-Attribute.
 
 = 1.8 =
 * NEW: Support reverse proxies
