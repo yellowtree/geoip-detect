@@ -119,7 +119,7 @@ function geoip_detect_plugin_page()
 			if (isset($_POST['ip']))
 			{
 				$ip = $_POST['ip'];
-				$ip_lookup_result = geoip_detect_get_info_from_ip($ip);
+				$ip_lookup_result = geoip_detect2_get_info_from_ip($ip);
 			}
 			break;
 

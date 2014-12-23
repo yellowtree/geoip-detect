@@ -22,8 +22,18 @@ function geoip_detect2_add_default_locales($locales) {
 		$locales = array();
 		
 		$site_locale = get_locale();
-		if ($site_locale)
-			$locales[] = substr($site_locale, 0, 2);
+		if ($site_locale) {
+			$translate = array(
+				'pt_BR' => 'pt-BR',
+				'zh_CN' => 'zh-CN',
+			);
+			if (isset($translate[$site_locale]))
+				$site_locale = $translate[$site_locale];
+			else
+				$site_locale = substr($site_locale, 0, 2);
+			
+			$locales[] = $site_locale;
+		}
 		$locales[] = 'en';
 	}
 	return $locales;
