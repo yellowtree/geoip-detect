@@ -14,3 +14,17 @@ function geoip_add_body_classes($classes) {
 
 	return $classes;
 }
+
+add_filter('geoip_detect2_locales', 'geoip_detect2_add_default_locales');
+
+function geoip_detect2_add_default_locales($locales) {
+	if (is_null($locales)) {
+		$locales = array();
+		
+		$site_locale = get_locale();
+		if ($site_locale)
+			$locales[] = substr($site_locale, 0, 2);
+		$locales[] = 'en';
+	}
+	return $locales;
+}

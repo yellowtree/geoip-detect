@@ -67,6 +67,12 @@ function geoip_detect2_get_reader($locales = null) {
 	if (!$data_file)
 		return null;
 	
+	/**
+	 * Filter: geoip_detect2_locales
+	 * @param array(string) $locales Current locales.
+	 */
+	$locales = apply_filters('geoip_detect2_locales', $locales);
+		
 	$reader = new GeoIp2\Database\Reader($data_file, $locales);
 	
 	/**
@@ -112,7 +118,7 @@ function geoip_detect_get_client_ip() {
  * Sometimes we can only see an local IP adress (local development environment.)
  * In this case we need to ask an internet server which IP adress our internet connection has.
  * 
- * @return string The detected IP Adress. If none is found, '0.0.0.0' is returned instead.
+ * @return string The detected IPv4 Adress. If none is found, '0.0.0.0' is returned instead.
  */
 function geoip_detect2_get_external_ip_adress()
 {
@@ -146,7 +152,7 @@ function _geoip_detect_get_external_ip_adress_without_cache()
 	
 	foreach ($ipservices as $url)
 	{
-		$ret = wp_remote_get($url, array('timeout' => 1));
+		$ret = wp_remote_get($url, array('timeout' => defined('WP_TESTS_TITLE') ? 3 : 1));
 
 		if (is_wp_error($ret)) {
 			if (WP_DEBUG || defined('WP_TESTS_TITLE')) {
