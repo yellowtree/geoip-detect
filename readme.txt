@@ -74,6 +74,7 @@ Maxmind released a new API version (v2) with localized country names and a accur
 
 This major update uses the new Maxmind API (v2). 
 At least PHP 5.3.1 is required now.
+See Migration Guide at https://github.com/yellowtree/wp-geoip-detect/wiki/How-to-migrate-from-v1-to-v2
 
 = 1.7.1 =
 
@@ -96,6 +97,7 @@ See Migration Guide at https://github.com/yellowtree/wp-geoip-detect/wiki/How-to
 
 Other changes:
 * NEW: The v2-functions now support names in other locales.
+* NEW: By default, they return the current site language if possible.
 * NEW: The shortcode also supports a "lang"-Attribute.
 
 = 1.8 =
