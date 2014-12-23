@@ -10,7 +10,7 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 		</p>
 	<?php endif; ?>
 	
-	<p title="<?php echo esc_attr(geoip_detect_get_abs_db_filename()); ?>">
+	<p>
 		<?php printf(__('Last updated: %s', 'geoip-detect'), $last_update ? date_i18n($date_format, $last_update) : __('Never', 'geoip-detect')); ?>
 	</p>
 
