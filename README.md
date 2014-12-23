@@ -15,12 +15,12 @@ Provides geographic information detected by an IP adress. This can be used in th
 #### Features: ####
 
 * Provides 3 functions: 
-  * `geoip_detect_get_info_from_ip($ip)`: Lookup Geo-Information of the specified IP 
-  * `geoip_detect_get_info_from_current_ip()`: Lookup Geo-Information of the current website user
-  * `geoip_detect_get_external_ip_adress()`: Fetch the internet adress of the webserver
+  * `geoip_detect2_get_info_from_ip($ip, $locales #### array('en'))`: Lookup Geo-Information of the specified IP 
+  * `geoip_detect2_get_info_from_current_ip($locales #### array('en'))`: Lookup Geo-Information of the current website user
+  * `geoip_detect2_get_external_ip_adress()`: Fetch the internet adress of the webserver
 * Auto-Update the GeoIP database once a week
 * For the property names, see the results of a specific IP in the wordpress backend (under Tools > GeoIP Detection).
-* You can include these properties into your posts and pages by using the shortcode `[geoip_detect property####"country_name"]` (where 'country_name' can be one of the other property names as well).
+* You can include these properties into your posts and pages by using the shortcode `[geoip_detect property####"country_name" default####"(country could not be detected)" lang####"en"]` (where 'country_name' can be one of the other property names as well, and 'default' can be used (optionally) to show a different text when no information was found for this IP).
 * When enabled on the plugin page, it adds CSS classes to the body tag such as `geoip-country-DE` and `geoip-continent-EU`.
 
 #### How can I use these functions? ####
@@ -28,63 +28,53 @@ Provides geographic information detected by an IP adress. This can be used in th
 * You could choose the currency of the store based on the country name
 * You could suggest an timezone to use when displaying dates
 * You could show the store nearest to your customer
+* You show or hide content specific to a geographic target group
 * Etc. ... You tell me! I'm rather curious what you'll do with this plugin!
 
-*This product includes GeoLite data created by MaxMind, available from http://www.maxmind.com.*
+*This product includes GeoLite2 data created by MaxMind, available from http://www.maxmind.com.*
 
 ## Installation ##
 
-This plugin does not contain the database itself, so it has to be loaded before first use.
-2 alternative ways of doing this:
-
-#### Automatic Installation ####
-
-Go to Tools > GeoIP Detect and click on the button `"Update now"`.
-The database is written into the `/uploads`-Folder.
-
-#### Manual Installation ####
-
-1. Download the database at http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
-2. extract it and 
-3. put it into the plugin directory.
+This plugin does not contain the database itself. It is downloaded as soon as you activate it the first time (takes some seconds).
+You can try it out on the plugin page.
 
 ## Frequently Asked Questions ##
 
 #### How exact is this data? ####
 
 Think of it as an "educated guess": IP adresses and their allocation change on a frequent basis.
-If you need [more exact data](http://www.maxmind.com/en/geolite_city_accuracy "GeoLiteCity Accuracy"), consider purchasing the commercial version of the data.
+If you need more exact data, consider purchasing the [commercial version of the data](https://www.maxmind.com/en/geoip2-city).
 
 #### Technically speaking, how could I verify if my visitor comes from Germany? ####
 
 Put this code somewhere in your template files:
 
-    $userInfo #### geoip_detect_get_info_from_current_ip();
-    if ($userInfo && $userInfo->country_code ## 'DE')
+    $userInfo #### geoip_detect2_get_info_from_current_ip();
+    if ($userInfo && $userInfo->country->isoCode ## 'de')
         echo 'Hallo! Schön dass Sie hier sind!';
 
 Or, add the plugin shortcode somewhere in the page or post content:
 
-    Heyo, over there in [geoip_detect property####"country_name"] !
+    Wie ist das Wetter in [geoip_detect property####"country_name" lang####"de"] ?
    
 To see which property names are supported, refer to the [Plugin Backend](http://wordpress.org/plugins/geoip-detect/screenshots/).
+
+#### What is planned to be implemented? ####
+
+Maxmind released a new API version (v2) with localized country names and a accuracy percentage. Work in Progress.
 
 ## Screenshots ##
 
 1. Backend page (under Tools > GeoIP Detection)
 
-## Upgrade Notice ##
-
-
 #### 2.0.0 ####
 
-This updates to the new Maxmind API (v2). 
+This major update uses the new Maxmind API (v2). 
 At least PHP 5.3.1 is required now.
 
 #### 1.7.1 ####
 
 Cron update was broken again ...
-
 
 #### 1.6 ####
 
@@ -97,13 +87,20 @@ Fixing automatic weekly updates.
 
 ## Changelog ##
 
-
 #### 2.0.0 ####
 * NEW: Using v2 version of the API.
+See Migration Guide at https://github.com/yellowtree/wp-geoip-detect/wiki/How-to-migrate-from-v1-to-v2
+
+Other changes:
+* NEW: The v2-functions now support names in other locales.
+* NEW: The shortcode also supports a "lang"-Attribute.
+
+#### 1.8 ####
+* NEW: Support reverse proxies (you have to enable it in the plugin options.)
+* NEW: Shortcode now has a default value when no information for this IP found.
 
 #### 1.7.1 ####
 * FIX: Fatal error on cron run
-
 
 #### 1.7 ####
 * FIX: Schedule Database update to do in background immediately after plugin installation/re-activation.
