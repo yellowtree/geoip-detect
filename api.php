@@ -65,7 +65,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 function geoip_detect2_get_reader($locales = null) {
 	$data_file = geoip_detect_get_abs_db_filename();
 	if (!$data_file)
-		return null;
+		return apply_filters('geoip_detect2_reader', null, $locales);
 	
 	/**
 	 * Filter: geoip_detect2_locales
