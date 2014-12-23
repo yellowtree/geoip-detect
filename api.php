@@ -4,29 +4,17 @@
  * Get Geo-Information for a specific IP
  * @param string 				$ip IP-Adress (IPv4 or IPv6)
  * @param array(string)			List of locale codes to use in name property
- * 								from most preferred to least preferred.
+ * 								from most preferred to least preferred. (Default: Site language, en)
  * @return GeoIp2\Model\City	GeoInformation. (NULL: no infos found.)
  * 
  * @see https://github.com/maxmind/GeoIP2-php				API Usage
  * @see http://dev.maxmind.com/geoip/geoip2/web-services/	API Documentation
  */
-function geoip_detect2_get_info_from_ip($ip, $locales = array('en'))
+function geoip_detect2_get_info_from_ip($ip, $locales = null)
 {
-	$data_file = geoip_detect_get_abs_db_filename();
-	if (!$data_file)
-		return 0;
-	
-	$reader = new GeoIp2\Database\Reader($data_file, $locales);
-	
-	/**
-	 * Filter: geoip_detect2_reader
-	 * You can customize your reader here.
-	 * This filter will be called for every IP request.
-	 * 
-	 * @param GeoIp2\Database\ProviderInterface  Reader (by default: GeoLite City)
-	 * @param array(string)							Locale precedence
-	 */
-	$reader = apply_filters('geoip_detect2_reader', $reader, $locales);
+	$reader = geoip_detect2_get_reader($locales);
+	if (!$reader)
+		return null;
 
 	$record = null;
 	try {
@@ -67,12 +55,40 @@ function geoip_detect2_get_info_from_ip($ip, $locales = array('en'))
 }
 
 /**
+ * Get the Maxmind Reader
+ * (Use this if you want to use other methods than "city" or otherwise customize behavior.)
+ * 
+ * @param array(string)			List of locale codes to use in name property
+ * 								from most preferred to least preferred. (Default: Site language, en)
+ * @return GeoIp2\Database\Reader The reader, ready to do its work. Don't forget to `close()` it afterwards. NULL if file not found (or other problems).
+ */
+function geoip_detect2_get_reader($locales = null) {
+	$data_file = geoip_detect_get_abs_db_filename();
+	if (!$data_file)
+		return null;
+	
+	$reader = new GeoIp2\Database\Reader($data_file, $locales);
+	
+	/**
+	 * Filter: geoip_detect2_reader
+	 * You can customize your reader here.
+	 * This filter will be called for every IP request.
+	 * 
+	 * @param GeoIp2\Database\ProviderInterface  Reader (by default: GeoLite City)
+	 * @param array(string)							Locale precedence
+	 */
+	$reader = apply_filters('geoip_detect2_reader', $reader, $locales);
+	
+	return $reader;
+}
+
+/**
  * Get Geo-Information for the current IP
  * @param array(string)			List of locale codes to use in name property
  * 								from most preferred to least preferred.
  * @return GeoIp2\Model\City	GeoInformation. (0 / NULL: no infos found.)
  */
-function geoip_detect2_get_info_from_current_ip($locales = array('en'))
+function geoip_detect2_get_info_from_current_ip($locales = null)
 {
 	return geoip_detect2_get_info_from_ip('me', $locales);
 }
