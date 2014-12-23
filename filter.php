@@ -21,6 +21,9 @@ function geoip_detect2_add_default_locales($locales) {
 	if (is_null($locales)) {
 		$locales = array();
 		
+		if (defined('ICL_LANGUAGE_CODE'))
+			$locales[] = ICL_LANGUAGE_CODE;
+		
 		$site_locale = get_locale();
 		if ($site_locale) {
 			$translate = array(
