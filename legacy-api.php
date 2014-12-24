@@ -27,6 +27,8 @@ if (!class_exists('geoiprecord')) {
 function geoip_detect_get_info_from_ip($ip)
 {
 	$ret = geoip_detect2_get_info_from_ip($ip);
+	if ($ret == null || !$ret->country->name) // Better way to detect "empty?"
+		$ret = geoip_detect2_get_info_from_ip('me');
 
 	$record = null;
 	
