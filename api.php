@@ -2,7 +2,7 @@
 
 /**
  * Get Geo-Information for a specific IP
- * @param string 				$ip IP-Adress (IPv4 or IPv6)
+ * @param string 				$ip IP-Adress (IPv4 or IPv6). 'me' is the current IP of the server.
  * @param array(string)			List of locale codes to use in name property
  * 								from most preferred to least preferred. (Default: Site language, en)
  * @return GeoIp2\Model\City	GeoInformation. (NULL: no infos found.)
@@ -18,6 +18,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 
 	$record = null;
 
+	// For development usage: if the client IP is not a public IP, use the public IP of the server instead.
 	if ($ip == 'me' || geoip_detect_is_private_ip($ip)) {
 		$ip = geoip_detect2_get_external_ip_adress();
 	}

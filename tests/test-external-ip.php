@@ -22,6 +22,24 @@ class ExternalIpTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	
+	function testPrivateIpFilter() {
+		$this->assertSame(false, geoip_detect_is_private_ip(GEOIP_DETECT_TEST_IP));
+		$this->assertSame(true, geoip_detect_is_private_ip('10.0.0.2'));
+		$this->assertSame(true, geoip_detect_is_private_ip('169.254.1.1'));
+	}
+	
+	function testLoopbackFilter() {
+		$this->assertSame(true, geoip_detect_is_private_ip('::1'));	
+		$this->assertSame(true, geoip_detect_is_private_ip('127.0.0.1'));
+		$this->assertSame(true, geoip_detect_is_private_ip('127.0.1.1'));
+	}
+
+	function testInvalidIpFilter() {
+		$this->assertSame(true, geoip_detect_is_private_ip('999.0.0.1'));
+		$this->assertSame(true, geoip_detect_is_private_ip('asdfasfasdf'));
+		$this->assertSame(true, geoip_detect_is_private_ip(':::'));
+	}
+	
 	function testExternalIp() {
 		add_filter('geiop_detect_ipservices', 'ipTestServiceProvider', 101);
 		

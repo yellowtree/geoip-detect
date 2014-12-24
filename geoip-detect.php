@@ -91,6 +91,15 @@ function geoip_detect_get_abs_db_filename()
 }
 
 
+function geoip_detect_is_ip_in_range($ip, $range_start, $range_end) {
+	$long_ip = ip2long($ip);
+	if ($long_ip === false) // Not IPv4
+		return false;
+	if($long_ip >= ip2long($range_start) && $long_ip <= ip2long($range_end))
+		return true;
+	return false;
+}
+
 /**
  * Check if IP is in RFC private IP range
  * (for local development)
@@ -98,10 +107,15 @@ function geoip_detect_get_abs_db_filename()
  * @return boolean TRUE if private
  */
 function geoip_detect_is_private_ip($ip) {
-	if ($ip == '127.0.0.1')
+	if (geoip_detect_is_ip_in_range($ip, '127.0.0.0', '127.255.255.255'))
 		return true;
-	// TODO implement
-	return false;
+
+	$flags = FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6  // IP can be v4 or v6
+		| FILTER_FLAG_NO_PRIV_RANGE // It may not be in the RFC private range
+		|  FILTER_FLAG_NO_RES_RANGE; // It may not be in the RFC reserved range
+	$is_private = filter_var($ip, FILTER_VALIDATE_IP, $flags) === false;
+	
+	return $is_private;
 }
 
 
