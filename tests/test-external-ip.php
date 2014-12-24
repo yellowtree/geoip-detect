@@ -22,22 +22,23 @@ class ExternalIpTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	
-	function testPrivateIpFilter() {
-		$this->assertSame(false, geoip_detect_is_private_ip(GEOIP_DETECT_TEST_IP));
-		$this->assertSame(true, geoip_detect_is_private_ip('10.0.0.2'));
-		$this->assertSame(true, geoip_detect_is_private_ip('169.254.1.1'));
+	function testPublicIpFilter() {
+		$this->assertSame(true, geoip_detect_is_public_ip(GEOIP_DETECT_TEST_IP));
+		$this->assertSame(false, geoip_detect_is_public_ip('10.0.0.2'));
+		$this->assertSame(false, geoip_detect_is_public_ip('169.254.1.1'));
 	}
 	
 	function testLoopbackFilter() {
-		$this->assertSame(true, geoip_detect_is_private_ip('::1'));	
-		$this->assertSame(true, geoip_detect_is_private_ip('127.0.0.1'));
-		$this->assertSame(true, geoip_detect_is_private_ip('127.0.1.1'));
+		$this->assertSame(false, geoip_detect_is_public_ip('::1'));	
+		$this->assertSame(false, geoip_detect_is_public_ip('127.0.0.1'));
+		$this->assertSame(false, geoip_detect_is_public_ip('127.0.1.1'));
 	}
 
 	function testInvalidIpFilter() {
-		$this->assertSame(true, geoip_detect_is_private_ip('999.0.0.1'));
-		$this->assertSame(true, geoip_detect_is_private_ip('asdfasfasdf'));
-		$this->assertSame(true, geoip_detect_is_private_ip(':::'));
+		$this->assertSame(false, geoip_detect_is_public_ip('999.0.0.1'));
+		$this->assertSame(false, geoip_detect_is_public_ip('asdfasfasdf'));
+		$this->assertSame(false, geoip_detect_is_public_ip(':::'));
+		$this->assertSame(false, geoip_detect_is_public_ip(''));
 	}
 	
 	function testExternalIp() {
@@ -57,6 +58,11 @@ class ExternalIpTest extends WP_UnitTestCase_GeoIP_Detect {
 			return;
 		}
 		$this->fail('Invalid IP provider did not provoke an error');
+	}
+	
+	function testCurrentIpCli() {
+		$ret = geoip_detect2_get_info_from_current_ip();
+		$this->assertSame(null, $ret);
 	}
 	
 	/**

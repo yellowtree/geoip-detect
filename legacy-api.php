@@ -92,7 +92,7 @@ add_filter('geoip_detect_record_information', '_try_to_fix_timezone');
  */
 function geoip_detect_get_info_from_current_ip()
 {
-	return geoip_detect_get_info_from_ip('me');
+	return geoip_detect_get_info_from_ip(geoip_detect_get_client_ip());
 }
 
 /**

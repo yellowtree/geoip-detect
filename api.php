@@ -5,7 +5,7 @@
  * @param string 				$ip IP-Adress (IPv4 or IPv6). 'me' is the current IP of the server.
  * @param array(string)			List of locale codes to use in name property
  * 								from most preferred to least preferred. (Default: Site language, en)
- * @return GeoIp2\Model\City	GeoInformation. (NULL: no infos found.)
+ * @return GeoIp2\Model\City	GeoInformation.
  * 
  * @see https://github.com/maxmind/GeoIP2-php				API Usage
  * @see http://dev.maxmind.com/geoip/geoip2/web-services/	API Documentation
@@ -19,7 +19,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 	$record = null;
 
 	// For development usage: if the client IP is not a public IP, use the public IP of the server instead.
-	if ($ip == 'me' || geoip_detect_is_private_ip($ip)) {
+	if ($ip == 'me' || (geoip_detect_is_ip($ip) && !geoip_detect_is_public_ip($ip))) {
 		$ip = geoip_detect2_get_external_ip_adress();
 	}
 	
@@ -35,6 +35,10 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 	}
 
 	$reader->close();
+	
+	if ($record === null) {
+		// Empty GeoIP record instead
+	}
 	
 	/**
 	 * Filter: geoip_detect_record_information
@@ -86,16 +90,17 @@ function geoip_detect2_get_reader($locales = null) {
  * Get Geo-Information for the current IP
  * @param array(string)			List of locale codes to use in name property
  * 								from most preferred to least preferred.
- * @return GeoIp2\Model\City	GeoInformation. (0 / NULL: no infos found.)
+ * @return GeoIp2\Model\City	GeoInformation.
  */
 function geoip_detect2_get_info_from_current_ip($locales = null)
 {
-	return geoip_detect2_get_info_from_ip('me', $locales);
+	return geoip_detect2_get_info_from_ip(geoip_detect_get_client_ip(), $locales);
 }
 
 /**
  * Get client IP (even if it is behind a reverse proxy)
- * @return string Client Ip
+ * For security reasons, the reverse proxy usage has to be enabled on the settings page.
+ * @return string Client Ip (IPv4 or IPv6)
  */
 function geoip_detect_get_client_ip() {
 	if (get_option('geoip-detect-has_reverse_proxy', 0) && isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
@@ -158,7 +163,7 @@ function _geoip_detect_get_external_ip_adress_without_cache()
 			}			
 		} else if (isset($ret['body'])) {
 			$ip = trim($ret['body']);
-			if (preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/', $ip))
+			if (geoip_detect_is_ip($ip))
 				return $ip;
 		}
 	}
