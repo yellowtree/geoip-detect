@@ -17,21 +17,14 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 		return null;
 
 	$record = null;
-	try {
-		if ($ip == 'me')
-			throw new GeoIp2\Exception\AddressNotFoundException();
 
-		$record = $reader->city($ip);
-	} catch(GeoIp2\Exception\AddressNotFoundException $e) {
-		// Try again with external adress
+	if ($ip == 'me' || geoip_detect_is_private_ip($ip)) {
 		$ip = geoip_detect2_get_external_ip_adress();
-		
-		try {
-			$record = $reader->city($ip);
-		} catch(GeoIp2\Exception\GeoIp2Exception $e) {
-			if (WP_DEBUG)
-				echo $e->getMessage();
-		}
+	}
+	
+	
+	try {
+		$record = $reader->city($ip);
 	} catch(GeoIp2\Exception\GeoIp2Exception $e) {
 		if (WP_DEBUG)
 				echo $e->getMessage();

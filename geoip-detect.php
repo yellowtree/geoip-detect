@@ -91,6 +91,20 @@ function geoip_detect_get_abs_db_filename()
 }
 
 
+/**
+ * Check if IP is in RFC private IP range
+ * (for local development)
+ * @param string $ip	IP (IPv4 or IPv6)
+ * @return boolean TRUE if private
+ */
+function geoip_detect_is_private_ip($ip) {
+	if ($ip == '127.0.0.1')
+		return true;
+	// TODO implement
+	return false;
+}
+
+
 
 // ------------- Admin GUI --------------------
 
