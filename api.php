@@ -63,17 +63,17 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
  * @return GeoIp2\Database\Reader The reader, ready to do its work. Don't forget to `close()` it afterwards. NULL if file not found (or other problems).
  */
 function geoip_detect2_get_reader($locales = null) {
-	$data_file = geoip_detect_get_abs_db_filename();
-	if (!$data_file)
-		return apply_filters('geoip_detect2_reader', null, $locales);
 	
 	/**
 	 * Filter: geoip_detect2_locales
 	 * @param array(string) $locales Current locales.
 	 */
 	$locales = apply_filters('geoip_detect2_locales', $locales);
-		
-	$reader = new GeoIp2\Database\Reader($data_file, $locales);
+	
+	$reader = null;	
+	$data_file = geoip_detect_get_abs_db_filename();
+	if ($data_file)
+		$reader = new GeoIp2\Database\Reader($data_file, $locales);
 	
 	/**
 	 * Filter: geoip_detect2_reader
