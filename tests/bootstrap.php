@@ -48,8 +48,9 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
  */
 	protected function assertValidGeoIP2Record($record, $ip)
 	{
-		$assert_text = 'When looking up info for IP ' . $ip . ':';
+		$assert_text = 'When looking up info for IP "' . $ip . '":';
 		$this->assertInstanceOf('GeoIp2\Model\City', $record, $assert_text);
+		$this->assertSame(false, $record->traits->isEmpty);
 		
 		$this->assertInternalType('string', $record->country->isoCode, $assert_text);
 		$this->assertEquals(2, strlen($record->country->isoCode), $assert_text);

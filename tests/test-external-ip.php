@@ -62,7 +62,7 @@ class ExternalIpTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	function testCurrentIpCli() {
 		$ret = geoip_detect2_get_info_from_current_ip();
-		$this->assertSame(null, $ret);
+		$this->assertValidGeoIP2Record($ret, 'current');
 	}
 	
 	/**

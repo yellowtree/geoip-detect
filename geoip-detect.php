@@ -12,7 +12,7 @@ Text Domain: geoip-detect
 Domain Path: /languages
 */
 /*
-Copyright 2013-2014 YellowTree, Siegen, Germany
+Copyright 2013-2015 YellowTree, Siegen, Germany
 Author: Benjamin Pick (b.pick@yellowtree.de)
 
 This program is free software; you can redistribute it and/or modify
@@ -32,29 +32,26 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 define('GEOIP_PLUGIN_FILE', __FILE__);
 
-require_once(dirname(__FILE__) . '/vendor/autoload.php');
+require_once(__DIR__ . '/vendor/autoload.php');
 
-require_once(dirname(__FILE__) . '/api.php');
-require_once(dirname(__FILE__) . '/legacy-api.php');
-require_once(dirname(__FILE__) . '/filter.php');
+require_once(__DIR__ . '/geoip-detect-lib.php');
+require_once(__DIR__ . '/api.php');
+require_once(__DIR__ . '/legacy-api.php');
+require_once(__DIR__ . '/filter.php');
 
-require_once(dirname(__FILE__) . '/updater.php');
+require_once(__DIR__ . '/updater.php');
 
-require_once(dirname(__FILE__) . '/shortcode.php');
+require_once(__DIR__ . '/shortcode.php');
 
 
 define('GEOIP_DETECT_DATA_FILENAME', 'GeoLite2-City.mmdb');
 define('GEOIP_REQUIRED_PHP_VERSION', '5.3.1');
 define('GEOIP_REQUIRED_WP_VERSION', '3.5');
 
+// You can define these constants if you like.
 
-function geoip_detect_defines() {
-	if (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED'))
-		define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', false);
-	if (!defined('GEOIP_DETECT_IP_CACHE_TIME'))
-		define('GEOIP_DETECT_IP_CACHE_TIME', 2 * HOUR_IN_SECONDS);
-}
-add_action('plugins_loaded', 'geoip_detect_defines');
+//define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', false);
+//define('GEOIP_DETECT_IP_CACHE_TIME', 2 * HOUR_IN_SECONDS);
 
 register_activation_hook( __FILE__, 'geoip_detect_version_check' );
 
@@ -75,53 +72,6 @@ function geoip_detect_version_check() {
     deactivate_plugins( basename( __FILE__ ) );
     wp_die('<p>The <strong>GeoIP Detect</strong> plugin requires '.$flag.'  version '.$min.' or greater.</p><p>You can try to install an 1.x version of this plugin.</p>','Plugin Activation Error',  array( 'response'=>200, 'back_link'=>TRUE ) );
 }
-
-function geoip_detect_get_abs_db_filename()
-{
-	$data_filename = dirname(__FILE__) . '/' . GEOIP_DETECT_DATA_FILENAME;
-	if (!file_exists($data_filename))
-		$data_filename = '';
-	
-	$data_filename = apply_filters('geoip_detect_get_abs_db_filename', $data_filename);
-	
-	if (!$data_filename && (WP_DEBUG || defined('WP_TESTS_TITLE')))
-		trigger_error(__('No GeoIP Database file found. Please refer to the installation instructions in readme.txt.', 'geoip-detect'), E_USER_NOTICE);
-
-	return $data_filename;
-}
-
-
-function geoip_detect_is_ip($ip) {
-	return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6) !== false;
-}
-
-function geoip_detect_is_ip_in_range($ip, $range_start, $range_end) {
-	$long_ip = ip2long($ip);
-	if ($long_ip === false) // Not IPv4
-		return false;
-	if($long_ip >= ip2long($range_start) && $long_ip <= ip2long($range_end))
-		return true;
-	return false;
-}
-
-/**
- * Check if IP is in RFC private IP range
- * (for local development)
- * @param string $ip	IP (IPv4 or IPv6)
- * @return boolean TRUE if private
- */
-function geoip_detect_is_public_ip($ip) {
-	if (geoip_detect_is_ip_in_range($ip, '127.0.0.0', '127.255.255.255'))
-		return false;
-
-	$flags = FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6  // IP can be v4 or v6
-		| FILTER_FLAG_NO_PRIV_RANGE // It may not be in the RFC private range
-		|  FILTER_FLAG_NO_RES_RANGE; // It may not be in the RFC reserved range
-	$is_public = filter_var($ip, FILTER_VALIDATE_IP, $flags) !== false;
-	
-	return $is_public;
-}
-
 
 
 // ------------- Admin GUI --------------------
@@ -182,7 +132,7 @@ function geoip_detect_plugin_page()
 		$options[$opt_name] = (int) get_option('geoip-detect-'. $opt_name);
 	}
 
-	include_once(dirname(__FILE__) . '/views/plugin_page.php');	
+	include_once(__DIR__ . '/views/plugin_page.php');	
 }
 
 function geoip_detect_menu() {
