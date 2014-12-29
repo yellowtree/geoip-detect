@@ -85,6 +85,7 @@ class Traits extends AbstractRecord
         'isp',
         'ipAddress',
         'organization',
-        'userType'
+        'userType',
+    	'isEmpty', // YT: How can I add new valid Attributes? See https://github.com/maxmind/GeoIP2-php/issues/34 
     );
 }
