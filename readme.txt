@@ -51,14 +51,17 @@ If you need more exact data, consider purchasing the [commercial version of the 
 Put this code somewhere in your template files:
 
     $userInfo = geoip_detect2_get_info_from_current_ip();
-    if ($userInfo && $userInfo->country->isoCode == 'de')
+    if ($userInfo->country->isoCode == 'de')
         echo 'Hallo! Schön dass Sie hier sind!';
+
+To see which property names are supported, refer to the [Plugin Backend](http://wordpress.org/plugins/geoip-detect/screenshots/).
 
 Or, add the plugin shortcode somewhere in the page or post content:
 
     Wie ist das Wetter in [geoip_detect property="country_name" lang="de"] ?
+
+The lang property is optional. If it is not specified, the current site language is used.
    
-To see which property names are supported, refer to the [Plugin Backend](http://wordpress.org/plugins/geoip-detect/screenshots/).
 
 #### What is planned to be implemented? ####
 
