@@ -5,6 +5,7 @@ define('TEST_GEOIP_PLUGIN_DATA_FILENAME', dirname(__FILE__) . '/../' . GEOIP_DET
 class ManualInstallTest extends WP_UnitTestCase_GeoIP_Detect {
 
 	function setUp() {
+		parent::setUp();
 		if (file_exists(TEST_GEOIP_PLUGIN_DATA_FILENAME))
 			unlink(TEST_GEOIP_PLUGIN_DATA_FILENAME);
 	}

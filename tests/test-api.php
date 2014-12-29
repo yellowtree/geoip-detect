@@ -6,16 +6,6 @@ function geoip_detect2_test_set_test_database()
 }
 
 class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
-	function setUp()
-	{
-		// Use Test File
-		add_filter('geoip_detect_get_abs_db_filename', 'geoip_detect2_test_set_test_database', 101);
-	}
-	
-	function tearDown()
-	{
-		remove_filter('geoip_detect_get_abs_db_filename', 'geoip_detect2_test_set_test_database', 101);
-	}
 	
 	function testLookup() {
 		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);

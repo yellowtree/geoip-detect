@@ -12,10 +12,12 @@ class ExternalIpTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	function setUp()
 	{
+		parent::setUp();
 	}
 	
 	function tearDown()
 	{
+		parent::tearDown();
 		remove_filter('geiop_detect_ipservices','ipTestServiceProvider', 101);
 		remove_filter('geiop_detect_ipservices', array($this, 'externalIpProvidersFilter'), 101);
 		remove_filter('geiop_detect_ipservices', 'ipTestServiceInvalidProvider', 101);

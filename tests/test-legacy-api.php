@@ -1,9 +1,6 @@
 <?php
 
-function geoip_detect_test_set_test_database()
-{
-	return GEOIP_DETECT_TEST_DB_FILENAME;
-}
+
 
 function geoip_detect_get_external_ip_adress_test_set_test_ip()
 {
@@ -14,13 +11,12 @@ class LegacyApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	function setUp()
 	{
-		// Use Test File
-		add_filter('geoip_detect_get_abs_db_filename', 'geoip_detect_test_set_test_database', 101);
+		parent::setUp();
 	}
 	
 	function tearDown()
 	{
-		remove_filter('geoip_detect_get_abs_db_filename', 'geoip_detect_test_set_test_database', 101);
+		parent::tearDown();
 		remove_filter('geoip_detect_get_external_ip_adress', 'geoip_detect_get_external_ip_adress_test_set_test_ip', 101);
 	}
 	
