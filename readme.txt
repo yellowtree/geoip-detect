@@ -58,9 +58,10 @@ To see which property names are supported, refer to the [Plugin Backend](http://
 
 Or, add the plugin shortcode somewhere in the page or post content:
 
-    Wie ist das Wetter in [geoip_detect property="country_name" lang="de"] ?
+    Wie ist das Wetter in [geoip_detect2 property="country.name" lang="de" default="ihrem Land"] ?
 
 The lang property is optional. If it is not specified, the current site language is used.
+The default property is optional. If the specified property is empty, then this default value is shown.
    
 
 #### What is planned to be implemented? ####
