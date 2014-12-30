@@ -39,19 +39,18 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 	$reader->close();
 	
 	if ($record === null) {
-		$data = array('traits' => array('is_empty' => true));
+		$data = array('traits' => array('is_empty' => true, 'ip_address' => $ip));
 		$record = new \GeoIp2\Model\City($data, array('en'));
 	}
 	
 	/**
-	 * Filter: geoip_detect_record_information
+	 * Filter: geoip_detect2_record_information
 	 * After loading the information from the GeoIP-Database, you can add or remove information from it.
-	 * @param GeoIp2\Model\City $record 	Information found (or NULL if not found)
-	 * @param string			 $ip	 	IP that was looked up. If original IP did not retrieve anything (probably intranet) then this is the internet IP of the server.
+	 * @param GeoIp2\Model\City $record 	Information found. The 
 	 * @param string			 $orig_ip	IP that originally passed to the function.
 	 * @return GeoIp2\Model\City
 	 */
-	$record = apply_filters('geoip_detect2_record_information', $record, $ip, $orig_ip);
+	$record = apply_filters('geoip_detect2_record_information', $record, $orig_ip);
 
 	return $record;
 }
