@@ -73,33 +73,27 @@ function geoip_detect_update_cron($immediately_after_activation = false) {
 	
 	if ($do_it)
 		geoip_detect_update();
+		
+	geoip_detect_schedule_next_cron_run();
 }
 
 add_action('geoipdetectupdate', 'geoip_detect_update_cron', 10, 1);
 
-
-add_filter( 'cron_schedules', 'geoip_detect_cron_add_weekly' );
-function geoip_detect_cron_add_weekly( $schedules ) {
-	// Adds once weekly to the existing schedules.
-	if (!isset($schedules['weekly']))
-	{
-		$schedules['weekly'] = array(
-				'interval' => 604800,
-				'display' => __( 'Once Weekly' )
-		);
-	}
-	return $schedules;
-}
-
 function geoip_detect_set_cron_schedule($now = false)
 {
-	// TODO GeoLite2 databases are updated on the first Tuesday of each month.
-	if ( !wp_next_scheduled( 'geoipdetectupdate' ) ) {
-		wp_schedule_event(time() + WEEK_IN_SECONDS, 'weekly', 'geoipdetectupdate');
+	$next = wp_next_scheduled( 'geoipdetectupdate' );
+	if ( !$next ) {
+		geoip_detect_schedule_next_cron_run();
 	}
 
 	if ($now)
 		wp_schedule_single_event(time(), 'geoipdetectupdate', array(true));
+}
+
+function geoip_detect_schedule_next_cron_run() {
+	// The Lite databases are updated on the first tuesday of each month. Maybe not at midnight, so we schedule it for the night afterwards.
+	$next = strtotime('first tuesday of next month + 1 day');
+	wp_schedule_single_event($next, 'geoipdetectupdate');
 }
 
 function geoip_detect_activate()
