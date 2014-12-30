@@ -30,10 +30,10 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 		$record = $reader->city($ip);
 	} catch(GeoIp2\Exception\GeoIp2Exception $e) {
 		if (WP_DEBUG)
-			echo $e->getMessage();
+			echo 'Error while looking up "' . $ip . '": ' . $e->getMessage();
 	} catch(Exception $e) {
 		if (WP_DEBUG)
-			echo $e->getMessage();		
+			echo 'Error while looking up "' . $ip . '": ' . $e->getMessage();		
 	}
 
 	$reader->close();

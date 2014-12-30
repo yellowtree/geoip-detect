@@ -37,6 +37,11 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 		remove_filter('geoip_detect_get_abs_db_filename', 'geoip_detect_test_set_test_database', 101);
 	}
 	
+	public function testDatabaseLocation() {
+		$filename = geoip_detect_get_abs_db_filename();
+		$this->assertEquals(GEOIP_DETECT_TEST_DB_FILENAME, $filename, 'Database path is incorrect. Maybe parent::setUp() has not been called.');
+	}
+	
 	protected function assertValidGeoIPRecord($record, $ip)
 	{
 		$assert_text = 'When looking up info for IP ' . $ip . ':';

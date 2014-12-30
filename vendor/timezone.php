@@ -5,6 +5,8 @@
 
 function _geoip_detect_get_time_zone($country, $region)
 {
+	$timezone = "";
+	
     switch ($country) {
         case "AD":
             $timezone = "Europe/Andorra";
