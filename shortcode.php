@@ -35,7 +35,12 @@ function geoip_detect2_shortcode($attr)
 
 	$defaultValue = isset($attr['default']) ? $attr['default'] : ''; 
 	
-	$propertyName = $attr['property']; 
+	$properties = explode('.', $attr['property']);
+	 
+	if (count($properties) == 1) {
+		return $userInfo->{$properties[0]};
+		
+	}
 	// TODO: support city->isoCode ...
 	
 	if (isset($userInfo, $propertyName)) {

@@ -26,6 +26,10 @@ function geoip_detect_test_set_test_database()
 	return GEOIP_DETECT_TEST_DB_FILENAME;
 }
 
+function geoip_detect_get_external_ip_adress_test_set_test_ip($ip) {
+	return GEOIP_DETECT_TEST_IP;
+}
+
 class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 {
 	public function setUp() {
