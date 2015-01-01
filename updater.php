@@ -92,7 +92,7 @@ function geoip_detect_set_cron_schedule($now = false)
 
 function geoip_detect_schedule_next_cron_run() {
 	// The Lite databases are updated on the first tuesday of each month. Maybe not at midnight, so we schedule it for the night afterwards.
-	$next = strtotime(GEOIP_DETECT_AUTO_UPDATE_SCHEDULE);
+	$next = strtotime('first tuesday of next month + 1 day');
 	wp_schedule_single_event($next, 'geoipdetectupdate');
 }
 

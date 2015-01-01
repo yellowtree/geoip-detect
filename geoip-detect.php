@@ -52,7 +52,6 @@ define('GEOIP_REQUIRED_WP_VERSION', '3.5');
 
 //define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', false);
 //define('GEOIP_DETECT_IP_CACHE_TIME', 2 * HOUR_IN_SECONDS);
-//define('GEOIP_DETECT_AUTO_UPDATE_SCHEDULE', 'first tuesday of next month + 1 day'); // will be parsed by strtotime
 
 register_activation_hook( GEOIP_PLUGIN_FILE, 'geoip_detect_version_check' );
 

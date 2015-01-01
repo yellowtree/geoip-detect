@@ -7,9 +7,6 @@ function geoip_detect_defines() {
 		define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', false);
 	if (!defined('GEOIP_DETECT_IP_CACHE_TIME'))
 		define('GEOIP_DETECT_IP_CACHE_TIME', 2 * HOUR_IN_SECONDS);
-		
-	if (!defined('GEOIP_DETECT_AUTO_UPDATE_SCHEDULE'))
-		define('GEOIP_DETECT_AUTO_UPDATE_SCHEDULE', 'first tuesday of next month + 1 day');
 }
 add_action('plugins_loaded', 'geoip_detect_defines');
 
