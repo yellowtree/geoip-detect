@@ -30,7 +30,7 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 	<h3>Test GeoIP Lookup manually</h3>
 	<form method="post" action="#">
 		<input type="hidden" name="action" value="lookup" />
-		<input type="text" name="ip" value="<?php echo isset($_REQUEST['ip']) ? esc_attr($_REQUEST['ip']) : esc_attr(geoip_detect_get_client_ip()); ?>" />
+		<input type="text" placeholder="Enter an IP (v4 or v6)" name="ip" value="<?php echo isset($_REQUEST['ip']) ? esc_attr($_REQUEST['ip']) : esc_attr(geoip_detect_get_client_ip()); ?>" />
 		<input type="submit" class="button button-secondary" value="<?php _e('Lookup', 'geoip-detect'); ?>" />
 	</form>
 	<?php if ($ip_lookup_result !== false) :
