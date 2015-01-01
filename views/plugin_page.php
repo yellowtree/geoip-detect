@@ -46,15 +46,27 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 			</thead>
 	
 		<tr>
+			<td><code>$record->city->name</code></td>
+			<td><?php echo esc_html($record->city->name);?></td>
+		</tr>
+		<tr>
+			<td><code>$record->mostSpecificSubdivision->isoCode</code></td>
+			<td><?php echo esc_html($record->mostSpecificSubdivision->name);?></td>
+		</tr>
+		<tr>
+			<td><code>$record->mostSpecificSubdivision->name</code></td>
+			<td><?php echo esc_html($record->mostSpecificSubdivision->name);?></td>
+		</tr>
+		<tr>
 			<td><code>$record->country->isoCode</code></td>
 			<td><?php echo esc_html($record->country->isoCode);?></td>
 		</tr>
 		<tr>
-			<td><code>$ret->country->name</code></td>
+			<td><code>$record->country->name</code></td>
 			<td><?php echo esc_html($record->country->name);?></td>
 		</tr>
 		<tr>
-			<td><code>$ret->location->latitude</code></td>
+			<td><code>$record->location->latitude</code></td>
 			<td><?php echo esc_html($record->location->latitude);?></td>
 		</tr>
 		<tr>
