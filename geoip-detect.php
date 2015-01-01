@@ -52,8 +52,9 @@ define('GEOIP_REQUIRED_WP_VERSION', '3.5');
 
 //define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', false);
 //define('GEOIP_DETECT_IP_CACHE_TIME', 2 * HOUR_IN_SECONDS);
+//define('GEOIP_DETECT_AUTO_UPDATE_SCHEDULE', 'first tuesday of next month + 1 day'); // will be parsed by strtotime
 
-register_activation_hook( __FILE__, 'geoip_detect_version_check' );
+register_activation_hook( GEOIP_PLUGIN_FILE, 'geoip_detect_version_check' );
 
 function geoip_detect_version_check() {
    global $wp_version;
@@ -69,7 +70,7 @@ function geoip_detect_version_check() {
     else
         return;
         
-    deactivate_plugins( basename( __FILE__ ) );
+    deactivate_plugins( basename( GEOIP_PLUGIN_FILE ) );
     wp_die('<p>The <strong>GeoIP Detect</strong> plugin requires '.$flag.'  version '.$min.' or greater.</p><p>You can try to install an 1.x version of this plugin.</p>','Plugin Activation Error',  array( 'response'=>200, 'back_link'=>TRUE ) );
 }
 

@@ -70,7 +70,7 @@ function geoip_detect2_shortcode($attr)
 		return $defaultValue . '<!-- GeoIP Detect: Invalid property name. -->';
 	}
 
-	if (is_object($return) && isset($return->name))
+	if (is_object($return) && isset($return->names))
 		$return = $return->name;
 	
 	if (is_object($return) || is_array($return))
