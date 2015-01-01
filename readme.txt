@@ -100,9 +100,11 @@ Fixing automatic weekly updates.
 See Migration Guide at https://github.com/yellowtree/wp-geoip-detect/wiki/How-to-migrate-from-v1-to-v2
 
 Other changes:
-* NEW: The v2-functions now support names in other locales.
-* NEW: By default, they return the current site language if possible.
-* NEW: The shortcode also supports a "lang"-Attribute.
+* NEW: The v2-functions now support location names in other locales. By default, they return the current site language if possible.
+* NEW: The new shortcode [geoip_detect2 ...] also supports a "lang"-Attribute.
+* NEW: IPv6 addresses are now supported as well.
+* Legacy function names and shortcode should work in most cases. For details check the guide above.
+* 
 
 = 1.8 =
 * NEW: Support reverse proxies (you have to enable it in the plugin options.)

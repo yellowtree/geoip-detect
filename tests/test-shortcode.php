@@ -59,6 +59,10 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertContains('<!--', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"INVALID\"] threw no error in spite of invalid property name: " . $string);
 		$string = do_shortcode('[geoip_detect2 property="city.INVALID"]');
 		$this->assertContains('<!--', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"city.INVALID\"] threw no error in spite of invalid property name: " . $string);
+		$string = do_shortcode('[geoip_detect2 property="INVALID.city"]');
+		$this->assertContains('<!--', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"INVALID.city\"] threw no error in spite of invalid property name: " . $string);
+		$string = do_shortcode('[geoip_detect2 property="city.names.INVALID"]');
+		$this->assertContains('<!--', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"city.names.INVALID\"] threw no error in spite of invalid property name: " . $string);
 		$string = do_shortcode('[geoip_detect2 property="INVALID" default="here"]');
 		$this->assertContains('here', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"INVALID\" default=\"here\"]does not contain default value: " . $string);
 	}

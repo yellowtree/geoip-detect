@@ -60,11 +60,12 @@ function geoip_detect2_shortcode($attr)
 		if (count($properties) == 1) {
 			$return = $userInfo->{$properties[0]};
 		} else if (count($properties) == 2) {
-			$return = $userInfo->{$properties[0]}->{$properties[1]};
-		} else if (count($properties) == 3) {
-			$return = $userInfo->{$properties[0]}->{$properties[1]}->{$properties[2]};
+			$return = $userInfo->{$properties[0]};
+			if (!is_object($return))
+				throw new \RuntimeException('Invalid property name.');
+			$return = $return->{$properties[1]};
 		} else {
-			throw new \RuntimeException('Only 2 dots supported. Please send a bug report to show me the shorcode you used if you need it ...');
+			throw new \RuntimeException('Only 1 dot supported. Please send a bug report to show me the shorcode you used if you need it ...');
 		}
 	} catch (\RuntimeException $e) {
 		return $defaultValue . '<!-- GeoIP Detect: Invalid property name. -->';

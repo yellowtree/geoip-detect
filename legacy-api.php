@@ -12,7 +12,7 @@ if (!class_exists('geoiprecord')) {
 		public $latitude;
 		public $longitude;
 		public $area_code;
-		public $dma_code; # metro and dma code are the same. use metro_code
+		public $dma_code;
 		public $metro_code;
 		public $continent_code;
 	}
