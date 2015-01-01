@@ -39,7 +39,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 	$reader->close();
 	
 	if ($record === null) {
-		$data = array('traits' => array('is_empty' => true, 'ip_address' => $ip));
+		$data = array('traits' => array(/* 'is_empty' => true, */ 'ip_address' => $ip));
 		$record = new \GeoIp2\Model\City($data, array('en'));
 	}
 	
