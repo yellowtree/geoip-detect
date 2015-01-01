@@ -99,13 +99,13 @@ function geoip_detect2_get_info_from_current_ip($locales = null)
 	return geoip_detect2_get_info_from_ip(geoip_detect_get_client_ip(), $locales);
 }
 
-	/**
-	 * Get client IP (even if it is behind a reverse proxy)
-	 * For security reasons, the reverse proxy usage has to be enabled on the settings page.
-	 * 
-	 * @return string Client Ip (IPv4 or IPv6)
-	 */
-	function geoip_detect_get_client_ip() {
+/**
+ * Get client IP (even if it is behind a reverse proxy)
+ * For security reasons, the reverse proxy usage has to be enabled on the settings page.
+ * 
+ * @return string Client Ip (IPv4 or IPv6)
+ */
+function geoip_detect_get_client_ip() {
 	if (get_option('geoip-detect-has_reverse_proxy', 0) && isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
 	{
 		$ip = @$_SERVER["HTTP_X_FORWARDED_FOR"];
@@ -137,5 +137,3 @@ function geoip_detect2_get_external_ip_adress()
 	$ip_cache = apply_filters('geoip_detect_get_external_ip_adress', $ip_cache);
 	return $ip_cache;
 }
-
-
