@@ -22,7 +22,7 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 		<?php if (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED') || !GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED) : ?>
 			<br />
 			<?php printf(__('Next update: %s', 'geoip-detect'), $next_cron_update ? date_i18n($date_format, $next_cron_update) : __('Never', 'geoip-detect')); ?><br />
-			<em><?php _e('(The file is updated automatically once a week.)', 'geoip-detect'); ?></em>
+			<em><?php _e('(The file is updated automatically once a month.)', 'geoip-detect'); ?></em>
 		<?php endif; ?>
 	</p>
 	
