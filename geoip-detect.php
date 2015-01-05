@@ -118,6 +118,13 @@ function geoip_detect_plugin_page()
 	if (file_exists($data_file))
 	{
 		$last_update = filemtime($data_file);
+		
+		$last_update_db = 0;
+		$reader = geoip_detect2_get_reader();
+		if (method_exists($reader, 'metadata')) {
+			$metadata = $reader->metadata();
+			$last_update_db = $metadata->buildEpoch;
+		}
 	}
 	else 
 	{
