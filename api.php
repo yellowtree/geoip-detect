@@ -15,32 +15,33 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 	$orig_ip = $ip;
 	
 	$reader = geoip_detect2_get_reader($locales);
-	if (!$reader)
-		return null;
 
 	$record = null;
 
-	// For development usage: if the client IP is not a public IP, use the public IP of the server instead.
-	if ($ip == 'me' || (geoip_detect_is_ip($ip) && !geoip_detect_is_public_ip($ip))) {
-		$ip = geoip_detect2_get_external_ip_adress();
-	}
+	if ($reader) {
+		// For development usage: if the client IP is not a public IP, use the public IP of the server instead.
+		if ($ip == 'me' || (geoip_detect_is_ip($ip) && !geoip_detect_is_public_ip($ip))) {
+			$ip = geoip_detect2_get_external_ip_adress();
+		}
+		
+		
+		try {
+			$record = $reader->city($ip);
+		} catch(GeoIp2\Exception\GeoIp2Exception $e) {
+			if (WP_DEBUG)
+				echo 'Error while looking up "' . $ip . '": ' . $e->getMessage();
+		} catch(Exception $e) {
+			if (WP_DEBUG)
+				echo 'Error while looking up "' . $ip . '": ' . $e->getMessage();		
+		}
 	
-	
-	try {
-		$record = $reader->city($ip);
-	} catch(GeoIp2\Exception\GeoIp2Exception $e) {
-		if (WP_DEBUG)
-			echo 'Error while looking up "' . $ip . '": ' . $e->getMessage();
-	} catch(Exception $e) {
-		if (WP_DEBUG)
-			echo 'Error while looking up "' . $ip . '": ' . $e->getMessage();		
+		$reader->close();
 	}
-
-	$reader->close();
 	
 	if ($record === null) {
-		$data = array('traits' => array(/* 'is_empty' => true, */ 'ip_address' => $ip));
+		$data = array('traits' => array('ip_address' => $ip));
 		$record = new \GeoIp2\Model\City($data, array('en'));
+		$record->isEmpty = true;
 	}
 	
 	/**
