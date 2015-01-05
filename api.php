@@ -39,6 +39,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 	}
 	
 	if ($record === null) {
+		// TODO : Allow to set default by filter
 		$data = array('traits' => array('ip_address' => $ip));
 		$record = new \GeoIp2\Model\City($data, array('en'));
 		$record->isEmpty = true;
