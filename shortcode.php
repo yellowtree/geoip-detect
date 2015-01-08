@@ -1,6 +1,5 @@
 <?php
 
-use Guzzle\Common\Exception\RuntimeException;
 add_shortcode('geoip_detect', 'geoip_detect_shortcode');
 /**
  * @deprecated 
