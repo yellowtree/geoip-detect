@@ -92,7 +92,7 @@ sed 's/===/#/g' /tmp/file1 &> /tmp/file2
 sed 's/==/##/g' /tmp/file2 &> /tmp/file1
 
 # Replave = to #### From Description To The End Of File
-sed '/Description/,$s/=/####/g' /tmp/file1 &> /tmp/file2
+#sed '/Description/,$s/=/####/g' /tmp/file1 &> /tmp/file2
 
 # Make Text Bold
 sed 's/[Cc]ontributors:/* **Contributors:**/' /tmp/file2 &> /tmp/file1
