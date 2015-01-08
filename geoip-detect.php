@@ -115,11 +115,13 @@ function geoip_detect_plugin_page()
 	}
 	
 	$data_file = geoip_detect_get_abs_db_filename();
+	$last_update_db = 0;
+	$last_update = 0;
+
 	if (file_exists($data_file))
 	{
 		$last_update = filemtime($data_file);
 		
-		$last_update_db = 0;
 		$reader = geoip_detect2_get_reader();
 		if (method_exists($reader, 'metadata')) {
 			$metadata = $reader->metadata();
@@ -129,7 +131,6 @@ function geoip_detect_plugin_page()
 	else 
 	{
 		$message .= __('No GeoIP Database found. Click on the button "Update now" or follow the installation instructions.', 'geoip-detect');
-		$last_update = 0;
 	}
 	$next_cron_update = wp_next_scheduled( 'geoipdetectupdate' );
 	

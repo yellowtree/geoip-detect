@@ -2,17 +2,17 @@
 $date_format = get_option('date_format') . ' ' . get_option('time_format')
 ?>
 <div class="wrap">
-	<h2><?php _e('GeoIP Detect', 'geoip-detect');?></h2>
+	<h2><?php _e('GeoIP Detection', 'geoip-detect');?></h2>
 
 	<?php if (!empty($message)): ?>
-		<p class="error" style="margin-top:10px;">
+		<p class="geoip_detect_error">
 		<?php echo $message; ?>
 		</p>
 	<?php endif; ?>
 	
 	<?php if ($last_update_db) : ?>
 	<p>
-		<?php printf(__('Database from : %s', 'geoip-detect'), date_i18n($date_format, $last_update_db) ); ?>
+		<?php printf(__('Database data from : %s', 'geoip-detect'), date_i18n($date_format, $last_update_db) ); ?>
 	</p>
 	<?php endif; ?>
 
@@ -45,45 +45,45 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 	</p>
 	
 	<table>
-		<thead>
+		<tr>
 			<th><?php _e('Key', 'geoip-detect'); ?></th>
-			<th><?php _e('Property Value', 'geoip-detect'); ?></th>
-			</thead>
+			<th><?php _e('Value', 'geoip-detect'); ?></th>
+		</tr>
 	
 		<tr>
-			<td><code>$record->city->name</code></td>
+			<td><code>$record-&gt;city-&gt;name</code></td>
 			<td><?php echo esc_html($record->city->name);?></td>
 		</tr>
 		<tr>
-			<td><code>$record->mostSpecificSubdivision->isoCode</code></td>
+			<td><code>$record-&gt;mostSpecificSubdivision-&gt;isoCode</code></td>
 			<td><?php echo esc_html($record->mostSpecificSubdivision->name);?></td>
 		</tr>
 		<tr>
-			<td><code>$record->mostSpecificSubdivision->name</code></td>
+			<td><code>$record-&gt;mostSpecificSubdivision-&gt;name</code></td>
 			<td><?php echo esc_html($record->mostSpecificSubdivision->name);?></td>
 		</tr>
 		<tr>
-			<td><code>$record->country->isoCode</code></td>
+			<td><code>$record-&gt;country-&gt;isoCode</code></td>
 			<td><?php echo esc_html($record->country->isoCode);?></td>
 		</tr>
 		<tr>
-			<td><code>$record->country->name</code></td>
+			<td><code>$record-&gt;country-&gt;name</code></td>
 			<td><?php echo esc_html($record->country->name);?></td>
 		</tr>
 		<tr>
-			<td><code>$record->location->latitude</code></td>
+			<td><code>$record-&gt;location-&gt;latitude</code></td>
 			<td><?php echo esc_html($record->location->latitude);?></td>
 		</tr>
 		<tr>
-			<td><code>$record->location->longitude</code></td>
+			<td><code>$record-&gt;location-&gt;longitude</code></td>
 			<td><?php echo esc_html($record->location->longitude);?></td>
 		</tr>
 		<tr>
-			<td><code>$record->continent->code</code></td>
+			<td><code>$record-&gt;continent-&gt;code</code></td>
 			<td><?php echo esc_html($record->continent->code);?></td>
 		</tr>
 		<tr>
-			<td><code>$record->location->timeZone</code></td>
+			<td><code>$record-&gt;location-&gt;timeZone</code></td>
 			<td><?php echo esc_html($record->location->timeZone);?></td>
 		</tr>
 
@@ -121,3 +121,22 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 		<small><em>This product includes GeoLite2 data created by MaxMind, available from <a href="http://www.maxmind.com/">http://www.maxmind.com</a>.</em></small>
 	</p>
 </div>
+<style>
+.geoip_detect_error {
+    background-color: rgb(255, 255, 255);
+    border-left: rgb(255, 0, 0) solid 4px;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    font-size: 14px;
+    line-height: 19px;
+    margin-bottom: 0;
+    margin-left: 2px;
+    margin-right: 20px;
+    margin-top: 25px;
+    padding-bottom: 11px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 11px;
+    text-align: left;
+}
+</style>

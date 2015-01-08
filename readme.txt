@@ -37,7 +37,10 @@ Provides geographic information detected by an IP adress. This can be used in th
 == Installation ==
 
 This plugin does not contain the database itself. It is downloaded as soon as you activate it the first time (takes some seconds).
-You can try it out on the plugin page.
+Alternatively, go to Tools > GeoIP Detection and click on "Update now".
+Both methods only work if your /wp-content/uploads-Folder is writable.
+
+To check if it works, go to the plugin page and click "Lookup".
 
 == Frequently Asked Questions ==
 
