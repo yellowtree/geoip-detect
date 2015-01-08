@@ -45,7 +45,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 		$record = new \GeoIp2\Model\City($data, array('en'));
 		$record->isEmpty = true;
 	} else {
-		//$record->isEmpty = false;
+		$record->isEmpty = false;
 	}
 	
 	/**
