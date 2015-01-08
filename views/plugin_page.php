@@ -12,7 +12,7 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 	
 	<?php if ($last_update_db) : ?>
 	<p>
-		<?php printf(__('Database data from : %s', 'geoip-detect'), date_i18n($date_format, $last_update_db) ); ?>
+		<?php printf(__('Database data from: %s', 'geoip-detect'), date_i18n($date_format, $last_update_db) ); ?>
 	</p>
 	<?php endif; ?>
 
