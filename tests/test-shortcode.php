@@ -1,5 +1,9 @@
 <?php
 
+function shortcode_empty_reader($reader) {
+	return null;
+}
+
 class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	function setUp() {
@@ -12,6 +16,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	function tearDown() {
 		parent::tearDown();
 		remove_filter('geoip_detect_get_external_ip_adress', 'geoip_detect_get_external_ip_adress_test_set_test_ip', 101);
+		remove_filter('geoip_detect2_reader', 'shortcode_empty_reader', 101);
 	}
 	
 	function testShortcodeOneProperty() {
@@ -65,6 +70,16 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertContains('<!--', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"city.names.INVALID\"] threw no error in spite of invalid property name: " . $string);
 		$string = do_shortcode('[geoip_detect2 property="INVALID" default="here"]');
 		$this->assertContains('here', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"INVALID\" default=\"here\"]does not contain default value: " . $string);
+	}
+	
+	function testEmptyData() {
+		// Force fallback to empty database. We want to test the case that no information is found.
+		// This can be the case, for example when a development machine has no internet access and thus cannot get any external IP.
+		add_filter('geoip_detect2_reader', 'shortcode_empty_reader', 101);
+		
+		$string = do_shortcode('[geoip_detect2 property="city" default="default"]');
+		$this->assertContains('No information found', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"city\"] should inform when no information accessible to this IP: " . $string);
+		$this->assertContains('default', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"city\"] should use default: " . $string);
 	}
 }
 

@@ -40,9 +40,12 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 	
 	if ($record === null) {
 		// TODO : Allow to set default by filter
+
 		$data = array('traits' => array('ip_address' => $ip));
 		$record = new \GeoIp2\Model\City($data, array('en'));
 		$record->isEmpty = true;
+	} else {
+		//$record->isEmpty = false;
 	}
 	
 	/**
@@ -98,7 +101,7 @@ function geoip_detect2_get_reader($locales = null) {
  */
 function geoip_detect2_get_info_from_current_ip($locales = null)
 {
-	return geoip_detect2_get_info_from_ip(geoip_detect_get_client_ip(), $locales);
+	return geoip_detect2_get_info_from_ip(geoip_detect2_get_client_ip(), $locales);
 }
 
 /**
@@ -107,7 +110,7 @@ function geoip_detect2_get_info_from_current_ip($locales = null)
  * 
  * @return string Client Ip (IPv4 or IPv6)
  */
-function geoip_detect_get_client_ip() {
+function geoip_detect2_get_client_ip() {
 	if (get_option('geoip-detect-has_reverse_proxy', 0) && isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
 	{
 		$ip = @$_SERVER["HTTP_X_FORWARDED_FOR"];

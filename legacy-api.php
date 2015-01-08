@@ -94,13 +94,22 @@ add_filter('geoip_detect_record_information', '_try_to_fix_timezone');
  */
 function geoip_detect_get_info_from_current_ip()
 {
-	return geoip_detect_get_info_from_ip(geoip_detect_get_client_ip());
+	return geoip_detect_get_info_from_ip(geoip_detect2_get_client_ip());
+}
+
+/**
+* Get client IP (even if it is behind a reverse proxy)
+* @deprecated since v2.0
+*/
+function geoip_detect_get_client_ip() {
+	return geoip_detect2_get_client_ip();
 }
 
 /**
  * Sometimes we can only see an local IP adress (local development environment.)
  * In this case we need to ask an internet server which IP adress our internet connection has.
  * 
+ * @deprecated since v2.0
  * @return string The detected IP Adress. If none is found, '0.0.0.0' is returned instead.
  */
 function geoip_detect_get_external_ip_adress()

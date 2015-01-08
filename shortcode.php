@@ -45,13 +45,15 @@ function geoip_detect2_shortcode($attr)
 {
 	$locales = isset($attr['lang']) ? array_unique(array($attr['lang'], 'en')) : null;
 	$locales = apply_filters('geoip_detect2_locales', $locales);
-		
-	$userInfo = geoip_detect2_get_info_from_current_ip($locales);
 
 	$defaultValue = isset($attr['default']) ? $attr['default'] : ''; 
 	
 	$properties = explode('.', $attr['property']);
 	
+	$userInfo = geoip_detect2_get_info_from_current_ip($locales);
+
+	if ($userInfo->isEmpty)
+		return $defaultValue . '<!-- GeoIP Detect: No information found for this IP (' . geoip_detect2_get_client_ip() . ') -->';	
 	
 	$return = '';
 	try {
@@ -69,11 +71,12 @@ function geoip_detect2_shortcode($attr)
 		return $defaultValue . '<!-- GeoIP Detect: Invalid property name. -->';
 	}
 
-	if (is_object($return) && isset($return->names))
+	if (is_object($return) && $return instanceof \GeoIp2\Record\AbstractPlaceRecord)
 		$return = $return->name;
 	
-	if (is_object($return) || is_array($return))
+	if (is_object($return) || is_array($return)) {
 		return $defaultValue . '<!-- GeoIP Detect: Invalid property name (sub-property missing). -->';
+	}
 	
 	if ($return)
 		return (string) $return;
