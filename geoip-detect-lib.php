@@ -46,6 +46,7 @@ function geoip_detect_is_ip_in_range($ip, $range_start, $range_end) {
  * @return boolean TRUE if private
  */
 function geoip_detect_is_public_ip($ip) {
+	// filver_var only detects 127.0.0.1 as local ...
 	if (geoip_detect_is_ip_in_range($ip, '127.0.0.0', '127.255.255.255'))
 		return false;
 

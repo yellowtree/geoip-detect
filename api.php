@@ -19,7 +19,9 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 	$record = null;
 
 	if ($reader) {
-		// For development usage: if the client IP is not a public IP, use the public IP of the server instead.
+		// When plugin installed on development boxes: 
+		// If the client IP is not a public IP, use the public IP of the server instead.
+		// Of course this only works if Internet Access works.
 		if ($ip == 'me' || (geoip_detect_is_ip($ip) && !geoip_detect_is_public_ip($ip))) {
 			$ip = geoip_detect2_get_external_ip_adress();
 		}
@@ -64,9 +66,10 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
  * Get the Maxmind Reader
  * (Use this if you want to use other methods than "city" or otherwise customize behavior.)
  * 
- * @param array(string)			List of locale codes to use in name property
- * 								from most preferred to least preferred. (Default: Site language, en)
- * @return GeoIp2\Database\Reader The reader, ready to do its work. Don't forget to `close()` it afterwards. NULL if file not found (or other problems).
+ * @param array(string)				List of locale codes to use in name property
+ * 									from most preferred to least preferred. (Default: Site language, en)
+ * @return GeoIp2\Database\Reader 	The reader, ready to do its work. Don't forget to `close()` it afterwards. NULL if file not found (or other problems).
+ * 									NULL if initialization went wrong (e.g., File not found.)
  */
 function geoip_detect2_get_reader($locales = null) {	
 	/**
@@ -95,6 +98,7 @@ function geoip_detect2_get_reader($locales = null) {
 
 /**
  * Get Geo-Information for the current IP
+ * 
  * @param array(string)			List of locale codes to use in name property
  * 								from most preferred to least preferred. (Default: Site language, en)
  * @return GeoIp2\Model\City	GeoInformation.
