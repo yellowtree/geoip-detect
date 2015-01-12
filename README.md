@@ -78,7 +78,7 @@ Maxmind released a new API version (v2) with localized country names and a accur
 
 1. Backend page (under Tools > GeoIP Detection)
 
-= 2.0.0 =
+= 2.0.1 =
 
 This major update uses the new Maxmind API (v2). 
 At least PHP 5.3.1 is required now.
@@ -99,7 +99,7 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
-= 2.0.0 =
+= 2.0.1 =
 * NEW: Using v2 version of the API.
 See Migration Guide at [Github](https://github.com/yellowtree/wp-geoip-detect/wiki/How-to-migrate-from-v1-to-v2)
 
@@ -109,6 +109,10 @@ Other changes:
 * NEW: The new shortcode [geoip_detect2 ...] also supports a "lang"-Attribute.
 * NEW: IPv6 addresses are now supported as well.
 * Legacy function names and shortcode should work in most cases. For details check the guide above.
+
+= 2.0.0 =
+
+(Was not released on wordpress.org to make sure that development releases get this update as well.)
 
 = 1.8 =
 * NEW: Support reverse proxies (you have to enable it in the plugin options.)
