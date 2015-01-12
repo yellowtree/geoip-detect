@@ -53,7 +53,7 @@ function geoip_detect_update()
 	gzclose($zh);
 	fclose($h);
 
-	//unlink($tmpFile);
+	unlink($tmpFile);
 
 	return true;
 }
