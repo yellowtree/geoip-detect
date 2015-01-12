@@ -84,6 +84,7 @@ README.md
 .git
 .gitignore
 tests
+*/tests
 test
 phpunit.xml" "$SVNPATH/trunk/"
 

@@ -71,10 +71,6 @@ Or, add the plugin shortcode somewhere in the page or post content:
 
 For more information, check the [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation).  
 
-#### What is planned to be implemented? ####
-
-Maxmind released a new API version (v2) with localized country names and a accuracy percentage. Work in Progress.
-
 == Screenshots ==
 
 1. Backend page (under Tools > GeoIP Detection)
