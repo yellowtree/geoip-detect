@@ -30,6 +30,7 @@ add_filter('geoip_detect_get_abs_db_filename', 'geoip_detect_get_database_upload
 function geoip_detect_update()
 {
 	$download_url = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz';
+	$download_url = apply_filters('geoip_detect2_download_url', $download_url);
 
 	$outFile = geoip_detect_get_database_upload_filename();
 
