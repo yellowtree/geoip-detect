@@ -77,6 +77,11 @@ For more information, check the [API Documentation](https://github.com/yellowtre
 
 == Upgrade Notice == 
 
+= 2.1.0 =
+Update to v2.x is a major update.
+At least PHP 5.3.1 is required now.
+See Migration Guide at https://github.com/yellowtree/wp-geoip-detect/wiki/How-to-migrate-from-v1-to-v2
+
 = 2.0.1 =
 
 This major update uses the new Maxmind API (v2). 
@@ -97,6 +102,9 @@ Fixing automatic weekly updates.
 
 
 == Changelog ==
+
+= 2.1.0 =
+* NEW: A nagging admin notice shows up on every wp-admin page when no database is installed (yet).
 
 = 2.0.1 =
 * NEW: Using v2 version of the API.
