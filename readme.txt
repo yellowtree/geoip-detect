@@ -77,7 +77,7 @@ For more information, check the [API Documentation](https://github.com/yellowtre
 
 == Upgrade Notice == 
 
-= 2.1.0 =
+= 2.1.1 =
 
 Update to v2.x is a major update.
 At least PHP 5.3.1 is required now.
@@ -103,6 +103,9 @@ Fixing automatic weekly updates.
 
 
 == Changelog ==
+
+= 2.1.1 =
+* FIX: Notice "Database missing" should not show during/right after database update.
 
 = 2.1.0 =
 * NEW: A nagging admin notice shows up on every wp-admin page when no database is installed (yet).
