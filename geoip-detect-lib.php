@@ -2,13 +2,6 @@
 // This file contains function that are necessary for the plugin, but not deemed as API.
 // Their name / parameter may change without warning.
 
-function geoip_detect_defines() {
-	if (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED'))
-		define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', false);
-	if (!defined('GEOIP_DETECT_IP_CACHE_TIME'))
-		define('GEOIP_DETECT_IP_CACHE_TIME', 2 * HOUR_IN_SECONDS);
-}
-add_action('plugins_loaded', 'geoip_detect_defines');
 
 
 function geoip_detect_get_abs_db_filename()

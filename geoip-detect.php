@@ -35,6 +35,9 @@ define('GEOIP_PLUGIN_FILE', __FILE__);
 require_once(__DIR__ . '/vendor/autoload.php');
 
 require_once(__DIR__ . '/geoip-detect-lib.php');
+
+require_once(__DIR__ . '/init.php');
+//require_once(__DIR__ . '/upgrade-plugin.php');
 require_once(__DIR__ . '/api.php');
 require_once(__DIR__ . '/legacy-api.php');
 require_once(__DIR__ . '/filter.php');
@@ -52,26 +55,6 @@ define('GEOIP_REQUIRED_WP_VERSION', '3.5');
 
 //define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', false);
 //define('GEOIP_DETECT_IP_CACHE_TIME', 2 * HOUR_IN_SECONDS);
-
-register_activation_hook( GEOIP_PLUGIN_FILE, 'geoip_detect_version_check' );
-
-function geoip_detect_version_check() {
-   global $wp_version;
-   
-    if ( version_compare( PHP_VERSION, GEOIP_REQUIRED_PHP_VERSION, '<' ) ) {
-        $flag = 'PHP';
-    	$min = GEOIP_REQUIRED_PHP_VERSION;
-    }
-    elseif ( version_compare( $wp_version, GEOIP_REQUIRED_WP_VERSION, '<' ) ) {
-        $flag = 'WordPress';
-   		$min = GEOIP_REQUIRED_WP_VERSION;
-    }
-    else
-        return;
-        
-    deactivate_plugins( basename( GEOIP_PLUGIN_FILE ) );
-    wp_die('<p>The <strong>GeoIP Detect</strong> plugin requires '.$flag.'  version '.$min.' or greater.</p><p>You can try to install an 1.x version of this plugin.</p>','Plugin Activation Error',  array( 'response'=>200, 'back_link'=>TRUE ) );
-}
 
 
 // ------------- Admin GUI --------------------
