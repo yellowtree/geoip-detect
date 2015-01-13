@@ -70,13 +70,14 @@ Or, add the plugin shortcode somewhere in the page or post content:
 
 For more information, check the [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation).  
 
-#### What is planned to be implemented? ####
-
-Maxmind released a new API version (v2) with localized country names and a accuracy percentage. Work in Progress.
-
 == Screenshots ==
 
 1. Backend page (under Tools > GeoIP Detection)
+
+= 2.1.0 =
+Update to v2.x is a major update.
+At least PHP 5.3.1 is required now.
+See Migration Guide at https://github.com/yellowtree/wp-geoip-detect/wiki/How-to-migrate-from-v1-to-v2
 
 = 2.0.1 =
 
@@ -98,6 +99,9 @@ Fixing automatic weekly updates.
 
 
 == Changelog ==
+
+= 2.1.0 =
+* NEW: A nagging admin notice shows up on every wp-admin page when no database is installed (yet).
 
 = 2.0.1 =
 * NEW: Using v2 version of the API.
