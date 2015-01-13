@@ -38,10 +38,17 @@ function geoip_detect_enqueue_admin_notices() {
 		(defined('DOING_CRON') && DOING_CRON) || 
 		(defined('DOING_AJAX') && DOING_AJAX) )
 		return;
+
+	global $plugin_page;
 	
 	$db_file = geoip_detect_get_abs_db_filename();
-	if (!$db_file || !file_exists($db_file))
-		add_action( 'all_admin_notices', 'geoip_detect_admin_notice_database_missing' );
+	if (!$db_file || !file_exists($db_file)) {
+		if ($plugin_page == 'geoip-detect/geoip-detect.php' && isset($_POST['action']) && $_POST['action'] == 'update') {
+			// Skip because maybe he is currently updating the database
+		} else {
+			add_action( 'all_admin_notices', 'geoip_detect_admin_notice_database_missing' );
+		}
+	}
 }
 add_action('admin_init', 'geoip_detect_enqueue_admin_notices');
 
@@ -54,7 +61,7 @@ function geoip_detect_admin_notice_database_missing() {
     <div class="error">
        	<p style="float: right"><a href="?geoip_detect_dismiss_notice=database_missing"><?php _e('Dismiss notice', 'geoip-detect'); ?></a>
     	<h3><?php _e( 'GeoIP Detection: Database missing', 'geoip-detect' ); ?></h3>
-        <p><?php printf(__( 'The Plugin %s can\'t do its work before you install the IP database. Click on the button below to download and install Maxmind GeoIPv2 Lite City now.', 'geoip-detect' ), '<a href="tools.php?page=geoip-detect/geoip-detect.php">GeoIP Detection</a>'); ?></p>
+        <p><?php printf(__( 'The Plugin %s can\'t do its work before you install an IP database. Click on the button below to download and install Maxmind GeoIPv2 Lite City now.', 'geoip-detect' ), '<a href="tools.php?page=geoip-detect/geoip-detect.php">GeoIP Detection</a>'); ?></p>
         <form action="tools.php?page=geoip-detect/geoip-detect.php" method="post">
 	        <p>
 	        		<input type="hidden" name="action" value="update" />
@@ -73,10 +80,13 @@ function geoip_detect_dismiss_message() {
 	if ($dismiss) {
 		$ignored_notices = (array) get_user_meta(get_current_user_id(), 'geoip_detect_dismissed_notices', true);
 		
-		if (!in_array($dismiss, $ignored_notices)) {
+		if ($dismiss == '-1') { // Undocumented feature: reset dismissed messages
+			$ignored_notices = array();
+		} else if (!in_array($dismiss, $ignored_notices)) {
 			$ignored_notices[] = $dismiss;
-			update_user_meta(get_current_user_id(), 'geoip_detect_dismissed_notices', $ignored_notices);	
 		}
+		
+		update_user_meta(get_current_user_id(), 'geoip_detect_dismissed_notices', $ignored_notices);	
 	}
 }
 add_action('admin_init', 'geoip_detect_dismiss_message');
