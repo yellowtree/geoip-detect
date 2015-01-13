@@ -85,9 +85,6 @@ README.md
 .gitignore
 tests
 test
-vendor/guzzle/guzzle/tests
-vendor/maxmind-db/reader/tests
-symfony/event-dispatcher/Symfony/Component/EventDispatcher/Tests
 phpunit.xml" "$SVNPATH/trunk/"
 
 #if submodule exist, recursively check out their indexes (from benbalter)

@@ -137,7 +137,6 @@ function geoip_detect_add_settings_link( $links ) {
 	array_push( $links, $settings_link );
 	return $links;
 }
-$plugin = plugin_basename( __FILE__ );
-add_filter( "plugin_action_links_$plugin", 'geoip_detect_add_settings_link' );
+add_filter( "plugin_action_links_" . plugin_basename( GEOIP_PLUGIN_FILE ), 'geoip_detect_add_settings_link' );
 
 

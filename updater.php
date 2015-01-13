@@ -24,7 +24,6 @@ function geoip_detect_get_database_upload_filename_filter($filename_before)
 	
 	return $filename_before;
 }
-
 add_filter('geoip_detect_get_abs_db_filename', 'geoip_detect_get_database_upload_filename_filter');
 
 function geoip_detect_update()
@@ -77,7 +76,6 @@ function geoip_detect_update_cron($immediately_after_activation = false) {
 		
 	geoip_detect_schedule_next_cron_run();
 }
-
 add_action('geoipdetectupdate', 'geoip_detect_update_cron', 10, 1);
 
 function geoip_detect_set_cron_schedule($now = false)

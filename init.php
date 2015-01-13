@@ -1,7 +1,5 @@
 <?php
 
-add_action( 'admin_init', 'geoip_detect_version_check' );
-
 function geoip_detect_version_check() {
    global $wp_version;
    
@@ -19,6 +17,9 @@ function geoip_detect_version_check() {
     deactivate_plugins( basename( GEOIP_PLUGIN_FILE ) );
     wp_die('<p>The plugin <strong>GeoIP Detection</strong> plugin requires '.$flag.'  version '.$min.' or greater and was therefore deactivated.</p><p>You can try to install an 1.x version of this plugin.</p>','Plugin Activation Error',  array( 'response'=>200, 'back_link'=>TRUE ) );
 }
+add_action( 'admin_init', 'geoip_detect_version_check' );
+
+
 
 function geoip_detect_defines() {
 	if (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED'))
@@ -27,6 +28,9 @@ function geoip_detect_defines() {
 		define('GEOIP_DETECT_IP_CACHE_TIME', 2 * HOUR_IN_SECONDS);
 }
 add_action('plugins_loaded', 'geoip_detect_defines');
+
+
+
 
 function geoip_detect_enqueue_admin_notices() {
 	// Nobody would see them anyway.

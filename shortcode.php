@@ -1,6 +1,5 @@
 <?php
 
-add_shortcode('geoip_detect', 'geoip_detect_shortcode');
 /**
  * @deprecated 
  */
@@ -24,8 +23,8 @@ function geoip_detect_shortcode($attr)
 	
 	return $defaultValue . '<!-- GeoIP Detect: Invalid property name. -->';
 }
+add_shortcode('geoip_detect', 'geoip_detect_shortcode');
 
-add_shortcode('geoip_detect2', 'geoip_detect2_shortcode');
 /**
  * Short Code
  * 
@@ -83,3 +82,4 @@ function geoip_detect2_shortcode($attr)
 		return $defaultValue;
 	
 }
+add_shortcode('geoip_detect2', 'geoip_detect2_shortcode');
