@@ -35,6 +35,8 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 * You show or hide content specific to a geographic target group
 * Etc. ... You tell me! I'm rather curious what you'll do with this plugin!
 
+System Requirements: You will need at least PHP 5.3.1.
+
 *This product includes GeoLite2 data created by MaxMind, available from http://www.maxmind.com.*
 
 == Installation ==
