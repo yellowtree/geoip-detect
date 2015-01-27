@@ -32,19 +32,19 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 define('GEOIP_PLUGIN_FILE', __FILE__);
 
-require_once(__DIR__ . '/vendor/autoload.php');
+require_once(dirname(GEOIP_PLUGIN_FILE) . '/vendor/autoload.php');
 
-require_once(__DIR__ . '/geoip-detect-lib.php');
+require_once(dirname(GEOIP_PLUGIN_FILE) . '/geoip-detect-lib.php');
 
-require_once(__DIR__ . '/init.php');
-//require_once(__DIR__ . '/upgrade-plugin.php');
-require_once(__DIR__ . '/api.php');
-require_once(__DIR__ . '/legacy-api.php');
-require_once(__DIR__ . '/filter.php');
+require_once(dirname(GEOIP_PLUGIN_FILE) . '/init.php');
+//require_once(dirname(GEOIP_PLUGIN_FILE) . '/upgrade-plugin.php');
+require_once(dirname(GEOIP_PLUGIN_FILE) . '/api.php');
+require_once(dirname(GEOIP_PLUGIN_FILE) . '/legacy-api.php');
+require_once(dirname(GEOIP_PLUGIN_FILE) . '/filter.php');
 
-require_once(__DIR__ . '/updater.php');
+require_once(dirname(GEOIP_PLUGIN_FILE) . '/updater.php');
 
-require_once(__DIR__ . '/shortcode.php');
+require_once(dirname(GEOIP_PLUGIN_FILE) . '/shortcode.php');
 
 
 define('GEOIP_DETECT_DATA_FILENAME', 'GeoLite2-City.mmdb');
@@ -123,7 +123,7 @@ function geoip_detect_plugin_page()
 		$options[$opt_name] = (int) get_option('geoip-detect-'. $opt_name);
 	}
 
-	include_once(__DIR__ . '/views/plugin_page.php');	
+	include_once(dirname(GEOIP_PLUGIN_FILE) . '/views/plugin_page.php');	
 }
 
 function geoip_detect_menu() {
