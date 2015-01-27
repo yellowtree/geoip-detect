@@ -15,7 +15,7 @@ function geoip_detect_version_check() {
         return;
         
     deactivate_plugins( basename( GEOIP_PLUGIN_FILE ) );
-    wp_die('<p>The plugin <strong>GeoIP Detection</strong> plugin requires '.$flag.'  version '.$min.' or greater and was therefore deactivated.</p><p>You can try to install an 1.x version of this plugin.</p>','Plugin Activation Error',  array( 'response'=>200, 'back_link'=>TRUE ) );
+    wp_die('<p>The plugin <strong>GeoIP Detection</strong> plugin requires '.$flag.'  version '.$min.' or greater and was therefore deactivated.</p><p>You can try to install an <a href="https://downloads.wordpress.org/plugin/geoip-detect.1.8.zip">1.x version</a> of this plugin.</p>','Plugin Activation Error',  array( 'response'=>200, 'back_link'=>TRUE ) );
 }
 add_action( 'admin_init', 'geoip_detect_version_check' );
 
