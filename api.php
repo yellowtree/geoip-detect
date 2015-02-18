@@ -117,7 +117,9 @@ function geoip_detect2_get_info_from_current_ip($locales = null)
 function geoip_detect2_get_client_ip() {
 	if (get_option('geoip-detect-has_reverse_proxy', 0) && isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
 	{
-		$ip = @$_SERVER["HTTP_X_FORWARDED_FOR"];
+		// This server option can be a comma-seperated list of IPs. Use the first IP in the list which should be the 'last' IP added.
+		$ip_list = explode(',', @$_SERVER["HTTP_X_FORWARDED_FOR"]);
+		$ip = $ip_list[0];
 	} else {
 		$ip = @$_SERVER['REMOTE_ADDR'];
 	}
