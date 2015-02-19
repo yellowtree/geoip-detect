@@ -28,6 +28,16 @@ add_filter('geoip_detect_get_abs_db_filename', 'geoip_detect_get_database_upload
 
 function geoip_detect_update()
 {
+	$task = geoip_detect_get_task();
+	if ($task->is_scheduled())
+		return 'Already running';
+
+	$task->schedule();
+	
+	return true;
+}
+
+function geoip_detect_get_task() {
 	// Class might be loaded by another plugin first
 	if ( ! class_exists( 'HM_Backdrop_Task' ) ) {
 		require_once( __DIR__ . '/vendor/backdrop/hm-backdrop.php' );
@@ -35,35 +45,32 @@ function geoip_detect_update()
 
 	$download_url = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz';
 	$download_url = apply_filters('geoip_detect2_download_url', $download_url);
-
-	$outFile = geoip_detect_get_database_upload_filename();
-
-	$task = new \HM\Backdrop\Task( '_geoip_detect_update', $download_url, $outFile );
-	if ($task->is_scheduled())
-		return 'Already running';
-	$task->schedule();
 	
-	return true;
+	$outFile = geoip_detect_get_database_upload_filename();
+	
+	$task = new \HM\Backdrop\Task( '_geoip_detect_update', $download_url, $outFile );
+	
+	return $task;
 }
 
 function _geoip_detect_update($url, $outfile)
 {
 	if (!is_writable($outfile))
-		return sprintf(__('Database could not be written (%s).', 'geoip-detect'), $outFile);
+		return sprintf(__('Database could not be written (%s).', 'geoip-detect'), $outfile);
 
 	// Download
-	$tmpFile = download_url($download_url);
+	$tmpFile = download_url($url);
 	if (is_wp_error($tmpFile))
 		return $tmpFile->get_error_message();
 
 	// Ungzip File
 	$zh = gzopen($tmpFile, 'r');
-	$h = fopen($outFile, 'w');
+	$h = fopen($outfile, 'w');
 
 	if (!$zh)
 		return __('Downloaded file could not be opened for reading.', 'geoip-detect');
 	if (!$h)
-		return sprintf(__('Database could not be written (%s).', 'geoip-detect'), $outFile);
+		return sprintf(__('Database could not be written (%s).', 'geoip-detect'), $outfile);
 
 	while ( ($string = gzread($zh, 4096)) != false )
 		fwrite($h, $string, strlen($string));

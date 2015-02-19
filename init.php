@@ -45,6 +45,8 @@ function geoip_detect_enqueue_admin_notices() {
 	if (!$db_file || !file_exists($db_file)) {
 		if ($plugin_page == 'geoip-detect/geoip-detect.php' && isset($_POST['action']) && $_POST['action'] == 'update') {
 			// Skip because maybe he is currently updating the database
+		} else if (geoip_detect_get_task()->is_scheduled()) {
+			// Skip because currently running
 		} else {
 			add_action( 'all_admin_notices', 'geoip_detect_admin_notice_database_missing' );
 		}

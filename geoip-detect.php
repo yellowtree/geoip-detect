@@ -74,9 +74,9 @@ function geoip_detect_plugin_page()
 		case 'update':
 			$ret = geoip_detect_update();
 			if ($ret === true)
-				$message .= __('Updated successfully.', 'geoip-detect');
+				$message .= __('Update scheduled.', 'geoip-detect');
 			else
-				$message .= __('Update failed.', 'geoip-detect') .' '. $ret;
+				$message .= __('Update already running.', 'geoip-detect');
 
 			break;
 
@@ -96,6 +96,8 @@ function geoip_detect_plugin_page()
 			
 			break;
 	}
+
+	$running = geoip_detect_get_task()->is_scheduled();
 	
 	$data_file = geoip_detect_get_abs_db_filename();
 	$last_update_db = 0;
@@ -113,7 +115,8 @@ function geoip_detect_plugin_page()
 	}
 	else 
 	{
-		$message .= __('No GeoIP Database found. Click on the button "Update now" or follow the installation instructions.', 'geoip-detect');
+		if (!$running) 
+			$message .= __('No GeoIP Database found. Click on the button "Update now" or follow the installation instructions.', 'geoip-detect');
 	}
 	$next_cron_update = wp_next_scheduled( 'geoipdetectupdate' );
 	
