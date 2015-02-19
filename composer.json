@@ -11,7 +11,7 @@
     "keywords": [],
     "homepage": "http://www.yellowtree.de",
     "license": [
-        "GPL-2.0+"
+        "GPL-3.0+"
     ],
     "require": {
         "geoip2/geoip2": "~2.0",
