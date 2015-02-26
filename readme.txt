@@ -106,6 +106,10 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+= 2.1.2 =
+* FIX: Show error message if PHP < 5.3 (instead of fatal error)
+* FIX: Support multiple proxies (but currently only one reverse proxy)
+
 = 2.1.1 =
 * FIX: Notice "Database missing" should not show during/right after database update.
 
