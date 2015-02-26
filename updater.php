@@ -95,12 +95,6 @@ function geoip_detect_schedule_next_cron_run() {
 	wp_schedule_single_event($next, 'geoipdetectupdate');
 }
 
-function geoip_detect_activate()
-{
-	geoip_detect_set_cron_schedule(true);
-}
-register_activation_hook(GEOIP_PLUGIN_FILE, 'geoip_detect_activate');
-
 
 function geoip_detect_deactivate()
 {
