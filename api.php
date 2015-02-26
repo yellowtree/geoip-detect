@@ -121,12 +121,14 @@ function geoip_detect2_get_client_ip() {
 		// Each Proxy server append their information at the end, so the last IP is most trustworthy.
 		// TODO get_option('geoip_detect_trusted_proxy_ips')
 		$ip_list = explode(',', @$_SERVER["HTTP_X_FORWARDED_FOR"]);
-		$ip = end($ip_list);
+		$ip = trim(end($ip_list));
 	} else {
 		$ip = @$_SERVER['REMOTE_ADDR'];
 	}
 	if (!$ip)
 		$ip = '::1'; // By default, use localhost
+	
+	$ip = apply_filters('geoip2_detect2_client_ip', $ip);
 	
 	return $ip;
 }
