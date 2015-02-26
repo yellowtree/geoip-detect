@@ -50,8 +50,6 @@ class ReverseProxyTest extends WP_UnitTestCase_GeoIP_Detect {
 	function testNormalizeIpv6() {
 		$this->assertSame('fe80::202:b3ff:fe1e:8329', geoip_detect_normalize_ip('FE80::0202:B3FF:FE1E:8329'));
 		$this->assertSame('fe80::202:b3ff:fe1e:8329', geoip_detect_normalize_ip('fe80:0:0:0:202:b3ff:fe1e:8329'));
-		
-		
 	}
 	
 	function testNormalizeIpv4() {
