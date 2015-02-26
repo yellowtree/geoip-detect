@@ -78,7 +78,7 @@ For more information, check the [API Documentation](https://github.com/yellowtre
 
 == Upgrade Notice == 
 
-= 2.2 =
+= 2.2.0 =
 
 The automatic updater was removed, because WP.org does not allow Creative-Commons-Licensed resources, including the Maxmind DB. See the updated Installation section for more information.
 
@@ -109,8 +109,9 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
-= 2.2 =
+= 2.2.0 =
 * FIX: Removing automatic update due to wp.org repo guidelines. See updated installation informations.
+* NEW: Commercial database is now supported. You can specify a manual path in the options.
 
 = 2.1.2 =
 * FIX: Show error message if PHP < 5.3 (instead of fatal error)
