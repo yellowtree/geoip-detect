@@ -115,16 +115,36 @@ function geoip_detect2_get_info_from_current_ip($locales = null)
  * @return string Client Ip (IPv4 or IPv6)
  */
 function geoip_detect2_get_client_ip() {
+	$ip = '::1';
+
+	if (isset($_SERVER['REMOTE_ADDR']))
+		$ip = $_SERVER['REMOTE_ADDR'];
+	
 	if (get_option('geoip-detect-has_reverse_proxy', 0) && isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
 	{
-		// This server option can be a comma-seperated list of IPs.
-		// Each Proxy server append their information at the end, so the last IP is most trustworthy.
-		// TODO get_option('geoip_detect_trusted_proxy_ips')
 		$ip_list = explode(',', @$_SERVER["HTTP_X_FORWARDED_FOR"]);
-		$ip = trim(end($ip_list));
-	} else {
-		$ip = @$_SERVER['REMOTE_ADDR'];
+		$ip_list = array_map('geoip_detect_normalize_ip', $ip_list);
+		
+		$trusted_proxies = get_option('geoip-detect-trusted_proxy_ips');
+		if ($trusted_proxies) {
+			// TODO: Expose option to UI. comma-seperated list of IPv4 and v6 adresses.			
+			$trusted_proxies = explode(',', $trusted_proxies);
+			
+			// Always trust localhost
+			$trusted_proxies[] = '::1';
+			$trusted_proxies[] = '127.0.0.1';
+			
+			$trusted_proxies = array_map('geoip_detect_normalize_ip', $trusted_proxies);
+			$ip_list[] = $ip;
+				
+			$ip_list = array_diff($ip_list, $trusted_proxies);
+
+		} 
+		
+		// Each Proxy server append their information at the end, so the last IP is most trustworthy.
+		$ip = end($ip_list);
 	}
+	
 	if (!$ip)
 		$ip = '::1'; // By default, use localhost
 	

@@ -18,6 +18,15 @@ function geoip_detect_get_abs_db_filename()
 	return $data_filename;
 }
 
+/**
+ * IPv6-Adresses can be written in different formats. Make sure they are standardized.
+ * For IPv4-Adresses, spaces are removed.
+ */
+function geoip_detect_normalize_ip($ip) {
+	$ip = trim($ip);
+	$ip = inet_ntop(inet_pton($ip));
+	return $ip;
+}
 
 function geoip_detect_is_ip($ip) {
 	return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6) !== false;
