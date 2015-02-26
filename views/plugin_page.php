@@ -4,14 +4,6 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 <div class="wrap">
 	<h2><?php _e('GeoIP Detection', 'geoip-detect');?></h2>
 
-	<?php if ($running) : ?>
-	<p>
-		<img src="<?php echo plugins_url('/views/', GEOIP_PLUGIN_FILE); ?>spinner.gif" />
-		<?php echo __('Doing update in background (refresh at will) ...', 'geoip-detect'); ?>
-	</p>
-	
-	<?php endif; ?>
-	
 	<?php if (!empty($message)): ?>
 		<p class="geoip_detect_error">
 		<?php echo $message; ?>
@@ -36,7 +28,7 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 	
 	<form method="post" action="#">
 		<input type="hidden" name="action" value="update" />
-		<input type="submit" class="button button-primary" value="<?php _e('Update now'); ?>" <?php if ($running) echo 'disabled="disabled"'; ?>/>
+		<input type="submit" class="button button-primary" value="<?php _e('Update now'); ?>" />
 	</form>
 	
 	<br/>
