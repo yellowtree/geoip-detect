@@ -34,6 +34,8 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 * You show or hide content specific to a geographic target group
 * Etc. ... You tell me! I'm rather curious what you'll do with this plugin!
 
+System Requirements: You will need at least PHP 5.3.1.
+
 *This product includes GeoLite2 data created by MaxMind, available from http://www.maxmind.com.*
 
 == Installation ==
@@ -100,6 +102,10 @@ Fixing automatic weekly updates.
 
 
 == Changelog ==
+
+= 2.1.2 =
+* FIX: Show error message if PHP < 5.3 (instead of fatal error)
+* FIX: Support multiple proxies (but currently only one reverse proxy)
 
 = 2.1.1 =
 * FIX: Notice "Database missing" should not show during/right after database update.
