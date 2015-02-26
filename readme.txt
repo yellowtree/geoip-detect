@@ -41,14 +41,13 @@ System Requirements: You will need at least PHP 5.3.1.
 
 == Installation ==
 
-This plugin does not contain the database itself. It is downloaded as soon as you activate it the first time (takes some seconds).
+This plugin does not contain the database itself.
 
-Alternatively, go to Tools > GeoIP Detection and click on "Update now".
+* Download the [free](http://dev.maxmind.com/geoip/geoip2/geolite2/) or commercial version ([country](https://www.maxmind.com/en/geoip2-country-database) or [city](https://www.maxmind.com/en/geoip2-city)) of the Maxmind DB Country binary.
+* Ungzip it and upload it to your server. You could use FTP or the media uploader to do so.
+* On the plugin page, set the absolute filepath to the mmdb-File.
+* Check if it works: go to the plugin page and click "Lookup".
 
-Both methods only work if your /wp-content/uploads-Folder is writable.
-
-
-To check if it works, go to the plugin page and click "Lookup".
 
 == Frequently Asked Questions ==
 
@@ -79,6 +78,10 @@ For more information, check the [API Documentation](https://github.com/yellowtre
 
 == Upgrade Notice == 
 
+= 2.2 =
+
+The automatic updater was removed, because WP.org does not allow Creative-Commons-Licensed resources, including the Maxmind DB. See the updated Installation section for more information.
+
 = 2.1.1 =
 
 Update to v2.x is a major update.
@@ -105,6 +108,9 @@ Fixing automatic weekly updates.
 
 
 == Changelog ==
+
+= 2.2 =
+* FIX: Removing automatic update due to wp.org repo guidelines. See updated installation informations.
 
 = 2.1.2 =
 * FIX: Show error message if PHP < 5.3 (instead of fatal error)

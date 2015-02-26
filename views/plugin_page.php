@@ -19,17 +19,19 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 	<p>
 		<?php printf(__('Last updated: %s', 'geoip-detect'), $last_update ? date_i18n($date_format, $last_update) : __('Never', 'geoip-detect')); ?>
 		
-		<?php if (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED') || !GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED) : ?>
+		<?php if (GEOIP_DETECT_UPDATER_INCLUDED && (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED') || !GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED)) : ?>
 			<br />
 			<?php printf(__('Next update: %s', 'geoip-detect'), $next_cron_update ? date_i18n($date_format, $next_cron_update) : __('Never', 'geoip-detect')); ?><br />
 			<em><?php _e('(The file is updated automatically once a month.)', 'geoip-detect'); ?></em>
 		<?php endif; ?>
 	</p>
 	
+	<?php if (GEOIP_DETECT_UPDATER_INCLUDED) : ?>
 	<form method="post" action="#">
 		<input type="hidden" name="action" value="update" />
 		<input type="submit" class="button button-primary" value="<?php _e('Update now'); ?>" />
 	</form>
+	<?php endif; ?>
 	
 	<br/>
 	<h3>Test GeoIP Lookup manually</h3>
@@ -107,11 +109,30 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 		<p>
 			<input type="checkbox" name="options[set_css_country]" value="1" <?php if ($options['set_css_country']) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Add a country-specific CSS class to the &lt;body&gt;-Tag.', 'geoip-detect'); ?><br />
 		</p>
-		<?php if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) : ?>
 		<p>
-			<input type="checkbox" name="options[has_reverse_proxy]" value="1" <?php if ($options['has_reverse_proxy']) { echo 'checked="checked"'; } ?>>&nbsp;<?php printf(__('The server is behind a reverse proxy (With Proxy: %s - Without Proxy: %s)', 'geoip-detect'), $_SERVER['HTTP_X_FORWARDED_FOR'], $_SERVER['REMOTE_ADDR']); ?><br />
+			<input type="checkbox" name="options[has_reverse_proxy]" value="1" <?php if ($options['has_reverse_proxy']) { echo 'checked="checked"'; } ?>>&nbsp;The server is behind a reverse proxy<em>
+			<span class="detail-box">
+			<?php if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) : ?>
+			<?php printf(__('(With Proxy: %s - Without Proxy: %s)', 'geoip-detect'), $_SERVER['HTTP_X_FORWARDED_FOR'], $_SERVER['REMOTE_ADDR']); ?><br />
+			<?php else: ?>
+			<?php echo "(This doesn't seem to be the case.)"; ?>
+			<?php endif; ?>
+			</em>
+			</span>
 		</p>
-		<?php endif; ?>
+
+		<h4>Data source: </h4>
+			<?php if (GEOIP_DETECT_UPDATER_INCLUDED) : ?>
+			<p><input type="radio" name="options[source]" value="auto" <?php if ($options['source'] == 'auto') { echo 'checked="checked"'; } ?> />Automatic download &amp; update</p>
+			<?php else : ?>
+			<p><input type="radio" name="options[source]" value="auto" disabled="disabled"/>Automatic download &amp; update <em>(only available in Github version)</em></p>
+			<?php endif; ?>
+			<p><input type="radio" name="options[source]" value="manual" <?php if ($options['source'] == 'manual') { echo 'checked="checked"'; } ?>  />Manual download &amp; update<br />
+			<span class="detail-box">
+				Filepath to mmdb-file: <input type="text" size="40" name="options[manual_file]" value="<?php echo esc_attr($options['manual_file']); ?>" /><br />
+				<a href="http://dev.maxmind.com/geoip/geoip2/geolite2/" target="_blank">Free version</a> - <a href="https://www.maxmind.com/en/geoip2-country-database" target="_blank">Commercial Version</a>
+			</span>
+		</p>
 		<p>
 			<input type="submit" class="button button-primary" value="<?php _e('Save', 'geoip-detect'); ?>" />
 		</p>
@@ -138,5 +159,10 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
     padding-right: 15px;
     padding-top: 11px;
     text-align: left;
+}
+.detail-box {
+	display: block;
+	margin-left: 50px;
+	color: #777;
 }
 </style>

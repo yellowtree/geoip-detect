@@ -2,13 +2,33 @@
 // This file contains function that are necessary for the plugin, but not deemed as API.
 // Their name / parameter may change without warning.
 
-
+function geoip_detect_validate_filename($filename) {
+	if (!substr($filename, -5) === '.mmdb')
+		return '';
+	if (file_exists($filename))
+		return $filename;
+	
+	if (file_exists(ABSPATH . $filename))
+		return ABSPATH . $filename;
+	return $filename;
+}
 
 function geoip_detect_get_abs_db_filename()
 {
-	$data_filename = __DIR__ . '/' . GEOIP_DETECT_DATA_FILENAME;
-	if (!file_exists($data_filename))
-		$data_filename = '';
+	$data_filename = '';
+	
+	$source = get_option('geoip-detect-source');
+	if ($source == 'manual') {
+		$data_filename = get_option('geoip-detect-manual_file_validated');
+		if (!file_exists($data_filename))
+			$data_filename = '';
+	}
+	
+	if (!$data_filename) {
+		$data_filename = __DIR__ . '/' . GEOIP_DETECT_DATA_FILENAME;
+		if (!file_exists($data_filename))
+			$data_filename = '';
+	}
 	
 	$data_filename = apply_filters('geoip_detect_get_abs_db_filename', $data_filename);
 	

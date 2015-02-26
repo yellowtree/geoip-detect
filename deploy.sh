@@ -85,7 +85,8 @@ README.md
 .gitignore
 tests
 test
-phpunit.xml" "$SVNPATH/trunk/"
+phpunit.xml
+updater.php" "$SVNPATH/trunk/"
 
 #if submodule exist, recursively check out their indexes (from benbalter)
 if [ -f ".gitmodules" ]

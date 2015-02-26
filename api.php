@@ -28,7 +28,11 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 		
 		
 		try {
-			$record = $reader->city($ip);
+			try {
+				$record = $reader->city($ip);
+			} catch (\MaxMind\Db\Reader\InvalidDatabaseException $e) {
+				$record = $reader->country($ip);
+			}
 		} catch(GeoIp2\Exception\GeoIp2Exception $e) {
 			if (WP_DEBUG)
 				echo 'Error while looking up "' . $ip . '": ' . $e->getMessage();
