@@ -26,36 +26,12 @@ function geoip_detect_get_database_upload_filename_filter($filename_before)
 }
 add_filter('geoip_detect_get_abs_db_filename', 'geoip_detect_get_database_upload_filename_filter');
 
-define('GEOIP_DETECT_UPDATE_LOCK_DURATION', 1 * MINUTE_IN_SECONDS);
-define('GEOIP_DETECT_UPDATE_LOCK_NAME', 'geoip_detect_doing_update');
-
 function geoip_detect_update()
 {
-	// Needs locking as Manual & Cron Update might run at the same time.
-	
-	// Naive implementation. Use HM Backdrop instead.
-	
-	$doing = get_transient(GEOIP_DETECT_UPDATE_LOCK_NAME);
-	if ($doing !== false && time() - $doing < GEOIP_DETECT_UPDATE_LOCK_DURATION)
-		return 'Update already running (maybe cron?). If necessary, try again later.';
-		
-	set_transient(GEOIP_DETECT_UPDATE_LOCK_NAME, time(), GEOIP_DETECT_UPDATE_LOCK_DURATION);
-	
 	$download_url = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz';
 	$download_url = apply_filters('geoip_detect2_download_url', $download_url);
 
 	$outFile = geoip_detect_get_database_upload_filename();
-	
-	$ret = _geoip_detect_update($download_url, $outFile);
-	
-	delete_transient(GEOIP_DETECT_UPDATE_LOCK_NAME);
-	return $ret;
-}
-
-function _geoip_detect_update($url, $outfile)
-{
-	if (!is_writable($outfile))
-		return sprintf(__('Database could not be written (%s).', 'geoip-detect'), $outFile);
 
 	// Download
 	$tmpFile = download_url($download_url);
