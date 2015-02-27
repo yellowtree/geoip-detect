@@ -7,7 +7,7 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Retrieving Geo-Information using the Maxmind GeoIPv2 (Lite) Database.
+Retrieving Geo-Information using the Maxmind GeoIP2 (Lite or Commercial) Database.
 
 == Description ==
 
@@ -19,7 +19,11 @@ Provides geographic information detected by an IP adress. This can be used in th
   * `geoip_detect2_get_info_from_ip($ip, $locales = array('en'))`: Lookup Geo-Information of the specified IP 
   * `geoip_detect2_get_info_from_current_ip($locales = array('en'))`: Lookup Geo-Information of the current website user
   * `geoip_detect2_get_external_ip_adress()`: Fetch the internet adress of the webserver
-* Auto-Update the GeoIP database once a month
+* You can use one of these data sources:
+  * [GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/)
+  * [GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database)
+  * [GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
+  * Soon: [GeoIP2 Precision: City](https://www.maxmind.com/en/geoip2-precision-city-service)
 * For the property names, see the results of a specific IP in the wordpress backend (under *Tools > GeoIP Detection*).
 * You can include these properties into your posts and pages by using the shortcode `[geoip_detect2 property="country.name" default="(country could not be detected)" lang="en"]` (where 'country.name' can be one of the other property names as well, and 'default' and 'lang' are optional).
 * When enabled on the plugin page, it adds CSS classes to the body tag such as `geoip-country-DE` and `geoip-continent-EU`.
@@ -35,7 +39,7 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 * You show or hide content specific to a geographic target group
 * Etc. ... You tell me! I'm rather curious what you'll do with this plugin!
 
-System Requirements: You will need at least PHP 5.3.1.
+**System Requirements**: You will need at least PHP 5.3.1.
 
 *This product includes GeoLite2 data created by MaxMind, available from http://www.maxmind.com.*
 
@@ -48,7 +52,7 @@ This plugin does not contain the database itself.
 * On the plugin page, set the absolute filepath to the mmdb-File.
 * Check if it works: go to the plugin page and click "Lookup".
 
-
+The GeoIPv2-Lite-database can only be updated automatically if you install the Github version of this plugin instead. See [Installation instructions](https://github.com/yellowtree/wp-geoip-detect/wiki/Installation) there.
 == Frequently Asked Questions ==
 
 = How exact is this data? =
