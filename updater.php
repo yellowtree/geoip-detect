@@ -18,9 +18,12 @@ function geoip_detect_get_database_upload_filename()
 
 function geoip_detect_get_database_upload_filename_filter($filename_before)
 {
-	$filename = geoip_detect_get_database_upload_filename();
-	if (file_exists($filename))
-		return $filename;
+	$source = get_option('geoip-detect-source');
+	if ($source == 'auto' || empty($source)) {
+		$filename = geoip_detect_get_database_upload_filename();
+		if (file_exists($filename))
+			return $filename;
+	}
 	
 	return $filename_before;
 }
