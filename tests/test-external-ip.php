@@ -46,8 +46,16 @@ class ExternalIpTest extends WP_UnitTestCase_GeoIP_Detect {
 	function testExternalIp() {
 		add_filter('geiop_detect_ipservices', 'ipTestServiceProvider', 101);
 		
-		$ip = _geoip_detect_get_external_ip_adress_without_cache();
-		$this->assertNotEquals('0.0.0.0', $ip);
+		try {
+			$ip = _geoip_detect_get_external_ip_adress_without_cache();
+			$this->assertNotEquals('0.0.0.0', $ip);
+		} catch (PHPUnit_Framework_Error_Warning $e) {
+			if (strpos($e->getMessage(), 'timed out') !== false) {
+				$this->markTestSkipped('External IP Service timed out ...');
+			} else {
+				throw $e;
+			}
+		}
 	}
 	
 	function testInvalidIp() {
