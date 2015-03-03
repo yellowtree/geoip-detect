@@ -5,12 +5,14 @@
 function geoip_detect_validate_filename($filename) {
 	if (!substr($filename, -5) === '.mmdb')
 		return '';
-	if (file_exists($filename))
+
+	if (file_exists($filename) && is_readable($filename))
 		return $filename;
 	
-	if (file_exists(ABSPATH . $filename))
+	if (file_exists(ABSPATH . $filename) && is_readable(ABSPATH . $filename))
 		return ABSPATH . $filename;
-	return $filename;
+
+	return '';
 }
 
 function geoip_detect_get_abs_db_filename()
