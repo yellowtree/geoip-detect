@@ -84,8 +84,14 @@ function geoip_detect2_get_reader($locales = null) {
 	
 	$reader = null;	
 	$data_file = geoip_detect_get_abs_db_filename();
-	if ($data_file)
-		$reader = new GeoIp2\Database\Reader($data_file, $locales);
+	if ($data_file) {
+		try {
+			$reader = new GeoIp2\Database\Reader($data_file, $locales);
+		} catch (Exception $e) {
+			if (WP_DEBUG)
+				echo 'Error while creating reader for "' . $data_file . '": ' . $e->getMessage();			
+		}
+	}
 	
 	/**
 	 * Filter: geoip_detect2_reader
