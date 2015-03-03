@@ -17,8 +17,8 @@ script:
     - rm updater.php && phpunit --verbose
     
 notifications:
-	email:
-		recipients:
-			- b.pick@yellowtree
-		on_success: change
-		on_failure: always
+    email:
+        recipients:
+            - b.pick@yellowtree
+        on_success: change
+        on_failure: always
