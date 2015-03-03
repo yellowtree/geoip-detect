@@ -15,3 +15,10 @@ before_script:
 script: 
     - phpunit --verbose
     - rm updater.php && phpunit --verbose
+    
+notifications:
+	email:
+		recipients:
+			- b.pick@yellowtree
+		on_success: change
+		on_failure: always
