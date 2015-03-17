@@ -4,9 +4,9 @@ Tests: [![Build Status](https://travis-ci.org/yellowtree/wp-geoip-detect.png?bra
 
 * **Contributors:** [benjaminpick] (http://profiles.wordpress.org/benjaminpick)
 
-* **License:** [GPL v2 or later] ( http://www.gnu.org/licenses/gpl-2.0.html)
+* **License:** [GPL v3 or later] (http://www.gnu.org/licenses/gpl-3.0.html)
 
-Retrieving Geo-Information using the Maxmind GeoIPv2 (Lite) Database.
+Retrieving Geo-Information using the Maxmind GeoIP2 (Lite or Commercial) Database.
 
 == Description ==
 
@@ -18,7 +18,11 @@ Provides geographic information detected by an IP adress. This can be used in th
   * `geoip_detect2_get_info_from_ip($ip, $locales = array('en'))`: Lookup Geo-Information of the specified IP 
   * `geoip_detect2_get_info_from_current_ip($locales = array('en'))`: Lookup Geo-Information of the current website user
   * `geoip_detect2_get_external_ip_adress()`: Fetch the internet adress of the webserver
-* Auto-Update the GeoIP database once a month
+* You can use one of these data sources:
+  * [GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/)
+  * [GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database)
+  * [GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
+  * Soon: [GeoIP2 Precision: City](https://www.maxmind.com/en/geoip2-precision-city-service)
 * For the property names, see the results of a specific IP in the wordpress backend (under *Tools > GeoIP Detection*).
 * You can include these properties into your posts and pages by using the shortcode `[geoip_detect2 property="country.name" default="(country could not be detected)" lang="en"]` (where 'country.name' can be one of the other property names as well, and 'default' and 'lang' are optional).
 * When enabled on the plugin page, it adds CSS classes to the body tag such as `geoip-country-DE` and `geoip-continent-EU`.
@@ -34,27 +38,28 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 * You show or hide content specific to a geographic target group
 * Etc. ... You tell me! I'm rather curious what you'll do with this plugin!
 
-System Requirements: You will need at least PHP 5.3.1.
+**System Requirements**: You will need at least PHP 5.3.1.
 
 *This product includes GeoLite2 data created by MaxMind, available from http://www.maxmind.com.*
 
 == Installation ==
 
-This plugin does not contain the database itself. It is downloaded as soon as you activate it the first time (takes some seconds).
+This plugin does not contain the database itself.
 
-Alternatively, go to Tools > GeoIP Detection and click on "Update now".
+* Download the [free](http://dev.maxmind.com/geoip/geoip2/geolite2/) or commercial version ([country](https://www.maxmind.com/en/geoip2-country-database) or [city](https://www.maxmind.com/en/geoip2-city)) of the Maxmind database file.
+* Ungzip it and upload it to your server. You could use FTP or the media uploader to do so.
+* On the plugin page, set the absolute filepath to the mmdb-File.
+* Check if it works: go to the plugin page and click "Lookup".
 
-Both methods only work if your /wp-content/uploads-Folder is writable.
-
-
-To check if it works, go to the plugin page and click "Lookup".
+The GeoIPv2-Lite-database can only be updated automatically if you install the Github version of this plugin instead. See [Installation instructions](https://github.com/yellowtree/wp-geoip-detect/wiki/Installation) there.
 
 == Frequently Asked Questions ==
 
 = How exact is this data? =
 
 Think of it as an "educated guess": IP adresses and their allocation change on a frequent basis.
-If you need more exact data, consider purchasing the [commercial version of the data](https://www.maxmind.com/en/geoip2-city).
+If you need more reliable data, consider purchasing the [commercial version of the data](https://www.maxmind.com/en/geoip2-city).
+See [accuracy stats per country](https://www.maxmind.com/en/geoip2-city-database-accuracy).
 
 = Technically speaking, how could I verify if my visitor comes from Germany? =
 
@@ -75,6 +80,9 @@ For more information, check the [API Documentation](https://github.com/yellowtre
 == Screenshots ==
 
 1. Backend page (under Tools > GeoIP Detection)
+
+= 2.2.0 =
+
 
 = 2.1.1 =
 
@@ -102,6 +110,11 @@ Fixing automatic weekly updates.
 
 
 == Changelog ==
+
+= 2.2.0 =
+* FIX: Removing automatic update due to wp.org repo guidelines. See updated installation informations.
+* FIX: Update Maxmind Reader to 1.0.3 (there were issues when the PHP extension mbstring was not installed)
+* NEW: Commercial databass are now supported. You can specify a file path in the options.
 
 = 2.1.2 =
 * FIX: Show error message if PHP < 5.3 (instead of fatal error)
