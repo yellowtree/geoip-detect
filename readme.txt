@@ -47,12 +47,13 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 
 This plugin does not contain the database itself.
 
-* Download the [free](http://dev.maxmind.com/geoip/geoip2/geolite2/) or commercial version ([country](https://www.maxmind.com/en/geoip2-country-database) or [city](https://www.maxmind.com/en/geoip2-city)) of the Maxmind DB Country binary.
+* Download the [free](http://dev.maxmind.com/geoip/geoip2/geolite2/) or commercial version ([country](https://www.maxmind.com/en/geoip2-country-database) or [city](https://www.maxmind.com/en/geoip2-city)) of the Maxmind database file.
 * Ungzip it and upload it to your server. You could use FTP or the media uploader to do so.
 * On the plugin page, set the absolute filepath to the mmdb-File.
 * Check if it works: go to the plugin page and click "Lookup".
 
 The GeoIPv2-Lite-database can only be updated automatically if you install the Github version of this plugin instead. See [Installation instructions](https://github.com/yellowtree/wp-geoip-detect/wiki/Installation) there.
+
 == Frequently Asked Questions ==
 
 = How exact is this data? =
@@ -115,6 +116,7 @@ Fixing automatic weekly updates.
 
 = 2.2.0 =
 * FIX: Removing automatic update due to wp.org repo guidelines. See updated installation informations.
+* FIX: Update Maxmind Reader to 1.0.3 (there were issues when the PHP extension mbstring was not installed)
 * NEW: Commercial database is now supported. You can specify a manual path in the options.
 
 = 2.1.2 =
