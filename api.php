@@ -46,6 +46,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 		$reader->close();
 	}
 	
+	// Always return a city record for API compatability. City attributes etc. return empty values.
 	if (is_object($record) && ! $record instanceof \GeoIp2\Model\City) {
 		$record = new \GeoIp2\Model\City($record->jsonSerialize());
 	}
