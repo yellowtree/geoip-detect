@@ -4,8 +4,8 @@ Tags: geoip, ip, maxmind, geolocation, locator, latitude, longitude
 Requires at least: 3.5
 Tested up to: 4.1
 Stable tag: trunk
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License: GPLv3 or later
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Retrieving Geo-Information using the Maxmind GeoIP2 (Lite or Commercial) Database.
 
