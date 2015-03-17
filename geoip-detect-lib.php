@@ -24,7 +24,7 @@ function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false) {
 	}
 	
 	$reader = null;
-	$data_file = geoip_detect_get_abs_db_filename ();
+	$data_file = geoip_detect_get_abs_db_filename();
 	if ($data_file) {
 		try {
 			$reader = new GeoIp2\Database\Reader ( $data_file, $locales );

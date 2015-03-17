@@ -35,22 +35,25 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define('GEOIP_PLUGIN_FILE', __FILE__);
+define(GEOIP_PLUGIN_DIR, __FILE__);
+define('GEOIP_PLUGIN_DIR', dirname(GEOIP_PLUGIN_FILE));
 
-require_once(dirname(GEOIP_PLUGIN_FILE) . '/vendor/autoload.php');
+require_once(GEOIP_PLUGIN_DIR . '/vendor/autoload.php');
 
-require_once(dirname(GEOIP_PLUGIN_FILE) . '/geoip-detect-lib.php');
+require_once(GEOIP_PLUGIN_DIR . '/geoip-detect-lib.php');
 
-require_once(dirname(GEOIP_PLUGIN_FILE) . '/init.php');
-//require_once(dirname(GEOIP_PLUGIN_FILE) . '/upgrade-plugin.php');
-require_once(dirname(GEOIP_PLUGIN_FILE) . '/api.php');
-require_once(dirname(GEOIP_PLUGIN_FILE) . '/legacy-api.php');
-require_once(dirname(GEOIP_PLUGIN_FILE) . '/filter.php');
-require_once(dirname(GEOIP_PLUGIN_FILE) . '/shortcode.php');
+require_once(GEOIP_PLUGIN_DIR . '/init.php');
+//require_once(GEOIP_PLUGIN_DIR . '/upgrade-plugin.php');
+require_once(GEOIP_PLUGIN_DIR . '/api.php');
+require_once(GEOIP_PLUGIN_DIR . '/legacy-api.php');
+require_once(GEOIP_PLUGIN_DIR . '/filter.php');
+require_once(GEOIP_PLUGIN_DIR . '/shortcode.php');
 
-@include_once(dirname(GEOIP_PLUGIN_FILE) . '/updater.php');
+@include_once(GEOIP_PLUGIN_DIR . '/updater.php');
 if (!defined('GEOIP_DETECT_UPDATER_INCLUDED'))
 	define('GEOIP_DETECT_UPDATER_INCLUDED', false);
+
+@include_once('data-sources/hostinfo.php');
 
 
 define('GEOIP_DETECT_DATA_FILENAME', 'GeoLite2-City.mmdb');
@@ -156,7 +159,7 @@ function geoip_detect_plugin_page()
 		}
 	}
 
-	include_once(dirname(GEOIP_PLUGIN_FILE) . '/views/plugin_page.php');	
+	include_once(GEOIP_PLUGIN_DIR . '/views/plugin_page.php');	
 }
 
 function geoip_detect_menu() {

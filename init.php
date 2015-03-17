@@ -43,7 +43,7 @@ function geoip_detect_enqueue_admin_notices() {
 	
 	$db_file = geoip_detect_get_abs_db_filename();
 	if (!$db_file || !file_exists($db_file)) {
-		if ($plugin_page == 'geoip-detect/geoip-detect.php' && isset($_POST['action']) && $_POST['action'] == 'update') {
+		if ($plugin_page == GEOIP_PLUGIN_DIR . '/geoip-detect.php' && isset($_POST['action']) && $_POST['action'] == 'update') {
 			// Skip because maybe he is currently updating the database
 		} else {
 			add_action( 'all_admin_notices', 'geoip_detect_admin_notice_database_missing' );
@@ -57,7 +57,7 @@ function geoip_detect_admin_notice_database_missing() {
 	if (in_array('database_missing', $ignored_notices))
 		return;
 
-	$url = '<a href="tools.php?page=geoip-detect/geoip-detect.php">GeoIP Detection</a>';
+	$url = '<a href="tools.php?page=' . GEOIP_PLUGIN_DIR . '/geoip-detect.php">GeoIP Detection</a>';
     ?>
     <div class="error">
        	<p style="float: right"><a href="?geoip_detect_dismiss_notice=database_missing"><?php _e('Dismiss notice', 'geoip-detect'); ?></a>
