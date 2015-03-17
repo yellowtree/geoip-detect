@@ -15,7 +15,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 	$orig_ip = $ip;
 	
 	$locales = apply_filters('geoip_detect2_locales', $locales);
-	$reader = geoip_detect2_get_reader($locales, true);
+	$reader = _geoip_detect2_get_reader($locales, true);
 
 	$record = null;
 
@@ -84,7 +84,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
  * 									NULL if initialization went wrong (e.g., File not found.)
  */
 function geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false) {	
-	_geoip_detect2_get_reader($locales, false);
+	return _geoip_detect2_get_reader($locales, false);
 }
 
 /**
