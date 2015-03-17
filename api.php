@@ -80,41 +80,11 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
  * 
  * @param array(string)				List of locale codes to use in name property
  * 									from most preferred to least preferred. (Default: Site language, en)
- * @param boolean					If locale filter should be skipped (default: No)
  * @return GeoIp2\Database\Reader 	The reader, ready to do its work. Don't forget to `close()` it afterwards. NULL if file not found (or other problems).
  * 									NULL if initialization went wrong (e.g., File not found.)
  */
 function geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false) {	
-	if (!$skipLocaleFilter) {
-		/**
-		 * Filter: geoip_detect2_locales
-		 * @param array(string) $locales Current locales.
-		 */
-		$locales = apply_filters('geoip_detect2_locales', $locales);
-	}
-	
-	$reader = null;	
-	$data_file = geoip_detect_get_abs_db_filename();
-	if ($data_file) {
-		try {
-			$reader = new GeoIp2\Database\Reader($data_file, $locales);
-		} catch (Exception $e) {
-			if (WP_DEBUG)
-				echo 'Error while creating reader for "' . $data_file . '": ' . $e->getMessage();			
-		}
-	}
-	
-	/**
-	 * Filter: geoip_detect2_reader
-	 * You can customize your reader here.
-	 * This filter will be called for every IP request.
-	 * 
-	 * @param GeoIp2\Database\ProviderInterface  Reader (by default: GeoLite City)
-	 * @param array(string)							Locale precedence
-	 */
-	$reader = apply_filters('geoip_detect2_reader', $reader, $locales);
-	
-	return $reader;
+	_geoip_detect2_get_reader($locales, false);
 }
 
 /**
