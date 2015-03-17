@@ -10,17 +10,15 @@ class GeoIP_HostInfo_Reader {
 		if (!$data)
 			return null;
 		
-		$r = new stdClass();
-		$r->country = new stdClass();
+		$r = array();
 		
 		if ($data['country_name'])
-			$r->country->names = array('en' => $data['country_name']);
+			$r['country']['names'] = array('en' => $data['country_name']);
 		if ($data['country_code'])
-			$r->country->isoCode = strtoupper($data['country_code']);
+			$r['country']['iso_code'] = strtoupper($data['country_code']);
 		
 		if ($data['city']) {
-			$r->city = new stdClass();
-			$r->city->names = array('en' => $data['city']);
+			$r['city']['names'] = array('en' => $data['city']);
 		}
 		
 		$record = new \GeoIp2\Model\City($r, array('en'));
@@ -30,6 +28,10 @@ class GeoIP_HostInfo_Reader {
 	
 	public function country($ip) {
 		return $this->city($ip); // too much info shouldn't hurt ...
+	}
+	
+	public function close() {
+			
 	}
 	
 	public function api_call($ip) {
@@ -48,17 +50,18 @@ class GeoIP_HostInfo_Reader {
 			
 			$hasInfo = false;
 			if ($data) {
+				$data = get_object_vars($data);
 				foreach ($data as $key => &$value) {
-					if (stripos($value, '(unknown'))
+					if (stripos($value, '(unknown') !== false)
 						$value = '';
-					if (stripos($value, '(private'))
+					if (stripos($value, '(private') !== false)
 						$value = '';
-					if ($key == 'country' && $value = 'XX')
+					if ($key == 'country_code' && $value == 'XX')
 						$value = '';
 				}
-				$hasInfo = $data->country_name || $data->country_code || $data->city;
+				$hasInfo = $data['country_name'] || $data['country_code'] || $data['city'];
 			}
-			
+		
 			if ($hasInfo)
 				return $data;
 			return null;

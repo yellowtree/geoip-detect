@@ -35,7 +35,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define(GEOIP_PLUGIN_DIR, __FILE__);
+define('GEOIP_PLUGIN_FILE', __FILE__);
 define('GEOIP_PLUGIN_DIR', dirname(GEOIP_PLUGIN_FILE));
 
 require_once(GEOIP_PLUGIN_DIR . '/vendor/autoload.php');
