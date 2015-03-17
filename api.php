@@ -14,7 +14,8 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 {
 	$orig_ip = $ip;
 	
-	$reader = geoip_detect2_get_reader($locales);
+	$locales = apply_filters('geoip_detect2_locales', $locales);
+	$reader = geoip_detect2_get_reader($locales, true);
 
 	$record = null;
 
@@ -46,7 +47,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 	
 	// Always return a city record for API compatability. City attributes etc. return empty values.
 	if (is_object($record) && ! $record instanceof \GeoIp2\Model\City && method_exists($record, 'jsonSerialize')) {
-		$record = new \GeoIp2\Model\City($record->jsonSerialize(), apply_filters('geoip_detect2_locales', $locales));
+		$record = new \GeoIp2\Model\City($record->jsonSerialize(), $locales);
 	}
 	
 	if ($record === null) {
@@ -65,9 +66,10 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 	 * 
 	 * @param GeoIp2\Model\City $record 	Information found. The 
 	 * @param string			 $orig_ip	IP that originally passed to the function.
+	 * @param string			 $locales	Desired locales
 	 * @return GeoIp2\Model\City
 	 */
-	$record = apply_filters('geoip_detect2_record_information', $record, $orig_ip);
+	$record = apply_filters('geoip_detect2_record_information', $record, $orig_ip, $locales);
 
 	return $record;
 }
@@ -78,15 +80,18 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
  * 
  * @param array(string)				List of locale codes to use in name property
  * 									from most preferred to least preferred. (Default: Site language, en)
+ * @param boolean					If locale filter should be skipped (default: No)
  * @return GeoIp2\Database\Reader 	The reader, ready to do its work. Don't forget to `close()` it afterwards. NULL if file not found (or other problems).
  * 									NULL if initialization went wrong (e.g., File not found.)
  */
-function geoip_detect2_get_reader($locales = null) {	
-	/**
-	 * Filter: geoip_detect2_locales
-	 * @param array(string) $locales Current locales.
-	 */
-	$locales = apply_filters('geoip_detect2_locales', $locales);
+function geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false) {	
+	if (!$skipLocaleFilter) {
+		/**
+		 * Filter: geoip_detect2_locales
+		 * @param array(string) $locales Current locales.
+		 */
+		$locales = apply_filters('geoip_detect2_locales', $locales);
+	}
 	
 	$reader = null;	
 	$data_file = geoip_detect_get_abs_db_filename();
