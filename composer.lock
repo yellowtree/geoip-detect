@@ -4,20 +4,20 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bacc00c084ee458ac737ad8b29b23dfe",
+    "hash": "4444e7695f5e2b2386060122108f67f4",
     "packages": [
         {
             "name": "geoip2/geoip2",
-            "version": "v2.1.0",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maxmind/GeoIP2-php.git",
-                "reference": "64f226209342c4a2f54b82ba3f0707db944f7d70"
+                "reference": "01f58d749b715f30c99d1b19a965ce5b93813656"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maxmind/GeoIP2-php/zipball/64f226209342c4a2f54b82ba3f0707db944f7d70",
-                "reference": "64f226209342c4a2f54b82ba3f0707db944f7d70",
+                "url": "https://api.github.com/repos/maxmind/GeoIP2-php/zipball/01f58d749b715f30c99d1b19a965ce5b93813656",
+                "reference": "01f58d749b715f30c99d1b19a965ce5b93813656",
                 "shasum": ""
             },
             "require": {
@@ -56,7 +56,7 @@
                 "geolocation",
                 "maxmind"
             ],
-            "time": "2014-10-29 17:11:44"
+            "time": "2014-12-03 14:59:16"
         },
         {
             "name": "guzzle/guzzle",
@@ -152,16 +152,16 @@
         },
         {
             "name": "maxmind-db/reader",
-            "version": "v1.0.0",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maxmind/MaxMind-DB-Reader-php.git",
-                "reference": "cbd695a5309c15249ef5944997cfb71f2a8a7963"
+                "reference": "07f211ab596ba60f9663d9984b888f76ee1beac9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maxmind/MaxMind-DB-Reader-php/zipball/cbd695a5309c15249ef5944997cfb71f2a8a7963",
-                "reference": "cbd695a5309c15249ef5944997cfb71f2a8a7963",
+                "url": "https://api.github.com/repos/maxmind/MaxMind-DB-Reader-php/zipball/07f211ab596ba60f9663d9984b888f76ee1beac9",
+                "reference": "07f211ab596ba60f9663d9984b888f76ee1beac9",
                 "shasum": ""
             },
             "require": {
@@ -197,21 +197,21 @@
                 "geolocation",
                 "maxmind"
             ],
-            "time": "2014-09-22 17:33:22"
+            "time": "2015-03-13 22:35:13"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.5.6",
+            "version": "v2.6.4",
             "target-dir": "Symfony/Component/EventDispatcher",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "804eb28dbbfba9ffdab21fe2066744906cea2212"
+                "reference": "f75989f3ab2743a82fe0b03ded2598a2b1546813"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/804eb28dbbfba9ffdab21fe2066744906cea2212",
-                "reference": "804eb28dbbfba9ffdab21fe2066744906cea2212",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/f75989f3ab2743a82fe0b03ded2598a2b1546813",
+                "reference": "f75989f3ab2743a82fe0b03ded2598a2b1546813",
                 "shasum": ""
             },
             "require": {
@@ -219,9 +219,10 @@
             },
             "require-dev": {
                 "psr/log": "~1.0",
-                "symfony/config": "~2.0",
-                "symfony/dependency-injection": "~2.0,<2.6.0",
-                "symfony/stopwatch": "~2.2"
+                "symfony/config": "~2.0,>=2.0.5",
+                "symfony/dependency-injection": "~2.6",
+                "symfony/expression-language": "~2.6",
+                "symfony/stopwatch": "~2.3"
             },
             "suggest": {
                 "symfony/dependency-injection": "",
@@ -230,7 +231,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.5-dev"
+                    "dev-master": "2.6-dev"
                 }
             },
             "autoload": {
@@ -254,7 +255,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "http://symfony.com",
-            "time": "2014-10-01 15:43:05"
+            "time": "2015-02-01 16:10:57"
         }
     ],
     "packages-dev": [],
@@ -262,6 +263,9 @@
     "minimum-stability": "stable",
     "stability-flags": [],
     "prefer-stable": false,
-    "platform": [],
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=5.3.1"
+    },
     "platform-dev": []
 }
