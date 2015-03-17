@@ -84,7 +84,7 @@ For more information, check the [API Documentation](https://github.com/yellowtre
 
 == Upgrade Notice == 
 
-= 2.2.0 =
+= 2.2.1 =
 
 The automatic updater was removed, because WP.org does not allow Creative-Commons-Licensed resources, including the Maxmind DB. See the updated Installation section for more information.
 
@@ -114,6 +114,9 @@ Fixing automatic weekly updates.
 
 
 == Changelog ==
+
+= 2.2.1 =
+* FIX: Country database now works as well.
 
 = 2.2.0 =
 * FIX: Removing automatic update due to wp.org repo guidelines. See updated installation informations.

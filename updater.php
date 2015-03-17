@@ -7,28 +7,6 @@ define('GEOIP_DETECT_UPDATER_INCLUDED', true);
 // Needed for WP File functions. Cron doesn't work without it.
 require_once(ABSPATH.'/wp-admin/includes/file.php');
 
-function geoip_detect_get_database_upload_filename()
-{
-	$upload_dir = wp_upload_dir();
-	$dir = $upload_dir['basedir'];
-
-	$filename = $dir . '/' . GEOIP_DETECT_DATA_FILENAME;
-	return $filename;
-}
-
-function geoip_detect_get_database_upload_filename_filter($filename_before)
-{
-	$source = get_option('geoip-detect-source');
-	if ($source == 'auto' || empty($source)) {
-		$filename = geoip_detect_get_database_upload_filename();
-		if (file_exists($filename))
-			return $filename;
-	}
-	
-	return $filename_before;
-}
-add_filter('geoip_detect_get_abs_db_filename', 'geoip_detect_get_database_upload_filename_filter');
-
 function geoip_detect_update()
 {
 	$download_url = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz';

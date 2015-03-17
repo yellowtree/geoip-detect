@@ -40,6 +40,28 @@ function geoip_detect_get_abs_db_filename()
 	return $data_filename;
 }
 
+function geoip_detect_get_database_upload_filename()
+{
+	$upload_dir = wp_upload_dir();
+	$dir = $upload_dir['basedir'];
+
+	$filename = $dir . '/' . GEOIP_DETECT_DATA_FILENAME;
+	return $filename;
+}
+
+function geoip_detect_get_database_upload_filename_filter($filename_before)
+{
+	$source = get_option('geoip-detect-source');
+	if ($source == 'auto' || empty($source)) {
+		$filename = geoip_detect_get_database_upload_filename();
+		if (file_exists($filename))
+			return $filename;
+	}
+
+	return $filename_before;
+}
+add_filter('geoip_detect_get_abs_db_filename', 'geoip_detect_get_database_upload_filename_filter');
+
 /**
  * IPv6-Adresses can be written in different formats. Make sure they are standardized.
  * For IPv4-Adresses, spaces are removed.
