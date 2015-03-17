@@ -59,7 +59,8 @@ The GeoIPv2-Lite-database can only be updated automatically if you install the G
 = How exact is this data? =
 
 Think of it as an "educated guess": IP adresses and their allocation change on a frequent basis.
-If you need more exact data, consider purchasing the [commercial version of the data](https://www.maxmind.com/en/geoip2-city).
+If you need more reliable data, consider purchasing the [commercial version of the data](https://www.maxmind.com/en/geoip2-city).
+See [accuracy stats per country](https://www.maxmind.com/en/geoip2-city-database-accuracy).
 
 = Technically speaking, how could I verify if my visitor comes from Germany? =
 
@@ -117,7 +118,7 @@ Fixing automatic weekly updates.
 = 2.2.0 =
 * FIX: Removing automatic update due to wp.org repo guidelines. See updated installation informations.
 * FIX: Update Maxmind Reader to 1.0.3 (there were issues when the PHP extension mbstring was not installed)
-* NEW: Commercial database is now supported. You can specify a manual path in the options.
+* NEW: Commercial databass are now supported. You can specify a file path in the options.
 
 = 2.1.2 =
 * FIX: Show error message if PHP < 5.3 (instead of fatal error)
