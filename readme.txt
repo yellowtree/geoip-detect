@@ -11,7 +11,7 @@ Retrieving Geo-Information using the Maxmind GeoIP2 (Lite or Commercial) Databas
 
 == Description ==
 
-Provides geographic information detected by an IP adress. This can be used in themes or other plugins, or via CSS body classes.
+Provides geographic information detected by an IP adress. This can be used in themes or other plugins, as a shortcode, or via CSS body classes.
 
 = Features: =
 
@@ -20,10 +20,10 @@ Provides geographic information detected by an IP adress. This can be used in th
   * `geoip_detect2_get_info_from_current_ip($locales = array('en'))`: Lookup Geo-Information of the current website user
   * `geoip_detect2_get_external_ip_adress()`: Fetch the internet adress of the webserver
 * You can use one of these data sources:
-  * [GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/)
-  * [GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database)
-  * [GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
-  * Soon: [GeoIP2 Precision: City](https://www.maxmind.com/en/geoip2-precision-city-service)
+  * Free: [GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/) (licensed CC BY-SA)
+  * Commercial: [GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database) or [GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
+  * Soon: API: [GeoIP2 Precision: City](https://www.maxmind.com/en/geoip2-precision-city-service)
+  * Free (default source): [HostIP.info](http://www.hostip.info/) (English only)
 * For the property names, see the results of a specific IP in the wordpress backend (under *Tools > GeoIP Detection*).
 * You can include these properties into your posts and pages by using the shortcode `[geoip_detect2 property="country.name" default="(country could not be detected)" lang="en"]` (where 'country.name' can be one of the other property names as well, and 'default' and 'lang' are optional).
 * When enabled on the plugin page, it adds CSS classes to the body tag such as `geoip-country-DE` and `geoip-continent-EU`.
@@ -84,9 +84,11 @@ For more information, check the [API Documentation](https://github.com/yellowtre
 
 == Upgrade Notice == 
 
-= 2.2.1 =
+= 2.3.0 =
 
-The automatic updater was removed, because WP.org does not allow Creative-Commons-Licensed resources, including the Maxmind DB. See the updated Installation section for more information.
+The plugin was down for licensing issues.
+All users must now opt in to use the database because it is licensed CC BY-SA.
+Otherwise, the GPL API HostIP.info is used. 
 
 = 2.1.1 =
 
@@ -115,13 +117,14 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
-= 2.2.1 =
-* FIX: Country database now works as well.
+= 2.3.0 =
+* NEW: Add HostIP.info-Support
 
 = 2.2.0 =
-* FIX: Removing automatic update due to wp.org repo guidelines. See updated installation informations.
 * FIX: Update Maxmind Reader to 1.0.3 (there were issues when the PHP extension mbstring was not installed)
 * NEW: Commercial databass are now supported. You can specify a file path in the options.
+* NEW: Country (lite or commercial) database now works as well.
+* NEW: License is now displayed before install.
 
 = 2.1.2 =
 * FIX: Show error message if PHP < 5.3 (instead of fatal error)
