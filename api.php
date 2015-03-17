@@ -21,7 +21,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 	if ($reader) {
 		// When plugin installed on development boxes: 
 		// If the client IP is not a public IP, use the public IP of the server instead.
-		// Of course this only works if Internet Access works.
+		// Of course this only works if the internet can be accessed.
 		if ($ip == 'me' || (geoip_detect_is_ip($ip) && !geoip_detect_is_public_ip($ip))) {
 			$ip = geoip_detect2_get_external_ip_adress();
 		}
@@ -34,11 +34,9 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 				$record = $reader->country($ip);
 			}
 		} catch(GeoIp2\Exception\GeoIp2Exception $e) {
-			throw $e;
 			if (WP_DEBUG)
 				echo 'Error while looking up "' . $ip . '": ' . $e->getMessage();
 		} catch(Exception $e) {
-			throw $e;
 			if (WP_DEBUG)
 				echo 'Error while looking up "' . $ip . '": ' . $e->getMessage();		
 		}
