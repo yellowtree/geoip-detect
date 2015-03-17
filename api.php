@@ -61,7 +61,8 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 	
 	/**
 	 * Filter: geoip_detect2_record_information
-	 * After loading the information from the GeoIP-Database, you can add or remove information from it.
+	 * After loading the information from the GeoIP-Database, you can add information to it.
+	 * 
 	 * @param GeoIp2\Model\City $record 	Information found. The 
 	 * @param string			 $orig_ip	IP that originally passed to the function.
 	 * @return GeoIp2\Model\City
