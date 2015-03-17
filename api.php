@@ -30,13 +30,15 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 		try {
 			try {
 				$record = $reader->city($ip);
-			} catch (\MaxMind\Db\Reader\InvalidDatabaseException $e) {
+			} catch (\BadMethodCallException $e) {
 				$record = $reader->country($ip);
 			}
 		} catch(GeoIp2\Exception\GeoIp2Exception $e) {
+			throw $e;
 			if (WP_DEBUG)
 				echo 'Error while looking up "' . $ip . '": ' . $e->getMessage();
 		} catch(Exception $e) {
+			throw $e;
 			if (WP_DEBUG)
 				echo 'Error while looking up "' . $ip . '": ' . $e->getMessage();		
 		}
@@ -52,6 +54,26 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 		$record->isEmpty = true;
 	} else {
 		$record->isEmpty = false;
+	}
+	
+	// Different data sources can have different attributes. Try to fill in.
+	$emptyName = new stdClass();
+	$emptyName->id = 0;
+	$emptyName->name = '';
+	$emptyName->names = array();
+	$emptyName->latitude = '';
+	$emptyName->longitude = '';
+	$emptyName->timeZone = '';
+	$emptyName->isoCode = '';
+	
+	if (!isset($record->city)) {
+		$record->city = $emptyName;
+	}
+	if (!isset($record->mostSpecificSubdivision)) {
+		$record->mostSpecificSubdivision = $emptyName;
+	}
+	if (!isset($record->location)) {
+		$record->location = $emptyName;
 	}
 	
 	/**
