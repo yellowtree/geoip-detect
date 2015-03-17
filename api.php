@@ -46,6 +46,10 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 		$reader->close();
 	}
 	
+	if (is_object($record) && ! $record instanceof \GeoIp2\Model\City) {
+		$record = new \GeoIp2\Model\City($record->jsonSerialize());
+	}
+	
 	if ($record === null) {
 		// TODO : Allow to set default by filter
 
@@ -54,26 +58,6 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 		$record->isEmpty = true;
 	} else {
 		$record->isEmpty = false;
-	}
-	
-	// Different data sources can have different attributes. Try to fill in.
-	$emptyName = new stdClass();
-	$emptyName->id = 0;
-	$emptyName->name = '';
-	$emptyName->names = array();
-	$emptyName->latitude = '';
-	$emptyName->longitude = '';
-	$emptyName->timeZone = '';
-	$emptyName->isoCode = '';
-	
-	if (!isset($record->city)) {
-		$record->city = $emptyName;
-	}
-	if (!isset($record->mostSpecificSubdivision)) {
-		$record->mostSpecificSubdivision = $emptyName;
-	}
-	if (!isset($record->location)) {
-		$record->location = $emptyName;
 	}
 	
 	/**
