@@ -75,4 +75,4 @@ class GeoIP_HostInfo_Reader {
 function geoip_detect2_hostinfo_reader() {
 	return new GeoIP_HostInfo_Reader();
 }
-add_filter('geoip_detect2_reader', 'geoip_detect2_hostinfo_reader');
+//add_filter('geoip_detect2_reader', 'geoip_detect2_hostinfo_reader');
