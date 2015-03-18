@@ -20,7 +20,7 @@ Provides geographic information detected by an IP adress. This can be used in th
   * `geoip_detect2_get_info_from_current_ip($locales = array('en'))`: Lookup Geo-Information of the current website user
   * `geoip_detect2_get_external_ip_adress()`: Fetch the internet adress of the webserver
 * You can use one of these data sources:
-  * Free: [GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/) (licensed CC BY-SA)
+  * Free: [GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/), automatically updated every month (licensed CC BY-SA. See [FAQ entry](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#the-maxmind-lite-databases-are-licensed-creative-commons-sharealike-attribution-when-do-i-need-to-give-attribution))
   * Commercial: [GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database) or [GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
   * Soon: API: [GeoIP2 Precision: City](https://www.maxmind.com/en/geoip2-precision-city-service)
   * Free (default source): [HostIP.info](http://www.hostip.info/) (English only)
@@ -41,18 +41,13 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 
 **System Requirements**: You will need at least PHP 5.3.1.
 
-*This product includes GeoLite2 data created by MaxMind, available from http://www.maxmind.com.*
+*This product can provide GeoLite2 data created by MaxMind, available from http://www.maxmind.com.*
 
 == Installation ==
 
-This plugin does not contain the database itself.
-
-* Download the [free](http://dev.maxmind.com/geoip/geoip2/geolite2/) or commercial version ([country](https://www.maxmind.com/en/geoip2-country-database) or [city](https://www.maxmind.com/en/geoip2-city)) of the Maxmind database file.
-* Ungzip it and upload it to your server. You could use FTP or the media uploader to do so.
-* On the plugin page, set the absolute filepath to the mmdb-File.
-* Check if it works: go to the plugin page and click "Lookup".
-
-The GeoIPv2-Lite-database can only be updated automatically if you install the Github version of this plugin instead. See [Installation instructions](https://github.com/yellowtree/wp-geoip-detect/wiki/Installation) there.
+* Install the plugin
+* Go to the plugin page (under Tools) and choose a data source.
+* Test it by clicking on "Lookup".
 
 == Frequently Asked Questions ==
 
