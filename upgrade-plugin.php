@@ -33,10 +33,10 @@ function geoip_detect_maybe_upgrade_version( ) {
 	$plugin = GEOIP_PLUGIN_FILE;
 	
 	if ( is_plugin_active_for_network( $plugin ) ) {
-		$current_vers = get_site_option( 'geoip_detect_plugin_version' );
+		$current_vers = get_site_option( 'geoip-detect-plugin_version' );
 		$network = true;
 	} elseif ( is_plugin_active( $plugin ) ) {
-		$current_vers = get_option( 'geoip_detect_plugin_version' );
+		$current_vers = get_option( 'geoip-detect-plugin_version' );
 		$network = false;
 	} else {
 		return false;
@@ -50,9 +50,9 @@ function geoip_detect_maybe_upgrade_version( ) {
 	}
 
 	if ( $network ) {
-		update_site_option( 'geoip_detect_plugin_version', $current_vers );
+		update_site_option( 'geoip-detect-plugin_version', $current_vers );
 	} else {
-		update_option( 'geoip_detect_plugin_version', $current_vers );
+		update_option( 'geoip-detect-plugin_version', $current_vers );
 	}
 }
-add_action('plugins_loaded', 'geoip_detect_maybe_upgrade_version');
+add_action('plugins_loaded', 'geoip_detect_maybe_upgrade_version', 1);

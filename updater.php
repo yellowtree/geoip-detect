@@ -9,6 +9,10 @@ require_once(ABSPATH.'/wp-admin/includes/file.php');
 
 function geoip_detect_update()
 {
+	// TODO: Currently cron is scheduled but not executed. Remove scheduling.
+	if (get_option('geoip-detect-source') != 'auto')
+		return;
+
 	$download_url = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz';
 	$download_url = apply_filters('geoip_detect2_download_url', $download_url);
 

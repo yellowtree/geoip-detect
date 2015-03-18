@@ -75,4 +75,9 @@ class GeoIP_HostInfo_Reader {
 function geoip_detect2_hostinfo_reader() {
 	return new GeoIP_HostInfo_Reader();
 }
-//add_filter('geoip_detect2_reader', 'geoip_detect2_hostinfo_reader');
+
+function geoip_detect2_load_hostinfo() {
+	if (get_option('geoip-detect-source') == 'hostinfo')
+	add_filter('geoip_detect2_reader', 'geoip_detect2_hostinfo_reader');
+}
+add_action('plugins_loaded', 'geoip_detect2_load_hostinfo');

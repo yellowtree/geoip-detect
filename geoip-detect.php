@@ -38,6 +38,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 define('GEOIP_DETECT_VERSION', '2.3.0');
 define('GEOIP_PLUGIN_FILE', __FILE__);
 define('GEOIP_PLUGIN_DIR', dirname(GEOIP_PLUGIN_FILE));
+define('GEOIP_PLUGIN_BASENAME', plugin_basename(GEOIP_PLUGIN_FILE));
 
 require_once(GEOIP_PLUGIN_DIR . '/vendor/autoload.php');
 
@@ -84,6 +85,11 @@ function geoip_detect_plugin_page()
 	switch(@$_POST['action'])
 	{
 		case 'update':
+			if (isset($_POST['source'])) {
+				update_option('geoip-detect-source', 'auto');
+				update_option('geoip-detect-ui-has-chosen-source', true);
+			}
+			
 			$ret = geoip_detect_update();
 			if ($ret === true)
 				$message .= __('Updated successfully.', 'geoip-detect');
@@ -101,6 +107,8 @@ function geoip_detect_plugin_page()
 			break;
 
 		case 'options':
+			update_option('geoip-detect-ui-has-chosen-source', true);
+			
 			foreach ($option_names as $opt_name) {
 				if (in_array($opt_name, $numeric_options))
 					$opt_value = isset($_POST['options'][$opt_name]) ? (int) $_POST['options'][$opt_name] : 0;
@@ -123,6 +131,16 @@ function geoip_detect_plugin_page()
 			break;
 	}
 	
+
+	$options = array();
+	foreach ($option_names as $opt_name) {
+		$options[$opt_name] = get_option('geoip-detect-'. $opt_name);
+	}
+	
+	if (!$options['source']) {
+		$options['source'] = 'hostinfo';
+	}
+		
 	$data_file = geoip_detect_get_abs_db_filename();
 	$last_update_db = 0;
 	$last_update = 0;
@@ -139,27 +157,20 @@ function geoip_detect_plugin_page()
 	}
 	else 
 	{
-		if (GEOIP_DETECT_UPDATER_INCLUDED)
+		if ($options['source'] == 'auto')
 			$message .= __('No GeoIP Database found. Click on the button "Update now" or follow the installation instructions.', 'geoip-detect');
-		else
+		elseif ($options['source'] == 'manual')
 			$message .= __('No GeoIP Database found. Please look at the installation instructions.', 'geoip-detect');
 	}
-	$next_cron_update = wp_next_scheduled( 'geoipdetectupdate' );
-	
-	$options = array();
-	
-	foreach ($option_names as $opt_name) {
-		$options[$opt_name] = get_option('geoip-detect-'. $opt_name);
-	}
-	
-	if (!$options['source']) {
-		if (GEOIP_DETECT_UPDATER_INCLUDED) {
-			$options['source'] = 'manual';
-		} else {
-			$options['source'] = 'auto';
-		}
-	}
 
+	
+
+	
+	$next_cron_update = 0;
+	if ($options['source'] == 'auto') {
+		$next_cron_update = wp_next_scheduled( 'geoipdetectupdate' );
+	}
+	
 	include_once(GEOIP_PLUGIN_DIR . '/views/plugin_page.php');	
 }
 

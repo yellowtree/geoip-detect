@@ -41,9 +41,8 @@ function geoip_detect_enqueue_admin_notices() {
 
 	global $plugin_page;
 	
-	$db_file = geoip_detect_get_abs_db_filename();
-	if (!$db_file || !file_exists($db_file)) {
-		if ($plugin_page == GEOIP_PLUGIN_DIR . '/geoip-detect.php' && isset($_POST['action']) && $_POST['action'] == 'update') {
+	if (get_option('geoip-detect-source') == 'hostinfo' && get_option('geoip-detect-ui-has-chosen-source', false) == false) {
+		if ($plugin_page == GEOIP_PLUGIN_BASENAME && isset($_POST['action']) && $_POST['action'] == 'update') {
 			// Skip because maybe he is currently updating the database
 		} else {
 			add_action( 'all_admin_notices', 'geoip_detect_admin_notice_database_missing' );
@@ -54,21 +53,23 @@ add_action('admin_init', 'geoip_detect_enqueue_admin_notices');
 
 function geoip_detect_admin_notice_database_missing() {
 	$ignored_notices = (array) get_user_meta(get_current_user_id(), 'geoip_detect_dismissed_notices', true);
-	if (in_array('database_missing', $ignored_notices))
+	if (in_array('hostinfo_used', $ignored_notices))
 		return;
 
-	$url = '<a href="tools.php?page=' . GEOIP_PLUGIN_DIR . '/geoip-detect.php">GeoIP Detection</a>';
+	$url = '<a href="tools.php?page=' . GEOIP_PLUGIN_BASENAME . '">GeoIP Detection</a>';
     ?>
     <div class="error">
-       	<p style="float: right"><a href="?geoip_detect_dismiss_notice=database_missing"><?php _e('Dismiss notice', 'geoip-detect'); ?></a>
-    	<h3><?php _e( 'GeoIP Detection: Database missing', 'geoip-detect' ); ?></h3>
+       	<p style="float: right"><a href="?geoip_detect_dismiss_notice=hostinfo_used"><?php _e('Dismiss notice', 'geoip-detect'); ?></a>
+    	<h3><?php _e( 'GeoIP Detection: No database installed', 'geoip-detect' ); ?></h3>
     	<?php if (GEOIP_DETECT_UPDATER_INCLUDED) : ?>
-        <p><?php printf(__( 'The Plugin %s can\'t do its work before you install an IP database. Click on the button below to download and install Maxmind GeoIPv2 Lite City now.', 'geoip-detect' ), $url); ?></p>
+        <p><?php printf(__('The Plugin %s is currently using the Webservice <a href="http://hostip.info" target="_blank">hostip.info</a> as data source. <br />You can click on the button below to download and install Maxmind GeoIPv2 Lite City now.', 'geoip-detect' ), $url); ?></p>
         <p><?php printf(__('This database is licenced <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA</a>. See <a href="http://dev.maxmind.com/geoip/geoip2/geolite2/#License">License</a> for details.')); ?>
-        <form action="tools.php?page=geoip-detect/geoip-detect.php" method="post">
+        <form action="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME; ?>" method="post">
 	        <p>
-	        		<input type="hidden" name="action" value="update" />
-	        		<input type="submit" value="Install now" class="button button-primary" />
+	        	<input type="hidden" name="source" value="auto" />
+	        	<input type="hidden" name="action" value="update" />
+	        	<input type="submit" value="Install now" class="button button-primary" />
+	        	&nbsp;&nbsp;<a href="?geoip_detect_dismiss_notice=hostinfo_used"><?php _e('Keep using hostip.info', 'geoip-detect'); ?></a>
 	        </p>
        	</form>
        	<?php else : ?>

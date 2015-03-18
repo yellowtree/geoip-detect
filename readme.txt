@@ -20,7 +20,7 @@ Provides geographic information detected by an IP adress. This can be used in th
   * `geoip_detect2_get_info_from_current_ip($locales = array('en'))`: Lookup Geo-Information of the current website user
   * `geoip_detect2_get_external_ip_adress()`: Fetch the internet adress of the webserver
 * You can use one of these data sources:
-  * Free: [GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/), automatically updated every month (licensed CC BY-SA. See [FAQ entry](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#the-maxmind-lite-databases-are-licensed-creative-commons-sharealike-attribution-when-do-i-need-to-give-attribution))
+  * Free: [GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/), automatically updated every month (licensed CC BY-SA. See FAQ.)
   * Commercial: [GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database) or [GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
   * Soon: API: [GeoIP2 Precision: City](https://www.maxmind.com/en/geoip2-precision-city-service)
   * Free (default source): [HostIP.info](http://www.hostip.info/) (English only)
@@ -72,6 +72,20 @@ Or, add the plugin shortcode somewhere in the page or post content:
     Wie ist das Wetter in [geoip_detect2 property="country.name" lang="de" default="ihrem Land"] ?
 
 For more information, check the [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation).  
+
+= The Maxmind Lite databases are licensed Creative Commons ShareAlike-Attribution. When do I need to give attribution? =
+
+Maxmind is writing:
+
+    "In most cases, a Wordpress site or other site that auto-detects
+    a default location/currency/language is not providing the GeoLite data
+    to others so they do not need to attribute. In contrast, a site that
+    allows users to look-up their own or other IP addresses would not 
+    to attribute since the data is being provided to others. ...
+
+    Please take a look at the following FAQ:
+    https://wiki.creativecommons.org/FAQ#Do_I_always_have_to_attribute_the_creator_of_the_licensed_material.3F "
+
 
 == Screenshots ==
 

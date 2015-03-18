@@ -16,6 +16,12 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 	</p>
 	<?php endif; ?>
 
+	<?php if ($options['source'] == 'hostinfo') : ?>
+	<p>
+		The free database hostip.info is being used. You can choose a Maxmind database below.
+	</p>
+	<?php endif; ?>
+	<?php if ($options['source'] == 'auto') : ?>
 	<p>
 		<?php printf(__('Last updated: %s', 'geoip-detect'), $last_update ? date_i18n($date_format, $last_update) : __('Never', 'geoip-detect')); ?>
 		
@@ -25,13 +31,14 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 			<em><?php _e('(The file is updated automatically once a month.)', 'geoip-detect'); ?></em>
 		<?php endif; ?>
 	</p>
-	
 	<?php if (GEOIP_DETECT_UPDATER_INCLUDED) : ?>
 	<form method="post" action="#">
 		<input type="hidden" name="action" value="update" />
 		<input type="submit" class="button button-primary" value="<?php _e('Update now'); ?>" />
 	</form>
 	<?php endif; ?>
+	<?php endif; ?>
+	
 	
 	<br/>
 	<h3>Test GeoIP Lookup manually</h3>
@@ -125,7 +132,7 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 			<?php if (GEOIP_DETECT_UPDATER_INCLUDED) : ?>
 			<p><input type="radio" name="options[source]" value="auto" <?php if ($options['source'] == 'auto') { echo 'checked="checked"'; } ?> />Automatic download &amp; update of Maxmind GeoIP Lite City</p>
 			<span class="detail-box">
-				(License: Creative Commons Attribution-ShareAlike 3.0 Unported)
+				(License: Creative Commons Attribution-ShareAlike 3.0 Unported. See <a href="https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#the-maxmind-lite-databases-are-licensed-creative-commons-sharealike-attribution-when-do-i-need-to-give-attribution" target="_blank">Licensing FAQ</a> for more details.)
 			</span>
 			<?php else : ?>
 			<p><input type="radio" name="options[source]" value="auto" disabled="disabled"/>Automatic download &amp; update <em>(only available in Github version)</em></p>
@@ -137,7 +144,7 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 			</span>
 			<p><input type="radio" name="options[source]" value="hostinfo" <?php if ($options['source'] == 'hostinfo') { echo 'checked="checked"'; } ?>  />HostIp.info<br />
 			<span class="detail-box">
-				(only English names, only country, country ID and city populated)
+				(only English names, only country, country ID and city are populated)
 			</span>
 			</p>
 		<p>
