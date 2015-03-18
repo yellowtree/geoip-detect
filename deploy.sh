@@ -42,13 +42,13 @@ NEWVERSION2=`grep "^Version" $GITPATH/$MAINFILE | awk -F' ' '{print $2}'`
 NEWVERSION="$NEWVERSION2"
 
 echo "$MAINFILE version: $NEWVERSION2"
-#NEWVERSION3=`grep "^define.*VERSION" $GITPATH/$MAINFILE | awk -F"'" '{print $4}'`
-#echo "$MAINFILE define version: $NEWVERSION3"
+NEWVERSION3=`grep "^define.*VERSION" $GITPATH/$MAINFILE | awk -F"'" '{print $4}'`
+echo "$MAINFILE define version: $NEWVERSION3"
 
 # if [ "$NEWVERSION1" != "$NEWVERSION2" ] || [ "$NEWVERSION1" != "$NEWVERSION3" ]; then echo "Versions don't match. Exiting...."; exit 1; fi
-#if [ "$NEWVERSION2" != "$NEWVERSION3" ]; then echo "Versions don't match. (php: '$NEWVERSION2', define: #'$NEWVERSION3') Exiting...."; exit 1; fi
+if [ "$NEWVERSION2" != "$NEWVERSION3" ]; then echo "Versions don't match. (php: '$NEWVERSION2', define: #'$NEWVERSION3') Exiting...."; exit 1; fi
 
-#echo "Versions match in readme.txt and PHP file. Let's proceed..."
+echo "Versions match in PHP file. Let's proceed..."
 
 #echo "Compressing JS files..."
 #java -jar ~/bin/yuicompressor.jar --nomunge --preserve-semi -o "$GITPATH/tinymce/editor_plugin.js" $GITPATH/tinymce/editor_plugin_src.js

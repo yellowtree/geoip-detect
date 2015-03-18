@@ -123,16 +123,23 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 
 		<h4>Data source: </h4>
 			<?php if (GEOIP_DETECT_UPDATER_INCLUDED) : ?>
-			<p><input type="radio" name="options[source]" value="auto" <?php if ($options['source'] == 'auto') { echo 'checked="checked"'; } ?> />Automatic download &amp; update</p>
+			<p><input type="radio" name="options[source]" value="auto" <?php if ($options['source'] == 'auto') { echo 'checked="checked"'; } ?> />Automatic download &amp; update of Maxmind GeoIP Lite City</p>
+			<span class="detail-box">
+				(License: Creative Commons Attribution-ShareAlike 3.0 Unported)
+			</span>
 			<?php else : ?>
 			<p><input type="radio" name="options[source]" value="auto" disabled="disabled"/>Automatic download &amp; update <em>(only available in Github version)</em></p>
 			<?php endif; ?>
-			<p><input type="radio" name="options[source]" value="manual" <?php if ($options['source'] == 'manual') { echo 'checked="checked"'; } ?>  />Manual download &amp; update<br />
+			<p><input type="radio" name="options[source]" value="manual" <?php if ($options['source'] == 'manual') { echo 'checked="checked"'; } ?>  />Manual download &amp; update of a Maxmind City or Country database<br />
 			<span class="detail-box">
 				Filepath to mmdb-file: <input type="text" size="40" name="options[manual_file]" value="<?php echo esc_attr($options['manual_file']); ?>" /><br />
 				<a href="http://dev.maxmind.com/geoip/geoip2/geolite2/" target="_blank">Free version</a> - <a href="https://www.maxmind.com/en/geoip2-country-database" target="_blank">Commercial Version</a>
 			</span>
-		</p>
+			<p><input type="radio" name="options[source]" value="hostinfo" <?php if ($options['source'] == 'hostinfo') { echo 'checked="checked"'; } ?>  />HostIp.info<br />
+			<span class="detail-box">
+				(only English names, only country, country ID and city populated)
+			</span>
+			</p>
 		<p>
 			<input type="submit" class="button button-primary" value="<?php _e('Save', 'geoip-detect'); ?>" />
 		</p>
