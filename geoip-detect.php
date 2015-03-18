@@ -45,7 +45,7 @@ require_once(GEOIP_PLUGIN_DIR . '/vendor/autoload.php');
 require_once(GEOIP_PLUGIN_DIR . '/geoip-detect-lib.php');
 
 require_once(GEOIP_PLUGIN_DIR . '/init.php');
-//require_once(GEOIP_PLUGIN_DIR . '/upgrade-plugin.php');
+require_once(GEOIP_PLUGIN_DIR . '/upgrade-plugin.php');
 require_once(GEOIP_PLUGIN_DIR . '/api.php');
 require_once(GEOIP_PLUGIN_DIR . '/legacy-api.php');
 require_once(GEOIP_PLUGIN_DIR . '/filter.php');
@@ -160,7 +160,7 @@ function geoip_detect_plugin_page()
 		if ($options['source'] == 'auto')
 			$message .= __('No GeoIP Database found. Click on the button "Update now" or follow the installation instructions.', 'geoip-detect');
 		elseif ($options['source'] == 'manual')
-			$message .= __('No GeoIP Database found. Please look at the installation instructions.', 'geoip-detect');
+			$message .= __('No GeoIP Database found. Please enter a valid file path below.', 'geoip-detect');
 	}
 
 	

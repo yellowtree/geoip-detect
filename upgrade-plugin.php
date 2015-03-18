@@ -26,22 +26,21 @@ function geoip_detect_do_upgrade($old_version) {
  * @param string $version The version to which the plugin is updating.
  */
 function geoip_detect_maybe_upgrade_version( ) {
-	if ( !is_admin() || !is_logged_in())
+	if ( !is_admin() || !is_user_logged_in())
 		return;
 
 	$version = GEOIP_DETECT_VERSION;
-	$plugin = GEOIP_PLUGIN_FILE;
+	$plugin = GEOIP_PLUGIN_BASENAME;
 	
 	if ( is_plugin_active_for_network( $plugin ) ) {
+		// Does this work?
 		$current_vers = get_site_option( 'geoip-detect-plugin_version' );
 		$network = true;
-	} elseif ( is_plugin_active( $plugin ) ) {
+	} else {
 		$current_vers = get_option( 'geoip-detect-plugin_version' );
 		$network = false;
-	} else {
-		return false;
 	}
-
+	
 	if ( version_compare( $version, $current_vers, '>' ) ) {
 		
 		geoip_detect_do_upgrade($current_vers);
