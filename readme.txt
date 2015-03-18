@@ -97,7 +97,7 @@ Maxmind is writing:
 
 The plugin was down for licensing issues.
 All users must now opt in to use the database because it is licensed CC BY-SA.
-Otherwise, the GPL API HostIP.info is used. 
+Otherwise, the Web-API of HostIP.info is used. 
 
 = 2.1.1 =
 
@@ -130,9 +130,9 @@ Fixing automatic weekly updates.
 * NEW: Add HostIP.info-Support
 
 = 2.2.0 =
-* FIX: Update Maxmind Reader to 1.0.3 (there were issues when the PHP extension mbstring was not installed)
+* FIX: Update Maxmind Reader to 1.0.3 (fixing issues when the PHP extension mbstring was not installed)
 * NEW: Commercial databass are now supported. You can specify a file path in the options.
-* NEW: Country (lite or commercial) database now works as well.
+* NEW: A country database (lite or commercial) database now works as well.
 * NEW: License is now displayed before install.
 
 = 2.1.2 =
