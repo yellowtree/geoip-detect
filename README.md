@@ -10,7 +10,7 @@ Retrieving Geo-Information using the Maxmind GeoIP2 (Lite or Commercial) Databas
 
 == Description ==
 
-Provides geographic information detected by an IP adress. This can be used in themes or other plugins, or via CSS body classes.
+Provides geographic information detected by an IP adress. This can be used in themes or other plugins, as a shortcode, or via CSS body classes.
 
 = Features: =
 
@@ -19,10 +19,10 @@ Provides geographic information detected by an IP adress. This can be used in th
   * `geoip_detect2_get_info_from_current_ip($locales = array('en'))`: Lookup Geo-Information of the current website user
   * `geoip_detect2_get_external_ip_adress()`: Fetch the internet adress of the webserver
 * You can use one of these data sources:
-  * [GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/)
-  * [GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database)
-  * [GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
-  * Soon: [GeoIP2 Precision: City](https://www.maxmind.com/en/geoip2-precision-city-service)
+  * Free: [GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/), automatically updated every month (licensed CC BY-SA. See FAQ.)
+  * Commercial: [GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database) or [GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
+  * Soon: API: [GeoIP2 Precision: City](https://www.maxmind.com/en/geoip2-precision-city-service)
+  * Free (default source): [HostIP.info](http://www.hostip.info/) (English only)
 * For the property names, see the results of a specific IP in the wordpress backend (under *Tools > GeoIP Detection*).
 * You can include these properties into your posts and pages by using the shortcode `[geoip_detect2 property="country.name" default="(country could not be detected)" lang="en"]` (where 'country.name' can be one of the other property names as well, and 'default' and 'lang' are optional).
 * When enabled on the plugin page, it adds CSS classes to the body tag such as `geoip-country-DE` and `geoip-continent-EU`.
@@ -40,18 +40,13 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 
 **System Requirements**: You will need at least PHP 5.3.1.
 
-*This product includes GeoLite2 data created by MaxMind, available from http://www.maxmind.com.*
+*This product can provide GeoLite2 data created by MaxMind, available from http://www.maxmind.com.*
 
 == Installation ==
 
-This plugin does not contain the database itself.
-
-* Download the [free](http://dev.maxmind.com/geoip/geoip2/geolite2/) or commercial version ([country](https://www.maxmind.com/en/geoip2-country-database) or [city](https://www.maxmind.com/en/geoip2-city)) of the Maxmind database file.
-* Ungzip it and upload it to your server. You could use FTP or the media uploader to do so.
-* On the plugin page, set the absolute filepath to the mmdb-File.
-* Check if it works: go to the plugin page and click "Lookup".
-
-The GeoIPv2-Lite-database can only be updated automatically if you install the Github version of this plugin instead. See [Installation instructions](https://github.com/yellowtree/wp-geoip-detect/wiki/Installation) there.
+* Install the plugin
+* Go to the plugin page (under Tools) and choose a data source.
+* Test it by clicking on "Lookup".
 
 == Frequently Asked Questions ==
 
@@ -77,12 +72,32 @@ Or, add the plugin shortcode somewhere in the page or post content:
 
 For more information, check the [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation).  
 
+= The Maxmind Lite databases are licensed Creative Commons ShareAlike-Attribution. When do I need to give attribution? =
+
+Maxmind is writing:
+
+    "In most cases, a Wordpress site or other site that auto-detects
+    a default location/currency/language is not providing the GeoLite data
+    to others so they do not need to attribute. In contrast, a site that
+    allows users to look-up their own or other IP addresses would not 
+    to attribute since the data is being provided to others. ...
+
+    Please take a look at the following FAQ:
+    https://wiki.creativecommons.org/FAQ#Do_I_always_have_to_attribute_the_creator_of_the_licensed_material.3F "
+
+= Does this plugin work in a MultiSite-Network environment? =
+
+Maybe. I haven't tested it.
+
 == Screenshots ==
 
 1. Backend page (under Tools > GeoIP Detection)
 
-= 2.2.0 =
+= 2.3.0 =
 
+The plugin was down for licensing issues.
+All users must now opt in to use the database because it is licensed CC BY-SA.
+Otherwise, the Web-API of HostIP.info is used. 
 
 = 2.1.1 =
 
@@ -111,10 +126,13 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+= 2.3.0 =
+* NEW: Add HostIP.info-Support
+
 = 2.2.0 =
-* FIX: Removing automatic update due to wp.org repo guidelines. See updated installation informations.
-* FIX: Update Maxmind Reader to 1.0.3 (there were issues when the PHP extension mbstring was not installed)
+* FIX: Update Maxmind Reader to 1.0.3 (fixing issues when the PHP extension mbstring was not installed)
 * NEW: Commercial databass are now supported. You can specify a file path in the options.
+* NEW: A country database (lite or commercial) database now works as well.
 
 = 2.1.2 =
 * FIX: Show error message if PHP < 5.3 (instead of fatal error)

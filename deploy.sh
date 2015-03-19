@@ -42,7 +42,7 @@ NEWVERSION2=`grep "^Version" $GITPATH/$MAINFILE | awk -F' ' '{print $2}'`
 NEWVERSION="$NEWVERSION2"
 
 echo "$MAINFILE version: $NEWVERSION2"
-NEWVERSION3=`grep "^define.*VERSION" $GITPATH/$MAINFILE | awk -F"'" '{print $4}'`
+NEWVERSION3=`grep "^define.*GEOIP_DETECT_VERSION" $GITPATH/$MAINFILE | awk -F"'" '{print $4}'`
 echo "$MAINFILE define version: $NEWVERSION3"
 
 # if [ "$NEWVERSION1" != "$NEWVERSION2" ] || [ "$NEWVERSION1" != "$NEWVERSION3" ]; then echo "Versions don't match. Exiting...."; exit 1; fi

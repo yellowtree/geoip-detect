@@ -53,7 +53,7 @@ done >> /tmp/file
 echo >> /tmp/file
 
 # Find License Details
-echo $LICENSE | grep 3.0 
+echo $LICENSE | grep 3.0 > /dev/null
 if [ $? -eq 0 ] 
 then
         LICENSE="[GPL v3 or later] (http://www.gnu.org/licenses/gpl-3.0.html)"

@@ -36,6 +36,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 define('GEOIP_DETECT_VERSION', '2.3.0');
+
 define('GEOIP_PLUGIN_FILE', __FILE__);
 define('GEOIP_PLUGIN_DIR', dirname(GEOIP_PLUGIN_FILE));
 define('GEOIP_PLUGIN_BASENAME', plugin_basename(GEOIP_PLUGIN_FILE));
