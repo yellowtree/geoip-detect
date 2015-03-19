@@ -32,14 +32,16 @@ function geoip_detect_maybe_upgrade_version( ) {
 	$version = GEOIP_DETECT_VERSION;
 	$plugin = GEOIP_PLUGIN_BASENAME;
 	
+	/* Plugins_loaded is too early for this
 	if ( is_plugin_active_for_network( $plugin ) ) {
 		// Does this work?
 		$current_vers = get_site_option( 'geoip-detect-plugin_version' );
 		$network = true;
 	} else {
+	*/
 		$current_vers = get_option( 'geoip-detect-plugin_version' );
 		$network = false;
-	}
+	//}
 	
 	if ( version_compare( $version, $current_vers, '>' ) ) {
 		
@@ -54,4 +56,4 @@ function geoip_detect_maybe_upgrade_version( ) {
 		update_option( 'geoip-detect-plugin_version', $current_vers );
 	}
 }
-add_action('plugins_loaded', 'geoip_detect_maybe_upgrade_version', 1);
+add_action('plugins_loaded', 'geoip_detect_maybe_upgrade_version');

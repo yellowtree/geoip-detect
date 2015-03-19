@@ -44,8 +44,8 @@ require_once(GEOIP_PLUGIN_DIR . '/vendor/autoload.php');
 
 require_once(GEOIP_PLUGIN_DIR . '/geoip-detect-lib.php');
 
-require_once(GEOIP_PLUGIN_DIR . '/init.php');
 require_once(GEOIP_PLUGIN_DIR . '/upgrade-plugin.php');
+require_once(GEOIP_PLUGIN_DIR . '/init.php');
 require_once(GEOIP_PLUGIN_DIR . '/api.php');
 require_once(GEOIP_PLUGIN_DIR . '/legacy-api.php');
 require_once(GEOIP_PLUGIN_DIR . '/filter.php');
@@ -85,10 +85,8 @@ function geoip_detect_plugin_page()
 	switch(@$_POST['action'])
 	{
 		case 'update':
-			if (isset($_POST['source'])) {
-				update_option('geoip-detect-source', 'auto');
-				update_option('geoip-detect-ui-has-chosen-source', true);
-			}
+			update_option('geoip-detect-source', 'auto');
+			update_option('geoip-detect-ui-has-chosen-source', true);
 			
 			$ret = geoip_detect_update();
 			if ($ret === true)
@@ -135,10 +133,6 @@ function geoip_detect_plugin_page()
 	$options = array();
 	foreach ($option_names as $opt_name) {
 		$options[$opt_name] = get_option('geoip-detect-'. $opt_name);
-	}
-	
-	if (!$options['source']) {
-		$options['source'] = 'hostinfo';
 	}
 		
 	$data_file = geoip_detect_get_abs_db_filename();

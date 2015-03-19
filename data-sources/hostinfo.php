@@ -1,6 +1,6 @@
 <?php
 
-class GeoIP_HostInfo_Reader {
+class GeoIP_HostInfo_Reader implements GeoIp2\ProviderInterface{
 	
 	const URL = 'http://api.hostip.info/get_json.php?ip=';
 	

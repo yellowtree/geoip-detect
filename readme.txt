@@ -86,6 +86,9 @@ Maxmind is writing:
     Please take a look at the following FAQ:
     https://wiki.creativecommons.org/FAQ#Do_I_always_have_to_attribute_the_creator_of_the_licensed_material.3F "
 
+= Does this plugin work in a MultiSite-Network environment? =
+
+Maybe. I haven't tested it.
 
 == Screenshots ==
 
