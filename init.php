@@ -59,7 +59,7 @@ function geoip_detect_admin_notice_database_missing() {
 	$url = '<a href="tools.php?page=' . GEOIP_PLUGIN_BASENAME . '">GeoIP Detection</a>';
     ?>
     <div class="error">
-       	<p style="float: right"><a href="?geoip_detect_dismiss_notice=hostinfo_used"><?php _e('Dismiss notice', 'geoip-detect'); ?></a>
+       	<p style="float: right"><a href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_dismiss_notice=hostinfo_used"><?php _e('Dismiss notice', 'geoip-detect'); ?></a>
     	<h3><?php _e( 'GeoIP Detection: No database installed', 'geoip-detect' ); ?></h3>
     	<?php if (GEOIP_DETECT_UPDATER_INCLUDED) : ?>
         <p><?php printf(__('The Plugin %s is currently using the Webservice <a href="http://hostip.info" target="_blank">hostip.info</a> as data source. <br />You can click on the button below to download and install Maxmind GeoIPv2 Lite City now.', 'geoip-detect' ), $url); ?></p>
@@ -80,6 +80,9 @@ function geoip_detect_admin_notice_database_missing() {
 }
 
 function geoip_detect_dismiss_message() {
+	if (!is_admin() || !is_user_logged_in())
+		return;
+	
 	if (!isset($_GET['geoip_detect_dismiss_notice']))
 		return;
 		
