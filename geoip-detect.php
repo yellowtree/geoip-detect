@@ -57,6 +57,8 @@ if (!defined('GEOIP_DETECT_UPDATER_INCLUDED'))
 	define('GEOIP_DETECT_UPDATER_INCLUDED', false);
 
 @include_once('data-sources/hostinfo.php');
+//@include_once('data-sources/auto.php');
+//@include_once('data-sources/manual.php');
 
 
 define('GEOIP_DETECT_DATA_FILENAME', 'GeoLite2-City.mmdb');
@@ -176,10 +178,10 @@ function geoip_detect_menu() {
 add_action('admin_menu', 'geoip_detect_menu');
 
 function geoip_detect_add_settings_link( $links ) {
-	$settings_link = '<a href="tools.php?page=geoip-detect/geoip-detect.php">' . __('Plugin page', 'geoip-detect') . '</a>';
+	$settings_link = '<a href="tools.php?page=' . GEOIP_PLUGIN_BASENAME . '">' . __('Plugin page', 'geoip-detect') . '</a>';
 	array_push( $links, $settings_link );
 	return $links;
 }
-add_filter( "plugin_action_links_" . plugin_basename( GEOIP_PLUGIN_FILE ), 'geoip_detect_add_settings_link' );
+add_filter( "plugin_action_links_" . GEOIP_PLUGIN_BASENAME, 'geoip_detect_add_settings_link' );
 
 
