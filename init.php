@@ -35,6 +35,7 @@ add_action('plugins_loaded', 'geoip_detect_defines');
 function geoip_detect_enqueue_admin_notices() {
 	// Nobody would see them anyway.
 	if (!is_admin() || 
+		!is_user_logged_in() ||
 		(defined('DOING_CRON') && DOING_CRON) || 
 		(defined('DOING_AJAX') && DOING_AJAX) )
 		return;
