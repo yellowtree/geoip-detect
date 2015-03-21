@@ -34,7 +34,14 @@ class GeoIP_HostInfo_Reader implements GeoIp2\ProviderInterface{
 			
 	}
 	
-	public function api_call($ip) {
+	public function metadata() {
+		$data = new stdClass();
+		$data->description = 'HostIP.info Web-API';
+		
+		return $data;
+	}
+	
+	private function api_call($ip) {
 		try {
 			// Setting timeout limit to speed up sites
 			$context = stream_context_create(

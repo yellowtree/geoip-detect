@@ -88,6 +88,22 @@ function geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false) {
 }
 
 /**
+ * Return a human-readable label of the currently chosen source.
+ * @return string
+ */
+function geoip_detect2_get_current_source_description() {
+	$reader = geoip_detect2_get_reader();
+	if (!method_exists($reader, 'metadata'))
+		return 'Unknown';
+	$metadata = $reader->metadata();
+	$desc = $metadata->description;
+	if (isset($desc['en']))
+		$desc = $desc['en'];
+	
+	return $desc;
+}
+
+/**
  * Get Geo-Information for the current IP
  * 
  * @param array(string)			List of locale codes to use in name property

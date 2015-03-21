@@ -10,6 +10,9 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 		</p>
 	<?php endif; ?>
 	
+	<p>
+		<?php printf(__('Selected data source: %s', 'geoip-detect'), geoip_detect2_get_current_source_description() ); ?>
+	</p>
 	<?php if ($last_update_db) : ?>
 	<p>
 		<?php printf(__('Database data from: %s', 'geoip-detect'), date_i18n($date_format, $last_update_db) ); ?>
@@ -18,7 +21,7 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 
 	<?php if ($options['source'] == 'hostinfo') : ?>
 	<p>
-		The free database hostip.info is being used. You can choose a Maxmind database below.
+		You can choose a Maxmind database below.
 	</p>
 	<?php endif; ?>
 	<?php if ($options['source'] == 'auto') : ?>
