@@ -129,6 +129,9 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+= 2.3.1 =
+* NEW: API function geoip_detect2_get_current_source_description() (as there are different sources to choose from now)
+
 = 2.3.0 =
 * NEW: Add HostIP.info-Support
 
