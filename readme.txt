@@ -96,6 +96,12 @@ Maybe. I haven't tested it.
 
 == Upgrade Notice == 
 
+= 2.3.1 =
+
+The plugin was down for licensing issues.
+All users must now opt in to use the database because it is licensed CC BY-SA.
+Otherwise, the Web-API of HostIP.info is used. 
+
 = 2.3.0 =
 
 The plugin was down for licensing issues.
@@ -131,6 +137,7 @@ Fixing automatic weekly updates.
 
 = 2.3.1 =
 * NEW: API function geoip_detect2_get_current_source_description() (as there are different sources to choose from now)
+* FIX: Show error message if PHP < 5.3 (instead of fatal error)
 
 = 2.3.0 =
 * NEW: Add HostIP.info-Support
@@ -199,5 +206,4 @@ Other changes:
 * New filter: When developing locally, the external IP is used to determine the geographic location.
 
 = 1.0 =
-
 * First working release.
