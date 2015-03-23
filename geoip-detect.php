@@ -152,7 +152,7 @@ function geoip_detect_plugin_page()
 		$reader = geoip_detect2_get_reader();
 		if (method_exists($reader, 'metadata')) {
 			$metadata = $reader->metadata();
-			$last_update_db = $metadata->buildEpoch;
+			$last_update_db = @$metadata->buildEpoch;
 		}
 	}
 	else 

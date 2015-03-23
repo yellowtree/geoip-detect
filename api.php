@@ -89,7 +89,7 @@ function geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false) {
 
 /**
  * Return a human-readable label of the currently chosen source.
- * @return string
+ * @return string The label.
  */
 function geoip_detect2_get_current_source_description() {
 	$reader = geoip_detect2_get_reader();
