@@ -37,16 +37,24 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+define('GEOIP_DETECT_DATA_FILENAME', 'GeoLite2-City.mmdb');
+define('GEOIP_REQUIRED_PHP_VERSION', '5.3.1');
+define('GEOIP_REQUIRED_WP_VERSION', '3.5');
+
 define('GEOIP_PLUGIN_FILE', __FILE__);
 define('GEOIP_PLUGIN_DIR', dirname(GEOIP_PLUGIN_FILE));
 define('GEOIP_PLUGIN_BASENAME', plugin_basename(GEOIP_PLUGIN_FILE));
+
+// Do PHP & WP Version check
+require_once(GEOIP_PLUGIN_DIR . '/init.php');
+if (!geoip_detect_version_check()) 
+	return; // Do nothing except emitting the admin notice
 
 require_once(GEOIP_PLUGIN_DIR . '/vendor/autoload.php');
 
 require_once(GEOIP_PLUGIN_DIR . '/geoip-detect-lib.php');
 
 require_once(GEOIP_PLUGIN_DIR . '/upgrade-plugin.php');
-require_once(GEOIP_PLUGIN_DIR . '/init.php');
 require_once(GEOIP_PLUGIN_DIR . '/api.php');
 require_once(GEOIP_PLUGIN_DIR . '/legacy-api.php');
 require_once(GEOIP_PLUGIN_DIR . '/filter.php');
@@ -59,11 +67,6 @@ if (!defined('GEOIP_DETECT_UPDATER_INCLUDED'))
 @include_once('data-sources/hostinfo.php');
 //@include_once('data-sources/auto.php');
 //@include_once('data-sources/manual.php');
-
-
-define('GEOIP_DETECT_DATA_FILENAME', 'GeoLite2-City.mmdb');
-define('GEOIP_REQUIRED_PHP_VERSION', '5.3.1');
-define('GEOIP_REQUIRED_WP_VERSION', '3.5');
 
 // You can define these constants if you like.
 
