@@ -1,6 +1,10 @@
 <?php
 function geoip_detect_version_check() {
-	global $wp_version;
+	if (empty($GLOBALS['wp_version']))
+		require(ABSPATH . '/wp-includes/version.php');
+	else
+		$wp_version = $GLOBALS['wp_version'];
+		
 
 	if (version_compare ( PHP_VERSION, GEOIP_REQUIRED_PHP_VERSION, '<' )) {
 		$flag = 'PHP';
@@ -23,7 +27,10 @@ function geoip_detect_version_check() {
 }
 
 function geoip_detect_version_minimum_requirements_notice() {
-	global $wp_version;
+	if (empty($GLOBALS['wp_version']))
+		require(ABSPATH . '/wp-includes/version.php');
+	else
+		$wp_version = $GLOBALS['wp_version'];
 	?>
 <div class="error">
 	<h3><?php _e( 'GeoIP Detection: Minimum requirements not met.', 'geoip-detect' ); ?></h3>
