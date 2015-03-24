@@ -41,7 +41,6 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	function testShortcodeOnePropertyOutput() {
-		$string = do_shortcode('[geoip_detect2 property="country"]');
 		$this->assertEquals('Germany', do_shortcode('[geoip_detect2 property="country"]'));
 	}
 	

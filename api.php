@@ -83,7 +83,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
  * @return GeoIp2\Database\Reader 	The reader, ready to do its work. Don't forget to `close()` it afterwards. NULL if file not found (or other problems).
  * 									NULL if initialization went wrong (e.g., File not found.)
  */
-function geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false) {	
+function geoip_detect2_get_reader($locales = null) {	
 	return _geoip_detect2_get_reader($locales, false);
 }
 

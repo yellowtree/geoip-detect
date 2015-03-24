@@ -30,10 +30,9 @@ function geoip_detect_maybe_upgrade_version( ) {
 		return;
 
 	$version = GEOIP_DETECT_VERSION;
-	$plugin = GEOIP_PLUGIN_BASENAME;
 	
 	/* Plugins_loaded is too early for this
-	if ( is_plugin_active_for_network( $plugin ) ) {
+	if ( is_plugin_active_for_network( GEOIP_PLUGIN_BASENAME ) ) {
 		// Does this work?
 		$current_vers = get_site_option( 'geoip-detect-plugin_version' );
 		$network = true;
