@@ -5,7 +5,7 @@
  * @param string 				$ip IP-Adress (IPv4 or IPv6). 'me' is the current IP of the server.
  * @param array(string)			List of locale codes to use in name property
  * 								from most preferred to least preferred. (Default: Site language, en)
- * @return GeoIp2\Model\City	GeoInformation.
+ * @return YellowTree\GeoipDetect\DataSources\City	GeoInformation.
  * 
  * @see https://github.com/maxmind/GeoIP2-php				API Usage
  * @see http://dev.maxmind.com/geoip/geoip2/web-services/	API Documentation
