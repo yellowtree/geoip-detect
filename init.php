@@ -1,42 +1,4 @@
 <?php
-
-function geoip_detect_version_check() {
-   global $wp_version;
-   
-    if ( version_compare( PHP_VERSION, GEOIP_REQUIRED_PHP_VERSION, '<' ) ) {
-        $flag = 'PHP';
-    	$min = GEOIP_REQUIRED_PHP_VERSION;
-    } elseif ( version_compare( $wp_version, GEOIP_REQUIRED_WP_VERSION, '<' ) ) {
-        $flag = 'WordPress';
-   		$min = GEOIP_REQUIRED_WP_VERSION;
-    } else {
-        return true;
-    
-		wp_die('<p>','Plugin Activation Error',  array( 'response'=>200, 'back_link'=>TRUE ) );
-    }
-    
-    add_action('all_admin_notices', 'geoip_detect_version_minimum_requirements_notice');
-    
-    return false;
-}
-
-function geoip_detect_version_minimum_requirements_notice() {
-	$ignored_notices = (array) get_user_meta(get_current_user_id(), 'geoip_detect_dismissed_notices', true);
-	if (in_array('minimum_requirements', $ignored_notices))
-		return;
-		
-	global $wp_version;
-?>
-<div class="error">
-       	<p style="float: right"><a href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_dismiss_notice=minimum_requirements"><?php _e('Dismiss notice', 'geoip-detect'); ?></a>
-	<h3><?php _e( 'GeoIP Detection: Minimum requirements not met.', 'geoip-detect' ); ?></h3>
-	<p>The plugin <strong>GeoIP Detection</strong> plugin requires PHP <?php echo GEOIP_REQUIRED_PHP_VERSION; ?> (you're using PHP <?php echo PHP_VERSION; ?>) and WordPress version <?php echo GEOIP_REQUIRED_WP_VERSION; ?> (you're using: <?php echo $wp_version; ?>) and therefore does exactly nothing.</p><p>You can update, or install an <a href="https://github.com/yellowtree/wp-geoip-detect/releases">1.x legacy version</a> of this plugin instead.</p>
-</div>
-<?php
-}
-
-
-
 function geoip_detect_defines() {
 	if (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED'))
 		define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', false);
@@ -75,25 +37,33 @@ function geoip_detect_admin_notice_database_missing() {
 
 	$url = '<a href="tools.php?page=' . GEOIP_PLUGIN_BASENAME . '">GeoIP Detection</a>';
     ?>
-    <div class="error">
-       	<p style="float: right"><a href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_dismiss_notice=hostinfo_used"><?php _e('Dismiss notice', 'geoip-detect'); ?></a>
-    	<h3><?php _e( 'GeoIP Detection: No database installed', 'geoip-detect' ); ?></h3>
+<div class="error">
+	<p style="float: right">
+		<a
+			href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_dismiss_notice=hostinfo_used"><?php _e('Dismiss notice', 'geoip-detect'); ?></a>
+	
+	
+	<h3><?php _e( 'GeoIP Detection: No database installed', 'geoip-detect' ); ?></h3>
     	<?php if (GEOIP_DETECT_UPDATER_INCLUDED) : ?>
         <p><?php printf(__('The Plugin %s is currently using the Webservice <a href="http://hostip.info" target="_blank">hostip.info</a> as data source. <br />You can click on the button below to download and install Maxmind GeoIPv2 Lite City now.', 'geoip-detect' ), $url); ?></p>
-        <p><?php printf(__('This database is licenced <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA</a>. See <a href="http://dev.maxmind.com/geoip/geoip2/geolite2/#License">License</a> for details.')); ?>
-        <form action="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME; ?>" method="post">
-	        <p>
-	        	<input type="hidden" name="source" value="auto" />
-	        	<input type="hidden" name="action" value="update" />
-	        	<input type="submit" value="Install now" class="button button-primary" />
-	        	&nbsp;&nbsp;<a href="?geoip_detect_dismiss_notice=hostinfo_used"><?php _e('Keep using hostip.info', 'geoip-detect'); ?></a>
-	        </p>
-       	</form>
+	<p><?php printf(__('This database is licenced <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA</a>. See <a href="http://dev.maxmind.com/geoip/geoip2/geolite2/#License">License</a> for details.')); ?>
+        
+	
+	
+	<form action="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME; ?>"
+		method="post">
+		<p>
+			<input type="hidden" name="source" value="auto" /> <input
+				type="hidden" name="action" value="update" /> <input type="submit"
+				value="Install now" class="button button-primary" /> &nbsp;&nbsp;<a
+				href="?geoip_detect_dismiss_notice=hostinfo_used"><?php _e('Keep using hostip.info', 'geoip-detect'); ?></a>
+		</p>
+	</form>
        	<?php else : ?>
         <p><?php printf(__( 'The Plugin %s can\'t do its work before you install an IP database. Go to the plugin page and set a data source.', 'geoip-detect' ), $url); ?></p>
        	<?php endif; ?>
     </div>
-    <?php
+<?php
 }
 
 function geoip_detect_dismiss_message() {

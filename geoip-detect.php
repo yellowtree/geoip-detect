@@ -46,11 +46,12 @@ define('GEOIP_PLUGIN_DIR', dirname(GEOIP_PLUGIN_FILE));
 define('GEOIP_PLUGIN_BASENAME', plugin_basename(GEOIP_PLUGIN_FILE));
 
 // Do PHP & WP Version check
-require_once(GEOIP_PLUGIN_DIR . '/init.php');
+require_once(GEOIP_PLUGIN_DIR . '/check_requirements.php');
 if (!geoip_detect_version_check()) 
 	return; // Do nothing except emitting the admin notice
 
 require_once(GEOIP_PLUGIN_DIR . '/vendor/autoload.php');
+require_once(GEOIP_PLUGIN_DIR . '/init.php');
 
 require_once(GEOIP_PLUGIN_DIR . '/geoip-detect-lib.php');
 
