@@ -37,5 +37,9 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
 		$this->assertSame(null, $record->country->name);	
 	}
+	
+	function testDescription() {
+		$this->assertNotEmpty(geoip_detect2_get_current_source_description());
+	}
 
 }

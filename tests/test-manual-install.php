@@ -16,15 +16,6 @@ class ManualInstallTest extends WP_UnitTestCase_GeoIP_Detect {
 		
 		$thrown = false;
 		try {
-			$this->assertSame('', geoip_detect_get_abs_db_filename() );
-		} catch(Exception $e) {
-			$thrown = true;
-		}
-		if (!$thrown)
-			$this->fail('geoip_detect_get_abs_db_filename(): No database missing exception was thrown.');
-
-		$thrown = false;
-		try {
 			$reader = geoip_detect2_get_reader();
 			$this->assertSame(null, $reader, 'geoip_detect2_get_info_from_ip() : should have returned NULL because there is no database'); 
 		} catch(Exception $e) {
@@ -50,9 +41,7 @@ class ManualInstallTest extends WP_UnitTestCase_GeoIP_Detect {
 		$ret = @copy(GEOIP_DETECT_TEST_DB_FILENAME, TEST_GEOIP_PLUGIN_DATA_FILENAME);
 		if (!$ret)
 			$this->markTestSkipped('Test could not be executed: Copy failed');
-		
-		$this->assertNotSame('', geoip_detect_get_abs_db_filename(), 'Did not detect manual database' );
-		
+			
 		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
 	}
