@@ -14,6 +14,8 @@ class ManualDataSource extends AbstractDataSource {
 	public function getDescriptionHTML() { return ''; }
 	public function getStatusInformationHTML() { return ''; }
 	public function getParameterHTML() { return ''; }
+	
+	public function getShortLabel() { return $this->maxmindGetFileDescription(); }
 
 	public function getReader() {
 		$reader = null;
@@ -52,6 +54,8 @@ class ManualDataSource extends AbstractDataSource {
 		}
 		
 		$data_filename = apply_filters('geoip_detect_get_abs_db_filename', $data_filename);
+		
+		return $data_filename;
 	}
 	
 	public static function maxmindValidateFilename($filename) {
@@ -73,6 +77,22 @@ class ManualDataSource extends AbstractDataSource {
 	
 		return $filename;
 	}
+	
+	protected function maxmindGetFileDescription() {
+		$reader = $this->getReader();
+		
+		if (!method_exists($reader, 'metadata'))
+			return 'Unknown';
+		
+		try {
+			$metadata = $reader->metadata();
+		} catch (\Exception $e) {
+			return 'Unknown';
+		}
+		
+		$desc = $metadata->description;
+		return $desc['en'];
+	} 
 }
 
 DataSourceRegistry::getInstance()->register(new ManualDataSource());

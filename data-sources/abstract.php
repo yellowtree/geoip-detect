@@ -20,6 +20,7 @@ abstract class AbstractDataSource {
 	public function getDescriptionHTML() { return ''; }
 	public function getStatusInformationHTML() { return ''; }
 	public function getParameterHTML() { return ''; }
+	public function getShortLabel() { return $this->getLabel(); }
 	
 	public function activate() { }
 	

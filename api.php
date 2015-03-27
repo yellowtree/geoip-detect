@@ -1,5 +1,6 @@
 <?php
 
+use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 /**
  * Get Geo-Information for a specific IP
  * @param string 				$ip IP-Adress (IPv4 or IPv6). 'me' is the current IP of the server.
@@ -92,21 +93,11 @@ function geoip_detect2_get_reader($locales = null) {
  * @return string The label.
  */
 function geoip_detect2_get_current_source_description() {
-	$reader = geoip_detect2_get_reader();
-	if (!method_exists($reader, 'metadata'))
-		return 'Unknown';
-	
-	try { 
-		$metadata = $reader->metadata();
-	} catch (\Exception $e) {
-		return 'Unknown';
+	$source = DataSourceRegistry::getInstance()->getCurrentSource();
+	if ($source) {
+		return $source->getShortLabel();
 	}
-	
-	$desc = $metadata->description;
-	if (isset($desc['en']))
-		$desc = $desc['en'];
-	
-	return $desc;
+	return 'Unknown';
 }
 
 /**

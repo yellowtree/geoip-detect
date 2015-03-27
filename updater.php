@@ -1,46 +1,12 @@
 <?php
-// You can use this in your theme/plugin to deactivate the auto-update
-//define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', true);
 
 define('GEOIP_DETECT_UPDATER_INCLUDED', true);
 
-// Needed for WP File functions. Cron doesn't work without it.
-require_once(ABSPATH.'/wp-admin/includes/file.php');
-
-function geoip_detect_update()
-{
-	// TODO: Currently cron is scheduled but not executed. Remove scheduling.
-	if (get_option('geoip-detect-source') != 'auto')
-		return;
-
-	$download_url = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz';
-	$download_url = apply_filters('geoip_detect2_download_url', $download_url);
-
-	$outFile = geoip_detect_get_database_upload_filename();
-
-	// Download
-	$tmpFile = download_url($download_url);
-	if (is_wp_error($tmpFile))
-		return $tmpFile->get_error_message();
-
-	// Ungzip File
-	$zh = gzopen($tmpFile, 'r');
-	$h = fopen($outFile, 'w');
-
-	if (!$zh)
-		return __('Downloaded file could not be opened for reading.', 'geoip-detect');
-	if (!$h)
-		return sprintf(__('Database could not be written (%s).', 'geoip-detect'), $outFile);
-
-	while ( ($string = gzread($zh, 4096)) != false )
-		fwrite($h, $string, strlen($string));
-
-	gzclose($zh);
-	fclose($h);
-
-	unlink($tmpFile);
-
-	return true;
+/**
+ * @deprecated
+ */
+function geoip_detect_update() {
+	// TODO fallback?
 }
 
 // ------------------ CRON Hooks --------------------------
@@ -56,6 +22,9 @@ function geoip_detect_update_cron($immediately_after_activation = false) {
 	 */
 	$do_it = apply_filters('geoip_detect_cron_do_update', !GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED, $immediately_after_activation);	
 	
+	// Needed for WP File functions. Cron doesn't work without it.
+	require_once(ABSPATH.'/wp-admin/includes/file.php');
+
 	if ($do_it)
 		geoip_detect_update();
 		
