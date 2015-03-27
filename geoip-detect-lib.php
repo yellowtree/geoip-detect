@@ -1,4 +1,5 @@
 <?php
+use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 // This file contains function that are necessary for the plugin, but not deemed as API.
 // Their name / parameter may change without warning.
 
@@ -63,52 +64,19 @@ function geoip_detect_validate_filename($filename) {
 	return '';
 }
 
+/**
+ * @deprecated since 2.4.0
+ * @return string
+ */
 function geoip_detect_get_abs_db_filename()
 {
-	$data_filename = '';
+	_doing_it_wrong('GeoIP Detection: geoip_detect_get_abs_db_filename', 'geoip_detect_get_abs_db_filename should not be called directly', '2.3.1');
 	
-	$source = get_option('geoip-detect-source');
-	if ($source == 'manual') {
-		$data_filename = get_option('geoip-detect-manual_file_validated');
-		if (!file_exists($data_filename))
-			$data_filename = '';
-	}
-	
-	if (!$data_filename) {
-		$data_filename = __DIR__ . '/' . GEOIP_DETECT_DATA_FILENAME;
-		if (!file_exists($data_filename))
-			$data_filename = '';
-	}
-	
-	$data_filename = apply_filters('geoip_detect_get_abs_db_filename', $data_filename);
-	
-	if (!$data_filename && (defined('WP_TESTS_TITLE')))
-		trigger_error(__('No GeoIP Database file found. Please refer to the installation instructions in readme.txt.', 'geoip-detect'), E_USER_NOTICE);
-
-	return $data_filename;
+	$source = DataSourceRegistry::getInstance()->getCurrentSource();
+	if (method_exists($source, 'maxmindGetFile'))
+		return $source->maxmindGetFile();
+	return '';
 }
-
-function geoip_detect_get_database_upload_filename()
-{
-	$upload_dir = wp_upload_dir();
-	$dir = $upload_dir['basedir'];
-
-	$filename = $dir . '/' . GEOIP_DETECT_DATA_FILENAME;
-	return $filename;
-}
-
-function geoip_detect_get_database_upload_filename_filter($filename_before)
-{
-	$source = get_option('geoip-detect-source');
-	if ($source == 'auto' || empty($source)) {
-		$filename = geoip_detect_get_database_upload_filename();
-		if (file_exists($filename))
-			return $filename;
-	}
-
-	return $filename_before;
-}
-add_filter('geoip_detect_get_abs_db_filename', 'geoip_detect_get_database_upload_filename_filter');
 
 /**
  * IPv6-Adresses can be written in different formats. Make sure they are standardized.
