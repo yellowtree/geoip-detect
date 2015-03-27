@@ -15,10 +15,14 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 {
 	$locales = apply_filters('geoip_detect2_locales', $locales);
 	
-	// TODO implement caching
-	$reader = _geoip_detect2_get_reader(array('en') /* will be replaced anyway */, true, $outSourceId);
-	$record = _geoip_detect2_get_record_from_reader($reader, $ip);
-	$data   = _geoip_detect2_record_enrich_data($record, $ip, $outSourceId);
+	$data = _geoip_detect2_get_data_from_cache($ip);
+	if (!$data) {
+		$reader = _geoip_detect2_get_reader(array('en') /* will be replaced anyway */, true, $outSourceId);
+		$record = _geoip_detect2_get_record_from_reader($reader, $ip);
+		$data   = _geoip_detect2_record_enrich_data($record, $ip, $outSourceId);
+		
+		_geoip_detect2_add_data_to_cache($data, $ip);
+	}
 	
 	// Always return a city record for API compatability. City attributes etc. return empty values.
 	$record = new \YellowTree\GeoipDetect\DataSources\City($data, $locales);

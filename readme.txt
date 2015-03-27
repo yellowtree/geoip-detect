@@ -136,7 +136,7 @@ Fixing automatic weekly updates.
 == Changelog ==
 
 = 2.4.0 =
-* 
+* FIX: Check for IPv6 support for PHP.
 
 = 2.3.1 =
 * NEW: API function geoip_detect2_get_current_source_description() (as there are different sources to choose from now)

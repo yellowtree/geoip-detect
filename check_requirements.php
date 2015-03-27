@@ -10,16 +10,22 @@ function geoip_detect_version_check() {
 		$flag = 'PHP';
 		$min = GEOIP_REQUIRED_PHP_VERSION;
 		$yours = PHP_VERSION;
+		
+		$message = 'Plugin GeoIP Detection is disabled. Requires ' . $flag . ' ' .$min ." (you're using " . $flag . " " . $yours . ") ";
 	} elseif (version_compare ( $wp_version, GEOIP_REQUIRED_WP_VERSION, '<' )) {
 		$flag = 'WordPress';
 		$min = GEOIP_REQUIRED_WP_VERSION;
 		$yours = $wp_version;
+		
+		$message = 'Plugin GeoIP Detection is disabled. Requires ' . $flag . ' ' .$min ." (you're using " . $flag . " " . $yours . ") ";
+	} elseif (!defined('AF_INET6')) {
+		$message = 'PHP was compiled with IPv6 support disabled. This is required for this plugin.';
 	} else {
 		return true;
 	}
 
 	if (WP_DEBUG)
-		trigger_error('Plugin GeoIP Detection is disabled. Requires ' . $flag . ' ' .$min ." (you're using " . $flag . " " . $yours . ") ");
+		trigger_error($message);
 
 	add_action ( 'all_admin_notices', 'geoip_detect_version_minimum_requirements_notice' );
 

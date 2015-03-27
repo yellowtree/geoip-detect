@@ -53,7 +53,8 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 	<?php if ($ip_lookup_result !== false) :
 			if (is_object($ip_lookup_result)) : $record = $ip_lookup_result; ?>
 	<p>
-		<?php printf(__('The function %s returns an object:', 'geoip-detect'), "<code>\$record = geoip_detect2_get_info_from_ip('" . esc_html($_POST['ip']) . "')</code>"); ?>
+		<?php printf(__('The function %s returns an object:', 'geoip-detect'), "<code>\$record = geoip_detect2_get_info_from_ip('" . esc_html($_POST['ip']) . "')</code>"); ?><br />
+		<?php printf(__('Lookup duration: %.5f s', 'geoip-detect'), $ip_lookup_duration); ?>
 	</p>
 	
 	<table>

@@ -73,6 +73,7 @@ require_once('data-sources/abstract.php');
 // You can define these constants if you like.
 
 //define('GEOIP_DETECT_IP_CACHE_TIME', 2 * HOUR_IN_SECONDS);
+//define('GEOIP_DETECT_READER_CACHE_TIME', 7 * DAY_IN_SECONDS);
 
 
 // ------------- Admin GUI --------------------
@@ -108,7 +109,10 @@ function geoip_detect_plugin_page()
 			if (isset($_POST['ip']))
 			{
 				$ip = $_POST['ip'];
+				$start = microtime(true);
 				$ip_lookup_result = geoip_detect2_get_info_from_ip($ip);
+				$end = microtime(true);
+				$ip_lookup_duration = $end - $start;
 			}
 			break;
 
@@ -125,8 +129,8 @@ function geoip_detect_plugin_page()
 			
 			// Validate manual file name
 			if (!empty($_POST['options']['manual_file'])) {
-				$validated_filename = geoip_detect_validate_filename($_POST['options']['manual_file']);
-				update_option('geoip-detect-manual_file_validated', $validated_filename);
+				//$validated_filename = geoip_detect_validate_filename($_POST['options']['manual_file']);
+				//update_option('geoip-detect-manual_file_validated', $validated_filename);
 				
 				if (empty($validated_filename)) {
 					$message .= __('The manual datafile has not been found or is not a mmdb-File. ', 'geoip-detect');
