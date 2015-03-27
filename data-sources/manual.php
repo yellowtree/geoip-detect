@@ -9,25 +9,37 @@ define('GEOIP_DETECT_DATA_FILENAME', 'GeoLite2-City.mmdb');
 class ManualDataSource extends AbstractDataSource {
 
 	public function getId() { return 'manual'; }
-	public function getLabel() { return ''; }
+	public function getLabel() { return 'Manual download & update of a Maxmind City or Country database'; }
 
 	public function getDescriptionHTML() { return ''; }
 	public function getStatusInformationHTML() { return ''; }
 	public function getParameterHTML() { return ''; }
 
-	public function activate() { }
-
-	public function getReader() { return null; }
+	public function getReader() {
+		$reader = null;
+		
+		$data_file = $this->maxmindGetFilename();
+		if ($data_file) {
+			try {
+				$reader = new GeoIp2\Database\Reader ( $data_file, $locales );
+			} catch ( \Exception $e ) {
+				if (WP_DEBUG)
+					echo 'Error while creating reader for "' . $data_file . '": ' . $e->getMessage ();
+			}
+		}
+		
+		return $reader;
+	}
 
 	public function isWorking() { 
-		$filename = $this->maxmindGetFile();
+		$filename = $this->maxmindGetFilename();
 		if (!is_readable($filename))
 			return false;
 
 		return true;
 	}
 	
-	public function maxmindGetFile() {
+	public function maxmindGetFilename() {
 		$data_filename = get_option('geoip-detect-manual_file_validated');
 
 		// Allow placing the file in the plugin folder for backwards compat
@@ -40,6 +52,26 @@ class ManualDataSource extends AbstractDataSource {
 		}
 		
 		$data_filename = apply_filters('geoip_detect_get_abs_db_filename', $data_filename);
+	}
+	
+	public static function maxmindValidateFilename($filename) {
+		if (file_exists(ABSPATH . $filename))
+			$filename = ABSPATH . $filename;
+		
+		if (!is_readable($filename))
+			return '';
+	
+		try {
+			$reader = new \GeoIp2\Database\Reader ($filename);
+			$metadata = $reader->metadata();
+			$reader->close();
+		} catch ( \Exception $e ) {
+			if (WP_DEBUG)
+				echo 'Error while creating reader for "' . $data_file . '": ' . $e->getMessage ();
+			return '';
+		}
+	
+		return $filename;
 	}
 }
 

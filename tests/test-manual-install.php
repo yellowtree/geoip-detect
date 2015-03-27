@@ -12,7 +12,7 @@ class ManualInstallTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	function testNoDatabaseFound() {
 		if (file_exists(TEST_GEOIP_PLUGIN_DATA_FILENAME))
-			$this->skip('Test could not be executed: ' . TEST_GEOIP_PLUGIN_DATA_FILENAME . ' could not be deleted.');
+			$this->markTestSkipped('Test could not be executed: ' . TEST_GEOIP_PLUGIN_DATA_FILENAME . ' could not be deleted.');
 		
 		$thrown = false;
 		try {
@@ -49,7 +49,7 @@ class ManualInstallTest extends WP_UnitTestCase_GeoIP_Detect {
 		
 		$ret = @copy(GEOIP_DETECT_TEST_DB_FILENAME, TEST_GEOIP_PLUGIN_DATA_FILENAME);
 		if (!$ret)
-			$this->skip('Test could not be executed: Copy failed');
+			$this->markTestSkipped('Test could not be executed: Copy failed');
 		
 		$this->assertNotSame('', geoip_detect_get_abs_db_filename(), 'Did not detect manual database' );
 		

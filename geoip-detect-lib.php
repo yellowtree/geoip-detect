@@ -1,7 +1,8 @@
 <?php
-use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 // This file contains function that are necessary for the plugin, but not deemed as API.
 // Their name / parameter may change without warning.
+
+use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 
 /*
  * Get the Maxmind Reader
@@ -25,15 +26,9 @@ function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false) {
 	}
 	
 	$reader = null;
-	$data_file = geoip_detect_get_abs_db_filename();
-	if ($data_file) {
-		try {
-			$reader = new GeoIp2\Database\Reader ( $data_file, $locales );
-		} catch ( Exception $e ) {
-			if (WP_DEBUG)
-				echo 'Error while creating reader for "' . $data_file . '": ' . $e->getMessage ();
-		}
-	}
+	$source = DataSourceRegistry::getInstance()->getCurrentSource();
+	if ($source)
+		$reader = $source->getReader();
 	
 	/**
 	 * Filter: geoip_detect2_reader
@@ -50,20 +45,6 @@ function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false) {
 	return $reader;
 }
 
-
-function geoip_detect_validate_filename($filename) {
-	if (!substr($filename, -5) === '.mmdb')
-		return '';
-
-	if (file_exists($filename) && is_readable($filename))
-		return $filename;
-	
-	if (file_exists(ABSPATH . $filename) && is_readable(ABSPATH . $filename))
-		return ABSPATH . $filename;
-
-	return '';
-}
-
 /**
  * @deprecated since 2.4.0
  * @return string
@@ -73,8 +54,8 @@ function geoip_detect_get_abs_db_filename()
 	_doing_it_wrong('GeoIP Detection: geoip_detect_get_abs_db_filename', 'geoip_detect_get_abs_db_filename should not be called directly', '2.3.1');
 	
 	$source = DataSourceRegistry::getInstance()->getCurrentSource();
-	if (method_exists($source, 'maxmindGetFile'))
-		return $source->maxmindGetFile();
+	if (method_exists($source, 'maxmindGetFilename'))
+		return $source->maxmindGetFilename();
 	return '';
 }
 
