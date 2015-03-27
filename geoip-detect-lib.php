@@ -47,6 +47,61 @@ function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &
 	return $reader;
 }
 
+function _geoip_detect2_get_record_from_reader($reader, $ip) {
+	$record = null;
+	
+	if ($reader) {
+		// When plugin installed on development boxes:
+		// If the client IP is not a public IP, use the public IP of the server instead.
+		// Of course this only works if the internet can be accessed.
+		if ($ip == 'me' || (geoip_detect_is_ip($ip) && !geoip_detect_is_public_ip($ip))) {
+			$ip = geoip_detect2_get_external_ip_adress();
+		}
+	
+	
+		try {
+			try {
+				$record = $reader->city($ip);
+			} catch (\BadMethodCallException $e) {
+				$record = $reader->country($ip);
+			}
+		} catch(GeoIp2\Exception\GeoIp2Exception $e) {
+			if (WP_DEBUG)
+				echo 'Error while looking up "' . $ip . '": ' . $e->getMessage();
+		} catch(Exception $e) {
+			if (WP_DEBUG)
+				echo 'Error while looking up "' . $ip . '": ' . $e->getMessage();
+		}
+	
+		$reader->close();
+	}
+	
+	return $record;
+}
+
+function _geoip_detect2_record_enrich_data($record, $orig_ip, $locales, $sourceId) {
+	$data = array('traits' => array('ip_address' => $ip), 'is_empty' => true);
+	if (is_object($record) && method_exists($record, 'jsonSerialize')) {
+		$data = $record->jsonSerialize();
+		$data['is_empty'] = false;
+	}
+	$data['extra']['source'] = $sourceId;
+	$data['extra']['cached'] = 0;
+
+	/**
+	 * Filter: geoip_detect2_record_data
+	 * After loading the information from the GeoIP-Database, you can add information to it.
+	 *
+	 * @param array $data 	Information found.
+	 * @param string	 $orig_ip	IP that originally passed to the function.
+	 * @param string $locales	Desired locales
+	 * @return array
+	 */
+	$data = apply_filters('geoip_detect2_record_data', $data, $orig_ip, $locales);
+
+	return $data;
+}
+
 /**
  * @deprecated since 2.4.0
  * @return string
