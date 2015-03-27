@@ -79,7 +79,7 @@ function _geoip_detect2_get_record_from_reader($reader, $ip) {
 	return $record;
 }
 
-function _geoip_detect2_record_enrich_data($record, $orig_ip, $locales, $sourceId) {
+function _geoip_detect2_record_enrich_data($record, $ip, $sourceId) {
 	$data = array('traits' => array('ip_address' => $ip), 'is_empty' => true);
 	if (is_object($record) && method_exists($record, 'jsonSerialize')) {
 		$data = $record->jsonSerialize();
@@ -94,10 +94,9 @@ function _geoip_detect2_record_enrich_data($record, $orig_ip, $locales, $sourceI
 	 *
 	 * @param array $data 	Information found.
 	 * @param string	 $orig_ip	IP that originally passed to the function.
-	 * @param string $locales	Desired locales
 	 * @return array
 	 */
-	$data = apply_filters('geoip_detect2_record_data', $data, $orig_ip, $locales);
+	$data = apply_filters('geoip_detect2_record_data', $data, $ip);
 
 	return $data;
 }
