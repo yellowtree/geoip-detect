@@ -64,3 +64,5 @@ class AutoDataSource extends ManualDataSource
 		return true;
 	}
 }
+
+\YellowTree\GeoipDetect\DataSources\DataSourceRegistry::getInstance()->register(new AutoDataSource());

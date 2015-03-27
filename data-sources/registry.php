@@ -31,7 +31,7 @@ class DataSourceRegistry {
 	 * @return AbstractDataSource
 	 */
 	public function getCurrentSource() {
-		$currentSource = get_option('geoip-detect-source');
+		$currentSource = get_option('geoip-detect-source', self::DEFAULT_SOURCE);
 		if (isset($this->sources[$currentSource]));
 			return $this->sources[$currentSource];
 		

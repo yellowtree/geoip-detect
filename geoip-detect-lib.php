@@ -28,7 +28,7 @@ function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false) {
 	$reader = null;
 	$source = DataSourceRegistry::getInstance()->getCurrentSource();
 	if ($source)
-		$reader = $source->getReader();
+		$reader = $source->getReader($locales);
 	
 	/**
 	 * Filter: geoip_detect2_reader
@@ -58,6 +58,8 @@ function geoip_detect_get_abs_db_filename()
 		return $source->maxmindGetFilename();
 	return '';
 }
+
+
 
 /**
  * IPv6-Adresses can be written in different formats. Make sure they are standardized.

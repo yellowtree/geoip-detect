@@ -17,13 +17,13 @@ class ManualDataSource extends AbstractDataSource {
 	
 	public function getShortLabel() { return $this->maxmindGetFileDescription(); }
 
-	public function getReader() {
+	public function getReader($locales = array('en')) {
 		$reader = null;
 		
 		$data_file = $this->maxmindGetFilename();
 		if ($data_file) {
 			try {
-				$reader = new GeoIp2\Database\Reader ( $data_file, $locales );
+				$reader = new \GeoIp2\Database\Reader ( $data_file, $locales );
 			} catch ( \Exception $e ) {
 				if (WP_DEBUG)
 					echo 'Error while creating reader for "' . $data_file . '": ' . $e->getMessage ();
@@ -95,4 +95,4 @@ class ManualDataSource extends AbstractDataSource {
 	} 
 }
 
-DataSourceRegistry::getInstance()->register(new ManualDataSource());
+\YellowTree\GeoipDetect\DataSources\DataSourceRegistry::getInstance()->register(new ManualDataSource());

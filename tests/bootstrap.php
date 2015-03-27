@@ -30,11 +30,16 @@ function geoip_detect_get_external_ip_adress_test_set_test_ip($ip) {
 	return GEOIP_DETECT_TEST_IP;
 }
 
+function geoip_detect_set_default_source() {
+	return 'manual';
+}
+
 class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 {
 	public function setUp() {
 		// Use Test File
-		add_filter('geoip_detect_get_abs_db_filename', 'geoip_detect_test_set_test_database', 101);		
+		add_filter('geoip_detect_get_abs_db_filename', 'geoip_detect_test_set_test_database', 101);
+		add_filter('pre_option_geoip-detect-source', 'geoip_detect_set_default_source', 101);
 	}
 	
 	public function tearDown() {

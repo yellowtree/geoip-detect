@@ -27,12 +27,4 @@ class UpdateTest extends WP_UnitTestCase_GeoIP_Detect {
 		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
 	}
-
-	function testUpdaterFileFilter() {
-		if (!function_exists('geoip_detect_update'))
-			$this->markTestSkipped('updater.php is not included, so not update test possible.');
-		
-		$this->assertEquals('', geoip_detect_get_database_upload_filename_filter(''));
-		$this->assertContains('/upload', geoip_detect_get_database_upload_filename());
-	}
 }
