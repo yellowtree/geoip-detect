@@ -14,7 +14,7 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
  * @return GeoIp2\Database\Reader 	The reader, ready to do its work. Don't forget to `close()` it afterwards. NULL if file not found (or other problems).
  * NULL if initialization went wrong (e.g., File not found.)
  */
-function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false) {
+function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &$sourceId = '') {
 	if (! $skipLocaleFilter) {
 		/**
 		 * Filter: geoip_detect2_locales
@@ -27,8 +27,10 @@ function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false) {
 	
 	$reader = null;
 	$source = DataSourceRegistry::getInstance()->getCurrentSource();
-	if ($source)
+	if ($source) {
 		$reader = $source->getReader($locales);
+		$sourceId = $source->getId();
+	}
 	
 	/**
 	 * Filter: geoip_detect2_reader

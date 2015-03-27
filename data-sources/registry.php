@@ -45,6 +45,20 @@ class DataSourceRegistry {
 	}
 	
 	/**
+	 * @param string
+	 * @return AbstractDataSource
+	 */
+	public function getSource($id) {
+		if (!$id)
+			return $this->getCurrentSource();
+
+		if (isset($this->sources[$id]))
+			return $this->sources[$id];
+		
+		return null;
+	}
+	
+	/**
 	 * @return array(AbstractDataSource)
 	 */
 	public function getAllSources() {

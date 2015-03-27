@@ -33,10 +33,45 @@ abstract class AbstractDataSource {
 /**
  * This Class extends the Maxmind City with more attributes.
  * 
- * @property isEmpty bool (Wordpress Plugin) If the record is empty or contains any data.
+ * @property bool $isEmpty (Wordpress Plugin) If the record is empty or contains any data.
+ * 
+ * @property \YellowTree\GeoipDetect\DataSources\ExtraInformation $extra (Wordpress Plugin) Extra Information added by the GeoIP Detect plugin
  */
 class City extends \GeoIp2\Model\City {
+	/**
+	 * @ignore
+	 */
+	protected $extra;
+	
+	/**
+	 * @ignore
+	 */
+	public function __construct($raw, $locales) {
+		parent::__construct($raw, $locales);
 		
+		$this->extra = new ExtraInformation($this->get('extra'));
+	}
+
+	public function __get($attr) {
+		if ($attr == 'isEmpty')
+			return $this->raw['is_empty'];
+		else
+			return parent::__get($attr);
+	}
+}
+
+/**
+ * @property $source string Id of the source that this record is originating from.
+ * 
+ * @property $cached int 0 if not cached, else Unix Timestamp when it was written to the cache. 
+ *
+ */
+
+class ExtraInformation extends \GeoIp2\Record\AbstractRecord {
+	/**
+	 * @ignore
+	 */
+	protected $validAttributes = array('source', 'cached');
 }
 
 interface ReaderInterface extends \GeoIp2\ProviderInterface {

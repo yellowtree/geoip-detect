@@ -6,7 +6,7 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
  * @param string 				$ip IP-Adress (IPv4 or IPv6). 'me' is the current IP of the server.
  * @param array(string)			List of locale codes to use in name property
  * 								from most preferred to least preferred. (Default: Site language, en)
- * @return YellowTree\GeoipDetect\DataSources\City	GeoInformation.
+ * @return YellowTree\GeoipDetect\DataSources\City	GeoInformation. (Actually, this is a subclass of \GeoIp2\Model\City)
  * 
  * @see https://github.com/maxmind/GeoIP2-php				API Usage
  * @see http://dev.maxmind.com/geoip/geoip2/web-services/	API Documentation
@@ -16,7 +16,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 	$orig_ip = $ip;
 	
 	$locales = apply_filters('geoip_detect2_locales', $locales);
-	$reader = _geoip_detect2_get_reader($locales, true);
+	$reader = _geoip_detect2_get_reader($locales, true, $sourceId);
 
 	$record = null;
 
@@ -46,29 +46,32 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null)
 		$reader->close();
 	}
 	
-	// Always return a city record for API compatability. City attributes etc. return empty values.
-	if (is_object($record) && ! $record instanceof \GeoIp2\Model\City && method_exists($record, 'jsonSerialize')) {
-		$record = new \GeoIp2\Model\City($record->jsonSerialize(), $locales);
+	$data = array('traits' => array('ip_address' => $ip), 'is_empty' => true);
+	if (is_object($record) && method_exists($record, 'jsonSerialize')) {
+		$data = $record->jsonSerialize();
+		$data['is_empty'] = false;
 	}
-	
-	if ($record === null) {
-		// TODO : Allow to set default by filter
+	$data['extra']['source'] = $sourceId;
+	$data['extra']['cached'] = 0;
 
-		$data = array('traits' => array('ip_address' => $ip));
-		$record = new \GeoIp2\Model\City($data, array('en'));
-		$record->isEmpty = true;
-	} else {
-		$record->isEmpty = false;
-	}
+	/**
+	 * Filter: geoip_detect2_record_data
+	 * After loading the information from the GeoIP-Database, you can add information to it.
+	 *
+	 * @param array $data 	Information found.
+ 	 * @param string	 $orig_ip	IP that originally passed to the function.
+	 * @param string $locales	Desired locales
+	 * @return array
+	 */
+	$data = apply_filters('geoip_detect2_record_data', $data, $orig_ip, $locales);
+	
+	// Always return a city record for API compatability. City attributes etc. return empty values.
+	$record = new \YellowTree\GeoipDetect\DataSources\City($data, $locales);
 	
 	/**
 	 * Filter: geoip_detect2_record_information
-	 * After loading the information from the GeoIP-Database, you can add information to it.
-	 * 
-	 * @param GeoIp2\Model\City $record 	Information found. The 
-	 * @param string			 $orig_ip	IP that originally passed to the function.
-	 * @param string			 $locales	Desired locales
-	 * @return GeoIp2\Model\City
+	 * @deprecated use geoip_detect2_record_data for easier manipulation of data.
+	 * @return \YellowTree\GeoipDetect\DataSources\City
 	 */
 	$record = apply_filters('geoip_detect2_record_information', $record, $orig_ip, $locales);
 
@@ -90,10 +93,11 @@ function geoip_detect2_get_reader($locales = null) {
 
 /**
  * Return a human-readable label of the currently chosen source.
+ * @param string Id of the source (currently, 'hostinfo', 'auto', or 'manual')
  * @return string The label.
  */
-function geoip_detect2_get_current_source_description() {
-	$source = DataSourceRegistry::getInstance()->getCurrentSource();
+function geoip_detect2_get_current_source_description($sourceId = '') {
+	$source = DataSourceRegistry::getInstance()->getSource($sourceId);
 	if ($source) {
 		return $source->getShortLabel();
 	}
