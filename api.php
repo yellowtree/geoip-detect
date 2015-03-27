@@ -95,7 +95,13 @@ function geoip_detect2_get_current_source_description() {
 	$reader = geoip_detect2_get_reader();
 	if (!method_exists($reader, 'metadata'))
 		return 'Unknown';
-	$metadata = $reader->metadata();
+	
+	try { 
+		$metadata = $reader->metadata();
+	} catch (\Exception $e) {
+		return 'Unknown';
+	}
+	
 	$desc = $metadata->description;
 	if (isset($desc['en']))
 		$desc = $desc['en'];

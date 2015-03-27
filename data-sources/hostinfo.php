@@ -1,6 +1,11 @@
 <?php
 
-class GeoIP_HostInfo_Reader implements GeoIp2\ProviderInterface{
+namespace YellowTree\GeoipDetect\DataSources\HostInfo;
+
+use YellowTree\GeoipDetect\DataSources\AbstractDataSource;
+use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
+
+class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 	
 	const URL = 'http://api.hostip.info/get_json.php?ip=';
 	
@@ -32,13 +37,6 @@ class GeoIP_HostInfo_Reader implements GeoIp2\ProviderInterface{
 	
 	public function close() {
 			
-	}
-	
-	public function metadata() {
-		$data = new stdClass();
-		$data->description = 'HostIP.info Web-API';
-		
-		return $data;
 	}
 	
 	private function api_call($ip) {
@@ -79,12 +77,21 @@ class GeoIP_HostInfo_Reader implements GeoIp2\ProviderInterface{
 	}
 }
 
-function geoip_detect2_hostinfo_reader() {
-	return new GeoIP_HostInfo_Reader();
+
+class HostInfoDataSource extends AbstractDataSource {
+	public function getId() { return 'hostinfo'; }
+	public function getLabel() { return 'HostIP.info Web-API'; }
+	
+	public function getDescriptionHTML() { return 'Free (Licence: GPL)<br />(only English names, does only have the following fields: country name, country ID and city name)'; }
+	public function getStatusInformationHTML() { return ''; }
+	public function getParameterHTML() { return ''; }
+	
+	public function activate() { }
+	
+	public function getReader() { return new Reader(); }
+	
+	public function isWorking() { return true; }
+	
 }
 
-function geoip_detect2_load_hostinfo() {
-	if (get_option('geoip-detect-source') == 'hostinfo')
-	add_filter('geoip_detect2_reader', 'geoip_detect2_hostinfo_reader');
-}
-add_action('plugins_loaded', 'geoip_detect2_load_hostinfo');
+DataSourceRegistry::getInstance()->register(new HostInfoDataSource());

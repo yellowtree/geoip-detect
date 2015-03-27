@@ -14,16 +14,8 @@ namespace YellowTree\GeoipDetect\DataSources;
 
 abstract class AbstractDataSource {
 	
-	protected $id;
-	protected $label;
-	
-	public function __construct($id, $label) {
-		$this->id = $id;
-		$this->label = $label;
-	}
-	
-	public function getId() { return $this->id; }
-	public function getLabel() { return $this->label; }
+	abstract public function getId();
+	public function getLabel() { return ''; }
 	
 	public function getDescriptionHTML() { return ''; }
 	public function getStatusInformationHTML() { return ''; }
@@ -44,4 +36,11 @@ abstract class AbstractDataSource {
  */
 class City extends \GeoIp2\Model\City {
 		
+}
+
+interface ReaderInterface extends \GeoIp2\ProviderInterface {
+    /**
+     * Closes the database and returns the resources to the system.
+     */
+	public function close();
 }
