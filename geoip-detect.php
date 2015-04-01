@@ -93,7 +93,7 @@ function geoip_detect_plugin_page()
 		case 'update':
 			update_option('geoip-detect-source', 'auto');
 			update_option('geoip-detect-ui-has-chosen-source', true);
-			
+
 			$ret = geoip_detect_update();
 			if ($ret === true)
 				$message .= __('Updated successfully.', 'geoip-detect');
@@ -114,8 +114,6 @@ function geoip_detect_plugin_page()
 			break;
 
 		case 'options':
-			update_option('geoip-detect-ui-has-chosen-source', true);
-			
 			foreach ($option_names as $opt_name) {
 				if (in_array($opt_name, $numeric_options))
 					$opt_value = isset($_POST['options'][$opt_name]) ? (int) $_POST['options'][$opt_name] : 0;

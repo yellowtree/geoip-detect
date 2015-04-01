@@ -77,7 +77,7 @@ class AutoDataSource extends ManualDataSource
 		return true;
 	}
 	
-	function hook_cron() {
+	public function hook_cron() {
 		/**
 		 * Filter:
 		 * Cron has fired.
@@ -88,20 +88,17 @@ class AutoDataSource extends ManualDataSource
 		 */
 		$do_it = apply_filters('geoip_detect_cron_do_update', !GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED, false);
 	
-		// Needed for WP File functions. Cron doesn't work without it.
-	
-	
 		if ($do_it)
 			$this->maxmindUpdate();
 	
 		$this->schedule_next_cron_run();
 	}
 	
-	function set_cron_schedule()
+	public function set_cron_schedule()
 	{
 		$next = wp_next_scheduled( 'geoipdetectupdate' );
 		if ( !$next ) {
-			geoip_detect_schedule_next_cron_run();
+			$this->schedule_next_cron_run();
 		}
 	}
 	
@@ -111,12 +108,11 @@ class AutoDataSource extends ManualDataSource
 		wp_schedule_single_event($next, 'geoipdetectupdate');
 	}
 	
-	function activate() {
+	public function activate() {
 		$this->set_cron_schedule();
 	}
-	
-	
-	function deactivate()
+		
+	public function deactivate()
 	{
 		wp_clear_scheduled_hook('geoipdetectupdate');
 	}

@@ -122,9 +122,6 @@ function _geoip_detect2_record_enrich_data($record, $ip, $sourceId) {
 }
 
 
-
-
-
 /**
  * IPv6-Adresses can be written in different formats. Make sure they are standardized.
  * For IPv4-Adresses, spaces are removed.

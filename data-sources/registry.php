@@ -19,7 +19,11 @@ class DataSourceRegistry {
 	
 	protected $sources;
 	
-	public function register(\YellowTree\GeoipDetect\DataSources\AbstractDataSource $source) {
+	/**
+	 * Register a Data source
+	 * @param \YellowTree\GeoipDetect\DataSources\AbstractDataSource $source
+	 */
+	public function register($source) {
 		$id = $source->getId();
 		$this->sources[$id] = $source;
 	}
@@ -28,7 +32,8 @@ class DataSourceRegistry {
 	const DEFAULT_SOURCE = 'hostinfo';
 	
 	/**
-	 * @return AbstractDataSource
+	 * Returns the currently chosen source.
+	 * @return \YellowTree\GeoipDetect\DataSources\AbstractDataSource
 	 */
 	public function getCurrentSource() {
 		$currentSource = get_option('geoip-detect-source', self::DEFAULT_SOURCE);
@@ -45,10 +50,11 @@ class DataSourceRegistry {
 	}
 	
 	/**
-	 * @param string
-	 * @return AbstractDataSource
+	 * Returns the source known by this id.
+	 * @param string Source id (if empty, use current one)
+	 * @return \YellowTree\GeoipDetect\DataSources\AbstractDataSource
 	 */
-	public function getSource($id) {
+	public function getSource($id = '') {
 		if (!$id)
 			return $this->getCurrentSource();
 
@@ -59,7 +65,26 @@ class DataSourceRegistry {
 	}
 	
 	/**
-	 * @return array(AbstractDataSource)
+	 * Choose a new source as "current source".
+	 * @param string $id
+	 */
+	public function chooseSource($id) {
+		$oldSource = $this->getCurrentSource();
+		$newSource = $this->getSource($id);
+		
+		if ($oldSource->getId() != $newSource->getId()) {
+			$oldSource->deactivate();
+			update_option('geoip-detect-source', $newSource->getId());
+			$newSource->activate();
+		}
+		
+		update_option('geoip-detect-ui-has-chosen-source', true);
+	}
+	
+	/**
+	 * Returns all registered sources.
+	 * 
+	 * @return array(\YellowTree\GeoipDetect\DataSources\AbstractDataSource)
 	 */
 	public function getAllSources() {
 		return $this->sources;
