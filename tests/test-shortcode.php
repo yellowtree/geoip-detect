@@ -8,14 +8,14 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	function setUp() {
 		parent::setUp();
-		add_filter('geoip_detect_get_external_ip_adress', 'geoip_detect_get_external_ip_adress_test_set_test_ip', 101);
+		add_filter('geoip_detect_get_external_ip_adress', array($this, 'filter_set_test_ip'), 101);
 		$this->assertEquals(GEOIP_DETECT_TEST_IP, geoip_detect_get_external_ip_adress());
 		setlocale(LC_NUMERIC, 'C'); // Set locale to always use . as decimal point
 	}
 	
 	function tearDown() {
 		parent::tearDown();
-		remove_filter('geoip_detect_get_external_ip_adress', 'geoip_detect_get_external_ip_adress_test_set_test_ip', 101);
+		remove_filter('geoip_detect_get_external_ip_adress', array($this, 'filter_set_test_ip'), 101);
 		remove_filter('geoip_detect2_reader', 'shortcode_empty_reader', 101);
 	}
 	

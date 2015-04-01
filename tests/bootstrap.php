@@ -22,31 +22,34 @@ define('GEOIP_DETECT_TEST_DB_FILENAME', dirname(__FILE__) . '/' . GEOIP_DETECT_D
 define('GEOIP_DETECT_TEST_IP', '88.64.140.3');
 define('GEOIP_DETECT_TEST_IP_SERIVCE_PROVIDER', 'https://raw.githubusercontent.com/yellowtree/wp-geoip-detect/master/tests/html/ipv4.txt');
 
-function geoip_detect_test_set_test_database()
-{
-	return GEOIP_DETECT_TEST_DB_FILENAME;
-}
-
-function geoip_detect_get_external_ip_adress_test_set_test_ip($ip) {
-	return GEOIP_DETECT_TEST_IP;
-}
-
-function geoip_detect_set_default_source() {
-	return 'manual';
-}
 
 class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 {
 	private $setup_was_called = false;
 	public function setUp() {
 		// Use Test File
-		add_filter('geoip_detect_get_abs_db_filename', 'geoip_detect_test_set_test_database', 101);
-		add_filter('pre_option_geoip-detect-source', 'geoip_detect_set_default_source', 101);
+		add_filter('geoip_detect_get_abs_db_filename', array($this, 'filter_set_test_database'), 101);
+		add_filter('pre_option_geoip-detect-source', array($this, 'filter_set_default_source'), 101);
 		$this->setup_was_called = true;
 	}
 	
+
+	function filter_set_test_database()
+	{
+		return GEOIP_DETECT_TEST_DB_FILENAME;
+	}
+	
+	function filter_set_test_ip($ip) {
+		return GEOIP_DETECT_TEST_IP;
+	}
+	
+	function filter_set_default_source() {
+		return 'manual';
+	}
+	
 	public function tearDown() {
-		remove_filter('geoip_detect_get_abs_db_filename', 'geoip_detect_test_set_test_database', 101);
+		remove_filter('geoip_detect_get_abs_db_filename', array($this, 'filter_set_test_database'), 101);
+		remove_filter('pre_option_geoip-detect-source', array($this, 'filter_set_default_source'), 101);
 		$this->setup_was_called = false;
 	}
 	
