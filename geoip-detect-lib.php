@@ -121,19 +121,7 @@ function _geoip_detect2_record_enrich_data($record, $ip, $sourceId) {
 	return $data;
 }
 
-/**
- * @deprecated since 2.4.0
- * @return string
- */
-function geoip_detect_get_abs_db_filename()
-{
-	_doing_it_wrong('GeoIP Detection: geoip_detect_get_abs_db_filename', 'geoip_detect_get_abs_db_filename should not be called directly', '2.3.1');
-	
-	$source = DataSourceRegistry::getInstance()->getCurrentSource();
-	if (method_exists($source, 'maxmindGetFilename'))
-		return $source->maxmindGetFilename();
-	return '';
-}
+
 
 
 

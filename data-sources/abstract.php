@@ -6,8 +6,8 @@ Each datasource has:
 - If active, a method or filter needs to be called.
 - (optional) Configuration options
 - (optional) Data Source Information (only shown for 
+- activate / deactivate when activated / deactivated by the user
 
-Use Class/Interface or WP Filter?
 */
 
 namespace YellowTree\GeoipDetect\DataSources;
@@ -23,6 +23,7 @@ abstract class AbstractDataSource {
 	public function getShortLabel() { return $this->getLabel(); }
 	
 	public function activate() { }
+	public function deactivate() { }
 	
 	public function getReader() { return null; }
 	

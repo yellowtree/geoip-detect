@@ -1,7 +1,5 @@
 <?php
 function geoip_detect_defines() {
-	if (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED'))
-		define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', false);
 	if (!defined('GEOIP_DETECT_IP_CACHE_TIME'))
 		define('GEOIP_DETECT_IP_CACHE_TIME', 2 * HOUR_IN_SECONDS);
 	if (!defined('GEOIP_DETECT_READER_CACHE_TIME'))

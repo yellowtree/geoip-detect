@@ -57,12 +57,9 @@ require_once(GEOIP_PLUGIN_DIR . '/geoip-detect-lib.php');
 require_once(GEOIP_PLUGIN_DIR . '/upgrade-plugin.php');
 require_once(GEOIP_PLUGIN_DIR . '/api.php');
 require_once(GEOIP_PLUGIN_DIR . '/legacy-api.php');
+require_once(GEOIP_PLUGIN_DIR . '/deprecated.php');
 require_once(GEOIP_PLUGIN_DIR . '/filter.php');
 require_once(GEOIP_PLUGIN_DIR . '/shortcode.php');
-
-@include_once(GEOIP_PLUGIN_DIR . '/updater.php');
-if (!defined('GEOIP_DETECT_UPDATER_INCLUDED'))
-	define('GEOIP_DETECT_UPDATER_INCLUDED', false);
 
 require_once('data-sources/registry.php');
 require_once('data-sources/abstract.php');

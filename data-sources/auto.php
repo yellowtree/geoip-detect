@@ -15,6 +15,17 @@ class AutoDataSource extends ManualDataSource
 	public function getDescriptionHTML() { return '(License: Creative Commons Attribution-ShareAlike 3.0 Unported. See <a href="https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#the-maxmind-lite-databases-are-licensed-creative-commons-sharealike-attribution-when-do-i-need-to-give-attribution" target="_blank">Licensing FAQ</a> for more details.)'; }
 	public function getParameterHTML() { return ''; }
 	
+	public function __construct() {
+		parent::__construct();
+		add_action('geoipdetectupdate', array($this, 'hook_cron'), 10, 1);
+		add_action('plugins_loaded', array($this, 'on_plugins_loaded'));
+	}
+	
+	public function on_plugins_loaded() {
+		if (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED'))
+			define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', false);
+	}
+	
 	public function maxmindGetFilename() {
 		$data_filename = $this->maxmindGetUploadFilename();
 		if (!is_readable($data_filename))
@@ -34,6 +45,8 @@ class AutoDataSource extends ManualDataSource
 	
 	public function maxmindUpdate()
 	{
+		require_once(ABSPATH.'/wp-admin/includes/file.php');
+		
 		$download_url = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz';
 		$download_url = apply_filters('geoip_detect2_download_url', $download_url);
 	
@@ -62,6 +75,50 @@ class AutoDataSource extends ManualDataSource
 		unlink($tmpFile);
 	
 		return true;
+	}
+	
+	function hook_cron() {
+		/**
+		 * Filter:
+		 * Cron has fired.
+		 * Find out if file should be updated now.
+		 *
+		 * @param $do_it False if deactivated by define
+		 * @param $immediately_after_activation True if this is fired because the plugin was recently activated (deprecated, will now always be false)
+		 */
+		$do_it = apply_filters('geoip_detect_cron_do_update', !GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED, false);
+	
+		// Needed for WP File functions. Cron doesn't work without it.
+	
+	
+		if ($do_it)
+			$this->maxmindUpdate();
+	
+		$this->schedule_next_cron_run();
+	}
+	
+	function set_cron_schedule()
+	{
+		$next = wp_next_scheduled( 'geoipdetectupdate' );
+		if ( !$next ) {
+			geoip_detect_schedule_next_cron_run();
+		}
+	}
+	
+	function schedule_next_cron_run() {
+		// The Lite databases are updated on the first tuesday of each month. Maybe not at midnight, so we schedule it for the night afterwards.
+		$next = strtotime('first tuesday of next month + 1 day');
+		wp_schedule_single_event($next, 'geoipdetectupdate');
+	}
+	
+	function activate() {
+		$this->set_cron_schedule();
+	}
+	
+	
+	function deactivate()
+	{
+		wp_clear_scheduled_hook('geoipdetectupdate');
 	}
 }
 
