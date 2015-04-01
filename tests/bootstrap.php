@@ -18,7 +18,8 @@ require $_tests_dir . '/includes/bootstrap.php';
 ini_set('error_reporting', ini_get('error_reporting') | E_USER_NOTICE);
 
 
-define('GEOIP_DETECT_TEST_DB_FILENAME', dirname(__FILE__) . '/' . GEOIP_DETECT_DATA_FILENAME);
+define('GEOIP_DETECT_TEST_DB_FILENAME', __DIR__ . '/' . GEOIP_DETECT_DATA_FILENAME);
+define('GEOIP_DETECT_TEST_COUNTRY_DB_FILENAME', __DIR__ . '/GeoLite2-Country.mmdb');
 define('GEOIP_DETECT_TEST_IP', '88.64.140.3');
 define('GEOIP_DETECT_TEST_IP_SERIVCE_PROVIDER', 'https://raw.githubusercontent.com/yellowtree/wp-geoip-detect/master/tests/html/ipv4.txt');
 
@@ -83,7 +84,7 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 	protected function assertValidGeoIP2Record($record, $ip)
 	{
 		$assert_text = 'When looking up info for IP "' . $ip . '":';
-		$this->assertInstanceOf('GeoIp2\Model\City', $record, $assert_text);
+		$this->assertInstanceOf('YellowTree\GeoipDetect\DataSources\City', $record, $assert_text);
 		$this->assertSame(false, $record->isEmpty);	
 		
 		$this->assertInternalType('string', $record->country->isoCode, $assert_text);
