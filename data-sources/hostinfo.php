@@ -94,4 +94,4 @@ class HostInfoDataSource extends AbstractDataSource {
 	
 }
 
-DataSourceRegistry::getInstance()->register(new HostInfoDataSource());
+geoip_detect2_register_source(new HostInfoDataSource());

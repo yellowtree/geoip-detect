@@ -95,4 +95,4 @@ class ManualDataSource extends AbstractDataSource {
 	} 
 }
 
-\YellowTree\GeoipDetect\DataSources\DataSourceRegistry::getInstance()->register(new ManualDataSource());
+geoip_detect2_register_source(new ManualDataSource());

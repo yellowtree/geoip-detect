@@ -1,11 +1,8 @@
 <?php
+
 namespace YellowTree\GeoipDetect\DataSources\Auto;
 
-use YellowTree\GeoipDetect\DataSources\AbstractDataSource;
 use YellowTree\GeoipDetect\DataSources\Manual\ManualDataSource;
-
-
-define('GEOIP_DETECT_DATA__UPDATE_FILENAME', 'GeoLite2-City.mmdb');
 
 class AutoDataSource extends ManualDataSource
 {	
@@ -24,6 +21,8 @@ class AutoDataSource extends ManualDataSource
 	public function on_plugins_loaded() {
 		if (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED'))
 			define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', false);
+		if (!defined('GEOIP_DETECT_DATA_UPDATE_FILENAME'))
+			define('GEOIP_DETECT_DATA_UPDATE_FILENAME', 'GeoLite2-City.mmdb');
 	}
 	
 	public function maxmindGetFilename() {
@@ -39,7 +38,7 @@ class AutoDataSource extends ManualDataSource
 		$upload_dir = wp_upload_dir();
 		$dir = $upload_dir['basedir'];
 		
-		$filename = $dir . '/' . GEOIP_DETECT_DATA__UPDATE_FILENAME;
+		$filename = $dir . '/' . GEOIP_DETECT_DATA_UPDATE_FILENAME;
 		return $filename;
 	}
 	
@@ -118,4 +117,4 @@ class AutoDataSource extends ManualDataSource
 	}
 }
 
-\YellowTree\GeoipDetect\DataSources\DataSourceRegistry::getInstance()->register(new AutoDataSource());
+//geoip_detect2_register_source(new AutoDataSource());

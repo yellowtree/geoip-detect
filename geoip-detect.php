@@ -65,9 +65,11 @@ require_once(GEOIP_PLUGIN_DIR . '/shortcode.php');
 
 require_once('data-sources/registry.php');
 require_once('data-sources/abstract.php');
+
 @include_once('data-sources/hostinfo.php');
 @include_once('data-sources/manual.php');
-//@include_once('data-sources/auto.php');
+@include_once('data-sources/auto.php');
+@include_once('data-sources/precision.php');
 
 // You can define these constants if you like.
 //define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', true);

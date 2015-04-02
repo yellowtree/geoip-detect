@@ -10,7 +10,7 @@ Each datasource has:
 
 */
 
-namespace YellowTree\GeoipDetect\DataSources;
+namespace YellowTree\GeoipDetect\DataSources {
 
 abstract class AbstractDataSource {
 	
@@ -80,4 +80,13 @@ interface ReaderInterface extends \GeoIp2\ProviderInterface {
      * Closes the database and returns the resources to the system.
      */
 	public function close();
+}
+
+} // end namespace 
+
+namespace { // global namespace
+	function geoip_detect2_register_source($source) {
+		$registry = \YellowTree\GeoipDetect\DataSources\DataSourceRegistry::getInstance();
+		$registry->register($source);
+	}
 }
