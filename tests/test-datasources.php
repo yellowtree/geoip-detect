@@ -14,14 +14,21 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
 		parent::setUp();
 		$this->registry = DataSourceRegistry::getInstance();
 	} 
+
+	public function testPresenceOfAllDataSources() {
+		$sources = $this->registry->getAllSources();
+		$source_ids = array_keys($sources);
+		sort($source_ids);
+		
+		$this->assertSame(array('auto', 'hostinfo', 'manual', 'precision'), $source_ids);
+	}
 	
 	public function testEachSourceForFormalValidity() {
 		$sources = $this->registry->getAllSources();
 		
-		$this->assertSame(3, count($sources), 'Not all sources where found ...');
 		foreach ($sources as $source) {
 			$id = $source->getId();
-			$this->assertRegExp('/^[-_a-z0-9]+$/i', $id);
+			$this->assertRegExp('/^[-_a-z0-9]+$/i', $id, 'Invalid chars in id name');
 			
 			$label = $source->getLabel();
 			$this->assertNotEmpty($label, 'Label of "' . $id . '" missing.');
