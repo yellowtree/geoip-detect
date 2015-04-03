@@ -67,6 +67,8 @@ function _geoip_detect2_add_data_to_cache($data, $ip) {
 	// Don't cache for file access based sources (not worth the effort/time)
 	if (get_option('geoip-detect-source') == 'auto' || get_option('geoip-detect-source') == 'manual')
 		return;
+
+	$data['extra']['cached'] = time();
 	
 	set_transient('geoip_detect_c_' . _ip_to_s($ip), $data, GEOIP_DETECT_READER_CACHE_TIME);
 }

@@ -1,4 +1,5 @@
-
+<div class="wrap">
+	<h2><?php _e('GeoIP Detection', 'geoip-detect');?></h2>
 <?php if (!empty($message)): ?>
 		<p class="geoip_detect_error">
 		<?php echo $message; ?>
@@ -8,11 +9,6 @@
 	<p>
 		<?php printf(__('Selected data source: %s', 'geoip-detect'), geoip_detect2_get_current_source_description() ); ?>
 	</p>
-	<?php if ($last_update_db) : ?>
-	<p>
-		<?php printf(__('Database data from: %s', 'geoip-detect'), date_i18n($date_format, $last_update_db) ); ?>
-	</p>
-	<?php endif; ?>
 
 	<?php if ($options['source'] == 'hostinfo') : ?>
 	<p>
@@ -62,14 +58,10 @@
 		</p>
 
 		<h4>Data source: </h4>
-			<?php if (GEOIP_DETECT_UPDATER_INCLUDED) : ?>
 			<p><input type="radio" name="options[source]" value="auto" <?php if ($options['source'] == 'auto') { echo 'checked="checked"'; } ?> /></p>
 			<span class="detail-box">
 				(License: Creative Commons Attribution-ShareAlike 3.0 Unported. See <a href="https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#the-maxmind-lite-databases-are-licensed-creative-commons-sharealike-attribution-when-do-i-need-to-give-attribution" target="_blank">Licensing FAQ</a> for more details.)
 			</span>
-			<?php else : ?>
-			<p><input type="radio" name="options[source]" value="auto" disabled="disabled"/>Automatic download &amp; update <em>(only available in Github version)</em></p>
-			<?php endif; ?>
 			<p><input type="radio" name="options[source]" value="manual" <?php if ($options['source'] == 'manual') { echo 'checked="checked"'; } ?>  /><br />
 			<span class="detail-box">
 				Filepath to mmdb-file: <input type="text" size="40" name="options[manual_file]" value="<?php echo esc_attr($options['manual_file']); ?>" /><br />

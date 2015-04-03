@@ -1,6 +1,6 @@
 <?php
 
-function geoip_add_body_classes($classes) {
+function geoip_detect2_add_body_classes($classes) {
 	if (!get_option('geoip-detect-set_css_country'))
 		return $classes;
 	
@@ -14,7 +14,7 @@ function geoip_add_body_classes($classes) {
 
 	return $classes;
 }
-add_filter('body_class', 'geoip_add_body_classes');
+add_filter('body_class', 'geoip_detect2_add_body_classes');
 
 
 

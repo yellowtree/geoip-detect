@@ -1,5 +1,8 @@
 <?php 
-$date_format = get_option('date_format') . ' ' . get_option('time_format')
+use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
+$date_format = get_option('date_format') . ' ' . get_option('time_format');
+
+$current_source = DataSourceRegistry::getInstance()->getCurrentSource();
 ?>
 <div class="wrap">
 	<h2><?php _e('GeoIP Detection', 'geoip-detect');?></h2>
@@ -8,26 +11,30 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format')
 	<p>
 		<?php printf(__('Selected data source: %s', 'geoip-detect'), geoip_detect2_get_current_source_description() ); ?>
 	</p>
-	<?php if ($last_update_db) : ?>
+		
 	<p>
-		<?php printf(__('Database data from: %s', 'geoip-detect'), date_i18n($date_format, $last_update_db) ); ?>
-	</p>
-	<?php endif; ?>
+		<?php echo $current_source->getDescriptionHTML(); ?>
+	</p>	
 		
 	<form method="post" action="#">
 		<input type="hidden" name="action" value="lookup" />
 		<input type="text" placeholder="Enter an IP (v4 or v6)" name="ip" value="<?php echo isset($_REQUEST['ip']) ? esc_attr($_REQUEST['ip']) : esc_attr(geoip_detect2_get_client_ip()); ?>" /><br />
-		<label>Use these locales: <select name="locales"><option value="">Default (Current site language, english otherwise)</option><option value="en">English only</option><option value="fr,en">French, English otherwise</option></select> </label><br />
-		<label><input type="checkbox" name="disable_cache" value="1" /> Do not read values from cache</label><br />
+		<label>Use these locales: <select name="locales"><option value="">Default (Current site language, English otherwise)</option><option value="en">English only</option><option value="fr,en">French, English otherwise</option></select> </label><br />
+		<label><input type="checkbox" name="skip_cache" value="1" <?php if (!empty($_POST['skip_cache'])) echo 'checked="checked"'?>/> Skip cache</label><br />
 		<br />
 		<input type="submit" class="button button-secondary" value="<?php _e('Lookup', 'geoip-detect'); ?>" />
 	</form>
 	<?php if ($ip_lookup_result !== false) :
-			if (is_object($ip_lookup_result)) : $record = $ip_lookup_result; ?>
+			if (is_object($ip_lookup_result)) :
+			$record = $ip_lookup_result; 			if (false) $record = new \YellowTree\GeoipDetect\DataSources\City(); 
+			?>
 			<h3>Lookup Result</h3>
 	<p>
-		<?php printf(__('The function %s returns an object:', 'geoip-detect'), "<code>\$record = geoip_detect2_get_info_from_ip('" . esc_html($_POST['ip']) . "')</code>"); ?><br />
+		<?php printf(__('The function %s returns an object:', 'geoip-detect'), "<code>\$record = geoip_detect2_get_info_from_ip('" . esc_html($request_ip) . "', " . var_export($request_locales, true) . ($request_skipCache ? ', TRUE' : '') .");</code>"); ?><br />
 		<?php printf(__('Lookup duration: %.5f s', 'geoip-detect'), $ip_lookup_duration); ?>
+		<?php if ($record->extra->cached) : ?>
+			<br /><?php printf(__('(Served from cache. Was cached %s ago)', 'geoip-detect'), human_time_diff($record->extra->cached));?>
+		<?php endif; ?>
 	</p>
 	
 	<table>
