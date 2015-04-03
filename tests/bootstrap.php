@@ -48,7 +48,7 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 		return GEOIP_DETECT_TEST_DB_FILENAME;
 	}
 	
-	function filter_set_test_ip($ip) {
+	function filter_set_test_ip() {
 		return GEOIP_DETECT_TEST_IP;
 	}
 	

@@ -1,6 +1,6 @@
 <?php
 
-function shortcode_empty_reader($reader) {
+function shortcode_empty_reader() {
 	return null;
 }
 

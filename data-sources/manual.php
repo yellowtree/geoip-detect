@@ -71,7 +71,7 @@ class ManualDataSource extends AbstractDataSource {
 			$reader->close();
 		} catch ( \Exception $e ) {
 			if (WP_DEBUG)
-				echo 'Error while creating reader for "' . $data_file . '": ' . $e->getMessage ();
+				echo 'Error while creating reader for "' . $filename . '": ' . $e->getMessage ();
 			return '';
 		}
 	
@@ -86,12 +86,11 @@ class ManualDataSource extends AbstractDataSource {
 		
 		try {
 			$metadata = $reader->metadata();
+			$desc = $metadata->description;
+			return $desc['en'];
 		} catch (\Exception $e) {
 			return 'Unknown';
 		}
-		
-		$desc = $metadata->description;
-		return $desc['en'];
 	} 
 }
 

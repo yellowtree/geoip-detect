@@ -13,6 +13,8 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 
 class PrecisionDataSource extends AbstractDataSource {
 	public function __construct() {
+		parent::__construct();
+		
 		$this->user_id = get_option('geoip-detect-precision-user_id');
 		$this->user_secret = get_option('geoip-detect-precision-user_secret');		
 	}
@@ -28,7 +30,7 @@ class PrecisionDataSource extends AbstractDataSource {
 		if (!$this->isWorking())
 			return null;
 
-		$client = new \GeoIp2\WebService\Client($user_id, $user_secret);
+		$client = new \GeoIp2\WebService\Client($this->user_id, $this->user_secret);
 		
 		return $client;
 	}
