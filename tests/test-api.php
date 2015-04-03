@@ -19,6 +19,11 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertSame(null, $record->country->name);
 	}
 	
+	function testIPv6() {
+		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP_V_6);
+		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
+	}
+	
 	function testLocale() {
 		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, array('en'));
 		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);

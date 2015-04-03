@@ -5,7 +5,7 @@
 function geoip_detect_update() {
 	_doing_it_wrong('GeoIP Detection: geoip_detect_update', ' If you really need to do that manually, use the AutoDataSource-Class instead.', '2.4.0');
 	$s = new \YellowTree\GeoipDetect\DataSources\Auto\AutoDataSource();
-	$s->maxmindUpdate();
+	return $s->maxmindUpdate();
 }
 
 /**

@@ -2,6 +2,8 @@ language: php
 
 php:
     - 5.3
+    - 5.4
+    - 5.5
     - 5.6
 
 env:
@@ -14,7 +16,6 @@ before_script:
 
 script: 
     - phpunit --verbose
-    - rm updater.php && phpunit --verbose
     
 notifications:
     email:

@@ -18,11 +18,9 @@ class UpdateTest extends WP_UnitTestCase_GeoIP_Detect {
 	 * @group external-http
 	 */
 	function testUpdate() {
-		$this->markTestSkipped('This test should not be executed by Travis.');
-		if (!function_exists('geoip_detect_update'))
-			$this->markTestSkipped('updater.php is not included, so not update test possible.');
+		$s = new \YellowTree\GeoipDetect\DataSources\Auto\AutoDataSource();
 		
-		$this->assertTrue( geoip_detect_update() );
+		$this->assertTrue( $s->maxmindUpdate() );
 
 		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);

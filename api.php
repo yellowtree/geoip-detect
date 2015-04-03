@@ -3,19 +3,25 @@
 use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 /**
  * Get Geo-Information for a specific IP
- * @param string 				$ip IP-Adress (IPv4 or IPv6). 'me' is the current IP of the server.
- * @param array(string)			List of locale codes to use in name property
- * 								from most preferred to least preferred. (Default: Site language, en)
+ * @param string 			$ip 		IP-Adress (IPv4 or IPv6). 'me' is the current IP of the server.
+ * @param array(string)		$locales 	List of locale codes to use in name property
+ * 										from most preferred to least preferred. (Default: Site language, en)
+ * @param boolean			$skipCache	TRUE: Do not use cache for this request. 
  * @return YellowTree\GeoipDetect\DataSources\City	GeoInformation. (Actually, this is a subclass of \GeoIp2\Model\City)
  * 
  * @see https://github.com/maxmind/GeoIP2-php				API Usage
  * @see http://dev.maxmind.com/geoip/geoip2/web-services/	API Documentation
  */
-function geoip_detect2_get_info_from_ip($ip, $locales = null)
+function geoip_detect2_get_info_from_ip($ip, $locales = null, $skipCache = false)
 {
 	$locales = apply_filters('geoip_detect2_locales', $locales);
 	
-	$data = _geoip_detect2_get_data_from_cache($ip);
+	$data = array();
+	
+	if (!$skipCache) {
+		$data = _geoip_detect2_get_data_from_cache($ip);
+	}
+	
 	if (!$data) {
 		$reader = _geoip_detect2_get_reader(array('en') /* will be replaced anyway */, true, $outSourceId);
 		$record = _geoip_detect2_get_record_from_reader($reader, $ip);

@@ -8,6 +8,9 @@ function ipTestServiceInvalidProvider() {
 	return array('http://aaa.example.org/test');
 }
 
+/**
+ * @group external-http
+ */
 class ExternalIpTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	function setUp()
@@ -21,26 +24,6 @@ class ExternalIpTest extends WP_UnitTestCase_GeoIP_Detect {
 		remove_filter('geiop_detect_ipservices','ipTestServiceProvider', 101);
 		remove_filter('geiop_detect_ipservices', array($this, 'externalIpProvidersFilter'), 101);
 		remove_filter('geiop_detect_ipservices', 'ipTestServiceInvalidProvider', 101);
-	}
-	
-	
-	function testPublicIpFilter() {
-		$this->assertSame(true, geoip_detect_is_public_ip(GEOIP_DETECT_TEST_IP));
-		$this->assertSame(false, geoip_detect_is_public_ip('10.0.0.2'));
-		$this->assertSame(false, geoip_detect_is_public_ip('169.254.1.1'));
-	}
-	
-	function testLoopbackFilter() {
-		$this->assertSame(false, geoip_detect_is_public_ip('::1'));	
-		$this->assertSame(false, geoip_detect_is_public_ip('127.0.0.1'));
-		$this->assertSame(false, geoip_detect_is_public_ip('127.0.1.1'));
-	}
-
-	function testInvalidIpFilter() {
-		$this->assertSame(false, geoip_detect_is_public_ip('999.0.0.1'));
-		$this->assertSame(false, geoip_detect_is_public_ip('asdfasfasdf'));
-		$this->assertSame(false, geoip_detect_is_public_ip(':::'));
-		$this->assertSame(false, geoip_detect_is_public_ip(''));
 	}
 	
 	function testExternalIp() {
@@ -75,12 +58,9 @@ class ExternalIpTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertValidGeoIP2Record($ret, 'current');
 	}
 	
-	/**
-	 * @group external-http
-	 */
+
 	function testExternalIpProviders() {
-		$this->markTestSkipped('This test should not be executed by Travis.');
-		
+		remove_filter('pre_transient_geoip_detect_external_ip', array($this, 'filter_set_external_ip'), 101);
 		add_filter('geiop_detect_ipservices', array($this, 'externalIpProvidersFilter'), 101);
 		
 		$this->providers = null;

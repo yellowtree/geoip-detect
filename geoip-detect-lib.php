@@ -47,12 +47,16 @@ function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &
 	return $reader;
 }
 
+function _ip_to_s($ip) {
+	return base64_encode(inet_pton($ip));
+}
+
 function _geoip_detect2_get_data_from_cache($ip) {
 	// Don't cache for file access based sources (not worth the effort/time)
 	if (get_option('geoip-detect-source') == 'auto' || get_option('geoip-detect-source') == 'manual')
 		return null;
 	
-	$data = get_transient('geoip_detect_' . inet_pton($ip));
+	$data = get_transient('geoip_detect_c_' . _ip_to_s($ip));
 	if (is_array($data) && $data['extra']['source'] != get_option('geoip-detect-source'))
 		return null;
 	
@@ -64,7 +68,7 @@ function _geoip_detect2_add_data_to_cache($data, $ip) {
 	if (get_option('geoip-detect-source') == 'auto' || get_option('geoip-detect-source') == 'manual')
 		return;
 	
-	set_transient('geoip_detect_' . inet_pton($ip), $data, GEOIP_DETECT_READER_CACHE_TIME);
+	set_transient('geoip_detect_c_' . _ip_to_s($ip), $data, GEOIP_DETECT_READER_CACHE_TIME);
 }
 
 function _geoip_detect2_get_record_from_reader($reader, $ip) {

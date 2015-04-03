@@ -4,6 +4,8 @@ namespace YellowTree\GeoipDetect\DataSources\Auto;
 
 use YellowTree\GeoipDetect\DataSources\Manual\ManualDataSource;
 
+define('GEOIP_DETECT_DATA_UPDATE_FILENAME', 'GeoLite2-City.mmdb');
+
 class AutoDataSource extends ManualDataSource
 {	
 	public function getId() { return 'auto'; }
@@ -13,7 +15,7 @@ class AutoDataSource extends ManualDataSource
 	public function getParameterHTML() { return ''; }
 	
 	public function __construct() {
-		parent::__construct();
+		//parent::__construct();
 		add_action('geoipdetectupdate', array($this, 'hook_cron'), 10, 1);
 		add_action('plugins_loaded', array($this, 'on_plugins_loaded'));
 	}
@@ -21,8 +23,6 @@ class AutoDataSource extends ManualDataSource
 	public function on_plugins_loaded() {
 		if (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED'))
 			define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', false);
-		if (!defined('GEOIP_DETECT_DATA_UPDATE_FILENAME'))
-			define('GEOIP_DETECT_DATA_UPDATE_FILENAME', 'GeoLite2-City.mmdb');
 	}
 	
 	public function maxmindGetFilename() {

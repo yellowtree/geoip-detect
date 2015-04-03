@@ -21,6 +21,8 @@ ini_set('error_reporting', ini_get('error_reporting') | E_USER_NOTICE);
 define('GEOIP_DETECT_TEST_DB_FILENAME', __DIR__ . '/' . GEOIP_DETECT_DATA_FILENAME);
 define('GEOIP_DETECT_TEST_COUNTRY_DB_FILENAME', __DIR__ . '/GeoLite2-Country.mmdb');
 define('GEOIP_DETECT_TEST_IP', '88.64.140.3');
+define('GEOIP_DETECT_TEST_IP_V_6', '2001:4860:4801:5::91');
+define('GEOIP_DETECT_EXTERNAL_IP', '88.64.140.3');
 define('GEOIP_DETECT_TEST_IP_SERIVCE_PROVIDER', 'https://raw.githubusercontent.com/yellowtree/wp-geoip-detect/master/tests/html/ipv4.txt');
 
 
@@ -31,10 +33,16 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 		// Use Test File
 		add_filter('geoip_detect_get_abs_db_filename', array($this, 'filter_set_test_database'), 101);
 		add_filter('pre_option_geoip-detect-source', array($this, 'filter_set_default_source'), 101);
+		add_filter('pre_transient_geoip_detect_external_ip', array($this, 'filter_set_external_ip'), 101);
+		
 		$this->setup_was_called = true;
 	}
 	
 
+	function filter_set_external_ip() {
+		return GEOIP_DETECT_EXTERNAL_IP;
+	}
+	
 	function filter_set_test_database()
 	{
 		return GEOIP_DETECT_TEST_DB_FILENAME;
@@ -51,6 +59,7 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 	public function tearDown() {
 		remove_filter('geoip_detect_get_abs_db_filename', array($this, 'filter_set_test_database'), 101);
 		remove_filter('pre_option_geoip-detect-source', array($this, 'filter_set_default_source'), 101);
+		remove_filter('pre_transient_geoip_detect_external_ip', array($this, 'filter_set_external_ip'), 101);
 		$this->setup_was_called = false;
 	}
 	
