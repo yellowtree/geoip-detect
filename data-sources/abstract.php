@@ -13,6 +13,7 @@ Each datasource has:
 namespace YellowTree\GeoipDetect\DataSources {
 
 abstract class AbstractDataSource {
+	public function __construct() {}
 	
 	abstract public function getId();
 	public function getLabel() { return ''; }
@@ -62,9 +63,9 @@ class City extends \GeoIp2\Model\City {
 }
 
 /**
- * @property $source string Id of the source that this record is originating from.
+ * @property string $source Id of the source that this record is originating from.
  * 
- * @property $cached int 0 if not cached, else Unix Timestamp when it was written to the cache. 
+ * @property int $cached 0 if not cached, else Unix Timestamp when it was written to the cache. 
  *
  */
 

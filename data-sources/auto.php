@@ -15,7 +15,7 @@ class AutoDataSource extends ManualDataSource
 	public function getParameterHTML() { return ''; }
 	
 	public function __construct() {
-		//parent::__construct();
+		parent::__construct();
 		add_action('geoipdetectupdate', array($this, 'hook_cron'), 10, 1);
 		add_action('plugins_loaded', array($this, 'on_plugins_loaded'));
 	}
@@ -117,4 +117,4 @@ class AutoDataSource extends ManualDataSource
 	}
 }
 
-//geoip_detect2_register_source(new AutoDataSource());
+geoip_detect2_register_source(new AutoDataSource());

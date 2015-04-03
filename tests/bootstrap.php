@@ -87,7 +87,7 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 /**
  * 
  * Enter description here ...
- * @param GeoIp2\Model\City $record
+ * @param YellowTree\GeoipDetect\DataSources\City $record
  * @param int $ip
  */
 	protected function assertValidGeoIP2Record($record, $ip)
@@ -95,6 +95,7 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 		$assert_text = 'When looking up info for IP "' . $ip . '":';
 		$this->assertInstanceOf('YellowTree\GeoipDetect\DataSources\City', $record, $assert_text);
 		$this->assertSame(false, $record->isEmpty);	
+		$this->assertNotEmpty($record->extra->source);
 		
 		$this->assertInternalType('string', $record->country->isoCode, $assert_text);
 		$this->assertEquals(2, strlen($record->country->isoCode), $assert_text);

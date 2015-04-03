@@ -18,7 +18,7 @@ class PrecisionDataSource extends AbstractDataSource {
 	}
 	
 	public function getId() { return 'precision'; }
-	public function getLabel() {  }
+	public function getLabel() { return 'Maxmind Precision Web-API'; }
 
 	public function getDescriptionHTML() {  }
 	public function getStatusInformationHTML() { return ''; }
