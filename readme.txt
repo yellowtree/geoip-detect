@@ -16,7 +16,7 @@ Provides geographic information detected by an IP adress. This can be used in th
 = Features: =
 
 * Provides 3 functions: 
-  * `geoip_detect2_get_info_from_ip($ip, $locales = array('en'))`: Lookup Geo-Information of the specified IP 
+  * `geoip_detect2_get_info_from_ip($ip, $locales = array('en'), $skipCache = false)`: Lookup Geo-Information of the specified IP 
   * `geoip_detect2_get_info_from_current_ip($locales = array('en'))`: Lookup Geo-Information of the current website user
   * `geoip_detect2_get_external_ip_adress()`: Fetch the internet adress of the webserver
 * You can use one of these data sources:

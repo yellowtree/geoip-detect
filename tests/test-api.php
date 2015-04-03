@@ -44,6 +44,9 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	function testDescription() {
 		$this->assertNotEmpty(geoip_detect2_get_current_source_description());
+		
+		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
+		$this->assertNotEmpty(geoip_detect2_get_current_source_description($record));
 	}
 
 }

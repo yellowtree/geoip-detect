@@ -11,6 +11,8 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
  * 
  * @see https://github.com/maxmind/GeoIP2-php				API Usage
  * @see http://dev.maxmind.com/geoip/geoip2/web-services/	API Documentation
+ *
+ * @since 2.4.0 New parameter $skipCache
  */
 function geoip_detect2_get_info_from_ip($ip, $locales = null, $skipCache = false)
 {
@@ -58,11 +60,15 @@ function geoip_detect2_get_reader($locales = null) {
 
 /**
  * Return a human-readable label of the currently chosen source.
- * @param string Id of the source (currently, 'hostinfo', 'auto', or 'manual')
+ * @param string|object Id of the source or the returned record
  * @return string The label.
+ * @since 2.4.0 new parameter $source
  */
-function geoip_detect2_get_current_source_description($sourceId = '') {
-	$source = DataSourceRegistry::getInstance()->getSource($sourceId);
+function geoip_detect2_get_current_source_description($source = null) {
+	if (is_object($source) && $source instanceof \YellowTree\GeoipDetect\DataSources\City) {
+		$source = $source->extra->source;
+	}
+	$source = DataSourceRegistry::getInstance()->getSource($source);
 	if ($source) {
 		return $source->getShortLabel();
 	}
