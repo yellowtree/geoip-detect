@@ -17,6 +17,10 @@ before_script:
 script: 
     - phpunit --verbose
     
+after_script:
+  - export CODACY_PROJECT_TOKEN=3ecfa450a15ea817475cc34d631357f2
+  - php vendor/bin/codacycoverage clover
+
 notifications:
     email:
         recipients:
