@@ -76,11 +76,9 @@ function geoip_detect_option_page() {
 				$message .= __('Update failed.', 'geoip-detect') .' '. $ret;
 	
 			break;
-	
 
 	
 		case 'options':
-
 			$registry->setCurrentSource($_POST['options']['source']);
 			$currentSource = $registry->getCurrentSource();
 			
@@ -105,8 +103,7 @@ function geoip_detect_option_page() {
 	
 			break;
 	}
-	
-	
+
 	$options = array();
 	foreach ($option_names as $opt_name) {
 		$options[$opt_name] = get_option('geoip-detect-'. $opt_name);

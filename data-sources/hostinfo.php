@@ -83,7 +83,7 @@ class HostInfoDataSource extends AbstractDataSource {
 	public function getLabel() { return 'HostIP.info Web-API'; }
 	
 	public function getDescriptionHTML() { return 'Free (Licence: GPL)<br />(only English names, does only have the following fields: country name, country ID and city name)'; }
-	public function getStatusInformationHTML() { return ''; }
+	public function getStatusInformationHTML() { return 'You can choose a Maxmind database below.'; }
 	public function getParameterHTML() { return ''; }
 	
 	public function activate() { }

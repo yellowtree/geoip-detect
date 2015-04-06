@@ -1,5 +1,5 @@
 <?php 
-
+$options = $currentSource->getParameterHTML();
 ?>
 
 <div class="wrap">
@@ -16,19 +16,31 @@
 	<p>
 		<?php echo $currentSource->getStatusInformationHTML(); ?>
 	</p>
-	<?php if ($options['source'] == 'hostinfo') : ?>
+	<?php if ($options) : ?>
+	<h3>Options for this data source</h3>
 	<p>
-		You can choose a Maxmind database below.
+		<?php echo $options; ?>	
 	</p>
 	<?php endif; ?>
 	<br/>
 	<a href="tools.php?page=<?= GEOIP_PLUGIN_BASENAME ?>">Test IP Detection Lookup</a>
 
 	<br /><br />
-	<h3>Options</h3>
 	<form method="post" action="#">
 		<input type="hidden" name="action" value="options" />
-	
+		<h3>Choose data source: </h3>
+		<?php foreach ($sources as $s) : $id = $s->getId();?>
+			<p><input type="radio" name="options[source]" value="<?= $id ?>" <?php if ($currentSource->getId() == $id) { echo 'checked="checked"'; } ?> /><?= $s->getLabel(); ?></p>
+			<span class="detail-box">
+				<?php echo $s->getDescriptionHTML(); ?>
+			</span>
+		<?php endforeach; ?>
+		<br />
+		<input type="submit" class="button button-primary" value="<?php _e('Save', 'geoip-detect'); ?>" />
+	</form>
+	<form method="post" action="#">
+		<input type="hidden" name="action" value="options" />
+		<h3>General Options</h3>
 		<p>
 			<input type="checkbox" name="options[set_css_country]" value="1" <?php if ($options['set_css_country']) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Add a country-specific CSS class to the &lt;body&gt;-Tag.', 'geoip-detect'); ?><br />
 		</p>
@@ -44,14 +56,6 @@
 			</span>
 		</p>
 
-		<h4>Data source: </h4>
-		<?php foreach ($sources as $s) : $id = $s->getId();?>
-			<p><input type="radio" name="options[source]" value="<?= $id ?>" <?php if ($currentSource->getId() == $id) { echo 'checked="checked"'; } ?> /><?= $s->getLabel(); ?></p>
-			<span class="detail-box">
-				<?php echo $s->getDescriptionHTML(); ?>
-				<?php echo $s->getParameterHTML(); ?>
-			</span>
-		<?php endforeach; ?>
 		<p>
 			<input type="submit" class="button button-primary" value="<?php _e('Save', 'geoip-detect'); ?>" />
 		</p>

@@ -12,7 +12,7 @@ class AutoDataSource extends ManualDataSource
 	public function getLabel() { return 'Automatic download & update of Maxmind GeoIP Lite City'; }
 	
 	public function getDescriptionHTML() { return '(License: Creative Commons Attribution-ShareAlike 3.0 Unported. See <a href="https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#the-maxmind-lite-databases-are-licensed-creative-commons-sharealike-attribution-when-do-i-need-to-give-attribution" target="_blank">Licensing FAQ</a> for more details.)'; }
-	public function getParameterHTML() { return ''; }
+
 	public function getStatusInformationHTML() {
 		$html = parent::getStatusInformationHTML();
 		$date_format = get_option('date_format') . ' ' . get_option('time_format');
@@ -23,6 +23,17 @@ class AutoDataSource extends ManualDataSource
 		return $html;
 	}
 
+	public function getParameterHTML() {
+		$text_update = __('Update now', 'geoip-detect');
+		$html = <<<HTML
+<form method="post" action="#">
+		<input type="hidden" name="action" value="update" />
+		<input type="submit" class="button button-primary" value="$text_update" />
+</form>
+HTML;
+		return $html;
+	}
+	
 	public function saveParameters($post) {}
 	
 	public function __construct() {

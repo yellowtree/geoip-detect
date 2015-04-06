@@ -11,7 +11,7 @@ class ManualDataSource extends AbstractDataSource {
 	public function getId() { return 'manual'; }
 	public function getLabel() { return 'Manual download & update of a Maxmind City or Country database'; }
 
-	public function getDescriptionHTML() { return ''; }
+	public function getDescriptionHTML() { return '<a href="http://dev.maxmind.com/geoip/geoip2/geolite2/" target="_blank">Free version</a> - <a href="https://www.maxmind.com/en/geoip2-country-database" target="_blank">Commercial Version</a>'; }
 	public function getStatusInformationHTML() {
 		$built = $last_update = 0;
 		$date_format = get_option('date_format') . ' ' . get_option('time_format');
