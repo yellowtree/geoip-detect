@@ -37,7 +37,8 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $skipCache = false
 	
 	/**
 	 * Filter: geoip_detect2_record_information
-	 * @deprecated use geoip_detect2_record_data for easier manipulation of data.
+	 * Use geoip_detect2_record_data if you want to modify the data.
+	 * 
 	 * @return \YellowTree\GeoipDetect\DataSources\City
 	 */
 	$record = apply_filters('geoip_detect2_record_information', $record, $ip, $locales);
@@ -51,7 +52,8 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $skipCache = false
  * 
  * @param array(string)				List of locale codes to use in name property
  * 									from most preferred to least preferred. (Default: Site language, en)
- * @return GeoIp2\Database\Reader 	The reader, ready to do its work. Don't forget to `close()` it afterwards. NULL if file not found (or other problems).
+ * 
+ * @return \YellowTree\GeoipDetect\DataSources\ReaderInterface 	The reader, ready to do its work. Don't forget to `close()` it afterwards. NULL if file not found (or other problems).
  * 									NULL if initialization went wrong (e.g., File not found.)
  */
 function geoip_detect2_get_reader($locales = null) {	

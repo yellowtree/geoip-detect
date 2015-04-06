@@ -69,6 +69,7 @@ function _geoip_detect2_add_data_to_cache($data, $ip) {
 		return;
 
 	$data['extra']['cached'] = time();
+	unset($data['maxmind']['queries_remaining']);
 	
 	set_transient('geoip_detect_c_' . _ip_to_s($ip), $data, GEOIP_DETECT_READER_CACHE_TIME);
 }

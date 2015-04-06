@@ -77,7 +77,7 @@ class ExtraInformation extends \GeoIp2\Record\AbstractRecord {
 }
 
 interface ReaderInterface extends \GeoIp2\ProviderInterface {
-    /**
+	/**
      * Closes the database and returns the resources to the system.
      */
 	public function close();

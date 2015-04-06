@@ -26,7 +26,7 @@ $current_source = DataSourceRegistry::getInstance()->getCurrentSource();
 	</form>
 	<?php if ($ip_lookup_result !== false) :
 			if (is_object($ip_lookup_result)) :
-			$record = $ip_lookup_result; 			if (false) $record = new \YellowTree\GeoipDetect\DataSources\City(); 
+			$record = $ip_lookup_result; 
 			?>
 			<h3>Lookup Result</h3>
 	<p>
@@ -91,5 +91,5 @@ $current_source = DataSourceRegistry::getInstance()->getCurrentSource();
 		<?php printf(__('See %s for more documentation.', 'geoip-detect'), '<a href="http://dev.maxmind.com/geoip/geoip2/web-services/" target="_blank">http://dev.maxmind.com/geoip/geoip2/web-services/</a>');?>
 	</p>
 	
-	
+</div>	
 	
