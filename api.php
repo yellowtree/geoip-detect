@@ -47,14 +47,13 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $skipCache = false
 }
 
 /**
- * Get the Maxmind Reader
+ * Get the Reader class of the currently chosen source.
  * (Use this if you want to use other methods than "city" or otherwise customize behavior.)
  * 
  * @param array(string)				List of locale codes to use in name property
  * 									from most preferred to least preferred. (Default: Site language, en)
  * 
  * @return \YellowTree\GeoipDetect\DataSources\ReaderInterface 	The reader, ready to do its work. Don't forget to `close()` it afterwards. NULL if file not found (or other problems).
- * 									NULL if initialization went wrong (e.g., File not found.)
  */
 function geoip_detect2_get_reader($locales = null) {	
 	return _geoip_detect2_get_reader($locales, false);
@@ -82,7 +81,7 @@ function geoip_detect2_get_current_source_description($source = null) {
  * 
  * @param array(string)			List of locale codes to use in name property
  * 								from most preferred to least preferred. (Default: Site language, en)
- * @return GeoIp2\Model\City	GeoInformation.
+ * @return YellowTree\GeoipDetect\DataSources\City	GeoInformation.
  */
 function geoip_detect2_get_info_from_current_ip($locales = null)
 {

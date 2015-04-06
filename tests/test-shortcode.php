@@ -50,6 +50,8 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	function testLang() {
 		$this->assertEquals('Deutschland', do_shortcode('[geoip_detect2 property="country" lang="de"]'));
+		$this->assertEquals('Deutschland', do_shortcode('[geoip_detect2 property="country" lang="zz,de"]'));
+		$this->assertEquals('Deutschland', do_shortcode('[geoip_detect2 property="country" lang="zz, de"]'));
 	}
 	
 	function testDefaultValue() {	
@@ -79,6 +81,13 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$string = do_shortcode('[geoip_detect2 property="city" default="default"]');
 		$this->assertContains('No information found', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"city\"] should inform when no information accessible to this IP: " . $string);
 		$this->assertContains('default', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"city\"] should use default: " . $string);
+	}
+	
+	function testSkipCache() {
+		do_shortcode('[geoip_detect2 property="extra.cached"]');
+		$this->assertNotSame('0', do_shortcode('[geoip_detect2 property="extra.cached"]'));
+		$this->assertSame('0', do_shortcode('[geoip_detect2 property="extra.cached" skipCache="true"]'));
+		$this->assertSame('default', do_shortcode('[geoip_detect2 property="extra.cached" skipCache="true" default="default"]'));
 	}
 }
 
