@@ -77,11 +77,14 @@ function geoip_detect_option_page() {
 	
 			break;
 
-	
-		case 'options':
+		case 'choose':
+			update_option('geoip-detect-ui-has-chosen-source', true);
 			$registry->setCurrentSource($_POST['options']['source']);
 			$currentSource = $registry->getCurrentSource();
+			break;
+	
 			
+		case 'options-source':			
 			$messages = array();
 			foreach ($sources as $s) {
 				$ret = $s->saveParameters($_POST);
@@ -89,7 +92,12 @@ function geoip_detect_option_page() {
 					$messages[] = $ret;
 				}
 			}
+			if ($messages)
+				$message .= implode('<br />', $messages);
 			
+			break;
+			
+		case 'options':	
 			foreach ($option_names as $opt_name) {
 				if (in_array($opt_name, $numeric_options))
 					$opt_value = isset($_POST['options'][$opt_name]) ? (int) $_POST['options'][$opt_name] : 0;
@@ -97,10 +105,6 @@ function geoip_detect_option_page() {
 					$opt_value = isset($_POST['options'][$opt_name]) ? $_POST['options'][$opt_name] : '';
 				update_option('geoip-detect-' . $opt_name, $opt_value);
 			}
-			
-			if ($messages)
-			$message .= implode('<br />', $messages);
-	
 			break;
 	}
 

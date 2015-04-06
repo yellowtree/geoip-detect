@@ -19,7 +19,13 @@ $options = $currentSource->getParameterHTML();
 	<?php if ($options) : ?>
 	<h3>Options for this data source</h3>
 	<p>
-		<?php echo $options; ?>	
+		<form method="post" action="#">
+			<input type="hidden" name="action" value="options-source" />
+			<p><?php echo $options; ?></p>
+			<p>
+			<input type="submit" class="button button-primary" value="<?php _e('Save', 'geoip-detect'); ?>" />
+			</p>	
+		</form>
 	</p>
 	<?php endif; ?>
 	<br/>
@@ -27,7 +33,7 @@ $options = $currentSource->getParameterHTML();
 
 	<br /><br />
 	<form method="post" action="#">
-		<input type="hidden" name="action" value="options" />
+		<input type="hidden" name="action" value="choose" />
 		<h3>Choose data source: </h3>
 		<?php foreach ($sources as $s) : $id = $s->getId();?>
 			<p><input type="radio" name="options[source]" value="<?= $id ?>" <?php if ($currentSource->getId() == $id) { echo 'checked="checked"'; } ?> /><?= $s->getLabel(); ?></p>
