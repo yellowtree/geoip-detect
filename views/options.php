@@ -1,43 +1,30 @@
+<?php 
+
+?>
+
 <div class="wrap">
 	<h2><?php _e('GeoIP Detection', 'geoip-detect');?></h2>
 <?php if (!empty($message)): ?>
 		<p class="geoip_detect_error">
 		<?php echo $message; ?>
 		</p>
-	<?php endif; ?>
+<?php endif; ?>
 	
 	<p>
 		<?php printf(__('Selected data source: %s', 'geoip-detect'), geoip_detect2_get_current_source_description() ); ?>
 	</p>
-
+	<p>
+		<?php echo $currentSource->getStatusInformationHTML(); ?>
+	</p>
 	<?php if ($options['source'] == 'hostinfo') : ?>
 	<p>
 		You can choose a Maxmind database below.
 	</p>
 	<?php endif; ?>
-	<?php if ($options['source'] == 'auto') : ?>
-	<p>
-		<?php printf(__('Last updated: %s', 'geoip-detect'), $last_update ? date_i18n($date_format, $last_update) : __('Never', 'geoip-detect')); ?>
-		
-		<?php if (GEOIP_DETECT_UPDATER_INCLUDED && (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED') || !GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED)) : ?>
-			<br />
-			<?php printf(__('Next update: %s', 'geoip-detect'), $next_cron_update ? date_i18n($date_format, $next_cron_update) : __('Never', 'geoip-detect')); ?><br />
-			<em><?php _e('(The file is updated automatically once a month.)', 'geoip-detect'); ?></em>
-		<?php endif; ?>
-	</p>
-	<?php if (GEOIP_DETECT_UPDATER_INCLUDED) : ?>
-	<form method="post" action="#">
-		<input type="hidden" name="action" value="update" />
-		<input type="submit" class="button button-primary" value="<?php _e('Update now'); ?>" />
-	</form>
-	<?php endif; ?>
-	<?php endif; ?>
-	
-	
 	<br/>
 	<a href="tools.php?page=<?= GEOIP_PLUGIN_BASENAME ?>">Test IP Detection Lookup</a>
 
-		<br /><br />
+	<br /><br />
 	<h3>Options</h3>
 	<form method="post" action="#">
 		<input type="hidden" name="action" value="options" />
@@ -58,20 +45,13 @@
 		</p>
 
 		<h4>Data source: </h4>
-			<p><input type="radio" name="options[source]" value="auto" <?php if ($options['source'] == 'auto') { echo 'checked="checked"'; } ?> /></p>
+		<?php foreach ($sources as $s) : $id = $s->getId();?>
+			<p><input type="radio" name="options[source]" value="<?= $id ?>" <?php if ($currentSource->getId() == $id) { echo 'checked="checked"'; } ?> /><?= $s->getLabel(); ?></p>
 			<span class="detail-box">
-				(License: Creative Commons Attribution-ShareAlike 3.0 Unported. See <a href="https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#the-maxmind-lite-databases-are-licensed-creative-commons-sharealike-attribution-when-do-i-need-to-give-attribution" target="_blank">Licensing FAQ</a> for more details.)
+				<?php echo $s->getDescriptionHTML(); ?>
+				<?php echo $s->getParameterHTML(); ?>
 			</span>
-			<p><input type="radio" name="options[source]" value="manual" <?php if ($options['source'] == 'manual') { echo 'checked="checked"'; } ?>  /><br />
-			<span class="detail-box">
-				Filepath to mmdb-file: <input type="text" size="40" name="options[manual_file]" value="<?php echo esc_attr($options['manual_file']); ?>" /><br />
-				<a href="http://dev.maxmind.com/geoip/geoip2/geolite2/" target="_blank">Free version</a> - <a href="https://www.maxmind.com/en/geoip2-country-database" target="_blank">Commercial Version</a>
-			</span>
-			<p><input type="radio" name="options[source]" value="hostinfo" <?php if ($options['source'] == 'hostinfo') { echo 'checked="checked"'; } ?>  />HostIp.info<br />
-			<span class="detail-box">
-				(only English names, only country, country ID and city are populated)
-			</span>
-			</p>
+		<?php endforeach; ?>
 		<p>
 			<input type="submit" class="button button-primary" value="<?php _e('Save', 'geoip-detect'); ?>" />
 		</p>

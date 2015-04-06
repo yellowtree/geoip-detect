@@ -12,8 +12,54 @@ class ManualDataSource extends AbstractDataSource {
 	public function getLabel() { return 'Manual download & update of a Maxmind City or Country database'; }
 
 	public function getDescriptionHTML() { return ''; }
-	public function getStatusInformationHTML() { return ''; }
-	public function getParameterHTML() { return ''; }
+	public function getStatusInformationHTML() {
+		$built = $last_update = 0;
+		$date_format = get_option('date_format') . ' ' . get_option('time_format');
+		$file = $this->maxmindGetFilename();
+		
+		if (!$file)
+			return '<b>No Maxmind database found.</b>';
+		
+		$html[] = sprintf(__('Database file: %s', 'geoip-detect'), $file);
+		
+		try { 
+			$reader = $this->getReader();
+			if ($reader) {
+				$metadata = $reader->metadata();
+				$built = $metadata->buildEpoch;
+				$last_update = @filemtime($file);
+			}
+		} catch (\Exception $e) { }
+		
+		$html[] = sprintf(__('Last updated: %s', 'geoip-detect'), $last_update ? date_i18n($date_format, $last_update) : __('Never', 'geoip-detect'));
+		$html[] = sprintf(__('Database data from: %s', 'geoip-detect'), date_i18n($date_format, $built) );
+		
+		return implode('<br>', $html);
+	}
+
+	public function getParameterHTML() { 
+		$manual_file = get_option('geoip-detect-manual_file');
+		$html = <<<HTML
+Filepath to mmdb-file: <input type="text" size="40" name="options[manual_file]" value="$manual_file" /><br />		
+HTML;
+		
+		return $html;
+	}
+	
+	public function saveParameters($post) {
+		$message = '';
+		
+		if (!empty($post['options']['manual_file'])) {
+			$validated_filename = self::maxmindValidateFilename($_POST['options']['manual_file']);
+			update_option('geoip-detect-manual_file_validated', $validated_filename);
+		
+			if (empty($validated_filename) || !$this->isWorking()) {
+				$message .= __('The manual datafile has not been found or is not a mmdb-File. ', 'geoip-detect');
+			}
+		}
+		
+		return $message;
+	}
 	
 	public function getShortLabel() { return $this->maxmindGetFileDescription(); }
 

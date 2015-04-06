@@ -1,5 +1,7 @@
 <?php
 
+use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
+
 function geoip_detect_menu() {
 	require_once ABSPATH . '/wp-admin/admin.php';
 	add_submenu_page('tools.php', __('GeoIP Detection Lookup', 'geoip-detect'), __('GeoIP Lookup', 'geoip-detect'), 'activate_plugins', GEOIP_PLUGIN_BASENAME, 'geoip_detect_lookup_page');
@@ -49,6 +51,13 @@ function geoip_detect_lookup_page()
 }
 
 function geoip_detect_option_page() {
+	if (!current_user_can('manage_options'))
+		return;
+	
+	$registry = DataSourceRegistry::getInstance();
+	$sources = $registry->getAllSources();
+	$currentSource = $registry->getCurrentSource();
+	
 	$message = '';
 	
 	$numeric_options = array('set_css_country', 'has_reverse_proxy');
@@ -72,6 +81,18 @@ function geoip_detect_option_page() {
 
 	
 		case 'options':
+
+			$registry->setCurrentSource($_POST['options']['source']);
+			$currentSource = $registry->getCurrentSource();
+			
+			$messages = array();
+			foreach ($sources as $s) {
+				$ret = $s->saveParameters($_POST);
+				if (is_string($ret) && $ret) {
+					$messages[] = $ret;
+				}
+			}
+			
 			foreach ($option_names as $opt_name) {
 				if (in_array($opt_name, $numeric_options))
 					$opt_value = isset($_POST['options'][$opt_name]) ? (int) $_POST['options'][$opt_name] : 0;
@@ -79,17 +100,9 @@ function geoip_detect_option_page() {
 					$opt_value = isset($_POST['options'][$opt_name]) ? $_POST['options'][$opt_name] : '';
 				update_option('geoip-detect-' . $opt_name, $opt_value);
 			}
-	
-			// Validate manual file name
-			if (!empty($_POST['options']['manual_file'])) {
-				//$validated_filename = geoip_detect_validate_filename($_POST['options']['manual_file']);
-				//update_option('geoip-detect-manual_file_validated', $validated_filename);
-	
-				if (empty($validated_filename)) {
-					$message .= __('The manual datafile has not been found or is not a mmdb-File. ', 'geoip-detect');
-				}
-			}
-	
+			
+			if ($messages)
+			$message .= implode('<br />', $messages);
 	
 			break;
 	}

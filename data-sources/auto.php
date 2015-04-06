@@ -13,6 +13,17 @@ class AutoDataSource extends ManualDataSource
 	
 	public function getDescriptionHTML() { return '(License: Creative Commons Attribution-ShareAlike 3.0 Unported. See <a href="https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#the-maxmind-lite-databases-are-licensed-creative-commons-sharealike-attribution-when-do-i-need-to-give-attribution" target="_blank">Licensing FAQ</a> for more details.)'; }
 	public function getParameterHTML() { return ''; }
+	public function getStatusInformationHTML() {
+		$html = parent::getStatusInformationHTML();
+		$date_format = get_option('date_format') . ' ' . get_option('time_format');
+		
+		$next_cron_update = wp_next_scheduled( 'geoipdetectupdate' );
+		$html .= '<br />' . sprintf(__('Next update: %s', 'geoip-detect'), $next_cron_update ? date_i18n($date_format, $next_cron_update) : __('Never', 'geoip-detect'));
+		
+		return $html;
+	}
+
+	public function saveParameters($post) {}
 	
 	public function __construct() {
 		parent::__construct();

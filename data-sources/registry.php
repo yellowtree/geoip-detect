@@ -37,11 +37,11 @@ class DataSourceRegistry {
 	 */
 	public function getCurrentSource() {
 		$currentSource = get_option('geoip-detect-source', self::DEFAULT_SOURCE);
-		if (isset($this->sources[$currentSource]));
+		if (isset($this->sources[$currentSource]))
 			return $this->sources[$currentSource];
 		
 		if (WP_DEBUG)
-			trigger_error('Current source has id "' . $currentSource . '", but no such source was found. Using default source instead.', E_NOTICE);
+			trigger_error('Current source has id "' . $currentSource . '", but no such source was found. Using default source instead.', E_USER_NOTICE);
 		
 		if (isset($this->sources[self::DEFAULT_SOURCE]))
 			return $this->sources[self::DEFAULT_SOURCE];
@@ -68,7 +68,7 @@ class DataSourceRegistry {
 	 * Choose a new source as "current source".
 	 * @param string $id
 	 */
-	public function chooseSource($id) {
+	public function setCurrentSource($id) {
 		$oldSource = $this->getCurrentSource();
 		$newSource = $this->getSource($id);
 		

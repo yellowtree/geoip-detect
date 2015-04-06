@@ -75,4 +75,4 @@ class PrecisionDataSource extends AbstractDataSource {
 
 }
 
-//geoip_detect2_register_source(new PrecisionDataSource());
+geoip_detect2_register_source(new PrecisionDataSource());
