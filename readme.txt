@@ -22,7 +22,7 @@ Provides geographic information detected by an IP adress. This can be used in th
 * You can use one of these data sources:
   * Free: [Maxmind GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/), automatically updated every month (licensed CC BY-SA. See FAQ.)
   * Commercial: [Maxmind GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database) or [Maxmind GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
-  * Soon: Commercial Web-API: [Maxmind GeoIP2 Precision: City](https://www.maxmind.com/en/geoip2-precision-city-service)
+  * Soon: Commercial Web-API: [Maxmind GeoIP2 Precision](https://www.maxmind.com/en/geoip2-precision-city-service)
   * Free (default source): [HostIP.info](http://www.hostip.info/) (English only)
 * For the property names, see the results of a specific IP in the wordpress backend (under *Tools > GeoIP Detection*).
 * You can include these properties into your posts and pages by using the shortcode `[geoip_detect2 property="country.name" default="(country could not be detected)" lang="en"]` (where 'country.name' can be one of the other property names as well, and 'default' and 'lang' are optional).
@@ -51,44 +51,8 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 
 == Frequently Asked Questions ==
 
-= How exact is this data? =
-
-Think of it as an "educated guess": IP adresses and their allocation change on a frequent basis.
-If you need more reliable data, consider purchasing the [commercial version of the data](https://www.maxmind.com/en/geoip2-city).
-See [accuracy stats per country](https://www.maxmind.com/en/geoip2-city-database-accuracy).
-
-= Technically speaking, how could I verify if my visitor comes from Germany? =
-
-Put this code somewhere in your template files:
-
-    $userInfo = geoip_detect2_get_info_from_current_ip();
-    if ($userInfo->country->isoCode == 'de')
-        echo 'Hallo! Schön dass Sie hier sind!';
-
-To see which property names are supported, refer to the [Plugin Backend](http://wordpress.org/plugins/geoip-detect/screenshots/).
-
-Or, add the plugin shortcode somewhere in the page or post content:
-
-    Wie ist das Wetter in [geoip_detect2 property="country.name" lang="de" default="ihrem Land"] ?
-
-For more information, check the [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation).  
-
-= The Maxmind Lite databases are licensed Creative Commons ShareAlike-Attribution. When do I need to give attribution? =
-
-Maxmind is writing:
-
-    "In most cases, a Wordpress site or other site that auto-detects
-    a default location/currency/language is not providing the GeoLite data
-    to others so they do not need to attribute. In contrast, a site that
-    allows users to look-up their own or other IP addresses would not 
-    to attribute since the data is being provided to others. ...
-
-    Please take a look at the following FAQ:
-    https://wiki.creativecommons.org/FAQ#Do_I_always_have_to_attribute_the_creator_of_the_licensed_material.3F "
-
-= Does this plugin work in a MultiSite-Network environment? =
-
-Maybe. I haven't tested it.
+The FAQ has moved to Github:
+https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ
 
 == Screenshots ==
 
@@ -136,8 +100,11 @@ Fixing automatic weekly updates.
 == Changelog ==
 
 = 2.4.0 =
-* FIX: Check for IPv6 support for PHP.
+* This is a major refactor in order to support multiple sources properly. The Lookup and the Options were seperated into 2 screens (accessible in the menu under Tools and Options, respectively.)
+* 
 * NEW: Add a Cache for Web-API-Requests
+* NEW: Experimental support for the Maxmind Precision API.
+* FIX: Check for IPv6 support for PHP.
 
 = 2.3.1 =
 * NEW: API function geoip_detect2_get_current_source_description() (as there are different sources to choose from now)
