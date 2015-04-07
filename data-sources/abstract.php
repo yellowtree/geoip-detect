@@ -2,11 +2,16 @@
 /**
 Each datasource has:
 - An id, name & description
-- A reader
-- If active, a method or filter needs to be called.
+- A reader that can generate Maxmind GeoIP records.
 - (optional) Configuration options
 - (optional) Data Source Information (only shown for 
 - activate / deactivate when activated / deactivated by the user
+
+For future compatibility:
+Each data source may not rely on the fact that it is the "currently chosen" source. There may be several sources that are "activated" and then used in a fallback manner.
+In practise this means that wordpress filters should be used only in conjunction of checks like
+
+if ($record->extra->source == $this->getId()) { ...
 
 */
 
@@ -68,13 +73,14 @@ class City extends \GeoIp2\Model\City {
  * 
  * @property int $cached 0 if not cached, else Unix Timestamp when it was written to the cache. 
  *
+ * @property string $error Error message if one occured during lookup. If multiple errors, they are seperated by \n
  */
 
 class ExtraInformation extends \GeoIp2\Record\AbstractRecord {
 	/**
 	 * @ignore
 	 */
-	protected $validAttributes = array('source', 'cached');
+	protected $validAttributes = array('source', 'cached', 'error');
 }
 
 interface ReaderInterface extends \GeoIp2\ProviderInterface {

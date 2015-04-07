@@ -35,6 +35,7 @@ $options = $currentSource->getParameterHTML();
 	<form method="post" action="#">
 		<input type="hidden" name="action" value="choose" />
 		<h3>Choose data source: </h3>
+		<a href="https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#which-data-source-should-i-choose">Help</a>
 		<?php foreach ($sources as $s) : $id = $s->getId();?>
 			<p><input type="radio" name="options[source]" value="<?= $id ?>" <?php if ($currentSource->getId() == $id) { echo 'checked="checked"'; } ?> /><?= $s->getLabel(); ?></p>
 			<span class="detail-box">

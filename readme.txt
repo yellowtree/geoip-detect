@@ -7,7 +7,7 @@ Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Retrieving Geo-Information using the Maxmind GeoIP2 (Lite or Commercial) Database.
+Retrieving Geo-Information using one the Maxmind GeoIP2 databases.
 
 == Description ==
 
@@ -22,12 +22,12 @@ Provides geographic information detected by an IP adress. This can be used in th
 * You can use one of these data sources:
   * Free: [Maxmind GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/), automatically updated every month (licensed CC BY-SA. See FAQ.)
   * Commercial: [Maxmind GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database) or [Maxmind GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
-  * Soon: Commercial Web-API: [Maxmind GeoIP2 Precision](https://www.maxmind.com/en/geoip2-precision-city-service)
+  * Commercial Web-API: [Maxmind GeoIP2 Precision](https://www.maxmind.com/en/geoip2-precision-services) (City, Country or Insights)
   * Free (default source): [HostIP.info](http://www.hostip.info/) (English only)
 * For the property names, see the results of a specific IP in the wordpress backend (under *Tools > GeoIP Detection*).
 * You can include these properties into your posts and pages by using the shortcode `[geoip_detect2 property="country.name" default="(country could not be detected)" lang="en"]` (where 'country.name' can be one of the other property names as well, and 'default' and 'lang' are optional).
-* When enabled on the plugin page, it adds CSS classes to the body tag such as `geoip-country-DE` and `geoip-continent-EU`.
-* When enabled on the plugin page, the client IP respects a reverse proxy of the server.
+* When enabled on the options page, it adds CSS classes to the body tag such as `geoip-country-DE` and `geoip-continent-EU`.
+* When enabled on the options page, the client IP respects a reverse proxy of the server.
 
 See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation) for more info.
 
@@ -46,8 +46,8 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 == Installation ==
 
 * Install the plugin
-* Go to the plugin page (under Tools) and choose a data source.
-* Test it by clicking on "Lookup".
+* Go to the plugin's option page and choose a data source.
+* Test it by clicking on "Lookup" on the lookup page.
 
 == Frequently Asked Questions ==
 
@@ -100,9 +100,9 @@ Fixing automatic weekly updates.
 == Changelog ==
 
 = 2.4.0 =
-* This is a major refactor in order to support multiple sources properly. The Lookup and the Options were seperated into 2 screens (accessible in the menu under Tools and Options, respectively.)
-* 
-* NEW: Add a Cache for Web-API-Requests. The function geoip_detect2_get_info_from_ip() received a new parameter "$skipCache" to skip this cache if not needed. You can check if the result is coming from the cache by checking $result->extra->cached (it is 0 when not cached, UNIX timestamp of cache event otherwise)
+This is a major refactor in order to support multiple sources properly. The Lookup and the Options were seperated into 2 screens (accessible in the menu under Tools and Options, respectively.)
+
+* NEW: Add a Cache for Web-API-Requests. Consequently, the function geoip_detect2_get_info_from_ip() received a new parameter "$skipCache" to skip this cache if not needed. You can check if the result is coming from the cache by checking $result->extra->cached (it is 0 when not cached, UNIX timestamp of cache event otherwise).
 * This also applies to the shortcode API (`[geoip_detect2 property="extra.cached" skipCache="true"]`)
 * NEW: Experimental support for the Maxmind Precision API.
 * FIX: Check for IPv6 support for PHP.

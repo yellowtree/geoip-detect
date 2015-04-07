@@ -1,8 +1,10 @@
 <?php
 /**
+ * maybe TODO:
  * - warn email when counter is low ?
  * - change to hostinfo or maxmind if credit is zero?
  * - exclude spiders?
+ * - error logging
  */
 
 namespace YellowTree\GeoipDetect\DataSources\Precision;
@@ -19,15 +21,17 @@ class PrecisionReader extends \GeoIp2\WebService\Client implements \YellowTree\G
 		
 		$ret = null;
 		if (method_exists($this, $method)) {
-			try {
+			//try {
 				$ret = $this->$method($ip);
 				
 				// Catch only Web-API-specific exceptions
+			/*
 			} catch (AuthenticationException $e) {
 				update_option('geoip-detect-precision-error', $e->getMessage());				
 			} catch (OutOfQueriesException $e) {
 				update_option('geoip-detect-precision-error', $e->getMessage());
 			}
+			*/
 		}
 		
 		if ($ret) {
@@ -49,7 +53,8 @@ class PrecisionDataSource extends AbstractDataSource {
 	protected $user_id;
 	protected $user_secret;
 	
-	protected $known_api_types = array('country' => array('label' => 'Country'), 
+	protected $known_api_types = array(
+			'country' => array('label' => 'Country'), 
 			'city' => array('label' => 'City'), 
 			'insights' => array('label' => 'Insights'));
 	

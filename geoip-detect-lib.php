@@ -42,7 +42,7 @@ function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &
 	 * @param
 	 *        	array(string)							Locale precedence
 	 */
-	$reader = apply_filters ( 'geoip_detect2_reader', $reader, $locales );
+	$reader = apply_filters('geoip_detect2_reader', $reader, $locales );
 	
 	return $reader;
 }
@@ -74,7 +74,7 @@ function _geoip_detect2_add_data_to_cache($data, $ip) {
 	set_transient('geoip_detect_c_' . _ip_to_s($ip), $data, GEOIP_DETECT_READER_CACHE_TIME);
 }
 
-function _geoip_detect2_get_record_from_reader($reader, $ip) {
+function _geoip_detect2_get_record_from_reader($reader, $ip, &$error) {
 	$record = null;
 	
 	if ($reader) {
@@ -92,12 +92,8 @@ function _geoip_detect2_get_record_from_reader($reader, $ip) {
 			} catch (\BadMethodCallException $e) {
 				$record = $reader->country($ip);
 			}
-		} catch(GeoIp2\Exception\GeoIp2Exception $e) {
-			if (WP_DEBUG)
-				echo 'Error while looking up "' . $ip . '": ' . $e->getMessage();
-		} catch(Exception $e) {
-			if (WP_DEBUG)
-				echo 'Error while looking up "' . $ip . '": ' . $e->getMessage();
+		} catch(\Exception $e) {
+			$error = $e->getMessage();
 		}
 	
 		$reader->close();
@@ -106,7 +102,7 @@ function _geoip_detect2_get_record_from_reader($reader, $ip) {
 	return $record;
 }
 
-function _geoip_detect2_record_enrich_data($record, $ip, $sourceId) {
+function _geoip_detect2_record_enrich_data($record, $ip, $sourceId, $error) {
 	$data = array('traits' => array('ip_address' => $ip), 'is_empty' => true);
 	if (is_object($record) && method_exists($record, 'jsonSerialize')) {
 		$data = $record->jsonSerialize();
@@ -114,6 +110,7 @@ function _geoip_detect2_record_enrich_data($record, $ip, $sourceId) {
 	}
 	$data['extra']['source'] = $sourceId;
 	$data['extra']['cached'] = 0;
+	$data['extra']['error'] = $error;
 
 	/**
 	 * Filter: geoip_detect2_record_data

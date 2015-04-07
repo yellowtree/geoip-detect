@@ -25,10 +25,14 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $skipCache = false
 	}
 	
 	if (!$data) {
+		$outError = '';
 		$reader = _geoip_detect2_get_reader(array('en') /* will be replaced anyway */, true, $outSourceId);
-		$record = _geoip_detect2_get_record_from_reader($reader, $ip);
-		$data   = _geoip_detect2_record_enrich_data($record, $ip, $outSourceId);
+		$record = _geoip_detect2_get_record_from_reader($reader, $ip, $outError);
+		$data   = _geoip_detect2_record_enrich_data($record, $ip, $outSourceId, $outError);
 		
+		if (WP_DEBUG && $outError) {
+			trigger_error($outError, E_USER_NOTICE);
+		}
 		_geoip_detect2_add_data_to_cache($data, $ip);
 	}
 	
