@@ -37,6 +37,13 @@ $current_source = DataSourceRegistry::getInstance()->getCurrentSource();
 		<?php endif; ?>
 	</p>
 	
+	<?php if ($record->extra->error) : ?>
+	<p class="geoip_detect_error">
+		<?php _e('Lookup Error:', 'geoip-detect'); ?> <br />
+		<?php echo nl2br(esc_html($record->extra->error)); ?>
+	</p>
+	<?php endif; ?>
+	
 	<table>
 		<tr>
 			<th><?php _e('Key', 'geoip-detect'); ?></th>

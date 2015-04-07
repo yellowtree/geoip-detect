@@ -23,13 +23,9 @@ class PrecisionReader extends \GeoIp2\WebService\Client implements \YellowTree\G
 		if (method_exists($this, $method)) {
 			//try {
 				$ret = $this->$method($ip);
-				
-				// Catch only Web-API-specific exceptions
-			/*
+			/* Web-API-specific exceptions:
 			} catch (AuthenticationException $e) {
-				update_option('geoip-detect-precision-error', $e->getMessage());				
 			} catch (OutOfQueriesException $e) {
-				update_option('geoip-detect-precision-error', $e->getMessage());
 			}
 			*/
 		}
