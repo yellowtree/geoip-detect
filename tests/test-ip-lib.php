@@ -13,6 +13,11 @@ class IpLibTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 
 
+	function testIpToS() {
+		$this->assertNotEmpty(_ip_to_s('127.0.0.1'));
+		$this->assertEmpty(_ip_to_s('garbage'));
+	}
+
 	function testPublicIpFilter() {
 		$this->assertSame(true, geoip_detect_is_public_ip(GEOIP_DETECT_TEST_IP));
 		$this->assertSame(false, geoip_detect_is_public_ip('10.0.0.2'));

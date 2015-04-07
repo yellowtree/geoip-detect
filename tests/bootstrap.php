@@ -1,6 +1,6 @@
 <?php
 
-//define('WP_DEBUG', true);
+define('GEOIP_DETECT_DOING_UNIT_TESTS', true);
 require_once 'vendor/autoload.php';
 
 $_tests_dir = getenv('WP_TESTS_DIR');

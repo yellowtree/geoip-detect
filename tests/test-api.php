@@ -15,6 +15,8 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$record = geoip_detect2_get_info_from_ip('garbage');
 		$this->assertInstanceOf('GeoIp2\Model\City', $record, 'Garbage IP did not return a record object');
 		$this->assertInstanceOf('YellowTree\GeoipDetect\DataSources\City', $record, 'Garbage IP did not return a wordpress record object');
+		$this->assertContains('is not a valid IP', $record->extra->error);
+		
 		$this->assertSame(true, $record->isEmpty);
 		$this->assertSame(null, $record->country->name);
 	}

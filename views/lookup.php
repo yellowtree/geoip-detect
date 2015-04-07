@@ -13,7 +13,7 @@ $current_source = DataSourceRegistry::getInstance()->getCurrentSource();
 	</p>
 		
 	<p>
-		<?php echo $current_source->getDescriptionHTML(); ?>
+		<?php echo $current_source->getStatusInformationHTML(); ?>
 	</p>	
 		
 	<form method="post" action="#">
@@ -28,7 +28,7 @@ $current_source = DataSourceRegistry::getInstance()->getCurrentSource();
 			if (is_object($ip_lookup_result)) :
 			$record = $ip_lookup_result; 
 			?>
-			<h3>Lookup Result</h3>
+	<h3>Lookup Result</h3>
 	<p>
 		<?php printf(__('The function %s returns an object:', 'geoip-detect'), "<code>\$record = geoip_detect2_get_info_from_ip('" . esc_html($request_ip) . "', " . var_export($request_locales, true) . ($request_skipCache ? ', TRUE' : '') .");</code>"); ?><br />
 		<?php printf(__('Lookup duration: %.5f s', 'geoip-detect'), $ip_lookup_duration); ?>
@@ -99,4 +99,22 @@ $current_source = DataSourceRegistry::getInstance()->getCurrentSource();
 	</p>
 	
 </div>	
-	
+<style>
+.geoip_detect_error {
+    background-color: rgb(255, 255, 255);
+    border-left: rgb(255, 0, 0) solid 4px;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    font-size: 14px;
+    line-height: 19px;
+    margin-bottom: 0;
+    margin-left: 2px;
+    margin-right: 20px;
+    margin-top: 25px;
+    padding-bottom: 11px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 11px;
+    text-align: left;
+}
+</style>

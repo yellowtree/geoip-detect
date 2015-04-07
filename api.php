@@ -30,10 +30,11 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $skipCache = false
 		$record = _geoip_detect2_get_record_from_reader($reader, $ip, $outError);
 		$data   = _geoip_detect2_record_enrich_data($record, $ip, $outSourceId, $outError);
 		
-		if (WP_DEBUG && $outError) {
+		if (WP_DEBUG && !GEOIP_DETECT_DOING_UNIT_TESTS && $outError) {
 			trigger_error($outError, E_USER_NOTICE);
 		}
-		_geoip_detect2_add_data_to_cache($data, $ip);
+		if (!$outError)
+			_geoip_detect2_add_data_to_cache($data, $ip);
 	}
 	
 	// Always return a city record for API compatability. City attributes etc. return empty values.

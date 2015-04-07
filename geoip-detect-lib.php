@@ -48,7 +48,8 @@ function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &
 }
 
 function _ip_to_s($ip) {
-	return base64_encode(inet_pton($ip));
+	$binary = @inet_pton($ip);
+	return base64_encode($binary);
 }
 
 function _geoip_detect2_get_data_from_cache($ip) {
@@ -56,7 +57,11 @@ function _geoip_detect2_get_data_from_cache($ip) {
 	if (get_option('geoip-detect-source') == 'auto' || get_option('geoip-detect-source') == 'manual')
 		return null;
 	
-	$data = get_transient('geoip_detect_c_' . _ip_to_s($ip));
+	$ip_s = _ip_to_s($ip);
+	if (!$ip_s)
+		return null;
+		
+	$data = get_transient('geoip_detect_c_' . $ip_s);
 	if (is_array($data) && $data['extra']['source'] != get_option('geoip-detect-source'))
 		return null;
 	
@@ -71,7 +76,11 @@ function _geoip_detect2_add_data_to_cache($data, $ip) {
 	$data['extra']['cached'] = time();
 	unset($data['maxmind']['queries_remaining']);
 	
-	set_transient('geoip_detect_c_' . _ip_to_s($ip), $data, GEOIP_DETECT_READER_CACHE_TIME);
+	$ip_s = _ip_to_s($ip);
+	if (!$ip_s)
+		return;
+
+	set_transient('geoip_detect_c_' . $ip_s, $data, GEOIP_DETECT_READER_CACHE_TIME);
 }
 
 function _geoip_detect2_get_record_from_reader($reader, $ip, &$error) {

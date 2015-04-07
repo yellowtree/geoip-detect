@@ -20,7 +20,9 @@ class PrecisionReader extends \GeoIp2\WebService\Client implements \YellowTree\G
 		$method = get_option('geoip-detect-precision_api_type', 'city');
 		
 		$ret = null;
-		if (method_exists($this, $method)) {
+		if (!method_exists($this, $method)) {
+			throw new \RuntimeException('Precision API: Unsupported method ' . $method);
+		}
 			//try {
 				$ret = $this->$method($ip);
 			/* Web-API-specific exceptions:
@@ -28,7 +30,6 @@ class PrecisionReader extends \GeoIp2\WebService\Client implements \YellowTree\G
 			} catch (OutOfQueriesException $e) {
 			}
 			*/
-		}
 		
 		if ($ret) {
 			$credits = $ret->maxmind->remainingCredits;
@@ -66,7 +67,11 @@ class PrecisionDataSource extends AbstractDataSource {
 	public function getLabel() { return 'Maxmind Precision Web-API'; }
 
 	public function getDescriptionHTML() { return '<a href="https://www.maxmind.com/en/geoip2-precision-services">Maxmind Precision Services</a>'; }
-	public function getStatusInformationHTML() { return ''; }
+	public function getStatusInformationHTML() { 
+		$html = ''; // Credits, last request, last error message
+		return $html;
+	}
+	
 	public function getParameterHTML() { 
 		$user_id = get_option('geoip-detect-precision_user_id');
 		$user_secret = get_option('geoip-detect-precision_user_secret');
