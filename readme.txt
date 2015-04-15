@@ -116,7 +116,7 @@ This is a major refactor in order to support multiple sources properly. The Look
 
 = 2.2.0 =
 * FIX: Update Maxmind Reader to 1.0.3 (fixing issues when the PHP extension mbstring was not installed)
-* NEW: Commercial databass are now supported. You can specify a file path in the options.
+* NEW: Commercial databases are now supported. You can specify a file path in the options.
 * NEW: A country database (lite or commercial) database now works as well.
 * NEW: License is now displayed before install.
 
