@@ -18,7 +18,7 @@ $current_source = DataSourceRegistry::getInstance()->getCurrentSource();
 		
 	<form method="post" action="#">
 		<input type="hidden" name="action" value="lookup" />
-		<input type="text" placeholder="Enter an IP (v4 or v6)" name="ip" value="<?php echo isset($_REQUEST['ip']) ? esc_attr($_REQUEST['ip']) : esc_attr(geoip_detect2_get_client_ip()); ?>" /><br />
+		IP: <input type="text" placeholder="Enter an IP (v4 or v6)" name="ip" value="<?php echo isset($_REQUEST['ip']) ? esc_attr($_REQUEST['ip']) : esc_attr(geoip_detect2_get_client_ip()); ?>" /><br />
 		<label>Use these locales: <select name="locales"><option value="">Default (Current site language, English otherwise)</option><option value="en">English only</option><option value="fr,en">French, English otherwise</option></select> </label><br />
 		<label><input type="checkbox" name="skip_cache" value="1" <?php if (!empty($_POST['skip_cache'])) echo 'checked="checked"'?>/> Skip cache</label><br />
 		<br />

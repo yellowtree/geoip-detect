@@ -11,11 +11,13 @@ namespace YellowTree\GeoipDetect\DataSources\Precision;
 
 use YellowTree\GeoipDetect\DataSources\AbstractDataSource;
 use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
-use GeoIp2\Exception\OutOfQueriesException;
-use GeoIp2\Exception\AuthenticationException;
 
 class PrecisionReader extends \GeoIp2\WebService\Client implements \YellowTree\GeoipDetect\DataSources\ReaderInterface 
 {
+	public function __construct($userId, $licenseKey) {
+		parent::__construct($userId, $licenseKey);
+	}
+	
 	public function city($ip) {
 		$method = get_option('geoip-detect-precision_api_type', 'city');
 		
@@ -24,7 +26,7 @@ class PrecisionReader extends \GeoIp2\WebService\Client implements \YellowTree\G
 			throw new \RuntimeException('Precision API: Unsupported method ' . $method);
 		}
 			//try {
-				$ret = $this->$method($ip);
+		$ret = $this->$method($ip);
 			/* Web-API-specific exceptions:
 			} catch (AuthenticationException $e) {
 			} catch (OutOfQueriesException $e) {
@@ -38,11 +40,7 @@ class PrecisionReader extends \GeoIp2\WebService\Client implements \YellowTree\G
 		return $ret;
 	}
 	
-	public function close() {
-		
-	}
-	
-	
+	public function close() { }
 }
 
 class PrecisionDataSource extends AbstractDataSource {
@@ -58,6 +56,10 @@ class PrecisionDataSource extends AbstractDataSource {
 	public function __construct() {
 		parent::__construct();
 		
+		$this->setCredentials();
+	}
+	
+	protected function setCredentials() {
 		$this->user_id = get_option('geoip-detect-precision-user_id');
 		$this->user_secret = get_option('geoip-detect-precision-user_secret');
 	}
@@ -68,6 +70,9 @@ class PrecisionDataSource extends AbstractDataSource {
 
 	public function getDescriptionHTML() { return '<a href="https://www.maxmind.com/en/geoip2-precision-services">Maxmind Precision Services</a>'; }
 	public function getStatusInformationHTML() { 
+		$html = '';
+		if (!$this->isWorking())
+			$html .= __('Maxmind Precision only works with a given user id and secret.', 'geoip-detect');
 		$html = ''; // Credits, last request, last error message
 		return $html;
 	}
@@ -110,22 +115,23 @@ HTML;
 		}
 		
 		if (!$this->isWorking())
-			$message .= __('Maxmind Precision only works with a given user id and secret.');
+			$message .= __('Maxmind Precision only works with a given user id and secret.', 'geoip-detect');
 		
 		return $message;
 	}
 	
-	public function getReader() { 
+	public function getReader() {
+		$this->setCredentials();
 		if (!$this->isWorking())
 			return null;
 
 		$client = new PrecisionReader($this->user_id, $this->user_secret);
-		
+
 		return $client;
 	}
 
 	public function isWorking() { 
-		return $this->user_id && $this->user_secret;
+		return !empty($this->user_id) && $this->user_secret;
 	}
 
 }

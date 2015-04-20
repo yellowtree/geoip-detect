@@ -77,7 +77,12 @@ function _geoip_detect2_add_data_to_cache($data, $ip) {
 	unset($data['maxmind']['queries_remaining']);
 	
 	$ip_s = _ip_to_s($ip);
+	// Do not cache invalid IPs
 	if (!$ip_s)
+		return;
+	
+	// Do not cache error lookups (they might be temporary)
+	if (!empty($data['extra']['error']))
 		return;
 
 	set_transient('geoip_detect_c_' . $ip_s, $data, GEOIP_DETECT_READER_CACHE_TIME);
@@ -94,7 +99,6 @@ function _geoip_detect2_get_record_from_reader($reader, $ip, &$error) {
 			$ip = geoip_detect2_get_external_ip_adress();
 		}
 	
-	
 		try {
 			try {
 				$record = $reader->city($ip);
@@ -102,10 +106,12 @@ function _geoip_detect2_get_record_from_reader($reader, $ip, &$error) {
 				$record = $reader->country($ip);
 			}
 		} catch(\Exception $e) {
-			$error = $e->getMessage();
+			$error = 'Lookup Error: ' . $e->getMessage();
 		}
 	
 		$reader->close();
+	} else {
+		$error = 'No reader was found. Check if the configuration is complete and correct.';
 	}
 	
 	return $record;
