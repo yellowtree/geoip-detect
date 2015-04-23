@@ -22,11 +22,21 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	function filter_set_user_id() {
-		return 6;
+		$id = getenv('WP_PRECISION_USER_ID');
+		if ($id)
+			return $id;
+		else
+			return 17;
 	}
 	
 	function filter_set_user_secret() {
-		return 'dd';
+		$id = getenv('WP_PRECISION_USER_SECRET');
+		if ($id)
+			return $id;
+		else {
+			$this->markTestSkipped('No precision credentials found.');
+			return 'asdfsadf';
+		}
 	}
 	
 	function filter_set_wrong_user_secret() {
@@ -34,6 +44,9 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	function testDataSourceExists() {
+		remove_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_user_secret'), 101);
+		add_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_wrong_user_secret'), 102);
+		
 		$registry = DataSourceRegistry::getInstance();
 		
 		$source = $registry->getCurrentSource();
@@ -64,6 +77,7 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	 * @expectedException \GeoIp2\Exception\AuthenticationException
 	 */
 	function testNoPasswordManualLookup() {
+		remove_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_user_secret'), 101);
 		add_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_wrong_user_secret'), 102);
 		
 		$reader = geoip_detect2_get_reader();
@@ -73,12 +87,22 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	function testNoPassword() {
+		remove_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_user_secret'), 101);
 		add_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_wrong_user_secret'), 102);
 		
 		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
-		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
 		$this->assertTrue($record->isEmpty);
 		$this->assertNotEmpty($record->extra->error);
+	}
+	
+	function testWorking() {
+		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
+		
+		var_dump($record);
+		
+		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
+		$this->assertFalse($record->isEmpty);
+		$this->assertEmpty($record->extra->error);
 	}
 
 }

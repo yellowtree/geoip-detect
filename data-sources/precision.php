@@ -40,7 +40,7 @@ class PrecisionReader extends \GeoIp2\WebService\Client implements \YellowTree\G
 			*/
 		
 		if ($ret) {
-			$credits = $ret->maxmind->remainingCredits;
+			$credits = $ret->maxmind->queriesRemaining; // This seems to be approximate.
 			update_option('geoip-detect-precision-remaining_credits', $credits);
 		}
 		return $ret;
