@@ -134,8 +134,7 @@ HTML;
 	public function isWorking() { 
 		$user_id = get_option('geoip-detect-precision-user_id');
 		$user_secret = get_option('geoip-detect-precision-user_secret');
-var_dump($user_id);
-var_dump($user_secret);		
+	
 		return ! (empty($user_id) || empty($user_secret));
 	}
 

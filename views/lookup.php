@@ -19,7 +19,12 @@ $current_source = DataSourceRegistry::getInstance()->getCurrentSource();
 	<form method="post" action="#">
 		<input type="hidden" name="action" value="lookup" />
 		IP: <input type="text" placeholder="Enter an IP (v4 or v6)" name="ip" value="<?php echo isset($_REQUEST['ip']) ? esc_attr($_REQUEST['ip']) : esc_attr(geoip_detect2_get_client_ip()); ?>" /><br />
-		<label>Use these locales: <select name="locales"><option value="">Default (Current site language, English otherwise)</option><option value="en">English only</option><option value="fr,en">French, English otherwise</option></select> </label><br />
+		<label>Use these locales: 
+			<select name="locales">
+				<option value="" <?php if (empty($_POST['locales'])) echo 'selected="selected"'?>>Default (Current site language, English otherwise)</option>
+				<option value="en" <?php if (!empty($_POST['locales']) && $_POST['locales'] == 'en') echo 'selected="selected"'?>>English only</option>
+				<option value="fr,en" <?php if (!empty($_POST['locales']) && $_POST['locales'] == 'fr,en') echo 'selected="selected"'?>>French, English otherwise</option>
+			</select> </label><br />
 		<label><input type="checkbox" name="skip_cache" value="1" <?php if (!empty($_POST['skip_cache'])) echo 'checked="checked"'?>/> Skip cache</label><br />
 		<br />
 		<input type="submit" class="button button-secondary" value="<?php _e('Lookup', 'geoip-detect'); ?>" />
@@ -88,6 +93,7 @@ $current_source = DataSourceRegistry::getInstance()->getCurrentSource();
 		</tr>
 
 	</table>
+
 		<?php elseif ($ip_lookup_result === 0 || is_null($ip_lookup_result)) : ?>
 			<p>
 				<?php _e('No information found about this IP.', 'geoip-detect')?>
