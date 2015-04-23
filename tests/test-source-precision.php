@@ -15,6 +15,7 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 		remove_filter('pre_option_geoip-detect-precision-user_id', array($this, 'filter_set_user_id'), 101);
 		remove_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_user_secret'), 101);
 		remove_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_wrong_user_secret'), 102);
+		remove_filter('pre_option_geoip-detect-precision_api_type', array($this, 'filter_set_precision_method_insights'), 102);
 	}
 	
 	function filter_set_default_source() {
@@ -43,6 +44,10 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 		return 'dd';
 	}
 	
+	function filter_set_precision_method_insights() {
+		return 'insights';
+	}
+	
 	function testDataSourceExists() {
 		remove_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_user_secret'), 101);
 		add_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_wrong_user_secret'), 102);
@@ -58,6 +63,7 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	/**
+	 * @group external-http
 	 * @expectedException \GeoIp2\Exception\AuthenticationException
 	 */
 	function testMaxmindApiPasswordWrong() {
@@ -66,6 +72,7 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	/**
+	 * @group external-http
 	 * @expectedException \GeoIp2\Exception\AuthenticationException
 	 */
 	function testMaxmindApiPasswordWrong2() {
@@ -74,6 +81,7 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	/**
+	 * @group external-http
 	 * @expectedException \GeoIp2\Exception\AuthenticationException
 	 */
 	function testNoPasswordManualLookup() {
@@ -86,15 +94,22 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 		$reader->city(GEOIP_DETECT_TEST_IP);		
 	}
 	
+	/**
+	 * @group external-http
+	 */
 	function testNoPassword() {
 		remove_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_user_secret'), 101);
 		add_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_wrong_user_secret'), 102);
 		
 		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		$this->assertTrue($record->isEmpty);
-		$this->assertNotEmpty($record->extra->error);
+		$this->assertContains('Invalid user_id or license_key', $record->extra->error);
 	}
 	
+	/**
+	 * @group external-http
+	 */
+	/*
 	function testWorking() {
 		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		
@@ -104,5 +119,18 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertFalse($record->isEmpty);
 		$this->assertEmpty($record->extra->error);
 	}
+	*/
+	
+	/**
+	 * @group external-http
+	 */
+	/*
+	function testInsightsNotWorking() {
+		add_filter('pre_option_geoip-detect-precision_api_type', array($this, 'filter_set_precision_method_insights'), 102);
+		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
+		$this->assertTrue($record->isEmpty);
+		$this->assertContains('out of queries', $record->extra->error);
+	}
+	*/
 
 }

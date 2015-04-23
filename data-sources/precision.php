@@ -51,9 +51,6 @@ class PrecisionReader extends \GeoIp2\WebService\Client implements \YellowTree\G
 
 class PrecisionDataSource extends AbstractDataSource {
 	
-	protected $user_id;
-	protected $user_secret;
-	
 	protected $known_api_types = array(
 			'country' => array('label' => 'Country'), 
 			'city' => array('label' => 'City'), 
@@ -61,14 +58,8 @@ class PrecisionDataSource extends AbstractDataSource {
 	
 	public function __construct() {
 		parent::__construct();
-		
-		$this->setCredentials();
 	}
-	
-	protected function setCredentials() {
-		$this->user_id = get_option('geoip-detect-precision-user_id');
-		$this->user_secret = get_option('geoip-detect-precision-user_secret');
-	}
+
 
 	
 	public function getId() { return 'precision'; }
@@ -77,20 +68,22 @@ class PrecisionDataSource extends AbstractDataSource {
 	public function getDescriptionHTML() { return '<a href="https://www.maxmind.com/en/geoip2-precision-services">Maxmind Precision Services</a>'; }
 	public function getStatusInformationHTML() { 
 		$html = '';
+		$html .= 'API Type: ' . ucfirst(get_option('geoip-detect-precision_api_type', 'city')) . '<br />';
+		
 		if (!$this->isWorking())
-			$html .= __('Maxmind Precision only works with a given user id and secret.', 'geoip-detect');
-		$html = ''; // Credits, last request, last error message
+			$html .= '<div class="geoip_detect_error">' . __('Maxmind Precision only works with a given user id and secret.', 'geoip-detect') . '</div>';
+
 		return $html;
 	}
 	
 	public function getParameterHTML() { 
-		$user_id = get_option('geoip-detect-precision_user_id');
-		$user_secret = get_option('geoip-detect-precision_user_secret');
+		$user_id = (int) get_option('geoip-detect-precision-user_id');
+		$user_secret = esc_attr(get_option('geoip-detect-precision-user_secret'));
 		$current_api_type = get_option('geoip-detect-precision_api_type');
 		
 		$html = <<<HTML
 User ID: <input type="text" size="10" name="options_precision[user_id]" value="$user_id" /><br />		
-User Secret: <input type="text" size="20" name="options_precision[user_secret]" value="$user_secret" /><br />
+User Secret: <input type="text" autocomplete="off" size="20" name="options_precision[user_secret]" value="$user_secret" /><br />
 API Type: <select name="options_precision[api_type]">
 HTML;
 		
@@ -108,12 +101,12 @@ HTML;
 		$message = '';
 		
 		if (isset($post['options_precision']['user_id'])) {
-			$this->user_id = (int) $post['options_precision']['user_id'];
-			update_option('geoip-detect-precision_user_id', $this->user_id);
+			$user_id = (int) $post['options_precision']['user_id'];
+			update_option('geoip-detect-precision-user_id', $user_id);
 		}
 		if (isset($post['options_precision']['user_secret'])) {
-			$this->user_secret = $post['options_precision']['user_secret'];
-			update_option('geoip-detect-precision_user_secret', $this->user_secret);	
+			$user_secret = $post['options_precision']['user_secret'];
+			update_option('geoip-detect-precision-user_secret', $user_secret);	
 		}
 		if (isset($post['options_precision']['api_type'])) {
 			if (isset($this->known_api_types[$post['options_precision']['api_type']]))
@@ -127,17 +120,23 @@ HTML;
 	}
 	
 	public function getReader() {
-		$this->setCredentials();
 		if (!$this->isWorking())
 			return null;
 
-		$client = new PrecisionReader($this->user_id, $this->user_secret);
+		$user_id = get_option('geoip-detect-precision-user_id');
+		$user_secret = get_option('geoip-detect-precision-user_secret');
+		
+		$client = new PrecisionReader($user_id, $user_secret);
 
 		return $client;
 	}
 
 	public function isWorking() { 
-		return !empty($this->user_id) && $this->user_secret;
+		$user_id = get_option('geoip-detect-precision-user_id');
+		$user_secret = get_option('geoip-detect-precision-user_secret');
+var_dump($user_id);
+var_dump($user_secret);		
+		return ! (empty($user_id) || empty($user_secret));
 	}
 
 }
