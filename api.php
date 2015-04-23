@@ -84,13 +84,14 @@ function geoip_detect2_get_current_source_description($source = null) {
 /**
  * Get Geo-Information for the current IP
  * 
- * @param array(string)			List of locale codes to use in name property
- * 								from most preferred to least preferred. (Default: Site language, en)
+ * @param array(string)		$locales	List of locale codes to use in name property
+ * 										from most preferred to least preferred. (Default: Site language, en)
+ * @param boolean			$skipCache	TRUE: Do not use cache for this request. 
  * @return YellowTree\GeoipDetect\DataSources\City	GeoInformation.
  */
-function geoip_detect2_get_info_from_current_ip($locales = null)
+function geoip_detect2_get_info_from_current_ip($locales = null, $skipCache = false)
 {
-	return geoip_detect2_get_info_from_ip(geoip_detect2_get_client_ip(), $locales);
+	return geoip_detect2_get_info_from_ip(geoip_detect2_get_client_ip(), $locales, $skipCache);
 }
 
 /**

@@ -103,7 +103,8 @@ Fixing automatic weekly updates.
 This is a major refactor in order to support multiple sources properly. The Lookup and the Options were seperated into 2 screens (accessible in the menu under Tools and Options, respectively.)
 
 * NEW: Add a Cache for Web-API-Requests. Consequently, the function geoip_detect2_get_info_from_ip() received a new parameter "$skipCache" to skip this cache if not needed. You can check if the result is coming from the cache by checking $result->extra->cached (it is 0 when not cached, UNIX timestamp of cache event otherwise).
-* This also applies to the shortcode API (`[geoip_detect2 property="extra.cached" skipCache="true"]`)
+* This also applies to the shortcode API (`[geoip_detect2 property="extra.cached" skip_cache="true"]`)
+* Shortcodes now also support fallback languages. (`[geoip_detect2 property="country" lang="fr,de"]`)
 * NEW: Experimental support for the Maxmind Precision API.
 * FIX: Check for IPv6 support for PHP.
 

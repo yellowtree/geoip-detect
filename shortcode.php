@@ -14,6 +14,7 @@ function geoip_detect_shortcode($attr)
 
 	$propertyName = $attr['property'];
 	
+	
 	if (property_exists($userInfo, $propertyName)) {
 		if ($userInfo->$propertyName)
 			return $userInfo->$propertyName;
@@ -38,17 +39,20 @@ add_shortcode('geoip_detect', 'geoip_detect_shortcode');
  * @param string $property		Property to read. Instead of '->', use '.'
  * @param string $lang			Language (optional. If not set, current site language is used.)
  * @param string $default 		Default Value that will be shown if value not set (optional)
+ * @param string $skipCache		if 'true': Do not cache value
  */
 function geoip_detect2_shortcode($attr)
 {
-	$locales = isset($attr['lang']) ? array_unique(array($attr['lang'], 'en')) : null;
+	$skipCache = isset($attr['skip_cache']) && (strtolower($attr['skip_cache']) == 'true' || $attr['skip_cache'] == '1');
+	
+	$locales = isset($attr['lang']) ? $attr['lang'] . ',en' : 'en';
 	$locales = apply_filters('geoip_detect2_locales', $locales);
 
 	$defaultValue = isset($attr['default']) ? $attr['default'] : ''; 
 	
 	$properties = explode('.', $attr['property']);
 	
-	$userInfo = geoip_detect2_get_info_from_current_ip($locales);
+	$userInfo = geoip_detect2_get_info_from_current_ip($locales, $skipCache);
 
 	if ($userInfo->isEmpty)
 		return $defaultValue . '<!-- GeoIP Detect: No information found for this IP (' . geoip_detect2_get_client_ip() . ') -->';	
@@ -63,7 +67,7 @@ function geoip_detect2_shortcode($attr)
 				throw new \RuntimeException('Invalid property name.');
 			$return = $return->{$properties[1]};
 		} else {
-			throw new \RuntimeException('Only 1 dot supported. Please send a bug report to show me the shorcode you used if you need it ...');
+			throw new \RuntimeException('Only 1 dot supported. Please send a bug report to show me the shortcode you used if you need it ...');
 		}
 	} catch (\RuntimeException $e) {
 		return $defaultValue . '<!-- GeoIP Detect: Invalid property name. -->';

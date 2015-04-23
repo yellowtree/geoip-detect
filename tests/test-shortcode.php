@@ -17,6 +17,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		parent::tearDown();
 		remove_filter('geoip_detect_get_external_ip_adress', array($this, 'filter_set_test_ip'), 101);
 		remove_filter('geoip_detect2_reader', 'shortcode_empty_reader', 101);
+		remove_filter('geoip2_detect_sources_not_cachable', array($this, 'filter_empty_array'), 101);
 	}
 	
 	function testShortcodeOneProperty() {
@@ -51,7 +52,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	function testLang() {
 		$this->assertEquals('Deutschland', do_shortcode('[geoip_detect2 property="country" lang="de"]'));
 		$this->assertEquals('Deutschland', do_shortcode('[geoip_detect2 property="country" lang="zz,de"]'));
-		$this->assertEquals('Deutschland', do_shortcode('[geoip_detect2 property="country" lang="zz, de"]'));
+		$this->assertEquals('Deutschland', do_shortcode('[geoip_detect2 property="country" lang=" zz, de "]'));
 	}
 	
 	function testDefaultValue() {	
@@ -83,11 +84,26 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertContains('default', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"city\"] should use default: " . $string);
 	}
 	
+	function filter_empty_array() {
+		return array();
+	}
+	
 	function testSkipCache() {
+		// enable caching 
+		add_filter('geoip2_detect_sources_not_cachable', array($this, 'filter_empty_array'), 101);
+		
+		// Make sure this is in the cache
 		do_shortcode('[geoip_detect2 property="extra.cached"]');
-		$this->assertNotSame('0', do_shortcode('[geoip_detect2 property="extra.cached"]'));
-		$this->assertSame('0', do_shortcode('[geoip_detect2 property="extra.cached" skipCache="true"]'));
-		$this->assertSame('default', do_shortcode('[geoip_detect2 property="extra.cached" skipCache="true" default="default"]'));
+		
+		$cached_time = do_shortcode('[geoip_detect2 property="extra.cached"]');
+		$this->assertNotEmpty($cached_time, 'Cache property cannot be read');
+		$this->assertNotEquals('0', $cached_time, 'Normally, this request should be cached.');
+		
+		$this->assertEquals('', do_shortcode('[geoip_detect2 property="extra.cached" skip_cache="true"]'), 'skip_cache parameter ignored?');
+		$this->assertEquals('', do_shortcode('[geoip_detect2 property="extra.cached" skip_cache="TRUE"]'), 'skip_cache parameter ignored?');
+		$this->assertEquals('', do_shortcode('[geoip_detect2 property="extra.cached" skip_cache="1"]'), 'skip_cache parameter ignored?');
+		
+		$this->assertEquals('default', do_shortcode('[geoip_detect2 property="extra.cached" skip_cache="true" default="default"]', 'default value does not work together with skip_cache'));
 	}
 }
 

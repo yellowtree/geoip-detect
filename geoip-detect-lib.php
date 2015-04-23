@@ -53,9 +53,10 @@ function _ip_to_s($ip) {
 
 function _geoip_detect2_get_data_from_cache($ip) {
 	// Don't cache for file access based sources (not worth the effort/time)
-	if (get_option('geoip-detect-source') == 'auto' || get_option('geoip-detect-source') == 'manual')
+	$sources_not_cachable = apply_filters('geoip2_detect_sources_not_cachable', array('auto', 'manual'));	
+	if (in_array(get_option('geoip-detect-source'), $sources_not_cachable))
 		return null;
-	
+
 	$ip_s = _ip_to_s($ip);
 	if (!$ip_s)
 		return null;
@@ -69,9 +70,10 @@ function _geoip_detect2_get_data_from_cache($ip) {
 
 function _geoip_detect2_add_data_to_cache($data, $ip) {
 	// Don't cache for file access based sources (not worth the effort/time)
-	if (get_option('geoip-detect-source') == 'auto' || get_option('geoip-detect-source') == 'manual')
+	$sources_not_cachable = apply_filters('geoip2_detect_sources_not_cachable', array('auto', 'manual'));	
+	if (in_array($data['extra']['source'], $sources_not_cachable))
 		return;
-
+	
 	$data['extra']['cached'] = time();
 	unset($data['maxmind']['queries_remaining']);
 	
