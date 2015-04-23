@@ -22,11 +22,17 @@ class PrecisionReader extends \GeoIp2\WebService\Client implements \YellowTree\G
 		$method = get_option('geoip-detect-precision_api_type', 'city');
 		
 		$ret = null;
-		if (!method_exists($this, $method)) {
+		
+		$callback = array($this, $method);
+		if (!is_callable($callback)) {
 			throw new \RuntimeException('Precision API: Unsupported method ' . $method);
 		}
-			//try {
-		$ret = $this->$method($ip);
+
+		if ($method == 'city')
+			$ret = parent::city($ip);
+		else
+			$ret = call_user_func_array($callback, array($ip));
+		
 			/* Web-API-specific exceptions:
 			} catch (AuthenticationException $e) {
 			} catch (OutOfQueriesException $e) {

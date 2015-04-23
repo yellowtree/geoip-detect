@@ -31,7 +31,6 @@ function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &
 		$reader = $source->getReader($locales);
 		$sourceId = $source->getId();
 	}
-	
 	/**
 	 * Filter: geoip_detect2_reader
 	 * You can customize your reader here.
@@ -43,7 +42,7 @@ function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &
 	 *        	array(string)							Locale precedence
 	 */
 	$reader = apply_filters('geoip_detect2_reader', $reader, $locales );
-	
+
 	return $reader;
 }
 
