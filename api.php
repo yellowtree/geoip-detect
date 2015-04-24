@@ -88,6 +88,8 @@ function geoip_detect2_get_current_source_description($source = null) {
  * 										from most preferred to least preferred. (Default: Site language, en)
  * @param boolean			$skipCache	TRUE: Do not use cache for this request. 
  * @return YellowTree\GeoipDetect\DataSources\City	GeoInformation.
+ *
+ * @since 2.4.0 New parameter $skipCache
  */
 function geoip_detect2_get_info_from_current_ip($locales = null, $skipCache = false)
 {

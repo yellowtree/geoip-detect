@@ -15,10 +15,12 @@ Provides geographic information detected by an IP adress. This can be used in th
 
 = Features: =
 
-* Provides 3 functions: 
+* Provides these 5 functions: 
   * `geoip_detect2_get_info_from_ip($ip, $locales = array('en'), $skipCache = false)`: Lookup Geo-Information of the specified IP 
-  * `geoip_detect2_get_info_from_current_ip($locales = array('en'))`: Lookup Geo-Information of the current website user
+  * `geoip_detect2_get_info_from_current_ip($locales = array('en'), $skipCache = false)`: Lookup Geo-Information of the current website user
+  * `geoip_detect2_get_current_source_description($source = null)`: Return a human-readable label of the currently chosen source.
   * `geoip_detect2_get_external_ip_adress()`: Fetch the internet adress of the webserver
+  * `geoip_detect2_get_client_ip()`: Get client IP (even if it is behind a reverse proxy)
 * You can use one of these data sources:
   * Free: [Maxmind GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/), automatically updated every month (licensed CC BY-SA. See FAQ.)
   * Commercial: [Maxmind GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database) or [Maxmind GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
@@ -59,6 +61,10 @@ https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ
 1. Backend page (under Tools > GeoIP Detection)
 
 == Upgrade Notice == 
+
+= 2.4.0 =
+
+Maxmind Precision API support is here ... Try it out, I would tag it "experimental" at the moment.
 
 = 2.3.1 =
 
@@ -104,8 +110,9 @@ This is a major refactor in order to support multiple sources properly. The Look
 
 * NEW: Add a Cache for Web-API-Requests. Consequently, the function geoip_detect2_get_info_from_ip() received a new parameter "$skipCache" to skip this cache if not needed. You can check if the result is coming from the cache by checking $result->extra->cached (it is 0 when not cached, UNIX timestamp of cache event otherwise).
 * This also applies to the shortcode API (`[geoip_detect2 property="extra.cached" skip_cache="true"]`)
-* Shortcodes now also support fallback languages. (`[geoip_detect2 property="country" lang="fr,de"]`)
+* NEW: Error messages during lookup are now in `$record->extra->error`.
 * NEW: Experimental support for the Maxmind Precision API.
+* NEW: Shortcodes now also support fallback languages. (`[geoip_detect2 property="country" lang="fr,de"]`)
 * FIX: Check for IPv6 support for PHP.
 
 = 2.3.1 =
