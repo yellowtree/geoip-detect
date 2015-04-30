@@ -58,7 +58,8 @@ https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ
 
 == Screenshots ==
 
-1. Backend page (under Tools > GeoIP Detection)
+1. Lookup page (under Tools > GeoIP Lookup)
+2. Options page (under Preferences > GeoIP Detection)
 
 == Upgrade Notice == 
 

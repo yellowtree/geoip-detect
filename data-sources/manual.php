@@ -20,9 +20,9 @@ class ManualDataSource extends AbstractDataSource {
 		if (!$file)
 			return '<b>No Maxmind database found.</b>';
 		
-		$file = geoip_detect_get_relative_path(ABSPATH, $file);
+		$relative_file = geoip_detect_get_relative_path(ABSPATH, $file);
 		
-		$html[] = sprintf(__('Database file: %s', 'geoip-detect'), $file);
+		$html[] = sprintf(__('Database file: %s', 'geoip-detect'), $relative_file);
 		
 		try { 
 			$reader = $this->getReader();

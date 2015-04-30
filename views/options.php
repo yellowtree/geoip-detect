@@ -4,7 +4,8 @@ $options = $currentSource->getParameterHTML();
 
 <div class="wrap">
 	<h2><?php _e('GeoIP Detection', 'geoip-detect');?></h2>
-<?php if (!empty($message)): ?>
+	<a href="tools.php?page=<?= GEOIP_PLUGIN_BASENAME ?>">Test IP Detection Lookup</a>
+	<?php if (!empty($message)): ?>
 		<p class="geoip_detect_error">
 		<?php echo $message; ?>
 		</p>
@@ -29,7 +30,6 @@ $options = $currentSource->getParameterHTML();
 	</p>
 	<?php endif; ?>
 	<br/>
-	<a href="tools.php?page=<?= GEOIP_PLUGIN_BASENAME ?>">Test IP Detection Lookup</a>
 
 	<br /><br />
 	<form method="post" action="#">

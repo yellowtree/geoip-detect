@@ -10,7 +10,7 @@ class AutoDataSource extends ManualDataSource
 {	
 	public function getId() { return 'auto'; }
 	public function getLabel() { return 'Automatic download & update of Maxmind GeoIP Lite City'; }
-	
+	public function getShortLabel() { return parent::getShortLabel() . ' (updated monthly)'; }
 	public function getDescriptionHTML() { return '(License: Creative Commons Attribution-ShareAlike 3.0 Unported. See <a href="https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#the-maxmind-lite-databases-are-licensed-creative-commons-sharealike-attribution-when-do-i-need-to-give-attribution" target="_blank">Licensing FAQ</a> for more details.)'; }
 
 	public function getStatusInformationHTML() {
