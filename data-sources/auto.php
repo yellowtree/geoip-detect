@@ -28,7 +28,7 @@ class AutoDataSource extends ManualDataSource
 		$html = <<<HTML
 <form method="post" action="#">
 		<input type="hidden" name="action" value="update" />
-		<input type="submit" class="button button-primary" value="$text_update" />
+		<input type="submit" class="button button-secondary" value="$text_update" />
 </form>
 HTML;
 		return $html;
@@ -123,7 +123,7 @@ HTML;
 		}
 	}
 	
-	function schedule_next_cron_run() {
+	public function schedule_next_cron_run() {
 		// The Lite databases are updated on the first tuesday of each month. Maybe not at midnight, so we schedule it for the night afterwards.
 		$next = strtotime('first tuesday of next month + 1 day');
 		wp_schedule_single_event($next, 'geoipdetectupdate');

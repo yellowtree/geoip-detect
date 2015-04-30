@@ -66,10 +66,11 @@ function geoip_detect_option_page() {
 	switch(@$_POST['action'])
 	{
 		case 'update':
-			update_option('geoip-detect-source', 'auto');
-			update_option('geoip-detect-ui-has-chosen-source', true);
+			$registry->setCurrentSource('auto');
 	
-			$ret = geoip_detect_update();
+			$s = new \YellowTree\GeoipDetect\DataSources\Auto\AutoDataSource();
+			$ret = $s->maxmindUpdate();
+
 			if ($ret === true)
 				$message .= __('Updated successfully.', 'geoip-detect');
 			else
@@ -78,7 +79,6 @@ function geoip_detect_option_page() {
 			break;
 
 		case 'choose':
-			update_option('geoip-detect-ui-has-chosen-source', true);
 			$registry->setCurrentSource($_POST['options']['source']);
 			$currentSource = $registry->getCurrentSource();
 			break;
