@@ -27,6 +27,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $skipCache = false
 	
 	if (!$data) {
 		$outError = '';
+
 		$reader = _geoip_detect2_get_reader(array('en') /* will be replaced anyway */, true, $outSourceId);
 		$record = _geoip_detect2_get_record_from_reader($reader, $ip, $outError);
 		$data   = _geoip_detect2_record_enrich_data($record, $ip, $outSourceId, $outError);
@@ -34,6 +35,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $skipCache = false
 		if (WP_DEBUG && !GEOIP_DETECT_DOING_UNIT_TESTS && $outError) {
 			trigger_error($outError, E_USER_NOTICE);
 		}
+
 		if (!$outError)
 			_geoip_detect2_add_data_to_cache($data, $ip);
 	}
@@ -43,7 +45,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $skipCache = false
 	
 	/**
 	 * Filter: geoip_detect2_record_information
-	 * Use geoip_detect2_record_data if you want to modify the data.
+	 * Use geoip_detect2_record_data instead if you want to modify the data.
 	 * 
 	 * @return \YellowTree\GeoipDetect\DataSources\City
 	 */
