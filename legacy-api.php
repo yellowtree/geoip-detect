@@ -65,28 +65,6 @@ function geoip_detect_get_info_from_ip($ip)
 }
 
 /**
- * GeoIPv2 doesn't always include a timezone when v1 did.
- * @todo is it possible to do this in v2 as well?
- * @param geoiprecord $record
- */
-function _try_to_fix_timezone($record) {
-	if (!empty($record->timezone))
-		return $record;
-	
-	if (!function_exists('_geoip_detect_get_time_zone')) {
-		require_once(__DIR__ . '/vendor/timezone.php');
-	}
-	
-	if (!empty($record->country_code))
-		$record->timezone = _geoip_detect_get_time_zone($record->country_code, $record->region);
-	else
-		$record->timezone = null;
-
-	return $record;
-}
-add_filter('geoip_detect_record_information', '_try_to_fix_timezone');
-
-/**
  * Get Geo-Information for the current IP
  * @param string 		$ip (IPv4)
  * @return geoiprecord	GeoInformation. (0 / NULL: no infos found.)

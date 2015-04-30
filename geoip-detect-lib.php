@@ -141,6 +141,26 @@ function _geoip_detect2_record_enrich_data($record, $ip, $sourceId, $error) {
 	return $data;
 }
 
+/**
+ * GeoIPv2 doesn't always include a timezone when v1 did.
+ * @param array $record
+ */
+function _geoip_detect2_try_to_fix_timezone($data) {
+	if (!empty($data['location']['timezone']))
+		return $data;
+
+	if (!function_exists('_geoip_detect_get_time_zone')) {
+		require_once(__DIR__ . '/vendor/timezone.php');
+	}
+
+	if (!empty($data['country']['iso_code']))
+		$data['location']['time_zone'] = _geoip_detect_get_time_zone($data['country']['iso_code'], @$data['mostSpecificSubdivision']['isoCode']);
+	else
+		$data['location']['time_zone'] = null;
+
+	return $data;
+}
+add_filter('geoip_detect2_record_data', '_geoip_detect2_try_to_fix_timezone');
 
 /**
  * IPv6-Adresses can be written in different formats. Make sure they are standardized.

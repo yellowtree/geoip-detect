@@ -106,7 +106,7 @@ Fixing automatic weekly updates.
 == Changelog ==
 
 = 2.4.0 =
-This is a major refactor in order to support multiple sources properly. The Lookup and the Options were seperated into 2 screens (accessible in the menu under Tools and Options, respectively.)
+This is a major refactor in order to support multiple sources properly. The Lookup and the Options were seperated into 2 screens (accessible in the menu under `Tools` and `Options`, respectively.)
 
 * NEW: Add a Cache for Web-API-Requests. Consequently, the function geoip_detect2_get_info_from_ip() received a new parameter "$skipCache" to skip this cache if not needed. You can check if the result is coming from the cache by checking $result->extra->cached (it is 0 when not cached, UNIX timestamp of cache event otherwise).
 * This also applies to the shortcode API (`[geoip_detect2 property="extra.cached" skip_cache="true"]`)
@@ -114,6 +114,7 @@ This is a major refactor in order to support multiple sources properly. The Look
 * NEW: Experimental support for the Maxmind Precision API.
 * NEW: Shortcodes now also support fallback languages. (`[geoip_detect2 property="country" lang="fr,de"]`)
 * FIX: Check for IPv6 support for PHP.
+* FIX: Country data now also get timezones.
 
 = 2.3.1 =
 * NEW: API function geoip_detect2_get_current_source_description() (as there are different sources to choose from now)
