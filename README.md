@@ -6,7 +6,7 @@ Tests: [![Build Status](https://travis-ci.org/yellowtree/wp-geoip-detect.png?bra
 
 * **License:** [GPL v3 or later] (http://www.gnu.org/licenses/gpl-3.0.html)
 
-Retrieving Geo-Information using the Maxmind GeoIP2 (Lite or Commercial) Database.
+Retrieving Geo-Information using one the Maxmind GeoIP2 databases.
 
 == Description ==
 
@@ -14,19 +14,21 @@ Provides geographic information detected by an IP adress. This can be used in th
 
 = Features: =
 
-* Provides 3 functions: 
-  * `geoip_detect2_get_info_from_ip($ip, $locales = array('en'))`: Lookup Geo-Information of the specified IP 
-  * `geoip_detect2_get_info_from_current_ip($locales = array('en'))`: Lookup Geo-Information of the current website user
+* Provides these 5 functions: 
+  * `geoip_detect2_get_info_from_ip($ip, $locales = array('en'), $skipCache = false)`: Lookup Geo-Information of the specified IP 
+  * `geoip_detect2_get_info_from_current_ip($locales = array('en'), $skipCache = false)`: Lookup Geo-Information of the current website user
+  * `geoip_detect2_get_current_source_description($source = null)`: Return a human-readable label of the currently chosen source.
   * `geoip_detect2_get_external_ip_adress()`: Fetch the internet adress of the webserver
+  * `geoip_detect2_get_client_ip()`: Get client IP (even if it is behind a reverse proxy)
 * You can use one of these data sources:
-  * Free: [GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/), automatically updated every month (licensed CC BY-SA. See FAQ.)
-  * Commercial: [GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database) or [GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
-  * Soon: API: [GeoIP2 Precision: City](https://www.maxmind.com/en/geoip2-precision-city-service)
+  * Free: [Maxmind GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/), automatically updated every month (licensed CC BY-SA. See FAQ.)
+  * Commercial: [Maxmind GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database) or [Maxmind GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
+  * Commercial Web-API: [Maxmind GeoIP2 Precision](https://www.maxmind.com/en/geoip2-precision-services) (City, Country or Insights)
   * Free (default source): [HostIP.info](http://www.hostip.info/) (English only)
 * For the property names, see the results of a specific IP in the wordpress backend (under *Tools > GeoIP Detection*).
 * You can include these properties into your posts and pages by using the shortcode `[geoip_detect2 property="country.name" default="(country could not be detected)" lang="en"]` (where 'country.name' can be one of the other property names as well, and 'default' and 'lang' are optional).
-* When enabled on the plugin page, it adds CSS classes to the body tag such as `geoip-country-DE` and `geoip-continent-EU`.
-* When enabled on the plugin page, the client IP respects a reverse proxy of the server.
+* When enabled on the options page, it adds CSS classes to the body tag such as `geoip-country-DE` and `geoip-continent-EU`.
+* When enabled on the options page, the client IP respects a reverse proxy of the server.
 
 See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation) for more info.
 
@@ -45,53 +47,22 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 == Installation ==
 
 * Install the plugin
-* Go to the plugin page (under Tools) and choose a data source.
-* Test it by clicking on "Lookup".
+* Go to the plugin's option page and choose a data source.
+* Test it by clicking on "Lookup" on the lookup page.
 
 == Frequently Asked Questions ==
 
-= How exact is this data? =
-
-Think of it as an "educated guess": IP adresses and their allocation change on a frequent basis.
-If you need more reliable data, consider purchasing the [commercial version of the data](https://www.maxmind.com/en/geoip2-city).
-See [accuracy stats per country](https://www.maxmind.com/en/geoip2-city-database-accuracy).
-
-= Technically speaking, how could I verify if my visitor comes from Germany? =
-
-Put this code somewhere in your template files:
-
-    $userInfo = geoip_detect2_get_info_from_current_ip();
-    if ($userInfo->country->isoCode == 'de')
-        echo 'Hallo! Schön dass Sie hier sind!';
-
-To see which property names are supported, refer to the [Plugin Backend](http://wordpress.org/plugins/geoip-detect/screenshots/).
-
-Or, add the plugin shortcode somewhere in the page or post content:
-
-    Wie ist das Wetter in [geoip_detect2 property="country.name" lang="de" default="ihrem Land"] ?
-
-For more information, check the [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation).  
-
-= The Maxmind Lite databases are licensed Creative Commons ShareAlike-Attribution. When do I need to give attribution? =
-
-Maxmind is writing:
-
-    "In most cases, a Wordpress site or other site that auto-detects
-    a default location/currency/language is not providing the GeoLite data
-    to others so they do not need to attribute. In contrast, a site that
-    allows users to look-up their own or other IP addresses would not 
-    to attribute since the data is being provided to others. ...
-
-    Please take a look at the following FAQ:
-    https://wiki.creativecommons.org/FAQ#Do_I_always_have_to_attribute_the_creator_of_the_licensed_material.3F "
-
-= Does this plugin work in a MultiSite-Network environment? =
-
-Maybe. I haven't tested it.
+The FAQ has moved to Github:
+https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ
 
 == Screenshots ==
 
-1. Backend page (under Tools > GeoIP Detection)
+1. Lookup page (under Tools > GeoIP Lookup)
+2. Options page (under Preferences > GeoIP Detection)
+
+= 2.4.0 =
+
+Maxmind Precision API support is here ... Try it out, I would tag it "experimental" at the moment.
 
 = 2.3.1 =
 
@@ -132,6 +103,17 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+= 2.4.0 =
+This is a major refactor in order to support multiple sources properly. The Lookup and the Options were seperated into 2 screens (accessible in the menu under `Tools` and `Options`, respectively.)
+
+* NEW: Add a Cache for Web-API-Requests. Consequently, the function geoip_detect2_get_info_from_ip() received a new parameter "$skipCache" to skip this cache if not needed. You can check if the result is coming from the cache by checking $result->extra->cached (it is 0 when not cached, UNIX timestamp of cache event otherwise).
+* This also applies to the shortcode API (`[geoip_detect2 property="extra.cached" skip_cache="true"]`)
+* NEW: Error messages during lookup are now in `$record->extra->error`.
+* NEW: Experimental support for the Maxmind Precision API.
+* NEW: Shortcodes now also support fallback languages. (`[geoip_detect2 property="country" lang="fr,de"]`)
+* FIX: Check for IPv6 support for PHP.
+* FIX: Country data now also get timezones.
+
 = 2.3.1 =
 * NEW: API function geoip_detect2_get_current_source_description() (as there are different sources to choose from now)
 * FIX: Show error message if PHP < 5.3 (instead of fatal error)
@@ -141,7 +123,7 @@ Fixing automatic weekly updates.
 
 = 2.2.0 =
 * FIX: Update Maxmind Reader to 1.0.3 (fixing issues when the PHP extension mbstring was not installed)
-* NEW: Commercial databass are now supported. You can specify a file path in the options.
+* NEW: Commercial databases are now supported. You can specify a file path in the options.
 * NEW: A country database (lite or commercial) database now works as well.
 
 = 2.1.2 =
