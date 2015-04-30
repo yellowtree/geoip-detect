@@ -34,10 +34,11 @@ add_shortcode('geoip_detect', 'geoip_detect_shortcode');
  * `[geoip_detect2 property="country.isoCode"]` -> de
  * 
  * `[geoip_detect2 property="country" lang="de"]` -> Deutschland
+ * `[geoip_detect2 property="country" lang="fr,de"]` -> Allemagne
  * `[geoip_detect2 property="country.confidence" default="default value"]` -> default value
  * 
  * @param string $property		Property to read. Instead of '->', use '.'
- * @param string $lang			Language (optional. If not set, current site language is used.)
+ * @param string $lang			Language(s) (optional. If not set, current site language is used.)
  * @param string $default 		Default Value that will be shown if value not set (optional)
  * @param string $skipCache		if 'true': Do not cache value
  */

@@ -71,9 +71,20 @@ include_once('data-sources/manual.php');
 include_once('data-sources/auto.php');
 include_once('data-sources/precision.php');
 
-// You can define these constants if you like.
+// You can define these constants in your theme/plugin if you like.
+/**
+ * Set to TRUE if the plugin should never auto-update the Maxmind City Lite database.
+ */
 //define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', true);
+/**
+ * How long the external IP of the server is cached.
+ * This is probably only used in dev cases, so per default relatively low.
+ */
 //define('GEOIP_DETECT_IP_CACHE_TIME', 2 * HOUR_IN_SECONDS);
+/**
+ * How long the data of the IP is cached. This applies to the Web-APIs (Maxmind Precision and HostIP.info)
+ * Only successful lookups will be cached.
+ */
 //define('GEOIP_DETECT_READER_CACHE_TIME', 7 * DAY_IN_SECONDS);
 
 require_once(GEOIP_PLUGIN_DIR . '/admin-ui.php');

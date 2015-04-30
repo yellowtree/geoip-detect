@@ -12,6 +12,7 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
  * @see https://github.com/maxmind/GeoIP2-php				API Usage
  * @see http://dev.maxmind.com/geoip/geoip2/web-services/	API Documentation
  *
+ * @since 2.0.0
  * @since 2.4.0 New parameter $skipCache
  */
 function geoip_detect2_get_info_from_ip($ip, $locales = null, $skipCache = false)
@@ -52,6 +53,23 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $skipCache = false
 }
 
 /**
+ * Get Geo-Information for the current IP
+ *
+ * @param array(string)		$locales	List of locale codes to use in name property
+ * 										from most preferred to least preferred. (Default: Site language, en)
+ * @param boolean			$skipCache	TRUE: Do not use cache for this request.
+ * @return YellowTree\GeoipDetect\DataSources\City	GeoInformation.
+ *
+ * @since 2.0.0
+ * @since 2.4.0 New parameter $skipCache
+ */
+function geoip_detect2_get_info_from_current_ip($locales = null, $skipCache = false)
+{
+	return geoip_detect2_get_info_from_ip(geoip_detect2_get_client_ip(), $locales, $skipCache);
+}
+
+
+/**
  * Get the Reader class of the currently chosen source.
  * (Use this if you want to use other methods than "city" or otherwise customize behavior.)
  * 
@@ -59,6 +77,8 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $skipCache = false
  * 									from most preferred to least preferred. (Default: Site language, en)
  * 
  * @return \YellowTree\GeoipDetect\DataSources\ReaderInterface 	The reader, ready to do its work. Don't forget to `close()` it afterwards. NULL if file not found (or other problems).
+ * 
+ * @since 2.0.0
  */
 function geoip_detect2_get_reader($locales = null) {	
 	return _geoip_detect2_get_reader($locales, false);
@@ -66,8 +86,10 @@ function geoip_detect2_get_reader($locales = null) {
 
 /**
  * Return a human-readable label of the currently chosen source.
- * @param string|object Id of the source or the returned record
+ * @param string|\YellowTree\GeoipDetect\DataSources\City Id of the source or the returned record
  * @return string The label.
+ * 
+ * @since 2.3.1
  * @since 2.4.0 new parameter $source
  */
 function geoip_detect2_get_current_source_description($source = null) {
@@ -82,25 +104,12 @@ function geoip_detect2_get_current_source_description($source = null) {
 }
 
 /**
- * Get Geo-Information for the current IP
- * 
- * @param array(string)		$locales	List of locale codes to use in name property
- * 										from most preferred to least preferred. (Default: Site language, en)
- * @param boolean			$skipCache	TRUE: Do not use cache for this request. 
- * @return YellowTree\GeoipDetect\DataSources\City	GeoInformation.
- *
- * @since 2.4.0 New parameter $skipCache
- */
-function geoip_detect2_get_info_from_current_ip($locales = null, $skipCache = false)
-{
-	return geoip_detect2_get_info_from_ip(geoip_detect2_get_client_ip(), $locales, $skipCache);
-}
-
-/**
  * Get client IP (even if it is behind a reverse proxy)
  * For security reasons, the reverse proxy usage has to be enabled on the settings page.
  * 
  * @return string Client Ip (IPv4 or IPv6)
+ * 
+ * @since 2.0.0
  */
 function geoip_detect2_get_client_ip() {
 	$ip = '::1';
@@ -146,6 +155,8 @@ function geoip_detect2_get_client_ip() {
  * In this case we need to ask an internet server which IP adress our internet connection has.
  * 
  * @return string The detected IPv4 Adress. If none is found, '0.0.0.0' is returned instead.
+ * 
+ * @since 2.0.0
  */
 function geoip_detect2_get_external_ip_adress()
 {
