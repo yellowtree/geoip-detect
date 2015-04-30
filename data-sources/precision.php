@@ -70,6 +70,11 @@ class PrecisionDataSource extends AbstractDataSource {
 		$html = '';
 		$html .= 'API Type: ' . ucfirst(get_option('geoip-detect-precision_api_type', 'city')) . '<br />';
 		
+		$remaining = get_option('geoip-detect-precision-remaining_credits');
+		if ($remaining !== false) {
+			$html .= 'Remaining Credits: ca. ' . $remaining . '<br />';
+		}
+		
 		if (!$this->isWorking())
 			$html .= '<div class="geoip_detect_error">' . __('Maxmind Precision only works with a given user id and secret.', 'geoip-detect') . '</div>';
 

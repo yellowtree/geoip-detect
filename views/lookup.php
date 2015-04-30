@@ -9,11 +9,12 @@ $current_source = DataSourceRegistry::getInstance()->getCurrentSource();
 	<a href="options-general.php?page=<?= GEOIP_PLUGIN_BASENAME ?>">Options</a>
 	
 	<p>
-		<?php printf(__('Selected data source: %s', 'geoip-detect'), geoip_detect2_get_current_source_description() ); ?>
+		<?php printf(__('<b>Selected data source:</b> %s', 'geoip-detect'), geoip_detect2_get_current_source_description() ); ?>
 	</p>
 		
 	<p>
 		<?php echo $current_source->getStatusInformationHTML(); ?>
+		<br />
 	</p>	
 		
 	<form method="post" action="#">
