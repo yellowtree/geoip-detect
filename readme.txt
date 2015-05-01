@@ -65,7 +65,7 @@ https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ
 
 = 2.4.1 =
 
-Maxmind Precision API support is here ... Try it out, I would tag it "experimental" at the moment.
+Reverting Requirements check to behavior before 2.4.0
 
 = 2.4.0 =
 

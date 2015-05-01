@@ -63,7 +63,7 @@ https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ
 
 = 2.4.1 =
 
-Maxmind Precision API support is here ... Try it out, I would tag it "experimental" at the moment.
+Reverting Requirements check to behavior before 2.4.0
 
 = 2.4.0 =
 
@@ -109,7 +109,7 @@ Fixing automatic weekly updates.
 == Changelog ==
 
 = 2.4.1 =
-* FIX: IPv6 check
+* FIX: Revert IPv6 check. (Sorry for this. I thought PHP compiled without IPv6 would be esoteric.)
 
 = 2.4.0 =
 This is a major refactor in order to support multiple sources properly. The Lookup and the Options were seperated into 2 screens (accessible in the menu under `Tools` and `Options`, respectively.)
