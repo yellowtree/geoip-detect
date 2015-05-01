@@ -39,6 +39,7 @@ fi
 # Add Travis CI
 
 echo "Tests: [![Build Status](https://travis-ci.org/yellowtree/wp-geoip-detect.png?branch=master)](https://travis-ci.org/yellowtree/wp-geoip-detect)" >> /tmp/file
+echo "Composer: [![Dependency Status](https://www.versioneye.com/user/projects/55433d0dd8fe1aea70000041/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55433d0dd8fe1aea70000041)" >> /tmp/file
 echo >> /tmp/file
 
 # Add Title & Contribute To Temp File

@@ -18,9 +18,10 @@ function geoip_detect_version_check() {
 		$yours = $wp_version;
 		
 		$message = 'Plugin GeoIP Detection is disabled. Requires ' . $flag . ' ' .$min ." (you're using " . $flag . " " . $yours . ") ";
+/*
 	} elseif (!defined('AF_INET6')) {
 		$message = 'PHP was compiled with IPv6 support disabled. This is required for this plugin.';
-	} else {
+*/	} else {
 		return true;
 	}
 
