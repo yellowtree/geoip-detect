@@ -44,9 +44,7 @@ function geoip_detect_version_minimum_requirements_notice() {
 	<p>
 		The plugin <strong>GeoIP Detection</strong> plugin requires PHP <?php echo GEOIP_REQUIRED_PHP_VERSION; ?> (you're using PHP <?php echo PHP_VERSION; ?>) and WordPress version <?php echo GEOIP_REQUIRED_WP_VERSION; ?> (you're using: <?php echo $wp_version; ?>) and therefore does exactly nothing.</p>
 	<p>
-		You can update, or install an <a
-			href="https://github.com/yellowtree/wp-geoip-detect/releases">1.x
-			legacy version</a> of this plugin instead.
+		You can update, or install an <a href="https://github.com/yellowtree/wp-geoip-detect/releases">1.x legacy version</a> of this plugin instead.
 	</p>
 </div>
 <?php

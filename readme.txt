@@ -22,7 +22,7 @@ Provides geographic information detected by an IP adress. This can be used in th
   * `geoip_detect2_get_external_ip_adress()`: Fetch the internet adress of the webserver
   * `geoip_detect2_get_client_ip()`: Get client IP (even if it is behind a reverse proxy)
 * You can use one of these data sources:
-  * Free: [Maxmind GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/), automatically updated every month (licensed CC BY-SA. See FAQ.)
+  * Free: [Maxmind GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/), automatically updated every month (licensed CC BY-SA. See [FAQ](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ).)
   * Commercial: [Maxmind GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database) or [Maxmind GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
   * Commercial Web-API: [Maxmind GeoIP2 Precision](https://www.maxmind.com/en/geoip2-precision-services) (City, Country or Insights)
   * Free (default source): [HostIP.info](http://www.hostip.info/) (English only)
@@ -62,6 +62,10 @@ https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ
 2. Options page (under Preferences > GeoIP Detection)
 
 == Upgrade Notice == 
+
+= 2.4.1 =
+
+Maxmind Precision API support is here ... Try it out, I would tag it "experimental" at the moment.
 
 = 2.4.0 =
 
@@ -105,6 +109,9 @@ Fixing automatic weekly updates.
 
 
 == Changelog ==
+
+= 2.4.1 =
+* FIX: Revert IPv6 check. (Sorry for this. I thought PHP compiled without IPv6 would be esoteric.)
 
 = 2.4.0 =
 This is a major refactor in order to support multiple sources properly. The Lookup and the Options were seperated into 2 screens (accessible in the menu under `Tools` and `Options`, respectively.)

@@ -275,7 +275,7 @@ function geoip_detect_get_relative_path($from, $to)
 				$relPath = array_pad($relPath, $padLength, '..');
 				break;
 			} else {
-				$relPath[0] = './' . $relPath[0];
+				$relPath[0] = $relPath[0];
 			}
 		}
 	}
