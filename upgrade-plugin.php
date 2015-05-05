@@ -1,7 +1,7 @@
 <?php
 /**
  * This function is executed each time a new version is installed.
- * Note that downgrading versions is not supported.
+ * Note that downgrading versions is not supported. (Shouldn't lead to problems, though, normally.)
  * 
  * @param string $old_version
  */
@@ -19,7 +19,7 @@ function geoip_detect_do_upgrade($old_version) {
  *
  * It works by comparing the current version with the version previously stored in the database.
  *
- * @since 3.1
+ * @since 2.3.0
  *
  * @param string $file A reference to the main plugin file
  * @param callback $callback The function to run when the hook is called.
@@ -30,17 +30,7 @@ function geoip_detect_maybe_upgrade_version( ) {
 		return;
 
 	$version = GEOIP_DETECT_VERSION;
-	
-	/* Plugins_loaded is too early for this
-	if ( is_plugin_active_for_network( GEOIP_PLUGIN_BASENAME ) ) {
-		// Does this work?
-		$current_vers = get_site_option( 'geoip-detect-plugin_version' );
-		$network = true;
-	} else {
-	*/
-		$current_vers = get_option( 'geoip-detect-plugin_version' );
-		$network = false;
-	//}
+	$current_vers = get_option( 'geoip-detect-plugin_version' );
 	
 	if ( version_compare( $version, $current_vers, '>' ) ) {
 		
@@ -49,10 +39,6 @@ function geoip_detect_maybe_upgrade_version( ) {
 		$current_vers = $version;
 	}
 
-	if ( $network ) {
-		update_site_option( 'geoip-detect-plugin_version', $current_vers );
-	} else {
-		update_option( 'geoip-detect-plugin_version', $current_vers );
-	}
+	update_option( 'geoip-detect-plugin_version', $current_vers );
 }
 add_action('plugins_loaded', 'geoip_detect_maybe_upgrade_version');

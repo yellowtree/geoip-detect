@@ -110,6 +110,9 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+= 2.4.2 = 
+* FIX: Trim whitespace of IP adress.
+
 = 2.4.1 =
 * FIX: Revert IPv6 check. (Sorry for this. I thought PHP compiled without IPv6 would be esoteric.)
 

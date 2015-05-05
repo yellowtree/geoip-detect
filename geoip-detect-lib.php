@@ -174,6 +174,10 @@ function geoip_detect_normalize_ip($ip) {
 	return $ip;
 }
 
+function geoip_detect_is_ip_equal($ip1, $ip2) {
+	return inet_pton($ip1) == inet_pton($ip2);
+}
+
 function geoip_detect_is_ip($ip) {
 	return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6) !== false;
 }
