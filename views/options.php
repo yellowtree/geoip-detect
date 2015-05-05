@@ -67,6 +67,14 @@ $options = $currentSource->getParameterHTML();
 			<input type="submit" class="button button-primary" value="<?php _e('Save', 'geoip-detect'); ?>" />
 		</p>
 	</form>
+	<?php if (!$ipv6_supported || true) : ?>
+	<div class="geoip_detect_error">
+		<h4>IPv6 not supported</h4>
+		<p>
+			Your version of PHP is compiled without IPv6-support, so it is not possible to lookup adresses like "2001:4860:4801:5::91". For more information see <a href="https://php.net/manual/en/function.inet-pton.php">PHP documentation & user comments</a>.
+		</p>
+	</div>
+	<?php endif; ?>
 	<p>
 		<br />
 		<small><em>This product includes GeoLite2 data created by MaxMind, available from <a href="http://www.maxmind.com/">http://www.maxmind.com</a>.</em></small>

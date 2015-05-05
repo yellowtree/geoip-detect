@@ -113,5 +113,7 @@ function geoip_detect_option_page() {
 		$options[$opt_name] = get_option('geoip-detect-'. $opt_name);
 	}
 	
+	$ipv6_supported = defined('AF_INET6');
+	
 	include_once(GEOIP_PLUGIN_DIR . '/views/options.php');
 }
