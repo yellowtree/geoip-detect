@@ -92,6 +92,8 @@ function _geoip_detect2_add_data_to_cache($data, $ip) {
 function _geoip_detect2_get_record_from_reader($reader, $ip, &$error) {
 	$record = null;
 	
+	$ip = trim($ip);
+	
 	if ($reader) {
 		// When plugin installed on development boxes:
 		// If the client IP is not a public IP, use the public IP of the server instead.
