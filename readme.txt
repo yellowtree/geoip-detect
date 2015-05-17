@@ -113,8 +113,9 @@ Fixing automatic weekly updates.
 = 2.4.2 = 
 * FIX: Trim whitespace of IP adress.
 * FIX: some PHP notices.
-* NEW: Show IPv6-not-supported notice. 
-
+* FIX: The Installation message "No database installed" failed to install the Maxmind database since 2.4.0 
+* NEW: Show IPv6-not-supported notice.
+ 
 = 2.4.1 =
 * FIX: Revert IPv6 check. (Sorry for this. I thought PHP compiled without IPv6 would be esoteric.)
 

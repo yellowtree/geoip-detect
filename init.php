@@ -46,8 +46,7 @@ function geoip_detect_admin_notice_database_missing() {
     ?>
 <div class="error">
 	<p style="float: right">
-		<a
-			href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_dismiss_notice=hostinfo_used"><?php _e('Dismiss notice', 'geoip-detect'); ?></a>
+		<a href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_dismiss_notice=hostinfo_used"><?php _e('Dismiss notice', 'geoip-detect'); ?></a>
 	
 	
 	<h3><?php _e( 'GeoIP Detection: No database installed', 'geoip-detect' ); ?></h3>
@@ -56,7 +55,7 @@ function geoip_detect_admin_notice_database_missing() {
         
 	
 	
-	<form action="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME; ?>"
+	<form action="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME; ?>"
 		method="post">
 		<p>
 			<input type="hidden" name="source" value="auto" /> <input
