@@ -45,7 +45,7 @@ abstract class AbstractDataSource {
  * 
  * @property \YellowTree\GeoipDetect\DataSources\ExtraInformation $extra (Wordpress Plugin) Extra Information added by the GeoIP Detect plugin
  */
-class City extends \GeoIp2\Model\City {
+class City extends \GeoIp2\Model\Insights {
 	/**
 	 * @ignore
 	 */
