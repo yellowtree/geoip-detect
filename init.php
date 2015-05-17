@@ -6,6 +6,10 @@ function geoip_detect_defines() {
 		define('GEOIP_DETECT_READER_CACHE_TIME', 7 * DAY_IN_SECONDS);
 	if (!defined('GEOIP_DETECT_DOING_UNIT_TESTS'))
 		define('GEOIP_DETECT_DOING_UNIT_TESTS', false);
+	
+	
+	if (!defined('GEOIP_DETECT_IPV6_SUPPORTED'))
+		define('GEOIP_DETECT_IPV6_SUPPORTED', defined('AF_INET6'));
 		
 }
 add_action('plugins_loaded', 'geoip_detect_defines');

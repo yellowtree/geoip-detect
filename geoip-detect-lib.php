@@ -48,6 +48,8 @@ function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &
 
 function _ip_to_s($ip) {
 	$binary = @inet_pton($ip);
+	if (empty($binary))
+		return '';
 	return base64_encode($binary);
 }
 
@@ -170,16 +172,28 @@ add_filter('geoip_detect2_record_data', '_geoip_detect2_try_to_fix_timezone');
  */
 function geoip_detect_normalize_ip($ip) {
 	$ip = trim($ip);
-	$ip = inet_ntop(inet_pton($ip));
+	$binary = @inet_pton($ip);
+	if (empty($binary))
+		return $ip; // Probably an IPv6 adress & IPv6 is not supported. Or not a valid IP.
+	
+	$ip = inet_ntop($binary);
 	return $ip;
 }
 
 function geoip_detect_is_ip_equal($ip1, $ip2) {
-	return inet_pton($ip1) == inet_pton($ip2);
+	$one = @inet_pton($ip1);
+	$two = @inet_pton($ip2);
+	
+	return !empty($one) && $one == $two;
 }
 
 function geoip_detect_is_ip($ip) {
-	return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6) !== false;
+	$flags = FILTER_FLAG_IPV4;
+	
+	if (GEOIP_DETECT_IPV6_SUPPORTED)
+		$flags = $flags | FILTER_FLAG_IPV6;
+	
+	return filter_var($ip, FILTER_VALIDATE_IP, $flags) !== false;
 }
 
 function geoip_detect_is_ip_in_range($ip, $range_start, $range_end) {
@@ -202,9 +216,13 @@ function geoip_detect_is_public_ip($ip) {
 	if (geoip_detect_is_ip_in_range($ip, '127.0.0.0', '127.255.255.255'))
 		return false;
 
-	$flags = FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6  // IP can be v4 or v6
+	$flags = FILTER_FLAG_IPV4  // IP can be v4 or v6
 		| FILTER_FLAG_NO_PRIV_RANGE // It may not be in the RFC private range
 		|  FILTER_FLAG_NO_RES_RANGE; // It may not be in the RFC reserved range
+	
+	if (GEOIP_DETECT_IPV6_SUPPORTED)
+		$flags = $flags | FILTER_FLAG_IPV6;
+	
 	$is_public = filter_var($ip, FILTER_VALIDATE_IP, $flags) !== false;
 	
 	return $is_public;

@@ -67,7 +67,7 @@ $options = $currentSource->getParameterHTML();
 			<input type="submit" class="button button-primary" value="<?php _e('Save', 'geoip-detect'); ?>" />
 		</p>
 	</form>
-	<?php if (!$ipv6_supported || true) : ?>
+	<?php if (!$ipv6_supported) : ?>
 	<div class="geoip_detect_error">
 		<h4>IPv6 not supported</h4>
 		<p>
