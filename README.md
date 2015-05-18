@@ -61,6 +61,10 @@ https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ
 1. Lookup page (under Tools > GeoIP Lookup)
 2. Options page (under Preferences > GeoIP Detection)
 
+= 2.4.2 =
+
+You don't need to upgrade to this version, this release is mainly to fix installation behavior.
+
 = 2.4.1 =
 
 Reverting Requirements check to behavior before 2.4.0
@@ -108,6 +112,13 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+= 2.4.2 = 
+* FIX: Trim whitespace of IP adress.
+* FIX: some PHP notices.
+* FIX: The Installation message "No database installed" failed to install the Maxmind database since 2.4.0 
+* NEW: Show IPv6-not-supported notice.
+* FIX: Add empty fallback functions in case the plugin requirements are not met. (To avoid fatal errors.)
+ 
 = 2.4.1 =
 * FIX: Revert IPv6 check. (Sorry for this. I thought PHP compiled without IPv6 would be esoteric.)
 
