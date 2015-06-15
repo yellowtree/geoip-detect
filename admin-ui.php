@@ -108,9 +108,9 @@ function geoip_detect_option_page() {
 			break;
 	}
 
-	$options = array();
+	$wp_options = array();
 	foreach ($option_names as $opt_name) {
-		$options[$opt_name] = get_option('geoip-detect-'. $opt_name);
+		$wp_options[$opt_name] = get_option('geoip-detect-'. $opt_name);
 	}
 	
 	$ipv6_supported = GEOIP_DETECT_IPV6_SUPPORTED;
