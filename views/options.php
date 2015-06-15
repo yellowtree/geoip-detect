@@ -62,6 +62,14 @@ $options = $currentSource->getParameterHTML();
 			</em>
 			</span>
 		</p>
+		<p>
+			External IP of this server: <input type="text" name="options[external_ip]" value="<?php echo esc_attr($wp_options['external_ip']); ?>" placeholder="auto" />
+			<span class="detail-box">
+			Current value: <?php echo geoip_detect2_get_external_ip_adress(); ?><br />
+			<b>auto</b> or empty: Try to use ip service to detect it. If this is not possible, 0.0.0.0 will be returned.
+			</span>
+		</p>
+		
 
 		<p>
 			<input type="submit" class="button button-primary" value="<?php _e('Save', 'geoip-detect'); ?>" />

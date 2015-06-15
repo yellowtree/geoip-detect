@@ -61,7 +61,8 @@ function geoip_detect_option_page() {
 	$message = '';
 	
 	$numeric_options = array('set_css_country', 'has_reverse_proxy');
-	$option_names = $numeric_options;
+	$text_options = array('external_ip');
+	$option_names = array_merge($numeric_options, $text_options);
 	
 	switch(@$_POST['action'])
 	{

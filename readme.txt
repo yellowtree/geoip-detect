@@ -114,6 +114,9 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+= 2.4.3 =
+* FIX: Options Page: The checkboxes didn't show (even though the option was saved) since 2.4.0
+
 = 2.4.2 = 
 * FIX: Trim whitespace of IP adress.
 * FIX: some PHP notices.
