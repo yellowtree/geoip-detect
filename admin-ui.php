@@ -99,6 +99,19 @@ function geoip_detect_option_page() {
 			break;
 			
 		case 'options':	
+			// Empty IP Cache
+			delete_transient('geoip_detect_external_ip');
+			
+			if (!empty($_POST['options']['external_ip'])) {
+				if (!geoip_detect_is_ip($_POST['options']['external_ip'])) {
+					$message .= 'The external IP "' . esc_html($_POST['options']['external_ip']) . '" is not a valid IP.';
+					unset($_POST['options']['external_ip']);
+				} else if (!geoip_detect_is_public_ip($_POST['options']['external_ip'])) {
+					$message .= 'Warning: The external IP "' . esc_html($_POST['options']['external_ip']) . '" is not a public internet IP, so it will probably not work.';
+				}
+			}
+			
+			
 			foreach ($option_names as $opt_name) {
 				if (in_array($opt_name, $numeric_options))
 					$opt_value = isset($_POST['options'][$opt_name]) ? (int) $_POST['options'][$opt_name] : 0;

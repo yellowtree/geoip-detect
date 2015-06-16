@@ -4,7 +4,7 @@ $options = $currentSource->getParameterHTML();
 
 <div class="wrap">
 	<h2><?php _e('GeoIP Detection', 'geoip-detect');?></h2>
-	<a href="tools.php?page=<?= GEOIP_PLUGIN_BASENAME ?>">Test IP Detection Lookup</a>
+	<p><a href="tools.php?page=<?= GEOIP_PLUGIN_BASENAME ?>">Test IP Detection Lookup</a></p>
 	<?php if (!empty($message)): ?>
 		<p class="geoip_detect_error">
 		<?php echo $message; ?>
@@ -66,7 +66,9 @@ $options = $currentSource->getParameterHTML();
 			External IP of this server: <input type="text" name="options[external_ip]" value="<?php echo esc_attr($wp_options['external_ip']); ?>" placeholder="auto" />
 			<span class="detail-box">
 			Current value: <?php echo geoip_detect2_get_external_ip_adress(); ?><br />
-			<b>auto</b> or empty: Try to use ip service to detect it. If this is not possible, 0.0.0.0 will be returned.
+			If empty: Try to use an ip service to detect it (Internet connection is necessary). If this is not possible, 0.0.0.0 will be returned.<br />
+			(This external adress will be used when the request IP adress is not a public IP, e.g. 127.0.0.1)
+			
 			</span>
 		</p>
 		
@@ -90,6 +92,7 @@ $options = $currentSource->getParameterHTML();
 </div>
 <style>
 .geoip_detect_error {
+	clear: both;
     background-color: rgb(255, 255, 255);
     border-left: rgb(255, 0, 0) solid 4px;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);

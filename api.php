@@ -156,13 +156,17 @@ function geoip_detect2_get_client_ip() {
  * Sometimes we can only see an local IP adress (local development environment.)
  * In this case we need to ask an internet server which IP adress our internet connection has.
  * 
+ * @param boolean $unfiltered If true, do not check the options for an external adress. (Default: false)
  * @return string The detected IPv4 Adress. If none is found, '0.0.0.0' is returned instead.
  * 
  * @since 2.0.0
+ * @since 2.4.3 Reading option 'external_ip' first. New param $unfiltered.
  */
-function geoip_detect2_get_external_ip_adress()
+function geoip_detect2_get_external_ip_adress($unfiltered = false)
 {
-	$ip_cache = get_transient('geoip_detect_external_ip');
+	$ip_cache = get_option('geoip-detect-external_ip');
+	if (!$ip_cache)
+		$ip_cache = get_transient('geoip_detect_external_ip');
 
 	if ($ip_cache)
 		return apply_filters('geoip_detect_get_external_ip_adress', $ip_cache);

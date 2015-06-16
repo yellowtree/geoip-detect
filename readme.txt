@@ -56,6 +56,9 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 The FAQ has moved to Github:
 https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ
 
+You'll also find API usage examples there:
+https://github.com/yellowtree/wp-geoip-detect/wiki/API-Usage-Examples
+
 == Screenshots ==
 
 1. Lookup page (under Tools > GeoIP Lookup)
@@ -116,6 +119,8 @@ Fixing automatic weekly updates.
 
 = 2.4.3 =
 * FIX: Options Page: The checkboxes didn't show (even though the option was saved) since 2.4.0
+* NEW: A fixed external IP can now be specified on the options page. (Useful in development scenarios without internet, or mixed internet/intranet cases.)
+* NEW: Hidden feature/side-effect: Clicking on save in the General Options section also empties the external IP cache. 
 
 = 2.4.2 = 
 * FIX: Trim whitespace of IP adress.
