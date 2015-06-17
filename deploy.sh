@@ -46,7 +46,7 @@ NEWVERSION3=`grep "^define.*GEOIP_DETECT_VERSION" $GITPATH/$MAINFILE | awk -F"'"
 echo "$MAINFILE define version: $NEWVERSION3"
 
 # if [ "$NEWVERSION1" != "$NEWVERSION2" ] || [ "$NEWVERSION1" != "$NEWVERSION3" ]; then echo "Versions don't match. Exiting...."; exit 1; fi
-if [ "$NEWVERSION2" != "$NEWVERSION3" ]; then echo "Versions don't match. (php: '$NEWVERSION2', define: #'$NEWVERSION3') Exiting...."; exit 1; fi
+if [ "$NEWVERSION2" != "$NEWVERSION3" ]; then echo "Versions don't match. (php: '$NEWVERSION2', define: '$NEWVERSION3') Exiting...."; exit 1; fi
 
 echo "Versions match in PHP file. Let's proceed..."
 

@@ -11,17 +11,18 @@ Retrieving Geo-Information using one the Maxmind GeoIP2 databases.
 
 == Description ==
 
-Provides geographic information detected by an IP adress. This can be used in themes or other plugins, as a shortcode, or via CSS body classes.
+Provides geographic information detected by an IP adress. This can be used in themes or other plugins,
+as a shortcode, or via CSS body classes. The city & country names are translated in different languages ([supported languages](https://dev.maxmind.com/geoip/geoip2/web-services/#Languages-8)).
 
 = Features: =
 
-* Provides these 5 functions: 
-  * `geoip_detect2_get_info_from_ip($ip, $locales = array('en'), $skipCache = false)`: Lookup Geo-Information of the specified IP 
-  * `geoip_detect2_get_info_from_current_ip($locales = array('en'), $skipCache = false)`: Lookup Geo-Information of the current website user
-  * `geoip_detect2_get_current_source_description($source = null)`: Return a human-readable label of the currently chosen source.
+* Provides these 5 functions (see [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation)): 
+  * `geoip_detect2_get_info_from_ip($ip, $locales = array('en'), ...)`: Lookup Geo-Information of the specified IP 
+  * `geoip_detect2_get_info_from_current_ip($locales = array('en'), ...)`: Lookup Geo-Information of the current website user
+  * `geoip_detect2_get_current_source_description(...)`: Return a human-readable label of the currently chosen source.
   * `geoip_detect2_get_external_ip_adress()`: Fetch the internet adress of the webserver
   * `geoip_detect2_get_client_ip()`: Get client IP (even if it is behind a reverse proxy)
-* You can use one of these data sources:
+* You can use one of these data sources (see [comparison](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#which-data-source-should-i-choose)):
   * Free: [Maxmind GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/), automatically updated every month (licensed CC BY-SA. See [FAQ](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ).)
   * Commercial: [Maxmind GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database) or [Maxmind GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
   * Commercial Web-API: [Maxmind GeoIP2 Precision](https://www.maxmind.com/en/geoip2-precision-services) (City, Country or Insights)
@@ -55,6 +56,9 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 
 The FAQ has moved to Github:
 https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ
+
+You'll also find API usage examples there:
+https://github.com/yellowtree/wp-geoip-detect/wiki/API-Usage-Examples
 
 == Screenshots ==
 
@@ -111,6 +115,11 @@ Fixing automatic weekly updates.
 
 
 == Changelog ==
+
+= 2.4.3 =
+* FIX: Options Page: The checkboxes didn't show (even though the option was saved) since 2.4.0
+* NEW: A fixed external IP can now be specified on the options page. (Useful in development scenarios without internet, or mixed internet/intranet cases.)
+* NEW: Hidden feature/side-effect: Clicking on save in the General Options section also empties the external IP cache. 
 
 = 2.4.2 = 
 * FIX: Trim whitespace of IP adress.
