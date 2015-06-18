@@ -3,6 +3,17 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 $date_format = get_option('date_format') . ' ' . get_option('time_format');
 
 $current_source = DataSourceRegistry::getInstance()->getCurrentSource();
+
+$shortcode_options = array();
+$shortcode_attr = '';
+if (!empty($_POST['locales']))
+	$shortcode_options['lang'] = $_POST['locales'];
+if ($shortcode_options) {
+	$shortcode_attr = '';
+	foreach($shortcode_options as $key => $value){
+		$shortcode_attr .= ' ' . $key.'="'.esc_attr($value).'"';
+	}
+}
 ?>
 <div class="wrap">
 	<h2><?php _e('GeoIP Detection', 'geoip-detect');?></h2>
@@ -54,43 +65,53 @@ $current_source = DataSourceRegistry::getInstance()->getCurrentSource();
 		<tr>
 			<th><?php _e('Key', 'geoip-detect'); ?></th>
 			<th><?php _e('Value', 'geoip-detect'); ?></th>
+			<th><?php _e('Shortcode equivalent', 'geoip-detect'); ?></th>
 		</tr>
 	
 		<tr>
 			<td><code>$record-&gt;city-&gt;name</code></td>
 			<td><?php echo esc_html($record->city->name);?></td>
+			<td><code>[geoip_detect2 property="city"<?php echo $shortcode_attr; ?>]</code></td>
 		</tr>
 		<tr>
 			<td><code>$record-&gt;mostSpecificSubdivision-&gt;isoCode</code></td>
-			<td><?php echo esc_html($record->mostSpecificSubdivision->name);?></td>
+			<td><?php echo esc_html($record->mostSpecificSubdivision->isoCode);?></td>
+			<td><code>[geoip_detect2 property="mostSpecificSubdivision.isoCode"]</code></td>
 		</tr>
 		<tr>
 			<td><code>$record-&gt;mostSpecificSubdivision-&gt;name</code></td>
 			<td><?php echo esc_html($record->mostSpecificSubdivision->name);?></td>
+			<td><code>[geoip_detect2 property="mostSpecificSubdivision"<?php echo $shortcode_attr; ?>]</code></td>
 		</tr>
 		<tr>
 			<td><code>$record-&gt;country-&gt;isoCode</code></td>
 			<td><?php echo esc_html($record->country->isoCode);?></td>
+			<td><code>[geoip_detect2 property="country.isoCode"]</code></td>
 		</tr>
 		<tr>
 			<td><code>$record-&gt;country-&gt;name</code></td>
 			<td><?php echo esc_html($record->country->name);?></td>
+			<td><code>[geoip_detect2 property="country"<?php echo $shortcode_attr; ?>]</code></td>
 		</tr>
 		<tr>
 			<td><code>$record-&gt;location-&gt;latitude</code></td>
 			<td><?php echo esc_html($record->location->latitude);?></td>
+			<td><code>[geoip_detect2 property="location.latitude"]</code></td>
 		</tr>
 		<tr>
 			<td><code>$record-&gt;location-&gt;longitude</code></td>
 			<td><?php echo esc_html($record->location->longitude);?></td>
+			<td><code>[geoip_detect2 property="location.longitude"]</code></td>
 		</tr>
 		<tr>
 			<td><code>$record-&gt;continent-&gt;code</code></td>
 			<td><?php echo esc_html($record->continent->code);?></td>
+			<td><code>[geoip_detect2 property="continent.code"]</code></td>
 		</tr>
 		<tr>
 			<td><code>$record-&gt;location-&gt;timeZone</code></td>
 			<td><?php echo esc_html($record->location->timeZone);?></td>
+			<td><code>[geoip_detect2 property="location.timeZone"]</code></td>
 		</tr>
 
 	</table>
