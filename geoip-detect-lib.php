@@ -147,6 +147,8 @@ function _geoip_detect2_record_enrich_data($record, $ip, $sourceId, $error) {
 
 /**
  * GeoIPv2 doesn't always include a timezone when v1 did.
+ * Region ids have changed, so countries with several time zones are out of luck.
+ * 
  * @param array $record
  */
 function _geoip_detect2_try_to_fix_timezone($data) {
@@ -157,10 +159,11 @@ function _geoip_detect2_try_to_fix_timezone($data) {
 		require_once(__DIR__ . '/vendor/timezone.php');
 	}
 
-	if (!empty($data['country']['iso_code']))
-		$data['location']['time_zone'] = _geoip_detect_get_time_zone($data['country']['iso_code'], @$data['mostSpecificSubdivision']['isoCode']);
-	else
+	if (!empty($data['country']['iso_code'])) {
+		$data['location']['time_zone'] = _geoip_detect_get_time_zone($data['country']['iso_code'], null);
+	} else {
 		$data['location']['time_zone'] = null;
+	}
 
 	return $data;
 }
