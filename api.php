@@ -9,7 +9,7 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
  * @param array				Property names with options.
  * 		@param boolean 		$skipCache		TRUE: Do not use cache for this request. (Default: FALSE)
  * 		@param float 		$timeout		Total transaction timeout in seconds (Precision+HostIP.info API only) 
- * 		@param float		$connectTimeout Initial connection timeout in seconds (Precision API only)
+ * 		@param int			$connectTimeout Initial connection timeout in seconds (Precision API only)
  * @return YellowTree\GeoipDetect\DataSources\City	GeoInformation. (Actually, this is a subclass of \GeoIp2\Model\City)
  * 
  * @see https://github.com/maxmind/GeoIP2-php				API Usage

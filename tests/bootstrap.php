@@ -93,7 +93,7 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 	protected function assertValidGeoIP2Record($record, $ip, $skipContinentTest = false)
 	{
 		$assert_text = 'When looking up info for IP "' . $ip . '": ';
-		$this->assertEmpty($record->extra->error, $assert_text . 'extra->error should be empty');
+		$this->assertSame('', $record->extra->error, $assert_text . 'extra->error should be empty');
 		$this->assertInstanceOf('YellowTree\GeoipDetect\DataSources\City', $record, $assert_text);
 		$this->assertSame(false, $record->isEmpty, $assert_text . 'isEmpty should not be false');	
 		$this->assertNotEmpty($record->extra->source, $assert_text . 'extra->source should not be empty');

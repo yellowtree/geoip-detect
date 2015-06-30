@@ -119,10 +119,11 @@ Fixing automatic weekly updates.
 == Changelog ==
 
 = 2.5 =
-* $skipCache is now $options['skipCache']. 
-* Vendor code was updated.
+* NEW: $timeout for Web-API lookups can now be specified.
+* CHANGE: The parameter $skipCache is now $options['skipCache']. Using $skipCache is deprecated, but still works. 
 * FIX: Hostip.info did not set traits->ipAddress
-* Hostip.info does not include IPv6. Add a lookup error message.
+* FIX: Hostip.info does not include IPv6. Add a lookup error message.
+* Maxmind vendor code was updated.
 
 = 2.4.3 =
 * FIX: Options Page: The checkboxes didn't show (even though the option was saved) since 2.4.0
