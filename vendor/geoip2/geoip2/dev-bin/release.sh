@@ -2,12 +2,16 @@
 
 set -e
 
-TAG=$1
+VERSION=$(perl -MFile::Slurp::Tiny=read_file -MDateTime <<EOF
+use v5.16;
+my \$log = read_file(q{CHANGELOG.md});
+\$log =~ /\n(\d+\.\d+\.\d+) \((\d{4}-\d{2}-\d{2})\)\n/;
+die 'Release time is not today!' unless DateTime->now->ymd eq \$2;
+say \$1;
+EOF
+)
 
-if [ -z $TAG ]; then
-    echo "Please specify a tag"
-    exit 1
-fi
+TAG="v$VERSION"
 
 if [ -f geoip2.phar ]; then
     rm geoip2.phar
@@ -25,16 +29,19 @@ fi
 php composer.phar self-update
 php composer.phar update --no-dev
 
-# We currently use a custom version of Box due to
-# https://github.com/box-project/box2/issues/88. There are PRs from Greg with
-# the fixes.
-#
-# if [ ! -f box.phar ]; then
-#     wget -O box.phar "https://github.com/kherge-archive/Box/releases/download/2.4.4/box-2.4.4.phar"
-# fi
+perl -pi -e "s/(?<=const VERSION = ').+?(?=';)/$TAG/g" src/WebService/Client.php
 
-../box2/bin/box build
-./dev-bin/phar-test.php
+if [ ! -f box.phar ]; then
+    wget -O box.phar "https://github.com/box-project/box2/releases/download/2.5.0/box-2.5.0.phar"
+fi
+
+php box.phar build
+
+PHAR_TEST=$(./dev-bin/phar-test.php)
+if [[ -n $PHAR_TEST ]]; then
+    echo "Phar test outputed non-empty string: $PHAR_TEST"
+    exit 1
+fi
 
 # Download test deps
 php composer.phar update
@@ -43,7 +50,7 @@ php composer.phar update
 
 if [ ! -d .gh-pages ]; then
     echo "Checking out gh-pages in .gh-pages"
-    git clone -b gh-pages git@git.maxmind.com:GeoIP2-php .gh-pages
+    git clone -b gh-pages git@github.com:maxmind/GeoIP2-php.git .gh-pages
     pushd .gh-pages
 else
     echo "Updating .gh-pages"

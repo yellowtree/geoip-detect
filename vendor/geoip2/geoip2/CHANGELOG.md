@@ -1,6 +1,34 @@
 CHANGELOG
 =========
 
+2.3.0 (2015-06-29)
+------------------
+
+* Support for demographics fields `averageIncome` and `populationDensity` in
+  the `Location` record, returned by the Insights endpoint.
+* The `isAnonymousProxy` and `isSatelliteProvider` properties on
+  `GeoIP2\Record\Traits` have been deprecated. Please use our [GeoIP2
+  Anonymous IP database](https://www.maxmind.com/en/geoip2-anonymous-ip-database)
+  to determine whether an IP address is used by an anonymizing service.
+
+2.2.0-beta1 (2015-06-09)
+------------------------
+
+* Typo fix in documentation.
+
+2.2.0-alpha2 (2015-06-01)
+-------------------------
+
+* `maxmind-ws/web-service-common` was renamed to `maxmind/web-service-common`.
+
+2.2.0-alpha1 (2015-05-22)
+-------------------------
+
+* The library no longer uses Guzzle and instead uses curl directly.
+* Support for `timeout` and `connectTimout` were added to the `$options` array
+  passed to the `GeoIp2\WebService\Client` constructor. Pull request by Will
+  Bradley. GitHub #36.
+
 2.1.1 (2014-12-03)
 ------------------
 

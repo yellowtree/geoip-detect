@@ -301,12 +301,9 @@ to the client API, please see
 ## Requirements  ##
 
 This code requires PHP 5.3 or greater. Older versions of PHP are not
-supported.
+supported. This library works and is tested with HHVM.
 
-This library works and is tested with HHVM.
-
-This library also relies on the [Guzzle HTTP client](http://guzzlephp.org/)
-and the [MaxMind DB Reader](https://github.com/maxmind/MaxMind-DB-Reader-php).
+This library also relies on the [MaxMind DB Reader](https://github.com/maxmind/MaxMind-DB-Reader-php).
 
 If you are using PHP 5.3 with an autoloader besides Composer, you must load
 `JsonSerializable.php` in the `compat` directory.
@@ -314,7 +311,7 @@ If you are using PHP 5.3 with an autoloader besides Composer, you must load
 ## Contributing ##
 
 Patches and pull requests are encouraged. All code should follow the
-PSR-2 style guidelines. Please include unit tests whenever possible.
+PSR-2 style guidelines. Please include unit tests whenever possible. You may obtain the test data for the maxmind-db folder by running `git submodule update --init --recursive` or adding `--recursive` to your initial clone, or from https://github.com/maxmind/MaxMind-DB
 
 ## Versioning ##
 
