@@ -118,9 +118,12 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+= 2.4.4 =
+* Vendor code was updated.
+
 = 2.4.3 =
 * FIX: Options Page: The checkboxes didn't show (even though the option was saved) since 2.4.0
-* NEW: A fixed external IP can now be specified on the options page. (Useful in development scenarios without internet, or mixed internet/intranet cases.)
+* NEW: A fixed external IP can now be specified on the options page. (Useful in development scenarios without internet, or mixed internet/intranet cases. You can also use this to speed up things on the production server if you know the IP will not change.)
 * NEW: Hidden feature/side-effect: Clicking on save in the General Options section also empties the external IP cache. 
 
 = 2.4.2 = 
