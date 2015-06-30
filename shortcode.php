@@ -53,7 +53,9 @@ function geoip_detect2_shortcode($attr)
 	
 	$properties = explode('.', $attr['property']);
 	
-	$userInfo = geoip_detect2_get_info_from_current_ip($locales, $skipCache);
+	$options = array('skipCache' => $skipCache);
+	
+	$userInfo = geoip_detect2_get_info_from_current_ip($locales, $options);
 
 	if ($userInfo->isEmpty)
 		return $defaultValue . '<!-- GeoIP Detect: No information found for this IP (' . geoip_detect2_get_client_ip() . ') -->';	

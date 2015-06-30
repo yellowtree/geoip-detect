@@ -17,8 +17,8 @@ as a shortcode, or via CSS body classes. The city & country names are translated
 = Features: =
 
 * Provides these 5 functions (see [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation)): 
-  * `geoip_detect2_get_info_from_ip($ip, $locales = array('en'), ...)`: Lookup Geo-Information of the specified IP 
-  * `geoip_detect2_get_info_from_current_ip($locales = array('en'), ...)`: Lookup Geo-Information of the current website user
+  * `geoip_detect2_get_info_from_ip($ip, $locales = array('en'), $options = array())`: Lookup Geo-Information of the specified IP 
+  * `geoip_detect2_get_info_from_current_ip($locales = array('en'), $options = array())`: Lookup Geo-Information of the current website user
   * `geoip_detect2_get_current_source_description(...)`: Return a human-readable label of the currently chosen source.
   * `geoip_detect2_get_external_ip_adress()`: Fetch the internet adress of the webserver
   * `geoip_detect2_get_client_ip()`: Get client IP (even if it is behind a reverse proxy)
@@ -118,7 +118,8 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
-= 2.4.4 =
+= 2.5 =
+* $skipCache is now $options['skipCache']. 
 * Vendor code was updated.
 
 = 2.4.3 =

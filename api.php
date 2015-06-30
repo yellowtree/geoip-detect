@@ -6,7 +6,8 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
  * @param string 			$ip 		IP-Adress (IPv4 or IPv6). 'me' is the current IP of the server.
  * @param array(string)		$locales 	List of locale codes to use in name property
  * 										from most preferred to least preferred. (Default: Site language, en)
- * @param boolean			$skipCache	TRUE: Do not use cache for this request. 
+ * @param array				Property names with options.
+ * 		@param boolean $skipCache	TRUE: Do not use cache for this request. (Default: FALSE) 
  * @return YellowTree\GeoipDetect\DataSources\City	GeoInformation. (Actually, this is a subclass of \GeoIp2\Model\City)
  * 
  * @see https://github.com/maxmind/GeoIP2-php				API Usage
@@ -14,14 +15,26 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
  *
  * @since 2.0.0
  * @since 2.4.0 New parameter $skipCache
+ * @since 2.5.0 Parameter $skipCache has been renamed to $options with 'skipCache' property
  */
-function geoip_detect2_get_info_from_ip($ip, $locales = null, $skipCache = false)
+function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array())
 {
+	if (is_bool($options)) {
+		_doing_it_wrong('GeoIP Detection Plugin: geoip_detect2_get_info_from_ip()', '$skipCache has been renamed to $options. Instead of TRUE, now use "array(\'skipCache\' => TRUE)".', '2.5.0');
+		$value = $options;
+		$options = array();
+		$options['skipCache'] = $value;
+	}
+	$defaultOptions = array(
+			'skipCache' => false,
+	);
+	$options = $options + $defaultOptions;
+
 	$locales = apply_filters('geoip_detect2_locales', $locales);
 	
 	$data = array();
 	
-	if (!$skipCache) {
+	if (!$options['skipCache']) {
 		$data = _geoip_detect2_get_data_from_cache($ip);
 	}
 	
@@ -59,15 +72,17 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $skipCache = false
  *
  * @param array(string)		$locales	List of locale codes to use in name property
  * 										from most preferred to least preferred. (Default: Site language, en)
- * @param boolean			$skipCache	TRUE: Do not use cache for this request.
+ * @param array				Property names with options.
+ * 		@param boolean $skipCache	TRUE: Do not use cache for this request. (Default: FALSE) 
  * @return YellowTree\GeoipDetect\DataSources\City	GeoInformation.
  *
  * @since 2.0.0
  * @since 2.4.0 New parameter $skipCache
+ * @since 2.5.0 Parameter $skipCache has been renamed to $options with 'skipCache' property
  */
-function geoip_detect2_get_info_from_current_ip($locales = null, $skipCache = false)
+function geoip_detect2_get_info_from_current_ip($locales = null, $options = array())
 {
-	return geoip_detect2_get_info_from_ip(geoip_detect2_get_client_ip(), $locales, $skipCache);
+	return geoip_detect2_get_info_from_ip(geoip_detect2_get_client_ip(), $locales, $options);
 }
 
 
