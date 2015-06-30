@@ -14,7 +14,7 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
  * @return GeoIp2\Database\Reader 	The reader, ready to do its work. Don't forget to `close()` it afterwards. NULL if file not found (or other problems).
  * NULL if initialization went wrong (e.g., File not found.)
  */
-function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &$sourceId = '') {
+function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &$sourceId = '', $options = array()) {
 	if (! $skipLocaleFilter) {
 		/**
 		 * Filter: geoip_detect2_locales
@@ -28,7 +28,7 @@ function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &
 	$reader = null;
 	$source = DataSourceRegistry::getInstance()->getCurrentSource();
 	if ($source) {
-		$reader = $source->getReader($locales);
+		$reader = $source->getReader($locales, $options);
 		$sourceId = $source->getId();
 	}
 	/**
@@ -190,10 +190,10 @@ function geoip_detect_is_ip_equal($ip1, $ip2) {
 	return !empty($one) && $one == $two;
 }
 
-function geoip_detect_is_ip($ip) {
+function geoip_detect_is_ip($ip, $noIpv6 = false) {
 	$flags = FILTER_FLAG_IPV4;
 	
-	if (GEOIP_DETECT_IPV6_SUPPORTED)
+	if (GEOIP_DETECT_IPV6_SUPPORTED && !$noIpv6)
 		$flags = $flags | FILTER_FLAG_IPV6;
 	
 	return filter_var($ip, FILTER_VALIDATE_IP, $flags) !== false;

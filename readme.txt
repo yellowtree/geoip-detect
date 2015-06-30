@@ -26,7 +26,7 @@ as a shortcode, or via CSS body classes. The city & country names are translated
   * Free: [Maxmind GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/), automatically updated every month (licensed CC BY-SA. See [FAQ](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ).)
   * Commercial: [Maxmind GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database) or [Maxmind GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
   * Commercial Web-API: [Maxmind GeoIP2 Precision](https://www.maxmind.com/en/geoip2-precision-services) (City, Country or Insights)
-  * Free (default source): [HostIP.info](http://www.hostip.info/) (English only)
+  * Free (default source): [HostIP.info](http://www.hostip.info/) (English, IPv4 only)
 * For the property names, see the results of a specific IP in the wordpress backend (under *Tools > GeoIP Detection*).
 * You can include these properties into your posts and pages by using the shortcode `[geoip_detect2 property="country.name" default="(country could not be detected)" lang="en"]` (where 'country.name' can be one of the other property names as well, and 'default' and 'lang' are optional).
 * When enabled on the options page, it adds CSS classes to the body tag such as `geoip-country-DE` and `geoip-continent-EU`.
@@ -121,6 +121,8 @@ Fixing automatic weekly updates.
 = 2.5 =
 * $skipCache is now $options['skipCache']. 
 * Vendor code was updated.
+* FIX: Hostip.info did not set traits->ipAddress
+* Hostip.info does not include IPv6. Add a lookup error message.
 
 = 2.4.3 =
 * FIX: Options Page: The checkboxes didn't show (even though the option was saved) since 2.4.0

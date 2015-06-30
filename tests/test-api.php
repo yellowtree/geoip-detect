@@ -25,6 +25,7 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	function testIPv6() {
 		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP_V_6);
 		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
+		$this->assertSame('IE', $record->country->isoCode);
 	}
 	
 	function testWhitespace() {

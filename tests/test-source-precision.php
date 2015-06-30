@@ -97,6 +97,21 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	/**
 	 * @group external-http
 	 */
+	function testTimeout() {
+		remove_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_user_secret'), 101);
+		add_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_wrong_user_secret'), 102);
+		
+		$before = microtime(true);
+		$ret = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, array('en'), array('timeout' => 0.01, 'skipCache' => true));
+		$after = microtime(true);
+		
+		$this->assertLessThan(0.1, $after - $before);
+		$this->assertValidGeoIP2Record($ret, 'timed out');
+	}
+	
+	/**
+	 * @group external-http
+	 */
 	function testNoPassword() {
 		remove_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_user_secret'), 101);
 		add_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_wrong_user_secret'), 102);

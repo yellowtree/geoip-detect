@@ -32,7 +32,7 @@ abstract class AbstractDataSource {
 	public function activate() { }
 	public function deactivate() { }
 	
-	public function getReader() { return null; }
+	public function getReader($locales = array('en'), $options = array()) { return null; }
 	
 	public function isWorking() { return false; }
 }

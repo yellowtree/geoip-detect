@@ -34,13 +34,14 @@ function geoip_detect_lookup_page()
 			{
 				$request_ip = $_POST['ip'];
 				$request_skipCache = !empty($_POST['skip_cache']);
+				$options = array('skipCache' => $request_skipCache);
 				
 				$request_locales = null;
 				if (!empty($_POST['locales']))
 					$request_locales = explode(',', $_POST['locales']);
 				
 				$start = microtime(true);
-				$ip_lookup_result = geoip_detect2_get_info_from_ip($request_ip, $request_locales, $request_skipCache);
+				$ip_lookup_result = geoip_detect2_get_info_from_ip($request_ip, $request_locales, $options);
 				$end = microtime(true);
 				$ip_lookup_duration = $end - $start;
 			}

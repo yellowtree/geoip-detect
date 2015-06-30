@@ -8,8 +8,19 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 	
 	const URL = 'http://api.hostip.info/get_json.php?ip=';
+	protected $options;
 	
-	public function city($ip) {	
+	function __construct($options) {
+		$default_options = array(
+			'timeout' => 1,			
+		);
+		$this->options = $options + $default_options;
+	}
+	
+	public function city($ip) {
+		if (!geoip_detect_is_ip($ip, true))
+			throw new \Exception('The Hostip.info-Database only contains IPv4 adresses.');
+		
 		$data = $this->api_call($ip);
 		
 		if (!$data)
@@ -25,6 +36,8 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 		if ($data['city']) {
 			$r['city']['names'] = array('en' => $data['city']);
 		}
+		
+		$r['traits']['ip_address'] = $ip;
 		
 		$record = new \GeoIp2\Model\City($r, array('en'));
 		
@@ -45,7 +58,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 			$context = stream_context_create(
 					array(
 							'http' => array(
-									'timeout' => 1,
+									'timeout' => $this->options['timeout'],
 							),
 					)
 			);
@@ -88,7 +101,7 @@ class HostInfoDataSource extends AbstractDataSource {
 	
 	public function activate() { }
 	
-	public function getReader() { return new Reader(); }
+	public function getReader($locales = array('en'), $options = array()) { return new Reader($options); }
 	
 	public function isWorking() { return true; }
 	

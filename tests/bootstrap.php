@@ -21,7 +21,7 @@ ini_set('error_reporting', ini_get('error_reporting') | E_USER_NOTICE);
 define('GEOIP_DETECT_TEST_DB_FILENAME', __DIR__ . '/' . GEOIP_DETECT_DATA_FILENAME);
 define('GEOIP_DETECT_TEST_COUNTRY_DB_FILENAME', __DIR__ . '/GeoLite2-Country.mmdb');
 define('GEOIP_DETECT_TEST_IP', '88.64.140.3');
-define('GEOIP_DETECT_TEST_IP_V_6', '2001:4860:4801:5::91');
+define('GEOIP_DETECT_TEST_IP_V_6', '2a00:1450:4001:801::101f');
 define('GEOIP_DETECT_EXTERNAL_IP', '88.64.140.3');
 define('GEOIP_DETECT_TEST_IP_SERIVCE_PROVIDER', 'https://raw.githubusercontent.com/yellowtree/wp-geoip-detect/master/tests/html/ipv4.txt');
 
@@ -85,22 +85,35 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 	
 	
 /**
+ * Test if the returned record is valid.
  * 
- * Enter description here ...
  * @param YellowTree\GeoipDetect\DataSources\City $record
- * @param int $ip
+ * @param string $ip
  */
-	protected function assertValidGeoIP2Record($record, $ip)
+	protected function assertValidGeoIP2Record($record, $ip, $skipContinentTest = false)
 	{
-		$assert_text = 'When looking up info for IP "' . $ip . '":';
+		$assert_text = 'When looking up info for IP "' . $ip . '": ';
+		$this->assertEmpty($record->extra->error, $assert_text . 'extra->error should be empty');
 		$this->assertInstanceOf('YellowTree\GeoipDetect\DataSources\City', $record, $assert_text);
-		$this->assertSame(false, $record->isEmpty);	
-		$this->assertNotEmpty($record->extra->source);
+		$this->assertSame(false, $record->isEmpty, $assert_text . 'isEmpty should not be false');	
+		$this->assertNotEmpty($record->extra->source, $assert_text . 'extra->source should not be empty');
 		
-		$this->assertInternalType('string', $record->country->isoCode, $assert_text);
-		$this->assertEquals(2, strlen($record->country->isoCode), $assert_text);
-		$this->assertEquals(2, strlen($record->continent->code), $assert_text);
-		$this->assertInternalType('array', $record->country->names, $assert_text);
+		$this->assertInternalType('string', $record->country->isoCode, $assert_text . 'country->isoCode should not be empty');
+		$this->assertEquals(2, strlen($record->country->isoCode), $assert_text . 'country->isoCode should be 2 chars long');
+		if (!$skipContinentTest)
+			$this->assertEquals(2, strlen($record->continent->code), $assert_text  . 'country->code should be 2 chars long');
+		$this->assertInternalType('array', $record->country->names, $assert_text . 'countr->names should be an array');
+		$this->assertNotEmpty($record->traits->ipAddress, $assert_text . 'requested IP should not be empty');
+	}
+	
+	protected function assertEmptyGeoIP2Record($record, $ip) {
+		$assert_text = 'When looking up info for IP "' . $ip . '": ';
+		$this->assertInstanceOf('YellowTree\GeoipDetect\DataSources\City', $record, $assert_text);
+		$this->assertSame(true, $record->isEmpty, $assert_text . 'isEmpty should not be true');
+		$this->assertNotEmpty($record->extra->source, $assert_text . 'extra->source should not be empty');
+		
+		$this->assertEquals('', $record->country->isoCode, $assert_text . 'country->isoCode should be empty');
+		$this->assertNotEmpty($record->traits->ipAddress, $assert_text . 'requested IP should not be empty');
 	}
 	
 	protected function assertAtLeastTheseProperties($expected, $actual) {

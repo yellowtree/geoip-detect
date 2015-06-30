@@ -65,7 +65,7 @@ HTML;
 	
 	public function getShortLabel() { return $this->maxmindGetFileDescription(); }
 
-	public function getReader($locales = array('en')) {
+	public function getReader($locales = array('en'), $options = array()) {
 		$reader = null;
 		
 		$data_file = $this->maxmindGetFilename();

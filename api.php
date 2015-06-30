@@ -7,7 +7,9 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
  * @param array(string)		$locales 	List of locale codes to use in name property
  * 										from most preferred to least preferred. (Default: Site language, en)
  * @param array				Property names with options.
- * 		@param boolean $skipCache	TRUE: Do not use cache for this request. (Default: FALSE) 
+ * 		@param boolean 		$skipCache		TRUE: Do not use cache for this request. (Default: FALSE)
+ * 		@param float 		$timeout		Total transaction timeout in seconds (Precision+HostIP.info API only) 
+ * 		@param float		$connectTimeout Initial connection timeout in seconds (Precision API only)
  * @return YellowTree\GeoipDetect\DataSources\City	GeoInformation. (Actually, this is a subclass of \GeoIp2\Model\City)
  * 
  * @see https://github.com/maxmind/GeoIP2-php				API Usage
@@ -41,10 +43,9 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()
 	if (!$data) {
 		$outError = '';
 
-		$reader = _geoip_detect2_get_reader(array('en') /* will be replaced anyway */, true, $outSourceId);
+		$reader = _geoip_detect2_get_reader(array('en') /* will be replaced anyway */, true, $outSourceId, $options);
 		$record = _geoip_detect2_get_record_from_reader($reader, $ip, $outError);
 		$data   = _geoip_detect2_record_enrich_data($record, $ip, $outSourceId, $outError);
-		
 		if (WP_DEBUG && !GEOIP_DETECT_DOING_UNIT_TESTS && $outError) {
 			trigger_error($outError, E_USER_NOTICE);
 		}
@@ -92,13 +93,16 @@ function geoip_detect2_get_info_from_current_ip($locales = null, $options = arra
  * 
  * @param array(string)				List of locale codes to use in name property
  * 									from most preferred to least preferred. (Default: Site language, en)
- * 
+ * @param array				Property names with options.
+ * 		@param float 		$timeout		Total transaction timeout in seconds (Precision+HostIP.info API only) 
+ * 		@param float		$connectTimeout Initial connection timeout in seconds (Precision API only)
  * @return \YellowTree\GeoipDetect\DataSources\ReaderInterface 	The reader, ready to do its work. Don't forget to `close()` it afterwards. NULL if file not found (or other problems).
  * 
  * @since 2.0.0
+ * @since 2.5.0 new parameter $options
  */
-function geoip_detect2_get_reader($locales = null) {	
-	return _geoip_detect2_get_reader($locales, false);
+function geoip_detect2_get_reader($locales = null, $options = array()) {	
+	return _geoip_detect2_get_reader($locales, false, $sourceIdOut, $options);
 }
 
 /**

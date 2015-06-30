@@ -14,8 +14,8 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 
 class PrecisionReader extends \GeoIp2\WebService\Client implements \YellowTree\GeoipDetect\DataSources\ReaderInterface 
 {
-	public function __construct($userId, $licenseKey) {
-		parent::__construct($userId, $licenseKey);
+	public function __construct($userId, $licenseKey, $options) {
+		parent::__construct($userId, $licenseKey, array('en'), $options);
 	}
 	
 	public function city($ip) {
@@ -124,14 +124,14 @@ HTML;
 		return $message;
 	}
 	
-	public function getReader() {
+	public function getReader($locales = array('en'), $options = array()) {
 		if (!$this->isWorking())
 			return null;
 
 		$user_id = get_option('geoip-detect-precision-user_id');
 		$user_secret = get_option('geoip-detect-precision-user_secret');
 		
-		$client = new PrecisionReader($user_id, $user_secret);
+		$client = new PrecisionReader($user_id, $user_secret, $options);
 
 		return $client;
 	}
