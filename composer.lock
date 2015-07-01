@@ -1,28 +1,28 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
     "hash": "b16c677dc7d93ad68e6bb2d8e2e96d0c",
     "packages": [
         {
             "name": "geoip2/geoip2",
-            "version": "v2.3.0",
+            "version": "v2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maxmind/GeoIP2-php.git",
-                "reference": "0d28ca5bb5a96e950651751a87fd4009be89e3d1"
+                "reference": "8bd919d9d829a1f25e01895cdead97c5247aacb7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maxmind/GeoIP2-php/zipball/0d28ca5bb5a96e950651751a87fd4009be89e3d1",
-                "reference": "0d28ca5bb5a96e950651751a87fd4009be89e3d1",
+                "url": "https://api.github.com/repos/maxmind/GeoIP2-php/zipball/8bd919d9d829a1f25e01895cdead97c5247aacb7",
+                "reference": "8bd919d9d829a1f25e01895cdead97c5247aacb7",
                 "shasum": ""
             },
             "require": {
                 "maxmind-db/reader": "~1.0",
-                "maxmind/web-service-common": "~0.0.2",
+                "maxmind/web-service-common": "~0.0.3",
                 "php": ">=5.3.1"
             },
             "require-dev": {
@@ -55,7 +55,7 @@
                 "geolocation",
                 "maxmind"
             ],
-            "time": "2015-06-29 16:43:30"
+            "time": "2015-06-30 19:03:29"
         },
         {
             "name": "maxmind-db/reader",
@@ -108,16 +108,16 @@
         },
         {
             "name": "maxmind/web-service-common",
-            "version": "v0.0.2",
+            "version": "v0.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maxmind/web-service-common-php.git",
-                "reference": "9d16d149135cec7b8a8004a8ca78fffc883f4ba6"
+                "reference": "cc395e9ecd585b3a3b6197cec219f432da21f1c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maxmind/web-service-common-php/zipball/9d16d149135cec7b8a8004a8ca78fffc883f4ba6",
-                "reference": "9d16d149135cec7b8a8004a8ca78fffc883f4ba6",
+                "url": "https://api.github.com/repos/maxmind/web-service-common-php/zipball/cc395e9ecd585b3a3b6197cec219f432da21f1c6",
+                "reference": "cc395e9ecd585b3a3b6197cec219f432da21f1c6",
                 "shasum": ""
             },
             "require": {
@@ -146,7 +146,7 @@
             ],
             "description": "Internal MaxMind Web Service API",
             "homepage": "https://github.com/maxmind/mm-web-service-api-php",
-            "time": "2015-06-09 19:11:34"
+            "time": "2015-06-30 18:56:25"
         }
     ],
     "packages-dev": [],

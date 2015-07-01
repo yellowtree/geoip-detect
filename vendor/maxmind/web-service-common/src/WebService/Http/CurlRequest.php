@@ -64,10 +64,19 @@ class CurlRequest implements Request
         $opts[CURLOPT_HTTPHEADER] = $this->options['headers'];
         $opts[CURLOPT_USERAGENT] = $this->options['userAgent'];
 
-        $opts[CURLOPT_CONNECTTIMEOUT] = ceil($this->options['connectTimeout']);
-        $opts[CURLOPT_CONNECTTIMEOUT_MS] = ceil($this->options['connectTimeout'] * 1000);
-        $opts[CURLOPT_TIMEOUT] = ceil($this->options['timeout']);
-        $opts[CURLOPT_TIMEOUT_MS] = ceil($this->options['timeout'] * 1000);
+        $connectTimeout = $this->options['connectTimeout'];
+        if (defined('CURLOPT_CONNECTTIMEOUT_MS')) {
+            $opts[CURLOPT_CONNECTTIMEOUT_MS] = ceil($connectTimeout * 1000);
+        } else {
+            $opts[CURLOPT_CONNECTTIMEOUT] = ceil($connectTimeout);
+        }
+
+        $timeout = $this->options['timeout'];
+        if (defined('CURLOPT_TIMEOUT_MS')) {
+            $opts[CURLOPT_TIMEOUT_MS] = ceil($timeout * 1000);
+        } else {
+            $opts[CURLOPT_TIMEOUT] = ceil($timeout);
+        }
 
         curl_setopt_array($curl, $opts);
         return $curl;
@@ -77,10 +86,8 @@ class CurlRequest implements Request
     {
         $body = curl_exec($curl);
         if ($errno = curl_errno($curl)) {
-        	if (function_exists('curl_strerror'))
-            	$error_message = curl_strerror($errno);
-            else
-            	$error_message = curl_error($curl);
+            $error_message = curl_error($curl);
+
             throw new HttpException(
                 "cURL error ({$errno}): {$error_message}",
                 0,
