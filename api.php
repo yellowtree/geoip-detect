@@ -21,38 +21,66 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
  */
 function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array())
 {
+	// 1) Processing the parameters.
+	
 	if (is_bool($options)) {
 		_doing_it_wrong('GeoIP Detection Plugin: geoip_detect2_get_info_from_ip()', '$skipCache has been renamed to $options. Instead of TRUE, now use "array(\'skipCache\' => TRUE)".', '2.5.0');
 		$value = $options;
 		$options = array();
 		$options['skipCache'] = $value;
 	}
+
+	/**
+	 * Filter: geoip_detect2_options
+	 * You can programmatically change the defaults etc.
+	 * 
+	 * @param array $options The options array
+	 * @param string $ip	The IP to look up
+	 */
+	$options = apply_filters('geoip_detect2_options', $options, $ip);
+	
+	
 	$defaultOptions = array(
 			'skipCache' => false,
 	);
 	$options = $options + $defaultOptions;
 
+	/**
+	 * Filter: geoip_detect2_locales
+	 * 
+	 * @param array $locales The locales that were passed to the function 
+	 */
 	$locales = apply_filters('geoip_detect2_locales', $locales);
 	
+	
+	// 2) Doing the Lookup
 	$data = array();
 	
+	// Have a look at the cache first
 	if (!$options['skipCache']) {
 		$data = _geoip_detect2_get_data_from_cache($ip);
 	}
 	
 	if (!$data) {
-		$outError = '';
 
 		$reader = _geoip_detect2_get_reader(array('en') /* will be replaced anyway */, true, $outSourceId, $options);
-		$record = _geoip_detect2_get_record_from_reader($reader, $ip, $outError);
-		$data   = _geoip_detect2_record_enrich_data($record, $ip, $outSourceId, $outError);
-		if (WP_DEBUG && !GEOIP_DETECT_DOING_UNIT_TESTS && $outError) {
-			trigger_error($outError, E_USER_NOTICE);
+		
+		$lookupError = '';
+		$record = _geoip_detect2_get_record_from_reader($reader, $ip, $lookupError);
+		
+		$data   = _geoip_detect2_record_enrich_data($record, $ip, $outSourceId, $lookupError);
+		
+		if (WP_DEBUG && !GEOIP_DETECT_DOING_UNIT_TESTS && $lookupError) {
+			trigger_error($lookupError, E_USER_NOTICE);
 		}
 
-		if (!$outError)
+		// Save result to cache, but no "IP not found in database" or similar errors
+		if (!$lookupError)
 			_geoip_detect2_add_data_to_cache($data, $ip);
 	}
+	
+	
+	// 3) Returning the data
 	
 	// Always return a city record for API compatability. City attributes etc. return empty values.
 	$record = new \YellowTree\GeoipDetect\DataSources\City($data, $locales);
