@@ -4,6 +4,37 @@
 
 use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 
+/**
+ * Take the parameter options and add the default values.
+ * @param array $options
+ * return $options
+ */
+
+function _geoip_detect2_process_options($options) {
+	if (is_bool($options)) {
+		_doing_it_wrong('GeoIP Detection Plugin: geoip_detect2_get_info_from_ip()', '$skipCache has been renamed to $options. Instead of TRUE, now use "array(\'skipCache\' => TRUE)".', '2.5.0');
+		$value = $options;
+		$options = array();
+		$options['skipCache'] = $value;
+	}
+	
+	/**
+	 * Filter: geoip_detect2_options
+	 * You can programmatically change the defaults etc.
+	 *
+	 * @param array $options The options array
+	 */
+	$options = apply_filters('geoip_detect2_options', $options);
+	
+	
+	$defaultOptions = array(
+			'skipCache' => false,
+	);
+	$options = $options + $defaultOptions;
+	
+	return $options;
+}
+
 /*
  * Get the Maxmind Reader
  * (Use this if you want to use other methods than "city" or otherwise customize behavior.)

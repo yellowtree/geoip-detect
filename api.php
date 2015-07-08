@@ -23,27 +23,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()
 {
 	// 1) Processing the parameters.
 	
-	if (is_bool($options)) {
-		_doing_it_wrong('GeoIP Detection Plugin: geoip_detect2_get_info_from_ip()', '$skipCache has been renamed to $options. Instead of TRUE, now use "array(\'skipCache\' => TRUE)".', '2.5.0');
-		$value = $options;
-		$options = array();
-		$options['skipCache'] = $value;
-	}
-
-	/**
-	 * Filter: geoip_detect2_options
-	 * You can programmatically change the defaults etc.
-	 * 
-	 * @param array $options The options array
-	 * @param string $ip	The IP to look up
-	 */
-	$options = apply_filters('geoip_detect2_options', $options, $ip);
-	
-	
-	$defaultOptions = array(
-			'skipCache' => false,
-	);
-	$options = $options + $defaultOptions;
+	$options = _geoip_detect2_process_options($options);
 
 	/**
 	 * Filter: geoip_detect2_locales
