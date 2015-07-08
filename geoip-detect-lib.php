@@ -11,6 +11,8 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
  */
 
 function _geoip_detect2_process_options($options) {
+	
+	// For backwards compat 2.4.0-2.5.0
 	if (is_bool($options)) {
 		_doing_it_wrong('GeoIP Detection Plugin: geoip_detect2_get_info_from_ip()', '$skipCache has been renamed to $options. Instead of TRUE, now use "array(\'skipCache\' => TRUE)".', '2.5.0');
 		$value = $options;
