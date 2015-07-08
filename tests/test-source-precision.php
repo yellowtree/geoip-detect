@@ -106,7 +106,8 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 		$after = microtime(true);
 		
 		$this->assertLessThan(0.1, $after - $before);
-		$this->assertValidGeoIP2Record($ret, 'timed out');
+		$this->assertEmptyGeoIP2Record($ret, 'timed out');
+		$this->assertNotEmpty($ret->extra->error);
 	}
 	
 	/**

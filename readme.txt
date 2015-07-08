@@ -118,7 +118,7 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
-= 2.5 =
+= 2.5.0 =
 * NEW: 'timeout' for Web-API lookups can now be specified.
 * CHANGE: The parameter $skipCache is now $options['skipCache']. Using $skipCache is deprecated, but still works. 
 * FIX: Hostip.info did not set traits->ipAddress

@@ -18,6 +18,10 @@ class PrecisionReader extends \GeoIp2\WebService\Client implements \YellowTree\G
 		parent::__construct($userId, $licenseKey, array('en'), $options);
 	}
 	
+	public function userAgent() {
+		return 'GeoIP2-API/' . Client::VERSION . ' WP-GeoIP-Detect/' . GEOIP_DETECT_VERSION;
+	}
+	
 	public function city($ip) {
 		$method = get_option('geoip-detect-precision_api_type', 'city');
 		
