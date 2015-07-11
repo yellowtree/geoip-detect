@@ -21,6 +21,7 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
  */
 function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array())
 {
+	_geoip_maybe_disable_pagecache();
 	// 1) Processing the parameters.
 	
 	$options = _geoip_detect2_process_options($options);
@@ -109,7 +110,8 @@ function geoip_detect2_get_info_from_current_ip($locales = null, $options = arra
  * @since 2.0.0
  * @since 2.5.0 new parameter $options
  */
-function geoip_detect2_get_reader($locales = null, $options = array()) {	
+function geoip_detect2_get_reader($locales = null, $options = array()) {
+	_geoip_maybe_disable_pagecache();
 	return _geoip_detect2_get_reader($locales, false, $sourceIdOut, $options);
 }
 
@@ -141,8 +143,10 @@ function geoip_detect2_get_current_source_description($source = null) {
  * @since 2.0.0
  */
 function geoip_detect2_get_client_ip() {
+	_geoip_maybe_disable_pagecache();
+	
 	$ip = '::1';
-
+	
 	if (isset($_SERVER['REMOTE_ADDR']))
 		$ip = $_SERVER['REMOTE_ADDR'];
 	

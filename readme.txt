@@ -123,6 +123,7 @@ Fixing automatic weekly updates.
 * CHANGE: The parameter $skipCache is now $options['skipCache']. Using $skipCache is deprecated, but still works. 
 * FIX: Hostip.info did not set traits->ipAddress
 * FIX: Hostip.info does not include IPv6. Add a lookup error message.
+* NEW: Do not cache pages that include geo-dependent content (see FAQ for details). (AFAIK, this only works for WP Super Cache and W3 Total Cache right now.)
 * Maxmind vendor code was updated.
 
 = 2.4.3 =
