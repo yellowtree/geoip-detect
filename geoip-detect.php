@@ -87,11 +87,6 @@ include_once('data-sources/precision.php');
  * Only successful lookups will be cached.
  */
 //define('GEOIP_DETECT_READER_CACHE_TIME', 7 * DAY_IN_SECONDS);
-/**
- * By default, the plugin disables the page cache if any of the API functions are called.
- * You can deactivate this behavior by setting the following define to false.
- */
-//define('GEOIP_DETECT_DISABLE_PAGE_CACHE_IF_USED', false);
 		
 
 require_once(GEOIP_PLUGIN_DIR . '/admin-ui.php');

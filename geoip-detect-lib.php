@@ -343,10 +343,18 @@ function geoip_detect_get_relative_path($from, $to)
 }
 
 function _geoip_maybe_disable_pagecache() {
-	if (!GEOIP_DETECT_DISABLE_PAGE_CACHE_IF_USED)
-		return;
+	if (!get_option('geoip-detect-disable_pagecache'))
+		return false;
 	
 	// WP Super Cache, W3 Total Cache
 	if (!defined('DONOTCACHEPAGE'))
 		define('DONOTCACHEPAGE', true);
+	
+	if (!defined('DONOTCACHEOBJECT'))
+		define('DONOTCACHEOBJECT', true);
+	
+	if (!defined('DONOTCACHEDB'))
+		define('DONOTCACHEDB', true);
+	
+	return true;
 }

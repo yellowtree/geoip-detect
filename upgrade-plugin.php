@@ -12,6 +12,12 @@ function geoip_detect_do_upgrade($old_version) {
 		if (!get_option('geoip-detect-source'))
 			update_option('geoip-detect-source', 'hostinfo');
 	}
+	
+	// v2.5.0 Set "DONOTCACHEPAGE"
+	if (version_compare('2.5.0', $old_version, '>')) {
+		if (!get_option('geoip-detect-disable_pagecache'))
+			update_option('geoip-detect-source', '1');
+	}
 }
 
 /**

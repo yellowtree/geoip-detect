@@ -52,6 +52,16 @@ $options = $currentSource->getParameterHTML();
 			<input type="checkbox" name="options[set_css_country]" value="1" <?php if (!empty($wp_options['set_css_country'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Add a country-specific CSS class to the &lt;body&gt;-Tag.', 'geoip-detect'); ?><br />
 		</p>
 		<p>
+			<input type="checkbox" name="options[disable_pagecache]" value="1" <?php if (!empty($wp_options['disable_pagecache'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Disable caching a page that contains a shortcode or API call to geo-dependent functions.', 'geoip-detect'); ?><br />
+			<span class="detail-box">
+				At least WP SuperCache, W3TotalCache and ZenCache are supported.
+			</span>	
+				<?php if (!empty($wp_options['set_css_country']) && !empty($wp_options['disable_pagecache'])): ?>
+				<span class="geoip_detect_error">Warning: As the CSS option above is active, this means that all pages are not cached.</span>
+				<?php endif; ?>
+		</p>
+		
+		<p>
 			<input type="checkbox" name="options[has_reverse_proxy]" value="1" <?php if (!empty($wp_options['has_reverse_proxy'])) { echo 'checked="checked"'; } ?>>&nbsp;The server is behind a reverse proxy<em>
 			<span class="detail-box">
 			<?php if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) : ?>
@@ -71,6 +81,7 @@ $options = $currentSource->getParameterHTML();
 			
 			</span>
 		</p>
+
 		
 
 		<p>
@@ -92,6 +103,7 @@ $options = $currentSource->getParameterHTML();
 </div>
 <style>
 .geoip_detect_error {
+	display:block;
 	clear: both;
     background-color: rgb(255, 255, 255);
     border-left: rgb(255, 0, 0) solid 4px;
