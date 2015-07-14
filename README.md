@@ -17,8 +17,8 @@ as a shortcode, or via CSS body classes. The city & country names are translated
 = Features: =
 
 * Provides these 5 functions (see [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation)): 
-  * `geoip_detect2_get_info_from_ip($ip, $locales = array('en'), ...)`: Lookup Geo-Information of the specified IP 
-  * `geoip_detect2_get_info_from_current_ip($locales = array('en'), ...)`: Lookup Geo-Information of the current website user
+  * `geoip_detect2_get_info_from_ip($ip, $locales = array('en'), $options = array())`: Lookup Geo-Information of the specified IP 
+  * `geoip_detect2_get_info_from_current_ip($locales = array('en'), $options = array())`: Lookup Geo-Information of the current website user
   * `geoip_detect2_get_current_source_description(...)`: Return a human-readable label of the currently chosen source.
   * `geoip_detect2_get_external_ip_adress()`: Fetch the internet adress of the webserver
   * `geoip_detect2_get_client_ip()`: Get client IP (even if it is behind a reverse proxy)
@@ -26,7 +26,7 @@ as a shortcode, or via CSS body classes. The city & country names are translated
   * Free: [Maxmind GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/), automatically updated every month (licensed CC BY-SA. See [FAQ](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ).)
   * Commercial: [Maxmind GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database) or [Maxmind GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
   * Commercial Web-API: [Maxmind GeoIP2 Precision](https://www.maxmind.com/en/geoip2-precision-services) (City, Country or Insights)
-  * Free (default source): [HostIP.info](http://www.hostip.info/) (English only)
+  * Free (default source): [HostIP.info](http://www.hostip.info/) (English, IPv4 only)
 * For the property names, see the results of a specific IP in the wordpress backend (under *Tools > GeoIP Detection*).
 * You can include these properties into your posts and pages by using the shortcode `[geoip_detect2 property="country.name" default="(country could not be detected)" lang="en"]` (where 'country.name' can be one of the other property names as well, and 'default' and 'lang' are optional).
 * When enabled on the options page, it adds CSS classes to the body tag such as `geoip-country-DE` and `geoip-continent-EU`.
@@ -64,6 +64,10 @@ https://github.com/yellowtree/wp-geoip-detect/wiki/API-Usage-Examples
 
 1. Lookup page (under Tools > GeoIP Lookup)
 2. Options page (under Preferences > GeoIP Detection)
+
+= 2.5.0 =
+
+If you use a caching plugin, you don't need to exempt geo-content pages manually anymore. When the API of this plugin is called, then this plugin signals to the caching plugin that this page should not be cached. You can disable this behavior on the options page.
 
 = 2.4.2 =
 
@@ -116,9 +120,17 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+= 2.5.0 =
+* CHANGE: The parameter $skipCache is now $options['skipCache']. Using $skipCache is deprecated, but still works. 
+* NEW: $options['timeout'] for Web-API lookups can now be specified.
+* FIX: Hostip.info did not set traits->ipAddress
+* FIX: Hostip.info does not include data for IPv6. Add a lookup error message.
+* NEW: Disable page caching if geoip-API was called (this is configurable in the options). (Supported plugins: WP Super Cache, W3 Total Cache, ZenCache, and possibly others)
+* Maxmind vendor code was updated to the current version.
+
 = 2.4.3 =
 * FIX: Options Page: The checkboxes didn't show (even though the option was saved) since 2.4.0
-* NEW: A fixed external IP can now be specified on the options page. (Useful in development scenarios without internet, or mixed internet/intranet cases.)
+* NEW: A fixed external IP can now be specified on the options page. (Useful in development scenarios without internet, or mixed internet/intranet cases. You can also use this to speed up things on the production server if you know the IP will not change.)
 * NEW: Hidden feature/side-effect: Clicking on save in the General Options section also empties the external IP cache. 
 
 = 2.4.2 = 
