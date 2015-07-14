@@ -67,6 +67,10 @@ https://github.com/yellowtree/wp-geoip-detect/wiki/API-Usage-Examples
 
 == Upgrade Notice == 
 
+= 2.5.0 =
+
+If you use a caching plugin, you don't need to exempt geo-content pages manually anymore. When the API of this plugin is called, then this plugin signals to the caching plugin that this page should not be cached. You can disable this behavior on the options page.
+
 = 2.4.2 =
 
 You don't need to upgrade to this version, this release is mainly to fix installation behavior.
@@ -119,12 +123,12 @@ Fixing automatic weekly updates.
 == Changelog ==
 
 = 2.5.0 =
-* NEW: 'timeout' for Web-API lookups can now be specified.
 * CHANGE: The parameter $skipCache is now $options['skipCache']. Using $skipCache is deprecated, but still works. 
+* NEW: $options['timeout'] for Web-API lookups can now be specified.
 * FIX: Hostip.info did not set traits->ipAddress
-* FIX: Hostip.info does not include IPv6. Add a lookup error message.
-* NEW: Do not cache pages that include geo-dependent content (this is configurable in the options).
-* Maxmind vendor code was updated.
+* FIX: Hostip.info does not include data for IPv6. Add a lookup error message.
+* NEW: Disable page caching if geoip-API was called (this is configurable in the options). (Supported plugins: WP Super Cache, W3 Total Cache, ZenCache, and possibly others)
+* Maxmind vendor code was updated to the current version.
 
 = 2.4.3 =
 * FIX: Options Page: The checkboxes didn't show (even though the option was saved) since 2.4.0
