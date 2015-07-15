@@ -65,6 +65,11 @@ https://github.com/yellowtree/wp-geoip-detect/wiki/API-Usage-Examples
 1. Lookup page (under Tools > GeoIP Lookup)
 2. Options page (under Preferences > GeoIP Detection)
 
+= 2.5.1 =
+
+Hotfix:
+If you upgraded to 2.5.0, please verify that the correct datasource is still chosen. Sorry for any inconvenience caused.
+
 = 2.5.0 =
 
 If you use a caching plugin, you don't need to exempt geo-content pages manually anymore. When the API of this plugin is called, then this plugin signals to the caching plugin that this page should not be cached. You can disable this behavior on the options page.
@@ -119,6 +124,9 @@ Fixing automatic weekly updates.
 
 
 == Changelog ==
+= 2.5.1 =
+* FIX: Upgrade script did change the source.
+* FIX: Page caching is only disabled on upgrade when set_css_country is disabled.
 
 = 2.5.0 =
 * CHANGE: The parameter $skipCache is now $options['skipCache']. Using $skipCache is deprecated, but still works. 

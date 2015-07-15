@@ -15,8 +15,19 @@ function geoip_detect_do_upgrade($old_version) {
 	
 	// v2.5.0 Set "DONOTCACHEPAGE"
 	if (version_compare('2.5.0', $old_version, '>')) {
-		if (!get_option('geoip-detect-disable_pagecache'))
-			update_option('geoip-detect-source', '1');
+		if (!get_option('geoip-detect-disable_pagecache')) {
+			if (get_option('geoip-detect-set_css_country'))
+				update_option('geoip-detect-disable_pagecache', '0');
+			else 
+				update_option('geoip-detect-disable_pagecache', '1');
+		}
+	}
+	
+	// v.2.5.1 - Upgrade to 2.5.0 contained a bug. Make sure info is consistent again.
+	if (version_compare('2.5.0', $old_version, '=')) {
+		if (get_option('geoip-detect-source') === '1') {
+			update_option('geoip-detect-source', 'hostinfo');
+		}
 	}
 }
 
