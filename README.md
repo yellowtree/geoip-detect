@@ -7,6 +7,8 @@ Composer: [![Dependency Status](https://www.versioneye.com/user/projects/55433d0
 
 * **License:** [GPL v3 or later] (http://www.gnu.org/licenses/gpl-3.0.html)
 
+* **Donate Link:** https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYUZHS8FH3CL
+
 Retrieving Geo-Information using one the Maxmind GeoIP2 databases.
 
 == Description ==
@@ -67,8 +69,7 @@ https://github.com/yellowtree/wp-geoip-detect/wiki/API-Usage-Examples
 
 = 2.5.1 =
 
-Hotfix:
-If you upgraded to 2.5.0, please verify that the correct datasource is still chosen. Sorry for any inconvenience caused.
+Hotfix: If you upgraded to 2.5.0, please verify that the correct datasource is still chosen. Sorry for any inconvenience caused.
 
 = 2.5.0 =
 
@@ -124,6 +125,10 @@ Fixing automatic weekly updates.
 
 
 == Changelog ==
+
+= 2.5.2 =
+* FIX: Also disallow proxy caching via HTTP header, if possible.
+
 = 2.5.1 =
 * FIX: Upgrade script did change the source.
 * FIX: Page caching is only disabled on upgrade when set_css_country is disabled.
