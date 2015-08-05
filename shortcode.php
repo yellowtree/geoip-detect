@@ -105,3 +105,10 @@ function geoip_detect2_shortcode_get_external_ip_adress($attr) {
 	return $external_ip;
 }
 add_shortcode('geoip_detect2_get_external_ip_adress', 'geoip_detect2_shortcode_get_external_ip_adress');
+
+function geoip_detect2_shortcode_get_current_source_description($attr) {
+	$external_ip = geoip_detect2_get_current_source_description();
+
+	return $external_ip;
+}
+add_shortcode('geoip_detect2_get_current_source_description', 'geoip_detect2_shortcode_get_current_source_description');

@@ -58,6 +58,10 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		
 		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		$this->assertNotEmpty(geoip_detect2_get_current_source_description($record));
+		
+		$desc = do_shortcode('[geoip_detect2_get_current_source_description]');
+		$this->assertNotSame('[geoip_detect2_get_current_source_description]', $desc, 'Shortcode was not executed.');
+		$this->assertNotEmpty($desc, 'Shortcode returned empty string');
 	}
 
 }
