@@ -36,6 +36,18 @@ class ReverseProxyTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertSame(GEOIP_DETECT_TEST_IP, geoip_detect2_get_client_ip());
 	}
 	
+	function testShortcode() {
+		$ip = do_shortcode('[geoip_detect2_get_client_ip]');
+		$this->assertEquals(GEOIP_DETECT_TEST_IP, $ip);
+	}
+	
+	function testShortcodeIpv6() {
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = 'fe80:0:0:0:202:b3ff:fe1e:8329';
+		
+		$ip = do_shortcode('[geoip_detect2_get_client_ip]');
+		$this->assertEquals('fe80::202:b3ff:fe1e:8329', $ip);
+	}
+	
 	function testTwoProxies() {
 		$_SERVER['HTTP_X_FORWARDED_FOR'] = '1.1.1.1, ' . GEOIP_DETECT_TEST_IP;
 		$this->assertSame(GEOIP_DETECT_TEST_IP, geoip_detect2_get_client_ip());
@@ -55,6 +67,7 @@ class ReverseProxyTest extends WP_UnitTestCase_GeoIP_Detect {
 	function testNormalizeIpv4() {
 		$this->assertSame('1.1.1.1', geoip_detect_normalize_ip(' 1.1.1.1 '));
 	}
+	
 	
 	function testTrustedProxies() {
 		add_filter('pre_option_geoip-detect-trusted_proxy_ips', 'test_set_trusted_proxies', 101);

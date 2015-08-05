@@ -191,20 +191,25 @@ function geoip_detect2_get_client_ip() {
  * @return string The detected IPv4 Adress. If none is found, '0.0.0.0' is returned instead.
  * 
  * @since 2.0.0
- * @since 2.4.3 Reading option 'external_ip' first. New param $unfiltered.
+ * @since 2.4.3 Reading option 'external_ip' first.
+ * @since 2.5.2 New param $unfiltered that can bypass the option.
  */
 function geoip_detect2_get_external_ip_adress($unfiltered = false)
 {
-	$ip_cache = get_option('geoip-detect-external_ip');
+	$ip_cache = '';
+	
+	if (!$unfiltered)
+		$ip_cache = get_option('geoip-detect-external_ip');
+	
 	if (!$ip_cache)
 		$ip_cache = get_transient('geoip_detect_external_ip');
 
-	if ($ip_cache)
-		return apply_filters('geoip_detect_get_external_ip_adress', $ip_cache);
-	
-	$ip_cache = _geoip_detect_get_external_ip_adress_without_cache();
-	set_transient('geoip_detect_external_ip', $ip_cache, GEOIP_DETECT_IP_CACHE_TIME);
+	if (!$ip_cache) {
+		$ip_cache = _geoip_detect_get_external_ip_adress_without_cache();
+		set_transient('geoip_detect_external_ip', $ip_cache, GEOIP_DETECT_IP_CACHE_TIME);
+	}
 	
 	$ip_cache = apply_filters('geoip_detect_get_external_ip_adress', $ip_cache);
+
 	return $ip_cache;
 }

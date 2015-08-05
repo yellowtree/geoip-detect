@@ -41,6 +41,11 @@ class ExternalIpTest extends WP_UnitTestCase_GeoIP_Detect {
 		}
 	}
 	
+	function testExternalIpShortcode() {
+		$ip = do_shortcode('[geoip_detect2_get_external_ip_adress]');
+		$this->assertTrue(geoip_detect_is_ip($ip), 'The return of the shortcode was not an ip adress: "' . $ip . '"');
+	}
+
 	function testInvalidIp() {
 		add_filter('geiop_detect_ipservices', 'ipTestServiceInvalidProvider', 101);
 		

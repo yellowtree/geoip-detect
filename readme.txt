@@ -129,6 +129,8 @@ Fixing automatic weekly updates.
 
 = 2.5.2 =
 * FIX: Also disallow proxy caching via HTTP header, if possible.
+* NEW: Shortcodes for client ip, external ip adress.
+* FIX: geoip_detect2_get_external_ip_adress() : do not filter if $unfiltered is true.
 
 = 2.5.1 =
 * FIX: Upgrade script did change the source.
