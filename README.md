@@ -128,6 +128,8 @@ Fixing automatic weekly updates.
 
 = 2.5.2 =
 * FIX: Also disallow proxy caching via HTTP header, if possible.
+* NEW: Shortcodes for the other API functions: `[geoip_detect2_get_current_source_description]`, `[geoip_detect2_get_client_ip]`, and `[geoip_detect2_get_external_ip_adress]`
+* FIX: geoip_detect2_get_external_ip_adress() : do not filter if $unfiltered is true.
 
 = 2.5.1 =
 * FIX: Upgrade script did change the source.
