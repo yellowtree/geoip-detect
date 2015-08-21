@@ -96,9 +96,12 @@ $options = $currentSource->getParameterHTML();
 		</p>
 	</div>
 	<?php endif; ?>
-	<p>
+	<p class="legal_notices">
 		<br />
-		<small><em>This product includes GeoLite2 data created by MaxMind, available from <a href="http://www.maxmind.com/">http://www.maxmind.com</a>.</em></small>
+		This extension is "charity-ware". You can use it for free but if you want to do me a favor, please <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYUZHS8FH3CL" target="_blank">donate</a> to <a href="http://www.jmem-hainichen.de/homepage" target="_blank">this charity</a>. (See <a href="https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#what-you-mean-by-this-plugin-is-charity-ware" target="_blank">FAQ</a> for more infos.)
+	</p>
+	<p class="legal_notices">
+		This product includes GeoLite2 data created by MaxMind, available from <a href="http://www.maxmind.com/">http://www.maxmind.com</a>.
 	</p>
 </div>
 <style>
@@ -125,5 +128,9 @@ $options = $currentSource->getParameterHTML();
 	display: block;
 	margin-left: 50px;
 	color: #777;
+}
+.legal_notices {
+	font-size: 80%;
+	font-style: italic;
 }
 </style>
