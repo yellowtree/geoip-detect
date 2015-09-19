@@ -57,11 +57,25 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 
 == Frequently Asked Questions ==
 
-The FAQ has moved to Github:
-https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ
+[Technically speaking, how could I verify if my visitor comes from Germany?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#technically-speaking-how-could-i-verify-if-my-visitor-comes-from-germany)
 
-You'll also find API usage examples there:
-https://github.com/yellowtree/wp-geoip-detect/wiki/API-Usage-Examples
+[Which data source should I choose?] (https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#which-data-source-should-i-choose)
+
+[Can I change the time period how long the data is cached?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#can-i-change-the-time-period-how-long-the-data-is-cached)
+
+[The Maxmind Lite databases are licensed Creative Commons ShareAlike-Attribution. When do I need to give attribution?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#the-maxmind-lite-databases-are-licensed-creative-commons-sharealike-attribution-when-do-i-need-to-give-attribution)
+
+[Does this plugin work in a MultiSite-Network environment?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#does-this-plugin-work-in-a-multisite-network-environment)
+
+[What you mean by "This plugin is charity-ware"?] (https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#what-you-mean-by-this-plugin-is-charity-ware)
+
+=== Further documentation ===
+
+[API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation)
+
+[Record Properties](https://github.com/yellowtree/wp-geoip-detect/wiki/Record-Properties)
+
+[API usage examples](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Usage-Examples)
 
 == Screenshots ==
 
