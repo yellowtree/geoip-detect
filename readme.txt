@@ -59,7 +59,7 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 
 [Technically speaking, how could I verify if my visitor comes from Germany?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#technically-speaking-how-could-i-verify-if-my-visitor-comes-from-germany)
 
-[Which data source should I choose?] (https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#which-data-source-should-i-choose)
+[Which data source should I choose?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#which-data-source-should-i-choose)
 
 [Can I change the time period how long the data is cached?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#can-i-change-the-time-period-how-long-the-data-is-cached)
 
@@ -67,9 +67,9 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 
 [Does this plugin work in a MultiSite-Network environment?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#does-this-plugin-work-in-a-multisite-network-environment)
 
-[What you mean by "This plugin is charity-ware"?] (https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#what-you-mean-by-this-plugin-is-charity-ware)
+[What you mean by "This plugin is charity-ware"?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#what-you-mean-by-this-plugin-is-charity-ware)
 
-=== Further documentation ===
+**Further documentation**
 
 [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation)
 
