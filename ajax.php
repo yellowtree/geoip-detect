@@ -16,10 +16,11 @@ function geoip_detect_ajax_get_info_from_current_ip() {
 	if (!get_option('geoip-detect-ajax_enabled'))
 		return;
 	
-	if (!is_ajax())	
+	if (!defined( 'DOING_AJAX' ))	
 		die('This method is for AJAX only.');
 	
 	// Referer check
+	
 	$referer = wp_get_referer();
 	$site_url = get_site_url();
 	if (strpos($referer, $site_url) !== 0)
@@ -35,8 +36,13 @@ function geoip_detect_ajax_get_info_from_current_ip() {
 	$locales = null;
 	if (isset($_REQUEST['locales']))
 		$locales = $_REQUEST['locales'];
+	
 	$info = geoip_detect2_get_info_from_current_ip($locales);
+	$data = $info->jsonSerialize();
+	
+	echo json_encode($data);
+	exit;
 }
 
-add_action( 'wp_ajax_geoip_detect2_get_info_from_current_ip', 'geoip_detect_ajax_get_info_from_current_ip' );
+add_action(        'wp_ajax_geoip_detect2_get_info_from_current_ip', 'geoip_detect_ajax_get_info_from_current_ip' );
 add_action( 'wp_ajax_nopriv_geoip_detect2_get_info_from_current_ip', 'geoip_detect_ajax_get_info_from_current_ip' );

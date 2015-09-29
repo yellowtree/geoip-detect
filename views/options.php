@@ -52,13 +52,19 @@ $options = $currentSource->getParameterHTML();
 			<input type="checkbox" name="options[set_css_country]" value="1" <?php if (!empty($wp_options['set_css_country'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Add a country-specific CSS class to the &lt;body&gt;-Tag.', 'geoip-detect'); ?><br />
 		</p>
 		<p>
-			<input type="checkbox" name="options[disable_pagecache]" value="1" <?php if (!empty($wp_options['disable_pagecache'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Disable caching a page that contains a shortcode or API call to geo-dependent functions.', 'geoip-detect'); ?><br />
+			<input type="checkbox" name="options[disable_pagecache]" value="1" <?php if (!empty($wp_options['disable_pagecache'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Disable caching a page that contains a shortcode or PHP API call to geo-dependent functions.', 'geoip-detect'); ?><br />
 			<span class="detail-box">
 				At least WP SuperCache, W3TotalCache and ZenCache are supported.
 			</span>	
 				<?php if (!empty($wp_options['set_css_country']) && !empty($wp_options['disable_pagecache'])): ?>
 				<span class="geoip_detect_error">Warning: As the CSS option above is active, this means that all pages are not cached.</span>
 				<?php endif; ?>
+		</p>
+		<p>
+			<input type="checkbox" name="options[ajax_enabled]" value="1" <?php if (!empty($wp_options['ajax_enabled'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Enable JS API', 'geoip-detect'); ?><br />
+			<span class="detail-box">
+				If you want to get the geo-data via AJAX, enable it here. (<a href="https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation#js-api" target="_blank">Help</a>)
+			</span>
 		</p>
 		
 		<p>

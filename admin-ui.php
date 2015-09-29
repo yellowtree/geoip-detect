@@ -61,12 +61,13 @@ function geoip_detect_option_page() {
 	
 	$message = '';
 	
-	$numeric_options = array('set_css_country', 'has_reverse_proxy', 'disable_pagecache');
+	$numeric_options = array('set_css_country', 'has_reverse_proxy', 'disable_pagecache', 'ajax_enabled');
 	$text_options = array('external_ip');
 	$option_names = array_merge($numeric_options, $text_options);
 	
 	switch(@$_POST['action'])
 	{
+		// Update the automatically installed Lite DB
 		case 'update':
 			$registry->setCurrentSource('auto');
 	
@@ -80,12 +81,13 @@ function geoip_detect_option_page() {
 	
 			break;
 
+		// Choose a datasource
 		case 'choose':
 			$registry->setCurrentSource($_POST['options']['source']);
 			$currentSource = $registry->getCurrentSource();
 			break;
 	
-			
+		// Save the options of a data source	
 		case 'options-source':			
 			$messages = array();
 			foreach ($sources as $s) {
@@ -99,7 +101,9 @@ function geoip_detect_option_page() {
 			
 			break;
 			
+		// Save general options
 		case 'options':	
+			
 			// Empty IP Cache
 			delete_transient('geoip_detect_external_ip');
 			
@@ -123,6 +127,7 @@ function geoip_detect_option_page() {
 			break;
 	}
 
+	// Getting variables for view
 	$wp_options = array();
 	foreach ($option_names as $opt_name) {
 		$wp_options[$opt_name] = get_option('geoip-detect-'. $opt_name);

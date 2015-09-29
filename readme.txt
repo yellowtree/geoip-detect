@@ -144,6 +144,8 @@ Fixing automatic weekly updates.
 == Changelog ==
 
 = 2.6.0 =
+* NEW: The function geoip_detect2_get_info_from_current_ip($locales) can now be called via JS, if enabled in the options. 
+  This can be useful for cached pages. See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation) for more infos. 
 * FIX: A locale array() is now treated as "use default".
 * FIX: A locale array(' de ') is now treated as array('de')
 
