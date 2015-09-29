@@ -143,6 +143,10 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+= 2.6.0 =
+* FIX: A locale array() is now treated as "use default".
+* FIX: A locale array(' de ') is now treated as array('de')
+
 = 2.5.3 =
 
 * Maxmind vendor code was updated to the current version (2.3.3).
