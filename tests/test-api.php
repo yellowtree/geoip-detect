@@ -44,6 +44,14 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
 		$this->assertEquals('Deutschland', $record->country->name);
 
+		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, array(' de '));
+		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
+		$this->assertEquals('Deutschland', $record->country->name, 'Locales is not trimmed!');
+		
+		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, 'fr, en');
+		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
+		$this->assertEquals('Allemagne', $record->country->name);
+
 		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, array('nn', 'mm', 'de'));
 		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
 		$this->assertEquals('Deutschland', $record->country->name);

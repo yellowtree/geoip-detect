@@ -20,16 +20,19 @@ add_filter('body_class', 'geoip_detect2_add_body_classes');
 function geoip_detect2_convert_locale_format($locales) {
 	if (is_string($locales)) {
 		$locales = explode(',', $locales);
-		$locales = array_map('trim', $locales);
-		
-		$locales = array_unique($locales);
+	} else if (!is_array($locales)) {
+		$locales = array();
 	}
+	
+	$locales = array_map('trim', $locales);
+	$locales = array_unique($locales);
+	
 	return $locales;
 }
 add_filter('geoip_detect2_locales', 'geoip_detect2_convert_locale_format', 7);
 
 function geoip_detect2_add_default_locales($locales) {
-	if (is_null($locales)) {
+	if (empty($locales)) {
 		$locales = array();
 		
 		/* Needed? should be in get_locale()
