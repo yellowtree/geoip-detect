@@ -47,7 +47,6 @@ function geoip_detect2_shortcode($attr)
 	$skipCache = isset($attr['skip_cache']) && (strtolower($attr['skip_cache']) == 'true' || $attr['skip_cache'] == '1');
 	
 	$locales = isset($attr['lang']) ? $attr['lang'] . ',en' : 'en';
-	$locales = apply_filters('geoip_detect2_locales', $locales);
 
 	$defaultValue = isset($attr['default']) ? $attr['default'] : ''; 
 	

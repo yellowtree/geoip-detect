@@ -3,13 +3,15 @@
 use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 /**
  * Get Geo-Information for a specific IP
- * @param string 			$ip 		IP-Adress (IPv4 or IPv6). 'me' is the current IP of the server.
- * @param array(string)		$locales 	List of locale codes to use in name property
- * 										from most preferred to least preferred. (Default: Site language, en)
- * @param array				Property names with options.
+ * @param string 				$ip 		IP-Adress (IPv4 or IPv6). 'me' is the current IP of the server.
+ * @param array(string)	|string	$locales 	List of locale codes to use in name property
+ * 											from most preferred to least preferred. (Default: Site language, en)
+ * 											It is also possible to pass these locales as string ("fr, en")
+ * @param array								Property names with options.
  * 		@param boolean 		$skipCache		TRUE: Do not use cache for this request. (Default: FALSE)
  * 		@param float 		$timeout		Total transaction timeout in seconds (Precision+HostIP.info API only) 
  * 		@param int			$connectTimeout Initial connection timeout in seconds (Precision API only)
+ * 
  * @return YellowTree\GeoipDetect\DataSources\City	GeoInformation. (Actually, this is a subclass of \GeoIp2\Model\City)
  * 
  * @see https://github.com/maxmind/GeoIP2-php				API Usage
