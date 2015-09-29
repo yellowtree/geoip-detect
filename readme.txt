@@ -143,6 +143,10 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+= 2.5.3 =
+
+* Maxmind vendor code was updated to the current version (2.3.3).
+
 = 2.5.2 =
 * FIX: Also disallow proxy caching via HTTP header, if possible.
 * NEW: Shortcodes for the other API functions: `[geoip_detect2_get_current_source_description]`, `[geoip_detect2_get_client_ip]`, and `[geoip_detect2_get_external_ip_adress]`
@@ -158,7 +162,7 @@ Fixing automatic weekly updates.
 * FIX: Hostip.info did not set traits->ipAddress
 * FIX: Hostip.info does not include data for IPv6. Add a lookup error message.
 * NEW: Disable page caching if geoip-API was called (this is configurable in the options). (Supported plugins: WP Super Cache, W3 Total Cache, ZenCache, and possibly others)
-* Maxmind vendor code was updated to the current version.
+* Maxmind vendor code was updated to the current version (2.3.1).
 
 = 2.4.3 =
 * FIX: Options Page: The checkboxes didn't show (even though the option was saved) since 2.4.0
