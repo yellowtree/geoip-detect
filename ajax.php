@@ -91,7 +91,7 @@ if (!function_exists('http_send_status')) {
 	// Polyfill in this function if PHP < 7.0
 	
 	function http_send_status($status) {
-		//...
+		//...TODO
 		return true;
 	}
 }
