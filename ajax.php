@@ -53,8 +53,11 @@ function _geoip_detect_ajax_get_data($locales, $options = array()) {
 	$info = geoip_detect2_get_info_from_current_ip($locales, $options);
 	$data = $info->jsonSerialize();
 	
-	$locales = apply_filters('geoip_detect2_locales', $locales);;
+	// Fill in properties that are possible, but not existing (eg, for this data source)
+	// TODO: Hard code default array? Reflection API from Maxmind API and cache in a transient?	
+	
 	// Add the 'name' field
+	$locales = apply_filters('geoip_detect2_locales', $locales);
 	foreach ($data as &$prop) {
 		if (isset($prop['names']) && is_array($prop['names'])) {
 			$prop['name'] = _geoip_detect_ajax_get_name($prop['names'], $locales);
