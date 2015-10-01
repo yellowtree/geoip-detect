@@ -145,6 +145,7 @@ Fixing automatic weekly updates.
 
 = 2.5.3 =
 
+* FIX: Do not use PHP shortcode tags (<?=) as some servers do not support it with PHP 5.3
 * Maxmind vendor code was updated to the current version (2.3.3).
 
 = 2.5.2 =
@@ -154,7 +155,7 @@ Fixing automatic weekly updates.
 
 = 2.5.1 =
 * FIX: Upgrade script did change the source.
-* FIX: Page caching is only disabled on upgrade when set_css_country is disabled.
+* FIX: Page caching is only disabled on upgrade when `set_css_country` is disabled.
 
 = 2.5.0 =
 * CHANGE: The parameter $skipCache is now $options['skipCache']. Using $skipCache is deprecated, but still works. 
