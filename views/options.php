@@ -4,7 +4,7 @@ $options = $currentSource->getParameterHTML();
 
 <div class="wrap">
 	<h2><?php _e('GeoIP Detection', 'geoip-detect');?></h2>
-	<p><a href="tools.php?page=<?= GEOIP_PLUGIN_BASENAME ?>">Test IP Detection Lookup</a></p>
+	<p><a href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>">Test IP Detection Lookup</a></p>
 	<?php if (!empty($message)): ?>
 		<p class="geoip_detect_error">
 		<?php echo $message; ?>
@@ -37,7 +37,7 @@ $options = $currentSource->getParameterHTML();
 		<h3>Choose data source: </h3>
 		<a href="https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#which-data-source-should-i-choose">Help</a>
 		<?php foreach ($sources as $s) : $id = $s->getId();?>
-			<p><input type="radio" name="options[source]" value="<?= $id ?>" <?php if ($currentSource->getId() == $id) { echo 'checked="checked"'; } ?> /><?= $s->getLabel(); ?></p>
+			<p><input type="radio" name="options[source]" value="<?php echo $id ?>" <?php if ($currentSource->getId() == $id) { echo 'checked="checked"'; } ?> /><?php echo $s->getLabel(); ?></p>
 			<span class="detail-box">
 				<?php echo $s->getDescriptionHTML(); ?>
 			</span>

@@ -17,7 +17,7 @@ if ($shortcode_options) {
 ?>
 <div class="wrap">
 	<h2><?php _e('GeoIP Detection', 'geoip-detect');?></h2>
-	<a href="options-general.php?page=<?= GEOIP_PLUGIN_BASENAME ?>">Options</a>
+	<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>">Options</a>
 	
 	<p>
 		<?php printf(__('<b>Selected data source:</b> %s', 'geoip-detect'), geoip_detect2_get_current_source_description() ); ?>
