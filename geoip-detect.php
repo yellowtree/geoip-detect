@@ -43,6 +43,7 @@ define('GEOIP_REQUIRED_WP_VERSION', '3.5');
 define('GEOIP_PLUGIN_FILE', __FILE__);
 define('GEOIP_PLUGIN_DIR', dirname(GEOIP_PLUGIN_FILE));
 define('GEOIP_PLUGIN_BASENAME', plugin_basename(GEOIP_PLUGIN_FILE));
+define('GEOIP_DETECT_PLUGIN_URI', plugin_dir_url(GEOIP_PLUGIN_FILE));
 
 
 // Do PHP & WP Version check

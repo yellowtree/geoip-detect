@@ -37,8 +37,10 @@ function geoip_detect_ajax_get_info_from_current_ip() {
 	if (isset($_REQUEST['locales']))
 		$locales = $_REQUEST['locales'];
 	
-	$info = geoip_detect2_get_info_from_current_ip($locales);
-	$data = $info->jsonSerialize();
+	$data = _geoip_detect_ajax_get_data($locales);
+	
+	if ($data['extra']['error'])
+		http_send_status(401);
 	
 	echo json_encode($data);
 	exit;
@@ -46,3 +48,47 @@ function geoip_detect_ajax_get_info_from_current_ip() {
 
 add_action(        'wp_ajax_geoip_detect2_get_info_from_current_ip', 'geoip_detect_ajax_get_info_from_current_ip' );
 add_action( 'wp_ajax_nopriv_geoip_detect2_get_info_from_current_ip', 'geoip_detect_ajax_get_info_from_current_ip' );
+
+function _geoip_detect_ajax_get_data($locales, $options = array()) {
+	$info = geoip_detect2_get_info_from_current_ip($locales, $options);
+	$data = $info->jsonSerialize();
+	
+	$locales = apply_filters('geoip_detect2_locales', $locales);;
+	// Add the 'name' field
+	foreach ($data as &$prop) {
+		if (isset($prop['names']) && is_array($prop['names'])) {
+			$prop['name'] = _geoip_detect_ajax_get_name($prop['names'], $locales);
+		}
+	}
+	
+	return $data;
+}
+
+function _geoip_detect_ajax_get_name($names, $locales)
+{
+	foreach ($locales as $locale) {
+		if (isset($names[$locale])) {
+			return $names[$locale];
+		}
+	}
+	return '';
+}
+
+
+
+add_action('wp_enqueue_scripts', function() {
+	wp_enqueue_script('geoip-detect-js', GEOIP_DETECT_PLUGIN_URI . 'js/example_usage.js', array('jquery'), GEOIP_DETECT_VERSION, true);
+	
+	$data = array();
+	$data['ajaxurl'] = admin_url('/admin-ajax.php'); 
+	wp_localize_script('geoip-detect-js', 'geoip_detect', $data);
+});
+
+if (!function_exists('http_send_status')) {
+	// Polyfill in this function if PHP < 7.0
+	
+	function http_send_status($status) {
+		//...
+		return true;
+	}
+}
