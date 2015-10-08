@@ -51,6 +51,7 @@ function geoip_detect2_shortcode($attr)
 	$properties = explode('.', @$attr['property']);
 	
 	if (get_option('geoip-detect-ajax_enabled') && get_option('geoip-detect-ajax_shortcode')) {
+		wp_enqueue_script('geoip-detect-js');
 		$html_attr = array();
 		$html_attr['property'] = @$attr['property'];
 		$html_attr['locales'] = $locales;
@@ -100,6 +101,7 @@ add_shortcode('geoip_detect2', 'geoip_detect2_shortcode');
 
 function geoip_detect2_shortcode_client_ip($attr) {
 	if (get_option('geoip-detect-ajax_enabled') && get_option('geoip-detect-ajax_shortcode')) {
+		wp_enqueue_script('geoip-detect-js');
 		$html_attr = array();
 		$html_attr['property'] = 'traits.ip_address';
 	

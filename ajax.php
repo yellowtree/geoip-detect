@@ -61,10 +61,7 @@ function _geoip_detect_ajax_error($error) {
 function _geoip_detect_ajax_get_data($locales, $options = array()) {
 	$info = geoip_detect2_get_info_from_current_ip($locales, $options);
 	$data = $info->jsonSerialize();
-	
-	// Fill in properties that are possible, but not existing (eg, for this data source)
-	// TODO: Hard code default array
-	
+
 	// Add the 'name' field
 	$locales = apply_filters('geoip_detect2_locales', $locales);
 	foreach ($data as &$prop) {
@@ -89,7 +86,7 @@ function _geoip_detect_ajax_get_name($names, $locales)
 
 
 function _geoip_detect_register_javascript() {
-	wp_enqueue_script('geoip-detect-js', GEOIP_DETECT_PLUGIN_URI . 'js/geoip_detect.js', array('jquery'), GEOIP_DETECT_VERSION, true);
+	wp_register_script('geoip-detect-js', GEOIP_DETECT_PLUGIN_URI . 'js/geoip_detect.js', array('jquery'), GEOIP_DETECT_VERSION, true);
 
 	$data = array();
 	$data['ajaxurl'] = admin_url('/admin-ajax.php');

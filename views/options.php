@@ -66,6 +66,12 @@ $options = $currentSource->getParameterHTML();
 				If you want to get the geo-data via AJAX, enable it here. (<a href="https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation#js-api" target="_blank">Help</a>)
 			</span>
 		</p>
+		<p>
+			<input type="checkbox" name="options[ajax_shortcode]" value="1" <?php if (!empty($wp_options['ajax_shortcode'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Use JS API for shortcodes', 'geoip-detect'); ?><br />
+			<span class="detail-box">
+				This is useful only if you cache the HTML and enable the JS API above.
+			</span>
+		</p>
 		
 		<p>
 			<input type="checkbox" name="options[has_reverse_proxy]" value="1" <?php if (!empty($wp_options['has_reverse_proxy'])) { echo 'checked="checked"'; } ?>>&nbsp;The server is behind a reverse proxy<em>
