@@ -45,14 +45,10 @@ add_shortcode('geoip_detect', 'geoip_detect_shortcode');
 function geoip_detect2_shortcode($attr)
 {
 	$skipCache = isset($attr['skip_cache']) && (strtolower($attr['skip_cache']) == 'true' || $attr['skip_cache'] == '1');
-	
 	$locales = isset($attr['lang']) ? $attr['lang'] . ',en' : 'en';
-
 	$defaultValue = isset($attr['default']) ? $attr['default'] : ''; 
-	
-	$properties = explode('.', $attr['property']);
-	
 	$options = array('skipCache' => $skipCache);
+	$properties = explode('.', $attr['property']);
 	
 	$userInfo = geoip_detect2_get_info_from_current_ip($locales, $options);
 
