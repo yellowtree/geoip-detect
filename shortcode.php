@@ -48,7 +48,19 @@ function geoip_detect2_shortcode($attr)
 	$locales = isset($attr['lang']) ? $attr['lang'] . ',en' : 'en';
 	$defaultValue = isset($attr['default']) ? $attr['default'] : ''; 
 	$options = array('skipCache' => $skipCache);
-	$properties = explode('.', $attr['property']);
+	$properties = explode('.', @$attr['property']);
+	
+	if (get_option('geoip-detect-ajax_enabled') && get_option('geoip-detect-ajax_shortcode')) {
+		$html_attr = array();
+		$html_attr['property'] = @$attr['property'];
+		$html_attr['locales'] = $locales;
+		$html_attr['default'] = $defaultValue;
+		if ($skipCache && WP_DEBUG)
+			trigger_error('The option skipCache is ignored when using AJAX', E_USER_NOTICE);
+		
+		$html = '<span data-geoip="' . esc_attr(json_encode($html_attr)) . '"></span>';
+		return $html;
+	}
 	
 	$userInfo = geoip_detect2_get_info_from_current_ip($locales, $options);
 
@@ -87,6 +99,14 @@ function geoip_detect2_shortcode($attr)
 add_shortcode('geoip_detect2', 'geoip_detect2_shortcode');
 
 function geoip_detect2_shortcode_client_ip($attr) {
+	if (get_option('geoip-detect-ajax_enabled') && get_option('geoip-detect-ajax_shortcode')) {
+		$html_attr = array();
+		$html_attr['property'] = 'traits.ip_address';
+	
+		$html = '<span data-geoip="' . esc_attr(json_encode($html_attr)) . '"></span>';
+		return $html;
+	}
+	
 	$client_ip = geoip_detect2_get_client_ip();
 	geoip_detect_normalize_ip($client_ip);
 	

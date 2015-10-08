@@ -16,8 +16,16 @@ function geoip_detect_ajax_promise(locales) {
 // Example usage
 
 jQuery(document).ready(function($) {
-	geoip_detect_ajax_promise('de, en')
+	var shortcodes = $('[data-geoip]');
+	if (!shortcodes.length)
+		return;
+	
+	var promise = geoip_detect_ajax_promise('en');
 	.done(function(data) {
+		shortcodes.each(function() {
+			var value;
+			$(this).text(value);
+		});
 		// Ok case
 		$('.site-description').text(data.country.name);
 	}).fail(function(data) {

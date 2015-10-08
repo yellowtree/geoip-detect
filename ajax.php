@@ -89,7 +89,7 @@ function _geoip_detect_ajax_get_name($names, $locales)
 
 
 function _geoip_detect_register_javascript() {
-	wp_enqueue_script('geoip-detect-js', GEOIP_DETECT_PLUGIN_URI . 'js/example_usage.js', array('jquery'), GEOIP_DETECT_VERSION, true);
+	wp_enqueue_script('geoip-detect-js', GEOIP_DETECT_PLUGIN_URI . 'js/geoip_detect.js', array('jquery'), GEOIP_DETECT_VERSION, true);
 
 	$data = array();
 	$data['ajaxurl'] = admin_url('/admin-ajax.php');
