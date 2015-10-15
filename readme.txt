@@ -86,7 +86,7 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 
 = 2.5.3 =
 
-This is a security update (low impact).
+This is a security update (please update).
 
 = 2.5.1 =
 

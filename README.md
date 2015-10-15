@@ -46,6 +46,8 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 
 **System Requirements**: You will need at least PHP 5.3.1.
 
+*This extension is "charity-ware". If you are happy with it, please [leave a tip](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYUZHS8FH3CL) for the benefit of [this charity](http://www.jmem-hainichen.de/homepage). (See [FAQ](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#what-you-mean-by-this-plugin-is-charity-ware) for more infos.)*
+
 *This product can provide GeoLite2 data created by MaxMind, available from http://www.maxmind.com.*
 
 == Installation ==
@@ -56,16 +58,34 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 
 == Frequently Asked Questions ==
 
-The FAQ has moved to Github:
-https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ
+[Technically speaking, how could I verify if my visitor comes from Germany?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#technically-speaking-how-could-i-verify-if-my-visitor-comes-from-germany)
 
-You'll also find API usage examples there:
-https://github.com/yellowtree/wp-geoip-detect/wiki/API-Usage-Examples
+[Which data source should I choose?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#which-data-source-should-i-choose)
+
+[Can I change the time period how long the data is cached?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#can-i-change-the-time-period-how-long-the-data-is-cached)
+
+[The Maxmind Lite databases are licensed Creative Commons ShareAlike-Attribution. When do I need to give attribution?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#the-maxmind-lite-databases-are-licensed-creative-commons-sharealike-attribution-when-do-i-need-to-give-attribution)
+
+[Does this plugin work in a MultiSite-Network environment?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#does-this-plugin-work-in-a-multisite-network-environment)
+
+[What you mean by "This plugin is charity-ware"?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#what-you-mean-by-this-plugin-is-charity-ware)
+
+**Further documentation**
+
+[API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation)
+
+[Record Properties](https://github.com/yellowtree/wp-geoip-detect/wiki/Record-Properties)
+
+[API usage examples](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Usage-Examples)
 
 == Screenshots ==
 
 1. Lookup page (under Tools > GeoIP Lookup)
 2. Options page (under Preferences > GeoIP Detection)
+
+= 2.5.3 =
+
+This is a security update (please update).
 
 = 2.5.1 =
 
@@ -126,6 +146,12 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+= 2.5.3 =
+
+* FIX: (Security) Add nonces to backend to avoid CSRF (thanks to Gerard Arall).
+* FIX: Do not use PHP shortcode tags (<?=) as some servers do not support it with PHP 5.3
+* Maxmind vendor code was updated to the current version (2.3.3).
+
 = 2.5.2 =
 * FIX: Also disallow proxy caching via HTTP header, if possible.
 * NEW: Shortcodes for the other API functions: `[geoip_detect2_get_current_source_description]`, `[geoip_detect2_get_client_ip]`, and `[geoip_detect2_get_external_ip_adress]`
@@ -133,7 +159,7 @@ Fixing automatic weekly updates.
 
 = 2.5.1 =
 * FIX: Upgrade script did change the source.
-* FIX: Page caching is only disabled on upgrade when set_css_country is disabled.
+* FIX: Page caching is only disabled on upgrade when `set_css_country` is disabled.
 
 = 2.5.0 =
 * CHANGE: The parameter $skipCache is now $options['skipCache']. Using $skipCache is deprecated, but still works. 
@@ -141,7 +167,7 @@ Fixing automatic weekly updates.
 * FIX: Hostip.info did not set traits->ipAddress
 * FIX: Hostip.info does not include data for IPv6. Add a lookup error message.
 * NEW: Disable page caching if geoip-API was called (this is configurable in the options). (Supported plugins: WP Super Cache, W3 Total Cache, ZenCache, and possibly others)
-* Maxmind vendor code was updated to the current version.
+* Maxmind vendor code was updated to the current version (2.3.1).
 
 = 2.4.3 =
 * FIX: Options Page: The checkboxes didn't show (even though the option was saved) since 2.4.0
