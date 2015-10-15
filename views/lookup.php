@@ -30,6 +30,7 @@ if ($shortcode_options) {
 	</p>	
 		
 	<form method="post" action="#">
+		<?php wp_nonce_field( 'geoip_detect_lookup' ); ?>
 		<input type="hidden" name="action" value="lookup" />
 		IP: <input type="text" placeholder="Enter an IP (v4 or v6)" name="ip" value="<?php echo isset($_REQUEST['ip']) ? esc_attr($_REQUEST['ip']) : esc_attr(geoip_detect2_get_client_ip()); ?>" /><br />
 		<label>Use these locales: 

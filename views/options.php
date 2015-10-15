@@ -22,6 +22,7 @@ $options = $currentSource->getParameterHTML();
 	<p>
 		<form method="post" action="#">
 			<input type="hidden" name="action" value="options-source" />
+			<?php wp_nonce_field( 'geoip_detect_options-source' ); ?>
 			<p><?php echo $options; ?></p>
 			<p>
 			<input type="submit" class="button button-primary" value="<?php _e('Save', 'geoip-detect'); ?>" />
@@ -34,6 +35,7 @@ $options = $currentSource->getParameterHTML();
 	<br /><br />
 	<form method="post" action="#">
 		<input type="hidden" name="action" value="choose" />
+		<?php wp_nonce_field( 'geoip_detect_choose' ); ?>
 		<h3>Choose data source: </h3>
 		<a href="https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#which-data-source-should-i-choose">Help</a>
 		<?php foreach ($sources as $s) : $id = $s->getId();?>
@@ -47,6 +49,7 @@ $options = $currentSource->getParameterHTML();
 	</form>
 	<form method="post" action="#">
 		<input type="hidden" name="action" value="options" />
+		<?php wp_nonce_field( 'geoip_detect_options' ); ?>
 		<h3>General Options</h3>
 		<p>
 			<input type="checkbox" name="options[set_css_country]" value="1" <?php if (!empty($wp_options['set_css_country'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Add a country-specific CSS class to the &lt;body&gt;-Tag.', 'geoip-detect'); ?><br />

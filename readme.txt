@@ -84,6 +84,10 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 
 == Upgrade Notice == 
 
+= 2.5.3 =
+
+This is a security update (low impact).
+
 = 2.5.1 =
 
 Hotfix: If you upgraded to 2.5.0, please verify that the correct datasource is still chosen. Sorry for any inconvenience caused.
@@ -145,6 +149,7 @@ Fixing automatic weekly updates.
 
 = 2.5.3 =
 
+* FIX: (Security) Add nonces to backend to avoid CSRF (thanks to Gerard Arall).
 * FIX: Do not use PHP shortcode tags (<?=) as some servers do not support it with PHP 5.3
 * Maxmind vendor code was updated to the current version (2.3.3).
 

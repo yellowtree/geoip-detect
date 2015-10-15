@@ -25,8 +25,10 @@ class AutoDataSource extends ManualDataSource
 
 	public function getParameterHTML() {
 		$text_update = __('Update now', 'geoip-detect');
+		$nonce_field = wp_nonce_field( 'geoip_detect_update' );
 		$html = <<<HTML
 <form method="post" action="#">
+		$nonce_field
 		<input type="hidden" name="action" value="update" />
 		<input type="submit" class="button button-secondary" value="$text_update" />
 </form>

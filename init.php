@@ -54,13 +54,13 @@ function geoip_detect_admin_notice_database_missing() {
         
 	
 	
-	<form action="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME; ?>"
-		method="post">
+	<form action="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME; ?>" method="post">
+		<?php wp_nonce_field( 'geoip_detect_update' ); ?>
+		<input type="hidden" name="source" value="auto" />
+		<input type="hidden" name="action" value="update" />
 		<p>
-			<input type="hidden" name="source" value="auto" /> <input
-				type="hidden" name="action" value="update" /> <input type="submit"
-				value="Install now" class="button button-primary" /> &nbsp;&nbsp;<a
-				href="?geoip_detect_dismiss_notice=hostinfo_used"><?php _e('Keep using hostip.info', 'geoip-detect'); ?></a>
+			  <input type="submit" value="Install now" class="button button-primary" /> &nbsp;&nbsp;
+				<a href="?geoip_detect_dismiss_notice=hostinfo_used"><?php _e('Keep using hostip.info', 'geoip-detect'); ?></a>
 		</p>
 	</form>
     </div>
