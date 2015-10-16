@@ -40,9 +40,20 @@ class ManualDataSource extends AbstractDataSource {
 	}
 
 	public function getParameterHTML() { 
-		$manual_file = get_option('geoip-detect-manual_file');
+		$manual_file = esc_attr(get_option('geoip-detect-manual_file'));
+		$current_value = '';
+		
+		if (	get_option('geoip-detect-manual_file_validated') && 
+				get_option('geoip-detect-manual_file') 				!= get_option('geoip-detect-manual_file_validated') &&
+				ABSPATH . get_option('geoip-detect-manual_file') 	!= get_option('geoip-detect-manual_file_validated')
+			) {
+			$current_value = '<br >Current value: ' . get_option('geoip-detect-manual_file_validated');
+		} 
+
 		$html = <<<HTML
-Filepath to mmdb-file: <input type="text" size="40" name="options_manual[manual_file]" value="$manual_file" /><br />		
+		<p>Filepath to mmdb-file: <input type="text" size="40" name="options_manual[manual_file]" value="$manual_file" /></p>
+		<span class="detail-box">e.g. wp-content/uploads/GeoLite2-Country.mmdb or absolute filepath$current_value</span>
+		<br />	
 HTML;
 		
 		return $html;
@@ -51,12 +62,15 @@ HTML;
 	public function saveParameters($post) {
 		$message = '';
 		
-		if (!empty($post['options_manual']['manual_file'])) {
-			$validated_filename = self::maxmindValidateFilename($post['options_manual']['manual_file']);
-			update_option('geoip-detect-manual_file_validated', $validated_filename);
-		
-			if (empty($validated_filename) || !$this->isWorking()) {
+		$file = @$post['options_manual']['manual_file'];
+		if (!empty($file)) {
+			update_option('geoip-detect-manual_file', $file);
+			
+			$validated_filename = self::maxmindValidateFilename($file);
+			if (empty($validated_filename)) {
 				$message .= __('The manual datafile has not been found or is not a mmdb-File. ', 'geoip-detect');
+			} else {
+				update_option('geoip-detect-manual_file_validated', $validated_filename);
 			}
 		}
 		
@@ -107,6 +121,7 @@ HTML;
 	}
 	
 	public static function maxmindValidateFilename($filename) {
+		// Maybe make path absolute
 		if (file_exists(ABSPATH . $filename))
 			$filename = ABSPATH . $filename;
 		
@@ -114,7 +129,7 @@ HTML;
 			return '';
 	
 		try {
-			$reader = new \GeoIp2\Database\Reader ($filename);
+			$reader = new \GeoIp2\Database\Reader($filename);
 			$metadata = $reader->metadata();
 			$reader->close();
 		} catch ( \Exception $e ) {
@@ -130,14 +145,14 @@ HTML;
 		$reader = $this->getReader();
 		
 		if (!method_exists($reader, 'metadata'))
-			return 'Unknown';
+			return 'Maxmind File Database (file does not exist or is not readable)';
 		
 		try {
 			$metadata = $reader->metadata();
 			$desc = $metadata->description;
 			return $desc['en'];
 		} catch (\Exception $e) {
-			return 'Unknown';
+			return 'Maxmind File Database (file does not exist or is not readable)';
 		}
 	} 
 }

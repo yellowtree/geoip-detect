@@ -147,6 +147,8 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+* FIX: Manual datasource filepath handling corrected.
+
 = 2.5.3 =
 
 * FIX: (Security) Add nonces to backend to avoid CSRF (thanks to Gerard Arall).
