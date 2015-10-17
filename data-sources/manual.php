@@ -9,16 +9,16 @@ define('GEOIP_DETECT_DATA_FILENAME', 'GeoLite2-City.mmdb');
 class ManualDataSource extends AbstractDataSource {
 
 	public function getId() { return 'manual'; }
-	public function getLabel() { return 'Manual download & update of a Maxmind City or Country database'; }
+	public function getLabel() { return __('Manual download & update of a Maxmind City or Country database', 'geoip-detect'); }
 
-	public function getDescriptionHTML() { return '<a href="http://dev.maxmind.com/geoip/geoip2/geolite2/" target="_blank">Free version</a> - <a href="https://www.maxmind.com/en/geoip2-country-database" target="_blank">Commercial Version</a>'; }
+	public function getDescriptionHTML() { return __('<a href="http://dev.maxmind.com/geoip/geoip2/geolite2/" target="_blank">Free version</a> - <a href="https://www.maxmind.com/en/geoip2-country-database" target="_blank">Commercial Version</a>', 'geoip-detect'); }
 	public function getStatusInformationHTML() {
 		$built = $last_update = 0;
 		$date_format = get_option('date_format') . ' ' . get_option('time_format');
 		$file = $this->maxmindGetFilename();
 		
 		if (!$file)
-			return '<b>No Maxmind database found.</b>';
+			return '<b>' . __('No Maxmind database found.', 'geoip-detect') . '</b>';
 		
 		$relative_file = geoip_detect_get_relative_path(ABSPATH, $file);
 		
@@ -47,7 +47,7 @@ class ManualDataSource extends AbstractDataSource {
 				get_option('geoip-detect-manual_file') 				!= get_option('geoip-detect-manual_file_validated') &&
 				ABSPATH . get_option('geoip-detect-manual_file') 	!= get_option('geoip-detect-manual_file_validated')
 			) {
-			$current_value = '<br >Current value: ' . get_option('geoip-detect-manual_file_validated');
+			$current_value = '<br >' . sprintf(__('Current value: %s', 'geoip-detect'), get_option('geoip-detect-manual_file_validated'));
 		} 
 
 		$html = <<<HTML
@@ -88,7 +88,7 @@ HTML;
 				$reader = new \GeoIp2\Database\Reader ( $data_file, $locales );
 			} catch ( \Exception $e ) {
 				if (WP_DEBUG)
-					echo 'Error while creating reader for "' . $data_file . '": ' . $e->getMessage ();
+					echo printf(__('Error while creating reader for "%s": %s', 'geoip-detect'), $filename, $e->getMessage ());
 			}
 		}
 		
@@ -134,7 +134,7 @@ HTML;
 			$reader->close();
 		} catch ( \Exception $e ) {
 			if (WP_DEBUG)
-				echo 'Error while creating reader for "' . $filename . '": ' . $e->getMessage ();
+				echo printf(__('Error while creating reader for "%s": %s', 'geoip-detect'), $filename, $e->getMessage ());
 			return '';
 		}
 	
@@ -145,14 +145,14 @@ HTML;
 		$reader = $this->getReader();
 		
 		if (!method_exists($reader, 'metadata'))
-			return 'Maxmind File Database (file does not exist or is not readable)';
+			return __('Maxmind File Database (file does not exist or is not readable)', 'geoip-detect');
 		
 		try {
 			$metadata = $reader->metadata();
 			$desc = $metadata->description;
 			return $desc['en'];
 		} catch (\Exception $e) {
-			return 'Maxmind File Database (file does not exist or is not readable)';
+			return __('Maxmind File Database (file does not exist or is not readable)', 'geoip-detect');
 		}
 	} 
 }

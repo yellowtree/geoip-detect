@@ -32,14 +32,14 @@ if ($shortcode_options) {
 	<form method="post" action="#">
 		<?php wp_nonce_field( 'geoip_detect_lookup' ); ?>
 		<input type="hidden" name="action" value="lookup" />
-		IP: <input type="text" placeholder="Enter an IP (v4 or v6)" name="ip" value="<?php echo isset($_REQUEST['ip']) ? esc_attr($_REQUEST['ip']) : esc_attr(geoip_detect2_get_client_ip()); ?>" /><br />
-		<label>Use these locales: 
+		<?php _e('IP', 'geoip-detect')?>: <input type="text" placeholder="<?php _e('Enter an IP (v4 or v6)', 'geoip-detect')?>" name="ip" value="<?php echo isset($_REQUEST['ip']) ? esc_attr($_REQUEST['ip']) : esc_attr(geoip_detect2_get_client_ip()); ?>" /><br />
+		<label><?php _e('Use these locales:', 'geoip-detect'); ?> 
 			<select name="locales">
-				<option value="" <?php if (empty($_POST['locales'])) echo 'selected="selected"'?>>Default (Current site language, English otherwise)</option>
-				<option value="en" <?php if (!empty($_POST['locales']) && $_POST['locales'] == 'en') echo 'selected="selected"'?>>English only</option>
-				<option value="fr,en" <?php if (!empty($_POST['locales']) && $_POST['locales'] == 'fr,en') echo 'selected="selected"'?>>French, English otherwise</option>
+				<option value="" <?php if (empty($_POST['locales'])) echo 'selected="selected"'?>><?php _e('Default (Current site language, English otherwise)', 'geoip-detect')?></option>
+				<option value="en" <?php if (!empty($_POST['locales']) && $_POST['locales'] == 'en') echo 'selected="selected"'?>><?php _e('English only', 'geoip-detect')?></option>
+				<option value="fr,en" <?php if (!empty($_POST['locales']) && $_POST['locales'] == 'fr,en') echo 'selected="selected"'?>><?php _e('French, English otherwise', 'geoip-detect')?></option>
 			</select> </label><br />
-		<label><input type="checkbox" name="skip_cache" value="1" <?php if (!empty($_POST['skip_cache'])) echo 'checked="checked"'?>/> Skip cache</label><br />
+		<label><input type="checkbox" name="skip_cache" value="1" <?php if (!empty($_POST['skip_cache'])) echo 'checked="checked"'?>/><?php _e('Skip cache', 'geoip-detect')?></label><br />
 		<br />
 		<input type="submit" class="button button-secondary" value="<?php _e('Lookup', 'geoip-detect'); ?>" />
 	</form>
@@ -126,7 +126,7 @@ if ($shortcode_options) {
 	<p>
 		<?php printf(__('See %s for more documentation.', 'geoip-detect'), '<a href="http://dev.maxmind.com/geoip/geoip2/web-services/" target="_blank">http://dev.maxmind.com/geoip/geoip2/web-services/</a>');?>
 	</p>
-	
+	<?php require(GEOIP_PLUGIN_DIR . '/views/footer.php'); ?>
 </div>	
 <style>
 .geoip_detect_error {

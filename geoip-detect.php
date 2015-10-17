@@ -16,7 +16,7 @@ Requires WP:     3.5
 Requires PHP:    5.3.1
 */
 
-define('GEOIP_DETECT_VERSION', '2.5.3');
+define('GEOIP_DETECT_VERSION', '2.5.4');
 
 /*
 Copyright 2013-2015 Yellow Tree, Siegen, Germany

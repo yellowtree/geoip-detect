@@ -61,16 +61,16 @@ class PrecisionDataSource extends AbstractDataSource {
 	}
 	
 	public function getId() { return 'precision'; }
-	public function getLabel() { return 'Maxmind Precision Web-API'; }
+	public function getLabel() { return __('Maxmind Precision Web-API', 'geoip-detect'); }
 
-	public function getDescriptionHTML() { return '<a href="https://www.maxmind.com/en/geoip2-precision-services">Maxmind Precision Services</a>'; }
+	public function getDescriptionHTML() { return __('<a href="https://www.maxmind.com/en/geoip2-precision-services">Maxmind Precision Services</a>', 'geoip-detect'); }
 	public function getStatusInformationHTML() { 
 		$html = '';
-		$html .= 'API Type: ' . ucfirst(get_option('geoip-detect-precision_api_type', 'city')) . '<br />';
+		$html .= sprintf(__('API Type: %s', 'geoip-detect'), ucfirst(get_option('geoip-detect-precision_api_type', 'city'))) . '<br />';
 		
 		$remaining = get_option('geoip-detect-precision-remaining_credits');
 		if ($remaining !== false) {
-			$html .= 'Remaining Credits: ca. ' . $remaining . '<br />';
+			$html .= sprintf(__('Remaining Credits: ca. %s', 'geoip-detect'), $remaining) . '<br />';
 		}
 		
 		if (!$this->isWorking())
@@ -84,10 +84,14 @@ class PrecisionDataSource extends AbstractDataSource {
 		$user_secret = esc_attr(get_option('geoip-detect-precision-user_secret'));
 		$current_api_type = get_option('geoip-detect-precision_api_type');
 		
+		$label_user_id = __('User ID:', 'geoip-detect');
+		$label_user_secret = __('User Secret:', 'geoip-detect');
+		$label_api_type = __('API Type:', 'geoip-detect');
+		
 		$html = <<<HTML
-User ID: <input type="text" size="10" name="options_precision[user_id]" value="$user_id" /><br />		
-User Secret: <input type="text" autocomplete="off" size="20" name="options_precision[user_secret]" value="$user_secret" /><br />
-API Type: <select name="options_precision[api_type]">
+$label_user_id <input type="text" size="10" name="options_precision[user_id]" value="$user_id" /><br />		
+$label_user_secret <input type="text" autocomplete="off" size="20" name="options_precision[user_secret]" value="$user_secret" /><br />
+$label_api_type <select name="options_precision[api_type]">
 HTML;
 		
 		foreach ($this->known_api_types as $name => $api_type) {
