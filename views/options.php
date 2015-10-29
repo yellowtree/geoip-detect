@@ -3,7 +3,7 @@ $options = $currentSource->getParameterHTML();
 ?>
 
 <div class="wrap">
-	<h2><?php _e('GeoIP Detection', 'geoip-detect');?></h2>
+	<h1><?php _e('GeoIP Detection', 'geoip-detect');?></h1>
 	<p><a href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>"><?php _e('Test IP Detection Lookup', 'geoip-detect')?></a></p>
 	<?php if (!empty($message)): ?>
 		<p class="geoip_detect_error">
@@ -18,7 +18,7 @@ $options = $currentSource->getParameterHTML();
 		<?php echo $currentSource->getStatusInformationHTML(); ?>
 	</p>
 	<?php if ($options) : ?>
-	<h3><?php _e('Options for this data source', 'geoip-detect'); ?></h3>
+	<h2><?php _e('Options for this data source', 'geoip-detect'); ?></h2>
 	<p>
 		<form method="post" action="#">
 			<input type="hidden" name="action" value="options-source" />
@@ -36,7 +36,7 @@ $options = $currentSource->getParameterHTML();
 	<form method="post" action="#">
 		<input type="hidden" name="action" value="choose" />
 		<?php wp_nonce_field( 'geoip_detect_choose' ); ?>
-		<h3><?php _e('Choose data source:', 'geoip-detect'); ?></h3>
+		<h2><?php _e('Choose data source:', 'geoip-detect'); ?></h2>
 		<a href="https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#which-data-source-should-i-choose">Help</a>
 		<?php foreach ($sources as $s) : $id = $s->getId();?>
 			<p><input type="radio" name="options[source]" value="<?php echo $id ?>" <?php if ($currentSource->getId() == $id) { echo 'checked="checked"'; } ?> /><?php echo $s->getLabel(); ?></p>
@@ -91,7 +91,7 @@ $options = $currentSource->getParameterHTML();
 	</form>
 	<?php if (!$ipv6_supported) : ?>
 	<div class="geoip_detect_error">
-		<h4><?php _e('IPv6 not supported', 'geoip-detect'); ?></h4>
+		<h3><?php _e('IPv6 not supported', 'geoip-detect'); ?></h3>
 		<p>
 			<?php _e('Your version of PHP is compiled without IPv6-support, so it is not possible to lookup adresses like "2001:4860:4801:5::91". For more information see <a href="https://php.net/manual/en/function.inet-pton.php">PHP documentation & user comments</a>.', 'geoip-detect'); ?>
 		</p>

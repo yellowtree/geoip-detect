@@ -16,7 +16,7 @@ if ($shortcode_options) {
 }
 ?>
 <div class="wrap">
-	<h2><?php _e('GeoIP Detection', 'geoip-detect');?></h2>
+	<h1><?php _e('GeoIP Detection', 'geoip-detect');?></h1>
 	<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>">Options</a>
 	
 	<p>
@@ -29,6 +29,7 @@ if ($shortcode_options) {
 		<br />
 	</p>	
 		
+	<h2>Test Lookup</h2>
 	<form method="post" action="#">
 		<?php wp_nonce_field( 'geoip_detect_lookup' ); ?>
 		<input type="hidden" name="action" value="lookup" />
