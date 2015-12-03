@@ -43,7 +43,7 @@ function geoip_detect_do_upgrade($old_version) {
  * @param string $version The version to which the plugin is updating.
  */
 function geoip_detect_maybe_upgrade_version( ) {
-	if ( !is_admin() || !is_user_logged_in())
+	if (!is_admin())
 		return;
 
 	$version = GEOIP_DETECT_VERSION;
