@@ -146,6 +146,11 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+= 2.5.4 =
+
+* FIX: Manual datasource filepath handling corrected.
+* FIX: Potential incompability with BuddyPress removed.
+
 = 2.5.3 =
 
 * FIX: (Security) Add nonces to backend to avoid CSRF (thanks to Gerard Arall).
