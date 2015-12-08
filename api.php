@@ -150,6 +150,8 @@ function geoip_detect2_get_client_ip() {
 	if (isset($_SERVER['REMOTE_ADDR']))
 		$ip = $_SERVER['REMOTE_ADDR'];
 	
+	$ip_list = array(); // set fallback $ip_list variable for filter
+	
 	if (get_option('geoip-detect-has_reverse_proxy', 0) && isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
 	{
 		$ip_list = explode(',', @$_SERVER["HTTP_X_FORWARDED_FOR"]);
@@ -178,7 +180,7 @@ function geoip_detect2_get_client_ip() {
 	if (!$ip)
 		$ip = '::1'; // By default, use localhost
 	
-	$ip = apply_filters('geoip2_detect2_client_ip', $ip);
+	$ip = apply_filters('geoip2_detect2_client_ip', $ip, $ip_list);
 	
 	return $ip;
 }
