@@ -150,7 +150,7 @@ function geoip_detect2_get_client_ip() {
 	if (isset($_SERVER['REMOTE_ADDR']))
 		$ip = $_SERVER['REMOTE_ADDR'];
 	
-	$ip_list = array(); // set fallback $ip_list variable for filter
+	$ip_list = array($ip);
 	
 	if (get_option('geoip-detect-has_reverse_proxy', 0) && isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
 	{
