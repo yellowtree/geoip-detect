@@ -170,7 +170,6 @@ function geoip_detect2_get_client_ip() {
 			$ip_list[] = $ip;
 				
 			$ip_list = array_diff($ip_list, $trusted_proxies);
-
 		} 
 		
 		// Each Proxy server append their information at the end, so the last IP is most trustworthy.
