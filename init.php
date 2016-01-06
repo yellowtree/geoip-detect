@@ -43,7 +43,7 @@ function geoip_detect_admin_notice_database_missing() {
 
 	$url = '<a href="tools.php?page=' . GEOIP_PLUGIN_BASENAME . '">GeoIP Detection</a>';
     ?>
-<div class="error">
+<div class="error notice is-dismissible">
 	<p style="float: right">
 		<a href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_dismiss_notice=hostinfo_used"><?php _e('Dismiss notice', 'geoip-detect'); ?></a>
 	
@@ -59,7 +59,7 @@ function geoip_detect_admin_notice_database_missing() {
 		<input type="hidden" name="source" value="auto" />
 		<input type="hidden" name="action" value="update" />
 		<p>
-			  <input type="submit" value="Install now" class="button button-primary" /> &nbsp;&nbsp;
+				<input type="submit" value="<?php esc_attr_e('Install now', 'geoip-detect');?>" class="button button-primary" /> &nbsp;&nbsp;
 				<a href="?geoip_detect_dismiss_notice=hostinfo_used"><?php _e('Keep using hostip.info', 'geoip-detect'); ?></a>
 		</p>
 	</form>
