@@ -14,6 +14,11 @@ function geoip_detect_defines() {
 add_action('plugins_loaded', 'geoip_detect_defines');
 
 
+// Load Locales
+function geoip_detect_load_textdomain() {
+  load_plugin_textdomain( 'geoip-detect', false, GEOIP_PLUGIN_BASENAME . '/languages' ); 
+}
+add_action( 'plugins_loaded', 'geoip_detect_load_textdomain' );
 
 
 function geoip_detect_enqueue_admin_notices() {
