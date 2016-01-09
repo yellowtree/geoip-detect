@@ -126,4 +126,19 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 		
 		$this->assertEquals($expected, $checkObject);
 	}
+
+    /**
+     * Empty method to disable integration with WP Core Trac.
+     *
+     * Overrides the parent's method to disable fetching information
+     * from the WordPress Core Trac ticket tracker which causes tests
+     * with the `@ticket` annotation in our own test cases to fail CI.
+     *
+     * @link https://core.trac.wordpress.org/browser/tags/4.4/tests/phpunit/includes/testcase.php#L434
+     *
+     * @return void
+     */
+    protected function checkRequirements () {
+        // do nothing!
+    }
 } 
