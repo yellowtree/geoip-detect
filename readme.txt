@@ -147,6 +147,11 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+= 2.5.5 =
+
+* Clean-up changes to prepare i18n.
+* FIX: Only show the "no database installed" admin notice to admins (props @meitar)
+
 = 2.5.4 =
 
 * FIX: Manual datasource filepath handling corrected.
