@@ -43,7 +43,7 @@ add_action('admin_init', 'geoip_detect_enqueue_admin_notices');
 
 function geoip_detect_admin_notice_database_missing() {
 	$ignored_notices = (array) get_user_meta(get_current_user_id(), 'geoip_detect_dismissed_notices', true);
-	if (in_array('hostinfo_used', $ignored_notices))
+	if (in_array('hostinfo_used', $ignored_notices) || !current_user_can('manage_options'))
 		return;
 
 	$url = '<a href="tools.php?page=' . GEOIP_PLUGIN_BASENAME . '">GeoIP Detection</a>';
