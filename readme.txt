@@ -84,6 +84,10 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 
 == Upgrade Notice == 
 
+= 2.5.6 =
+
+Some users reported problems with open_basedir-notices - if that's you, this update will help. Otherwise there are no changes.
+
 = 2.5.3 =
 
 This is a security update (please update).
@@ -146,6 +150,9 @@ Fixing automatic weekly updates.
 
 
 == Changelog ==
+
+= 2.5.6 =
+* FIX: Removed noticed concerning open_basedir.
 
 = 2.5.5 =
 
