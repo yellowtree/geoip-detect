@@ -74,6 +74,7 @@ echo
 echo "Creating local copy of SVN repo ..."
 svn co $SVNURL -N $SVNPATH
 svn up $SVNPATH/trunk
+svn up --set-depth empty $SVNPATH/tags
 
 echo "Exporting the HEAD of master from git to the trunk of SVN"
 git checkout-index -a -f --prefix=$SVNPATH/trunk/
@@ -110,7 +111,7 @@ svn copy trunk/ tags/$NEWVERSION/
 cd $SVNPATH/tags/$NEWVERSION
 svn commit --username=$SVNUSER -m "Tagging version $NEWVERSION"
 
-# echo "Removing temporary directory $SVNPATH"
+echo "Removing temporary directory $SVNPATH"
 rm -fr $SVNPATH/
 
 echo "*** FIN ***"

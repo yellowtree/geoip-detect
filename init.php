@@ -16,7 +16,7 @@ add_action('plugins_loaded', 'geoip_detect_defines');
 
 // Load Locales
 function geoip_detect_load_textdomain() {
-  load_plugin_textdomain( 'geoip-detect', false, GEOIP_PLUGIN_BASENAME . '/languages' ); 
+  load_plugin_textdomain( 'geoip-detect', false, GEOIP_PLUGIN_DIR . '/languages' ); 
 }
 add_action( 'plugins_loaded', 'geoip_detect_load_textdomain' );
 
