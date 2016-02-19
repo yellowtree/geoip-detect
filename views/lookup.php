@@ -15,9 +15,9 @@ if ($shortcode_options) {
 	}
 }
 ?>
-<div class="wrap">
+<div class="wrap geoip-detect-wrap">
 	<h1><?php _e('GeoIP Detection', 'geoip-detect');?></h1>
-	<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>">Options</a>
+	<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>"><?php _e('Options', 'geoip-detect');?></a>
 	
 	<p>
 		<?php printf(__('<b>Selected data source:</b> %s', 'geoip-detect'), geoip_detect2_get_current_source_description() ); ?>
@@ -29,7 +29,7 @@ if ($shortcode_options) {
 		<br />
 	</p>	
 		
-	<h2>Test Lookup</h2>
+	<h2><?php _e('Test IP Detection Lookup ', 'geoip-detect');?></h2>
 	<form method="post" action="#">
 		<?php wp_nonce_field( 'geoip_detect_lookup' ); ?>
 		<input type="hidden" name="action" value="lookup" />
@@ -42,13 +42,13 @@ if ($shortcode_options) {
 			</select> </label><br />
 		<label><input type="checkbox" name="skip_cache" value="1" <?php if (!empty($_POST['skip_cache'])) echo 'checked="checked"'?>/><?php _e('Skip cache', 'geoip-detect')?></label><br />
 		<br />
-		<input type="submit" class="button button-secondary" value="<?php _e('Lookup', 'geoip-detect'); ?>" />
+		<input type="submit" class="button button-primary" value="<?php _e('Lookup', 'geoip-detect'); ?>" />
 	</form>
 	<?php if ($ip_lookup_result !== false) :
 			if (is_object($ip_lookup_result)) :
 			$record = $ip_lookup_result; 
 			?>
-	<h3>Lookup Result</h3>
+	<h3><?php _e('Lookup Result', 'geoip-detect'); ?></h3>
 	<p>
 		<?php printf(__('The function %s returns an object:', 'geoip-detect'), "<code>\$record = geoip_detect2_get_info_from_ip('" . esc_html($request_ip) . "', " . var_export($request_locales, true) . ($request_skipCache ? ', TRUE' : '') .");</code>"); ?><br />
 		<?php printf(__('Lookup duration: %.5f s', 'geoip-detect'), $ip_lookup_duration); ?>
@@ -130,6 +130,10 @@ if ($shortcode_options) {
 	<?php require(GEOIP_PLUGIN_DIR . '/views/footer.php'); ?>
 </div>	
 <style>
+.geoip-detect-wrap select {
+	max-width: 100%;
+}
+
 .geoip_detect_error {
     background-color: rgb(255, 255, 255);
     border-left: rgb(255, 0, 0) solid 4px;
