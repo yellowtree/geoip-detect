@@ -151,6 +151,9 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+= 2.5.7 =
+* ADD: Shortcodes can now optionally specifiy the IP: `[geoip_detect2 property="country.isoCode" ip="(ipv4 or ipv6)"]`
+
 = 2.5.6 =
 * FIX: Removed noticed concerning open_basedir.
 
