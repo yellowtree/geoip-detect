@@ -55,7 +55,7 @@ function geoip_detect_admin_notice_database_missing() {
 	
 	<h3><?php _e( 'GeoIP Detection: No database installed', 'geoip-detect' ); ?></h3>
         <p><?php printf(__('The Plugin %s is currently using the Webservice <a href="http://hostip.info" target="_blank">hostip.info</a> as data source. <br />You can click on the button below to download and install Maxmind GeoIPv2 Lite City now.', 'geoip-detect' ), $url); ?></p>
-	<p><?php printf(__('This database is licenced <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA</a>. See <a href="http://dev.maxmind.com/geoip/geoip2/geolite2/#License">License</a> for details.')); ?>
+	<p><?php printf(__('This database is licenced <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA</a>. See <a href="http://dev.maxmind.com/geoip/geoip2/geolite2/#License">License</a> for details.', 'geoip-detect')); ?>
         
 	
 	

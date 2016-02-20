@@ -50,9 +50,11 @@ class ManualDataSource extends AbstractDataSource {
 			$current_value = '<br >' . sprintf(__('Current value: %s', 'geoip-detect'), get_option('geoip-detect-manual_file_validated'));
 		} 
 
+		$label = __('Filepath to mmdb-file:', 'geoip-detect');
+		$desc = __('e.g. wp-content/uploads/GeoLite2-Country.mmdb or absolute filepath', 'geoip-detect');
 		$html = <<<HTML
-		<p>Filepath to mmdb-file: <input type="text" size="40" name="options_manual[manual_file]" value="$manual_file" /></p>
-		<span class="detail-box">e.g. wp-content/uploads/GeoLite2-Country.mmdb or absolute filepath$current_value</span>
+		<p>$label <input type="text" size="40" name="options_manual[manual_file]" value="$manual_file" /></p>
+		<span class="detail-box">$desc $current_value</span>
 		<br />	
 HTML;
 		
