@@ -19,8 +19,7 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
  * @since 2.4.0 New parameter $skipCache
  * @since 2.5.0 Parameter $skipCache has been renamed to $options with 'skipCache' property
  */
-function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array())
-{
+function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()) {
 	_geoip_maybe_disable_pagecache();
 	// 1) Processing the parameters.
 	
@@ -90,8 +89,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()
  * @since 2.4.0 New parameter $skipCache
  * @since 2.5.0 Parameter $skipCache has been renamed to $options with 'skipCache' property
  */
-function geoip_detect2_get_info_from_current_ip($locales = null, $options = array())
-{
+function geoip_detect2_get_info_from_current_ip($locales = null, $options = array()) {
 	return geoip_detect2_get_info_from_ip(geoip_detect2_get_client_ip(), $locales, $options);
 }
 
@@ -195,8 +193,7 @@ function geoip_detect2_get_client_ip() {
  * @since 2.4.3 Reading option 'external_ip' first.
  * @since 2.5.2 New param $unfiltered that can bypass the option.
  */
-function geoip_detect2_get_external_ip_adress($unfiltered = false)
-{
+function geoip_detect2_get_external_ip_adress($unfiltered = false) {
 	$ip_cache = '';
 	
 	if (!$unfiltered)
