@@ -143,12 +143,14 @@ function geoip_detect2_get_current_source_description($source = null) {
 function geoip_detect2_get_client_ip() {
 	_geoip_maybe_disable_pagecache();
 	
-	$ip = '::1';
+	$ip = '';
 	
 	if (isset($_SERVER['REMOTE_ADDR']))
 		$ip = $_SERVER['REMOTE_ADDR'];
 	
-	$ip_list = array($ip);
+	// REMOTE_ADDR may contain multiple adresses? https://wordpress.org/support/topic/php-fatal-error-uncaught-exception-invalidargumentexception?replies=2#post-8128737
+	$ip_list = explode(',', $ip);
+	array_unshift($ip_list, '::1');
 	
 	if (get_option('geoip-detect-has_reverse_proxy', 0) && isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
 	{
@@ -161,6 +163,7 @@ function geoip_detect2_get_client_ip() {
 			$trusted_proxies = explode(',', $trusted_proxies);
 			
 			// Always trust localhost
+			$trusted_proxies[] = '';
 			$trusted_proxies[] = '::1';
 			$trusted_proxies[] = '127.0.0.1';
 			
@@ -168,12 +171,12 @@ function geoip_detect2_get_client_ip() {
 			$ip_list[] = $ip;
 				
 			$ip_list = array_diff($ip_list, $trusted_proxies);
-		} 
-		
-		// Each Proxy server append their information at the end, so the last IP is most trustworthy.
-		$ip = end($ip_list);
-	}
-	
+		}	
+	}	
+	// Each Proxy server append their information at the end, so the last IP is most trustworthy.
+	$ip = end($ip_list);
+	$ip = geoip_detect_normalize_ip($ip);
+
 	if (!$ip)
 		$ip = '::1'; // By default, use localhost
 	

@@ -104,6 +104,10 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 			$this->assertEquals(2, strlen($record->continent->code), $assert_text  . 'country->code should be 2 chars long');
 		$this->assertInternalType('array', $record->country->names, $assert_text . 'countr->names should be an array');
 		$this->assertNotEmpty($record->traits->ipAddress, $assert_text . 'requested IP should not be empty');
+		
+		if (geoip_detect_is_ip($ip))
+			$this->assertSame(geoip_detect_normalize_ip($ip), geoip_detect_normalize_ip($record->traits->ipAddress), $assert_text);
+
 	}
 	
 	protected function assertEmptyGeoIP2Record($record, $ip) {
