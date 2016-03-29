@@ -150,12 +150,17 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+= 2.5.7 =
+* ADD: Shortcodes can now optionally specifiy the IP: `[geoip_detect2 property="country.isoCode" ip="(ipv4 or ipv6)"]`
+* ADD: Plugin is now translated into German.
+* FIX: `geoip_detect2_get_info_from_current_ip()` now also handles the case when REMOTE_ADDR contains multiple IP adresses
+
 = 2.5.6 =
 * FIX: Removed noticed concerning open_basedir.
 
 = 2.5.5 =
 
-* Clean-up changes to prepare i18n.
+* Clean-up changes to prepare plugin translation.
 * FIX: Only show the "no database installed" admin notice to admins (props @meitar)
 
 = 2.5.4 =

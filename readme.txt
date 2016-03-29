@@ -1,8 +1,8 @@
 === GeoIP Detection ===
 Contributors: benjaminpick
-Tags: geoip, ip, maxmind, geolocation, locator, latitude, longitude
+Tags: geoip, maxmind, geolocation, locator
 Requires at least: 3.5
-Tested up to: 4.4
+Tested up to: 4.5
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -154,6 +154,7 @@ Fixing automatic weekly updates.
 = 2.5.7 =
 * ADD: Shortcodes can now optionally specifiy the IP: `[geoip_detect2 property="country.isoCode" ip="(ipv4 or ipv6)"]`
 * ADD: Plugin is now translated into German.
+* FIX: `geoip_detect2_get_info_from_current_ip()` now also handles the case when REMOTE_ADDR contains multiple IP adresses
 
 = 2.5.6 =
 * FIX: Removed noticed concerning open_basedir.
