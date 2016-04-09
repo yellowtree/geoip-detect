@@ -5,6 +5,7 @@
         "This file is @generated automatically"
     ],
     "hash": "b16c677dc7d93ad68e6bb2d8e2e96d0c",
+    "content-hash": "223d46e82bc16a7c0d33786966031412",
     "packages": [
         {
             "name": "geoip2/geoip2",
@@ -58,16 +59,16 @@
         },
         {
             "name": "maxmind-db/reader",
-            "version": "v1.0.3",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maxmind/MaxMind-DB-Reader-php.git",
-                "reference": "07f211ab596ba60f9663d9984b888f76ee1beac9"
+                "reference": "1383655533aa2f13a990b27b075fdde8b7bdd5ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maxmind/MaxMind-DB-Reader-php/zipball/07f211ab596ba60f9663d9984b888f76ee1beac9",
-                "reference": "07f211ab596ba60f9663d9984b888f76ee1beac9",
+                "url": "https://api.github.com/repos/maxmind/MaxMind-DB-Reader-php/zipball/1383655533aa2f13a990b27b075fdde8b7bdd5ff",
+                "reference": "1383655533aa2f13a990b27b075fdde8b7bdd5ff",
                 "shasum": ""
             },
             "require": {
@@ -75,7 +76,8 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "4.2.*",
-                "satooshi/php-coveralls": "dev-master"
+                "satooshi/php-coveralls": "dev-master",
+                "squizlabs/php_codesniffer": "2.*"
             },
             "type": "library",
             "autoload": {
@@ -103,7 +105,7 @@
                 "geolocation",
                 "maxmind"
             ],
-            "time": "2015-03-13 22:35:13"
+            "time": "2016-01-04 15:38:11"
         },
         {
             "name": "maxmind/web-service-common",

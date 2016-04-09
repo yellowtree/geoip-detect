@@ -1,8 +1,8 @@
 === GeoIP Detection ===
 Contributors: benjaminpick
-Tags: geoip, ip, maxmind, geolocation, locator, latitude, longitude
+Tags: geoip, maxmind, geolocation, locator
 Requires at least: 3.5
-Tested up to: 4.3
+Tested up to: 4.5
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -89,6 +89,14 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 
 == Upgrade Notice == 
 
+= 2.5.6 =
+
+Some users reported problems with open_basedir-notices - if that's you, this update will help. Otherwise there are no changes.
+
+= 2.5.3 =
+
+This is a security update (please update).
+
 = 2.5.1 =
 
 Hotfix: If you upgraded to 2.5.0, please verify that the correct datasource is still chosen. Sorry for any inconvenience caused.
@@ -148,14 +156,35 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+
 = 2.6.0 =
 * NEW: The function geoip_detect2_get_info_from_current_ip($locales) can now be called via JS, if enabled in the options. 
   This can be useful for cached pages. See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation) for more infos. 
 * FIX: A locale array() is now treated as "use default".
 * FIX: A locale array(' de ') is now treated as array('de')
 
+= 2.5.7 =
+* ADD: Shortcodes can now optionally specifiy the IP: `[geoip_detect2 property="country.isoCode" ip="(ipv4 or ipv6)"]`
+* ADD: Plugin is now translated into German.
+* FIX: `geoip_detect2_get_info_from_current_ip()` now also handles the case when REMOTE_ADDR contains multiple IP adresses
+
+= 2.5.6 =
+* FIX: Removed noticed concerning open_basedir.
+
+= 2.5.5 =
+
+* Clean-up changes to prepare plugin translation.
+* FIX: Only show the "no database installed" admin notice to admins (props @meitar)
+
+= 2.5.4 =
+
+* FIX: Manual datasource filepath handling corrected.
+* FIX: Potential incompability with BuddyPress removed.
+
 = 2.5.3 =
 
+* FIX: (Security) Add nonces to backend to avoid CSRF (thanks to Gerard Arall).
+* FIX: Do not use PHP shortcode tags (<?=) as some servers do not support it with PHP 5.3
 * Maxmind vendor code was updated to the current version (2.3.3).
 
 = 2.5.2 =
@@ -165,7 +194,7 @@ Fixing automatic weekly updates.
 
 = 2.5.1 =
 * FIX: Upgrade script did change the source.
-* FIX: Page caching is only disabled on upgrade when set_css_country is disabled.
+* FIX: Page caching is only disabled on upgrade when `set_css_country` is disabled.
 
 = 2.5.0 =
 * CHANGE: The parameter $skipCache is now $options['skipCache']. Using $skipCache is deprecated, but still works. 

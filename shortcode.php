@@ -31,7 +31,8 @@ add_shortcode('geoip_detect', 'geoip_detect_shortcode');
  * 
  * Examples:
  * `[geoip_detect2 property="country"]` -> Germany
- * `[geoip_detect2 property="country.isoCode"]` -> de
+ * `[geoip_detect2 property="country.isoCode"]` -> DE
+ * `[geoip_detect2 property="country.isoCode" ip="8.8.8.8"]` -> US
  * 
  * `[geoip_detect2 property="country" lang="de"]` -> Deutschland
  * `[geoip_detect2 property="country" lang="fr,de"]` -> Allemagne
@@ -41,6 +42,8 @@ add_shortcode('geoip_detect', 'geoip_detect_shortcode');
  * @param string $lang			Language(s) (optional. If not set, current site language is used.)
  * @param string $default 		Default Value that will be shown if value not set (optional)
  * @param string $skipCache		if 'true': Do not cache value
+ *
+ * @since 2.5.7 New attribute `ip`
  */
 function geoip_detect2_shortcode($attr)
 {
@@ -63,7 +66,9 @@ function geoip_detect2_shortcode($attr)
 		return $html;
 	}
 	
-	$userInfo = geoip_detect2_get_info_from_current_ip($locales, $options);
+	$ip = isset($attr['ip']) ? $attr['ip'] : geoip_detect2_get_client_ip();
+	
+	$userInfo = geoip_detect2_get_info_from_ip($ip, $locales, $options);
 
 	if ($userInfo->isEmpty)
 		return $defaultValue . '<!-- GeoIP Detect: No information found for this IP (' . geoip_detect2_get_client_ip() . ') -->';	

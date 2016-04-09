@@ -2,6 +2,11 @@
 
 class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	
+	function tearDown() {
+		parent::tearDown();
+		$_SERVER['REMOTE_ADDR'] = '';
+	}
+	
 	function testCurrentIp() {			
 		$record = geoip_detect2_get_info_from_current_ip();
 		$this->assertValidGeoIP2Record($record, 'current_ip');
@@ -22,9 +27,27 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertSame(null, $record->country->name);
 	}
 	
+	function testErrorLookup() {
+		$record = geoip_detect2_get_info_from_ip('1.0.0.146,40.196.197.115');
+		$this->assertInstanceOf('GeoIp2\Model\City', $record, 'Garbage IP did not return a record object');
+		$this->assertInstanceOf('YellowTree\GeoipDetect\DataSources\City', $record, 'Garbage IP did not return a wordpress record object');
+		$this->assertNotEmpty($record->extra->error);
+		$this->assertContains('is not a valid IP', $record->extra->error);
+		
+		$this->assertSame(true, $record->isEmpty);
+		$this->assertSame(null, $record->country->name);	
+	}
+	
+	function testExtendedRemoteAddr() {
+		$_SERVER['REMOTE_ADDR'] = '1.1.1.1, ' . GEOIP_DETECT_TEST_IP; 
+		$record = geoip_detect2_get_info_from_current_ip();
+		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
+	}
+	
+		
 	function testIPv6() {
 		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP_V_6);
-		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
+		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP_V_6);
 		$this->assertSame('IE', $record->country->isoCode);
 	}
 	

@@ -9,9 +9,9 @@ define('GEOIP_DETECT_DATA_UPDATE_FILENAME', 'GeoLite2-City.mmdb');
 class AutoDataSource extends ManualDataSource
 {	
 	public function getId() { return 'auto'; }
-	public function getLabel() { return 'Automatic download & update of Maxmind GeoIP Lite City'; }
-	public function getShortLabel() { return parent::getShortLabel() . ' (updated monthly)'; }
-	public function getDescriptionHTML() { return '(License: Creative Commons Attribution-ShareAlike 3.0 Unported. See <a href="https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#the-maxmind-lite-databases-are-licensed-creative-commons-sharealike-attribution-when-do-i-need-to-give-attribution" target="_blank">Licensing FAQ</a> for more details.)'; }
+	public function getLabel() { return __('Automatic download & update of Maxmind GeoIP Lite City', 'geoip-detect'); }
+	public function getShortLabel() { return sprintf(__('%s (updated monthly)', 'geoip-detect'), parent::getShortLabel()); }
+	public function getDescriptionHTML() { return __('(License: Creative Commons Attribution-ShareAlike 3.0 Unported. See <a href="https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#the-maxmind-lite-databases-are-licensed-creative-commons-sharealike-attribution-when-do-i-need-to-give-attribution" target="_blank">Licensing FAQ</a> for more details.)', 'geoip-detect'); }
 
 	public function getStatusInformationHTML() {
 		$html = parent::getStatusInformationHTML();
@@ -25,8 +25,10 @@ class AutoDataSource extends ManualDataSource
 
 	public function getParameterHTML() {
 		$text_update = __('Update now', 'geoip-detect');
+		$nonce_field = wp_nonce_field( 'geoip_detect_update' );
 		$html = <<<HTML
 <form method="post" action="#">
+		$nonce_field
 		<input type="hidden" name="action" value="update" />
 		<input type="submit" class="button button-secondary" value="$text_update" />
 </form>

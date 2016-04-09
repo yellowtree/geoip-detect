@@ -55,6 +55,10 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertEquals('Deutschland', do_shortcode('[geoip_detect2 property="country" lang=" zz, de "]'));
 	}
 	
+	function testManualIp() {
+		$this->assertEquals('US', do_shortcode('[geoip_detect2 property="country.isoCode" ip="8.8.8.8"]'));
+	}
+	
 	function testDefaultValue() {	
 		$this->assertEquals('default value', do_shortcode('[geoip_detect2 property="country.confidence" default="default value"]'));
 	}

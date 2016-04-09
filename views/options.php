@@ -3,8 +3,8 @@ $options = $currentSource->getParameterHTML();
 ?>
 
 <div class="wrap">
-	<h2><?php _e('GeoIP Detection', 'geoip-detect');?></h2>
-	<p><a href="tools.php?page=<?= GEOIP_PLUGIN_BASENAME ?>">Test IP Detection Lookup</a></p>
+	<h1><?php _e('GeoIP Detection', 'geoip-detect');?></h1>
+	<p><a href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>"><?php _e('Test IP Detection Lookup', 'geoip-detect')?></a></p>
 	<?php if (!empty($message)): ?>
 		<p class="geoip_detect_error">
 		<?php echo $message; ?>
@@ -18,10 +18,11 @@ $options = $currentSource->getParameterHTML();
 		<?php echo $currentSource->getStatusInformationHTML(); ?>
 	</p>
 	<?php if ($options) : ?>
-	<h3>Options for this data source</h3>
+	<h2><?php _e('Options for this data source', 'geoip-detect'); ?></h2>
 	<p>
 		<form method="post" action="#">
 			<input type="hidden" name="action" value="options-source" />
+			<?php wp_nonce_field( 'geoip_detect_options-source' ); ?>
 			<p><?php echo $options; ?></p>
 			<p>
 			<input type="submit" class="button button-primary" value="<?php _e('Save', 'geoip-detect'); ?>" />
@@ -34,10 +35,11 @@ $options = $currentSource->getParameterHTML();
 	<br /><br />
 	<form method="post" action="#">
 		<input type="hidden" name="action" value="choose" />
-		<h3>Choose data source: </h3>
+		<?php wp_nonce_field( 'geoip_detect_choose' ); ?>
+		<h2><?php _e('Choose data source:', 'geoip-detect'); ?></h2>
 		<a href="https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#which-data-source-should-i-choose">Help</a>
 		<?php foreach ($sources as $s) : $id = $s->getId();?>
-			<p><input type="radio" name="options[source]" value="<?= $id ?>" <?php if ($currentSource->getId() == $id) { echo 'checked="checked"'; } ?> /><?= $s->getLabel(); ?></p>
+			<p><input type="radio" name="options[source]" value="<?php echo $id ?>" <?php if ($currentSource->getId() == $id) { echo 'checked="checked"'; } ?> /><?php echo $s->getLabel(); ?></p>
 			<span class="detail-box">
 				<?php echo $s->getDescriptionHTML(); ?>
 			</span>
@@ -47,17 +49,18 @@ $options = $currentSource->getParameterHTML();
 	</form>
 	<form method="post" action="#">
 		<input type="hidden" name="action" value="options" />
-		<h3>General Options</h3>
+		<?php wp_nonce_field( 'geoip_detect_options' ); ?>
+		<h3><?php _e('General Options', 'geoip-detect'); ?></h3>
 		<p>
 			<input type="checkbox" name="options[set_css_country]" value="1" <?php if (!empty($wp_options['set_css_country'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Add a country-specific CSS class to the &lt;body&gt;-Tag.', 'geoip-detect'); ?><br />
 		</p>
 		<p>
 			<input type="checkbox" name="options[disable_pagecache]" value="1" <?php if (!empty($wp_options['disable_pagecache'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Disable caching a page that contains a shortcode or PHP API call to geo-dependent functions.', 'geoip-detect'); ?><br />
 			<span class="detail-box">
-				At least WP SuperCache, W3TotalCache and ZenCache are supported.
+				<?php _e('At least WP SuperCache, W3TotalCache and ZenCache are supported.', 'geoip-detect'); ?>
 			</span>	
 				<?php if (!empty($wp_options['set_css_country']) && !empty($wp_options['disable_pagecache'])): ?>
-				<span class="geoip_detect_error">Warning: As the CSS option above is active, this means that all pages are not cached.</span>
+				<span class="geoip_detect_error"><?php _e('Warning: As the CSS option above is active, this means that all pages are not cached.', 'geoip-detect'); ?></span>
 				<?php endif; ?>
 		</p>
 		<p>
@@ -74,27 +77,25 @@ $options = $currentSource->getParameterHTML();
 		</p>
 		
 		<p>
-			<input type="checkbox" name="options[has_reverse_proxy]" value="1" <?php if (!empty($wp_options['has_reverse_proxy'])) { echo 'checked="checked"'; } ?>>&nbsp;The server is behind a reverse proxy<em>
+			<input type="checkbox" name="options[has_reverse_proxy]" value="1" <?php if (!empty($wp_options['has_reverse_proxy'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('The server is behind a reverse proxy', 'geoip-detect')?><em>
 			<span class="detail-box">
 			<?php if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) : ?>
 			<?php printf(__('(With Proxy: %s - Without Proxy: %s - Client IP with current configuration: %s)', 'geoip-detect'), $_SERVER['HTTP_X_FORWARDED_FOR'], $_SERVER['REMOTE_ADDR'], geoip_detect2_get_client_ip()); ?><br />
 			<?php else: ?>
-			<?php echo "(This doesn't seem to be the case.)"; ?>
+			<?php echo __("(This doesn't seem to be the case.)", 'geoip-detect'); ?>
 			<?php endif; ?>
 			</em>
 			</span>
 		</p>
 		<p>
-			External IP of this server: <input type="text" name="options[external_ip]" value="<?php echo esc_attr($wp_options['external_ip']); ?>" placeholder="auto" />
+			<?php _e('External IP of this server:', 'geoip-detect'); ?> <input type="text" name="options[external_ip]" value="<?php echo esc_attr($wp_options['external_ip']); ?>" placeholder="<?php _e('detect automatically', 'geoip-detect'); ?>" />
 			<span class="detail-box">
-			Current value: <?php echo geoip_detect2_get_external_ip_adress(); ?><br />
-			If empty: Try to use an ip service to detect it (Internet connection is necessary). If this is not possible, 0.0.0.0 will be returned.<br />
-			(This external adress will be used when the request IP adress is not a public IP, e.g. 127.0.0.1)
-			
+			<?php _e('Current value:', 'geoip-detect'); ?> <?php echo geoip_detect2_get_external_ip_adress(); ?><br />
+			<?php _e('If empty: Try to use an ip service to detect it (Internet connection is necessary). If this is not possible, 0.0.0.0 will be returned.', 'geoip-detect'); ?><br />
+			<?php _e('(This external adress will be used when the request IP adress is not a public IP, e.g. 127.0.0.1)', 'geoip-detect'); ?>
 			</span>
 		</p>
 
-		
 
 		<p>
 			<input type="submit" class="button button-primary" value="<?php _e('Save', 'geoip-detect'); ?>" />
@@ -102,19 +103,13 @@ $options = $currentSource->getParameterHTML();
 	</form>
 	<?php if (!$ipv6_supported) : ?>
 	<div class="geoip_detect_error">
-		<h4>IPv6 not supported</h4>
+		<h3><?php _e('IPv6 not supported', 'geoip-detect'); ?></h3>
 		<p>
-			Your version of PHP is compiled without IPv6-support, so it is not possible to lookup adresses like "2001:4860:4801:5::91". For more information see <a href="https://php.net/manual/en/function.inet-pton.php">PHP documentation & user comments</a>.
+			<?php _e('Your version of PHP is compiled without IPv6-support, so it is not possible to lookup adresses like "2001:4860:4801:5::91". For more information see <a href="https://php.net/manual/en/function.inet-pton.php">PHP documentation & user comments</a>.', 'geoip-detect'); ?>
 		</p>
 	</div>
 	<?php endif; ?>
-	<p class="legal_notices">
-		<br />
-		This extension is "charity-ware". You can use it for free but if you want to do me a favor, please <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYUZHS8FH3CL" target="_blank">donate</a> to <a href="http://www.jmem-hainichen.de/homepage" target="_blank">this charity</a>. (See <a href="https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#what-you-mean-by-this-plugin-is-charity-ware" target="_blank">FAQ</a> for more infos.)
-	</p>
-	<p class="legal_notices">
-		This product includes GeoLite2 data created by MaxMind, available from <a href="http://www.maxmind.com/">http://www.maxmind.com</a>.
-	</p>
+	<?php require(GEOIP_PLUGIN_DIR . '/views/footer.php'); ?>
 </div>
 <style>
 .geoip_detect_error {
@@ -141,8 +136,5 @@ $options = $currentSource->getParameterHTML();
 	margin-left: 50px;
 	color: #777;
 }
-.legal_notices {
-	font-size: 80%;
-	font-style: italic;
-}
+
 </style>

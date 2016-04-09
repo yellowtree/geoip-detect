@@ -64,4 +64,41 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
 			$this->assertNotEmpty($desc, 'Description of "' . $id . '" missing.');
 		}
 	}
+
+    /**
+     * @group admin_notices
+     *
+     * @ticket 22
+     */
+    public function testAdminNoticeDatabaseMissingRequiresManageOptionsCapability () {
+        $args = array('role' => 'subscriber');
+        if (!$this->factory) {
+            $this->factory = new WP_UnitTest_Factory();
+            $args['user_login'] = hash('md5', uniqid() . microtime());
+            $args['user_email'] = hash('md5', uniqid() . microtime()) . '@example.invalid';
+        }
+        $id = $this->factory->user->create($args);
+        wp_set_current_user($id);
+        $this->expectOutputString('');
+        geoip_detect_admin_notice_database_missing();
+    }
+
+    /**
+     * @group admin_notices
+     *
+     * @ticket 22
+     */
+    public function testAdminNoticeDatabaseMissingPrintsOutputWithManageOptionsCapability () {
+        $args = array('role' => 'administrator');
+        if (!$this->factory) {
+            $this->factory = new WP_UnitTest_Factory();
+            $args['user_login'] = hash('md5', uniqid() . microtime());
+            $args['user_email'] = hash('md5', uniqid() . microtime()) . '@example.invalid';
+        }
+        $id = $this->factory->user->create($args);
+        wp_set_current_user($id);
+        $this->expectOutputRegex('/' . __('GeoIP Detection: No database installed', 'geoip-detect') . '/');
+        geoip_detect_admin_notice_database_missing();
+    }
+
 }
