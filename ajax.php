@@ -95,6 +95,7 @@ function _geoip_detect_register_javascript() {
 
 add_action('wp_enqueue_scripts', '_geoip_detect_register_javascript');
 
+// Backwards compat for PHP 5.3
 if (!function_exists('http_response_code')) {
         function http_response_code($code = NULL) {
             if ($code !== NULL) {
