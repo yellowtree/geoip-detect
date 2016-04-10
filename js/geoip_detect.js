@@ -26,14 +26,14 @@ function geoip_detect_ajax_promise(locales) {
  * @param property_name
  * @param options
  */
-function geoip_get_property_value(data, property_name, options) {
+function geoip_detect_get_property_value(data, property_name, options) {
 	function _get_name(names, locales) {
-		if (typeof(locales) == 'string') {
+		if (typeof(locales) === 'string') {
 			locales = locales.split(',');
 		}
 		locales.unshift(['en']);
 		
-		for (l in locales) {
+		for (var l in locales) {
 			if (typeof(names[l]) != 'undefined' && names[l])
 				return names[l];
 		}
@@ -60,14 +60,13 @@ function geoip_get_property_value(data, property_name, options) {
 		return options['default'];
 	if (typeof(data[next_property]) == 'string')
 		return data[next_property];
-	return geoip_get_property_value(data[next_property], properties.join('.'), options);
+	return geoip_detect_get_property_value(data[next_property], properties.join('.'), options);
 }
 
-
-jQuery(document).ready(function($) {
-
+function geoip_detect_fill_data_attributes(el) {
+	el = $(el);
 	// Fill in the shortcodes into the HTML
-	var shortcodes = $('[data-geoip]');
+	var shortcodes = el.find('[data-geoip]');
 	if (!shortcodes.length)
 		return;
 	
@@ -76,8 +75,12 @@ jQuery(document).ready(function($) {
 	promise.done(function(data) {
 		shortcodes.each(function() {
 			var options = $(this).data('geoip');
-			var value = geoip_get_property_value(data, options.property, options);
-			$(this).text(value);
+			var value = geoip_detect_get_property_value(data, options.property, options);
+			
+			if ($(this).data('geoip-method') == 'class')
+				$(this).addClass('geoip-' + value);
+			else
+				$(this).text(value);
 			$(this).trigger('geoip_detect.value.success');
 		});
 	}).fail(function(data) {
@@ -85,4 +88,9 @@ jQuery(document).ready(function($) {
 			console.log('Error: ' + data.error);
 		shortcodes.trigger('geoip_detect.value.failure');
 	});
+}
+
+
+jQuery(document).ready(function($) {
+	geoip_detect_fill_data_attributes('html');
 });
