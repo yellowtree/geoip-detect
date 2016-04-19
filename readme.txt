@@ -151,6 +151,8 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+* FIX: Cron scheduling is checked every time you visit the plugin page.
+
 = 2.5.7 =
 * ADD: Shortcodes can now optionally specifiy the IP: `[geoip_detect2 property="country.isoCode" ip="(ipv4 or ipv6)"]`
 * ADD: Plugin is now translated into German.

@@ -17,8 +17,15 @@ class AutoDataSource extends ManualDataSource
 		$html = parent::getStatusInformationHTML();
 		$date_format = get_option('date_format') . ' ' . get_option('time_format');
 		
+		$rescheduled = '';
 		$next_cron_update = wp_next_scheduled( 'geoipdetectupdate' );
+		if (!$next_cron_update) {
+			$rescheduled = ' ' . __('(Was rescheduled just now)', 'geoip-detect');
+			$this->set_cron_schedule();
+			$next_cron_update = wp_next_scheduled( 'geoipdetectupdate' );
+		}
 		$html .= '<br />' . sprintf(__('Next update: %s', 'geoip-detect'), $next_cron_update ? date_i18n($date_format, $next_cron_update) : __('Never', 'geoip-detect'));
+		$html .= $rescheduled;
 		
 		return $html;
 	}
@@ -67,7 +74,7 @@ HTML;
 	}
 	
 	public function maxmindUpdate()
-	{
+	{	
 		require_once(ABSPATH.'/wp-admin/includes/file.php');
 		
 		$download_url = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz';
@@ -111,10 +118,10 @@ HTML;
 		 */
 		$do_it = apply_filters('geoip_detect_cron_do_update', !GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED, false);
 	
+		$this->schedule_next_cron_run();
+		
 		if ($do_it)
 			$this->maxmindUpdate();
-	
-		$this->schedule_next_cron_run();
 	}
 	
 	public function set_cron_schedule()

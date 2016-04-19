@@ -7,7 +7,7 @@ use YellowTree\GeoipDetect\DataSources\AbstractDataSource;
 define('GEOIP_DETECT_DATA_FILENAME', 'GeoLite2-City.mmdb');
 
 class ManualDataSource extends AbstractDataSource {
-
+	
 	public function getId() { return 'manual'; }
 	public function getLabel() { return __('Manual download & update of a Maxmind City or Country database', 'geoip-detect'); }
 
