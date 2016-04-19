@@ -59,6 +59,10 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 
 [Technically speaking, how could I verify if my visitor comes from Germany?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#technically-speaking-how-could-i-verify-if-my-visitor-comes-from-germany)
 
+[How can I show text only if the visitor is coming from Germany?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#how-can-i-show-text-only-if-the-visitor-is-coming-from-germany)
+
+[How can I add the current country name as text in my page?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#how-can-i-add-the-current-country-name-as-text-in-my-page)
+
 [Which data source should I choose?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#which-data-source-should-i-choose)
 
 [Can I change the time period how long the data is cached?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#can-i-change-the-time-period-how-long-the-data-is-cached)
