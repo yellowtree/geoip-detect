@@ -156,6 +156,7 @@ Fixing automatic weekly updates.
 == Changelog ==
 
 * FIX: Cron scheduling is checked every time you visit the plugin page.
+* Maxmind vendor code was updated to the current version (2.4.0).
 
 = 2.5.7 =
 * ADD: Shortcodes can now optionally specifiy the IP: `[geoip_detect2 property="country.isoCode" ip="(ipv4 or ipv6)"]`
