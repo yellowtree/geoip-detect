@@ -27,12 +27,13 @@ function geoip_detect_ajax_promise(locales) {
  * @param options
  */
 function geoip_detect_get_property_value(data, property_name, options) {
-	function _get_name(names, locales) {
+	var _get_name = function(names, locales) {
 		if (typeof(locales) === 'string') {
 			locales = locales.split(',');
 		}
 		
 		for (var l in locales) {
+			//l = l.trim();
 			if (typeof(names[l]) != 'undefined' && names[l])
 				return names[l];
 		}
@@ -44,7 +45,7 @@ function geoip_detect_get_property_value(data, property_name, options) {
 		'locales' : 'en',
 		'default' : '',
 	};
-	$.extend(options, default_options);
+	options = $.extend(options, default_options);
 	
 	var properties = property_name.split('.');
 	var next_property = properties.shift();

@@ -9,17 +9,24 @@
   <div id="qunit"></div>
   <div id="qunit-fixture"></div>
   
-  <script src="vendor/"></script>
+  <script src="vendor/components/jquery/jquery.js"></script>
   <script>$.noConflict();</script>
   <script src="vendor/qunit/qunit-1.23.0.js"></script>
   <script src="../js/geoip_detect.js"></script>
 <script>	  
 	var ajax_example_data = {"city":{"geoname_id":5375480,"names":{"de":"Mountain View","en":"Mountain View","fr":"Mountain View","ja":"\u30de\u30a6\u30f3\u30c6\u30f3\u30d3\u30e5\u30fc","ru":"\u041c\u0430\u0443\u043d\u0442\u0438\u043d-\u0412\u044c\u044e","zh-CN":"\u8292\u5ef7\u7ef4\u5c24"},"name":"Mountain View"},"continent":{"code":"NA","geoname_id":6255149,"names":{"de":"Nordamerika","en":"North America","es":"Norteam\u00e9rica","fr":"Am\u00e9rique du Nord","ja":"\u5317\u30a2\u30e1\u30ea\u30ab","pt-BR":"Am\u00e9rica do Norte","ru":"\u0421\u0435\u0432\u0435\u0440\u043d\u0430\u044f \u0410\u043c\u0435\u0440\u0438\u043a\u0430","zh-CN":"\u5317\u7f8e\u6d32"},"name":"North America"},"country":{"geoname_id":6252001,"iso_code":"US","names":{"de":"USA","en":"United States","es":"Estados Unidos","fr":"\u00c9tats-Unis","ja":"\u30a2\u30e1\u30ea\u30ab\u5408\u8846\u56fd","pt-BR":"Estados Unidos","ru":"\u0421\u0428\u0410","zh-CN":"\u7f8e\u56fd"},"name":"United States"},"location":{"latitude":37.3845,"longitude":-122.0881,"metro_code":807,"time_zone":""},"postal":{"code":"94040"},"registered_country":{"geoname_id":6252001,"iso_code":"US","names":{"de":"USA","en":"United States","es":"Estados Unidos","fr":"\u00c9tats-Unis","ja":"\u30a2\u30e1\u30ea\u30ab\u5408\u8846\u56fd","pt-BR":"Estados Unidos","ru":"\u0421\u0428\u0410","zh-CN":"\u7f8e\u56fd"},"name":"United States"},"subdivisions":[{"geoname_id":5332921,"iso_code":"CA","names":{"de":"Kalifornien","en":"California","es":"California","fr":"Californie","ja":"\u30ab\u30ea\u30d5\u30a9\u30eb\u30cb\u30a2\u5dde","pt-BR":"Calif\u00f3rnia","ru":"\u041a\u0430\u043b\u0438\u0444\u043e\u0440\u043d\u0438\u044f","zh-CN":"\u52a0\u5229\u798f\u5c3c\u4e9a\u5dde"}}],"traits":{"ip_address":"8.8.8.8"},"is_empty":false,"extra":{"source":"auto","cached":0,"error":""}};  
 	  
-    QUnit.test( "geoip_detect_get_property_value", function( assert ) {
+    QUnit.test( "geoip_detect_get_property_value simple", function( assert ) {
       var value = geoip_detect_get_property_value(ajax_example_data, 'traits.ip_address');
       assert.equal( value, "8.8.8.8", "traits.ip_address" );
     });
+	QUnit.test( "geoip_detect_get_property_value locale", function( assert ) {
+      var value = geoip_detect_get_property_value(ajax_example_data, 'continent');
+      assert.equal( value, "North America", "Continent (locale empty)" );
+	 var value = geoip_detect_get_property_value(ajax_example_data, 'continent', {locales: ' en  '});
+      assert.equal( value, "North America", "Continent (locale 'en')" );
+    });
+	
   </script>
 </body>
 </html>
