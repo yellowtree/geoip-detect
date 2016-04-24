@@ -31,7 +31,6 @@ function geoip_detect_get_property_value(data, property_name, options) {
 		if (typeof(locales) === 'string') {
 			locales = locales.split(',');
 		}
-		locales.unshift(['en']);
 		
 		for (var l in locales) {
 			if (typeof(names[l]) != 'undefined' && names[l])
@@ -42,7 +41,7 @@ function geoip_detect_get_property_value(data, property_name, options) {
 	
 	var $ = jQuery;
 	var default_options = {
-		'locales' : '',
+		'locales' : 'en',
 		'default' : '',
 	};
 	$.extend(options, default_options);
@@ -64,6 +63,7 @@ function geoip_detect_get_property_value(data, property_name, options) {
 }
 
 function geoip_detect_fill_data_attributes(el) {
+	var $ = jQuery;
 	el = $(el);
 	// Fill in the shortcodes into the HTML
 	var shortcodes = el.find('[data-geoip]');
