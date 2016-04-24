@@ -1,5 +1,8 @@
 {
     "require-dev": {
         "codacy/coverage": "dev-master"
-    }
+    },
+	"require": {
+		 "components/jquery": "1.*"	
+	}
 }

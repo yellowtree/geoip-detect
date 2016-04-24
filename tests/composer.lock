@@ -1,86 +1,37 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "babc2c7a8d9b88e58e6b3a81e7ab5f8b",
-    "packages": [],
-    "packages-dev": [
+    "hash": "86d2f6bb98cbea79379dc8329ae14bd7",
+    "content-hash": "7111282ab7dcacef6ea34053f010b205",
+    "packages": [
         {
-            "name": "codacy/coverage",
-            "version": "dev-master",
+            "name": "components/jquery",
+            "version": "1.12.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/codacy/php-codacy-coverage.git",
-                "reference": "7361495964e2e1bf5c486bfd9704957f050eff2a"
+                "url": "https://github.com/components/jquery.git",
+                "reference": "b3879795fd6fa63ef364cdf9ae6cd779d61edfb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codacy/php-codacy-coverage/zipball/7361495964e2e1bf5c486bfd9704957f050eff2a",
-                "reference": "7361495964e2e1bf5c486bfd9704957f050eff2a",
+                "url": "https://api.github.com/repos/components/jquery/zipball/b3879795fd6fa63ef364cdf9ae6cd779d61edfb2",
+                "reference": "b3879795fd6fa63ef364cdf9ae6cd779d61edfb2",
                 "shasum": ""
             },
-            "require": {
-                "gitonomy/gitlib": "0.1.7",
-                "php": ">=5.3.2"
-            },
-            "require-dev": {
-                "kherge/box": "~2.5",
-                "phpunit/phpunit": "~4.5"
-            },
-            "bin": [
-                "bin/codacycoverage"
-            ],
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jakob Pupke",
-                    "email": "jakob.pupke@gmail.com"
-                }
-            ],
-            "description": "Sends PHP test coverage information to Codacy.",
-            "homepage": "https://github.com/codacy/php-codacy-coverage",
-            "time": "2015-03-19 18:16:59"
-        },
-        {
-            "name": "gitonomy/gitlib",
-            "version": "v0.1.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/gitonomy/gitlib.git",
-                "reference": "7a46107cfb8552b312101e0d5906e95d54d7ddc6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/gitonomy/gitlib/zipball/7a46107cfb8552b312101e0d5906e95d54d7ddc6",
-                "reference": "7a46107cfb8552b312101e0d5906e95d54d7ddc6",
-                "shasum": ""
-            },
-            "require": {
-                "symfony/process": "~2.4"
-            },
-            "require-dev": {
-                "psr/log": "~1"
-            },
-            "suggest": {
-                "psr/log": "Add some log"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Gitonomy\\Git": [
-                        "src/",
-                        "tests/"
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "jquery.js"
+                    ],
+                    "files": [
+                        "jquery.min.js",
+                        "jquery.min.map",
+                        "jquery-migrate.js",
+                        "jquery-migrate.min.js"
                     ]
                 }
             },
@@ -90,71 +41,16 @@
             ],
             "authors": [
                 {
-                    "name": "Alexandre Salomé",
-                    "email": "alexandre.salome@gmail.com",
-                    "homepage": "http://alexandre-salome.fr"
-                },
-                {
-                    "name": "Julien DIDIER",
-                    "email": "genzo.wm@gmail.com",
-                    "homepage": "http://www.jdidier.net"
+                    "name": "John Resig",
+                    "email": "jeresig@gmail.com"
                 }
             ],
-            "description": "Library for accessing git",
-            "homepage": "http://gitonomy.com",
-            "time": "2014-07-13 19:02:31"
-        },
-        {
-            "name": "symfony/process",
-            "version": "v2.6.5",
-            "target-dir": "Symfony/Component/Process",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/Process.git",
-                "reference": "4d717f34f3d1d6ab30fbe79f7132960a27f4a0dc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/4d717f34f3d1d6ab30fbe79f7132960a27f4a0dc",
-                "reference": "4d717f34f3d1d6ab30fbe79f7132960a27f4a0dc",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "symfony/phpunit-bridge": "~2.7"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.6-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Symfony\\Component\\Process\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                },
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                }
-            ],
-            "description": "Symfony Process Component",
-            "homepage": "http://symfony.com",
-            "time": "2015-03-12 10:28:44"
+            "description": "jQuery JavaScript Library",
+            "homepage": "http://jquery.com",
+            "time": "2016-02-24 08:51:35"
         }
     ],
+    "packages-dev": null,
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {

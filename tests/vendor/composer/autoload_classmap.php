@@ -6,13 +6,4 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Codacy\\Coverage\\Parser\\CloverParser' => $vendorDir . '/codacy/coverage/src/Codacy/Coverage/Parser/CloverParser.php',
-    'Codacy\\Coverage\\Parser\\IParser' => $vendorDir . '/codacy/coverage/src/Codacy/Coverage/Parser/Parser.php',
-    'Codacy\\Coverage\\Parser\\PhpUnitXmlParser' => $vendorDir . '/codacy/coverage/src/Codacy/Coverage/Parser/PhpUnitXmlParser.php',
-    'Codacy\\Coverage\\Parser\\XMLParser' => $vendorDir . '/codacy/coverage/src/Codacy/Coverage/Parser/Parser.php',
-    'Codacy\\Coverage\\Report\\CoverageReport' => $vendorDir . '/codacy/coverage/src/Codacy/Coverage/Report/CoverageReport.php',
-    'Codacy\\Coverage\\Report\\FileReport' => $vendorDir . '/codacy/coverage/src/Codacy/Coverage/Report/FileReport.php',
-    'Codacy\\Coverage\\Util\\CodacyApiClient' => $vendorDir . '/codacy/coverage/src/Codacy/Coverage/Util/CodacyApiClient.php',
-    'Codacy\\Coverage\\Util\\GitClient' => $vendorDir . '/codacy/coverage/src/Codacy/Coverage/Util/GitClient.php',
-    'Codacy\\Coverage\\Util\\JsonProducer' => $vendorDir . '/codacy/coverage/src/Codacy/Coverage/Util/JsonProducer.php',
 );
