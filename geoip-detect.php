@@ -71,6 +71,7 @@ include_once('data-sources/hostinfo.php');
 include_once('data-sources/manual.php');
 include_once('data-sources/auto.php');
 include_once('data-sources/precision.php');
+include_once('data-sources/header.php');
 
 // You can define these constants in your theme/plugin if you like.
 /**

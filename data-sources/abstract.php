@@ -89,6 +89,28 @@ interface ReaderInterface extends \GeoIp2\ProviderInterface {
      */
 	public function close();
 }
+	
+abstract class AbstractReader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
+	protected $options;
+	
+	public function __construct($options) {
+		$this->options = array();	
+	}
+	
+	public function city($ip) {
+		throw new \Exception('This datasource does not provide data for city()');
+	}
+	
+	public function country($ip) {
+		throw new \Exception('This datasource does not provide data for country()');
+	}
+		
+	public function close() {
+			
+	}
+	
+}
+	
 
 } // end namespace 
 
