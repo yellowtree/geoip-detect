@@ -120,7 +120,7 @@ HTML;
 				update_option('geoip-detect-precision_api_type', $post['options_precision']['api_type']);
 		}
 		
-		if (!$this->isWorking())
+		if (geoip_detect2_is_source_active('precision') && !$this->isWorking())
 			$message .= __('Maxmind Precision only works with a given user id and secret.', 'geoip-detect');
 		
 		return $message;

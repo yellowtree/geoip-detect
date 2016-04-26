@@ -105,7 +105,7 @@ function _geoip_detect2_get_data_from_cache($ip) {
 
 function _geoip_detect2_add_data_to_cache($data, $ip) {
 	// Don't cache for file access based sources (not worth the effort/time)
-	$sources_not_cachable = apply_filters('geoip2_detect_sources_not_cachable', array('auto', 'manual'));	
+	$sources_not_cachable = apply_filters('geoip2_detect_sources_not_cachable', array('auto', 'manual', 'header'));	
 	if (in_array($data['extra']['source'], $sources_not_cachable))
 		return;
 	
