@@ -101,8 +101,8 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 		$this->assertInternalType('string', $record->country->isoCode, $assert_text . 'country->isoCode should not be empty');
 		$this->assertEquals(2, strlen($record->country->isoCode), $assert_text . 'country->isoCode should be 2 chars long');
 		if (!$skipContinentTest)
-			$this->assertEquals(2, strlen($record->continent->code), $assert_text  . 'country->code should be 2 chars long');
-		$this->assertInternalType('array', $record->country->names, $assert_text . 'countr->names should be an array');
+			$this->assertEquals(2, strlen($record->continent->code), $assert_text  . 'continent->code should be 2 chars long');
+		$this->assertInternalType('array', $record->country->names, $assert_text . 'country->names should be an array');
 		$this->assertNotEmpty($record->traits->ipAddress, $assert_text . 'requested IP should not be empty');
 		
 		if (geoip_detect_is_ip($ip))
@@ -113,7 +113,7 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 	protected function assertEmptyGeoIP2Record($record, $ip) {
 		$assert_text = 'When looking up info for IP "' . $ip . '": ';
 		$this->assertInstanceOf('YellowTree\GeoipDetect\DataSources\City', $record, $assert_text);
-		$this->assertSame(true, $record->isEmpty, $assert_text . 'isEmpty should not be true');
+		$this->assertSame(true, $record->isEmpty, $assert_text . 'isEmpty should be true');
 		$this->assertNotEmpty($record->extra->source, $assert_text . 'extra->source should not be empty');
 		
 		$this->assertEquals('', $record->country->isoCode, $assert_text . 'country->isoCode should be empty');
