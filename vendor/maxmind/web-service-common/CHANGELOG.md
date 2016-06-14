@@ -1,6 +1,28 @@
 CHANGELOG
 =========
 
+0.2.1 (2016-06-13)
+------------------
+
+* Fix typo in code to copy cert to temp directory.
+
+0.2.0 (2016-06-10)
+------------------
+
+* Added handling of additional error codes that the web service may return.
+* A `USER_ID_UNKNOWN` error will now throw a
+  `MaxMind\Exception\AuthenticationException`.
+* Added support for `proxy` option. Closes #6.
+
+0.1.0 (2016-05-23)
+------------------
+
+* A `PERMISSION_REQUIRED` error will now throw a `PermissionRequiredException`
+  exception.
+* Added a `.gitattributes` file to exclude tests from Composer releases.
+  GitHub #7.
+* Updated included cert bundle.
+
 0.0.4 (2015-07-21)
 ------------------
 
