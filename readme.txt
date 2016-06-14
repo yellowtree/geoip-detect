@@ -28,6 +28,7 @@ as a shortcode, or via CSS body classes. The city & country names are translated
   * Commercial: [Maxmind GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database) or [Maxmind GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
   * Commercial Web-API: [Maxmind GeoIP2 Precision](https://www.maxmind.com/en/geoip2-precision-services) (City, Country or Insights)
   * Free (default source): [HostIP.info](http://www.hostip.info/) (English, IPv4 only)
+  * Hosting-Provider dependent: [Cloudflare](https://support.cloudflare.com/hc/en-us/articles/200168236-What-does-CloudFlare-IP-Geolocation-do-) or [Amazon AWS CloudFront](https://aws.amazon.com/blogs/aws/enhanced-cloudfront-customization/) (Country)
 * For the property names, see the results of a specific IP in the wordpress backend (under *Tools > GeoIP Detection*).
 * You can include these properties into your posts and pages by using the shortcode `[geoip_detect2 property="country.name" default="(country could not be detected)" lang="en"]` (where 'country.name' can be one of the other property names as well, and 'default' and 'lang' are optional).
 * When enabled on the options page, it adds CSS classes to the body tag such as `geoip-country-DE` and `geoip-continent-EU`.
@@ -154,6 +155,8 @@ Fixing automatic weekly updates.
 
 
 == Changelog ==
+
+= 2.5.8 =
 
 * ADD: New datasources for Cloudflare & Amazon AWS CloudFront (country detection only).
 * FIX: Cron scheduling is checked every time you visit the plugin page.

@@ -9,21 +9,21 @@
     "packages": [
         {
             "name": "geoip2/geoip2",
-            "version": "v2.4.0",
+            "version": "v2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maxmind/GeoIP2-php.git",
-                "reference": "2edce6957126399039124459174d5dce24edfdae"
+                "reference": "241e4442e0469d70043805ef699290616d53ce41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maxmind/GeoIP2-php/zipball/2edce6957126399039124459174d5dce24edfdae",
-                "reference": "2edce6957126399039124459174d5dce24edfdae",
+                "url": "https://api.github.com/repos/maxmind/GeoIP2-php/zipball/241e4442e0469d70043805ef699290616d53ce41",
+                "reference": "241e4442e0469d70043805ef699290616d53ce41",
                 "shasum": ""
             },
             "require": {
                 "maxmind-db/reader": "~1.0",
-                "maxmind/web-service-common": "~0.0.3",
+                "maxmind/web-service-common": "~0.2",
                 "php": ">=5.3.1"
             },
             "require-dev": {
@@ -56,7 +56,7 @@
                 "geolocation",
                 "maxmind"
             ],
-            "time": "2016-04-15 19:49:51"
+            "time": "2016-06-10 22:32:01"
         },
         {
             "name": "maxmind-db/reader",
@@ -110,16 +110,16 @@
         },
         {
             "name": "maxmind/web-service-common",
-            "version": "v0.0.4",
+            "version": "v0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maxmind/web-service-common-php.git",
-                "reference": "f26fce5281290973beeeca3e33847887177dd138"
+                "reference": "436bebacf4e74651b383435822c472f3e0f2a28a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maxmind/web-service-common-php/zipball/f26fce5281290973beeeca3e33847887177dd138",
-                "reference": "f26fce5281290973beeeca3e33847887177dd138",
+                "url": "https://api.github.com/repos/maxmind/web-service-common-php/zipball/436bebacf4e74651b383435822c472f3e0f2a28a",
+                "reference": "436bebacf4e74651b383435822c472f3e0f2a28a",
                 "shasum": ""
             },
             "require": {
@@ -128,7 +128,8 @@
                 "php": ">=5.3"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.6.*"
+                "phpunit/phpunit": "4.*",
+                "squizlabs/php_codesniffer": "2.*"
             },
             "type": "library",
             "autoload": {
@@ -148,7 +149,7 @@
             ],
             "description": "Internal MaxMind Web Service API",
             "homepage": "https://github.com/maxmind/mm-web-service-api-php",
-            "time": "2015-07-21 20:07:31"
+            "time": "2016-06-13 19:55:20"
         }
     ],
     "packages-dev": [],

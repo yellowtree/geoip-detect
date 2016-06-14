@@ -30,6 +30,9 @@ function geoip_detect_verify_nonce() {
 
 function geoip_detect_lookup_page()
 {
+	if (!is_admin())
+		return;
+	
 	$ip_lookup_result = false;
 	$message = '';
 
@@ -59,7 +62,7 @@ function geoip_detect_lookup_page()
 }
 
 function geoip_detect_option_page() {
-	if (!current_user_can('manage_options'))
+	if (!is_admin() || !current_user_can('manage_options'))
 		return;
 		
 	$registry = DataSourceRegistry::getInstance();

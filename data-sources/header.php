@@ -312,10 +312,10 @@ class HeaderDataSource extends AbstractDataSource {
 		
 		if ($provider == 'cloudflare') {
 			$html .= '<br><br>';
-			$html .= __('This needs to be enabled in the admin panel: see <a href="https://support.cloudflare.com/hc/en-us/articles/200168236-What-does-CloudFlare-IP-Geolocation-do-">Help</a>.', 'geoip-detect');
+			$html .= sprintf(__('This needs to be enabled in the admin panel: see <a href="%s">Help</a>.', 'geoip-detect'), 'https://support.cloudflare.com/hc/en-us/articles/200168236-What-does-CloudFlare-IP-Geolocation-do-');
 		} elseif ($provider == 'aws') {
 			$html .= '<br><br>';
-			$html .= __('This needs to be enabled in the admin panel: see <a href="https://aws.amazon.com/blogs/aws/enhanced-cloudfront-customization/">Help</a>.', 'geoip-detect');
+			$html .= sprintf(__('This needs to be enabled in the admin panel: see <a href="%s">Help</a>.', 'geoip-detect'), 'https://aws.amazon.com/blogs/aws/enhanced-cloudfront-customization/');
 		}
 		return $html;
 	}
