@@ -2,7 +2,7 @@
 Contributors: benjaminpick
 Tags: geoip, maxmind, geolocation, locator
 Requires at least: 3.5
-Tested up to: 4.5
+Tested up to: 4.6
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -160,7 +160,7 @@ Fixing automatic weekly updates.
 
 * ADD: New datasources for Cloudflare & Amazon AWS CloudFront (country detection only).
 * FIX: Cron scheduling is checked every time you visit the plugin page.
-* Maxmind vendor code was updated to the current version (2.4.0).
+* Maxmind vendor code was updated to the current version (2.4.1).
 
 = 2.5.7 =
 * ADD: Shortcodes can now optionally specifiy the IP: `[geoip_detect2 property="country.isoCode" ip="(ipv4 or ipv6)"]`
