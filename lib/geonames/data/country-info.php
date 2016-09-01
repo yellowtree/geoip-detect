@@ -1,5 +1,5 @@
-<?php 
-// Generated at Thu, 01 Sep 2016 13:08:47 +0200
+<?php
+// Generated at Thu, 01 Sep 2016 19:27:59 +0200;
 return array (
   'AD' => 
   array (
@@ -1760,8 +1760,8 @@ return array (
     ),
     'location' => 
     array (
-      'latitude' => 46.814510942298149,
-      'longitude' => 8.225043641892114,
+      'latitude' => 46.815513500000002,
+      'longitude' => 8.2244720000000004,
     ),
   ),
   'CI' => 
@@ -2334,8 +2334,8 @@ return array (
     ),
     'location' => 
     array (
-      'latitude' => 51.164235133224366,
-      'longitude' => 10.454033001170981,
+      'latitude' => 51.165706499999999,
+      'longitude' => 10.452764,
     ),
   ),
   'DJ' => 

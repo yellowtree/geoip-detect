@@ -1,5 +1,5 @@
 <?php
-// Usage: $ php lib/geonames/generators/geonames.php api_username > lib/geonames/data/country-info.php
+// Usage: $ php lib/geonames/generators/geonames.php api_username lib/geonames/data
 if (php_sapi_name() != "cli")
 	die('This can only be run from command line.');
 
@@ -9,8 +9,15 @@ function output_to_stderr($text) {
 
 require_once(__DIR__ . '/vendor/autoload.php');
 
-$username = @$argv[1]; // Get your free geonames.org - Account here: http://www.geonames.org/login
+$username = @$argv[1];
+if (!$username)
+	die('1st parameter missing: You need to get a free geonames.org-User here: http://www.geonames.org/login');
 
+$output_dir = @$argv[2];
+if (!$output_dir)
+	$output_dir = '.';
+if (!is_dir($output_dir))
+	die('2nd parameter: You need to specify an existing directory');
 
 // List of languages that the Maxmind Database support
 $langs = ['en', 'de', 'it', 'es', 'fr', 'ja', 'pt-BR', 'ru', 'zh-CN'];
@@ -71,10 +78,61 @@ foreach ($lang_geonames as $lang_maxmind => $lang_geonames) {
 	// Merge the languages together
 	$all_records = array_replace_recursive($all_records, $records);
 }
-output_to_stderr("Writing the results to the standard output...");
-echo '<?php ' . PHP_EOL;
-echo '// Generated at ' . date('r') . PHP_EOL;
-echo 'return ';
-var_export($all_records);
-echo ';';
-output_to_stderr("Done. You should now run phpunit to see if the file data is valid.");
+
+function geonames_array_to_php($data) {
+	$date_now = date('r');
+	$data = var_export($data, true);
+
+	$file = <<<PHP
+<?php
+// Generated at {$date_now} 
+return $data;
+PHP;
+	$data = '';
+	return $file;
+}
+
+output_to_stderr("Writing country-info.php...");
+file_put_contents($output_dir . '/country-info.php', geonames_array_to_php($all_records));
+output_to_stderr('OK.' . PHP_EOL);
+
+output_to_stderr('Writing country-names.php...');
+
+$all_names = [];
+foreach ($all_records as $id => $r) {
+	$all_names[$id] = $r['country']['names'];
+}
+
+file_put_contents($output_dir . '/country-names.php', geonames_array_to_php($all_names));
+
+output_to_stderr('OK.' . PHP_EOL);
+
+
+/* Takes up as much memory (around 700kb)
+$getDataOfCountrySwitchCases = '';
+foreach ($all_records as $id => $r) {
+	$id_exported = var_export($id, true);
+	$r_exported = var_export($r, true);
+	$getDataOfCountrySwitchCases .= "case $id_exported: return $r_exported;" . PHP_EOL;
+}
+
+echo <<<'PHP'
+namespace YellowTree\GeoipDetect\Geonames;
+
+if (!class_exists('CountryInformationData')) {
+	class CountryInformationData {
+		public function getDataOfCountry($country) {
+			switch($country) {
+			
+PHP;
+echo $getDataOfCountrySwitchCases;
+echo <<<'PHP'
+			}
+			return ''; // Country not found
+		}
+	}
+
+
+PHP;
+*/
+output_to_stderr("Done. You should now run phpunit to see if the file data is valid." . PHP_EOL);
