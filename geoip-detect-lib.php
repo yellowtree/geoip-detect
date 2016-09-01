@@ -193,7 +193,7 @@ function _geoip_detect2_try_to_fix_timezone($data) {
 	}
 
 	if (!empty($data['country']['iso_code'])) {
-		$data['location']['time_zone'] = _geoip_detect_get_time_zone($data['country']['iso_code'], null);
+		$data['location']['time_zone'] = _geoip_detect_get_time_zone($data['country']['iso_code'], @$data['subdivisions'][0]['iso_code']);
 	} else {
 		$data['location']['time_zone'] = null;
 	}

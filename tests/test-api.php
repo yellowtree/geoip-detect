@@ -86,5 +86,14 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertNotSame('[geoip_detect2_get_current_source_description]', $desc, 'Shortcode was not executed.');
 		$this->assertNotEmpty($desc, 'Shortcode returned empty string');
 	}
-
+	
+	function testFillInTimezone() {
+		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
+		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
+		$this->assertSame('Europe/Berlin', $record->location->timeZone, 'Timezone must be dectected via country');
+		
+		$record = geoip_detect2_get_info_from_ip('8.8.8.8');
+		$this->assertValidGeoIP2Record($record, '8.8.8.8');
+		$this->assertSame('America/Los_Angeles', $record->location->timeZone, 'Timezone must be dectected via country/state');
+	}
 }
