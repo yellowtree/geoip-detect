@@ -1,5 +1,5 @@
 <?php
-// Usage: php geonames.php api_username > ../countryInfo.php
+// Usage: $ php lib/geonames/generators/geonames.php api_username > lib/geonames/data/country-info.php
 if (php_sapi_name() != "cli")
 	die('This can only be run from command line.');
 
@@ -72,7 +72,9 @@ foreach ($lang_geonames as $lang_maxmind => $lang_geonames) {
 	$all_records = array_replace_recursive($all_records, $records);
 }
 output_to_stderr("Writing the results to the standard output...");
-echo '<?php return ';
+echo '<?php ' . PHP_EOL;
+echo '// Generated at ' . date('r') . PHP_EOL;
+echo 'return ';
 var_export($all_records);
 echo ';';
 output_to_stderr("Done. You should now run phpunit to see if the file data is valid.");

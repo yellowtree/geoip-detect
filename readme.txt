@@ -159,7 +159,9 @@ Fixing automatic weekly updates.
 = 2.5.8 =
 
 * ADD: New datasources for Cloudflare & Amazon AWS CloudFront (country detection only).
+* ADD: Country information (names, lat/lon, continent) are now filled in for sources that only detect the country code (Cloudflare, Amazon, hostip.info)
 * FIX: Cron scheduling is checked every time you visit the plugin page.
+* FIX: Timezones of US & Canada are now detected more often (if country+state is known)
 * Maxmind vendor code was updated to the current version (2.4.1).
 
 = 2.5.7 =

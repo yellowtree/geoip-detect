@@ -1,4 +1,6 @@
-<?php return array (
+<?php 
+// Generated at Thu, 01 Sep 2016 13:08:47 +0200
+return array (
   'AD' => 
   array (
     'country' => 
@@ -200,8 +202,8 @@
     ),
     'location' => 
     array (
-      'latitude' => 18.225119499999998,
-      'longitude' => -63.072130000000001,
+      'latitude' => 18.218597472984868,
+      'longitude' => -63.067322670909135,
     ),
   ),
   'AL' => 
@@ -1758,8 +1760,8 @@
     ),
     'location' => 
     array (
-      'latitude' => 46.815513500000002,
-      'longitude' => 8.2244720000000004,
+      'latitude' => 46.814510942298149,
+      'longitude' => 8.225043641892114,
     ),
   ),
   'CI' => 
@@ -2262,7 +2264,7 @@
       'geoname_id' => 3077311,
       'names' => 
       array (
-        'en' => 'Czech Republic',
+        'en' => 'Czechia',
         'de' => 'Tschechien',
         'it' => 'Repubblica Ceca',
         'es' => 'República Checa',
@@ -2332,8 +2334,8 @@
     ),
     'location' => 
     array (
-      'latitude' => 51.165706499999999,
-      'longitude' => 10.452764,
+      'latitude' => 51.164235133224366,
+      'longitude' => 10.454033001170981,
     ),
   ),
   'DJ' => 

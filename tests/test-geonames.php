@@ -1,13 +1,12 @@
 
 <?php
 
-define ('GEONAMES_COUNTRY_INFO', 'lib/geonames/countryInfo.php');
 
 class GeonamesTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	public function testAllAttributesContainSomething() {
-		$this->assertFileExists(GEONAMES_COUNTRY_INFO);	
-		$data = require(GEONAMES_COUNTRY_INFO);
+		$this->assertFileExists(GEOIP_DETECT_GEONAMES_COUNTRY_INFO);	
+		$data = require(GEOIP_DETECT_GEONAMES_COUNTRY_INFO);
 		
 		$this->assertInternalType('array', $data);
 		foreach ($data as $id => $country) {
