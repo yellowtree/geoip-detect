@@ -202,6 +202,20 @@ function _geoip_detect2_try_to_fix_timezone($data) {
 }
 add_filter('geoip_detect2_record_data', '_geoip_detect2_try_to_fix_timezone');
 
+function _geoip_detect2_add_geonames_data($data) {
+	static $countryInfo = null;
+	if (is_null($countryInfo))
+		$countryInfo = new \YellowTree\GeoipDetect\Geonames\CountryInformation;
+	
+	if (!empty($data['country']['iso_code']) && empty($data['country']['names']['de'])) {
+		$geonamesData = $countryInfo->getInformationAboutCountry($data['country']['iso_code']);
+		$data = array_replace_recursive($geonamesData, $data);
+	}
+	
+	return $data;
+}
+add_filter('geoip_detect2_record_data', '_geoip_detect2_add_geonames_data');
+
 /**
  * IPv6-Adresses can be written in different formats. Make sure they are standardized.
  * For IPv4-Adresses, spaces are removed.

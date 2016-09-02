@@ -23,7 +23,7 @@ class CountryInformation {
 	public function getInformationAboutCountry($iso) {
 		$data = $this->lazyLoadInformation(GEOIP_DETECT_GEONAMES_COUNTRY_INFO);
 		
-		if ($iso == 'all')
+		if ($iso == 'keys')
 			return array_keys($data['countries']);
 		
 		if (!isset($data['countries'][$iso]))
@@ -43,6 +43,9 @@ class CountryInformation {
 	public function getAllCountries($locales = 'en') {
 		$data = $this->lazyLoadInformation(GEOIP_DETECT_GEONAMES_COUNTRY_NAMES);
 
+		if ($locales === 'keys')
+			return array_keys($data);
+		
 		foreach ((array) $locales as $locale) {
 			if (isset($data[$locale]))
 				return $data[$locale];

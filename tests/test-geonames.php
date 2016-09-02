@@ -25,7 +25,7 @@ class GeonamesTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	public function testCountryInfoEveryAttributeIsNotEmpty() {
-		$keys = $this->countryInformation->getInformationAboutCountry('all');
+		$keys = $this->countryInformation->getInformationAboutCountry('keys');
 
 		foreach ($keys as $id) {
 			$country = $this->countryInformation->getInformationAboutCountry($id);
@@ -56,7 +56,9 @@ class GeonamesTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	public function testGetAllCountries() {
-		foreach (['en', 'de', 'it', 'es', 'fr', 'ja', 'pt-BR', 'ru', 'zh-CN'] as $lang_id) {
+		$keys = $this->countryInformation->getAllCountries('keys');
+		
+		foreach ($keys as $lang_id) {
 			$lang = $this->countryInformation->getAllCountries($lang_id);
 			
 			foreach ($lang as $c_id => $country) {
@@ -74,5 +76,17 @@ class GeonamesTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertSame($lang['AE'], 'United Arab Emirates');
 	}
 	
+	public function testEnrichtData() {
+		$data = [];
+		$data['country']['iso_code'] = 'AE';
+		$data['continent']['code'] = 'ZZ'; // This is wrong, of course. Existing data should not be overwritten.
+		
+		$data = apply_filters('geoip_detect2_record_data', $data);
+		
+		$this->assertSame('Vereinigte Arabische Emirate', $data['country']['names']['de']);
+		$this->assertSame('ZZ', $data['continent']['code']);
+		$this->assertSame('Asien', $data['continent']['names']['de']);
+		$this->assertNotEmpty($data['location']['latitude']);
+	}
 	
 }
