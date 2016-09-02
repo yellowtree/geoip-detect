@@ -25,15 +25,21 @@ class GeonamesTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	public function testCountryInfoEveryAttributeIsNotEmpty() {
-		$data = $this->countryInformation->getInformationAboutCountry('all');
-		$this->assertInternalType('array', $data);
-		foreach ($data as $id => $country) {
-			if (strlen($id) > 2)
-				continue;
-			
+		$keys = $this->countryInformation->getInformationAboutCountry('all');
+
+		foreach ($keys as $id) {
+			$country = $this->countryInformation->getInformationAboutCountry($id);
+
 			$record = new \YellowTree\GeoipDetect\DataSources\City($country, ['en']);
 			$this->assertValidGeoIP2Record($record, 'Geonames Country Info of ' . $id, false /* Check continent: YES */, true /* Check Extra Info: NO */);
 		}
+		
+		// Some asserts
+		
+		$info = $this->countryInformation->getInformationAboutCountry('AE');
+		$this->assertSame(290557, $info['country']['geoname_id']);
+		$this->assertSame('Asien', $info['continent']['names']['de']);
+		$this->assertSame('AS', $info['continent']['code']);
 	}
 		
 	public function testCountryNamesMemoryUsage() {

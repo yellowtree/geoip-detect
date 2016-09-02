@@ -1,6 +1,7 @@
 <?php
 // Generated at Thu, 01 Sep 2016 19:27:59 +0200;
 return array (
+  'countries' => array(
   'AD' => 
   array (
     'country' => 
@@ -20,22 +21,7 @@ return array (
         'zh-CN' => '安道尔',
       ),
     ),
-    'continent' => 
-    array (
-      'code' => 'EU',
-      'names' => 
-      array (
-        'en' => 'Europe',
-        'de' => 'Europa',
-        'it' => 'Europa',
-        'es' => 'Europa',
-        'fr' => 'Europe',
-        'ja' => 'ヨーロッパ',
-        'pt-BR' => 'Europa',
-        'ru' => 'Европа',
-        'zh-CN' => '欧洲',
-      ),
-    ),
+    'continent' => 'EU',
     'location' => 
     array (
       'latitude' => 42.542268247534167,
@@ -61,22 +47,7 @@ return array (
         'zh-CN' => '阿拉伯联合酋长国',
       ),
     ),
-    'continent' => 
-    array (
-      'code' => 'AS',
-      'names' => 
-      array (
-        'en' => 'Asia',
-        'de' => 'Asien',
-        'it' => 'Asia',
-        'es' => 'Asia',
-        'fr' => 'Asie',
-        'ja' => 'アジア',
-        'pt-BR' => 'Ásia',
-        'ru' => 'Азия',
-        'zh-CN' => '亚洲',
-      ),
-    ),
+    'continent' => 'AS',
     'location' => 
     array (
       'latitude' => 24.358744621276855,
@@ -10251,4 +10222,37 @@ return array (
       'longitude' => 29.146666500000002,
     ),
   ),
+  ),
+  'continents' => array(
+  'EU' => array (
+      'code' => 'EU',
+      'names' => 
+      array (
+        'en' => 'Europe',
+        'de' => 'Europa',
+        'it' => 'Europa',
+        'es' => 'Europa',
+        'fr' => 'Europe',
+        'ja' => 'ヨーロッパ',
+        'pt-BR' => 'Europa',
+        'ru' => 'Европа',
+        'zh-CN' => '欧洲',
+      ),
+    ),
+    'AS' =>  array (
+      'code' => 'AS',
+      'names' => 
+      array (
+        'en' => 'Asia',
+        'de' => 'Asien',
+        'it' => 'Asia',
+        'es' => 'Asia',
+        'fr' => 'Asie',
+        'ja' => 'アジア',
+        'pt-BR' => 'Ásia',
+        'ru' => 'Азия',
+        'zh-CN' => '亚洲',
+      ),
+    ),
+  )
 );

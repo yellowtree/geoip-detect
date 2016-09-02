@@ -27,6 +27,7 @@ $lang_geonames['pt-BR'] = 'pt';
 $lang_geonames['zh-CN'] = 'zh';
 //$langs = ['en', 'de'];
 
+$continents = [];
 $all_records = [];
 output_to_stderr("Getting Country Information from geonames.org with API username " . $username . ":" . PHP_EOL);
 foreach ($lang_geonames as $lang_maxmind => $lang_geoname) {
@@ -56,9 +57,11 @@ foreach ($lang_geonames as $lang_maxmind => $lang_geoname) {
 				
 				// Continent data
 				if ($row['continent'])
-					$r['continent']['code'] = $row['continent'];
-				if ($row['continentName'])
-					$r['continent']['names'][$lang_maxmind] = $row['continentName'];
+					$r['continent'] = $row['continent'];
+				if ($row['continentName']) {
+					$continents[$row['continent']]['code'] = $row['continent'];
+					$continents[$row['continent']]['continent']['names'][$lang_maxmind] = $row['continentName'];
+				}
 				
 				// Special country data
 				if (isset($row['north']) && isset($row['south']))
@@ -93,7 +96,7 @@ PHP;
 }
 
 output_to_stderr("Writing country-info.php...");
-file_put_contents($output_dir . '/country-info.php', geonames_array_to_php($all_records));
+file_put_contents($output_dir . '/country-info.php', geonames_array_to_php(['countries' => $all_records, 'continents' => $continents]));
 output_to_stderr('OK.' . PHP_EOL);
 
 

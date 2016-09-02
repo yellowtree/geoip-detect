@@ -24,9 +24,15 @@ class CountryInformation {
 		$data = $this->lazyLoadInformation(GEOIP_DETECT_GEONAMES_COUNTRY_INFO);
 		
 		if ($iso == 'all')
-			return $data;
+			return array_keys($data['countries']);
 		
-		return isset($data[$iso]) ? $data[$iso] : [];
+		if (!isset($data['countries'][$iso]))
+			return [];
+		
+		$country = $data['countries'][$iso];
+		if (isset($country['continent']) && is_string($country['continent']))
+			$country['continent'] = $data['continents'][$country['continent']];
+		return $country;
 	}
 	
 	/**
