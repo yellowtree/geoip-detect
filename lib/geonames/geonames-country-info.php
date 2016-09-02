@@ -23,6 +23,9 @@ class CountryInformation {
 	public function getInformationAboutCountry($iso) {
 		$data = $this->lazyLoadInformation(GEOIP_DETECT_GEONAMES_COUNTRY_INFO);
 		
+		if ($iso == 'all')
+			return $data;
+		
 		return isset($data[$iso]) ? $data[$iso] : [];
 	}
 	
@@ -31,14 +34,14 @@ class CountryInformation {
 	 * @param  string/array $locales Locale of the label (if array: use the first locale available)
 	 * @return array ISO Codes => Label Pairs
 	 */
-	public function getAllCountries($locales) {
+	public function getAllCountries($locales = 'en') {
 		$data = $this->lazyLoadInformation(GEOIP_DETECT_GEONAMES_COUNTRY_NAMES);
 
-		foreach ($locales as $locale) {
+		foreach ((array) $locales as $locale) {
 			if (isset($data[$locale]))
 				return $data[$locale];
 		}
-		return [];
+		return $data['en'];
 	}
 }
 
