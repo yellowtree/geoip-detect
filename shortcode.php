@@ -117,3 +117,40 @@ function geoip_detect2_shortcode_get_current_source_description($attr) {
 	return $external_ip;
 }
 add_shortcode('geoip_detect2_get_current_source_description', 'geoip_detect2_shortcode_get_current_source_description');
+
+/**
+ * [[Description]]
+ * @param  string $lang Language(s) (optional. If not set, current site language is used.)
+ * @param string $selected Which country to select by default (2-letter ISO code.) (optional. If not set, the country will be detected by client ip.)
+ * @param string $default 		Default Value that will be used if country cannot be detected
+ * @return string HTML
+ */
+function geoip_detect2_shortcode_country_select($attr) {
+	$selected = '';
+	if (isset($attr['selected'])) {
+		$selected = $attr['selected'];
+	} else {
+		$record = geoip_detect2_get_info_from_current_ip();
+		$selected = $record->country->isoCode;
+	}
+	if (empty($selected)) {
+		if (isset($attr['default']))
+			$selected = $attr['default'];
+	}
+	
+	$locales = isset($attr['lang']) ? $attr['lang'] . ',en' : 'en';
+	$locales = apply_filters('geoip_detect2_locales', $locales);
+
+	$countryInfo = new YellowTree\GeoipDetect\Geonames\CountryInformation();
+	$countries = $countryInfo->getAllCountries($locales);
+	
+	$name = 'geoip_detect_name';
+	$html = '<select name="' . esc_attr($name) . '">';
+	foreach ($countries as $code => $label) {
+		$html .= '<option value="' . esc_attr($code) . '"' . ($code == $selected ? ' selected="selected"' : '') . '>' . esc_html($label) . '</option>';	
+	}
+	$html .= '</select>';
+	
+	return $html;
+}
+add_shortcode('geoip_detect2_shortcode_country_select', 'geoip_detect2_shortcode_country_select');

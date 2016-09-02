@@ -2,25 +2,43 @@
 
 namespace YellowTree\GeoipDetect\Geonames;
 define ('GEOIP_DETECT_GEONAMES_COUNTRY_INFO', GEOIP_PLUGIN_DIR . '/lib/geonames/data/country-info.php');
+define ('GEOIP_DETECT_GEONAMES_COUNTRY_NAMES', GEOIP_PLUGIN_DIR . '/lib/geonames/data/country-names.php');
 
 class CountryInformation {
 	
-	protected $data;
+	protected $data = [];
 	
-	protected function lazyLoadInformation() {
-		if (is_null($this->data)) {
-			$this->data = require(GEOIP_DETECT_GEONAMES_COUNTRY_INFO);
+	protected function lazyLoadInformation($filename) {
+		if (!isset($this->data[$filename])) {
+			$this->data[$filename] = require($filename);
 		}
+		return $this->data[$filename];
+	}
+	/**
+	 * Get all geonames Information that is known about the country with this ISO code.
+	 * 
+	 * @param string $iso 2-letter ISO-Code of the country (e.g. 'DE')
+	 * @return array Information in record format
+	 */
+	public function getInformationAboutCountry($iso) {
+		$data = $this->lazyLoadInformation(GEOIP_DETECT_GEONAMES_COUNTRY_INFO);
+		
+		return isset($data[$iso]) ? $data[$iso] : [];
 	}
 	
-	public function getInformationAbout($iso) {
-		$this->lazyLoadInformation();
-		// Return in record format
-	}
-	
-	public function getAllCountries($locale) {
-		$this->lazyLoadInformation();
-		// return array iso => label 
+	/**
+	 * Get all country names
+	 * @param  string/array $locales Locale of the label (if array: use the first locale available)
+	 * @return array ISO Codes => Label Pairs
+	 */
+	public function getAllCountries($locales) {
+		$data = $this->lazyLoadInformation(GEOIP_DETECT_GEONAMES_COUNTRY_NAMES);
+
+		foreach ($locales as $locale) {
+			if (isset($data[$locale]))
+				return $data[$locale];
+		}
+		return [];
 	}
 }
 

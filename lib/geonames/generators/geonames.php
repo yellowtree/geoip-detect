@@ -29,9 +29,9 @@ $lang_geonames['zh-CN'] = 'zh';
 
 $all_records = [];
 output_to_stderr("Getting Country Information from geonames.org with API username " . $username . ":" . PHP_EOL);
-foreach ($lang_geonames as $lang_maxmind => $lang_geonames) {
+foreach ($lang_geonames as $lang_maxmind => $lang_geoname) {
 	// Load country information of all countries
-	$client = new \spacedealer\geonames\api\Geonames($username, $lang_geonames);
+	$client = new \spacedealer\geonames\api\Geonames($username, $lang_geoname);
 
 	try {
 		$records = [];
@@ -39,7 +39,7 @@ foreach ($lang_geonames as $lang_maxmind => $lang_geonames) {
 
 		if ($response->isOk()) {
 			$count = $response->count();
-			output_to_stderr("Lang " . $lang_geonames . ": Found countries: $count" . PHP_EOL);
+			output_to_stderr("Lang " . $lang_geoname . ": Found countries: $count" . PHP_EOL);
 			
 			foreach ($response as $row) {
 				$r = [];
@@ -96,11 +96,19 @@ output_to_stderr("Writing country-info.php...");
 file_put_contents($output_dir . '/country-info.php', geonames_array_to_php($all_records));
 output_to_stderr('OK.' . PHP_EOL);
 
+
 output_to_stderr('Writing country-names.php...');
 
 $all_names = [];
 foreach ($all_records as $id => $r) {
-	$all_names[$id] = $r['country']['names'];
+	foreach ($lang_geonames as $lang_maxmind => $lang_geoname) {
+		if (!empty( $r['country']['names'][$lang_geoname]))
+			$all_names[$lang_geoname][$id] = $r['country']['names'][$lang_geoname];
+	}
+}
+// Sort by label, not by ISO Code
+foreach ($all_names as $lang_maxmind => $names) {
+	sort($all_names[$lang_maxmind]);
 }
 
 file_put_contents($output_dir . '/country-names.php', geonames_array_to_php($all_names));
@@ -135,4 +143,4 @@ echo <<<'PHP'
 
 PHP;
 */
-output_to_stderr("Done. You should now run phpunit to see if the file data is valid." . PHP_EOL);
+output_to_stderr("Done. You should now run 'phpunit' now to see if the file data is valid." . PHP_EOL);
