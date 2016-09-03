@@ -6,7 +6,7 @@ define ('GEOIP_DETECT_GEONAMES_COUNTRY_NAMES', GEOIP_PLUGIN_DIR . '/lib/geonames
 
 class CountryInformation {
 	
-	protected $data = [];
+	protected $data = array();
 	
 	protected function lazyLoadInformation($filename) {
 		if (!isset($this->data[$filename])) {
@@ -27,7 +27,7 @@ class CountryInformation {
 			return array_keys($data['countries']);
 		
 		if (!isset($data['countries'][$iso]))
-			return [];
+			return array();
 		
 		$country = $data['countries'][$iso];
 		if (isset($country['continent']) && is_string($country['continent']))

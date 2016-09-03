@@ -1,5 +1,7 @@
 <?php
 // Usage: $ php lib/geonames/generators/geonames.php api_username lib/geonames/data
+// Requires PHP 5.4
+
 if (php_sapi_name() != "cli")
 	die('This can only be run from command line.');
 
