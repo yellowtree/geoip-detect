@@ -119,7 +119,7 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 		
 		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		$this->assertTrue($record->isEmpty);
-		$this->assertContains('Invalid user_id or license_key', $record->extra->error);
+		$this->assertContains('authenticated', $record->extra->error);
 	}
 	
 	/**

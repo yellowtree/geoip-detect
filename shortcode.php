@@ -120,14 +120,16 @@ add_shortcode('geoip_detect2_get_current_source_description', 'geoip_detect2_sho
 
 /**
  * [[Description]]
- * @param  string $lang Language(s) (optional. If not set, current site language is used.)
+ * @param string $lang Language(s) (optional. If not set, current site language is used.)
  * @param string $selected Which country to select by default (2-letter ISO code.) (optional. If not set, the country will be detected by client ip.)
+ * @param string $name Name of the form element
  * @param string $default 		Default Value that will be used if country cannot be detected
  * @return string HTML
  */
 function geoip_detect2_shortcode_country_select($attr) {
+	var_dump($attr);
 	$selected = '';
-	if (isset($attr['selected'])) {
+	if (!empty($attr['selected'])) {
 		$selected = $attr['selected'];
 	} else {
 		$record = geoip_detect2_get_info_from_current_ip();
@@ -138,19 +140,70 @@ function geoip_detect2_shortcode_country_select($attr) {
 			$selected = $attr['default'];
 	}
 	
-	$locales = isset($attr['lang']) ? $attr['lang'] . ',en' : 'en';
+	$locales = !empty($attr['lang']) ? $attr['lang'] . ',en' : 'en';
 	$locales = apply_filters('geoip_detect2_locales', $locales);
+
+	$select_attrs = [ 
+		'name' => !empty($attr['name']) ? $attr['name'] : 'geoip-countries',
+		'id' => @$attr['id'],
+		'class' => @$attr['class'],
+		'aria-required' => !empty($attr['required']) ? 'required' : '',
+		'aria-invalid' => !empty($attr['invalid']) ? $attr['invalid'] : '',
+	];
+	$select_attrs_html = '';
+	foreach ($select_attrs as $key => $value) {
+		if ($value)
+			$select_attrs_html .= $key . '="' . esc_attr($value) . '" ';
+	}
 
 	$countryInfo = new YellowTree\GeoipDetect\Geonames\CountryInformation();
 	$countries = $countryInfo->getAllCountries($locales);
 	
-	$name = 'geoip_detect_name';
-	$html = '<select name="' . esc_attr($name) . '">';
+	$html = '<select ' . $select_attrs_html . '>';
+	if (!empty($attr['include_blank'])) 
+		$html .= '<option value="">---</option>';
 	foreach ($countries as $code => $label) {
-		$html .= '<option value="' . esc_attr($code) . '"' . ($code == $selected ? ' selected="selected"' : '') . '>' . esc_html($label) . '</option>';	
+		$html .= '<option' . ($code == $selected ? ' selected="selected"' : '') . '>' . esc_html($label) . '</option>';	
 	}
 	$html .= '</select>';
 	
 	return $html;
 }
 add_shortcode('geoip_detect2_shortcode_country_select', 'geoip_detect2_shortcode_country_select');
+
+function geoip_detect2_shortcode_country_select_wpcf7($tag) {
+	$tag = new WPCF7_Shortcode( $tag );
+	
+	$default = (string) reset( $tag->values );
+	$default = $tag->get_default_option($default, ['multiple' => false]);
+	$default = wpcf7_get_hangover( $tag->name, $default ); // Get from $_POST if available
+	
+	$class = wpcf7_form_controls_class( $tag->type );
+	$validation_error = wpcf7_get_validation_error( $tag->name );
+	if ($validation_error)
+		$class .= ' wpcf7-not-valid';
+	
+	$attr = [
+		'name' => $tag->name,
+		'include_blank' => $tag->has_option( 'include_blank' ),
+		'required' => substr($tag->type, -1) == '*',
+		'invalid' => $validation_error ? 'true' : 'false',
+		'id' => $tag->get_id_option(),
+		'class' => $tag->get_class_option( $class ),
+		'lang' => $tag->get_option('lang', '', true),
+		'selected' => $default,
+		'default' => $tag->get_option('default', '', true),
+	];
+	$html = geoip_detect2_shortcode_country_select($attr);
+	
+	$html = sprintf(
+		'<span class="wpcf7-form-control-wrap %1$s">%2$s %3$s</span>',
+		sanitize_html_class( $tag->name ), $html, $validation_error );
+	
+	return $html;
+}
+
+add_action( 'wpcf7_init', 'geoip_detect2_add_shortcodes' );
+function geoip_detect2_add_shortcodes() {
+	wpcf7_add_shortcode(['geoip_detect2_countries', 'geoip_detect2_countries*'], 'geoip_detect2_shortcode_country_select_wpcf7', true);
+}
