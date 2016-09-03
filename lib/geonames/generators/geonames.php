@@ -60,7 +60,7 @@ foreach ($lang_geonames as $lang_maxmind => $lang_geoname) {
 					$r['continent'] = $row['continent'];
 				if ($row['continentName']) {
 					$continents[$row['continent']]['code'] = $row['continent'];
-					$continents[$row['continent']]['continent']['names'][$lang_maxmind] = $row['continentName'];
+					$continents[$row['continent']]['names'][$lang_maxmind] = $row['continentName'];
 				}
 				
 				// Special country data
@@ -111,7 +111,7 @@ foreach ($all_records as $id => $r) {
 }
 // Sort by label, not by ISO Code
 foreach ($all_names as $lang_maxmind => $names) {
-	sort($all_names[$lang_maxmind]);
+	asort($all_names[$lang_maxmind]);
 }
 
 file_put_contents($output_dir . '/country-names.php', geonames_array_to_php($all_names));
