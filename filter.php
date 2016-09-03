@@ -29,7 +29,7 @@ function geoip_detect2_convert_locale_format($locales) {
 add_filter('geoip_detect2_locales', 'geoip_detect2_convert_locale_format', 7);
 
 function geoip_detect2_add_default_locales($locales) {
-	if (is_null($locales)) {
+	if (is_null($locales) || $locales === false) {
 		$locales = array();
 		
 		/* Needed? should be in get_locale()

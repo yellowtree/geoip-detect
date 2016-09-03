@@ -49,7 +49,7 @@ function geoip_detect2_shortcode($attr)
 {
 	$skipCache = isset($attr['skip_cache']) && (strtolower($attr['skip_cache']) == 'true' || $attr['skip_cache'] == '1');
 	
-	$locales = isset($attr['lang']) ? $attr['lang'] . ',en' : 'en';
+	$locales = isset($attr['lang']) ? $attr['lang'] . ',en' : null;
 	$locales = apply_filters('geoip_detect2_locales', $locales);
 
 	$defaultValue = isset($attr['default']) ? $attr['default'] : ''; 
@@ -140,7 +140,7 @@ function geoip_detect2_shortcode_country_select($attr) {
 			$selected = $attr['default'];
 	}
 	
-	$locales = !empty($attr['lang']) ? $attr['lang'] . ',en' : 'en';
+	$locales = !empty($attr['lang']) ? $attr['lang'] : null;
 	$locales = apply_filters('geoip_detect2_locales', $locales);
 
 	$select_attrs = [ 
