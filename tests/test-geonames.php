@@ -30,7 +30,7 @@ class GeonamesTest extends WP_UnitTestCase_GeoIP_Detect {
 		foreach ($keys as $id) {
 			$country = $this->countryInformation->getInformationAboutCountry($id);
 
-			$record = new \YellowTree\GeoipDetect\DataSources\City($country, ['en']);
+			$record = new \YellowTree\GeoipDetect\DataSources\City($country, array('en'));
 			$this->assertValidGeoIP2Record($record, 'Geonames Country Info of ' . $id, false /* Check continent: YES */, true /* Check Extra Info: NO */);
 		}
 	}
