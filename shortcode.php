@@ -243,5 +243,5 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 
 add_action( 'wpcf7_init', 'geoip_detect2_add_shortcodes' );
 function geoip_detect2_add_shortcodes() {
-	wpcf7_add_shortcode(['geoip_detect2_countries', 'geoip_detect2_countries*'], 'geoip_detect2_shortcode_country_select_wpcf7', true);
+	wpcf7_add_shortcode(array('geoip_detect2_countries', 'geoip_detect2_countries*'), 'geoip_detect2_shortcode_country_select_wpcf7', true);
 }
