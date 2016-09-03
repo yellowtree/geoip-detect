@@ -156,7 +156,7 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
-= 2.5.8 =
+= 2.6.0 =
 
 * ADD: New datasources for Cloudflare & Amazon AWS CloudFront (country detection only).
 * ADD: Country information (names, lat/lon, continent) are now filled in for sources that only detect the country code (Cloudflare, Amazon, hostip.info)

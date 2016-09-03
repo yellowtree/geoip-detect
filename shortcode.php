@@ -119,12 +119,24 @@ function geoip_detect2_shortcode_get_current_source_description($attr) {
 add_shortcode('geoip_detect2_get_current_source_description', 'geoip_detect2_shortcode_get_current_source_description');
 
 /**
- * [[Description]]
+ * Create a <select>-Input element with all countries.
+ * 
+ * Examples:
+ * `[geoip_detect2_countries_select name="mycountry" lang="fr"]` -> A list of all country names in French, the visitor's country is preselected.
+ * `[geoip_detect2_countries_select id="id" class="class" name="mycountry" lang="fr"]` -> As above, with CSS id "#id" and class ".class"
+ * `[geoip_detect2_countries_select name="mycountry" include_blank="true"] -> Country names are in the current site language. User can also choose '---' for no country at all.
+ * `[geoip_detect2_countries_select name="mycountry" selected="US"] -> "United States" is preselected, there is no visitor IP detection going on here
+ * `[geoip_detect2_countries_select name="mycountry" default="US"] -> Visitor's country is preselected, but in case the country is unknown, use "United States"
+ * 
+ * @param string $name Name of the form element
+ * @param string $id CSS Id of element
+ * @param string $class CSS Class of element
  * @param string $lang Language(s) (optional. If not set, current site language is used.)
  * @param string $selected Which country to select by default (2-letter ISO code.) (optional. If not set, the country will be detected by client ip.)
- * @param string $name Name of the form element
- * @param string $default 		Default Value that will be used if country cannot be detected
- * @return string HTML
+ * @param string $default 		Default Value that will be used if country cannot be detected (optional)
+ * @param string $include_blank If this value contains 'true', a empty value will be prepended ('---', i.e. no country) (optional)
+ *                                                                                                             
+ * @return string The generated HTML
  */
 function geoip_detect2_shortcode_country_select($attr) {
 	var_dump($attr);
@@ -160,7 +172,7 @@ function geoip_detect2_shortcode_country_select($attr) {
 	$countries = $countryInfo->getAllCountries($locales);
 	
 	$html = '<select ' . $select_attrs_html . '>';
-	if (!empty($attr['include_blank'])) 
+	if (!empty($attr['include_blank']) && $attr['include_blank'] !== 'false') 
 		$html .= '<option value="">---</option>';
 	foreach ($countries as $code => $label) {
 		$html .= '<option' . ($code == $selected ? ' selected="selected"' : '') . '>' . esc_html($label) . '</option>';	
@@ -169,8 +181,17 @@ function geoip_detect2_shortcode_country_select($attr) {
 	
 	return $html;
 }
-add_shortcode('geoip_detect2_shortcode_country_select', 'geoip_detect2_shortcode_country_select');
+add_shortcode('geoip_detect2_countries_select', 'geoip_detect2_shortcode_country_select');
 
+/**
+ *
+ * Examples:
+ * `[geoip_detect2_countries mycountry id:id class:class lang:fr]` -> A list of all country names in French (with CSS id "#id" and class ".class"), the visitor's country is preselected.
+ * `[geoip_detect2_countries mycountry include_blank] -> Country names are in the current site language. User can also choose '---' for no country at all.
+ * `[geoip_detect2_countries mycountry "US"] -> "United States" is preselected, there is no visitor IP detection going on here
+ * `[geoip_detect2_countries mycountry default:US] -> Visitor's country is preselected, but in case the country is unknown, use "United States"
+ *
+ */
 function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 	$tag = new WPCF7_Shortcode( $tag );
 	
