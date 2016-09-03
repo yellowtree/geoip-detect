@@ -77,7 +77,7 @@ class GeonamesTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	public function testEnrichData() {
-		$data = [];
+		$data = array();
 		$data['country']['iso_code'] = 'AE';
 		$data['continent']['code'] = 'ZZ'; // This is wrong, of course. Existing data should not be overwritten.
 		
