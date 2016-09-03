@@ -52,21 +52,81 @@
         ]
     },
     {
-        "name": "maxmind/web-service-common",
-        "version": "v0.2.1",
-        "version_normalized": "0.2.1.0",
+        "name": "composer/ca-bundle",
+        "version": "1.0.3",
+        "version_normalized": "1.0.3.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/maxmind/web-service-common-php.git",
-            "reference": "436bebacf4e74651b383435822c472f3e0f2a28a"
+            "url": "https://github.com/composer/ca-bundle.git",
+            "reference": "5df9ed0ed0c9506ea6404a23450854e5df15cc12"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/maxmind/web-service-common-php/zipball/436bebacf4e74651b383435822c472f3e0f2a28a",
-            "reference": "436bebacf4e74651b383435822c472f3e0f2a28a",
+            "url": "https://api.github.com/repos/composer/ca-bundle/zipball/5df9ed0ed0c9506ea6404a23450854e5df15cc12",
+            "reference": "5df9ed0ed0c9506ea6404a23450854e5df15cc12",
             "shasum": ""
         },
         "require": {
+            "ext-openssl": "*",
+            "ext-pcre": "*",
+            "php": "^5.3.2 || ^7.0"
+        },
+        "require-dev": {
+            "symfony/process": "^2.5 || ^3.0"
+        },
+        "suggest": {
+            "symfony/process": "This is necessary to reliably check whether openssl_x509_parse is vulnerable on older php versions, but can be ignored on PHP 5.5.6+"
+        },
+        "time": "2016-07-18 23:07:53",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Composer\\CaBundle\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Jordi Boggiano",
+                "email": "j.boggiano@seld.be",
+                "homepage": "http://seld.be"
+            }
+        ],
+        "description": "Lets you find a path to the system CA bundle, and includes a fallback to the Mozilla CA bundle.",
+        "keywords": [
+            "cabundle",
+            "cacert",
+            "certificate",
+            "ssl",
+            "tls"
+        ]
+    },
+    {
+        "name": "maxmind/web-service-common",
+        "version": "v0.3.1",
+        "version_normalized": "0.3.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/maxmind/web-service-common-php.git",
+            "reference": "1fe780bcd6a9038b7e36b13fa0aeeeeca4cdb0a4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/maxmind/web-service-common-php/zipball/1fe780bcd6a9038b7e36b13fa0aeeeeca4cdb0a4",
+            "reference": "1fe780bcd6a9038b7e36b13fa0aeeeeca4cdb0a4",
+            "shasum": ""
+        },
+        "require": {
+            "composer/ca-bundle": "^1.0.3",
             "ext-curl": "*",
             "ext-json": "*",
             "php": ">=5.3"
@@ -75,7 +135,7 @@
             "phpunit/phpunit": "4.*",
             "squizlabs/php_codesniffer": "2.*"
         },
-        "time": "2016-06-13 19:55:20",
+        "time": "2016-08-18 16:36:52",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -98,29 +158,29 @@
     },
     {
         "name": "geoip2/geoip2",
-        "version": "v2.4.1",
-        "version_normalized": "2.4.1.0",
+        "version": "v2.4.2",
+        "version_normalized": "2.4.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/maxmind/GeoIP2-php.git",
-            "reference": "241e4442e0469d70043805ef699290616d53ce41"
+            "reference": "24b278b0195d7067e930b844c44faf8fae5bdbc7"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/maxmind/GeoIP2-php/zipball/241e4442e0469d70043805ef699290616d53ce41",
-            "reference": "241e4442e0469d70043805ef699290616d53ce41",
+            "url": "https://api.github.com/repos/maxmind/GeoIP2-php/zipball/24b278b0195d7067e930b844c44faf8fae5bdbc7",
+            "reference": "24b278b0195d7067e930b844c44faf8fae5bdbc7",
             "shasum": ""
         },
         "require": {
             "maxmind-db/reader": "~1.0",
-            "maxmind/web-service-common": "~0.2",
+            "maxmind/web-service-common": "~0.3",
             "php": ">=5.3.1"
         },
         "require-dev": {
             "phpunit/phpunit": "4.2.*",
             "squizlabs/php_codesniffer": "2.*"
         },
-        "time": "2016-06-10 22:32:01",
+        "time": "2016-08-17 20:42:55",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
