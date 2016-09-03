@@ -122,11 +122,20 @@ add_shortcode('geoip_detect2_get_current_source_description', 'geoip_detect2_sho
  * Create a <select>-Input element with all countries.
  * 
  * Examples:
- * `[geoip_detect2_countries_select name="mycountry" lang="fr"]` -> A list of all country names in French, the visitor's country is preselected.
- * `[geoip_detect2_countries_select id="id" class="class" name="mycountry" lang="fr"]` -> As above, with CSS id "#id" and class ".class"
- * `[geoip_detect2_countries_select name="mycountry" include_blank="true"] -> Country names are in the current site language. User can also choose '---' for no country at all.
- * `[geoip_detect2_countries_select name="mycountry" selected="US"] -> "United States" is preselected, there is no visitor IP detection going on here
- * `[geoip_detect2_countries_select name="mycountry" default="US"] -> Visitor's country is preselected, but in case the country is unknown, use "United States"
+ * `[geoip_detect2_countries_select name="mycountry" lang="fr"]`
+ * A list of all country names in French, the visitor's country is preselected.
+ * 
+ * `[geoip_detect2_countries_select id="id" class="class" name="mycountry" lang="fr"]`
+ * As above, with CSS id "#id" and class ".class"
+ * 
+ * `[geoip_detect2_countries_select name="mycountry" include_blank="true"]`
+ * Country names are in the current site language. User can also choose '---' for no country at all.
+ * 
+ * `[geoip_detect2_countries_select name="mycountry" selected="US"]`
+ * "United States" is preselected, there is no visitor IP detection going on here
+ * 
+ * `[geoip_detect2_countries_select name="mycountry" default="US"]`
+ * Visitor's country is preselected, but in case the country is unknown, use "United States"
  * 
  * @param string $name Name of the form element
  * @param string $id CSS Id of element
@@ -155,13 +164,13 @@ function geoip_detect2_shortcode_country_select($attr) {
 	$locales = !empty($attr['lang']) ? $attr['lang'] : null;
 	$locales = apply_filters('geoip_detect2_locales', $locales);
 
-	$select_attrs = [ 
+	$select_attrs = array(
 		'name' => !empty($attr['name']) ? $attr['name'] : 'geoip-countries',
 		'id' => @$attr['id'],
 		'class' => @$attr['class'],
 		'aria-required' => !empty($attr['required']) ? 'required' : '',
 		'aria-invalid' => !empty($attr['invalid']) ? $attr['invalid'] : '',
-	];
+	);
 	$select_attrs_html = '';
 	foreach ($select_attrs as $key => $value) {
 		if ($value)
@@ -186,10 +195,18 @@ add_shortcode('geoip_detect2_countries_select', 'geoip_detect2_shortcode_country
 /**
  *
  * Examples:
- * `[geoip_detect2_countries mycountry id:id class:class lang:fr]` -> A list of all country names in French (with CSS id "#id" and class ".class"), the visitor's country is preselected.
- * `[geoip_detect2_countries mycountry include_blank] -> Country names are in the current site language. User can also choose '---' for no country at all.
- * `[geoip_detect2_countries mycountry "US"] -> "United States" is preselected, there is no visitor IP detection going on here
- * `[geoip_detect2_countries mycountry default:US] -> Visitor's country is preselected, but in case the country is unknown, use "United States"
+ * 
+ * `[geoip_detect2_countries mycountry id:id class:class lang:fr]`
+ * A list of all country names in French (with CSS id "#id" and class ".class"), the visitor's country is preselected.
+ * 
+ * `[geoip_detect2_countries mycountry include_blank]`
+ * Country names are in the current site language. User can also choose '---' for no country at all.
+ * 
+ * `[geoip_detect2_countries mycountry "US"]`
+ * "United States" is preselected, there is no visitor IP detection going on here
+ * 
+ * `[geoip_detect2_countries mycountry default:US]`
+ * Visitor's country is preselected, but in case the country is unknown, use "United States"
  *
  */
 function geoip_detect2_shortcode_country_select_wpcf7($tag) {
@@ -204,7 +221,7 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 	if ($validation_error)
 		$class .= ' wpcf7-not-valid';
 	
-	$attr = [
+	$attr = array(
 		'name' => $tag->name,
 		'include_blank' => $tag->has_option( 'include_blank' ),
 		'required' => substr($tag->type, -1) == '*',
@@ -214,7 +231,7 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 		'lang' => $tag->get_option('lang', '', true),
 		'selected' => $default,
 		'default' => $tag->get_option('default', '', true),
-	];
+	);
 	$html = geoip_detect2_shortcode_country_select($attr);
 	
 	$html = sprintf(
