@@ -213,7 +213,7 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 	$tag = new WPCF7_Shortcode( $tag );
 	
 	$default = (string) reset( $tag->values );
-	$default = $tag->get_default_option($default, ['multiple' => false]);
+	$default = $tag->get_default_option($default, array('multiple' => false));
 	$default = wpcf7_get_hangover( $tag->name, $default ); // Get from $_POST if available
 	
 	$class = wpcf7_form_controls_class( $tag->type );
