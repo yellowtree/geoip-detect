@@ -68,11 +68,11 @@ class GeonamesTest extends WP_UnitTestCase_GeoIP_Detect {
 		}
 		
 		// Fallback order
-		$lang = $this->countryInformation->getAllCountries(['zz', 'qq', 'de']);
+		$lang = $this->countryInformation->getAllCountries(array('zz', 'qq', 'de'));
 		$this->assertSame($lang['AE'], 'Vereinigte Arabische Emirate');
 		
 		// Use 'en' as fallback
-		$lang = $this->countryInformation->getAllCountries(['zz']);
+		$lang = $this->countryInformation->getAllCountries(array('zz'));
 		$this->assertSame($lang['AE'], 'United Arab Emirates');
 	}
 	
