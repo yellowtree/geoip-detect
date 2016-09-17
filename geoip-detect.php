@@ -19,8 +19,8 @@ Requires PHP:    5.3.1
 define('GEOIP_DETECT_VERSION', '2.6.0');
 
 /*
-Copyright 2013-2015 Yellow Tree, Siegen, Germany
-Author: Benjamin Pick (b.pick@yellowtree.de)
+Copyright 2013-2016 Yellow Tree, Siegen, Germany
+Author: Benjamin Pick (info@yellowtree.de)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
