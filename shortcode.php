@@ -277,8 +277,8 @@ function geoip_detect2_shortcode_user_info_wpcf7($output, $name, $isHtml) {
         $lines[] = sprintf(__('Country: %s', 'geoip-detect'), $info->country->name);
     if ($info->mostSpecificSubdivision->name)
         $lines[] = sprintf(__('State or region: %s', 'geoip-detect'), $info->mostSpecificSubdivision->name);
-    if ($info->country->city)
-        $lines[] = sprintf(__('City: %s', 'geoip-detect'), $info->country->city);
+    if ($info->city->name)
+        $lines[] = sprintf(__('City: %s', 'geoip-detect'), $info->city->name);
 
     $lineBreak = $isHtml ? "<br>" : "\n";
     return implode($lineBreak, $lines);
