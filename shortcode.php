@@ -166,7 +166,6 @@ add_shortcode('geoip_detect2_get_current_source_description', 'geoip_detect2_sho
  * @return string The generated HTML
  */
 function geoip_detect2_shortcode_country_select($attr) {
-	var_dump($attr);
 	$selected = '';
 	if (!empty($attr['selected'])) {
 		$selected = $attr['selected'];
