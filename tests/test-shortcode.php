@@ -16,6 +16,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	function tearDown() {
 		parent::tearDown();
 		remove_filter('geoip_detect_get_external_ip_adress', array($this, 'filter_set_test_ip'), 101);
+        remove_filter('geoip2_detect2_client_ip', array($this, 'filter_set_test_ip'), 101);
 		remove_filter('geoip_detect2_reader', 'shortcode_empty_reader', 101);
 		remove_filter('geoip2_detect_sources_not_cachable', array($this, 'filter_empty_array'), 101);
 	}
@@ -111,6 +112,8 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 
     public function testShortcodeCF7UserInfo() {
+        add_filter('geoip2_detect2_client_ip', array($this, 'filter_set_test_ip'), 101);
+
         $this->assertEquals('', geoip_detect2_shortcode_user_info_wpcf7('', 'asdfsadf', false));
 
         $userInfo = geoip_detect2_shortcode_user_info_wpcf7('', 'geoip_detect2_user_info', false);
