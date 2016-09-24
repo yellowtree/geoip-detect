@@ -263,3 +263,24 @@ add_action( 'wpcf7_init', 'geoip_detect2_add_shortcodes' );
 function geoip_detect2_add_shortcodes() {
 	wpcf7_add_shortcode(array('geoip_detect2_countries', 'geoip_detect2_countries*'), 'geoip_detect2_shortcode_country_select_wpcf7', true);
 }
+
+
+function geoip_detect2_shortcode_user_info_wpcf7($output, $name, $isHtml) {
+    if ($name != 'geoip_detect2_user_info')
+        return $output;
+
+    $lines = array();
+
+    $lines[] = sprintf(__('IP of the user: %s', 'geoip-detect'), geoip_detect2_get_client_ip());
+    $info = geoip_detect2_get_info_from_current_ip();
+    if ($info->country->name)
+        $lines[] = sprintf(__('Country: %s', 'geoip-detect'), $info->country->name);
+    if ($info->mostSpecificSubdivision->name)
+        $lines[] = sprintf(__('State or region: %s', 'geoip-detect'), $info->mostSpecificSubdivision->name);
+    if ($info->country->city)
+        $lines[] = sprintf(__('City: %s', 'geoip-detect'), $info->country->city);
+
+    $lineBreak = $isHtml ? "<br>" : "\n";
+    return implode($lineBreak, $lines);
+}
+add_filter( 'wpcf7_special_mail_tags', 'geoip_detect2_shortcode_user_info_wpcf7', 15, 3 );

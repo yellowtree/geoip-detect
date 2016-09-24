@@ -109,6 +109,17 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		
 		$this->assertEquals('default', do_shortcode('[geoip_detect2 property="extra.cached" skip_cache="true" default="default"]', 'default value does not work together with skip_cache'));
 	}
+
+    public function testShortcodeCF7UserInfo() {
+        $this->assertEquals('', geoip_detect2_shortcode_user_info_wpcf7('', 'asdfsadf', false));
+
+        $userInfo = geoip_detect2_shortcode_user_info_wpcf7('', 'geoip_detect2_user_info', false);
+        $this->assertNotEmpty($userInfo);
+        $this->assertContains(GEOIP_DETECT_TEST_IP, $userInfo);
+        $this->assertContains('Country: Germany', $userInfo);
+        $this->assertContains('State or region: Hesse' , $userInfo);
+        $this->assertContains('City: Eschborn' , $userInfo);
+    }
 }
 
 /* Data of Test IP:
