@@ -33,6 +33,9 @@ as a shortcode, or via CSS body classes. The city & country names are translated
 * You can include these properties into your posts and pages by using the shortcode `[geoip_detect2 property="country.name" default="(country could not be detected)" lang="en"]` (where 'country.name' can be one of the other property names as well, and 'default' and 'lang' are optional).
 * When enabled on the options page, it adds CSS classes to the body tag such as `geoip-country-DE` and `geoip-continent-EU`.
 * When enabled on the options page, the client IP respects a reverse proxy of the server.
+* If you are using [Contact Form 7](https://wordpress.org/plugins/contact-form-7/), you can use these shortcodes:
+  * A select input with all countries, the detected country being selected by default `[geoip_detect2_countries mycountry]`
+  * Tracking information for the email text `[geoip_detect2_user_info]`
 
 See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation) for more info.
 
@@ -55,6 +58,9 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 * Install the plugin
 * Go to the plugin's option page and choose a data source.
 * Test it by clicking on "Lookup" on the lookup page.
+
+* Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardless of where you are visiting the site from? Maybe your server has a reverse proxy configured. You can check this:
+ * Go to the options page and look for "reverse proxy". Are there 2 IPs listed there? If so, which one corresponds to your [public IP](https://www.whatismyip.com/)?
 
 == Frequently Asked Questions ==
 
@@ -88,6 +94,10 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 2. Options page (under Preferences > GeoIP Detection)
 
 == Upgrade Notice == 
+
+= 2.6.0 =
+
+2 shortcoded for Contact Form 7.
 
 = 2.5.6 =
 
@@ -160,6 +170,7 @@ Fixing automatic weekly updates.
 
 * ADD: New datasources for Cloudflare & Amazon AWS CloudFront (country detection only).
 * ADD: Country information (names, lat/lon, continent) are now filled in for sources that only detect the country code (Cloudflare, Amazon, hostip.info)
+* ADD: 2 shortcodes for [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) (a select with all countries `[geoip_detect2_countries mycountry]`, and tracking information for the email text `[geoip_detect2_user_info]`) - see [Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation#wp-contactform7-shortcodes)
 * FIX: Cron scheduling is checked every time you visit the plugin page.
 * FIX: Timezones of US & Canada are now detected more often (if country+state is known)
 * FIX: Shortcode didn't use current sitelang as default, but always english
