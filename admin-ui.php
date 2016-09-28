@@ -85,7 +85,6 @@ function geoip_detect_option_page() {
 		
 	$registry = DataSourceRegistry::getInstance();
 	$sources = $registry->getAllSources();
-	$currentSource = $registry->getCurrentSource();
 	
 	$message = '';
 	
@@ -111,7 +110,6 @@ function geoip_detect_option_page() {
 	
 			case 'choose':
 				$registry->setCurrentSource($_POST['options']['source']);
-				$currentSource = $registry->getCurrentSource();
 				break;
 		
 				
@@ -153,6 +151,8 @@ function geoip_detect_option_page() {
 		}
 	}
 
+    $currentSource = $registry->getCurrentSource();
+    
 	$wp_options = array();
 	foreach ($option_names as $opt_name) {
 		$wp_options[$opt_name] = get_option('geoip-detect-'. $opt_name);

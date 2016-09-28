@@ -97,7 +97,7 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 
 = 2.6.0 =
 
-2 shortcoded for Contact Form 7.
+Support for Cloudflare & AWS. 2 shortcodes for Contact Form 7.
 
 = 2.5.6 =
 
