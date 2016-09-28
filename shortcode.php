@@ -283,3 +283,8 @@ function geoip_detect2_shortcode_user_info_wpcf7($output, $name, $isHtml) {
     return implode($lineBreak, $lines);
 }
 add_filter( 'wpcf7_special_mail_tags', 'geoip_detect2_shortcode_user_info_wpcf7', 15, 3 );
+
+function geoip_detect_shortcode_user_info($attr) {
+    return geoip_detect2_shortcode_user_info_wpcf7('', 'geoip_detect2_user_info', true);
+}
+add_shortcode('geoip_detect2_user_info', 'geoip_detect_shortcode_user_info');
