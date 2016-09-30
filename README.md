@@ -28,7 +28,7 @@ as a shortcode, or via CSS body classes. The city & country names are translated
   * Free: [Maxmind GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/), automatically updated every month (licensed CC BY-SA. See [FAQ](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ).)
   * Commercial: [Maxmind GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database) or [Maxmind GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
   * Commercial Web-API: [Maxmind GeoIP2 Precision](https://www.maxmind.com/en/geoip2-precision-services) (City, Country or Insights)
-  * Free (default source): [HostIP.info](http://www.hostip.info/) (English, IPv4 only)
+  * Free (default source): [HostIP.info](http://www.hostip.info/) (IPv4 only)
   * Hosting-Provider dependent: [Cloudflare](https://support.cloudflare.com/hc/en-us/articles/200168236-What-does-CloudFlare-IP-Geolocation-do-) or [Amazon AWS CloudFront](https://aws.amazon.com/blogs/aws/enhanced-cloudfront-customization/) (Country)
 * For the property names, see the results of a specific IP in the wordpress backend (under *Tools > GeoIP Detection*).
 * You can include these properties into your posts and pages by using the shortcode `[geoip_detect2 property="country.name" default="(country could not be detected)" lang="en"]` (where 'country.name' can be one of the other property names as well, and 'default' and 'lang' are optional).
@@ -60,8 +60,9 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 * Go to the plugin's option page and choose a data source.
 * Test it by clicking on "Lookup" on the lookup page.
 
-* Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardless of where you are visiting the site from? Maybe your server has a reverse proxy configured. You can check this:
- * Go to the options page and look for "reverse proxy". Are there 2 IPs listed there? If so, which one corresponds to your [public IP](https://www.whatismyip.com/)?
+# Troubleshooting #
+
+Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardless of where you are visiting the site from? Maybe your server has a reverse proxy configured. You can check this: Go to the options page and look for "reverse proxy". Are there 2 IPs listed there? If so, which one corresponds to your [public IP](https://www.whatismyip.com/)?
 
 == Frequently Asked Questions ==
 
@@ -96,7 +97,7 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 
 = 2.6.0 =
 
-2 shortcoded for Contact Form 7.
+Support for Cloudflare & AWS. 2 shortcodes for Contact Form 7.
 
 = 2.5.6 =
 
@@ -167,8 +168,8 @@ Fixing automatic weekly updates.
 
 = 2.6.0 =
 
-* ADD: New datasources for Cloudflare & Amazon AWS CloudFront (country detection only).
-* ADD: Country information (names, lat/lon, continent) are now filled in for sources that only detect the country code (Cloudflare, Amazon, hostip.info)
+* ADD: New datasources for Cloudflare & Amazon AWS CloudFront (countries for current IP only).
+* ADD: Country information (names, lat/lon, continent, localized in the different languages) are now filled in for sources that only detect the country code (Cloudflare, Amazon, hostip.info)
 * ADD: 2 shortcodes for [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) (a select with all countries `[geoip_detect2_countries mycountry]`, and tracking information for the email text `[geoip_detect2_user_info]`) - see [Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation#wp-contactform7-shortcodes)
 * FIX: Cron scheduling is checked every time you visit the plugin page.
 * FIX: Timezones of US & Canada are now detected more often (if country+state is known)
