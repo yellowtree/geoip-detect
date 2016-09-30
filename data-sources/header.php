@@ -70,15 +70,12 @@ class HeaderDataSource extends AbstractDataSource {
 	public function getStatusInformationHTML() {
 		$provider = get_option('geoip-detect-header-provider');
 		
-		$html = $this->getShortLabel();
-		
 		if ($provider == 'cloudflare') {
-			$html .= '<br><br>';
-			$html .= sprintf(__('This needs to be enabled in the admin panel: see <a href="%s">Help</a>.', 'geoip-detect'), 'https://support.cloudflare.com/hc/en-us/articles/200168236-What-does-CloudFlare-IP-Geolocation-do-');
+			$link = 'https://support.cloudflare.com/hc/en-us/articles/200168236-What-does-CloudFlare-IP-Geolocation-do-';
 		} elseif ($provider == 'aws') {
-			$html .= '<br><br>';
-			$html .= sprintf(__('This needs to be enabled in the admin panel: see <a href="%s">Help</a>.', 'geoip-detect'), 'https://aws.amazon.com/blogs/aws/enhanced-cloudfront-customization/');
+			$link = 'https://aws.amazon.com/blogs/aws/enhanced-cloudfront-customization/';
 		}
+		$html = sprintf(__('This needs to be enabled in the admin panel: see <a href="%s">Help</a>.', 'geoip-detect'), $link);
 		return $html;
 	}
 
