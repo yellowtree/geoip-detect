@@ -86,9 +86,10 @@ README.md
 .git
 .gitignore
 tests
-lib/geonames/generators
 test
 phpunit.xml" "$SVNPATH/trunk/"
+
+svn propset svn:ignore '*' $SVNPATH/trunk/lib/geonames/generators
 
 #if submodule exist, recursively check out their indexes (from benbalter)
 if [ -f ".gitmodules" ]
