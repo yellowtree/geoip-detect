@@ -89,6 +89,7 @@ tests
 test
 phpunit.xml" "$SVNPATH/trunk/"
 
+mkdir -p $SVNPATH/trunk/lib/geonames/generators
 svn propset svn:ignore '*' $SVNPATH/trunk/lib/geonames/generators
 
 #if submodule exist, recursively check out their indexes (from benbalter)
