@@ -67,16 +67,16 @@
         },
         {
             "name": "geoip2/geoip2",
-            "version": "v2.4.2",
+            "version": "v2.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maxmind/GeoIP2-php.git",
-                "reference": "24b278b0195d7067e930b844c44faf8fae5bdbc7"
+                "reference": "57e0384a83d0935db4c4cdb3f411aa131481ae80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maxmind/GeoIP2-php/zipball/24b278b0195d7067e930b844c44faf8fae5bdbc7",
-                "reference": "24b278b0195d7067e930b844c44faf8fae5bdbc7",
+                "url": "https://api.github.com/repos/maxmind/GeoIP2-php/zipball/57e0384a83d0935db4c4cdb3f411aa131481ae80",
+                "reference": "57e0384a83d0935db4c4cdb3f411aa131481ae80",
                 "shasum": ""
             },
             "require": {
@@ -114,7 +114,7 @@
                 "geolocation",
                 "maxmind"
             ],
-            "time": "2016-08-17 20:42:55"
+            "time": "2016-10-11 21:58:42"
         },
         {
             "name": "maxmind-db/reader",
