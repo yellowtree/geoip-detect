@@ -167,6 +167,10 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+= 2.6.1 =
+
+* Maxmind vendor code was updated to the current version (2.4.4).
+
 = 2.6.0 =
 
 * ADD: New datasources for Cloudflare & Amazon AWS CloudFront (countries for current IP only).
