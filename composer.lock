@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "composer/ca-bundle",
-            "version": "1.0.4",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "ec21a59414b99501e723b63fd664aa8ead9c5680"
+                "reference": "a795611394b3c05164fd0eb291b492b39339cba4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/ec21a59414b99501e723b63fd664aa8ead9c5680",
-                "reference": "ec21a59414b99501e723b63fd664aa8ead9c5680",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/a795611394b3c05164fd0eb291b492b39339cba4",
+                "reference": "a795611394b3c05164fd0eb291b492b39339cba4",
                 "shasum": ""
             },
             "require": {
@@ -63,7 +63,7 @@
                 "ssl",
                 "tls"
             ],
-            "time": "2016-09-04 19:00:06"
+            "time": "2016-11-02 18:11:27"
         },
         {
             "name": "geoip2/geoip2",

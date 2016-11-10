@@ -65,14 +65,15 @@ require_once(GEOIP_PLUGIN_DIR . '/deprecated.php');
 require_once(GEOIP_PLUGIN_DIR . '/filter.php');
 require_once(GEOIP_PLUGIN_DIR . '/shortcode.php');
 
-require_once('data-sources/registry.php');
-require_once('data-sources/abstract.php');
+require_once(GEOIP_PLUGIN_DIR . '/data-sources/registry.php');
+require_once(GEOIP_PLUGIN_DIR . '/data-sources/abstract.php');
 
-include_once('data-sources/hostinfo.php');
-include_once('data-sources/manual.php');
-include_once('data-sources/auto.php');
-include_once('data-sources/precision.php');
-include_once('data-sources/header.php');
+// These data-source files are optional
+include_once(GEOIP_PLUGIN_DIR . '/data-sources/hostinfo.php');
+include_once(GEOIP_PLUGIN_DIR . '/data-sources/manual.php');
+include_once(GEOIP_PLUGIN_DIR . '/data-sources/auto.php');
+include_once(GEOIP_PLUGIN_DIR . '/data-sources/precision.php');
+include_once(GEOIP_PLUGIN_DIR . '/data-sources/header.php');
 
 // You can define these constants in your theme/plugin if you like.
 /**
