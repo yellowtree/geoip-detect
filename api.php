@@ -103,12 +103,16 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()
  * @param array(string)		$locales	List of locale codes to use in name property
  * 										from most preferred to least preferred. (Default: Site language, en)
  * @param array				Property names with options.
- * 		@param boolean $skipCache	TRUE: Do not use cache for this request. (Default: FALSE) 
+ * 		@param boolean 		$skipCache		TRUE: Do not use cache for this request. (Default: FALSE)
+ * 		@param string       $source         Change the source for this request only. (Valid values: 'auto', 'manual', 'precision', 'header', 'hostinfo')
+ * 		@param float 		$timeout		Total transaction timeout in seconds (Precision+HostIP.info API only) 
+ * 		@param int			$connectTimeout Initial connection timeout in seconds (Precision API only)
  * @return YellowTree\GeoipDetect\DataSources\City	GeoInformation.
  *
  * @since 2.0.0
  * @since 2.4.0 New parameter $skipCache
  * @since 2.5.0 Parameter $skipCache has been renamed to $options with 'skipCache' property
+ * @since 2.7.0 Parameter $options['source'] has been introduced
  */
 function geoip_detect2_get_info_from_current_ip($locales = null, $options = array()) {
 	return geoip_detect2_get_info_from_ip(geoip_detect2_get_client_ip(), $locales, $options);
@@ -122,12 +126,13 @@ function geoip_detect2_get_info_from_current_ip($locales = null, $options = arra
  * @param array(string)				List of locale codes to use in name property
  * 									from most preferred to least preferred. (Default: Site language, en)
  * @param array				Property names with options.
+ * 		@param string       $source         Change the source for this request only. (Valid values: 'auto', 'manual', 'precision', 'header', 'hostinfo')
  * 		@param float 		$timeout		Total transaction timeout in seconds (Precision+HostIP.info API only) 
- * 		@param float		$connectTimeout Initial connection timeout in seconds (Precision API only)
- * @return \YellowTree\GeoipDetect\DataSources\ReaderInterface 	The reader, ready to do its work. Don't forget to `close()` it afterwards. NULL if file not found (or other problems).
+ * 		@param int			$connectTimeout Initial connection timeout in seconds (Precision API only)
  * 
  * @since 2.0.0
  * @since 2.5.0 new parameter $options
+ * @since 2.7.0 Parameter $options['source'] has been introduced
  */
 function geoip_detect2_get_reader($locales = null, $options = array()) {
 	_geoip_maybe_disable_pagecache();
