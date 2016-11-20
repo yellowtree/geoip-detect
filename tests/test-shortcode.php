@@ -122,6 +122,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
         $this->assertContains('Country: Germany', $userInfo);
         $this->assertContains('State or region: Hesse' , $userInfo);
         $this->assertContains('City: Eschborn' , $userInfo);
+		$this->assertContains('Data from: GeoLite2 City database' , $userInfo);
     }
 }
 
