@@ -162,7 +162,7 @@ HTML;
 		
 	public function deactivate()
 	{
-		wp_clear_scheduled_hook('geoipdetectupdate');
+		//wp_clear_scheduled_hook('geoipdetectupdate');
 	}
 }
 

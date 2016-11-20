@@ -99,8 +99,6 @@ class HostInfoDataSource extends AbstractDataSource {
 	public function getStatusInformationHTML() { return __('You can choose a Maxmind database below.', 'geoip-detect'); }
 	public function getParameterHTML() { return ''; }
 	
-	public function activate() { }
-	
 	public function getReader($locales = array('en'), $options = array()) { return new Reader($options); }
 	
 	public function isWorking() { return true; }

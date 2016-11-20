@@ -18,10 +18,15 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
 	public function tearDown() {
 		parent::tearDown();
 		remove_filter('pre_option_geoip-detect-source', array($this, 'filter_set_invalid_default_source'), 105);
+		remove_filter('pre_option_geoip-detect-source', array($this, 'filter_set_wrong_default_source'), 106);
 	}
 	
 	public function filter_set_invalid_default_source() {
 		return 'invalid';
+	}
+	
+	public function filter_set_wrong_default_source() {
+		return 'header';
 	}
 
 	public function testPresenceOfAllDataSources() {
@@ -33,14 +38,22 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	public function testInvalidDatasources() {
-		$this->assertNull($this->registry->getSource('invalid'));
+		try {
+			$this->assertNotNull($this->registry->getSource('invalid'));
+		} catch (PHPUnit_Framework_Error_Notice $e) {
+			$msg = $e->getMessage();
+			if (strpos($msg, 'no such source was found') !== false)
+				return;
+			throw $e;
+		}
+		$this->fail('No notice thrown in spite of invalid datasource');
 	}
 	
 	public function testInvalidCurrentDatasource() {
 		add_filter('pre_option_geoip-detect-source', array($this, 'filter_set_invalid_default_source'), 105);
 		
 		try {
-			$this->registry->getCurrentSource();
+			$source = $this->registry->getCurrentSource();
 		} catch (PHPUnit_Framework_Error_Notice $e) {
 			$msg = $e->getMessage();
 			if (strpos($msg, 'no such source was found') !== false)
@@ -48,6 +61,17 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
 			throw $e;
 		}
 		$this->fail('No notice thrown in spite of invalid current datasource');
+	}
+	
+	public function testManualOverrideDatasource() {
+		add_filter('pre_option_geoip-detect-source', array($this, 'filter_set_wrong_default_source'), 106);
+		$source = $this->registry->getCurrentSource();
+		$this->assertEquals('header', $source->getId());
+			
+		// Test lookup with manual source name
+		$record =  geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, array('en'), array('source' => 'manual'));
+		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
+		$this->assertEquals('Germany', $record->country->name);
 	}
 	
 	public function testEachSourceForFormalValidity() {

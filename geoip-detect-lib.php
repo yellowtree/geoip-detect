@@ -38,7 +38,14 @@ function _geoip_detect2_process_options($options) {
 		$options = array();
 		$options['skipCache'] = $value;
 	}
-	
+    
+	// Check if source exists
+	if (isset($options['source'])) {
+		$registry = DataSourceRegistry::getInstance();
+		if (!$registry->sourceExists($options['source']))
+			unset($options['source']);
+	}
+    
 	/**
 	 * Filter: geoip_detect2_options
 	 * You can programmatically change the defaults etc.
@@ -49,7 +56,8 @@ function _geoip_detect2_process_options($options) {
 	
 	
 	$defaultOptions = array(
-			'skipCache' => false,
+		'skipCache' => false,
+		'source' => get_option('geoip-detect-source', DataSourceRegistry::DEFAULT_SOURCE),
 	);
 	$options = $options + $defaultOptions;
 	
@@ -78,11 +86,12 @@ function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &
 	}
 	
 	$reader = null;
-	$source = DataSourceRegistry::getInstance()->getCurrentSource();
+	$source = DataSourceRegistry::getInstance()->getSource($options['source']);
 	if ($source) {
 		$reader = $source->getReader($locales, $options);
 		$sourceId = $source->getId();
 	}
+	
 	/**
 	 * Filter: geoip_detect2_reader
 	 * You can customize your reader here.
@@ -105,28 +114,23 @@ function _ip_to_s($ip) {
 	return base64_encode($binary);
 }
 
-function _geoip_detect2_get_data_from_cache($ip) {
-	// Don't cache for file access based sources (not worth the effort/time)
-	$sources_not_cachable = apply_filters('geoip2_detect_sources_not_cachable', array('auto', 'manual'));	
-	if (in_array(get_option('geoip-detect-source'), $sources_not_cachable))
+function _geoip_detect2_get_data_from_cache($ip, $source) {
+	if (!DataSourceRegistry::getInstance()->isSourceCachable($source))
 		return null;
 
 	$ip_s = _ip_to_s($ip);
 	if (!$ip_s)
 		return null;
 		
-	$data = get_transient('geoip_detect_c_' . $ip_s);
-	if (is_array($data) && $data['extra']['source'] != get_option('geoip-detect-source'))
-		return null;
+	$data = get_transient('geoip_detect_c_' . $source . '_' . $ip_s);
 	
 	return $data;
 }
 
 function _geoip_detect2_add_data_to_cache($data, $ip) {
-	// Don't cache for file access based sources (not worth the effort/time)
-	$sources_not_cachable = apply_filters('geoip2_detect_sources_not_cachable', array('auto', 'manual', 'header'));	
-	if (in_array($data['extra']['source'], $sources_not_cachable))
-		return;
+	$source = $data['extra']['source'];
+	if (!DataSourceRegistry::getInstance()->isSourceCachable($source))
+		return null;
 	
 	$data['extra']['cached'] = time();
 	unset($data['maxmind']['queries_remaining']);
@@ -140,7 +144,7 @@ function _geoip_detect2_add_data_to_cache($data, $ip) {
 	if (!empty($data['extra']['error']))
 		return;
 
-	set_transient('geoip_detect_c_' . $ip_s, $data, GEOIP_DETECT_READER_CACHE_TIME);
+	set_transient('geoip_detect_c_' . $source . '_' . $ip_s, $data, GEOIP_DETECT_READER_CACHE_TIME);
 }
 
 function _geoip_detect2_get_record_from_reader($reader, $ip, &$error) {

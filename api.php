@@ -19,6 +19,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
+
 /**
  * Get Geo-Information for a specific IP
  * @param string 			$ip 		IP-Adress (IPv4 or IPv6). 'me' is the current IP of the server.
@@ -26,6 +27,7 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
  * 										from most preferred to least preferred. (Default: Site language, en)
  * @param array				Property names with options.
  * 		@param boolean 		$skipCache		TRUE: Do not use cache for this request. (Default: FALSE)
+ * 		@param string       $source         Change the source for this request only. (Valid values: 'auto', 'manual', 'precision', 'header', 'hostinfo')
  * 		@param float 		$timeout		Total transaction timeout in seconds (Precision+HostIP.info API only) 
  * 		@param int			$connectTimeout Initial connection timeout in seconds (Precision API only)
  * @return YellowTree\GeoipDetect\DataSources\City	GeoInformation. (Actually, this is a subclass of \GeoIp2\Model\City)
@@ -36,6 +38,7 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
  * @since 2.0.0
  * @since 2.4.0 New parameter $skipCache
  * @since 2.5.0 Parameter $skipCache has been renamed to $options with 'skipCache' property
+ * @since 2.7.0 Parameter $options['source'] has been introduced
  */
 function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()) {
 	_geoip_maybe_disable_pagecache();
@@ -56,7 +59,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()
 	
 	// Have a look at the cache first
 	if (!$options['skipCache']) {
-		$data = _geoip_detect2_get_data_from_cache($ip);
+		$data = _geoip_detect2_get_data_from_cache($ip, $options['source']);
 	}
 	
 	if (!$data) {
@@ -143,7 +146,13 @@ function geoip_detect2_get_current_source_description($source = null) {
 	if (is_object($source) && $source instanceof \YellowTree\GeoipDetect\DataSources\City) {
 		$source = $source->extra->source;
 	}
-	$source = DataSourceRegistry::getInstance()->getSource($source);
+	$registry = DataSourceRegistry::getInstance();
+	if (is_null($source)) {
+		$source = $registry->getCurrentSource();
+	} else {
+		$source = $registry->getSource($source);
+	}
+	
 	if ($source) {
 		return $source->getShortLabel();
 	}
