@@ -260,7 +260,13 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 
 add_action( 'wpcf7_init', 'geoip_detect2_add_shortcodes' );
 function geoip_detect2_add_shortcodes() {
-	wpcf7_add_shortcode(array('geoip_detect2_countries', 'geoip_detect2_countries*'), 'geoip_detect2_shortcode_country_select_wpcf7', true);
+	if (function_exists('wpcf7_add_form_tag')) {
+		// >=CF 4.6 
+		wpcf7_add_form_tag(array('geoip_detect2_countries', 'geoip_detect2_countries*'), 'geoip_detect2_shortcode_country_select_wpcf7', true);
+	} else if (function_exists('wpcf7_add_shortcode')) {
+		// < CF 4.6
+		wpcf7_add_shortcode(array('geoip_detect2_countries', 'geoip_detect2_countries*'), 'geoip_detect2_shortcode_country_select_wpcf7', true);		
+	}
 }
 
 

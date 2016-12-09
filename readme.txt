@@ -2,7 +2,7 @@
 Contributors: benjaminpick
 Tags: geoip, maxmind, geolocation, locator
 Requires at least: 3.5
-Tested up to: 4.6
+Tested up to: 4.7
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -170,6 +170,7 @@ Fixing automatic weekly updates.
 = 2.7.0 =
 
 * ADD: The options array of `geoip_detect2_get_info_from_ip` now has a new parameter for overriding the current source for a single lookup. See [API usage examples](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Usage-Examples)
+* FIX: Compatibility with CF 4.6 (remove deprecated function call)
 * Maxmind vendor code was updated to the current version (2.4.4).
 
 = 2.6.0 =
