@@ -118,16 +118,16 @@
         },
         {
             "name": "maxmind-db/reader",
-            "version": "v1.1.1",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maxmind/MaxMind-DB-Reader-php.git",
-                "reference": "8da3b4fcd439779d4b16bba0a4ba98365f78d788"
+                "reference": "571279051c3339414dc91b422fb61af540c3431d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maxmind/MaxMind-DB-Reader-php/zipball/8da3b4fcd439779d4b16bba0a4ba98365f78d788",
-                "reference": "8da3b4fcd439779d4b16bba0a4ba98365f78d788",
+                "url": "https://api.github.com/repos/maxmind/MaxMind-DB-Reader-php/zipball/571279051c3339414dc91b422fb61af540c3431d",
+                "reference": "571279051c3339414dc91b422fb61af540c3431d",
                 "shasum": ""
             },
             "require": {
@@ -138,10 +138,15 @@
                 "satooshi/php-coveralls": "1.0.*",
                 "squizlabs/php_codesniffer": "2.*"
             },
+            "suggest": {
+                "ext-bcmath": "bcmath or gmp is requred for decoding larger integers with the pure PHP decoder",
+                "ext-gmp": "bcmath or gmp is requred for decoding larger integers with the pure PHP decoder",
+                "ext-maxminddb": "A C-based database decoder that provides significantly faster lookups"
+            },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "MaxMind": "src/"
+                "psr-4": {
+                    "MaxMind\\Db\\": "src/MaxMind/Db"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -164,7 +169,7 @@
                 "geolocation",
                 "maxmind"
             ],
-            "time": "2016-09-15 21:26:50"
+            "time": "2016-11-21 21:33:24"
         },
         {
             "name": "maxmind/web-service-common",
