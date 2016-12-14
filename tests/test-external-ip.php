@@ -63,6 +63,14 @@ class ExternalIpTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertValidGeoIP2Record($ret, 'current');
 	}
 	
+	function testInternalIp() {
+		$ret = geoip_detect2_get_info_from_ip('127.1.1.1');
+		$this->assertValidGeoIP2Record($ret, 'current');
+
+		$ret = geoip_detect2_get_info_from_ip('0.0.0.0');
+		$this->assertValidGeoIP2Record($ret, 'current');
+	}
+	
 
 	function testExternalIpProviders() {
 		remove_filter('pre_transient_geoip_detect_external_ip', array($this, 'filter_set_external_ip'), 101);

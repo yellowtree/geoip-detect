@@ -136,6 +136,8 @@ function geoip_detect2_get_info_from_current_ip($locales = null, $options = arra
  */
 function geoip_detect2_get_reader($locales = null, $options = array()) {
 	_geoip_maybe_disable_pagecache();
+	$options = _geoip_detect2_process_options($options);
+
 	return _geoip_detect2_get_reader($locales, false, $sourceIdOut, $options);
 }
 

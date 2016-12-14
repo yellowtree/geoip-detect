@@ -94,7 +94,8 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 	{
 		$assert_text = 'When looking up info for IP "' . $ip . '": ';
 		$this->assertInstanceOf('YellowTree\GeoipDetect\DataSources\City', $record, $assert_text);
-
+		$assert_text .= '(record: ' . json_encode($record) . ')' . "\n";
+		
 		if (!$skipExtraTest) {
 			$this->assertSame('', $record->extra->error, $assert_text . 'extra->error should be empty');
 			$this->assertSame(false, $record->isEmpty, $assert_text . 'isEmpty should not be false');	

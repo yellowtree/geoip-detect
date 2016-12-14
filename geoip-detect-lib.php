@@ -316,7 +316,7 @@ function _geoip_detect_get_external_ip_adress_without_cache()
 		'http://ipecho.net/plain',
 		'http://v4.ident.me',
 		'http://bot.whatismyipaddress.com',
-		'http://ip.appspot.com',
+//		'http://ip.appspot.com', // overloaded
 	);
 	
 	// Randomizing to avoid querying the same service each time
@@ -336,10 +336,15 @@ function _geoip_detect_get_external_ip_adress_without_cache()
 			if (WP_DEBUG || defined('WP_TESTS_TITLE')) {
 				trigger_error('_geoip_detect_get_external_ip_adress_without_cache(): HTTP error (' . $url . '): Returned code ' . $ret['response']['code'], E_USER_NOTICE);
 			}			
-		} else if (isset($ret['body'])) {
-			$ip = trim($ret['body']);
-			if (geoip_detect_is_ip($ip))
-				return $ip;
+		} else {
+			if (isset($ret['body'])) {
+				$ip = trim($ret['body']);
+				if (geoip_detect_is_ip($ip))
+					return $ip;
+			}
+			if (WP_DEBUG || defined('WP_TESTS_TITLE')) {
+				trigger_error('_geoip_detect_get_external_ip_adress_without_cache(): HTTP error (' . $url . '): Did not return an IP: ' . $ret['body'], E_USER_NOTICE);
+			}
 		}
 	}
 	return '0.0.0.0';

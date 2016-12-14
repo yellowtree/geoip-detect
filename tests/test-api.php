@@ -38,6 +38,12 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertSame(null, $record->country->name);	
 	}
 	
+	function testEmptyLookup() {
+		$record = geoip_detect2_get_info_from_ip('0.0.0.0');		
+		$this->assertSame(true, $record->isEmpty);
+		$this->assertSame(null, $record->country->name);	
+	}
+	
 	function testExtendedRemoteAddr() {
 		$_SERVER['REMOTE_ADDR'] = '1.1.1.1, ' . GEOIP_DETECT_TEST_IP; 
 		$record = geoip_detect2_get_info_from_current_ip();
