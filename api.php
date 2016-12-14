@@ -239,7 +239,7 @@ function geoip_detect2_get_external_ip_adress($unfiltered = false) {
 
 	if (!$ip_cache) {
 		$ip_cache = _geoip_detect_get_external_ip_adress_without_cache();
-		set_transient('geoip_detect_external_ip', $ip_cache, GEOIP_DETECT_IP_CACHE_TIME);
+		set_transient('geoip_detect_external_ip', $ip_cache, ($ip_cache == '0.0.0.0') ? GEOIP_DETECT_IP_EMPTY_CACHE_TIME : GEOIP_DETECT_IP_CACHE_TIME);
 	}
 	
 	$ip_cache = apply_filters('geoip_detect_get_external_ip_adress', $ip_cache);

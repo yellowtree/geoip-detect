@@ -86,10 +86,16 @@ include_once(GEOIP_PLUGIN_DIR . '/data-sources/header.php');
  */
 //define('GEOIP_DETECT_IP_CACHE_TIME', 2 * HOUR_IN_SECONDS);
 /**
+ * How long the external IP of the server is cached, if no IP was found.
+ * Default: the same as GEOIP_DETECT_IP_CACHE_TIME
+ */
+//define('GEOIP_DETECT_IP_EMPTY_CACHE_TIME', 2 * HOUR_IN_SECONDS);
+/**
  * How long the data of the IP is cached. This applies to the Web-APIs (Maxmind Precision and HostIP.info)
  * Only successful lookups will be cached.
  */
 //define('GEOIP_DETECT_READER_CACHE_TIME', 7 * DAY_IN_SECONDS);
-		
+
+
 
 require_once(GEOIP_PLUGIN_DIR . '/admin-ui.php');
