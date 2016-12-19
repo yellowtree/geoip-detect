@@ -279,7 +279,7 @@ function geoip_detect_is_ip_in_range($ip, $range_start, $range_end) {
 }
 
 /**
- * Check if IP is in RFC private IP range
+ * Check if IP is not in RFC private IP range
  * (for local development)
  * @param string $ip	IP (IPv4 or IPv6)
  * @return boolean TRUE if private
@@ -287,6 +287,8 @@ function geoip_detect_is_ip_in_range($ip, $range_start, $range_end) {
 function geoip_detect_is_public_ip($ip) {
 	// filver_var only detects 127.0.0.1 as local ...
 	if (geoip_detect_is_ip_in_range($ip, '127.0.0.0', '127.255.255.255'))
+		return false;
+	if (trim($ip) === '0.0.0.0')
 		return false;
 
 	$flags = FILTER_FLAG_IPV4  // IP can be v4 or v6
@@ -316,7 +318,7 @@ function _geoip_detect_get_external_ip_adress_without_cache()
 		'http://ipecho.net/plain',
 		'http://v4.ident.me',
 		'http://bot.whatismyipaddress.com',
-//		'http://ip.appspot.com', // overloaded
+//		'http://ip.appspot.com', // overloaded, 503 Out of Quota
 	);
 	
 	// Randomizing to avoid querying the same service each time

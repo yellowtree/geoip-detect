@@ -39,9 +39,14 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	function testEmptyLookup() {
-		$record = geoip_detect2_get_info_from_ip('0.0.0.0');		
-		$this->assertSame(true, $record->isEmpty);
-		$this->assertSame(null, $record->country->name);	
+		$this->assertFalse(geoip_detect_is_public_ip('0.0.0.0'), '0.0.0.0 should not be a public IP');
+		$this->assertTrue(geoip_detect_is_ip('0.0.0.0'), '0.0.0.0 should be an IP');
+		$this->assertTrue(geoip_detect_is_ip_equal('0.0.0.0', '0.0.0.0'), '0.0.0.0 should work with equal');
+		
+		$record = geoip_detect2_get_info_from_ip('0.0.0.0'); //Fallback to external IP
+		$this->assertSame(false, $record->isEmpty);
+		$this->assertSame(GEOIP_DETECT_TEST_IP, $record->traits->ipAddress);
+		$this->assertSame('Eschborn', $record->city->name);	
 	}
 	
 	function testExtendedRemoteAddr() {
