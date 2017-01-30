@@ -118,16 +118,16 @@
         },
         {
             "name": "maxmind-db/reader",
-            "version": "v1.1.2",
+            "version": "v1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maxmind/MaxMind-DB-Reader-php.git",
-                "reference": "571279051c3339414dc91b422fb61af540c3431d"
+                "reference": "7eeccf61b078bb23bb07b1a151a7e5db52871e65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maxmind/MaxMind-DB-Reader-php/zipball/571279051c3339414dc91b422fb61af540c3431d",
-                "reference": "571279051c3339414dc91b422fb61af540c3431d",
+                "url": "https://api.github.com/repos/maxmind/MaxMind-DB-Reader-php/zipball/7eeccf61b078bb23bb07b1a151a7e5db52871e65",
+                "reference": "7eeccf61b078bb23bb07b1a151a7e5db52871e65",
                 "shasum": ""
             },
             "require": {
@@ -169,7 +169,7 @@
                 "geolocation",
                 "maxmind"
             ],
-            "time": "2016-11-21 21:33:24"
+            "time": "2017-01-19 23:49:38"
         },
         {
             "name": "maxmind/web-service-common",
