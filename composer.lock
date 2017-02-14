@@ -4,7 +4,6 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8bb448974815061f5600822fb70091b1",
     "content-hash": "600b354d911b7fb40bc8e6b398c09245",
     "packages": [
         {
@@ -63,20 +62,20 @@
                 "ssl",
                 "tls"
             ],
-            "time": "2016-11-02 18:11:27"
+            "time": "2016-11-02T18:11:27+00:00"
         },
         {
             "name": "geoip2/geoip2",
-            "version": "v2.4.4",
+            "version": "v2.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maxmind/GeoIP2-php.git",
-                "reference": "57e0384a83d0935db4c4cdb3f411aa131481ae80"
+                "reference": "b28a0ed0190cd76c878ed7002a5d1bb8c5f4c175"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maxmind/GeoIP2-php/zipball/57e0384a83d0935db4c4cdb3f411aa131481ae80",
-                "reference": "57e0384a83d0935db4c4cdb3f411aa131481ae80",
+                "url": "https://api.github.com/repos/maxmind/GeoIP2-php/zipball/b28a0ed0190cd76c878ed7002a5d1bb8c5f4c175",
+                "reference": "b28a0ed0190cd76c878ed7002a5d1bb8c5f4c175",
                 "shasum": ""
             },
             "require": {
@@ -114,7 +113,7 @@
                 "geolocation",
                 "maxmind"
             ],
-            "time": "2016-10-11 21:58:42"
+            "time": "2017-01-31T17:28:48+00:00"
         },
         {
             "name": "maxmind-db/reader",
@@ -169,7 +168,7 @@
                 "geolocation",
                 "maxmind"
             ],
-            "time": "2017-01-19 23:49:38"
+            "time": "2017-01-19T23:49:38+00:00"
         },
         {
             "name": "maxmind/web-service-common",
@@ -213,7 +212,7 @@
             ],
             "description": "Internal MaxMind Web Service API",
             "homepage": "https://github.com/maxmind/mm-web-service-api-php",
-            "time": "2016-08-18 16:36:52"
+            "time": "2016-08-18T16:36:52+00:00"
         }
     ],
     "packages-dev": [],
