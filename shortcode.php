@@ -196,11 +196,24 @@ function geoip_detect2_shortcode_country_select($attr) {
 
 	$countryInfo = new YellowTree\GeoipDetect\Geonames\CountryInformation();
 	$countries = $countryInfo->getAllCountries($locales);
+
+	/**
+	 * Filter: geoip_detect2_shortcode_country_select_countries
+	 * Change the list of countries that should show up in the select box.
+	 * You can add, remove, reorder countries at will.
+	 * If you want to add a blank value (for seperators or so), use a key name that starts with 'blank_' 
+	 * and then something at will in case you need several of them.
+	 * @param array $countries	List of localized country names
+	 * @param array $attr		Parameters that were passed to the shortcode
+	 * @return array
+	 */
+	$countries = apply_filters('geoip_detect2_shortcode_country_select_countries', $countries, $attr);
 	
 	$html = '<select ' . $select_attrs_html . '>';
 	if (!empty($attr['include_blank']) && $attr['include_blank'] !== 'false') 
 		$html .= '<option value="">---</option>';
 	foreach ($countries as $code => $label) {
+		// TODO if $code starts with blank_
 		$html .= '<option' . ($code == $selected ? ' selected="selected"' : '') . '>' . esc_html($label) . '</option>';	
 	}
 	$html .= '</select>';

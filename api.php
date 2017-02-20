@@ -214,7 +214,10 @@ function geoip_detect2_get_client_ip() {
 	if (!$ip)
 		$ip = '::1'; // By default, use localhost
 	
+	// @deprecated: this filter was added by mistake
 	$ip = apply_filters('geoip2_detect2_client_ip', $ip, $ip_list);
+	// this is the correct one!
+	$ip = apply_filters('geoip_detect2_client_ip', $ip, $ip_list);
 	
 	return $ip;
 }
