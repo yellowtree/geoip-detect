@@ -213,14 +213,21 @@ function geoip_detect2_shortcode_country_select($attr) {
 	if (!empty($attr['include_blank']) && $attr['include_blank'] !== 'false') 
 		$html .= '<option value="">---</option>';
 	foreach ($countries as $code => $label) {
-		// TODO if $code starts with blank_
-		$html .= '<option' . ($code == $selected ? ' selected="selected"' : '') . '>' . esc_html($label) . '</option>';	
+		if (substr($code, 0, 6) == 'blank_')
+		{
+			$html .= '<option value="">' . esc_html($label) . '</option>';	
+		}
+		else
+		{
+			$html .= '<option' . ($code == $selected ? ' selected="selected"' : '') . '>' . esc_html($label) . '</option>';	
+		}
 	}
 	$html .= '</select>';
 	
 	return $html;
 }
 add_shortcode('geoip_detect2_countries_select', 'geoip_detect2_shortcode_country_select');
+add_shortcode('geoip_detect2_countries', 'geoip_detect2_shortcode_country_select');
 
 /**
  *

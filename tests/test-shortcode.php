@@ -19,6 +19,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
         remove_filter('geoip2_detect2_client_ip', array($this, 'filter_set_test_ip'), 101);
 		remove_filter('geoip_detect2_reader', 'shortcode_empty_reader', 101);
 		remove_filter('geoip2_detect_sources_not_cachable', array($this, 'filter_empty_array'), 101);
+		remove_filter('geoip_detect2_shortcode_country_select_countries', array($this, 'shortcodeFilter'), 101);
 	}
 	
 	function testShortcodeOneProperty() {
@@ -124,6 +125,44 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
         $this->assertContains('City: Eschborn' , $userInfo);
 		$this->assertContains('Data from: GeoLite2 City database' , $userInfo);
     }
+	
+	public function testShortcodeCountrySelect() {
+		$html = do_shortcode('[geoip_detect2_countries include_blank="false"]');
+		$this->assertNotContains('---', $html, 'Should not contain blank');
+		$this->assertNotContains('[geoip_detect2_countries', $html, 'Shortcode was not found.');
+		$this->assertContains('name="geoip-countries"', $html);
+		$this->assertContains('Germany', $html);
+		$this->assertContains('"selected">Germany', $html);
+		
+		$html = geoip_detect2_shortcode_country_select(array('include_blank' => false));
+		$this->assertNotContains('---', $html, 'Should not contain blank');
+		
+		$html = do_shortcode('[geoip_detect2_countries include_blank="true"]');
+		$this->assertContains('---', $html, 'Should contain blank but didn\'t');
+
+		$html = do_shortcode('[geoip_detect2_countries selected="US"]');
+		$this->assertContains('"selected">United', $html);
+	}
+	
+	public function testShortcodeCountryFilter() {
+		add_filter('geoip_detect2_shortcode_country_select_countries', array($this, 'shortcodeFilter'), 101, 2);
+		
+		$html = do_shortcode('[geoip_detect2_countries selected="aa"]');
+		$this->assertNotContains('Germany', $html);
+		$this->assertNotContains('<option>----', $html);
+		$this->assertContains('value="">----', $html);
+		$this->assertContains('value="">*', $html);
+		$this->assertContains('A', $html);
+		$this->assertContains('"selected">A', $html);
+	}
+	public function shortcodeFilter($countries, $attr) {
+		return array(
+			'aa' => 'A',
+			'blank_asdfsa' => '----',
+			'blank_asdf' => '*',
+			'b' => 'B'
+		);
+	}
 }
 
 /* Data of Test IP:
