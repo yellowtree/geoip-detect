@@ -1,5 +1,5 @@
 <?php
-// Generated at Fri, 11 Nov 2016 17:55:52 +0100 
+// Generated at Mon, 13 Mar 2017 12:14:10 +0100 
 return array (
   'countries' => 
   array (
@@ -155,8 +155,8 @@ return array (
       'continent' => 'EU',
       'location' => 
       array (
-        'latitude' => 41.156986000000003,
-        'longitude' => 20.181221999999998,
+        'latitude' => 41.153014710620553,
+        'longitude' => 20.160672377352647,
       ),
     ),
     'AM' => 
@@ -701,8 +701,8 @@ return array (
       'continent' => 'NA',
       'location' => 
       array (
-        'latitude' => 32.320236000000001,
-        'longitude' => -64.774021500000003,
+        'latitude' => 32.319387258230812,
+        'longitude' => -64.767212240722671,
       ),
     ),
     'BN' => 
@@ -883,8 +883,8 @@ return array (
       'continent' => 'AN',
       'location' => 
       array (
-        'latitude' => -54.431352500000003,
-        'longitude' => 3.4117375000000001,
+        'latitude' => -54.419768851630295,
+        'longitude' => 3.3608110028978331,
       ),
     ),
     'BW' => 
@@ -1481,7 +1481,7 @@ return array (
       'continent' => 'EU',
       'location' => 
       array (
-        'latitude' => 51.164235133224366,
+        'latitude' => 51.090735557380697,
         'longitude' => 10.454033001170981,
       ),
     ),
@@ -1637,8 +1637,8 @@ return array (
       'continent' => 'SA',
       'location' => 
       array (
-        'latitude' => -1.7799014999999998,
-        'longitude' => -78.131591999999998,
+        'latitude' => -1.7904610797626752,
+        'longitude' => -78.13541522506975,
       ),
     ),
     'EE' => 
@@ -1663,8 +1663,8 @@ return array (
       'continent' => 'EU',
       'location' => 
       array (
-        'latitude' => 58.596208500000003,
-        'longitude' => 25.023778,
+        'latitude' => 58.592312052510394,
+        'longitude' => 25.018813401475601,
       ),
     ),
     'EG' => 
@@ -1845,8 +1845,8 @@ return array (
       'continent' => 'OC',
       'location' => 
       array (
-        'latitude' => -16.5780405,
-        'longitude' => -0.64755200000000457,
+        'latitude' => -16.577801029357165,
+        'longitude' => -0.64202631176044633,
       ),
     ),
     'FK' => 
@@ -1923,8 +1923,8 @@ return array (
       'continent' => 'EU',
       'location' => 
       array (
-        'latitude' => 61.897846000000001,
-        'longitude' => -6.9287915,
+        'latitude' => 61.892459353514354,
+        'longitude' => -6.972375624847877,
       ),
     ),
     'FR' => 
@@ -1949,8 +1949,8 @@ return array (
       'continent' => 'EU',
       'location' => 
       array (
-        'latitude' => 46.232192999999995,
-        'longitude' => 2.2096669999999996,
+        'latitude' => 46.227411278966052,
+        'longitude' => 2.2103091990658004,
       ),
     ),
     'GA' => 
@@ -2859,8 +2859,8 @@ return array (
       'continent' => 'EU',
       'location' => 
       array (
-        'latitude' => 41.873987499999998,
-        'longitude' => 12.564167000000001,
+        'latitude' => 41.867932703854351,
+        'longitude' => 12.573501384524841,
       ),
     ),
     'JE' => 
@@ -3171,8 +3171,8 @@ return array (
       'continent' => 'AS',
       'location' => 
       array (
-        'latitude' => 35.901695500000002,
-        'longitude' => 127.73588949999998,
+        'latitude' => 35.894399703461701,
+        'longitude' => 127.7352292667875,
       ),
     ),
     'KW' => 
@@ -3327,8 +3327,8 @@ return array (
       'continent' => 'NA',
       'location' => 
       array (
-        'latitude' => 13.904011499999999,
-        'longitude' => -60.974176499999999,
+        'latitude' => 13.9087932550721,
+        'longitude' => -60.976593971912308,
       ),
     ),
     'LI' => 
@@ -3483,8 +3483,8 @@ return array (
       'continent' => 'EU',
       'location' => 
       array (
-        'latitude' => 49.815763500000003,
-        'longitude' => 6.1315140000000001,
+        'latitude' => 49.815315565781077,
+        'longitude' => 6.1332985028233686,
       ),
     ),
     'LV' => 
@@ -3509,8 +3509,8 @@ return array (
       'continent' => 'EU',
       'location' => 
       array (
-        'latitude' => 56.875583500000005,
-        'longitude' => 24.607722000000003,
+        'latitude' => 56.880237870430001,
+        'longitude' => 24.606613741685898,
       ),
     ),
     'LY' => 
@@ -3665,8 +3665,8 @@ return array (
       'continent' => 'NA',
       'location' => 
       array (
-        'latitude' => 18.091292500000002,
-        'longitude' => -63.082880000000003,
+        'latitude' => 18.086233691138208,
+        'longitude' => -63.080476051053722,
       ),
     ),
     'MG' => 
@@ -4601,8 +4601,8 @@ return array (
       'continent' => 'AS',
       'location' => 
       array (
-        'latitude' => 12.8819585,
-        'longitude' => 121.76654049999999,
+        'latitude' => 12.88199172124097,
+        'longitude' => 121.7669150462425,
       ),
     ),
     'PK' => 
@@ -4679,8 +4679,8 @@ return array (
       'continent' => 'NA',
       'location' => 
       array (
-        'latitude' => 46.9661635,
-        'longitude' => -56.336824500000006,
+        'latitude' => 46.963208868962745,
+        'longitude' => -56.266211037608116,
       ),
     ),
     'PN' => 
@@ -5303,8 +5303,8 @@ return array (
       'continent' => 'EU',
       'location' => 
       array (
-        'latitude' => 43.942973262829568,
-        'longitude' => 12.460035423309307,
+        'latitude' => 43.942896593917453,
+        'longitude' => 12.459727152803548,
       ),
     ),
     'SN' => 
@@ -5485,8 +5485,8 @@ return array (
       'continent' => 'NA',
       'location' => 
       array (
-        'latitude' => 18.040970000000002,
-        'longitude' => -63.078516,
+        'latitude' => 18.035910279177614,
+        'longitude' => -63.075940545819492,
       ),
     ),
     'SY' => 
@@ -5745,8 +5745,8 @@ return array (
       'continent' => 'OC',
       'location' => 
       array (
-        'latitude' => -8.7997303009033203,
-        'longitude' => 125.67734527587891,
+        'latitude' => -8.8157601356506348,
+        'longitude' => 125.69338226318359,
       ),
     ),
     'TM' => 
