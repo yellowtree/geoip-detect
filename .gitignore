@@ -1,2 +1,4 @@
 /GeoLite*
 /composer.phar
+.DS_Store
+Thumbs.db

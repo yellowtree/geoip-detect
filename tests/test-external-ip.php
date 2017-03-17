@@ -22,7 +22,7 @@ class ExternalIpTest extends WP_UnitTestCase_GeoIP_Detect {
 		remove_filter('geiop_detect_ipservices','ipTestServiceProvider', 101);
 		remove_filter('geiop_detect_ipservices', array($this, 'externalIpProvidersFilter'), 101);
 		remove_filter('geiop_detect_ipservices', 'ipTestServiceInvalidProvider', 101);
-		remove_filter('geiop_detect_ipservices', array($this, 'filterProviderNone'), 101);
+		remove_filter('geiop_detect_ipservices', array($this, 'filterProviderNone'), 199);
 	}
 	
 	/**
@@ -110,21 +110,31 @@ class ExternalIpTest extends WP_UnitTestCase_GeoIP_Detect {
 		return array($this->currentProvider);
 	}
 	
-	/**
-	 * @group external-http
-	 */	
 	function testTransientCaching() {
+		remove_filter('pre_transient_geoip_detect_external_ip', array($this, 'filter_set_external_ip'), 101);
 		if (GEOIP_DETECT_IP_EMPTY_CACHE_TIME > 10)
 			$this->markTestSkipped('Constant could not be redefined');
 		
-		delete_transient('geoip_detect_external_ip');
+		$TRANSIENT_NAME = 'geoip_detect_external_ip';
+		delete_transient($TRANSIENT_NAME);
 		
-		add_filter('geiop_detect_ipservices', array($this, 'filterProviderNone'), 101);
-		$this->assertSame('0.0.0.0', geoip_detect2_get_external_ip_adress());
-		remove_filter('geiop_detect_ipservices', array($this, 'filterProviderNone'), 101);
+		// Check if transient is really away
+		$transient = get_transient($TRANSIENT_NAME);
+		$this->assertSame(false, $transient, 'BEFORE: Transient has not been deleted - why?');
+		
+		// Add transient
+		add_filter('geiop_detect_ipservices', array($this, 'filterProviderNone'), 199);
+		$this->assertSame('0.0.0.0', geoip_detect2_get_external_ip_adress(true));
+		
+		// Transient should be there
+		$transient = get_transient($TRANSIENT_NAME);
+		$this->assertSame('0.0.0.0', $transient, 'Transient has not been created');
+		
 		sleep(GEOIP_DETECT_IP_EMPTY_CACHE_TIME + 1);
-		// This shows that the ip is not cached anymore
-		$this->assertSame('47.64.121.17', geoip_detect2_get_external_ip_adress());		
+		
+		// The transient should be expired now, so check that it doesn't exist
+		$transient = get_transient($TRANSIENT_NAME);
+		$this->assertSame(false, $transient, 'AFTER: Transient should have expired by now ...');
 	}
 	
 	function filterProviderNone() {

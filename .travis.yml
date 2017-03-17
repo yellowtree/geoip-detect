@@ -9,10 +9,6 @@ notifications:
     on_success: change
     on_failure: change
 
-branches:
-  only:
-    - master
-
 php:
     - '5.3'
     - '5.6'

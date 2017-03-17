@@ -1,6 +1,6 @@
 <?php
 if (!defined('GEOIP_DETECT_IP_EMPTY_CACHE_TIME'))
-	define('GEOIP_DETECT_IP_EMPTY_CACHE_TIME', 2);
+	define('GEOIP_DETECT_IP_EMPTY_CACHE_TIME', 1);
 
 define('GEOIP_DETECT_DOING_UNIT_TESTS', true);
 require_once 'vendor/autoload.php';

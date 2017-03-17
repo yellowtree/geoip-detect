@@ -115,12 +115,14 @@ function _ip_to_s($ip) {
 }
 
 function _geoip_detect2_get_data_from_cache($ip, $source) {
-	if (!DataSourceRegistry::getInstance()->isSourceCachable($source))
+	if (!DataSourceRegistry::getInstance()->isSourceCachable($source)) {
 		return null;
+	}
 
 	$ip_s = _ip_to_s($ip);
-	if (!$ip_s)
+	if (!$ip_s) {
 		return null;
+	}
 		
 	$data = get_transient('geoip_detect_c_' . $source . '_' . $ip_s);
 	
@@ -129,20 +131,23 @@ function _geoip_detect2_get_data_from_cache($ip, $source) {
 
 function _geoip_detect2_add_data_to_cache($data, $ip) {
 	$source = $data['extra']['source'];
-	if (!DataSourceRegistry::getInstance()->isSourceCachable($source))
+	if (!DataSourceRegistry::getInstance()->isSourceCachable($source)) {
 		return null;
+	}
 	
 	$data['extra']['cached'] = time();
 	unset($data['maxmind']['queries_remaining']);
 	
 	$ip_s = _ip_to_s($ip);
 	// Do not cache invalid IPs
-	if (!$ip_s)
+	if (!$ip_s) {
 		return;
+	}
 	
 	// Do not cache error lookups (they might be temporary)
-	if (!empty($data['extra']['error']))
+	if (!empty($data['extra']['error'])) {
 		return;
+	}
 
 	set_transient('geoip_detect_c_' . $source . '_' . $ip_s, $data, GEOIP_DETECT_READER_CACHE_TIME);
 }
@@ -325,7 +330,7 @@ function _geoip_detect_get_external_ip_adress_without_cache()
 	shuffle($ipservices);
 	$ipservices = apply_filters('geiop_detect_ipservices', $ipservices);
 	$ipservices = array_slice($ipservices, 0, 3);
-	
+
 	foreach ($ipservices as $url)
 	{
 		$ret = wp_remote_get($url, array('timeout' => defined('WP_TESTS_TITLE') ? 3 : 1));
