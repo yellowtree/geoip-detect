@@ -203,6 +203,7 @@ function geoip_detect2_shortcode_country_select($attr) {
 	 * You can add, remove, reorder countries at will.
 	 * If you want to add a blank value (for seperators or so), use a key name that starts with 'blank_' 
 	 * and then something at will in case you need several of them.
+	 *
 	 * @param array $countries	List of localized country names
 	 * @param array $attr		Parameters that were passed to the shortcode
 	 * @return array
