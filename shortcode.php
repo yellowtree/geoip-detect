@@ -248,7 +248,7 @@ add_shortcode('geoip_detect2_countries', 'geoip_detect2_shortcode_country_select
  *
  */
 function geoip_detect2_shortcode_country_select_wpcf7($tag) {
-	$tag = new WPCF7_Shortcode( $tag );
+	$tag = new WPCF7_FormTag( $tag );
 	
 	$default = (string) reset( $tag->values );
 	$default = $tag->get_default_option($default, array('multiple' => false));
