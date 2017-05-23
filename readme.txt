@@ -167,6 +167,8 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+* Maxmind vendor code was updated to the current version (2.5.0).
+
 = 2.7.0 =
 
 * ADD: The options array of `geoip_detect2_get_info_from_ip` now has a new parameter for overriding the current source for a single lookup. See [API usage examples](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Usage-Examples)

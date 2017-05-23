@@ -103,59 +103,6 @@
         ]
     },
     {
-        "name": "geoip2/geoip2",
-        "version": "v2.4.5",
-        "version_normalized": "2.4.5.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/maxmind/GeoIP2-php.git",
-            "reference": "b28a0ed0190cd76c878ed7002a5d1bb8c5f4c175"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/maxmind/GeoIP2-php/zipball/b28a0ed0190cd76c878ed7002a5d1bb8c5f4c175",
-            "reference": "b28a0ed0190cd76c878ed7002a5d1bb8c5f4c175",
-            "shasum": ""
-        },
-        "require": {
-            "maxmind-db/reader": "~1.0",
-            "maxmind/web-service-common": "~0.3",
-            "php": ">=5.3.1"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "4.2.*",
-            "squizlabs/php_codesniffer": "2.*"
-        },
-        "time": "2017-01-31T17:28:48+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "GeoIp2\\": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "Apache-2.0"
-        ],
-        "authors": [
-            {
-                "name": "Gregory J. Oschwald",
-                "email": "goschwald@maxmind.com",
-                "homepage": "http://www.maxmind.com/"
-            }
-        ],
-        "description": "MaxMind GeoIP2 PHP API",
-        "homepage": "https://github.com/maxmind/GeoIP2-php",
-        "keywords": [
-            "IP",
-            "geoip",
-            "geoip2",
-            "geolocation",
-            "maxmind"
-        ]
-    },
-    {
         "name": "composer/ca-bundle",
         "version": "1.0.7",
         "version_normalized": "1.0.7.0",
@@ -214,6 +161,60 @@
             "certificate",
             "ssl",
             "tls"
+        ]
+    },
+    {
+        "name": "geoip2/geoip2",
+        "version": "v2.5.0",
+        "version_normalized": "2.5.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/maxmind/GeoIP2-php.git",
+            "reference": "87602e1c9f5014291b06e126847123360cb6c2db"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/maxmind/GeoIP2-php/zipball/87602e1c9f5014291b06e126847123360cb6c2db",
+            "reference": "87602e1c9f5014291b06e126847123360cb6c2db",
+            "shasum": ""
+        },
+        "require": {
+            "maxmind-db/reader": "~1.0",
+            "maxmind/web-service-common": "~0.3",
+            "php": ">=5.3.1"
+        },
+        "require-dev": {
+            "apigen/apigen": "^4.1",
+            "phpunit/phpunit": "4.2.*",
+            "squizlabs/php_codesniffer": "2.*"
+        },
+        "time": "2017-05-08T20:05:30+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "GeoIp2\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Apache-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Gregory J. Oschwald",
+                "email": "goschwald@maxmind.com",
+                "homepage": "http://www.maxmind.com/"
+            }
+        ],
+        "description": "MaxMind GeoIP2 PHP API",
+        "homepage": "https://github.com/maxmind/GeoIP2-php",
+        "keywords": [
+            "IP",
+            "geoip",
+            "geoip2",
+            "geolocation",
+            "maxmind"
         ]
     }
 ]
