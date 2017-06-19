@@ -2,7 +2,7 @@
 Contributors: benjaminpick
 Tags: geoip, maxmind, geolocation, locator
 Requires at least: 3.5
-Tested up to: 4.7
+Tested up to: 4.8
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
