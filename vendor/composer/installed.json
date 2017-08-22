@@ -1,51 +1,5 @@
 [
     {
-        "name": "maxmind/web-service-common",
-        "version": "v0.3.1",
-        "version_normalized": "0.3.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/maxmind/web-service-common-php.git",
-            "reference": "1fe780bcd6a9038b7e36b13fa0aeeeeca4cdb0a4"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/maxmind/web-service-common-php/zipball/1fe780bcd6a9038b7e36b13fa0aeeeeca4cdb0a4",
-            "reference": "1fe780bcd6a9038b7e36b13fa0aeeeeca4cdb0a4",
-            "shasum": ""
-        },
-        "require": {
-            "composer/ca-bundle": "^1.0.3",
-            "ext-curl": "*",
-            "ext-json": "*",
-            "php": ">=5.3"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "4.*",
-            "squizlabs/php_codesniffer": "2.*"
-        },
-        "time": "2016-08-18T16:36:52+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "MaxMind\\": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "Apache-2.0"
-        ],
-        "authors": [
-            {
-                "name": "Gregory Oschwald",
-                "email": "goschwald@maxmind.com"
-            }
-        ],
-        "description": "Internal MaxMind Web Service API",
-        "homepage": "https://github.com/maxmind/mm-web-service-api-php"
-    },
-    {
         "name": "maxmind-db/reader",
         "version": "v1.1.3",
         "version_normalized": "1.1.3.0",
@@ -164,31 +118,80 @@
         ]
     },
     {
-        "name": "geoip2/geoip2",
-        "version": "v2.5.0",
-        "version_normalized": "2.5.0.0",
+        "name": "maxmind/web-service-common",
+        "version": "v0.4.0",
+        "version_normalized": "0.4.0.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/maxmind/GeoIP2-php.git",
-            "reference": "87602e1c9f5014291b06e126847123360cb6c2db"
+            "url": "https://github.com/maxmind/web-service-common-php.git",
+            "reference": "622f7c732a7f9c4c62497fc103939e042b6bdb88"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/maxmind/GeoIP2-php/zipball/87602e1c9f5014291b06e126847123360cb6c2db",
-            "reference": "87602e1c9f5014291b06e126847123360cb6c2db",
+            "url": "https://api.github.com/repos/maxmind/web-service-common-php/zipball/622f7c732a7f9c4c62497fc103939e042b6bdb88",
+            "reference": "622f7c732a7f9c4c62497fc103939e042b6bdb88",
+            "shasum": ""
+        },
+        "require": {
+            "composer/ca-bundle": "^1.0.3",
+            "ext-curl": "*",
+            "ext-json": "*",
+            "php": ">=5.4"
+        },
+        "require-dev": {
+            "friendsofphp/php-cs-fixer": "2.*",
+            "phpunit/phpunit": "4.*",
+            "squizlabs/php_codesniffer": "3.*"
+        },
+        "time": "2017-07-06T17:48:21+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "MaxMind\\Exception\\": "src/Exception",
+                "MaxMind\\WebService\\": "src/WebService"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Apache-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Gregory Oschwald",
+                "email": "goschwald@maxmind.com"
+            }
+        ],
+        "description": "Internal MaxMind Web Service API",
+        "homepage": "https://github.com/maxmind/web-service-common-php"
+    },
+    {
+        "name": "geoip2/geoip2",
+        "version": "v2.6.0",
+        "version_normalized": "2.6.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/maxmind/GeoIP2-php.git",
+            "reference": "9f6f1edf9901fed5cd692dd260333bf52091acd3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/maxmind/GeoIP2-php/zipball/9f6f1edf9901fed5cd692dd260333bf52091acd3",
+            "reference": "9f6f1edf9901fed5cd692dd260333bf52091acd3",
             "shasum": ""
         },
         "require": {
             "maxmind-db/reader": "~1.0",
-            "maxmind/web-service-common": "~0.3",
-            "php": ">=5.3.1"
+            "maxmind/web-service-common": "~0.4",
+            "php": ">=5.4"
         },
         "require-dev": {
-            "apigen/apigen": "^4.1",
-            "phpunit/phpunit": "4.2.*",
-            "squizlabs/php_codesniffer": "2.*"
+            "apigen/apigen": "*",
+            "friendsofphp/php-cs-fixer": "2.*",
+            "phpunit/phpunit": "4.*",
+            "squizlabs/php_codesniffer": "3.*"
         },
-        "time": "2017-05-08T20:05:30+00:00",
+        "time": "2017-07-10T17:59:43+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

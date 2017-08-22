@@ -5,7 +5,7 @@ Plugin URI:      http://www.yellowtree.de
 Description:     Retrieving Geo-Information using the Maxmind GeoIP (Lite) Database.
 Author:          Yellow Tree (Benjamin Pick)
 Author URI:      http://www.yellowtree.de
-Version:         2.7.0
+Version:         2.8.0-beta
 License:         GPLv3 or later
 License URI:     http://www.gnu.org/licenses/gpl-3.0.html
 Text Domain:     geoip-detect
@@ -16,7 +16,7 @@ Requires WP:     3.5
 Requires PHP:    5.3.1
 */
 
-define('GEOIP_DETECT_VERSION', '2.7.0');
+define('GEOIP_DETECT_VERSION', '2.8.0');
 
 /*
 Copyright 2013-2016 Yellow Tree, Siegen, Germany
@@ -37,7 +37,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define('GEOIP_REQUIRED_PHP_VERSION', '5.3.1');
+define('GEOIP_REQUIRED_PHP_VERSION', '5.4');
 define('GEOIP_REQUIRED_WP_VERSION', '3.5');
 
 define('GEOIP_PLUGIN_FILE', __FILE__);

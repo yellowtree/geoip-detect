@@ -9,8 +9,9 @@ class ComposerStaticInite354937679ffa734a3f63544e59103dd
     public static $prefixLengthsPsr4 = array (
         'M' => 
         array (
+            'MaxMind\\WebService\\' => 19,
+            'MaxMind\\Exception\\' => 18,
             'MaxMind\\Db\\' => 11,
-            'MaxMind\\' => 8,
         ),
         'G' => 
         array (
@@ -23,13 +24,17 @@ class ComposerStaticInite354937679ffa734a3f63544e59103dd
     );
 
     public static $prefixDirsPsr4 = array (
+        'MaxMind\\WebService\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/maxmind/web-service-common/src/WebService',
+        ),
+        'MaxMind\\Exception\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/maxmind/web-service-common/src/Exception',
+        ),
         'MaxMind\\Db\\' => 
         array (
             0 => __DIR__ . '/..' . '/maxmind-db/reader/src/MaxMind/Db',
-        ),
-        'MaxMind\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/maxmind/web-service-common/src',
         ),
         'GeoIp2\\' => 
         array (
