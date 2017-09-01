@@ -12,7 +12,7 @@ notifications:
 php:
     - '5.4'
     - '5.6'
-    - '7.0'
+    - '7.1'
 
 env:
     - WP_VERSION=latest WP_MULTISITE=0
@@ -21,7 +21,7 @@ env:
 
 matrix:
   exclude:
-    - php: '7.0'
+    - php: '7.1'
       env: WP_VERSION=3.7 WP_MULTISITE=0
 
 before_script:
