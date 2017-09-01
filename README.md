@@ -28,11 +28,15 @@ as a shortcode, or via CSS body classes. The city & country names are translated
   * Free: [Maxmind GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/), automatically updated every month (licensed CC BY-SA. See [FAQ](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ).)
   * Commercial: [Maxmind GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database) or [Maxmind GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
   * Commercial Web-API: [Maxmind GeoIP2 Precision](https://www.maxmind.com/en/geoip2-precision-services) (City, Country or Insights)
-  * Free (default source): [HostIP.info](http://www.hostip.info/) (English, IPv4 only)
+  * Free (default source): [HostIP.info](http://www.hostip.info/) (IPv4 only)
+  * Hosting-Provider dependent: [Cloudflare](https://support.cloudflare.com/hc/en-us/articles/200168236-What-does-CloudFlare-IP-Geolocation-do-) or [Amazon AWS CloudFront](https://aws.amazon.com/blogs/aws/enhanced-cloudfront-customization/) (Country)
 * For the property names, see the results of a specific IP in the wordpress backend (under *Tools > GeoIP Detection*).
 * You can include these properties into your posts and pages by using the shortcode `[geoip_detect2 property="country.name" default="(country could not be detected)" lang="en"]` (where 'country.name' can be one of the other property names as well, and 'default' and 'lang' are optional).
 * When enabled on the options page, it adds CSS classes to the body tag such as `geoip-country-DE` and `geoip-continent-EU`.
 * When enabled on the options page, the client IP respects a reverse proxy of the server.
+* If you are using [Contact Form 7](https://wordpress.org/plugins/contact-form-7/), you can use these shortcodes:
+  * A select input with all countries, the detected country being selected by default `[geoip_detect2_countries mycountry]`
+  * Tracking information for the email text `[geoip_detect2_user_info]`
 
 See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation) for more info.
 
@@ -56,9 +60,17 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 * Go to the plugin's option page and choose a data source.
 * Test it by clicking on "Lookup" on the lookup page.
 
+# Troubleshooting #
+
+Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardless of where you are visiting the site from? Maybe your server has a reverse proxy configured. You can check this: Go to the options page and look for "reverse proxy". Are there 2 IPs listed there? If so, which one corresponds to your [public IP](https://www.whatismyip.com/)?
+
 == Frequently Asked Questions ==
 
 [Technically speaking, how could I verify if my visitor comes from Germany?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#technically-speaking-how-could-i-verify-if-my-visitor-comes-from-germany)
+
+[How can I show text only if the visitor is coming from Germany?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#how-can-i-show-text-only-if-the-visitor-is-coming-from-germany)
+
+[How can I add the current country name as text in my page?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#how-can-i-add-the-current-country-name-as-text-in-my-page)
 
 [Which data source should I choose?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#which-data-source-should-i-choose)
 
@@ -82,6 +94,10 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 
 1. Lookup page (under Tools > GeoIP Lookup)
 2. Options page (under Preferences > GeoIP Detection)
+
+= 2.6.0 =
+
+Support for Cloudflare & AWS. 2 shortcodes for Contact Form 7.
 
 = 2.5.6 =
 
@@ -149,6 +165,24 @@ Fixing automatic weekly updates.
 
 
 == Changelog ==
+
+= 2.7.0 =
+
+* ADD: The options array of `geoip_detect2_get_info_from_ip` now has a new parameter for overriding the current source for a single lookup. See [API usage examples](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Usage-Examples)
+* ADD: New filter `geoip_detect2_shortcode_country_select_countries` for the country list of `[geoip_detect2_countries]`
+* ADD: New constant `GEOIP_DETECT_IP_EMPTY_CACHE_TIME` that can be used to specify a shorter cache time in case temporarily no external IP was found.
+* FIX: Compatibility with CF 4.6 (remove deprecated function call)
+* Maxmind vendor code was updated to the current version (2.4.5).
+
+= 2.6.0 =
+
+* ADD: New datasources for Cloudflare & Amazon AWS CloudFront (countries for current IP only).
+* ADD: Country information (names, lat/lon, continent, localized in the different languages) are now filled in for sources that only detect the country code (Cloudflare, Amazon, hostip.info)
+* ADD: 2 shortcodes for [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) (a select with all countries `[geoip_detect2_countries mycountry]`, and tracking information for the email text `[geoip_detect2_user_info]`) - see [Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation#wp-contactform7-shortcodes)
+* FIX: Cron scheduling is checked every time you visit the plugin page.
+* FIX: Timezones of US & Canada are now detected more often (if country+state is known)
+* FIX: Shortcode didn't use current sitelang as default, but always english
+* Maxmind vendor code was updated to the current version (2.4.2).
 
 = 2.5.7 =
 * ADD: Shortcodes can now optionally specifiy the IP: `[geoip_detect2 property="country.isoCode" ip="(ipv4 or ipv6)"]`

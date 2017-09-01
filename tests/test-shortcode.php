@@ -16,8 +16,10 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	function tearDown() {
 		parent::tearDown();
 		remove_filter('geoip_detect_get_external_ip_adress', array($this, 'filter_set_test_ip'), 101);
+        remove_filter('geoip2_detect2_client_ip', array($this, 'filter_set_test_ip'), 101);
 		remove_filter('geoip_detect2_reader', 'shortcode_empty_reader', 101);
 		remove_filter('geoip2_detect_sources_not_cachable', array($this, 'filter_empty_array'), 101);
+		remove_filter('geoip_detect2_shortcode_country_select_countries', array($this, 'shortcodeFilter'), 101);
 	}
 	
 	function testShortcodeOneProperty() {
@@ -108,6 +110,58 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertEquals('', do_shortcode('[geoip_detect2 property="extra.cached" skip_cache="1"]'), 'skip_cache parameter ignored?');
 		
 		$this->assertEquals('default', do_shortcode('[geoip_detect2 property="extra.cached" skip_cache="true" default="default"]', 'default value does not work together with skip_cache'));
+	}
+
+    public function testShortcodeCF7UserInfo() {
+        add_filter('geoip2_detect2_client_ip', array($this, 'filter_set_test_ip'), 101);
+
+        $this->assertEquals('', geoip_detect2_shortcode_user_info_wpcf7('', 'asdfsadf', false));
+
+        $userInfo = geoip_detect2_shortcode_user_info_wpcf7('', 'geoip_detect2_user_info', false);
+        $this->assertNotEmpty($userInfo);
+        $this->assertContains(GEOIP_DETECT_TEST_IP, $userInfo);
+        $this->assertContains('Country: Germany', $userInfo);
+        $this->assertContains('State or region: Hesse' , $userInfo);
+        $this->assertContains('City: Eschborn' , $userInfo);
+		$this->assertContains('Data from: GeoLite2 City database' , $userInfo);
+    }
+	
+	public function testShortcodeCountrySelect() {
+		$html = do_shortcode('[geoip_detect2_countries include_blank="false"]');
+		$this->assertNotContains('---', $html, 'Should not contain blank');
+		$this->assertNotContains('[geoip_detect2_countries', $html, 'Shortcode was not found.');
+		$this->assertContains('name="geoip-countries"', $html);
+		$this->assertContains('Germany', $html);
+		$this->assertContains('"selected">Germany', $html);
+		
+		$html = geoip_detect2_shortcode_country_select(array('include_blank' => false));
+		$this->assertNotContains('---', $html, 'Should not contain blank');
+		
+		$html = do_shortcode('[geoip_detect2_countries include_blank="true"]');
+		$this->assertContains('---', $html, 'Should contain blank but didn\'t');
+
+		$html = do_shortcode('[geoip_detect2_countries selected="US"]');
+		$this->assertContains('"selected">United', $html);
+	}
+	
+	public function testShortcodeCountryFilter() {
+		add_filter('geoip_detect2_shortcode_country_select_countries', array($this, 'shortcodeFilter'), 101, 2);
+		
+		$html = do_shortcode('[geoip_detect2_countries selected="aa"]');
+		$this->assertNotContains('Germany', $html);
+		$this->assertNotContains('<option>----', $html);
+		$this->assertContains('value="">----', $html);
+		$this->assertContains('value="">*', $html);
+		$this->assertContains('A', $html);
+		$this->assertContains('"selected">A', $html);
+	}
+	public function shortcodeFilter($countries, $attr) {
+		return array(
+			'aa' => 'A',
+			'blank_asdfsa' => '----',
+			'blank_asdf' => '*',
+			'b' => 'B'
+		);
 	}
 }
 

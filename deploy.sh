@@ -14,14 +14,16 @@ GITPATH="$CURRENTDIR/" # this file should be in the base of your git repository
 # svn config
 SVNPATH="/tmp/$PLUGINSLUG" # path to a temp SVN repo. No trailing slash required and don't add trunk.
 SVNURL="http://plugins.svn.wordpress.org/geoip-detect/" # Remote SVN repo on wordpress.org, with no trailing slash
-SVNUSER="benjaminpick" # your svn username
+SVNUSER="benjamin4" # your svn username
 
 
 if [ "$1" = "checkout" ] ; then
 	echo "Only Checkout"
 	echo 
 	echo "Creating local copy of SVN repo ..."
-	svn co $SVNURL $SVNPATH
+	svn co $SVNURL -N $SVNPATH
+	svn up $SVNPATH/trunk
+	svn up --set-depth empty $SVNPATH/tags
 
 	echo "SVN Repo was checked out to $SVNPATH"
 	exit 0;
@@ -88,6 +90,8 @@ README.md
 tests
 test
 phpunit.xml" "$SVNPATH/trunk/"
+
+svn propset svn:ignore '*' "$SVNPATH/trunk/lib/geonames/generators/"
 
 #if submodule exist, recursively check out their indexes (from benbalter)
 if [ -f ".gitmodules" ]

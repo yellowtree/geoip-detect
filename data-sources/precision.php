@@ -1,4 +1,23 @@
 <?php
+/*
+Copyright 2013-2016 Yellow Tree, Siegen, Germany
+Author: Benjamin Pick (info@yellowtree.de)
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+
 /**
  * maybe TODO:
  * - warn email when counter is low ?
@@ -120,7 +139,7 @@ HTML;
 				update_option('geoip-detect-precision_api_type', $post['options_precision']['api_type']);
 		}
 		
-		if (!$this->isWorking())
+		if (geoip_detect2_is_source_active('precision') && !$this->isWorking())
 			$message .= __('Maxmind Precision only works with a given user id and secret.', 'geoip-detect');
 		
 		return $message;

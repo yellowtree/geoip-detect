@@ -1,6 +1,25 @@
 <?php
+/*
+Copyright 2013-2016 Yellow Tree, Siegen, Germany
+Author: Benjamin Pick (info@yellowtree.de)
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 
 use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
+
 /**
  * Get Geo-Information for a specific IP
  * @param string 				$ip 		IP-Adress (IPv4 or IPv6). 'me' is the current IP of the server.
@@ -9,6 +28,7 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
  * 											It is also possible to pass these locales as string ("fr, en")
  * @param array								Property names with options.
  * 		@param boolean 		$skipCache		TRUE: Do not use cache for this request. (Default: FALSE)
+ * 		@param string       $source         Change the source for this request only. (Valid values: 'auto', 'manual', 'precision', 'header', 'hostinfo')
  * 		@param float 		$timeout		Total transaction timeout in seconds (Precision+HostIP.info API only) 
  * 		@param int			$connectTimeout Initial connection timeout in seconds (Precision API only)
  * 
@@ -20,6 +40,7 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
  * @since 2.0.0
  * @since 2.4.0 New parameter $skipCache
  * @since 2.5.0 Parameter $skipCache has been renamed to $options with 'skipCache' property
+ * @since 2.7.0 Parameter $options['source'] has been introduced
  */
 function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()) {
 	_geoip_maybe_disable_pagecache();
@@ -40,7 +61,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()
 	
 	// Have a look at the cache first
 	if (!$options['skipCache']) {
-		$data = _geoip_detect2_get_data_from_cache($ip);
+		$data = _geoip_detect2_get_data_from_cache($ip, $options['source']);
 	}
 	
 	if (!$data) {
@@ -84,12 +105,16 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()
  * @param array(string)		$locales	List of locale codes to use in name property
  * 										from most preferred to least preferred. (Default: Site language, en)
  * @param array				Property names with options.
- * 		@param boolean $skipCache	TRUE: Do not use cache for this request. (Default: FALSE) 
+ * 		@param boolean 		$skipCache		TRUE: Do not use cache for this request. (Default: FALSE)
+ * 		@param string       $source         Change the source for this request only. (Valid values: 'auto', 'manual', 'precision', 'header', 'hostinfo')
+ * 		@param float 		$timeout		Total transaction timeout in seconds (Precision+HostIP.info API only) 
+ * 		@param int			$connectTimeout Initial connection timeout in seconds (Precision API only)
  * @return YellowTree\GeoipDetect\DataSources\City	GeoInformation.
  *
  * @since 2.0.0
  * @since 2.4.0 New parameter $skipCache
  * @since 2.5.0 Parameter $skipCache has been renamed to $options with 'skipCache' property
+ * @since 2.7.0 Parameter $options['source'] has been introduced
  */
 function geoip_detect2_get_info_from_current_ip($locales = null, $options = array()) {
 	return geoip_detect2_get_info_from_ip(geoip_detect2_get_client_ip(), $locales, $options);
@@ -103,15 +128,18 @@ function geoip_detect2_get_info_from_current_ip($locales = null, $options = arra
  * @param array(string)				List of locale codes to use in name property
  * 									from most preferred to least preferred. (Default: Site language, en)
  * @param array				Property names with options.
+ * 		@param string       $source         Change the source for this request only. (Valid values: 'auto', 'manual', 'precision', 'header', 'hostinfo')
  * 		@param float 		$timeout		Total transaction timeout in seconds (Precision+HostIP.info API only) 
- * 		@param float		$connectTimeout Initial connection timeout in seconds (Precision API only)
- * @return \YellowTree\GeoipDetect\DataSources\ReaderInterface 	The reader, ready to do its work. Don't forget to `close()` it afterwards. NULL if file not found (or other problems).
+ * 		@param int			$connectTimeout Initial connection timeout in seconds (Precision API only)
  * 
  * @since 2.0.0
  * @since 2.5.0 new parameter $options
+ * @since 2.7.0 Parameter $options['source'] has been introduced
  */
 function geoip_detect2_get_reader($locales = null, $options = array()) {
 	_geoip_maybe_disable_pagecache();
+	$options = _geoip_detect2_process_options($options);
+
 	return _geoip_detect2_get_reader($locales, false, $sourceIdOut, $options);
 }
 
@@ -127,7 +155,13 @@ function geoip_detect2_get_current_source_description($source = null) {
 	if (is_object($source) && $source instanceof \YellowTree\GeoipDetect\DataSources\City) {
 		$source = $source->extra->source;
 	}
-	$source = DataSourceRegistry::getInstance()->getSource($source);
+	$registry = DataSourceRegistry::getInstance();
+	if (is_null($source)) {
+		$source = $registry->getCurrentSource();
+	} else {
+		$source = $registry->getSource($source);
+	}
+	
 	if ($source) {
 		return $source->getShortLabel();
 	}
@@ -152,29 +186,28 @@ function geoip_detect2_get_client_ip() {
 	
 	// REMOTE_ADDR may contain multiple adresses? https://wordpress.org/support/topic/php-fatal-error-uncaught-exception-invalidargumentexception?replies=2#post-8128737
 	$ip_list = explode(',', $ip);
-	array_unshift($ip_list, '::1');
 	
 	if (get_option('geoip-detect-has_reverse_proxy', 0) && isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
 	{
 		$ip_list = explode(',', @$_SERVER["HTTP_X_FORWARDED_FOR"]);
 		$ip_list = array_map('geoip_detect_normalize_ip', $ip_list);
 		
-		$trusted_proxies = get_option('geoip-detect-trusted_proxy_ips');
-		if ($trusted_proxies) {
-			// TODO: Expose option to UI. comma-seperated list of IPv4 and v6 adresses.			
-			$trusted_proxies = explode(',', $trusted_proxies);
-			
-			// Always trust localhost
-			$trusted_proxies[] = '';
-			$trusted_proxies[] = '::1';
-			$trusted_proxies[] = '127.0.0.1';
-			
-			$trusted_proxies = array_map('geoip_detect_normalize_ip', $trusted_proxies);
-			$ip_list[] = $ip;
-				
-			$ip_list = array_diff($ip_list, $trusted_proxies);
-		}	
+		// TODO: Expose option to UI. comma-seperated list of IPv4 and v6 adresses.			
+		$trusted_proxies = explode(',', get_option('geoip-detect-trusted_proxy_ips'));
+
+		// Always trust localhost
+		$trusted_proxies[] = '';
+		$trusted_proxies[] = '::1';
+		$trusted_proxies[] = '127.0.0.1';
+
+		$trusted_proxies = array_map('geoip_detect_normalize_ip', $trusted_proxies);
+		$ip_list[] = $ip;
+
+		$ip_list = array_diff($ip_list, $trusted_proxies);
 	}	
+	// Fallback IP
+	array_unshift($ip_list, '::1');
+	
 	// Each Proxy server append their information at the end, so the last IP is most trustworthy.
 	$ip = end($ip_list);
 	$ip = geoip_detect_normalize_ip($ip);
@@ -182,7 +215,10 @@ function geoip_detect2_get_client_ip() {
 	if (!$ip)
 		$ip = '::1'; // By default, use localhost
 	
+	// @deprecated: this filter was added by mistake
 	$ip = apply_filters('geoip2_detect2_client_ip', $ip, $ip_list);
+	// this is the correct one!
+	$ip = apply_filters('geoip_detect2_client_ip', $ip, $ip_list);
 	
 	return $ip;
 }
@@ -209,7 +245,12 @@ function geoip_detect2_get_external_ip_adress($unfiltered = false) {
 
 	if (!$ip_cache) {
 		$ip_cache = _geoip_detect_get_external_ip_adress_without_cache();
-		set_transient('geoip_detect_external_ip', $ip_cache, GEOIP_DETECT_IP_CACHE_TIME);
+		
+		$expiryTime = GEOIP_DETECT_IP_CACHE_TIME;
+		if (empty($ip_cache) || $ip_cache === '0.0.0.0')
+			$expiryTime = GEOIP_DETECT_IP_EMPTY_CACHE_TIME;
+		
+		set_transient('geoip_detect_external_ip', $ip_cache, $expiryTime);
 	}
 	
 	$ip_cache = apply_filters('geoip_detect_get_external_ip_adress', $ip_cache);

@@ -1,0 +1,35 @@
+{
+  "name": "spacedealer/geonames-api",
+  "description": "Geonames.org api client library based on guzzle 5",
+  "keywords": [
+    "geonames",
+    "guzzle",
+    "REST",
+    "api",
+    "client"
+  ],
+  "homepage": "https://github.com/spacedealer/geonames-api",
+  "license": "BSD-3-Clause",
+  "support": {
+    "issues": "https://github.com/spacedealer/geonames-api/issues",
+    "source": "https://github.com/spacedealer/geonames-api"
+  },
+  "authors": [
+    {
+      "name": "Dirk Adler",
+      "email": "adler@spacedealer.de"
+    }
+  ],
+  "require": {
+    "guzzlehttp/guzzle-services": "0.5.*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.6.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "spacedealer\\geonames\\api\\": "src/",
+      "spacedealer\\tests\\geonames\\api\\": "test/"
+    }
+  }
+}

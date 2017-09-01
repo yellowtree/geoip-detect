@@ -1,4 +1,22 @@
 <?php
+/*
+Copyright 2013-2016 Yellow Tree, Siegen, Germany
+Author: Benjamin Pick (info@yellowtree.de)
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 
 namespace YellowTree\GeoipDetect\DataSources\Auto;
 
@@ -17,8 +35,15 @@ class AutoDataSource extends ManualDataSource
 		$html = parent::getStatusInformationHTML();
 		$date_format = get_option('date_format') . ' ' . get_option('time_format');
 		
+		$rescheduled = '';
 		$next_cron_update = wp_next_scheduled( 'geoipdetectupdate' );
+		if (!$next_cron_update) {
+			$rescheduled = ' ' . __('(Was rescheduled just now)', 'geoip-detect');
+			$this->set_cron_schedule();
+			$next_cron_update = wp_next_scheduled( 'geoipdetectupdate' );
+		}
 		$html .= '<br />' . sprintf(__('Next update: %s', 'geoip-detect'), $next_cron_update ? date_i18n($date_format, $next_cron_update) : __('Never', 'geoip-detect'));
+		$html .= $rescheduled;
 		
 		return $html;
 	}
@@ -67,7 +92,7 @@ HTML;
 	}
 	
 	public function maxmindUpdate()
-	{
+	{	
 		require_once(ABSPATH.'/wp-admin/includes/file.php');
 		
 		$download_url = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz';
@@ -111,10 +136,10 @@ HTML;
 		 */
 		$do_it = apply_filters('geoip_detect_cron_do_update', !GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED, false);
 	
+		$this->schedule_next_cron_run();
+		
 		if ($do_it)
 			$this->maxmindUpdate();
-	
-		$this->schedule_next_cron_run();
 	}
 	
 	public function set_cron_schedule()
@@ -137,7 +162,7 @@ HTML;
 		
 	public function deactivate()
 	{
-		wp_clear_scheduled_hook('geoipdetectupdate');
+		//wp_clear_scheduled_hook('geoipdetectupdate');
 	}
 }
 

@@ -1,0 +1,4 @@
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+
+{"postalCodes":[{"adminCode2":"00","adminName3":"Kreisfreie Stadt Berlin","adminCode1":"BE","lng":13.43695,"countryCode":"DE","postalCode":"10997","adminName1":"Berlin","placeName":"Berlin Kreuzberg","lat":52.50015}]}

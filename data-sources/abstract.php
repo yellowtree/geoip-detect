@@ -89,6 +89,28 @@ interface ReaderInterface extends \GeoIp2\ProviderInterface {
      */
 	public function close();
 }
+	
+abstract class AbstractReader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
+	protected $options;
+	
+	public function __construct($options = array()) {
+		$this->options = $options;	
+	}
+	
+	public function city($ip) {
+		throw new \BadMethodCallException('This datasource does not provide data for city()');
+	}
+	
+	public function country($ip) {
+		throw new \BadMethodCallException('This datasource does not provide data for country()');
+	}
+		
+	public function close() {
+			
+	}
+	
+}
+	
 
 } // end namespace 
 
@@ -96,5 +118,10 @@ namespace { // global namespace
 	function geoip_detect2_register_source($source) {
 		$registry = \YellowTree\GeoipDetect\DataSources\DataSourceRegistry::getInstance();
 		$registry->register($source);
+	}
+	
+	function geoip_detect2_is_source_active($sourceId) {
+		$registry = \YellowTree\GeoipDetect\DataSources\DataSourceRegistry::getInstance();
+		return $sourceId == $registry->getCurrentSource();
 	}
 }

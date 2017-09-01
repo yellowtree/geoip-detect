@@ -38,6 +38,17 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertSame(null, $record->country->name);	
 	}
 	
+	function testEmptyLookup() {
+		$this->assertFalse(geoip_detect_is_public_ip('0.0.0.0'), '0.0.0.0 should not be a public IP');
+		$this->assertTrue(geoip_detect_is_ip('0.0.0.0'), '0.0.0.0 should be an IP');
+		$this->assertTrue(geoip_detect_is_ip_equal('0.0.0.0', '0.0.0.0'), '0.0.0.0 should work with equal');
+		
+		$record = geoip_detect2_get_info_from_ip('0.0.0.0'); //Fallback to external IP
+		$this->assertSame(false, $record->isEmpty);
+		$this->assertSame(GEOIP_DETECT_TEST_IP, $record->traits->ipAddress);
+		$this->assertSame('Eschborn', $record->city->name);	
+	}
+	
 	function testExtendedRemoteAddr() {
 		$_SERVER['REMOTE_ADDR'] = '1.1.1.1, ' . GEOIP_DETECT_TEST_IP; 
 		$record = geoip_detect2_get_info_from_current_ip();
@@ -94,5 +105,14 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertNotSame('[geoip_detect2_get_current_source_description]', $desc, 'Shortcode was not executed.');
 		$this->assertNotEmpty($desc, 'Shortcode returned empty string');
 	}
-
+	
+	function testFillInTimezone() {
+		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
+		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
+		$this->assertSame('Europe/Berlin', $record->location->timeZone, 'Timezone must be dectected via country');
+		
+		$record = geoip_detect2_get_info_from_ip('8.8.8.8');
+		$this->assertValidGeoIP2Record($record, '8.8.8.8');
+		$this->assertSame('America/Los_Angeles', $record->location->timeZone, 'Timezone must be dectected via country/state');
+	}
 }

@@ -1,4 +1,22 @@
 <?php
+/*
+Copyright 2013-2016 Yellow Tree, Siegen, Germany
+Author: Benjamin Pick (info@yellowtree.de)
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 
 use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 
@@ -30,6 +48,9 @@ function geoip_detect_verify_nonce() {
 
 function geoip_detect_lookup_page()
 {
+	if (!is_admin())
+		return;
+	
 	$ip_lookup_result = false;
 	$message = '';
 
@@ -59,12 +80,11 @@ function geoip_detect_lookup_page()
 }
 
 function geoip_detect_option_page() {
-	if (!current_user_can('manage_options'))
+	if (!is_admin() || !current_user_can('manage_options'))
 		return;
 		
 	$registry = DataSourceRegistry::getInstance();
 	$sources = $registry->getAllSources();
-	$currentSource = $registry->getCurrentSource();
 	
 	$message = '';
 	
@@ -92,7 +112,6 @@ function geoip_detect_option_page() {
 			// Choose a datasource
 			case 'choose':
 				$registry->setCurrentSource($_POST['options']['source']);
-				$currentSource = $registry->getCurrentSource();
 				break;
 		
 			// Save the options of a data source
@@ -135,7 +154,8 @@ function geoip_detect_option_page() {
 		}
 	}
 
-	// Getting variables for view
+    $currentSource = $registry->getCurrentSource();
+    
 	$wp_options = array();
 	foreach ($option_names as $opt_name) {
 		$wp_options[$opt_name] = get_option('geoip-detect-'. $opt_name);

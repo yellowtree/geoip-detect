@@ -1,4 +1,22 @@
 <?php
+/*
+Copyright 2013-2016 Yellow Tree, Siegen, Germany
+Author: Benjamin Pick (info@yellowtree.de)
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 
 namespace YellowTree\GeoipDetect\DataSources;
 
@@ -33,15 +51,25 @@ class DataSourceRegistry {
 	
 	/**
 	 * Returns the currently chosen source.
+	 * @deprecated Use getSource() instead
 	 * @return \YellowTree\GeoipDetect\DataSources\AbstractDataSource
 	 */
 	public function getCurrentSource() {
 		$currentSource = get_option('geoip-detect-source', self::DEFAULT_SOURCE);
-		if (isset($this->sources[$currentSource]))
-			return $this->sources[$currentSource];
+		return $this->getSource($currentSource);
+	}
+	
+	/**
+	 * Returns the source known by this id.
+	 * @param string Source id
+	 * @return \YellowTree\GeoipDetect\DataSources\AbstractDataSource
+	 */
+	public function getSource($id) {
+		if (isset($this->sources[$id]))
+			return $this->sources[$id];
 		
 		if (WP_DEBUG)
-			trigger_error('Current source has id "' . $currentSource . '", but no such source was found. Using default source instead.', E_USER_NOTICE);
+			trigger_error('The source with id "' . $id . '" was requested, but no such source was found. Using default source instead.', E_USER_NOTICE);
 		
 		if (isset($this->sources[self::DEFAULT_SOURCE]))
 			return $this->sources[self::DEFAULT_SOURCE];
@@ -50,18 +78,12 @@ class DataSourceRegistry {
 	}
 	
 	/**
-	 * Returns the source known by this id.
-	 * @param string Source id (if empty, use current one)
-	 * @return \YellowTree\GeoipDetect\DataSources\AbstractDataSource
+	 * Check if a source named $id exists.
+	 * @param string $id
+	 * @return boolean
 	 */
-	public function getSource($id = '') {
-		if (!$id)
-			return $this->getCurrentSource();
-
-		if (isset($this->sources[$id]))
-			return $this->sources[$id];
-		
-		return null;
+	public function sourceExists($id) {
+		return isset($this->sources[$id]);
 	}
 	
 	/**
@@ -88,5 +110,11 @@ class DataSourceRegistry {
 	 */
 	public function getAllSources() {
 		return $this->sources;
+	}
+    
+	public function isSourceCachable($source) {
+		// Don't cache for file access based sources (not worth the effort/time)
+		$sources_not_cachable = apply_filters('geoip2_detect_sources_not_cachable', array('auto', 'manual', 'header'));	
+		return !in_array($source, $sources_not_cachable);
 	}
 }

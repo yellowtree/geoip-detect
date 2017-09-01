@@ -64,8 +64,9 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 			);
 			// Using @file... to supress errors
 			// Example output: {"country_name":"UNITED STATES","country_code":"US","city":"Aurora, TX","ip":"12.215.42.19"}
-			$data = json_decode(@file_get_contents(self::URL . $ip, false, $context));
-			
+			$body = @file_get_contents(self::URL . $ip, false, $context);
+			$data = json_decode($body);
+	
 			$hasInfo = false;
 			if ($data) {
 				$data = get_object_vars($data);
@@ -98,8 +99,6 @@ class HostInfoDataSource extends AbstractDataSource {
 	public function getDescriptionHTML() { return __('Free (Licence: GPL)<br />(only English names, does only have the following fields: country name, country ID and city name)', 'geoip-detect'); }
 	public function getStatusInformationHTML() { return __('You can choose a Maxmind database below.', 'geoip-detect'); }
 	public function getParameterHTML() { return ''; }
-	
-	public function activate() { }
 	
 	public function getReader($locales = array('en'), $options = array()) { return new Reader($options); }
 	
