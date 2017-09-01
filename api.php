@@ -184,29 +184,28 @@ function geoip_detect2_get_client_ip() {
 	
 	// REMOTE_ADDR may contain multiple adresses? https://wordpress.org/support/topic/php-fatal-error-uncaught-exception-invalidargumentexception?replies=2#post-8128737
 	$ip_list = explode(',', $ip);
-	array_unshift($ip_list, '::1');
 	
 	if (get_option('geoip-detect-has_reverse_proxy', 0) && isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
 	{
 		$ip_list = explode(',', @$_SERVER["HTTP_X_FORWARDED_FOR"]);
 		$ip_list = array_map('geoip_detect_normalize_ip', $ip_list);
 		
-		$trusted_proxies = get_option('geoip-detect-trusted_proxy_ips');
-		if ($trusted_proxies) {
-			// TODO: Expose option to UI. comma-seperated list of IPv4 and v6 adresses.			
-			$trusted_proxies = explode(',', $trusted_proxies);
-			
-			// Always trust localhost
-			$trusted_proxies[] = '';
-			$trusted_proxies[] = '::1';
-			$trusted_proxies[] = '127.0.0.1';
-			
-			$trusted_proxies = array_map('geoip_detect_normalize_ip', $trusted_proxies);
-			$ip_list[] = $ip;
-				
-			$ip_list = array_diff($ip_list, $trusted_proxies);
-		}	
+		// TODO: Expose option to UI. comma-seperated list of IPv4 and v6 adresses.			
+		$trusted_proxies = explode(',', get_option('geoip-detect-trusted_proxy_ips'));
+
+		// Always trust localhost
+		$trusted_proxies[] = '';
+		$trusted_proxies[] = '::1';
+		$trusted_proxies[] = '127.0.0.1';
+
+		$trusted_proxies = array_map('geoip_detect_normalize_ip', $trusted_proxies);
+		$ip_list[] = $ip;
+
+		$ip_list = array_diff($ip_list, $trusted_proxies);
 	}	
+	// Fallback IP
+	array_unshift($ip_list, '::1');
+	
 	// Each Proxy server append their information at the end, so the last IP is most trustworthy.
 	$ip = end($ip_list);
 	$ip = geoip_detect_normalize_ip($ip);
