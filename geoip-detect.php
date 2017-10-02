@@ -13,13 +13,13 @@ Domain Path:     /languages
 GitHub Plugin URI: https://github.com/yellowtree/wp-geoip-detect
 GitHub Branch:   geoipv2
 Requires WP:     3.5
-Requires PHP:    5.3.1
+Requires PHP:    5.4
 */
 
 define('GEOIP_DETECT_VERSION', '2.8.0');
 
 /*
-Copyright 2013-2016 Yellow Tree, Siegen, Germany
+Copyright 2013-2017 Yellow Tree, Siegen, Germany
 Author: Benjamin Pick (info@yellowtree.de)
 
 This program is free software; you can redistribute it and/or modify

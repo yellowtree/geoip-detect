@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright 2013-2016 Yellow Tree, Siegen, Germany
+Copyright 2013-2017 Yellow Tree, Siegen, Germany
 Author: Benjamin Pick (info@yellowtree.de)
 
 This program is free software; you can redistribute it and/or modify
