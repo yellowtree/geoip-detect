@@ -132,7 +132,8 @@ HTML;
 		}
 		
 		if (!file_exists($data_filename)) {
-			$data_filename = '';
+			// Maybe site root changed?
+			$data_filename = $this->maxmindValidateFilename(get_option('geoip-detect-manual_file'));
 		}
 		
 		$data_filename = apply_filters('geoip_detect_get_abs_db_filename', $data_filename);

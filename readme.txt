@@ -175,6 +175,7 @@ Fixing automatic weekly updates.
 = 2.8.0 =
 
 * FIX: Localhost now always is a trusted proxy (for standard reverse proxy configurations, however the checkbox "uses a reverse proxy" still needs to be activated.)
+* ADD: If the manual datasource is used, the file will continue to be found if the site is moved to another host
 * Maxmind vendor code was updated to the current version (2.6.0).
 * PHP 5.4 is now required (due to the maxmind library).
 
