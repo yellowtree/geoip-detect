@@ -104,7 +104,7 @@ class PrecisionDataSource extends AbstractDataSource {
 		$current_api_type = get_option('geoip-detect-precision_api_type');
 		
 		$label_user_id = __('User ID:', 'geoip-detect');
-		$label_user_secret = __('User Secret:', 'geoip-detect');
+		$label_user_secret = __('License key:', 'geoip-detect');
 		$label_api_type = __('API Type:', 'geoip-detect');
 		
 		$html = <<<HTML
@@ -131,7 +131,7 @@ HTML;
 			update_option('geoip-detect-precision-user_id', $user_id);
 		}
 		if (isset($post['options_precision']['user_secret'])) {
-			$user_secret = $post['options_precision']['user_secret'];
+			$user_secret = trim($post['options_precision']['user_secret']);
 			update_option('geoip-detect-precision-user_secret', $user_secret);	
 		}
 		if (isset($post['options_precision']['api_type'])) {
