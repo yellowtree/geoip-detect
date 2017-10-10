@@ -213,7 +213,7 @@ function _geoip_detect2_record_enrich_data($record, $ip, $sourceId, $error) {
  * @param array $record
  */
 function _geoip_detect2_try_to_fix_timezone($data) {
-	if (!empty($data['location']['timezone']))
+	if (!empty($data['location']['time_zone']))
 		return $data;
 
 	if (!function_exists('_geoip_detect_get_time_zone')) {
