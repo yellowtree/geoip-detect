@@ -48,7 +48,7 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 * You show or hide content specific to a geographic target group
 * Etc. ... You tell me! I'm rather curious what you'll do with this plugin!
 
-**System Requirements**: You will need at least PHP 5.3.1.
+**System Requirements**: You will need at least PHP 5.4.
 
 *This extension is "charity-ware". If you are happy with it, please [leave a tip](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYUZHS8FH3CL) for the benefit of [this charity](http://www.jmem-hainichen.de/homepage). (See [FAQ](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#what-you-mean-by-this-plugin-is-charity-ware) for more infos.)*
 
@@ -94,6 +94,10 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 
 1. Lookup page (under Tools > GeoIP Lookup)
 2. Options page (under Preferences > GeoIP Detection)
+
+= 2.8.0 =
+
+Warning: This bugfix version of the plugin requires PHP 5.4.
 
 = 2.6.0 =
 
@@ -165,6 +169,14 @@ Fixing automatic weekly updates.
 
 
 == Changelog ==
+
+= 2.8.0 =
+
+* FIX: Localhost now always is a trusted proxy (for standard reverse proxy configurations, however the checkbox "uses a reverse proxy" still needs to be activated.)
+* FIX: Timezone was overwritten by country data even though the maxmind data had already detected a timezone.
+* ADD: If the manual datasource is used, the file will continue to be found if the site is moved to another host
+* Maxmind vendor code was updated to the current version (2.6.0).
+* PHP 5.4 is now required (due to the maxmind library).
 
 = 2.7.0 =
 

@@ -99,7 +99,7 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 
 = 2.8.0 =
 
-Warning: This new version of the plugin requires PHP 5.4 !
+Warning: This bugfix version of the plugin requires PHP 5.4.
 
 = 2.6.0 =
 
