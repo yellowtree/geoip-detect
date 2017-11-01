@@ -172,6 +172,9 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+= 2.8.1 =
+* Maxmind vendor code was updated to the current version (2.7.0).
+
 = 2.8.0 =
 
 * FIX: Localhost now always is a trusted proxy (for standard reverse proxy configurations, however the checkbox "uses a reverse proxy" still needs to be activated.)
