@@ -37,7 +37,7 @@ class PrecisionReader extends \GeoIp2\WebService\Client implements \YellowTree\G
 		parent::__construct($userId, $licenseKey, array('en'), $options);
 	}
 	
-	public function city($ip) {
+	public function city($ip = 'me') {
 		$method = get_option('geoip-detect-precision_api_type', 'city');
 		
 		$ret = null;
