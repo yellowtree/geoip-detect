@@ -174,6 +174,7 @@ Fixing automatic weekly updates.
 
 = 2.8.1 =
 * Maxmind vendor code was updated to the current version (2.7.0).
+* FIX: Compatibility with PHP 7.2 (thx jj-dev)
 
 = 2.8.0 =
 
