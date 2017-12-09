@@ -95,30 +95,36 @@ HTML;
 	{	
 		require_once(ABSPATH.'/wp-admin/includes/file.php');
 		
-		$download_url = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz';
+		$download_url = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz';
+		//$download_url = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz';
 		$download_url = apply_filters('geoip_detect2_download_url', $download_url);
 	
 		$outFile = $this->maxmindGetUploadFilename();
-	
 		// Download
 		$tmpFile = download_url($download_url);
-		if (is_wp_error($tmpFile))
+
+		if (is_wp_error($tmpFile)) {
 			return $tmpFile->get_error_message();
+		}
 	
 		// Ungzip File
-		$zh = gzopen($tmpFile, 'r');
-		$h = fopen($outFile, 'w');
-	
-		if (!$zh)
+		$dir = scandir('phar://' . $tmpFile)[0];
+		if (!$dir)
 			return __('Downloaded file could not be opened for reading.', 'geoip-detect');
-		if (!$h)
+
+		$in = fopen('phar://' . $tmpFile . '/' . $dir . '/GeoLite2-City.mmdb', 'r');
+		$out = fopen($outFile, 'w');
+	
+		if (!$in)
+			return __('Downloaded file could not be opened for reading.', 'geoip-detect');
+		if (!$out)
 			return sprintf(__('Database could not be written (%s).', 'geoip-detect'), $outFile);
 	
-		while ( ($string = gzread($zh, 4096)) != false )
-			fwrite($h, $string, strlen($string));
+		while ( ($string = fread($in, 4096)) != false )
+			fwrite($out, $string, strlen($string));
 	
-		gzclose($zh);
-		fclose($h);
+		fclose($in);
+		fclose($out);
 	
 		unlink($tmpFile);
 	
