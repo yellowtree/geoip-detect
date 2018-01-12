@@ -18,7 +18,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-// Usage: $ php lib/geonames/generators/geonames.php api_username lib/geonames/data
+// Usage: $ php lib/geonames/generators/geonames.php {api_username} lib/geonames/data
 // Requires PHP 5.4
 
 if (php_sapi_name() != "cli")
@@ -71,9 +71,11 @@ foreach ($lang_geonames as $lang_maxmind => $lang_geoname) {
 				
 				// Country data
 				$r['country']['iso_code'] = $id;
-				if ($row['geonameId'])
+				if (!empty($row['isoAlpha3']))
+					$r['country']['iso_code3'] = $row['isoAlpha3'];
+				if (!empty($row['geonameId']))
 					$r['country']['geoname_id'] = $row['geonameId'];
-				if ($row['countryName'])
+				if (!empty($row['countryName']))
 					$r['country']['names'][$lang_maxmind] = $row['countryName'];
 				
 				// Continent data

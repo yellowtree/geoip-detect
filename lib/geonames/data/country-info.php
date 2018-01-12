@@ -1,5 +1,5 @@
 <?php
-// Generated at Mon, 13 Mar 2017 12:14:10 +0100 
+// Generated at Fri, 12 Jan 2018 20:51:14 +0100 
 return array (
   'countries' => 
   array (
@@ -8,6 +8,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'AD',
+        'iso_code3' => 'AND',
         'geoname_id' => 3041565,
         'names' => 
         array (
@@ -34,6 +35,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'AE',
+        'iso_code3' => 'ARE',
         'geoname_id' => 290557,
         'names' => 
         array (
@@ -60,6 +62,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'AF',
+        'iso_code3' => 'AFG',
         'geoname_id' => 1149361,
         'names' => 
         array (
@@ -86,6 +89,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'AG',
+        'iso_code3' => 'ATG',
         'geoname_id' => 3576396,
         'names' => 
         array (
@@ -112,6 +116,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'AI',
+        'iso_code3' => 'AIA',
         'geoname_id' => 3573511,
         'names' => 
         array (
@@ -138,6 +143,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'AL',
+        'iso_code3' => 'ALB',
         'geoname_id' => 783754,
         'names' => 
         array (
@@ -164,6 +170,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'AM',
+        'iso_code3' => 'ARM',
         'geoname_id' => 174982,
         'names' => 
         array (
@@ -181,8 +188,8 @@ return array (
       'continent' => 'AS',
       'location' => 
       array (
-        'latitude' => 40.066181,
-        'longitude' => 45.111107522579999,
+        'latitude' => 40.071902999999999,
+        'longitude' => 45.039342639811366,
       ),
     ),
     'AO' => 
@@ -190,6 +197,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'AO',
+        'iso_code3' => 'AGO',
         'geoname_id' => 3351879,
         'names' => 
         array (
@@ -216,6 +224,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'AQ',
+        'iso_code3' => 'ATA',
         'geoname_id' => 6697173,
         'names' => 
         array (
@@ -242,6 +251,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'AR',
+        'iso_code3' => 'ARG',
         'geoname_id' => 3865483,
         'names' => 
         array (
@@ -259,8 +269,8 @@ return array (
       'continent' => 'SA',
       'location' => 
       array (
-        'latitude' => -38.421295499999999,
-        'longitude' => -63.587402500000003,
+        'latitude' => -38.417824813499948,
+        'longitude' => -63.602132684499992,
       ),
     ),
     'AS' => 
@@ -268,6 +278,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'AS',
+        'iso_code3' => 'ASM',
         'geoname_id' => 5880801,
         'names' => 
         array (
@@ -294,6 +305,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'AT',
+        'iso_code3' => 'AUT',
         'geoname_id' => 2782113,
         'names' => 
         array (
@@ -320,6 +332,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'AU',
+        'iso_code3' => 'AUS',
         'geoname_id' => 2077456,
         'names' => 
         array (
@@ -346,6 +359,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'AW',
+        'iso_code3' => 'ABW',
         'geoname_id' => 3577279,
         'names' => 
         array (
@@ -372,6 +386,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'AX',
+        'iso_code3' => 'ALA',
         'geoname_id' => 661882,
         'names' => 
         array (
@@ -398,6 +413,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'AZ',
+        'iso_code3' => 'AZE',
         'geoname_id' => 587116,
         'names' => 
         array (
@@ -424,6 +440,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'BA',
+        'iso_code3' => 'BIH',
         'geoname_id' => 3277605,
         'names' => 
         array (
@@ -450,6 +467,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'BB',
+        'iso_code3' => 'BRB',
         'geoname_id' => 3374084,
         'names' => 
         array (
@@ -476,6 +494,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'BD',
+        'iso_code3' => 'BGD',
         'geoname_id' => 1210997,
         'names' => 
         array (
@@ -502,6 +521,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'BE',
+        'iso_code3' => 'BEL',
         'geoname_id' => 2802361,
         'names' => 
         array (
@@ -519,8 +539,8 @@ return array (
       'continent' => 'EU',
       'location' => 
       array (
-        'latitude' => 50.499527,
-        'longitude' => 4.4754024999999995,
+        'latitude' => 50.501040186390753,
+        'longitude' => 4.4746332119649903,
       ),
     ),
     'BF' => 
@@ -528,6 +548,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'BF',
+        'iso_code3' => 'BFA',
         'geoname_id' => 2361809,
         'names' => 
         array (
@@ -554,6 +575,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'BG',
+        'iso_code3' => 'BGR',
         'geoname_id' => 732800,
         'names' => 
         array (
@@ -580,6 +602,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'BH',
+        'iso_code3' => 'BHR',
         'geoname_id' => 290291,
         'names' => 
         array (
@@ -606,6 +629,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'BI',
+        'iso_code3' => 'BDI',
         'geoname_id' => 433561,
         'names' => 
         array (
@@ -632,6 +656,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'BJ',
+        'iso_code3' => 'BEN',
         'geoname_id' => 2395170,
         'names' => 
         array (
@@ -658,6 +683,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'BL',
+        'iso_code3' => 'BLM',
         'geoname_id' => 3578476,
         'names' => 
         array (
@@ -684,6 +710,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'BM',
+        'iso_code3' => 'BMU',
         'geoname_id' => 3573345,
         'names' => 
         array (
@@ -710,6 +737,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'BN',
+        'iso_code3' => 'BRN',
         'geoname_id' => 1820814,
         'names' => 
         array (
@@ -736,6 +764,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'BO',
+        'iso_code3' => 'BOL',
         'geoname_id' => 3923057,
         'names' => 
         array (
@@ -762,6 +791,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'BQ',
+        'iso_code3' => 'BES',
         'geoname_id' => 7626844,
         'names' => 
         array (
@@ -788,6 +818,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'BR',
+        'iso_code3' => 'BRA',
         'geoname_id' => 3469034,
         'names' => 
         array (
@@ -814,6 +845,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'BS',
+        'iso_code3' => 'BHS',
         'geoname_id' => 3572887,
         'names' => 
         array (
@@ -840,6 +872,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'BT',
+        'iso_code3' => 'BTN',
         'geoname_id' => 1252634,
         'names' => 
         array (
@@ -857,8 +890,8 @@ return array (
       'continent' => 'AS',
       'location' => 
       array (
-        'latitude' => 27.515709000000001,
-        'longitude' => 90.442455499999994,
+        'latitude' => 27.47416741900005,
+        'longitude' => 90.435397886500056,
       ),
     ),
     'BV' => 
@@ -866,6 +899,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'BV',
+        'iso_code3' => 'BVT',
         'geoname_id' => 3371123,
         'names' => 
         array (
@@ -892,6 +926,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'BW',
+        'iso_code3' => 'BWA',
         'geoname_id' => 933860,
         'names' => 
         array (
@@ -918,6 +953,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'BY',
+        'iso_code3' => 'BLR',
         'geoname_id' => 630336,
         'names' => 
         array (
@@ -944,6 +980,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'BZ',
+        'iso_code3' => 'BLZ',
         'geoname_id' => 3582678,
         'names' => 
         array (
@@ -970,6 +1007,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'CA',
+        'iso_code3' => 'CAN',
         'geoname_id' => 6251999,
         'names' => 
         array (
@@ -996,6 +1034,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'CC',
+        'iso_code3' => 'CCK',
         'geoname_id' => 1547376,
         'names' => 
         array (
@@ -1022,6 +1061,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'CD',
+        'iso_code3' => 'COD',
         'geoname_id' => 203312,
         'names' => 
         array (
@@ -1048,6 +1088,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'CF',
+        'iso_code3' => 'CAF',
         'geoname_id' => 239880,
         'names' => 
         array (
@@ -1074,6 +1115,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'CG',
+        'iso_code3' => 'COG',
         'geoname_id' => 2260494,
         'names' => 
         array (
@@ -1100,6 +1142,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'CH',
+        'iso_code3' => 'CHE',
         'geoname_id' => 2658434,
         'names' => 
         array (
@@ -1126,6 +1169,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'CI',
+        'iso_code3' => 'CIV',
         'geoname_id' => 2287781,
         'names' => 
         array (
@@ -1152,6 +1196,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'CK',
+        'iso_code3' => 'COK',
         'geoname_id' => 1899402,
         'names' => 
         array (
@@ -1178,6 +1223,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'CL',
+        'iso_code3' => 'CHL',
         'geoname_id' => 3895114,
         'names' => 
         array (
@@ -1195,8 +1241,8 @@ return array (
       'continent' => 'SA',
       'location' => 
       array (
-        'latitude' => -36.71658775546085,
-        'longitude' => -73.601703999999998,
+        'latitude' => -36.703785677499951,
+        'longitude' => -73.626590492999952,
       ),
     ),
     'CM' => 
@@ -1204,6 +1250,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'CM',
+        'iso_code3' => 'CMR',
         'geoname_id' => 2233387,
         'names' => 
         array (
@@ -1230,6 +1277,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'CN',
+        'iso_code3' => 'CHN',
         'geoname_id' => 1814991,
         'names' => 
         array (
@@ -1256,6 +1304,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'CO',
+        'iso_code3' => 'COL',
         'geoname_id' => 3686110,
         'names' => 
         array (
@@ -1273,8 +1322,8 @@ return array (
       'continent' => 'SA',
       'location' => 
       array (
-        'latitude' => 4.5773165000000002,
-        'longitude' => -74.298972999999989,
+        'latitude' => 4.5788054935000151,
+        'longitude' => -74.291495523499947,
       ),
     ),
     'CR' => 
@@ -1282,6 +1331,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'CR',
+        'iso_code3' => 'CRI',
         'geoname_id' => 3624060,
         'names' => 
         array (
@@ -1299,8 +1349,8 @@ return array (
       'continent' => 'NA',
       'location' => 
       array (
-        'latitude' => 9.6248970000000007,
-        'longitude' => -84.253307500000005,
+        'latitude' => 9.6296931151324792,
+        'longitude' => -84.251285673292756,
       ),
     ),
     'CU' => 
@@ -1308,6 +1358,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'CU',
+        'iso_code3' => 'CUB',
         'geoname_id' => 3562981,
         'names' => 
         array (
@@ -1334,6 +1385,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'CV',
+        'iso_code3' => 'CPV',
         'geoname_id' => 3374766,
         'names' => 
         array (
@@ -1360,6 +1412,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'CW',
+        'iso_code3' => 'CUW',
         'geoname_id' => 7626836,
         'names' => 
         array (
@@ -1386,6 +1439,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'CX',
+        'iso_code3' => 'CXR',
         'geoname_id' => 2078138,
         'names' => 
         array (
@@ -1400,7 +1454,7 @@ return array (
           'zh-CN' => '圣诞岛',
         ),
       ),
-      'continent' => 'AS',
+      'continent' => 'OC',
       'location' => 
       array (
         'latitude' => -10.49141950325,
@@ -1412,6 +1466,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'CY',
+        'iso_code3' => 'CYP',
         'geoname_id' => 146669,
         'names' => 
         array (
@@ -1438,6 +1493,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'CZ',
+        'iso_code3' => 'CZE',
         'geoname_id' => 3077311,
         'names' => 
         array (
@@ -1464,6 +1520,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'DE',
+        'iso_code3' => 'DEU',
         'geoname_id' => 2921044,
         'names' => 
         array (
@@ -1481,8 +1538,8 @@ return array (
       'continent' => 'EU',
       'location' => 
       array (
-        'latitude' => 51.090735557380697,
-        'longitude' => 10.454033001170981,
+        'latitude' => 51.164253602753703,
+        'longitude' => 10.454065459994251,
       ),
     ),
     'DJ' => 
@@ -1490,6 +1547,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'DJ',
+        'iso_code3' => 'DJI',
         'geoname_id' => 223816,
         'names' => 
         array (
@@ -1516,6 +1574,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'DK',
+        'iso_code3' => 'DNK',
         'geoname_id' => 2623032,
         'names' => 
         array (
@@ -1542,6 +1601,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'DM',
+        'iso_code3' => 'DMA',
         'geoname_id' => 3575830,
         'names' => 
         array (
@@ -1568,6 +1628,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'DO',
+        'iso_code3' => 'DOM',
         'geoname_id' => 3508796,
         'names' => 
         array (
@@ -1585,8 +1646,8 @@ return array (
       'continent' => 'NA',
       'location' => 
       array (
-        'latitude' => 18.736508999999998,
-        'longitude' => -70.1617435,
+        'latitude' => 18.7358162165838,
+        'longitude' => -70.167215797562747,
       ),
     ),
     'DZ' => 
@@ -1594,6 +1655,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'DZ',
+        'iso_code3' => 'DZA',
         'geoname_id' => 2589581,
         'names' => 
         array (
@@ -1620,6 +1682,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'EC',
+        'iso_code3' => 'ECU',
         'geoname_id' => 3658394,
         'names' => 
         array (
@@ -1646,6 +1709,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'EE',
+        'iso_code3' => 'EST',
         'geoname_id' => 453733,
         'names' => 
         array (
@@ -1672,6 +1736,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'EG',
+        'iso_code3' => 'EGY',
         'geoname_id' => 357994,
         'names' => 
         array (
@@ -1698,6 +1763,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'EH',
+        'iso_code3' => 'ESH',
         'geoname_id' => 2461445,
         'names' => 
         array (
@@ -1724,6 +1790,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'ER',
+        'iso_code3' => 'ERI',
         'geoname_id' => 338010,
         'names' => 
         array (
@@ -1750,6 +1817,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'ES',
+        'iso_code3' => 'ESP',
         'geoname_id' => 2510769,
         'names' => 
         array (
@@ -1776,6 +1844,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'ET',
+        'iso_code3' => 'ETH',
         'geoname_id' => 337996,
         'names' => 
         array (
@@ -1802,6 +1871,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'FI',
+        'iso_code3' => 'FIN',
         'geoname_id' => 660013,
         'names' => 
         array (
@@ -1828,6 +1898,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'FJ',
+        'iso_code3' => 'FJI',
         'geoname_id' => 2205218,
         'names' => 
         array (
@@ -1854,6 +1925,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'FK',
+        'iso_code3' => 'FLK',
         'geoname_id' => 3474414,
         'names' => 
         array (
@@ -1871,8 +1943,8 @@ return array (
       'continent' => 'SA',
       'location' => 
       array (
-        'latitude' => -51.800581000000001,
-        'longitude' => -59.528838999999998,
+        'latitude' => -51.80856182349995,
+        'longitude' => -59.532772162999947,
       ),
     ),
     'FM' => 
@@ -1880,6 +1952,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'FM',
+        'iso_code3' => 'FSM',
         'geoname_id' => 2081918,
         'names' => 
         array (
@@ -1906,6 +1979,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'FO',
+        'iso_code3' => 'FRO',
         'geoname_id' => 2622320,
         'names' => 
         array (
@@ -1932,6 +2006,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'FR',
+        'iso_code3' => 'FRA',
         'geoname_id' => 3017382,
         'names' => 
         array (
@@ -1958,6 +2033,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'GA',
+        'iso_code3' => 'GAB',
         'geoname_id' => 2400553,
         'names' => 
         array (
@@ -1984,6 +2060,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'GB',
+        'iso_code3' => 'GBR',
         'geoname_id' => 2635167,
         'names' => 
         array (
@@ -2001,8 +2078,8 @@ return array (
       'continent' => 'EU',
       'location' => 
       array (
-        'latitude' => 54.633221000000006,
-        'longitude' => -3.4322774999999996,
+        'latitude' => 54.631818205118002,
+        'longitude' => -3.4244043338491452,
       ),
     ),
     'GD' => 
@@ -2010,6 +2087,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'GD',
+        'iso_code3' => 'GRD',
         'geoname_id' => 3580239,
         'names' => 
         array (
@@ -2036,6 +2114,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'GE',
+        'iso_code3' => 'GEO',
         'geoname_id' => 614540,
         'names' => 
         array (
@@ -2062,6 +2141,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'GF',
+        'iso_code3' => 'GUF',
         'geoname_id' => 3381670,
         'names' => 
         array (
@@ -2088,6 +2168,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'GG',
+        'iso_code3' => 'GGY',
         'geoname_id' => 3042362,
         'names' => 
         array (
@@ -2114,6 +2195,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'GH',
+        'iso_code3' => 'GHA',
         'geoname_id' => 2300660,
         'names' => 
         array (
@@ -2140,6 +2222,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'GI',
+        'iso_code3' => 'GIB',
         'geoname_id' => 2411586,
         'names' => 
         array (
@@ -2166,6 +2249,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'GL',
+        'iso_code3' => 'GRL',
         'geoname_id' => 3425505,
         'names' => 
         array (
@@ -2192,6 +2276,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'GM',
+        'iso_code3' => 'GMB',
         'geoname_id' => 2413451,
         'names' => 
         array (
@@ -2218,6 +2303,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'GN',
+        'iso_code3' => 'GIN',
         'geoname_id' => 2420477,
         'names' => 
         array (
@@ -2244,6 +2330,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'GP',
+        'iso_code3' => 'GLP',
         'geoname_id' => 3579143,
         'names' => 
         array (
@@ -2270,6 +2357,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'GQ',
+        'iso_code3' => 'GNQ',
         'geoname_id' => 2309096,
         'names' => 
         array (
@@ -2296,6 +2384,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'GR',
+        'iso_code3' => 'GRC',
         'geoname_id' => 390903,
         'names' => 
         array (
@@ -2322,6 +2411,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'GS',
+        'iso_code3' => 'SGS',
         'geoname_id' => 3474415,
         'names' => 
         array (
@@ -2339,8 +2429,8 @@ return array (
       'continent' => 'AN',
       'location' => 
       array (
-        'latitude' => -56.724862999999999,
-        'longitude' => -32.1252505,
+        'latitude' => -56.722045023,
+        'longitude' => -32.150010337999952,
       ),
     ),
     'GT' => 
@@ -2348,6 +2438,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'GT',
+        'iso_code3' => 'GTM',
         'geoname_id' => 3595528,
         'names' => 
         array (
@@ -2374,6 +2465,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'GU',
+        'iso_code3' => 'GUM',
         'geoname_id' => 4043988,
         'names' => 
         array (
@@ -2400,6 +2492,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'GW',
+        'iso_code3' => 'GNB',
         'geoname_id' => 2372248,
         'names' => 
         array (
@@ -2426,6 +2519,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'GY',
+        'iso_code3' => 'GUY',
         'geoname_id' => 3378535,
         'names' => 
         array (
@@ -2452,6 +2546,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'HK',
+        'iso_code3' => 'HKG',
         'geoname_id' => 1819730,
         'names' => 
         array (
@@ -2478,6 +2573,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'HM',
+        'iso_code3' => 'HMD',
         'geoname_id' => 1547314,
         'names' => 
         array (
@@ -2504,6 +2600,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'HN',
+        'iso_code3' => 'HND',
         'geoname_id' => 3608932,
         'names' => 
         array (
@@ -2530,6 +2627,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'HR',
+        'iso_code3' => 'HRV',
         'geoname_id' => 3202326,
         'names' => 
         array (
@@ -2556,6 +2654,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'HT',
+        'iso_code3' => 'HTI',
         'geoname_id' => 3723988,
         'names' => 
         array (
@@ -2582,6 +2681,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'HU',
+        'iso_code3' => 'HUN',
         'geoname_id' => 719819,
         'names' => 
         array (
@@ -2608,6 +2708,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'ID',
+        'iso_code3' => 'IDN',
         'geoname_id' => 1643084,
         'names' => 
         array (
@@ -2634,6 +2735,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'IE',
+        'iso_code3' => 'IRL',
         'geoname_id' => 2963597,
         'names' => 
         array (
@@ -2651,8 +2753,8 @@ return array (
       'continent' => 'EU',
       'location' => 
       array (
-        'latitude' => 53.419750499999999,
-        'longitude' => -8.2404724999999992,
+        'latitude' => 53.415246157117849,
+        'longitude' => -8.2390267417035759,
       ),
     ),
     'IL' => 
@@ -2660,6 +2762,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'IL',
+        'iso_code3' => 'ISR',
         'geoname_id' => 294640,
         'names' => 
         array (
@@ -2686,6 +2789,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'IM',
+        'iso_code3' => 'IMN',
         'geoname_id' => 3042225,
         'names' => 
         array (
@@ -2712,6 +2816,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'IN',
+        'iso_code3' => 'IND',
         'geoname_id' => 1269750,
         'names' => 
         array (
@@ -2729,8 +2834,8 @@ return array (
       'continent' => 'AS',
       'location' => 
       array (
-        'latitude' => 21.125681,
-        'longitude' => 82.794997999999993,
+        'latitude' => 21.14025058611815,
+        'longitude' => 82.949655493136149,
       ),
     ),
     'IO' => 
@@ -2738,6 +2843,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'IO',
+        'iso_code3' => 'IOT',
         'geoname_id' => 1282588,
         'names' => 
         array (
@@ -2764,6 +2870,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'IQ',
+        'iso_code3' => 'IRQ',
         'geoname_id' => 99237,
         'names' => 
         array (
@@ -2790,6 +2897,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'IR',
+        'iso_code3' => 'IRN',
         'geoname_id' => 130758,
         'names' => 
         array (
@@ -2816,6 +2924,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'IS',
+        'iso_code3' => 'ISL',
         'geoname_id' => 2629691,
         'names' => 
         array (
@@ -2833,8 +2942,8 @@ return array (
       'continent' => 'EU',
       'location' => 
       array (
-        'latitude' => 64.963941500000004,
-        'longitude' => -19.021169499999999,
+        'latitude' => 64.966093044213849,
+        'longitude' => -19.013648005306301,
       ),
     ),
     'IT' => 
@@ -2842,6 +2951,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'IT',
+        'iso_code3' => 'ITA',
         'geoname_id' => 3175395,
         'names' => 
         array (
@@ -2868,6 +2978,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'JE',
+        'iso_code3' => 'JEY',
         'geoname_id' => 3042142,
         'names' => 
         array (
@@ -2894,6 +3005,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'JM',
+        'iso_code3' => 'JAM',
         'geoname_id' => 3489940,
         'names' => 
         array (
@@ -2911,8 +3023,8 @@ return array (
       'continent' => 'NA',
       'location' => 
       array (
-        'latitude' => 18.115265000000001,
-        'longitude' => -77.273479500000008,
+        'latitude' => 18.1153814024428,
+        'longitude' => -77.276052640169155,
       ),
     ),
     'JO' => 
@@ -2920,6 +3032,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'JO',
+        'iso_code3' => 'JOR',
         'geoname_id' => 248816,
         'names' => 
         array (
@@ -2946,6 +3059,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'JP',
+        'iso_code3' => 'JPN',
         'geoname_id' => 1861060,
         'names' => 
         array (
@@ -2963,8 +3077,8 @@ return array (
       'continent' => 'AS',
       'location' => 
       array (
-        'latitude' => 34.886305999999998,
-        'longitude' => 134.37971099999999,
+        'latitude' => 34.8890634005,
+        'longitude' => 134.37555597300002,
       ),
     ),
     'KE' => 
@@ -2972,6 +3086,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'KE',
+        'iso_code3' => 'KEN',
         'geoname_id' => 192950,
         'names' => 
         array (
@@ -2998,6 +3113,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'KG',
+        'iso_code3' => 'KGZ',
         'geoname_id' => 1527747,
         'names' => 
         array (
@@ -3024,6 +3140,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'KH',
+        'iso_code3' => 'KHM',
         'geoname_id' => 1831722,
         'names' => 
         array (
@@ -3050,6 +3167,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'KI',
+        'iso_code3' => 'KIR',
         'geoname_id' => 4030945,
         'names' => 
         array (
@@ -3076,6 +3194,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'KM',
+        'iso_code3' => 'COM',
         'geoname_id' => 921929,
         'names' => 
         array (
@@ -3102,6 +3221,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'KN',
+        'iso_code3' => 'KNA',
         'geoname_id' => 3575174,
         'names' => 
         array (
@@ -3128,6 +3248,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'KP',
+        'iso_code3' => 'PRK',
         'geoname_id' => 1873107,
         'names' => 
         array (
@@ -3154,6 +3275,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'KR',
+        'iso_code3' => 'KOR',
         'geoname_id' => 1835841,
         'names' => 
         array (
@@ -3180,6 +3302,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'KW',
+        'iso_code3' => 'KWT',
         'geoname_id' => 285570,
         'names' => 
         array (
@@ -3206,6 +3329,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'KY',
+        'iso_code3' => 'CYM',
         'geoname_id' => 3580718,
         'names' => 
         array (
@@ -3232,6 +3356,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'KZ',
+        'iso_code3' => 'KAZ',
         'geoname_id' => 1522867,
         'names' => 
         array (
@@ -3258,6 +3383,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'LA',
+        'iso_code3' => 'LAO',
         'geoname_id' => 1655842,
         'names' => 
         array (
@@ -3284,6 +3410,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'LB',
+        'iso_code3' => 'LBN',
         'geoname_id' => 272103,
         'names' => 
         array (
@@ -3310,6 +3437,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'LC',
+        'iso_code3' => 'LCA',
         'geoname_id' => 3576468,
         'names' => 
         array (
@@ -3336,6 +3464,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'LI',
+        'iso_code3' => 'LIE',
         'geoname_id' => 3042058,
         'names' => 
         array (
@@ -3362,6 +3491,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'LK',
+        'iso_code3' => 'LKA',
         'geoname_id' => 1227603,
         'names' => 
         array (
@@ -3388,6 +3518,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'LR',
+        'iso_code3' => 'LBR',
         'geoname_id' => 2275384,
         'names' => 
         array (
@@ -3414,6 +3545,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'LS',
+        'iso_code3' => 'LSO',
         'geoname_id' => 932692,
         'names' => 
         array (
@@ -3431,8 +3563,8 @@ return array (
       'continent' => 'AF',
       'location' => 
       array (
-        'latitude' => -29.620511,
-        'longitude' => 28.247414499999998,
+        'latitude' => -29.623187501499949,
+        'longitude' => 28.233469970000051,
       ),
     ),
     'LT' => 
@@ -3440,6 +3572,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'LT',
+        'iso_code3' => 'LTU',
         'geoname_id' => 597427,
         'names' => 
         array (
@@ -3466,6 +3599,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'LU',
+        'iso_code3' => 'LUX',
         'geoname_id' => 2960313,
         'names' => 
         array (
@@ -3492,6 +3626,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'LV',
+        'iso_code3' => 'LVA',
         'geoname_id' => 458258,
         'names' => 
         array (
@@ -3518,6 +3653,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'LY',
+        'iso_code3' => 'LBY',
         'geoname_id' => 2215636,
         'names' => 
         array (
@@ -3544,6 +3680,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'MA',
+        'iso_code3' => 'MAR',
         'geoname_id' => 2542007,
         'names' => 
         array (
@@ -3570,6 +3707,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'MC',
+        'iso_code3' => 'MCO',
         'geoname_id' => 2993457,
         'names' => 
         array (
@@ -3596,6 +3734,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'MD',
+        'iso_code3' => 'MDA',
         'geoname_id' => 617790,
         'names' => 
         array (
@@ -3622,6 +3761,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'ME',
+        'iso_code3' => 'MNE',
         'geoname_id' => 3194884,
         'names' => 
         array (
@@ -3648,6 +3788,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'MF',
+        'iso_code3' => 'MAF',
         'geoname_id' => 3578421,
         'names' => 
         array (
@@ -3674,6 +3815,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'MG',
+        'iso_code3' => 'MDG',
         'geoname_id' => 1062947,
         'names' => 
         array (
@@ -3700,6 +3842,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'MH',
+        'iso_code3' => 'MHL',
         'geoname_id' => 2080185,
         'names' => 
         array (
@@ -3726,6 +3869,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'MK',
+        'iso_code3' => 'MKD',
         'geoname_id' => 718075,
         'names' => 
         array (
@@ -3752,6 +3896,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'ML',
+        'iso_code3' => 'MLI',
         'geoname_id' => 2453866,
         'names' => 
         array (
@@ -3778,6 +3923,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'MM',
+        'iso_code3' => 'MMR',
         'geoname_id' => 1327865,
         'names' => 
         array (
@@ -3804,6 +3950,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'MN',
+        'iso_code3' => 'MNG',
         'geoname_id' => 2029969,
         'names' => 
         array (
@@ -3830,6 +3977,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'MO',
+        'iso_code3' => 'MAC',
         'geoname_id' => 1821275,
         'names' => 
         array (
@@ -3856,6 +4004,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'MP',
+        'iso_code3' => 'MNP',
         'geoname_id' => 4041468,
         'names' => 
         array (
@@ -3882,6 +4031,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'MQ',
+        'iso_code3' => 'MTQ',
         'geoname_id' => 3570311,
         'names' => 
         array (
@@ -3908,6 +4058,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'MR',
+        'iso_code3' => 'MRT',
         'geoname_id' => 2378080,
         'names' => 
         array (
@@ -3934,6 +4085,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'MS',
+        'iso_code3' => 'MSR',
         'geoname_id' => 3578097,
         'names' => 
         array (
@@ -3960,6 +4112,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'MT',
+        'iso_code3' => 'MLT',
         'geoname_id' => 2562770,
         'names' => 
         array (
@@ -3986,6 +4139,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'MU',
+        'iso_code3' => 'MUS',
         'geoname_id' => 934292,
         'names' => 
         array (
@@ -4012,6 +4166,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'MV',
+        'iso_code3' => 'MDV',
         'geoname_id' => 1282028,
         'names' => 
         array (
@@ -4038,6 +4193,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'MW',
+        'iso_code3' => 'MWI',
         'geoname_id' => 927384,
         'names' => 
         array (
@@ -4064,6 +4220,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'MX',
+        'iso_code3' => 'MEX',
         'geoname_id' => 3996063,
         'names' => 
         array (
@@ -4090,6 +4247,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'MY',
+        'iso_code3' => 'MYS',
         'geoname_id' => 1733045,
         'names' => 
         array (
@@ -4116,6 +4274,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'MZ',
+        'iso_code3' => 'MOZ',
         'geoname_id' => 1036973,
         'names' => 
         array (
@@ -4142,6 +4301,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'NA',
+        'iso_code3' => 'NAM',
         'geoname_id' => 3355338,
         'names' => 
         array (
@@ -4168,6 +4328,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'NC',
+        'iso_code3' => 'NCL',
         'geoname_id' => 2139685,
         'names' => 
         array (
@@ -4194,6 +4355,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'NE',
+        'iso_code3' => 'NER',
         'geoname_id' => 2440476,
         'names' => 
         array (
@@ -4220,6 +4382,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'NF',
+        'iso_code3' => 'NFK',
         'geoname_id' => 2155115,
         'names' => 
         array (
@@ -4246,6 +4409,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'NG',
+        'iso_code3' => 'NGA',
         'geoname_id' => 2328926,
         'names' => 
         array (
@@ -4272,6 +4436,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'NI',
+        'iso_code3' => 'NIC',
         'geoname_id' => 3617476,
         'names' => 
         array (
@@ -4298,6 +4463,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'NL',
+        'iso_code3' => 'NLD',
         'geoname_id' => 2750405,
         'names' => 
         array (
@@ -4315,8 +4481,8 @@ return array (
       'continent' => 'EU',
       'location' => 
       array (
-        'latitude' => 52.133057000000001,
-        'longitude' => 5.2952500000000002,
+        'latitude' => 52.1330400319425,
+        'longitude' => 5.2929384320746102,
       ),
     ),
     'NO' => 
@@ -4324,6 +4490,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'NO',
+        'iso_code3' => 'NOR',
         'geoname_id' => 3144096,
         'names' => 
         array (
@@ -4341,8 +4508,8 @@ return array (
       'continent' => 'EU',
       'location' => 
       array (
-        'latitude' => 64.583013499999993,
-        'longitude' => 17.864109760375975,
+        'latitude' => 64.582677167394678,
+        'longitude' => 17.852782042042108,
       ),
     ),
     'NP' => 
@@ -4350,6 +4517,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'NP',
+        'iso_code3' => 'NPL',
         'geoname_id' => 1282988,
         'names' => 
         array (
@@ -4376,6 +4544,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'NR',
+        'iso_code3' => 'NRU',
         'geoname_id' => 2110425,
         'names' => 
         array (
@@ -4402,6 +4571,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'NU',
+        'iso_code3' => 'NIU',
         'geoname_id' => 4036232,
         'names' => 
         array (
@@ -4428,6 +4598,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'NZ',
+        'iso_code3' => 'NZL',
         'geoname_id' => 2186224,
         'names' => 
         array (
@@ -4454,6 +4625,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'OM',
+        'iso_code3' => 'OMN',
         'geoname_id' => 286963,
         'names' => 
         array (
@@ -4480,6 +4652,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'PA',
+        'iso_code3' => 'PAN',
         'geoname_id' => 3703430,
         'names' => 
         array (
@@ -4497,8 +4670,8 @@ return array (
       'continent' => 'NA',
       'location' => 
       array (
-        'latitude' => 8.4177099999999996,
-        'longitude' => -80.112777499999993,
+        'latitude' => 8.4248912279636592,
+        'longitude' => -80.104381307849252,
       ),
     ),
     'PE' => 
@@ -4506,6 +4679,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'PE',
+        'iso_code3' => 'PER',
         'geoname_id' => 3932488,
         'names' => 
         array (
@@ -4532,6 +4706,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'PF',
+        'iso_code3' => 'PYF',
         'geoname_id' => 4030656,
         'names' => 
         array (
@@ -4558,6 +4733,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'PG',
+        'iso_code3' => 'PNG',
         'geoname_id' => 2088628,
         'names' => 
         array (
@@ -4584,6 +4760,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'PH',
+        'iso_code3' => 'PHL',
         'geoname_id' => 1694008,
         'names' => 
         array (
@@ -4602,7 +4779,7 @@ return array (
       'location' => 
       array (
         'latitude' => 12.88199172124097,
-        'longitude' => 121.7669150462425,
+        'longitude' => 121.76691925886163,
       ),
     ),
     'PK' => 
@@ -4610,6 +4787,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'PK',
+        'iso_code3' => 'PAK',
         'geoname_id' => 1168579,
         'names' => 
         array (
@@ -4636,6 +4814,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'PL',
+        'iso_code3' => 'POL',
         'geoname_id' => 798544,
         'names' => 
         array (
@@ -4653,8 +4832,8 @@ return array (
       'continent' => 'EU',
       'location' => 
       array (
-        'latitude' => 51.922750499999999,
-        'longitude' => 19.136874500000001,
+        'latitude' => 51.918917589430599,
+        'longitude' => 19.134333936256098,
       ),
     ),
     'PM' => 
@@ -4662,6 +4841,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'PM',
+        'iso_code3' => 'SPM',
         'geoname_id' => 3424932,
         'names' => 
         array (
@@ -4688,6 +4868,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'PN',
+        'iso_code3' => 'PCN',
         'geoname_id' => 4030699,
         'names' => 
         array (
@@ -4705,8 +4886,8 @@ return array (
       'continent' => 'OC',
       'location' => 
       array (
-        'latitude' => -24.494214999999997,
-        'longitude' => -126.55964300000001,
+        'latitude' => -24.501251809927449,
+        'longitude' => -126.56492005559713,
       ),
     ),
     'PR' => 
@@ -4714,6 +4895,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'PR',
+        'iso_code3' => 'PRI',
         'geoname_id' => 4566966,
         'names' => 
         array (
@@ -4732,7 +4914,7 @@ return array (
       'location' => 
       array (
         'latitude' => 18.223285499999999,
-        'longitude' => -66.592731499999999,
+        'longitude' => -66.592903838338145,
       ),
     ),
     'PS' => 
@@ -4740,6 +4922,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'PS',
+        'iso_code3' => 'PSE',
         'geoname_id' => 6254930,
         'names' => 
         array (
@@ -4766,6 +4949,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'PT',
+        'iso_code3' => 'PRT',
         'geoname_id' => 2264397,
         'names' => 
         array (
@@ -4792,6 +4976,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'PW',
+        'iso_code3' => 'PLW',
         'geoname_id' => 1559582,
         'names' => 
         array (
@@ -4818,6 +5003,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'PY',
+        'iso_code3' => 'PRY',
         'geoname_id' => 3437598,
         'names' => 
         array (
@@ -4844,6 +5030,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'QA',
+        'iso_code3' => 'QAT',
         'geoname_id' => 289688,
         'names' => 
         array (
@@ -4870,6 +5057,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'RE',
+        'iso_code3' => 'REU',
         'geoname_id' => 935317,
         'names' => 
         array (
@@ -4896,6 +5084,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'RO',
+        'iso_code3' => 'ROU',
         'geoname_id' => 798549,
         'names' => 
         array (
@@ -4913,8 +5102,8 @@ return array (
       'continent' => 'EU',
       'location' => 
       array (
-        'latitude' => 45.947124500000001,
-        'longitude' => 24.980513500000001,
+        'latitude' => 45.942203927915045,
+        'longitude' => 24.98864679799815,
       ),
     ),
     'RS' => 
@@ -4922,6 +5111,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'RS',
+        'iso_code3' => 'SRB',
         'geoname_id' => 6290252,
         'names' => 
         array (
@@ -4948,6 +5138,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'RU',
+        'iso_code3' => 'RUS',
         'geoname_id' => 2017370,
         'names' => 
         array (
@@ -4974,6 +5165,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'RW',
+        'iso_code3' => 'RWA',
         'geoname_id' => 49518,
         'names' => 
         array (
@@ -4991,8 +5183,8 @@ return array (
       'continent' => 'AF',
       'location' => 
       array (
-        'latitude' => -1.9470800000000001,
-        'longitude' => 29.876376,
+        'latitude' => -1.9436984046076602,
+        'longitude' => 29.880738731107598,
       ),
     ),
     'SA' => 
@@ -5000,6 +5192,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'SA',
+        'iso_code3' => 'SAU',
         'geoname_id' => 102358,
         'names' => 
         array (
@@ -5017,8 +5210,8 @@ return array (
       'continent' => 'AS',
       'location' => 
       array (
-        'latitude' => 23.886291499999999,
-        'longitude' => 45.081138500000002,
+        'latitude' => 24.268916513062798,
+        'longitude' => 45.08113850000003,
       ),
     ),
     'SB' => 
@@ -5026,6 +5219,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'SB',
+        'iso_code3' => 'SLB',
         'geoname_id' => 2103350,
         'names' => 
         array (
@@ -5052,6 +5246,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'SC',
+        'iso_code3' => 'SYC',
         'geoname_id' => 241170,
         'names' => 
         array (
@@ -5078,6 +5273,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'SD',
+        'iso_code3' => 'SDN',
         'geoname_id' => 366755,
         'names' => 
         array (
@@ -5104,6 +5300,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'SE',
+        'iso_code3' => 'SWE',
         'geoname_id' => 2661886,
         'names' => 
         array (
@@ -5121,8 +5318,8 @@ return array (
       'continent' => 'EU',
       'location' => 
       array (
-        'latitude' => 62.199805999999995,
-        'longitude' => 17.637493241959248,
+        'latitude' => 62.198705544344051,
+        'longitude' => 17.6323723126125,
       ),
     ),
     'SG' => 
@@ -5130,6 +5327,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'SG',
+        'iso_code3' => 'SGP',
         'geoname_id' => 1880251,
         'names' => 
         array (
@@ -5156,6 +5354,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'SH',
+        'iso_code3' => 'SHN',
         'geoname_id' => 3370751,
         'names' => 
         array (
@@ -5182,6 +5381,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'SI',
+        'iso_code3' => 'SVN',
         'geoname_id' => 3190538,
         'names' => 
         array (
@@ -5208,6 +5408,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'SJ',
+        'iso_code3' => 'SJM',
         'geoname_id' => 607072,
         'names' => 
         array (
@@ -5234,6 +5435,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'SK',
+        'iso_code3' => 'SVK',
         'geoname_id' => 3057568,
         'names' => 
         array (
@@ -5260,6 +5462,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'SL',
+        'iso_code3' => 'SLE',
         'geoname_id' => 2403846,
         'names' => 
         array (
@@ -5286,6 +5489,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'SM',
+        'iso_code3' => 'SMR',
         'geoname_id' => 3168068,
         'names' => 
         array (
@@ -5312,6 +5516,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'SN',
+        'iso_code3' => 'SEN',
         'geoname_id' => 2245662,
         'names' => 
         array (
@@ -5338,6 +5543,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'SO',
+        'iso_code3' => 'SOM',
         'geoname_id' => 51537,
         'names' => 
         array (
@@ -5364,6 +5570,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'SR',
+        'iso_code3' => 'SUR',
         'geoname_id' => 3382998,
         'names' => 
         array (
@@ -5390,6 +5597,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'SS',
+        'iso_code3' => 'SSD',
         'geoname_id' => 7909807,
         'names' => 
         array (
@@ -5416,6 +5624,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'ST',
+        'iso_code3' => 'STP',
         'geoname_id' => 2410758,
         'names' => 
         array (
@@ -5442,6 +5651,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'SV',
+        'iso_code3' => 'SLV',
         'geoname_id' => 3585968,
         'names' => 
         array (
@@ -5468,6 +5678,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'SX',
+        'iso_code3' => 'SXM',
         'geoname_id' => 7609695,
         'names' => 
         array (
@@ -5494,6 +5705,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'SY',
+        'iso_code3' => 'SYR',
         'geoname_id' => 163843,
         'names' => 
         array (
@@ -5520,6 +5732,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'SZ',
+        'iso_code3' => 'SWZ',
         'geoname_id' => 934841,
         'names' => 
         array (
@@ -5546,6 +5759,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'TC',
+        'iso_code3' => 'TCA',
         'geoname_id' => 3576916,
         'names' => 
         array (
@@ -5572,6 +5786,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'TD',
+        'iso_code3' => 'TCD',
         'geoname_id' => 2434508,
         'names' => 
         array (
@@ -5598,6 +5813,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'TF',
+        'iso_code3' => 'ATF',
         'geoname_id' => 1546748,
         'names' => 
         array (
@@ -5624,6 +5840,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'TG',
+        'iso_code3' => 'TGO',
         'geoname_id' => 2363686,
         'names' => 
         array (
@@ -5650,6 +5867,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'TH',
+        'iso_code3' => 'THA',
         'geoname_id' => 1605651,
         'names' => 
         array (
@@ -5676,6 +5894,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'TJ',
+        'iso_code3' => 'TJK',
         'geoname_id' => 1220409,
         'names' => 
         array (
@@ -5702,6 +5921,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'TK',
+        'iso_code3' => 'TKL',
         'geoname_id' => 4031074,
         'names' => 
         array (
@@ -5728,6 +5948,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'TL',
+        'iso_code3' => 'TLS',
         'geoname_id' => 1966436,
         'names' => 
         array (
@@ -5754,6 +5975,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'TM',
+        'iso_code3' => 'TKM',
         'geoname_id' => 1218197,
         'names' => 
         array (
@@ -5780,6 +6002,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'TN',
+        'iso_code3' => 'TUN',
         'geoname_id' => 2464461,
         'names' => 
         array (
@@ -5806,6 +6029,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'TO',
+        'iso_code3' => 'TON',
         'geoname_id' => 4032283,
         'names' => 
         array (
@@ -5832,6 +6056,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'TR',
+        'iso_code3' => 'TUR',
         'geoname_id' => 298795,
         'names' => 
         array (
@@ -5858,6 +6083,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'TT',
+        'iso_code3' => 'TTO',
         'geoname_id' => 3573591,
         'names' => 
         array (
@@ -5884,6 +6110,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'TV',
+        'iso_code3' => 'TUV',
         'geoname_id' => 2110297,
         'names' => 
         array (
@@ -5910,6 +6137,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'TW',
+        'iso_code3' => 'TWN',
         'geoname_id' => 1668284,
         'names' => 
         array (
@@ -5936,6 +6164,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'TZ',
+        'iso_code3' => 'TZA',
         'geoname_id' => 149590,
         'names' => 
         array (
@@ -5962,6 +6191,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'UA',
+        'iso_code3' => 'UKR',
         'geoname_id' => 690791,
         'names' => 
         array (
@@ -5988,6 +6218,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'UG',
+        'iso_code3' => 'UGA',
         'geoname_id' => 226074,
         'names' => 
         array (
@@ -6005,8 +6236,8 @@ return array (
       'continent' => 'AF',
       'location' => 
       array (
-        'latitude' => 1.3651884999999999,
-        'longitude' => 32.304650500000001,
+        'latitude' => 1.3749193692074451,
+        'longitude' => 32.287259435275899,
       ),
     ),
     'UM' => 
@@ -6014,6 +6245,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'UM',
+        'iso_code3' => 'UMI',
         'geoname_id' => 5854968,
         'names' => 
         array (
@@ -6040,6 +6272,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'US',
+        'iso_code3' => 'USA',
         'geoname_id' => 6252001,
         'names' => 
         array (
@@ -6066,6 +6299,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'UY',
+        'iso_code3' => 'URY',
         'geoname_id' => 3439705,
         'names' => 
         array (
@@ -6092,6 +6326,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'UZ',
+        'iso_code3' => 'UZB',
         'geoname_id' => 1512440,
         'names' => 
         array (
@@ -6118,6 +6353,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'VA',
+        'iso_code3' => 'VAT',
         'geoname_id' => 3164670,
         'names' => 
         array (
@@ -6144,6 +6380,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'VC',
+        'iso_code3' => 'VCT',
         'geoname_id' => 3577815,
         'names' => 
         array (
@@ -6170,6 +6407,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'VE',
+        'iso_code3' => 'VEN',
         'geoname_id' => 3625428,
         'names' => 
         array (
@@ -6196,6 +6434,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'VG',
+        'iso_code3' => 'VGB',
         'geoname_id' => 3577718,
         'names' => 
         array (
@@ -6222,6 +6461,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'VI',
+        'iso_code3' => 'VIR',
         'geoname_id' => 4796775,
         'names' => 
         array (
@@ -6248,6 +6488,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'VN',
+        'iso_code3' => 'VNM',
         'geoname_id' => 1562822,
         'names' => 
         array (
@@ -6274,6 +6515,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'VU',
+        'iso_code3' => 'VUT',
         'geoname_id' => 2134431,
         'names' => 
         array (
@@ -6300,6 +6542,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'WF',
+        'iso_code3' => 'WLF',
         'geoname_id' => 4034749,
         'names' => 
         array (
@@ -6326,6 +6569,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'WS',
+        'iso_code3' => 'WSM',
         'geoname_id' => 4034894,
         'names' => 
         array (
@@ -6352,6 +6596,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'XK',
+        'iso_code3' => 'XKX',
         'geoname_id' => 831053,
         'names' => 
         array (
@@ -6378,6 +6623,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'YE',
+        'iso_code3' => 'YEM',
         'geoname_id' => 69543,
         'names' => 
         array (
@@ -6404,6 +6650,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'YT',
+        'iso_code3' => 'MYT',
         'geoname_id' => 1024031,
         'names' => 
         array (
@@ -6430,6 +6677,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'ZA',
+        'iso_code3' => 'ZAF',
         'geoname_id' => 953987,
         'names' => 
         array (
@@ -6447,8 +6695,8 @@ return array (
       'continent' => 'AF',
       'location' => 
       array (
-        'latitude' => -28.483219999999999,
-        'longitude' => 24.676997,
+        'latitude' => -28.479600030499899,
+        'longitude' => 24.6984374725,
       ),
     ),
     'ZM' => 
@@ -6456,6 +6704,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'ZM',
+        'iso_code3' => 'ZMB',
         'geoname_id' => 895949,
         'names' => 
         array (
@@ -6482,6 +6731,7 @@ return array (
       'country' => 
       array (
         'iso_code' => 'ZW',
+        'iso_code3' => 'ZWE',
         'geoname_id' => 878675,
         'names' => 
         array (
