@@ -48,6 +48,15 @@ function geoip_detect_do_upgrade($old_version) {
 			update_option('geoip-detect-source', 'hostinfo');
 		}
 	}
+
+	// Fix auto update hook (re-schedule if necessary)
+	if (version_compare('2.8.2', $old_version, '>')) {
+		$source = new \YellowTree\GeoipDetect\DataSources\Auto\AutoDataSource;
+		$source->deactivate();
+		if (get_option('geoip-detect-source') == 'auto') {
+			$source->activate();
+		}
+	}
 }
 
 /**
