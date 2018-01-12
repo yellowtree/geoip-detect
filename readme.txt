@@ -174,7 +174,7 @@ Fixing automatic weekly updates.
 
 = 2.9 =
 * Maxmind vendor code was updated to the current version (2.7.0).
-* FIX: Compatibility with PHP 7.2 (thx jj-dev)
+* FIX: There was a fatal error when using PHP 7.2 (thx jj-dev)
 * FIX: The update URL of the Maxmind Geoip2 Lite City database was updated.
 
 = 2.8.0 =

@@ -1,5 +1,4 @@
 Tests: [![Build Status](https://travis-ci.org/yellowtree/wp-geoip-detect.png?branch=master)](https://travis-ci.org/yellowtree/wp-geoip-detect)
-Composer: [![Dependency Status](https://www.versioneye.com/user/projects/55433d0dd8fe1aea70000041/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55433d0dd8fe1aea70000041)
 
 # GeoIP Detection #
 
@@ -169,6 +168,11 @@ Fixing automatic weekly updates.
 
 
 == Changelog ==
+
+= 2.9 =
+* Maxmind vendor code was updated to the current version (2.7.0).
+* FIX: There was a fatal error when using PHP 7.2 (thx jj-dev)
+* FIX: The update URL of the Maxmind Geoip2 Lite City database was updated.
 
 = 2.8.0 =
 
