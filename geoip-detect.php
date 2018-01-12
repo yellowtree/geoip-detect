@@ -19,7 +19,7 @@ Requires PHP:    5.4
 define('GEOIP_DETECT_VERSION', '2.8.1');
 
 /*
-Copyright 2013-2017 Yellow Tree, Siegen, Germany
+Copyright 2013-2018 Yellow Tree, Siegen, Germany
 Author: Benjamin Pick (info@yellowtree.de)
 
 This program is free software; you can redistribute it and/or modify
@@ -76,20 +76,24 @@ include_once(GEOIP_PLUGIN_DIR . '/data-sources/precision.php');
 include_once(GEOIP_PLUGIN_DIR . '/data-sources/header.php');
 
 // You can define these constants in your theme/plugin if you like.
+
 /**
  * Set to TRUE if the plugin should never auto-update the Maxmind City Lite database.
  */
 //define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', true);
+
 /**
  * How long the external IP of the server is cached.
  * This is probably only used in dev cases, so per default relatively low.
  */
 //define('GEOIP_DETECT_IP_CACHE_TIME', 2 * HOUR_IN_SECONDS);
+
 /**
  * How long the external IP of the server is cached, if no IP was found.
  * Default: the same as GEOIP_DETECT_IP_CACHE_TIME
  */
 //define('GEOIP_DETECT_IP_EMPTY_CACHE_TIME', 2 * HOUR_IN_SECONDS);
+
 /**
  * How long the data of the IP is cached. This applies to the Web-APIs (Maxmind Precision and HostIP.info)
  * Only successful lookups will be cached.

@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright 2013-2017 Yellow Tree, Siegen, Germany
+Copyright 2013-2018 Yellow Tree, Siegen, Germany
 Author: Benjamin Pick (info@yellowtree.de)
 
 This program is free software; you can redistribute it and/or modify
@@ -102,7 +102,9 @@ HTML;
 		$outFile = $this->maxmindGetUploadFilename();
 		// Download
 		$tmpFile = download_url($download_url);
-
+//$response = wp_safe_remote_get( $download_url );
+//var_dump(wp_remote_retrieve_body($response));
+ 
 		if (is_wp_error($tmpFile)) {
 			return $tmpFile->get_error_message();
 		}
