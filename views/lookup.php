@@ -47,6 +47,7 @@ if ($shortcode_options) {
 	<?php if ($ip_lookup_result !== false) :
 			if (is_object($ip_lookup_result)) :
 			$record = $ip_lookup_result; 
+	var_dump($record->jsonSerialize()['country']['iso_code3']);
 			?>
 	<h3><?php _e('Lookup Result', 'geoip-detect'); ?></h3>
 	<p>
