@@ -91,26 +91,44 @@ HTML;
 		return $filename;
 	}
 	
+	protected function download_url($url) {
+		// Similar to wordpress download_url, but with custom UA
+		$url_filename = basename( parse_url( $url, PHP_URL_PATH ) );
+ 
+		$tmpfname = wp_tempnam( $url_filename );
+		if ( ! $tmpfname )
+			return new \WP_Error('http_no_file', __('Could not create Temporary file.'));
+		
+		$response = wp_safe_remote_get( $url, array('timeout' => 300, 'stream' => true, 'filename' => $tmpfname, 'headers' => array('user-agent' => GEOIP_DETECT_USER_AGENT) ) );
+		if (is_wp_error( $response ) || 200 != wp_remote_retrieve_response_code( $response ) ) {
+			unlink($tmpfname);
+			$body = wp_remote_retrieve_body($response);
+			return new \WP_Error( 'http_404', wp_remote_retrieve_response_code( $response ) . ': ' . trim( wp_remote_retrieve_response_message( $response ) ) . ' ' . $body );
+		}
+		
+		return $tmpfname;
+	}
+	
 	public function maxmindUpdate()
 	{	
 		require_once(ABSPATH.'/wp-admin/includes/file.php');
 		
-		$download_url = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz';
+		$download_url = 'http://geolite.maxmind.com/ddownload/geoip/database/GeoLite2-City.tar.gz';
 		//$download_url = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz';
 		$download_url = apply_filters('geoip_detect2_download_url', $download_url);
 	
 		$outFile = $this->maxmindGetUploadFilename();
 		// Download
-		$tmpFile = download_url($download_url);
-//$response = wp_safe_remote_get( $download_url );
-//var_dump(wp_remote_retrieve_body($response));
+		$tmpFile = $this->download_url($download_url);
  
 		if (is_wp_error($tmpFile)) {
 			return $tmpFile->get_error_message();
 		}
 	
 		// Ungzip File
-		$dir = scandir('phar://' . $tmpFile)[0];
+		if (!file_exists($tmpFile))
+			return __('Downloaded file could not be opened for reading.', 'geoip-detect');
+		$dir = @scandir('phar://' . $tmpFile)[0];
 		if (!$dir)
 			return __('Downloaded file could not be opened for reading.', 'geoip-detect');
 

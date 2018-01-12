@@ -14,6 +14,9 @@ function geoip_detect_defines() {
 	
 	if (!defined('GEOIP_DETECT_IPV6_SUPPORTED'))
 		define('GEOIP_DETECT_IPV6_SUPPORTED', defined('AF_INET6'));
+	
+	if (!defined('GEOIP_DETECT_USER_AGENT')) 
+		define('GEOIP_DETECT_USER_AGENT', 'GeoIP Detect ' . GEOIP_DETECT_VERSION);
 }
 add_action('plugins_loaded', 'geoip_detect_defines');
 
