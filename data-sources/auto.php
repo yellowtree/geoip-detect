@@ -179,6 +179,7 @@ HTML;
 	public function schedule_next_cron_run() {
 		// The Lite databases are updated on the first tuesday of each month. Maybe not at midnight, so we schedule it for the night afterwards.
 		$next = strtotime('first tuesday of next month + 1 day');
+		$next += mt_rand(1, WEEK_IN_SECONDS);
 		wp_schedule_single_event($next, 'geoipdetectupdate');
 	}
 	
@@ -188,7 +189,7 @@ HTML;
 		
 	public function deactivate()
 	{
-		//wp_clear_scheduled_hook('geoipdetectupdate');
+		wp_clear_scheduled_hook('geoipdetectupdate');
 	}
 }
 
