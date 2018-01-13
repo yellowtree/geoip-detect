@@ -104,7 +104,7 @@ function geoip_detect_option_page() {
 				if ($ret === true)
 					$message .= __('Updated successfully.', 'geoip-detect');
 				else
-					$message .= __('Update failed.', 'geoip-detect') .' '. $ret;
+					$message .= __('File was not updated', 'geoip-detect') .': '. $ret;
 		
 				break;
 	

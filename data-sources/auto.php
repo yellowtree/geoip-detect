@@ -91,7 +91,7 @@ HTML;
 		return $filename;
 	}
 	
-	protected function download_url($url) {
+	protected function download_url($url, $modified = 0) {
 		// Similar to wordpress download_url, but with custom UA
 		$url_filename = basename( parse_url( $url, PHP_URL_PATH ) );
  
@@ -99,11 +99,21 @@ HTML;
 		if ( ! $tmpfname )
 			return new \WP_Error('http_no_file', __('Could not create Temporary file.'));
 		
-		$response = wp_safe_remote_get( $url, array('timeout' => 300, 'stream' => true, 'filename' => $tmpfname, 'headers' => array('user-agent' => GEOIP_DETECT_USER_AGENT) ) );
-		if (is_wp_error( $response ) || 200 != wp_remote_retrieve_response_code( $response ) ) {
+		$headers = array();
+		$headers['User-Agent'] = GEOIP_DETECT_USER_AGENT;
+		if ($modified) {
+			$headers['If-Modified-Since'] = date('r', $modified);
+		}
+		
+		$response = wp_safe_remote_get( $url, array('timeout' => 300, 'stream' => true, 'filename' => $tmpfname, 'headers' => $headers ) );
+		$http_response_code = wp_remote_retrieve_response_code( $response );
+		if (304 === $http_response_code) {
+			return new \WP_Error( 'http_304', __('It has not changed since last update.', 'geoip-detect') );
+		}
+		if (is_wp_error( $response ) || 200 !=  $http_response_code) {
 			unlink($tmpfname);
 			$body = wp_remote_retrieve_body($response);
-			return new \WP_Error( 'http_404', wp_remote_retrieve_response_code( $response ) . ': ' . trim( wp_remote_retrieve_response_message( $response ) ) . ' ' . $body );
+			return new \WP_Error( 'http_404', $http_response_code . ': ' . trim( wp_remote_retrieve_response_message( $response ) ) . ' ' . $body );
 		}
 		
 		return $tmpfname;
@@ -113,13 +123,14 @@ HTML;
 	{	
 		require_once(ABSPATH.'/wp-admin/includes/file.php');
 		
-		$download_url = 'http://geolite.maxmind.com/ddownload/geoip/database/GeoLite2-City.tar.gz';
+		$download_url = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz';
 		//$download_url = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz';
 		$download_url = apply_filters('geoip_detect2_download_url', $download_url);
 	
 		$outFile = $this->maxmindGetUploadFilename();
+		$modified = @filemtime($outFile);
 		// Download
-		$tmpFile = $this->download_url($download_url);
+		$tmpFile = $this->download_url($download_url, $modified);
  
 		if (is_wp_error($tmpFile)) {
 			return $tmpFile->get_error_message();
