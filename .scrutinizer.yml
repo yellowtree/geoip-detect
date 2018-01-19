@@ -1,8 +1,17 @@
 checks:
     php: true
 
+build:
+    nodes:
+        analysis:
+            project_setup:
+                override: true
+            tests:
+                override: [php-scrutinizer-run]
+
 filter:
     excluded_paths:
         - tests/*
-        - vendor/*
-        - lib/*
+        - lib/
+    dependency_paths:
+        - "vendor/"
