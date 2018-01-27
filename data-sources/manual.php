@@ -108,7 +108,7 @@ HTML;
 				$reader = new \GeoIp2\Database\Reader ( $data_file, $locales );
 			} catch ( \Exception $e ) {
 				if (WP_DEBUG)
-					echo printf(__('Error while creating reader for "%s": %s', 'geoip-detect'), $filename, $e->getMessage ());
+					echo printf(__('Error while creating reader for "%s": %s', 'geoip-detect'), $data_file, $e->getMessage());
 			}
 		}
 		

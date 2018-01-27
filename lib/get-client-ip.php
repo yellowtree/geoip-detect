@@ -22,6 +22,24 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 namespace YellowTree\GeoipDetect\Lib;
 
 class GetClientIp {
+	protected $proxyWhitelist = [];
+	
+	public function __construct() {
+		$this->proxyWhitelist[] = '';
+		$this->proxyWhitelist[] = '::1';
+		$this->proxyWhitelist[] = '127.0.0.1';
+		
+		$this->addProxyWhitelisteFromOption();
+	}
+	
+	protected function addProxyWhitelisteFromOption() {
+		// TODO: Expose option to UI. comma-seperated list of IPv4 and v6 adresses.			
+		$trusted_proxies = explode(',', get_option('geoip-detect-trusted_proxy_ips'));
+		$trusted_proxies = array_map('geoip_detect_normalize_ip', $trusted_proxies);
+		
+		$this->proxyWhitelist = array_merge($trusted_proxies, $this->proxyWhitelist);
+	}
+	
 	public function getIp() {
 		_geoip_maybe_disable_pagecache();
 
@@ -38,18 +56,9 @@ class GetClientIp {
 			$ip_list = explode(',', @$_SERVER["HTTP_X_FORWARDED_FOR"]);
 			$ip_list = array_map('geoip_detect_normalize_ip', $ip_list);
 
-			// TODO: Expose option to UI. comma-seperated list of IPv4 and v6 adresses.			
-			$trusted_proxies = explode(',', get_option('geoip-detect-trusted_proxy_ips'));
-
-			// Always trust localhost
-			$trusted_proxies[] = '';
-			$trusted_proxies[] = '::1';
-			$trusted_proxies[] = '127.0.0.1';
-
-			$trusted_proxies = array_map('geoip_detect_normalize_ip', $trusted_proxies);
 			$ip_list[] = $ip;
 
-			$ip_list = array_diff($ip_list, $trusted_proxies);
+			$ip_list = array_diff($ip_list, $this->proxyWhitelist);
 		}	
 		// Fallback IP
 		array_unshift($ip_list, '::1');

@@ -21,7 +21,13 @@ ini_set('error_reporting', ini_get('error_reporting') | E_USER_NOTICE);
 
 
 define('GEOIP_DETECT_TEST_DB_FILENAME', __DIR__ . '/' . GEOIP_DETECT_DATA_FILENAME);
+if (!file_exists(GEOIP_DETECT_TEST_DB_FILENAME))
+	die('Error: Maxmind City Test file is missing.');
+
 define('GEOIP_DETECT_TEST_COUNTRY_DB_FILENAME', __DIR__ . '/GeoLite2-Country.mmdb');
+if (!file_exists(GEOIP_DETECT_TEST_DB_FILENAME))
+	die('Error: Maxmind Country Test file is missing.');
+
 define('GEOIP_DETECT_TEST_IP', '88.64.140.3');
 define('GEOIP_DETECT_TEST_IP_V_6', '2a00:1450:4001:801::101f');
 define('GEOIP_DETECT_EXTERNAL_IP', '88.64.140.3');
