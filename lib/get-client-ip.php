@@ -28,19 +28,14 @@ class GetClientIp {
 		$this->proxyWhitelist[] = '';
 		$this->proxyWhitelist[] = '::1';
 		$this->proxyWhitelist[] = '127.0.0.1';
-		
-		$this->addProxyWhitelisteFromOption();
 	}
 	
-	protected function addProxyWhitelisteFromOption() {
-		// TODO: Expose option to UI. comma-seperated list of IPv4 and v6 adresses.			
-		$trusted_proxies = explode(',', get_option('geoip-detect-trusted_proxy_ips'));
+	public function addProxiesToWhitelist($trusted_proxies) {
 		$trusted_proxies = array_map('geoip_detect_normalize_ip', $trusted_proxies);
-		
 		$this->proxyWhitelist = array_merge($trusted_proxies, $this->proxyWhitelist);
 	}
 	
-	public function getIp() {
+	public function getIp($useReverseProxy = false) {
 		_geoip_maybe_disable_pagecache();
 
 		$ip = '';
@@ -51,7 +46,7 @@ class GetClientIp {
 		// REMOTE_ADDR may contain multiple adresses? https://wordpress.org/support/topic/php-fatal-error-uncaught-exception-invalidargumentexception?replies=2#post-8128737
 		$ip_list = explode(',', $ip);
 
-		if (get_option('geoip-detect-has_reverse_proxy', 0) && isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
+		if ($useReverseProxy)
 		{
 			$ip_list = explode(',', @$_SERVER["HTTP_X_FORWARDED_FOR"]);
 			$ip_list = array_map('geoip_detect_normalize_ip', $ip_list);

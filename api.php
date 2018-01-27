@@ -179,8 +179,13 @@ function geoip_detect2_get_client_ip() {
 	static $helper = null;
 	if (is_null($helper)) {
 		$helper = new GetClientIp();
+		
+		// TODO: Expose option to UI. comma-seperated list of IPv4 and v6 adresses.
+		$trusted_proxies = explode(',', get_option('geoip-detect-trusted_proxy_ips'));
+		$helper->addProxiesToWhitelist($trusted_proxies);
 	}
-	return $helper->getIp();
+	$useReverseProxy = get_option('geoip-detect-has_reverse_proxy', 0) && isset($_SERVER["HTTP_X_FORWARDED_FOR"]);
+	return $helper->getIp( $useReverseProxy );
 }
 
 /**

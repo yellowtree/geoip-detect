@@ -108,7 +108,7 @@ HTML;
 				$reader = new \GeoIp2\Database\Reader ( $data_file, $locales );
 			} catch ( \Exception $e ) {
 				if (WP_DEBUG)
-					echo printf(__('Error while creating reader for "%s": %s', 'geoip-detect'), $data_file, $e->getMessage());
+					printf(__('Error while creating reader for "%s": %s', 'geoip-detect'), $data_file, $e->getMessage());
 			}
 		}
 		
@@ -154,8 +154,7 @@ HTML;
 			$metadata = $reader->metadata();
 			$reader->close();
 		} catch ( \Exception $e ) {
-			if (WP_DEBUG)
-				echo printf(__('Error while creating reader for "%s": %s', 'geoip-detect'), $filename, $e->getMessage ());
+			// Not readable, so do not accept this filename
 			return '';
 		}
 	
