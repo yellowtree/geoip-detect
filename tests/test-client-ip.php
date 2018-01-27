@@ -3,13 +3,14 @@
 class GetClientIpTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	protected $trusted;
+	protected $useProxy = 0;
 	
 	function test_set_trusted_proxies() {
 		return $this->trusted;
 	}
 	
 	function option_use_proxy() {
-		return 1;
+		return $this->useProxy;
 	}
 	
 	
@@ -17,7 +18,7 @@ class GetClientIpTest extends WP_UnitTestCase_GeoIP_Detect {
 		parent::setUp();
 		add_filter('pre_option_geoip-detect-has_reverse_proxy', array($this, 'option_use_proxy'), 101);
 		add_filter('pre_option_geoip-detect-trusted_proxy_ips', array($this, 'test_set_trusted_proxies'), 101);
-		$this->trusted = [];
+		$this->trusted = '';
 	}
 	public function tearDown() {
 		parent::tearDown();
@@ -25,25 +26,47 @@ class GetClientIpTest extends WP_UnitTestCase_GeoIP_Detect {
 		remove_filter('pre_option_geoip-detect-trusted_proxy_ips', array($this, 'test_set_trusted_proxies'), 101);
 		unset($_SERVER['REMOTE_ADDR']);
 		unset($_SERVER['HTTP_X_FORWARDED_FOR']);
+		$this->useProxy = 0;
 	}
 	
 	/**
 	 * @dataProvider dataReverseProxy
 	 */
-	public function testReverseProxy($expectedIp, $RemoteAddr, $ForwardedFor, $Whitelist) {
+	public function testReverseProxy($expectedIp, $RemoteAddr, $ForwardedFor, $Whitelist, $name = '') {
 		$_SERVER['REMOTE_ADDR'] = $RemoteAddr;
 		$_SERVER['HTTP_X_FORWARDED_FOR'] = $ForwardedFor;
+		$this->useProxy = 1;
 		$this->trusted = $Whitelist;
-		$this->assertSame($expectedIp, geoip_detect2_get_client_ip());
+		$this->assertSame($expectedIp, geoip_detect2_get_client_ip(), "Failing test $name:");
 	}
 	
 	public function dataReverseProxy() {
 		return array(
-			array('1.2.3.4', '1.2.3.4', '', ''),
-			array('1.2.3.4', '9.9.9.9,1.2.3.4', '', ''), // REMOTE_ADDR with , @see https://wordpress.org/support/topic/php-fatal-error-uncaught-exception-invalidargumentexception/?replies=2#post-8128737
-			array('1.2.3.4', '9.9.9.9', '1.2.3.4', ''),
-			array('1.2.3.4', '9.9.9.9', '10.10.10.10, 1.2.3.4', ''),
-			array('1.2.3.4', '9.9.9.9', '10.10.10.10, 1.2.3.4, 11.11.11.11', '11.11.11.11'),
+			array('1.2.3.4', '9.9.9.9', '1.2.3.4', '9.9.9.9', '1 proxy'),
+			array('1.2.3.4', '9.9.9.9', '1.2.3.4, 14.14.14.14', '14.14.14.14, 9.9.9.9', '2 proxies'),
+			array('1.2.3.4', '9.9.9.9', '1.2.3.4', '', '1 proxy without whitelist (backwards compat)'),
+			array('1.2.3.4', '1.2.3.4, 9.9.9.9', '', '9.9.9.9', 'REMOTE_ADDR with ,'), // @see https://wordpress.org/support/topic/php-fatal-error-uncaught-exception-invalidargumentexception/?replies=2#post-8128737
+			array('1.2.3.4', '9.9.9.9', '10.10.10.10, 1.2.3.4', '', 'Missing whitelist'),
+			array('1.2.3.4', '9.9.9.9', '10.10.10.10, 1.2.3.4, 11.11.11.11', '9.9.9.9, 11.11.11.11', 'Part whitelist'),
+			array('1.2.3.4', '9.9.9.9', '10.10.10.10, 1.2.3.4, 11.11.11.11, ::1, 127.0.0.1', '9.9.9.9, 11.11.11.11', 'Localhost'), 
+		);
+	}
+	
+	/**
+	 * @dataProvider dataSimpleIp
+	 */ 
+	public function testSimpleIp($expectedIp, $RemoteAddr, $name) {
+		$_SERVER['REMOTE_ADDR'] = $RemoteAddr;
+		$this->useProxy = 0;
+		$this->assertSame($expectedIp, geoip_detect2_get_client_ip(), "Failing test $name:");
+	}
+	
+	public function dataSimpleIp() {
+		return array(
+			array('1.2.3.4', '1.2.3.4', 'simple'),
+			array('1.2.3.4', '9.9.9.9,1.2.3.4', 'REMOTE_ADDR with ,'), // @see https://wordpress.org/support/topic/php-fatal-error-uncaught-exception-invalidargumentexception/?replies=2#post-8128737
+			array('::1', '', 'empty'),
+			array('::1', 'asdfasdf', 'wrong'),
 		);
 	}
 }

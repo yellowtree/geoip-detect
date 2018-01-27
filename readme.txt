@@ -97,6 +97,10 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 
 == Upgrade Notice == 
 
+= 2.9.0 =
+
+There have been changes to the reverse proxy logic. If you have enabled a reverse proxy, check if the detected IP is correct.
+
 = 2.8.2 =
 
 This plugin version is compatible with PHP 7.2 and adapted the automatic update code.
@@ -177,7 +181,8 @@ Fixing automatic weekly updates.
 == Changelog ==
 
 = 2.9.0 =
-* NEW: Wizard to get the right email adress (in order to simplify reverse proxy configuration).
+* NEW: Wizard to get the right ip adress (in order to simplify reverse proxy configuration).
+* The reverse proxy logic was heavily changed. If you run into configuration errors, try the wizard.
 
 = 2.8.2 =
 * Maxmind vendor code was updated to the current version (2.7.0).

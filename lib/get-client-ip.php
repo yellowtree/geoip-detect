@@ -23,6 +23,7 @@ namespace YellowTree\GeoipDetect\Lib;
 
 class GetClientIp {
 	protected $proxyWhitelist = [];
+	protected $useProxyWhitelist = false;
 	
 	public function __construct() {
 		$this->proxyWhitelist[] = '';
@@ -31,42 +32,53 @@ class GetClientIp {
 	}
 	
 	public function addProxiesToWhitelist($trusted_proxies) {
-		$trusted_proxies = array_map('geoip_detect_normalize_ip', $trusted_proxies);
-		$this->proxyWhitelist = array_merge($trusted_proxies, $this->proxyWhitelist);
+		foreach ($trusted_proxies as $proxy) {
+			$proxy = geoip_detect_normalize_ip($proxy);
+			if ($proxy) {
+				$this->proxyWhitelist[] = $proxy;
+				$this->useProxyWhitelist = true;
+			}
+		}
+	}
+	
+	protected function getIpsFromRemoteAddr() {
+		if (!isset($_SERVER['REMOTE_ADDR']))
+			return ['::1'];
+
+		// REMOTE_ADDR may contain multiple adresses
+		$ip_list = explode(',', $_SERVER['REMOTE_ADDR']);
+		
+		return $ip_list;
+	}
+	
+	protected function getIpsFromForwardedFor($currentIpList) {
+		$ip_list_reverse = explode(',', @$_SERVER["HTTP_X_FORWARDED_FOR"]);
+
+		if ($this->useProxyWhitelist) {
+			// Add the REMOTE_ADDR to the available IP pool
+			$ip_list_reverse = array_merge($ip_list_reverse, $currentIpList);
+			$ip_list_reverse = array_map('geoip_detect_normalize_ip', $ip_list_reverse);
+			$ip_list_reverse = array_diff($ip_list_reverse, $this->proxyWhitelist);
+		}
+		
+		return $ip_list_reverse;
 	}
 	
 	public function getIp($useReverseProxy = false) {
-		_geoip_maybe_disable_pagecache();
-
-		$ip = '';
-
-		if (isset($_SERVER['REMOTE_ADDR']))
-			$ip = $_SERVER['REMOTE_ADDR'];
-
-		// REMOTE_ADDR may contain multiple adresses? https://wordpress.org/support/topic/php-fatal-error-uncaught-exception-invalidargumentexception?replies=2#post-8128737
-		$ip_list = explode(',', $ip);
+		$ip_list = $this->getIpsFromRemoteAddr();
 
 		if ($useReverseProxy)
 		{
-			$ip_list = explode(',', @$_SERVER["HTTP_X_FORWARDED_FOR"]);
-			$ip_list = array_map('geoip_detect_normalize_ip', $ip_list);
-
-			$ip_list[] = $ip;
-
-			$ip_list = array_diff($ip_list, $this->proxyWhitelist);
+			$ip_list = $this->getIpsFromForwardedFor($ip_list);
 		}	
-		// Fallback IP
-		array_unshift($ip_list, '::1');
-
+		
 		// Each Proxy server append their information at the end, so the last IP is most trustworthy.
 		$ip = end($ip_list);
 		$ip = geoip_detect_normalize_ip($ip);
 
-		if (!$ip)
+		if (!geoip_detect_is_ip($ip))
 			$ip = '::1'; // By default, use localhost
 
-		// @deprecated: this filter was added by mistake
-		$ip = apply_filters('geoip2_detect2_client_ip', $ip, $ip_list);
 		// this is the correct one!
 		$ip = apply_filters('geoip_detect2_client_ip', $ip, $ip_list);
 

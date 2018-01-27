@@ -176,15 +176,17 @@ function geoip_detect2_get_current_source_description($source = null) {
  * @since 2.0.0
  */
 function geoip_detect2_get_client_ip() {
+	_geoip_maybe_disable_pagecache();
+	
 	static $helper = null;
-	if (is_null($helper)) {
+	if (is_null($helper) || defined('GEOIP_DETECT_DOING_UNIT_TESTS')) {
 		$helper = new GetClientIp();
 		
 		// TODO: Expose option to UI. comma-seperated list of IPv4 and v6 adresses.
 		$trusted_proxies = explode(',', get_option('geoip-detect-trusted_proxy_ips'));
 		$helper->addProxiesToWhitelist($trusted_proxies);
 	}
-	$useReverseProxy = get_option('geoip-detect-has_reverse_proxy', 0) && isset($_SERVER["HTTP_X_FORWARDED_FOR"]);
+	$useReverseProxy = get_option('geoip-detect-has_reverse_proxy', 0);
 	return $helper->getIp( $useReverseProxy );
 }
 

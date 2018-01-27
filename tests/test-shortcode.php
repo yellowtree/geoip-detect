@@ -113,7 +113,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 
     public function testShortcodeCF7UserInfo() {
-        add_filter('geoip2_detect2_client_ip', array($this, 'filter_set_test_ip'), 101);
+        add_filter('geoip_detect2_client_ip', array($this, 'filter_set_test_ip'), 101);
 
         $this->assertEquals('', geoip_detect2_shortcode_user_info_wpcf7('', 'asdfsadf', false));
 
