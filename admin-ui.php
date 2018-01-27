@@ -82,6 +82,12 @@ function geoip_detect_lookup_page()
 function geoip_detect_option_page() {
 	if (!is_admin() || !current_user_can('manage_options'))
 		return;
+	
+	switch (@$_GET['geoip_detect_part']) {
+		case 'client-ip':
+			return geoip_detect_option_client_ip_page();
+			break;
+	}
 		
 	$registry = DataSourceRegistry::getInstance();
 	$sources = $registry->getAllSources();
@@ -161,4 +167,8 @@ function geoip_detect_option_page() {
 	$ipv6_supported = GEOIP_DETECT_IPV6_SUPPORTED;
 	
 	include_once(GEOIP_PLUGIN_DIR . '/views/options.php');
+}
+
+function geoip_detect_option_client_ip_page() {
+	include_once(GEOIP_PLUGIN_DIR . '/views/client-ip.php');
 }

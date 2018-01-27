@@ -9,9 +9,37 @@
 	<p class="legal_notices">
 		<?php _e('This product includes GeoLite2 data created by MaxMind, available from <a href="http://www.maxmind.com/">http://www.maxmind.com</a>.', 'geoip-detect'); ?>
 	</p>
+
 <style>
 .legal_notices {
 	font-size: 80%;
 	font-style: italic;
+}
+.geoip_detect_error {
+	display:block;
+	clear: both;
+    background-color: rgb(255, 255, 255);
+    border-left: rgb(255, 0, 0) solid 4px;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    font-size: 14px;
+    line-height: 19px;
+    margin-bottom: 0;
+    margin-left: 2px;
+    margin-right: 20px;
+    margin-top: 25px;
+    padding-bottom: 11px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 11px;
+    text-align: left;
+}
+.detail-box {
+	display: block;
+	margin-left: 50px;
+	color: #777;
+}
+.geoip-detect-wrap select {
+	max-width: 100%;
 }
 </style>

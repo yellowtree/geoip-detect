@@ -17,7 +17,9 @@ if ($shortcode_options) {
 ?>
 <div class="wrap geoip-detect-wrap">
 	<h1><?php _e('GeoIP Detection', 'geoip-detect');?></h1>
-	<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>"><?php _e('Options', 'geoip-detect');?></a>
+	<p>
+		<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>"><?php _e('Options', 'geoip-detect');?></a>
+	</p>
 	
 	<p>
 		<?php printf(__('<b>Selected data source:</b> %s', 'geoip-detect'), geoip_detect2_get_current_source_description() ); ?>
@@ -29,19 +31,9 @@ if ($shortcode_options) {
 		<br />
 	</p>
 	
-	<h2>Current IP:</h2>
 	<p>
-		Detected client IP: <?php echo geoip_detect2_get_client_ip(); ?><br>
-		External Server IP: <?php echo geoip_detect2_get_external_ip_adress(); ?>
-	</p>
-	<p>
-		REMOTE_ADDR: <?php echo $_SERVER['REMOTE_ADDR']; ?><br>
-		<?php if(!empty($_SERVER["HTTP_X_FORWARDED_FOR"])): ?>
-		HTTP_X_FORWARDED_FOR: <?php echo $_SERVER["HTTP_X_FORWARDED_FOR"]; ?><br>
-		<?php if (!get_option('geoip-detect-has_reverse_proxy')): ?>
-		<i>(Probably you should enable the reverse proxy option.)</i>
-		<?php endif; ?>
-		<?php endif; ?>
+		<b><?php _e('Current IP:', 'geoip-detect');?></b> <?php echo geoip_detect2_get_client_ip(); ?>
+		<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_part=client-ip">(<?php _e('Not correct?', 'geoip-detect');?>)</a>
 	</p>
 		
 	<h2><?php _e('Test IP Detection Lookup ', 'geoip-detect');?></h2>
@@ -144,27 +136,4 @@ if ($shortcode_options) {
 		<?php printf(__('See %s for more documentation.', 'geoip-detect'), '<a href="http://dev.maxmind.com/geoip/geoip2/web-services/" target="_blank">http://dev.maxmind.com/geoip/geoip2/web-services/</a>');?>
 	</p>
 	<?php require(GEOIP_PLUGIN_DIR . '/views/footer.php'); ?>
-</div>	
-<style>
-.geoip-detect-wrap select {
-	max-width: 100%;
-}
-
-.geoip_detect_error {
-    background-color: rgb(255, 255, 255);
-    border-left: rgb(255, 0, 0) solid 4px;
-    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
-    display: inline-block;
-    font-size: 14px;
-    line-height: 19px;
-    margin-bottom: 0;
-    margin-left: 2px;
-    margin-right: 20px;
-    margin-top: 25px;
-    padding-bottom: 11px;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 11px;
-    text-align: left;
-}
-</style>
+</div>

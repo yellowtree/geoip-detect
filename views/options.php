@@ -66,6 +66,7 @@ $options = $currentSource->getParameterHTML();
 		
 		<p>
 			<label><input type="checkbox" name="options[has_reverse_proxy]" value="1" <?php if (!empty($wp_options['has_reverse_proxy'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('The server is behind a reverse proxy', 'geoip-detect')?></label>
+			<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_part=client-ip">(<?php _e('Set client IP settings', 'geoip-detect');?>)</a>
 			<span class="detail-box">
 			<?php if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) : ?>
 			<?php printf(__('(With Proxy: %s - Without Proxy: %s - Client IP with current configuration: %s)', 'geoip-detect'), $_SERVER['HTTP_X_FORWARDED_FOR'], $_SERVER['REMOTE_ADDR'], geoip_detect2_get_client_ip()); ?><br />
@@ -73,6 +74,7 @@ $options = $currentSource->getParameterHTML();
 			<?php echo __("(This doesn't seem to be the case.)", 'geoip-detect'); ?>
 			<?php endif; ?>
 			</span>
+			
 		</p>
 		<p>
 			<label><?php _e('External IP of this server:', 'geoip-detect'); ?> <input type="text" name="options[external_ip]" value="<?php echo esc_attr($wp_options['external_ip']); ?>" placeholder="<?php _e('detect automatically', 'geoip-detect'); ?>" /></label>
@@ -98,30 +100,3 @@ $options = $currentSource->getParameterHTML();
 	<?php endif; ?>
 	<?php require(GEOIP_PLUGIN_DIR . '/views/footer.php'); ?>
 </div>
-<style>
-.geoip_detect_error {
-	display:block;
-	clear: both;
-    background-color: rgb(255, 255, 255);
-    border-left: rgb(255, 0, 0) solid 4px;
-    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
-    display: inline-block;
-    font-size: 14px;
-    line-height: 19px;
-    margin-bottom: 0;
-    margin-left: 2px;
-    margin-right: 20px;
-    margin-top: 25px;
-    padding-bottom: 11px;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 11px;
-    text-align: left;
-}
-.detail-box {
-	display: block;
-	margin-left: 50px;
-	color: #777;
-}
-
-</style>
