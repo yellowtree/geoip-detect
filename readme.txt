@@ -176,6 +176,9 @@ Fixing automatic weekly updates.
 
 == Changelog ==
 
+= 2.9.0 =
+* NEW: Wizard to get the right email adress (in order to simplify reverse proxy configuration).
+
 = 2.8.2 =
 * Maxmind vendor code was updated to the current version (2.7.0).
 * FIX: There was a fatal error when using PHP 7.2 (thx jj-dev)

@@ -19,6 +19,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
+use YellowTree\GeoipDetect\Lib\GetClientIp;
 
 /**
  * Get Geo-Information for a specific IP
@@ -175,50 +176,11 @@ function geoip_detect2_get_current_source_description($source = null) {
  * @since 2.0.0
  */
 function geoip_detect2_get_client_ip() {
-	_geoip_maybe_disable_pagecache();
-	
-	$ip = '';
-	
-	if (isset($_SERVER['REMOTE_ADDR']))
-		$ip = $_SERVER['REMOTE_ADDR'];
-	
-	// REMOTE_ADDR may contain multiple adresses? https://wordpress.org/support/topic/php-fatal-error-uncaught-exception-invalidargumentexception?replies=2#post-8128737
-	$ip_list = explode(',', $ip);
-	
-	if (get_option('geoip-detect-has_reverse_proxy', 0) && isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
-	{
-		$ip_list = explode(',', @$_SERVER["HTTP_X_FORWARDED_FOR"]);
-		$ip_list = array_map('geoip_detect_normalize_ip', $ip_list);
-		
-		// TODO: Expose option to UI. comma-seperated list of IPv4 and v6 adresses.			
-		$trusted_proxies = explode(',', get_option('geoip-detect-trusted_proxy_ips'));
-
-		// Always trust localhost
-		$trusted_proxies[] = '';
-		$trusted_proxies[] = '::1';
-		$trusted_proxies[] = '127.0.0.1';
-
-		$trusted_proxies = array_map('geoip_detect_normalize_ip', $trusted_proxies);
-		$ip_list[] = $ip;
-
-		$ip_list = array_diff($ip_list, $trusted_proxies);
-	}	
-	// Fallback IP
-	array_unshift($ip_list, '::1');
-	
-	// Each Proxy server append their information at the end, so the last IP is most trustworthy.
-	$ip = end($ip_list);
-	$ip = geoip_detect_normalize_ip($ip);
-
-	if (!$ip)
-		$ip = '::1'; // By default, use localhost
-	
-	// @deprecated: this filter was added by mistake
-	$ip = apply_filters('geoip2_detect2_client_ip', $ip, $ip_list);
-	// this is the correct one!
-	$ip = apply_filters('geoip_detect2_client_ip', $ip, $ip_list);
-	
-	return $ip;
+	static $helper = null;
+	if (is_null($helper)) {
+		$helper = new GetClientIp();
+	}
+	return $helper->getIp();
 }
 
 /**
