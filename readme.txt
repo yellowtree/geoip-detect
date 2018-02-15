@@ -18,8 +18,8 @@ as a shortcode, or via CSS body classes. The city & country names are translated
 
 = Features: =
 
-* Provides these 5 functions (see [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation)): 
-  * `geoip_detect2_get_info_from_ip($ip, $locales = array('en'), $options = array())`: Lookup Geo-Information of the specified IP 
+* Provides these 5 functions (see [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation)):
+  * `geoip_detect2_get_info_from_ip($ip, $locales = array('en'), $options = array())`: Lookup Geo-Information of the specified IP
   * `geoip_detect2_get_info_from_current_ip($locales = array('en'), $options = array())`: Lookup Geo-Information of the current website user
   * `geoip_detect2_get_current_source_description(...)`: Return a human-readable label of the currently chosen source.
   * `geoip_detect2_get_external_ip_adress()`: Fetch the internet adress of the webserver
@@ -95,7 +95,7 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 1. Lookup page (under Tools > GeoIP Lookup)
 2. Options page (under Preferences > GeoIP Detection)
 
-== Upgrade Notice == 
+== Upgrade Notice ==
 
 = 2.9.0 =
 
@@ -145,13 +145,13 @@ Maxmind Precision API support is here ... Try it out, I would tag it "experiment
 
 The plugin was down for licensing issues.
 All users must now opt in to use the database because it is licensed CC BY-SA.
-Otherwise, the Web-API of HostIP.info is used. 
+Otherwise, the Web-API of HostIP.info is used.
 
 = 2.3.0 =
 
 The plugin was down for licensing issues.
 All users must now opt in to use the database because it is licensed CC BY-SA.
-Otherwise, the Web-API of HostIP.info is used. 
+Otherwise, the Web-API of HostIP.info is used.
 
 = 2.1.1 =
 
@@ -161,7 +161,7 @@ See Migration Guide at https://github.com/yellowtree/wp-geoip-detect/wiki/How-to
 
 = 2.0.1 =
 
-This major update uses the new Maxmind API (v2). 
+This major update uses the new Maxmind API (v2).
 At least PHP 5.3.1 is required now.
 See Migration Guide at https://github.com/yellowtree/wp-geoip-detect/wiki/How-to-migrate-from-v1-to-v2
 
@@ -183,6 +183,8 @@ Fixing automatic weekly updates.
 = 2.9.0 =
 * NEW: Wizard to get the right ip adress (in order to simplify reverse proxy configuration).
 * The reverse proxy logic was heavily changed. If you run into configuration errors, try the wizard.
+* NEW: The CSS classes that are added to the body-tag (if enabled in the options) now also include the most specific subdivisino (province).
+* Maxmind vendor code was updated to the current version (2.8.0).
 
 = 2.8.2 =
 * Maxmind vendor code was updated to the current version (2.7.0).
@@ -254,7 +256,7 @@ Fixing automatic weekly updates.
 * FIX: Page caching is only disabled on upgrade when `set_css_country` is disabled.
 
 = 2.5.0 =
-* CHANGE: The parameter $skipCache is now $options['skipCache']. Using $skipCache is deprecated, but still works. 
+* CHANGE: The parameter $skipCache is now $options['skipCache']. Using $skipCache is deprecated, but still works.
 * NEW: $options['timeout'] for Web-API lookups can now be specified.
 * FIX: Hostip.info did not set traits->ipAddress
 * FIX: Hostip.info does not include data for IPv6. Add a lookup error message.
@@ -264,15 +266,15 @@ Fixing automatic weekly updates.
 = 2.4.3 =
 * FIX: Options Page: The checkboxes didn't show (even though the option was saved) since 2.4.0
 * NEW: A fixed external IP can now be specified on the options page. (Useful in development scenarios without internet, or mixed internet/intranet cases. You can also use this to speed up things on the production server if you know the IP will not change.)
-* NEW: Hidden feature/side-effect: Clicking on save in the General Options section also empties the external IP cache. 
+* NEW: Hidden feature/side-effect: Clicking on save in the General Options section also empties the external IP cache.
 
-= 2.4.2 = 
+= 2.4.2 =
 * FIX: Trim whitespace of IP adress.
 * FIX: some PHP notices.
-* FIX: The Installation message "No database installed" failed to install the Maxmind database since 2.4.0 
+* FIX: The Installation message "No database installed" failed to install the Maxmind database since 2.4.0
 * NEW: Show IPv6-not-supported notice.
 * FIX: Add empty fallback functions in case the plugin requirements are not met. (To avoid fatal errors.)
- 
+
 = 2.4.1 =
 * FIX: Revert IPv6 check. (Sorry for this. I thought PHP compiled without IPv6 would be esoteric.)
 
@@ -351,7 +353,7 @@ Other changes:
 * FIX: Manual install works again (was broken since 1.2)
 
 = 1.2 =
-* FIX: property region_name is now filled again (was broken since 1.1) 
+* FIX: property region_name is now filled again (was broken since 1.1)
 
 = 1.1 =
 * Add function `geoip_detect_get_external_ip_adress()`: Ask a webservice to tell me the external IP of the webserver.
