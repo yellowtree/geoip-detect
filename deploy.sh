@@ -60,6 +60,7 @@ cd $GITPATH
 
 echo "Generate README.md from readme.txt"
 bin/readme.sh "$SVNURL"
+bin/changelog.sh
 
 echo -e "Enter a commit message for this new version: \c"
 read COMMITMSG
