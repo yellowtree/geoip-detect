@@ -5,14 +5,14 @@ function shortcode_empty_reader() {
 }
 
 class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
-	
+
 	function setUp() {
 		parent::setUp();
 		add_filter('geoip_detect_get_external_ip_adress', array($this, 'filter_set_test_ip'), 101);
 		$this->assertEquals(GEOIP_DETECT_TEST_IP, geoip_detect_get_external_ip_adress());
 		setlocale(LC_NUMERIC, 'C'); // Set locale to always use . as decimal point
 	}
-	
+
 	function tearDown() {
 		parent::tearDown();
 		remove_filter('geoip_detect_get_external_ip_adress', array($this, 'filter_set_test_ip'), 101);
@@ -21,32 +21,36 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		remove_filter('geoip2_detect_sources_not_cachable', array($this, 'filter_empty_array'), 101);
 		remove_filter('geoip_detect2_shortcode_country_select_countries', array($this, 'shortcodeFilter'), 101);
 	}
-	
+
 	function testShortcodeOneProperty() {
 		$string = do_shortcode('[geoip_detect2 property="country"]');
 		$this->assertNotEmpty($string, '[geoip_detect2 property="country"]', "The Geoip Detect shortcode did not generate any output");
 		$this->assertNotEquals($string, '[geoip_detect2 property="country"]', "The Geoip Detect shortcode does not seem to be called");
 		$this->assertNotContains('<!--', $string, "Geoip Detect shortcode threw an error: " . $string);
 	}
-	
+
 	function testShortcodeProperties() {
 		$this->assertEquals('Hesse', do_shortcode('[geoip_detect2 property="mostSpecificSubdivision"]'));
 		$this->assertEquals('HE', do_shortcode('[geoip_detect2 property="mostSpecificSubdivision.isoCode"]'));
 		$this->assertEquals(GEOIP_DETECT_TEST_IP, do_shortcode('[geoip_detect2 property="traits.ipAddress"]'));
 		$this->assertEquals('Eschborn', do_shortcode('[geoip_detect2 property="city"]'));
-		$this->assertEquals('Europe/Berlin', do_shortcode('[geoip_detect2 property="location.timeZone"]'));		
-		$this->assertEquals('Europe', do_shortcode('[geoip_detect2 property="continent"]'));		
-		$this->assertEquals('EU', do_shortcode('[geoip_detect2 property="continent.code"]'));		
+		$this->assertEquals('Europe/Berlin', do_shortcode('[geoip_detect2 property="location.timeZone"]'));
+		$this->assertEquals('Europe', do_shortcode('[geoip_detect2 property="continent"]'));
+		$this->assertEquals('EU', do_shortcode('[geoip_detect2 property="continent.code"]'));
+	}
+	function testSubdivisionProperties() {
+		$this->assertEquals('HE', do_shortcode('[geoip_detect2 property="subdivisions.0.isoCode"]'));
+		$this->assertEquals('Hesse', do_shortcode('[geoip_detect2 property="subdivisions.0"]'));		
 	}
 	function testNonStringProperties() {
 		$this->assertEquals('2929134', do_shortcode('[geoip_detect2 property="city.geonameId"]'));
 		$this->assertEquals('50.1333', do_shortcode('[geoip_detect2 property="location.latitude"]'));
 	}
-	
+
 	function testShortcodeOnePropertyOutput() {
 		$this->assertEquals('Germany', do_shortcode('[geoip_detect2 property="country"]'));
 	}
-	
+
 	function testShortcodeTwoPropertiesOutput() {
 		$this->assertEquals('Germany', do_shortcode('[geoip_detect2 property="country.name"]'));
 		$this->assertEquals('DE', do_shortcode('[geoip_detect2 property="country.isoCode"]'));
@@ -56,18 +60,18 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertEquals('Deutschland', do_shortcode('[geoip_detect2 property="country" lang="zz,de"]'));
 		$this->assertEquals('Deutschland', do_shortcode('[geoip_detect2 property="country" lang=" zz, de "]'));
 	}
-	
+
 	function testManualIp() {
 		$this->assertEquals('US', do_shortcode('[geoip_detect2 property="country.isoCode" ip="8.8.8.8"]'));
 	}
-	
-	function testDefaultValue() {	
+
+	function testDefaultValue() {
 		$this->assertEquals('default value', do_shortcode('[geoip_detect2 property="country.confidence" default="default value"]'));
 	}
-	
+
 	function testInvalidShortcode() {
 		$this->assertContains('sub-property missing', do_shortcode('[geoip_detect2 property="location"]'));
-		
+
 		$string = do_shortcode('[geoip_detect2 property="INVALID"]');
 		$this->assertContains('<!--', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"INVALID\"] threw no error in spite of invalid property name: " . $string);
 		$string = do_shortcode('[geoip_detect2 property="city.INVALID"]');
@@ -79,36 +83,36 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$string = do_shortcode('[geoip_detect2 property="INVALID" default="here"]');
 		$this->assertContains('here', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"INVALID\" default=\"here\"]does not contain default value: " . $string);
 	}
-	
+
 	function testEmptyData() {
 		// Force fallback to empty database. We want to test the case that no information is found.
 		// This can be the case, for example when a development machine has no internet access and thus cannot get any external IP.
 		add_filter('geoip_detect2_reader', 'shortcode_empty_reader', 101);
-		
+
 		$string = do_shortcode('[geoip_detect2 property="city" default="default"]');
 		$this->assertContains('No information found', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"city\"] should inform when no information accessible to this IP: " . $string);
 		$this->assertContains('default', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"city\"] should use default: " . $string);
 	}
-	
+
 	function filter_empty_array() {
 		return array();
 	}
-	
+
 	function testSkipCache() {
-		// enable caching 
+		// enable caching
 		add_filter('geoip2_detect_sources_not_cachable', array($this, 'filter_empty_array'), 101);
-		
+
 		// Make sure this is in the cache
 		do_shortcode('[geoip_detect2 property="extra.cached"]');
-		
+
 		$cached_time = do_shortcode('[geoip_detect2 property="extra.cached"]');
 		$this->assertNotEmpty($cached_time, 'Cache property cannot be read');
 		$this->assertNotEquals('0', $cached_time, 'Normally, this request should be cached.');
-		
+
 		$this->assertEquals('', do_shortcode('[geoip_detect2 property="extra.cached" skip_cache="true"]'), 'skip_cache parameter ignored?');
 		$this->assertEquals('', do_shortcode('[geoip_detect2 property="extra.cached" skip_cache="TRUE"]'), 'skip_cache parameter ignored?');
 		$this->assertEquals('', do_shortcode('[geoip_detect2 property="extra.cached" skip_cache="1"]'), 'skip_cache parameter ignored?');
-		
+
 		$this->assertEquals('default', do_shortcode('[geoip_detect2 property="extra.cached" skip_cache="true" default="default"]', 'default value does not work together with skip_cache'));
 	}
 
@@ -125,7 +129,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
         $this->assertContains('City: Eschborn' , $userInfo);
 		$this->assertContains('Data from: GeoLite2 City database' , $userInfo);
     }
-	
+
 	public function testShortcodeCountrySelect() {
 		$html = do_shortcode('[geoip_detect2_countries include_blank="false"]');
 		$this->assertNotContains('---', $html, 'Should not contain blank');
@@ -133,20 +137,20 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertContains('name="geoip-countries"', $html);
 		$this->assertContains('Germany', $html);
 		$this->assertContains('"selected">Germany', $html);
-		
+
 		$html = geoip_detect2_shortcode_country_select(array('include_blank' => false));
 		$this->assertNotContains('---', $html, 'Should not contain blank');
-		
+
 		$html = do_shortcode('[geoip_detect2_countries include_blank="true"]');
 		$this->assertContains('---', $html, 'Should contain blank but didn\'t');
 
 		$html = do_shortcode('[geoip_detect2_countries selected="US"]');
 		$this->assertContains('"selected">United', $html);
 	}
-	
+
 	public function testShortcodeCountryFilter() {
 		add_filter('geoip_detect2_shortcode_country_select_countries', array($this, 'shortcodeFilter'), 101, 2);
-		
+
 		$html = do_shortcode('[geoip_detect2_countries selected="aa"]');
 		$this->assertNotContains('Germany', $html);
 		$this->assertNotContains('<option>----', $html);

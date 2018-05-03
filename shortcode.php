@@ -19,43 +19,43 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 /**
- * @deprecated 
+ * @deprecated
  */
 function geoip_detect_shortcode($attr)
 {
 	$userInfo = geoip_detect_get_info_from_current_ip();
 
-	$defaultValue = isset($attr['default']) ? $attr['default'] : ''; 
-	
+	$defaultValue = isset($attr['default']) ? $attr['default'] : '';
+
 	if (!is_object($userInfo))
 		return $defaultValue . '<!-- GeoIP Detect: No info found for this IP. -->';
 
 	$propertyName = $attr['property'];
-	
-	
+
+
 	if (property_exists($userInfo, $propertyName)) {
 		if ($userInfo->$propertyName)
 			return $userInfo->$propertyName;
 		else
 			return $defaultValue;
 	}
-	
+
 	return $defaultValue . '<!-- GeoIP Detect: Invalid property name. -->';
 }
 add_shortcode('geoip_detect', 'geoip_detect_shortcode');
 
 /**
  * Short Code
- * 
+ *
  * Examples:
  * `[geoip_detect2 property="country"]` -> Germany
  * `[geoip_detect2 property="country.isoCode"]` -> DE
  * `[geoip_detect2 property="country.isoCode" ip="8.8.8.8"]` -> US
- * 
+ *
  * `[geoip_detect2 property="country" lang="de"]` -> Deutschland
  * `[geoip_detect2 property="country" lang="fr,de"]` -> Allemagne
  * `[geoip_detect2 property="country.confidence" default="default value"]` -> default value
- * 
+ *
  * @param string $property		Property to read. Instead of '->', use '.'
  * @param string $lang			Language(s) (optional. If not set, current site language is used.)
  * @param string $default 		Default Value that will be shown if value not set (optional)
@@ -66,23 +66,23 @@ add_shortcode('geoip_detect', 'geoip_detect_shortcode');
 function geoip_detect2_shortcode($attr)
 {
 	$skipCache = isset($attr['skip_cache']) && (strtolower($attr['skip_cache']) == 'true' || $attr['skip_cache'] == '1');
-	
+
 	$locales = isset($attr['lang']) ? $attr['lang'] . ',en' : null;
 	$locales = apply_filters('geoip_detect2_locales', $locales);
 
-	$defaultValue = isset($attr['default']) ? $attr['default'] : ''; 
-	
+	$defaultValue = isset($attr['default']) ? $attr['default'] : '';
+
 	$properties = explode('.', $attr['property']);
-	
+
 	$options = array('skipCache' => $skipCache);
-	
+
 	$ip = isset($attr['ip']) ? $attr['ip'] : geoip_detect2_get_client_ip();
-	
+
 	$userInfo = geoip_detect2_get_info_from_ip($ip, $locales, $options);
 
 	if ($userInfo->isEmpty)
-		return $defaultValue . '<!-- GeoIP Detect: No information found for this IP (' . geoip_detect2_get_client_ip() . ') -->';	
-	
+		return $defaultValue . '<!-- GeoIP Detect: No information found for this IP (' . geoip_detect2_get_client_ip() . ') -->';
+
 	$return = '';
 	try {
 		if (count($properties) == 1) {
@@ -92,6 +92,19 @@ function geoip_detect2_shortcode($attr)
 			if (!is_object($return))
 				throw new \RuntimeException('Invalid property name.');
 			$return = $return->{$properties[1]};
+		} else if ($properties[0] == 'subdivisions' (count($properties) == 2 || count($properties) == 3)) {
+			$return = $userInfo->{$properties[0]};
+			if (!is_object($return))
+				throw new \RuntimeException('Invalid property name.');
+			if (!is_numeric($properties[1]))
+				throw new \RuntimeException('Invalid property name (must be numeric, e.g. "subdivisions.0").');
+			$return = $return[(int) $properties[1]];
+
+			if (isset($properties[2])) {
+				if (!is_object($return))
+					throw new \RuntimeException('Invalid property name.');
+				$return = $return->{$properties[2]};
+			}
 		} else {
 			throw new \RuntimeException('Only 1 dot supported. Please send a bug report to show me the shortcode you used if you need it ...');
 		}
@@ -101,30 +114,30 @@ function geoip_detect2_shortcode($attr)
 
 	if (is_object($return) && $return instanceof \GeoIp2\Record\AbstractPlaceRecord)
 		$return = $return->name;
-	
+
 	if (is_object($return) || is_array($return)) {
 		return $defaultValue . '<!-- GeoIP Detect: Invalid property name (sub-property missing). -->';
 	}
-	
+
 	if ($return)
 		return (string) $return;
 	else
 		return $defaultValue;
-	
+
 }
 add_shortcode('geoip_detect2', 'geoip_detect2_shortcode');
 
 function geoip_detect2_shortcode_client_ip($attr) {
 	$client_ip = geoip_detect2_get_client_ip();
 	geoip_detect_normalize_ip($client_ip);
-	
+
 	return $client_ip;
 }
 add_shortcode('geoip_detect2_get_client_ip', 'geoip_detect2_shortcode_client_ip');
 
 function geoip_detect2_shortcode_get_external_ip_adress($attr) {
 	$external_ip = geoip_detect2_get_external_ip_adress();
-	
+
 	return $external_ip;
 }
 add_shortcode('geoip_detect2_get_external_ip_adress', 'geoip_detect2_shortcode_get_external_ip_adress');
@@ -138,23 +151,23 @@ add_shortcode('geoip_detect2_get_current_source_description', 'geoip_detect2_sho
 
 /**
  * Create a <select>-Input element with all countries.
- * 
+ *
  * Examples:
  * `[geoip_detect2_countries_select name="mycountry" lang="fr"]`
  * A list of all country names in French, the visitor's country is preselected.
- * 
+ *
  * `[geoip_detect2_countries_select id="id" class="class" name="mycountry" lang="fr"]`
  * As above, with CSS id "#id" and class ".class"
- * 
+ *
  * `[geoip_detect2_countries_select name="mycountry" include_blank="true"]`
  * Country names are in the current site language. User can also choose '---' for no country at all.
- * 
+ *
  * `[geoip_detect2_countries_select name="mycountry" selected="US"]`
  * "United States" is preselected, there is no visitor IP detection going on here
- * 
+ *
  * `[geoip_detect2_countries_select name="mycountry" default="US"]`
  * Visitor's country is preselected, but in case the country is unknown, use "United States"
- * 
+ *
  * @param string $name Name of the form element
  * @param string $id CSS Id of element
  * @param string $class CSS Class of element
@@ -162,7 +175,7 @@ add_shortcode('geoip_detect2_get_current_source_description', 'geoip_detect2_sho
  * @param string $selected Which country to select by default (2-letter ISO code.) (optional. If not set, the country will be detected by client ip.)
  * @param string $default 		Default Value that will be used if country cannot be detected (optional)
  * @param string $include_blank If this value contains 'true', a empty value will be prepended ('---', i.e. no country) (optional)
- *                                                                                                             
+ *
  * @return string The generated HTML
  */
 function geoip_detect2_shortcode_country_select($attr) {
@@ -177,7 +190,7 @@ function geoip_detect2_shortcode_country_select($attr) {
 		if (isset($attr['default']))
 			$selected = $attr['default'];
 	}
-	
+
 	$locales = !empty($attr['lang']) ? $attr['lang'] : null;
 	$locales = apply_filters('geoip_detect2_locales', $locales);
 
@@ -201,7 +214,7 @@ function geoip_detect2_shortcode_country_select($attr) {
 	 * Filter: geoip_detect2_shortcode_country_select_countries
 	 * Change the list of countries that should show up in the select box.
 	 * You can add, remove, reorder countries at will.
-	 * If you want to add a blank value (for seperators or so), use a key name that starts with 'blank_' 
+	 * If you want to add a blank value (for seperators or so), use a key name that starts with 'blank_'
 	 * and then something at will in case you need several of them.
 	 *
 	 * @param array $countries	List of localized country names
@@ -209,22 +222,22 @@ function geoip_detect2_shortcode_country_select($attr) {
 	 * @return array
 	 */
 	$countries = apply_filters('geoip_detect2_shortcode_country_select_countries', $countries, $attr);
-	
+
 	$html = '<select ' . $select_attrs_html . '>';
-	if (!empty($attr['include_blank']) && $attr['include_blank'] !== 'false') 
+	if (!empty($attr['include_blank']) && $attr['include_blank'] !== 'false')
 		$html .= '<option value="">---</option>';
 	foreach ($countries as $code => $label) {
 		if (substr($code, 0, 6) == 'blank_')
 		{
-			$html .= '<option value="">' . esc_html($label) . '</option>';	
+			$html .= '<option value="">' . esc_html($label) . '</option>';
 		}
 		else
 		{
-			$html .= '<option' . ($code == $selected ? ' selected="selected"' : '') . '>' . esc_html($label) . '</option>';	
+			$html .= '<option' . ($code == $selected ? ' selected="selected"' : '') . '>' . esc_html($label) . '</option>';
 		}
 	}
 	$html .= '</select>';
-	
+
 	return $html;
 }
 add_shortcode('geoip_detect2_countries_select', 'geoip_detect2_shortcode_country_select');
@@ -233,32 +246,32 @@ add_shortcode('geoip_detect2_countries', 'geoip_detect2_shortcode_country_select
 /**
  *
  * Examples:
- * 
+ *
  * `[geoip_detect2_countries mycountry id:id class:class lang:fr]`
  * A list of all country names in French (with CSS id "#id" and class ".class"), the visitor's country is preselected.
- * 
+ *
  * `[geoip_detect2_countries mycountry include_blank]`
  * Country names are in the current site language. User can also choose '---' for no country at all.
- * 
+ *
  * `[geoip_detect2_countries mycountry "US"]`
  * "United States" is preselected, there is no visitor IP detection going on here
- * 
+ *
  * `[geoip_detect2_countries mycountry default:US]`
  * Visitor's country is preselected, but in case the country is unknown, use "United States"
  *
  */
 function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 	$tag = new WPCF7_FormTag( $tag );
-	
+
 	$default = (string) reset( $tag->values );
 	$default = $tag->get_default_option($default, array('multiple' => false));
 	$default = wpcf7_get_hangover( $tag->name, $default ); // Get from $_POST if available
-	
+
 	$class = wpcf7_form_controls_class( $tag->type );
 	$validation_error = wpcf7_get_validation_error( $tag->name );
 	if ($validation_error)
 		$class .= ' wpcf7-not-valid';
-	
+
 	$attr = array(
 		'name' => $tag->name,
 		'include_blank' => $tag->has_option( 'include_blank' ),
@@ -271,22 +284,22 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 		'default' => $tag->get_option('default', '', true),
 	);
 	$html = geoip_detect2_shortcode_country_select($attr);
-	
+
 	$html = sprintf(
 		'<span class="wpcf7-form-control-wrap %1$s">%2$s %3$s</span>',
 		sanitize_html_class( $tag->name ), $html, $validation_error );
-	
+
 	return $html;
 }
 
 add_action( 'wpcf7_init', 'geoip_detect2_add_shortcodes' );
 function geoip_detect2_add_shortcodes() {
 	if (function_exists('wpcf7_add_form_tag')) {
-		// >=CF 4.6 
+		// >=CF 4.6
 		wpcf7_add_form_tag(array('geoip_detect2_countries', 'geoip_detect2_countries*'), 'geoip_detect2_shortcode_country_select_wpcf7', true);
 	} else if (function_exists('wpcf7_add_shortcode')) {
 		// < CF 4.6
-		wpcf7_add_shortcode(array('geoip_detect2_countries', 'geoip_detect2_countries*'), 'geoip_detect2_shortcode_country_select_wpcf7', true);		
+		wpcf7_add_shortcode(array('geoip_detect2_countries', 'geoip_detect2_countries*'), 'geoip_detect2_shortcode_country_select_wpcf7', true);
 	}
 }
 
