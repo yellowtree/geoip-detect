@@ -87,14 +87,9 @@ function geoip_detect2_shortcode($attr)
 	try {
 		if (count($properties) == 1) {
 			$return = $userInfo->{$properties[0]};
-		} else if (count($properties) == 2) {
-			$return = $userInfo->{$properties[0]};
-			if (!is_object($return))
-				throw new \RuntimeException('Invalid property name.');
-			$return = $return->{$properties[1]};
 		} else if ($properties[0] == 'subdivisions' && (count($properties) == 2 || count($properties) == 3)) {
 			$return = $userInfo->{$properties[0]};
-			if (!is_object($return))
+			if (!is_array($return))
 				throw new \RuntimeException('Invalid property name.');
 			if (!is_numeric($properties[1]))
 				throw new \RuntimeException('Invalid property name (must be numeric, e.g. "subdivisions.0").');
@@ -105,6 +100,11 @@ function geoip_detect2_shortcode($attr)
 					throw new \RuntimeException('Invalid property name.');
 				$return = $return->{$properties[2]};
 			}
+		} else if (count($properties) == 2) {
+			$return = $userInfo->{$properties[0]};
+			if (!is_object($return))
+			throw new \RuntimeException('Invalid property name.');
+			$return = $return->{$properties[1]};
 		} else {
 			throw new \RuntimeException('Only 1 dot supported. Please send a bug report to show me the shortcode you used if you need it ...');
 		}

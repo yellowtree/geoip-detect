@@ -40,7 +40,9 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	function testSubdivisionProperties() {
 		$this->assertEquals('HE', do_shortcode('[geoip_detect2 property="subdivisions.0.isoCode"]'));
-		$this->assertEquals('Hesse', do_shortcode('[geoip_detect2 property="subdivisions.0"]'));		
+		$this->assertEquals('Hesse', do_shortcode('[geoip_detect2 property="subdivisions.0"]'));
+		$this->assertContains('<!--',do_shortcode('[geoip_detect2 property="subdivisions.1"]'));
+		$this->assertContains('<!--',do_shortcode('[geoip_detect2 property="subdivisions.wrong"]'));
 	}
 	function testNonStringProperties() {
 		$this->assertEquals('2929134', do_shortcode('[geoip_detect2 property="city.geonameId"]'));
