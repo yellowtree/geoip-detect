@@ -92,7 +92,7 @@ function geoip_detect2_shortcode($attr)
 			if (!is_object($return))
 				throw new \RuntimeException('Invalid property name.');
 			$return = $return->{$properties[1]};
-		} else if ($properties[0] == 'subdivisions' (count($properties) == 2 || count($properties) == 3)) {
+		} else if ($properties[0] == 'subdivisions' && (count($properties) == 2 || count($properties) == 3)) {
 			$return = $userInfo->{$properties[0]};
 			if (!is_object($return))
 				throw new \RuntimeException('Invalid property name.');
