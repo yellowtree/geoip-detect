@@ -1,11 +1,5 @@
 == Old Changelog ==
 
-= 2.9.0 =
-* NEW: Wizard to get the right ip adress (in order to simplify reverse proxy configuration).
-* The reverse proxy logic was heavily changed. If you run into configuration errors, try the wizard.
-* NEW: The CSS classes that are added to the body-tag (if enabled in the options) now also include the most specific subdivisino (province).
-* Maxmind vendor code was updated to the current version (2.8.0).
-
 = 2.8.2 =
 * Maxmind vendor code was updated to the current version (2.7.0).
 * FIX: There was a fatal error when using PHP 7.2 (thx jj-dev)
