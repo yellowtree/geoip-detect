@@ -71,6 +71,7 @@ function geoip_detect2_shortcode($attr)
 	$locales = apply_filters('geoip_detect2_locales', $locales);
 
 	$defaultValue = isset($attr['default']) ? $attr['default'] : '';
+	$defaultValue = esc_html($defaultValue);
 
 	$properties = explode('.', $attr['property']);
 

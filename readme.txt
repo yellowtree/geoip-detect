@@ -108,6 +108,7 @@ There have been changes to the reverse proxy logic. If you have enabled a revers
 * The reverse proxy logic was heavily changed. If you run into configuration errors, try the wizard.
 * NEW: The CSS classes that are added to the body-tag (if enabled in the options) now also include the most specific subdivisino (province).
 * NEW: Shortcodes now support multiple subdivisions (`[geoip_detect2 property="subdivisions.0.isoCode"]`)
+* FIX: Escape any HTML inside the shortcode attribute `[geoip_detect2 default="..."]`
 * Maxmind vendor code was updated to the current version (2.8.0).
 
 [Older changelog](https://github.com/yellowtree/wp-geoip-detect/blob/master/CHANGELOG.md)
