@@ -30,7 +30,7 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
  */
 
 function _geoip_detect2_process_options($options) {
-	
+
 	// For backwards compat 2.4.0-2.5.0
 	if (is_bool($options)) {
 		_doing_it_wrong('GeoIP Detection Plugin: geoip_detect2_get_info_from_ip()', '$skipCache has been renamed to $options. Instead of TRUE, now use "array(\'skipCache\' => TRUE)".', '2.5.0');
@@ -38,14 +38,14 @@ function _geoip_detect2_process_options($options) {
 		$options = array();
 		$options['skipCache'] = $value;
 	}
-    
+
 	// Check if source exists
 	if (isset($options['source'])) {
 		$registry = DataSourceRegistry::getInstance();
 		if (!$registry->sourceExists($options['source']))
 			unset($options['source']);
 	}
-    
+
 	/**
 	 * Filter: geoip_detect2_options
 	 * You can programmatically change the defaults etc.
@@ -53,14 +53,14 @@ function _geoip_detect2_process_options($options) {
 	 * @param array $options The options array
 	 */
 	$options = apply_filters('geoip_detect2_options', $options);
-	
-	
+
+
 	$defaultOptions = array(
 		'skipCache' => false,
 		'source' => get_option('geoip-detect-source', DataSourceRegistry::DEFAULT_SOURCE),
 	);
 	$options = $options + $defaultOptions;
-	
+
 	return $options;
 }
 
@@ -84,14 +84,14 @@ function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &
 		 */
 		$locales = apply_filters ( 'geoip_detect2_locales', $locales );
 	}
-	
+
 	$reader = null;
 	$source = DataSourceRegistry::getInstance()->getSource($options['source']);
 	if ($source) {
 		$reader = $source->getReader($locales, $options);
 		$sourceId = $source->getId();
 	}
-	
+
 	/**
 	 * Filter: geoip_detect2_reader
 	 * You can customize your reader here.
@@ -123,9 +123,9 @@ function _geoip_detect2_get_data_from_cache($ip, $source) {
 	if (!$ip_s) {
 		return null;
 	}
-		
+
 	$data = get_transient('geoip_detect_c_' . $source . '_' . $ip_s);
-	
+
 	return $data;
 }
 
@@ -134,16 +134,20 @@ function _geoip_detect2_add_data_to_cache($data, $ip) {
 	if (!DataSourceRegistry::getInstance()->isSourceCachable($source)) {
 		return null;
 	}
-	
+	if (GEOIP_DETECT_READER_CACHE_TIME === 0) {
+		// Caching is disabled
+		return null;
+	}
+
 	$data['extra']['cached'] = time();
 	unset($data['maxmind']['queries_remaining']);
-	
+
 	$ip_s = _ip_to_s($ip);
 	// Do not cache invalid IPs
 	if (!$ip_s) {
 		return;
 	}
-	
+
 	// Do not cache error lookups (they might be temporary)
 	if (!empty($data['extra']['error'])) {
 		return;
@@ -154,9 +158,9 @@ function _geoip_detect2_add_data_to_cache($data, $ip) {
 
 function _geoip_detect2_get_record_from_reader($reader, $ip, &$error) {
 	$record = null;
-	
+
 	$ip = trim($ip);
-	
+
 	if ($reader) {
 		// When plugin installed on development boxes:
 		// If the client IP is not a public IP, use the public IP of the server instead.
@@ -164,7 +168,7 @@ function _geoip_detect2_get_record_from_reader($reader, $ip, &$error) {
 		if ($ip == 'me' || (geoip_detect_is_ip($ip) && !geoip_detect_is_public_ip($ip))) {
 			$ip = geoip_detect2_get_external_ip_adress();
 		}
-	
+
 		try {
 			try {
 				$record = $reader->city($ip);
@@ -174,12 +178,12 @@ function _geoip_detect2_get_record_from_reader($reader, $ip, &$error) {
 		} catch(\Exception $e) {
 			$error = 'Lookup Error: ' . $e->getMessage();
 		}
-	
+
 		$reader->close();
 	} else {
 		$error = 'No reader was found. Check if the configuration is complete and correct.';
 	}
-	
+
 	return $record;
 }
 
@@ -209,7 +213,7 @@ function _geoip_detect2_record_enrich_data($record, $ip, $sourceId, $error) {
 /**
  * GeoIPv2 doesn't always include a timezone when v1 did.
  * Region ids have changed, so countries with several time zones are out of luck.
- * 
+ *
  * @param array $record
  */
 function _geoip_detect2_try_to_fix_timezone($data) {
@@ -234,7 +238,7 @@ function _geoip_detect2_add_geonames_data($data) {
 	static $countryInfo = null;
 	if (is_null($countryInfo))
 		$countryInfo = new \YellowTree\GeoipDetect\Geonames\CountryInformation;
-	
+
 	if (!empty($data['country']['iso_code'])) {
 		$geonamesData = $countryInfo->getInformationAboutCountry($data['country']['iso_code']);
 		$data = array_replace_recursive($geonamesData, $data);
@@ -253,7 +257,7 @@ function geoip_detect_normalize_ip($ip) {
 	$binary = @inet_pton($ip);
 	if (empty($binary))
 		return $ip; // Probably an IPv6 adress & IPv6 is not supported. Or not a valid IP.
-	
+
 	$ip = inet_ntop($binary);
 	return $ip;
 }
@@ -261,16 +265,16 @@ function geoip_detect_normalize_ip($ip) {
 function geoip_detect_is_ip_equal($ip1, $ip2) {
 	$one = @inet_pton($ip1);
 	$two = @inet_pton($ip2);
-	
+
 	return !empty($one) && $one == $two;
 }
 
 function geoip_detect_is_ip($ip, $noIpv6 = false) {
 	$flags = FILTER_FLAG_IPV4;
-	
+
 	if (GEOIP_DETECT_IPV6_SUPPORTED && !$noIpv6)
 		$flags = $flags | FILTER_FLAG_IPV6;
-	
+
 	return filter_var($ip, FILTER_VALIDATE_IP, $flags) !== false;
 }
 
@@ -299,12 +303,12 @@ function geoip_detect_is_public_ip($ip) {
 	$flags = FILTER_FLAG_IPV4  // IP can be v4 or v6
 		| FILTER_FLAG_NO_PRIV_RANGE // It may not be in the RFC private range
 		|  FILTER_FLAG_NO_RES_RANGE; // It may not be in the RFC reserved range
-	
+
 	if (GEOIP_DETECT_IPV6_SUPPORTED)
 		$flags = $flags | FILTER_FLAG_IPV6;
-	
+
 	$is_public = filter_var($ip, FILTER_VALIDATE_IP, $flags) !== false;
-	
+
 	return $is_public;
 }
 
@@ -312,7 +316,7 @@ function geoip_detect_is_public_ip($ip) {
  * Sometimes we can only see an local IP adress (local development environment.)
  * In this case we need to ask an internet server which IP adress our internet connection has.
  * (This function is not cached. Some providers may throttle our requests, that's why caching is enabled by default.)
- * 
+ *
  * @return string The detected IPv4 Adress. If none is found, '0.0.0.0' is returned instead.
  */
 function _geoip_detect_get_external_ip_adress_without_cache()
@@ -325,7 +329,7 @@ function _geoip_detect_get_external_ip_adress_without_cache()
 		'http://bot.whatismyipaddress.com',
 //		'http://ip.appspot.com', // overloaded, 503 Out of Quota
 	);
-	
+
 	// Randomizing to avoid querying the same service each time
 	shuffle($ipservices);
 	$ipservices = apply_filters('geiop_detect_ipservices', $ipservices);
@@ -342,7 +346,7 @@ function _geoip_detect_get_external_ip_adress_without_cache()
 		} else if (isset($ret['response']['code']) && $ret['response']['code'] != 200) {
 			if (WP_DEBUG || defined('WP_TESTS_TITLE')) {
 				trigger_error('_geoip_detect_get_external_ip_adress_without_cache(): HTTP error (' . $url . '): Returned code ' . $ret['response']['code'], E_USER_NOTICE);
-			}			
+			}
 		} else {
 			if (isset($ret['body'])) {
 				$ip = trim($ret['body']);
@@ -394,20 +398,20 @@ function geoip_detect_get_relative_path($from, $to)
 function _geoip_maybe_disable_pagecache() {
 	if (!get_option('geoip-detect-disable_pagecache'))
 		return false;
-	
+
 	// WP Super Cache, W3 Total Cache
 	if (!defined('DONOTCACHEPAGE'))
 		define('DONOTCACHEPAGE', true);
-	
+
 	if (!defined('DONOTCACHEOBJECT'))
 		define('DONOTCACHEOBJECT', true);
-	
+
 	if (!defined('DONOTCACHEDB'))
 		define('DONOTCACHEDB', true);
-	
+
 	if (!headers_sent() && !is_user_logged_in()) {
 		header('Cache-Control: private, proxy-revalidate, s-maxage=0');
 	}
-	
+
 	return true;
 }
