@@ -330,3 +330,110 @@ function geoip_detect_shortcode_user_info($attr) {
     return geoip_detect2_shortcode_user_info_wpcf7('', 'geoip_detect2_user_info', true);
 }
 add_shortcode('geoip_detect2_user_info', 'geoip_detect_shortcode_user_info');
+
+/**
+ *
+ * Content Hiding
+ * 
+ * Uses an enclosing shortcode (i.e. [shortcode]Content[/shortcode]). Shortcode attributes can be as follows:
+ * "timezone", "continent", "country", "region"/"state", "city", and "and-not".
+ * 
+ * Each attribute may only appear once in a shortcode, and each attribute can only contain a single value, or
+ * the shortcode will break, showing the contents no matter what.
+ *
+ * Examples:
+ *
+ * `[geoip_detect2_hide_unless country="US" state="TX"]<h1>Title</h1>[/geoip_detect2_hide_unless]`
+ * 	    - OR -
+ * `[geoip_detect2_hide_unless country="US" region="TX"]<h1>Title</h1>[/geoip_detect2_hide_unless]`
+ * 	    - OR -
+ * `[geoip_detect2_hide_unless country="US" region="Texas"]<h1>Title</h1>[/geoip_detect2_hide_unless]`
+ * Only displays the inner content if the specified attributes match the visitor's country and region/state.
+ * 
+ * `[geoip_detect2_hide_unless country="US" state="TX" and-not="Houston"]<h1>Title</h1>[/geoip_detect2_hide_unless]`
+ * Only displays the inner content if the specified attributes match the visitor's country and region/state,
+ * and the specified exclusion is not found in any possible GeoIP Detect field (e.g. visitor's country,
+ * city, timezone, etc.).
+ * 
+ * `[geoip_detect2_hide_unless contenant="North America"]<h1>Title</h1>[/geoip_detect2_hide_unless]`
+ * Only displays the inner content if the specified attributes match the visitor's contenant.
+ * 
+ */
+function geoip_detect2_shortcode_hide_unless($atts, $content = null) {
+    $atts_array = shortcode_atts(array(
+        'timezone' => null,
+        'continent' => null,
+        'country' => null,
+        'region' => null,
+        'state' => null,
+        'city' => null,
+        'and-not' => null),
+        $atts);
+
+    $info = geoip_detect2_get_info_from_current_ip();
+    $criteria_test_flag = true;       // If set to false, nothing will display
+    
+    /* Attribute Conditions */
+    // Timezone
+    if ($atts_array['timezone'] != null) {
+        if ($info->location->timeZone && $atts_array['timezone'] != $info->location->timeZone) {
+            $criteria_test_flag = false;
+        }
+    }
+
+    // Continent
+    if ($atts_array['continent'] != null) {
+        if ($info->continent->code && $atts_array['continent'] != $info->continent->code) {
+            $criteria_test_flag = false;
+        }
+    }
+
+    // Country
+    if ($atts_array['country'] != null) {
+        if ($info->country->name && $atts_array['country'] != $info->country->name
+            && $info->country->isoCode && $atts_array['country'] != $info->country->isoCode) {
+            $criteria_test_flag = false;
+        }
+    }
+
+    // Region/State
+    if ($atts_array['region'] != null) {
+        if ($info->mostSpecificSubdivision->name && $atts_array['region'] != $info->mostSpecificSubdivision->name
+        && $info->mostSpecificSubdivision->isoCode && $atts_array['region'] != $info->mostSpecificSubdivision->isoCode) {
+            $criteria_test_flag = false;
+        }
+    }
+    if ($atts_array['state'] != null) {
+        if ($info->mostSpecificSubdivision->name && $atts_array['state'] != $info->mostSpecificSubdivision->name
+            && $info->mostSpecificSubdivision->isoCode && $atts_array['state'] != $info->mostSpecificSubdivision->isoCode) {
+            $criteria_test_flag = false;
+        }
+    }
+
+    // City
+    if ($atts_array['city'] != null) {
+        if ($info->city->name && $atts_array['city'] != $info->city->name) {
+            $criteria_test_flag = false;
+        }
+    }
+
+    // And Not (Exclusion)
+    if ($atts_array['and-not'] != null) {
+        if ($info->location->timeZone && $atts_array['and-not'] == $info->location->timeZone
+        || $info->continent->code && $atts_array['and-not'] == $info->continent->code
+        || $info->country->name && $atts_array['and-not'] == $info->country->name
+        || $info->country->isoCode && $atts_array['and-not'] == $info->country->isoCode
+        || $info->mostSpecificSubdivision->name && $atts_array['and-not'] == $info->mostSpecificSubdivision->name
+        || $info->mostSpecificSubdivision->isoCode && $atts_array['and-not'] == $info->mostSpecificSubdivision->isoCode
+        || $info->city->name && $atts_array['and-not'] == $info->city->name) {
+            $criteria_test_flag = false;
+        }
+    }
+
+    // All Criteria Passed?
+    if ($criteria_test_flag == true) {
+        return do_shortcode($content);
+    }
+}
+
+add_shortcode('geoip_detect2_hide_unless', 'geoip_detect2_shortcode_hide_unless');
