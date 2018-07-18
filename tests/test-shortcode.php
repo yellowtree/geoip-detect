@@ -161,6 +161,46 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertContains('A', $html);
 		$this->assertContains('"selected">A', $html);
 	}
+
+	/**
+	 * @dataProvider dataShortcodeShowIf
+	 */
+	public function testShortcodeShowIf($result, $txt) {
+		$return = do_shortcode($txt);
+		$this->assertSame($result, $return);
+	}
+
+	/**
+	 * @dataProvider dataShortcodeShowIf
+	 */
+	public function testShortcodeHideIf($result, $txt) {
+		// Negate the tests
+		$txt = strtr($txt, 'geoip_detect2_show_if', 'geoip_detect2_hide_if');
+		$result = $result ? '' : 'yes';
+
+		$return = do_shortcode($txt);
+		$this->assertSame($result, $return);
+	}
+
+	public function dataShortcodeShowIf() {
+		return array(
+				array('no condition', '[geoip_detect2_show_if]no condition[/geoip_detect2_show_if]' ),
+				array('yes', '[geoip_detect2_show_if country="DE"]yes[/geoip_detect2_show_if]' ),
+				array('yes', '[geoip_detect2_show_if country="Germany"]yes[/geoip_detect2_show_if]' ),
+				array('',    '[geoip_detect2_show_if country="US"]yes[/geoip_detect2_show_if]' ),
+				array('',    '[geoip_detect2_show_if country="DE" city="Munic"]yes[/geoip_detect2_show_if]' ),
+				array('yes', '[geoip_detect2_show_if country="DE" city="Eschborn"]yes[/geoip_detect2_show_if]' ),
+				array('yes', '[geoip_detect2_show_if country="DE" lang="ru" city="Эшборн"]yes[/geoip_detect2_show_if]' ),
+				array('yes', '[geoip_detect2_show_if state="HE"]yes[/geoip_detect2_show_if]' ),
+				array('yes', '[geoip_detect2_show_if region="HE"]yes[/geoip_detect2_show_if]' ),
+				array('yes', '[geoip_detect2_show_if most_specific_subdivision="HE"]yes[/geoip_detect2_show_if]' ),
+				array('',    '[geoip_detect2_show_if state="NN"]yes[/geoip_detect2_show_if]' ),
+				array('yes', '[geoip_detect2_show_if continent="EU"]yes[/geoip_detect2_show_if]' ),
+				array('yes', '[geoip_detect2_show_if timezone="Europe/Berlin"]yes[/geoip_detect2_show_if]' ),
+				array('nested', '[geoip_detect2_show_if country="DE"][geoip_detect2_show_if city="Eschborn"]nested[/geoip_detect2_show_if][/geoip_detect2_show_if]' ),
+		);
+	}
+
 	public function shortcodeFilter($countries, $attr) {
 		return array(
 			'aa' => 'A',
