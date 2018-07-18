@@ -364,6 +364,7 @@ function geoip_detect2_shortcode_show_if($atts, $content = null) {
         'timezone' => null,
         'continent' => null,
         'country' => null,
+        'most_specific_subdivision' => null,
         'region' => null,
         'state' => null,
         'city' => null,
@@ -396,18 +397,21 @@ function geoip_detect2_shortcode_show_if($atts, $content = null) {
         }
     }
 
-    // Region/State
-    if ($atts_array['region'] != null) {
-        if ($info->most_specific_subdivision->name && $atts_array['region'] != $info->most_specific_subdivision->name
-        && $info->most_specific_subdivision->isoCode && $atts_array['region'] != $info->most_specific_subdivision->isoCode) {
-            $criteria_test_flag = false;
-        }
+    // Region/State/Subdivision (these are alias parameter names)
+	$subdivision = null;
+    if ($atts_array['most_specific_subdivision'] != null) {
+    	$subdivision = $atts_array['most_specific_subdivision'];
+    } else if ($atts_array['region'] != null) {
+    	$subdivision = $atts_array['region'];
+    } else if ($atts_array['state'] != null) {
+    	$subdivision = $atts_array['state'];    
     }
-    if ($atts_array['state'] != null) {
-        if ($info->most_specific_subdivision->name && $atts_array['state'] != $info->most_specific_subdivision->name
-            && $info->most_specific_subdivision->isoCode && $atts_array['state'] != $info->most_specific_subdivision->isoCode) {
-            $criteria_test_flag = false;
-        }
+    
+    if ($subdivision) {
+		if ($info->most_specific_subdivision->name && $subdivision != $info->most_specific_subdivision->name
+		&& $info->most_specific_subdivision->isoCode && $subdivision != $info->most_specific_subdivision->isoCode) {
+		    $criteria_test_flag = false;
+		}    
     }
 
     // City
