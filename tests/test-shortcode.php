@@ -175,7 +175,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	 */
 	public function testShortcodeHideIf($result, $txt) {
 		// Negate the tests
-		$txt = strtr($txt, 'geoip_detect2_show_if', 'geoip_detect2_hide_if');
+		$txt = str_replace('geoip_detect2_show_if', 'geoip_detect2_hide_if', $txt);
 		$result = $result ? '' : 'yes';
 
 		$return = do_shortcode($txt);
