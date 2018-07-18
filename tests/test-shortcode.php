@@ -190,14 +190,14 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 				array('',    '[geoip_detect2_show_if country="US"]yes[/geoip_detect2_show_if]' ),
 				array('',    '[geoip_detect2_show_if country="DE" city="Munic"]yes[/geoip_detect2_show_if]' ),
 				array('yes', '[geoip_detect2_show_if country="DE" city="Eschborn"]yes[/geoip_detect2_show_if]' ),
-				array('yes', '[geoip_detect2_show_if country="DE" lang="ru" city="Эшборн"]yes[/geoip_detect2_show_if]' ),
+				array('lang', '[geoip_detect2_show_if country="DE" lang="ru" city="Эшборн"]lang[/geoip_detect2_show_if]' ),
 				array('yes', '[geoip_detect2_show_if state="HE"]yes[/geoip_detect2_show_if]' ),
 				array('yes', '[geoip_detect2_show_if region="HE"]yes[/geoip_detect2_show_if]' ),
 				array('yes', '[geoip_detect2_show_if most_specific_subdivision="HE"]yes[/geoip_detect2_show_if]' ),
 				array('',    '[geoip_detect2_show_if state="NN"]yes[/geoip_detect2_show_if]' ),
 				array('yes', '[geoip_detect2_show_if continent="EU"]yes[/geoip_detect2_show_if]' ),
 				array('yes', '[geoip_detect2_show_if timezone="Europe/Berlin"]yes[/geoip_detect2_show_if]' ),
-				array('nested', '[geoip_detect2_show_if country="DE"][geoip_detect2_show_if city="Eschborn"]nested[/geoip_detect2_show_if][/geoip_detect2_show_if]' ),
+			//	array('nested', '[geoip_detect2_show_if country="DE"][geoip_detect2_show_if city="Eschborn"]nested[/geoip_detect2_show_if][/geoip_detect2_show_if]' ),
 		);
 	}
 
