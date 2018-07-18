@@ -314,8 +314,8 @@ function geoip_detect2_shortcode_user_info_wpcf7($output, $name, $isHtml) {
     $info = geoip_detect2_get_info_from_current_ip();
     if ($info->country->name)
         $lines[] = sprintf(__('Country: %s', 'geoip-detect'), $info->country->name);
-    if ($info->mostSpecificSubdivision->name)
-        $lines[] = sprintf(__('State or region: %s', 'geoip-detect'), $info->mostSpecificSubdivision->name);
+    if ($info->most_specific_subdivision->name)
+        $lines[] = sprintf(__('State or region: %s', 'geoip-detect'), $info->most_specific_subdivision->name);
     if ($info->city->name)
         $lines[] = sprintf(__('City: %s', 'geoip-detect'), $info->city->name);
 	$lines[] = '';
@@ -336,7 +336,7 @@ add_shortcode('geoip_detect2_user_info', 'geoip_detect_shortcode_user_info');
  * Content Hiding
  * 
  * Uses an enclosing shortcode (i.e. [shortcode]Content[/shortcode]). Shortcode attributes can be as follows:
- * "timezone", "continent", "country", "region"/"state", "city", and "and-not".
+ * "timezone", "continent", "country", "region"/"state", "city", and "and_not".
  * 
  * Each attribute may only appear once in a shortcode, and each attribute can only contain a single value, or
  * the shortcode will break, showing the contents no matter what.
@@ -350,16 +350,16 @@ add_shortcode('geoip_detect2_user_info', 'geoip_detect_shortcode_user_info');
  * `[geoip_detect2_hide_unless country="US" region="Texas"]<h1>Title</h1>[/geoip_detect2_hide_unless]`
  * Only displays the inner content if the specified attributes match the visitor's country and region/state.
  * 
- * `[geoip_detect2_hide_unless country="US" state="TX" and-not="Houston"]<h1>Title</h1>[/geoip_detect2_hide_unless]`
+ * `[geoip_detect2_hide_unless country="US" state="TX" and_not="Houston"]<h1>Title</h1>[/geoip_detect2_hide_unless]`
  * Only displays the inner content if the specified attributes match the visitor's country and region/state,
  * and the specified exclusion is not found in any possible GeoIP Detect field (e.g. visitor's country,
  * city, timezone, etc.).
  * 
- * `[geoip_detect2_hide_unless contenant="North America"]<h1>Title</h1>[/geoip_detect2_hide_unless]`
- * Only displays the inner content if the specified attributes match the visitor's contenant.
+ * `[geoip_detect2_hide_unless continent="North America"]<h1>Title</h1>[/geoip_detect2_hide_unless]`
+ * Only displays the inner content if the specified attributes match the visitor's continent.
  * 
  */
-function geoip_detect2_shortcode_hide_unless($atts, $content = null) {
+function geoip_detect2_shortcode_show_if($atts, $content = null) {
     $atts_array = shortcode_atts(array(
         'timezone' => null,
         'continent' => null,
@@ -367,7 +367,7 @@ function geoip_detect2_shortcode_hide_unless($atts, $content = null) {
         'region' => null,
         'state' => null,
         'city' => null,
-        'and-not' => null),
+        'and_not' => null),
         $atts);
 
     $info = geoip_detect2_get_info_from_current_ip();
@@ -398,14 +398,14 @@ function geoip_detect2_shortcode_hide_unless($atts, $content = null) {
 
     // Region/State
     if ($atts_array['region'] != null) {
-        if ($info->mostSpecificSubdivision->name && $atts_array['region'] != $info->mostSpecificSubdivision->name
-        && $info->mostSpecificSubdivision->isoCode && $atts_array['region'] != $info->mostSpecificSubdivision->isoCode) {
+        if ($info->most_specific_subdivision->name && $atts_array['region'] != $info->most_specific_subdivision->name
+        && $info->most_specific_subdivision->isoCode && $atts_array['region'] != $info->most_specific_subdivision->isoCode) {
             $criteria_test_flag = false;
         }
     }
     if ($atts_array['state'] != null) {
-        if ($info->mostSpecificSubdivision->name && $atts_array['state'] != $info->mostSpecificSubdivision->name
-            && $info->mostSpecificSubdivision->isoCode && $atts_array['state'] != $info->mostSpecificSubdivision->isoCode) {
+        if ($info->most_specific_subdivision->name && $atts_array['state'] != $info->most_specific_subdivision->name
+            && $info->most_specific_subdivision->isoCode && $atts_array['state'] != $info->most_specific_subdivision->isoCode) {
             $criteria_test_flag = false;
         }
     }
@@ -418,22 +418,23 @@ function geoip_detect2_shortcode_hide_unless($atts, $content = null) {
     }
 
     // And Not (Exclusion)
-    if ($atts_array['and-not'] != null) {
-        if ($info->location->timeZone && $atts_array['and-not'] == $info->location->timeZone
-        || $info->continent->code && $atts_array['and-not'] == $info->continent->code
-        || $info->country->name && $atts_array['and-not'] == $info->country->name
-        || $info->country->isoCode && $atts_array['and-not'] == $info->country->isoCode
-        || $info->mostSpecificSubdivision->name && $atts_array['and-not'] == $info->mostSpecificSubdivision->name
-        || $info->mostSpecificSubdivision->isoCode && $atts_array['and-not'] == $info->mostSpecificSubdivision->isoCode
-        || $info->city->name && $atts_array['and-not'] == $info->city->name) {
+    if ($atts_array['and_not'] != null) {
+        if ($info->location->timeZone && $atts_array['and_not'] == $info->location->timeZone
+        || $info->continent->code && $atts_array['and_not'] == $info->continent->code
+        || $info->country->name && $atts_array['and_not'] == $info->country->name
+        || $info->country->isoCode && $atts_array['and_not'] == $info->country->isoCode
+        || $info->most_specific_subdivision->name && $atts_array['and_not'] == $info->most_specific_subdivision->name
+        || $info->most_specific_subdivision->isoCode && $atts_array['and_not'] == $info->most_specific_subdivision->isoCode
+        || $info->city->name && $atts_array['and_not'] == $info->city->name) {
             $criteria_test_flag = false;
         }
     }
 
     // All Criteria Passed?
     if ($criteria_test_flag == true) {
-        return do_shortcode($content);
+        if ($content != null)
+            return do_shortcode($content);
     }
 }
 
-add_shortcode('geoip_detect2_hide_unless', 'geoip_detect2_shortcode_hide_unless');
+add_shortcode('geoip_detect2_show_if', 'geoip_detect2_shortcode_show_if');
