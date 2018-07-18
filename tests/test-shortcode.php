@@ -200,7 +200,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 				array('not_country', '[geoip_detect2_show_if not_country="FR"]not_country[/geoip_detect2_show_if]' ),
 				array('', '[geoip_detect2_show_if not_country="DE"]yes[/geoip_detect2_show_if]' ),
 				array('', '[geoip_detect2_show_if continent="EU" not_country="DE"]yes[/geoip_detect2_show_if]' ),
-				array('', '[geoip_detect2_show_if country="US, DE"]yes[/geoip_detect2_show_if]' ),
+				array('yes', '[geoip_detect2_show_if country="US, DE"]yes[/geoip_detect2_show_if]' ),
 		);
 	}
 
