@@ -197,7 +197,10 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 				array('',    '[geoip_detect2_show_if state="NN"]yes[/geoip_detect2_show_if]' ),
 				array('yes', '[geoip_detect2_show_if continent="EU"]yes[/geoip_detect2_show_if]' ),
 				array('yes', '[geoip_detect2_show_if timezone="Europe/Berlin"]yes[/geoip_detect2_show_if]' ),
-			//	array('nested', '[geoip_detect2_show_if country="DE"][geoip_detect2_show_if city="Eschborn"]nested[/geoip_detect2_show_if][/geoip_detect2_show_if]' ),
+				array('not_country', '[geoip_detect2_show_if not_country="FR"]not_country[/geoip_detect2_show_if]' ),
+				array('', '[geoip_detect2_show_if not_country="DE"]yes[/geoip_detect2_show_if]' ),
+				array('', '[geoip_detect2_show_if continent="EU" not_country="DE"]yes[/geoip_detect2_show_if]' ),
+				array('', '[geoip_detect2_show_if country="US, DE"]yes[/geoip_detect2_show_if]' ),
 		);
 	}
 
