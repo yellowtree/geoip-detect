@@ -314,8 +314,8 @@ function geoip_detect2_shortcode_user_info_wpcf7($output, $name, $isHtml) {
     $info = geoip_detect2_get_info_from_current_ip();
     if ($info->country->name)
         $lines[] = sprintf(__('Country: %s', 'geoip-detect'), $info->country->name);
-    if ($info->most_specific_subdivision->name)
-        $lines[] = sprintf(__('State or region: %s', 'geoip-detect'), $info->most_specific_subdivision->name);
+    if ($info->mostSpecificSubdivision->name)
+        $lines[] = sprintf(__('State or region: %s', 'geoip-detect'), $info->mostSpecificSubdivision->name);
     if ($info->city->name)
         $lines[] = sprintf(__('City: %s', 'geoip-detect'), $info->city->name);
 	$lines[] = '';
@@ -408,8 +408,8 @@ function geoip_detect2_shortcode_show_if($atts, $content = null) {
     }
     
     if ($subdivision) {
-		if ($info->most_specific_subdivision->name && $subdivision != $info->most_specific_subdivision->name
-		&& $info->most_specific_subdivision->isoCode && $subdivision != $info->most_specific_subdivision->isoCode) {
+		if ($info->mostSpecificSubdivision->name && $subdivision != $info->mostSpecificSubdivision->name
+		&& $info->mostSpecificSubdivision->isoCode && $subdivision != $info->mostSpecificSubdivision->isoCode) {
 		    $criteria_test_flag = false;
 		}    
     }
@@ -427,8 +427,8 @@ function geoip_detect2_shortcode_show_if($atts, $content = null) {
         || $info->continent->code && $atts_array['and_not'] == $info->continent->code
         || $info->country->name && $atts_array['and_not'] == $info->country->name
         || $info->country->isoCode && $atts_array['and_not'] == $info->country->isoCode
-        || $info->most_specific_subdivision->name && $atts_array['and_not'] == $info->most_specific_subdivision->name
-        || $info->most_specific_subdivision->isoCode && $atts_array['and_not'] == $info->most_specific_subdivision->isoCode
+        || $info->mostSpecificSubdivision->name && $atts_array['and_not'] == $info->mostSpecificSubdivision->name
+        || $info->mostSpecificSubdivision->isoCode && $atts_array['and_not'] == $info->mostSpecificSubdivision->isoCode
         || $info->city->name && $atts_array['and_not'] == $info->city->name) {
             $criteria_test_flag = false;
         }
