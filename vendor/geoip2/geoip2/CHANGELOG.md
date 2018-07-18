@@ -1,10 +1,15 @@
 CHANGELOG
 =========
 
+2.9.0 (2018-04-10)
+------------------
+
+* Refer to account IDs using the terminology "account" rather than "user".
+
 2.8.0 (2018-01-18)
 ------------------
 
-- The `isInEuropeanUnion` property was added to `GeoIp2\Record\Country`
+* The `isInEuropeanUnion` property was added to `GeoIp2\Record\Country`
   and `GeoIp2\Record\RepresentedCountry`. This property is `true` if the
   country is a member state of the European Union.
 
