@@ -370,7 +370,8 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
         'region' => null,
         'state' => null,
         'city' => null,
-        'and_not' => null),
+        'and_not' => null,
+        'not_country' => null),
         $atts);
 
     $info = geoip_detect2_get_info_from_current_ip();
@@ -428,11 +429,17 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
     if ($atts_array['and_not'] != null) {
         if ($info->location->timeZone && $atts_array['and_not'] == $info->location->timeZone
         || $info->continent->code && $atts_array['and_not'] == $info->continent->code
-        || $info->country->name && $atts_array['and_not'] == $info->country->name
-        || $info->country->isoCode && $atts_array['and_not'] == $info->country->isoCode
         || $info->mostSpecificSubdivision->name && $atts_array['and_not'] == $info->mostSpecificSubdivision->name
         || $info->mostSpecificSubdivision->isoCode && $atts_array['and_not'] == $info->mostSpecificSubdivision->isoCode
         || $info->city->name && $atts_array['and_not'] == $info->city->name) {
+            $criteria_test_flag = false;
+        }
+    }
+	
+    // Not Country
+    if ($atts_array['not_country'] != null) {
+        if ($info->country->name && $atts_array['not_country'] == $info->country->name
+        || $info->country->isoCode && $atts_array['not_country'] == $info->country->isoCode) {
             $criteria_test_flag = false;
         }
     }
