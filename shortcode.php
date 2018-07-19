@@ -404,9 +404,10 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
             $temp_attribute_values = explode(',', $atts_array[$shortcodeParamName]);
             array_walk($temp_attribute_values, 'trim');
 
-            if (isset($info->{$maxmindName}->name) && !(in_array($info->{$maxmindName}->name, $temp_attribute_values))
-            && isset($info->{$maxmindName}->name) && !(in_array($info->{$maxmindName}->name, $temp_attribute_values))) {
-                $criteria_test_flag = false;
+            foreach ($actualValues as $actual_attribute_value) {
+                if (!(in_array($actual_attribute_value, $temp_attribute_values))) {
+                    $criteria_test_flag = false;
+                }
             }
 		}
 	}
