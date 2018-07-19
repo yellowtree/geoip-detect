@@ -375,8 +375,8 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
         $atts);
 
     $info = geoip_detect2_get_info_from_current_ip();
-    $criteria_test_flag = true;                     // If set to false, nothing will display
-    $temp_attribute_values = new Array();           // Temporarily stores each value of an attribute (if multiple)
+    $criteria_test_flag = true;            // If set to false, nothing will display
+    $temp_attribute_values = [];           // Temporarily stores each value of an attribute (if multiple)
 
     /* Attribute Conditions */
     // Timezone
