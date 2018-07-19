@@ -1,17 +1,43 @@
 checks:
-    php: true
-
+    php:
+        variable_existence: true
+        switch_fallthrough_commented: true
+        security_vulnerabilities: true
+        return_in_constructor: true
+        require_scope_for_methods: true
+        require_php_tag_first: false
+        precedence_mistakes: true
+        precedence_in_conditions: true
+        phpunit_assertions: true
+        parameter_non_unique: true
+        no_short_open_tag: true
+        no_non_implemented_abstract_methods: true
+        no_exit: false
+        no_eval: true
+        no_goto: true
+        no_debug_code: true
+        missing_arguments: true
+        closure_use_not_conflicting: true
+        avoid_closing_tag: false
+        assignment_of_null_return: true
 build:
     nodes:
+        tests: true
         analysis:
-            project_setup:
-                override: true
+            dependencies:
+                before:
+                    - composer require --dev johnpbloch/wordpress
             tests:
-                override: [php-scrutinizer-run]
+                override:
+                    -
+                        command: phpcs-run
+                        use_website_config: true
+                    - php-scrutinizer-run
 
 filter:
     excluded_paths:
         - tests/*
-        - lib/
+        - lib/geonames/generators
     dependency_paths:
+        - wordpress/
         - "vendor/"
