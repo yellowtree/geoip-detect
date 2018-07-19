@@ -396,11 +396,18 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
 			if (isset($info->{$maxmindName}->name)) {
 				$actualValues[] = $info->{$maxmindName}->name;
 			} else if(isset($info->{$maxmindName}->isoCode)) {
-				// ...
+				$actualValues[] = $info->{$maxmindName}->isoCode;
 			} else if(isset($info->{$maxmindName}->code)) {
-				// ...
-			}
-			// ...
+				$actualValues[] = $info->{$maxmindName}->code;
+            }
+
+            $temp_attribute_values = explode(',', $atts_array[$shortcodeParamName]);
+            array_walk($temp_attribute_values, 'trim');
+
+            if (isset($info->{$maxmindName}->name) && !(in_array($info->{$maxmindName}->name, $temp_attribute_values))
+            && isset($info->{$maxmindName}->name) && !(in_array($info->{$maxmindName}->name, $temp_attribute_values))) {
+                $criteria_test_flag = false;
+            }
 		}
 	}
 
