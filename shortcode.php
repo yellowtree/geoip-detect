@@ -423,7 +423,8 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
         }
     }
 
-    // And Not (Exclusion)
+    // Negative Conditions (Exclusion)
+    // Miscellaneous
     if ($atts_array['and_not'] != null) {
         if ($info->location->timeZone && $atts_array['and_not'] == $info->location->timeZone
         || $info->continent->code && $atts_array['and_not'] == $info->continent->code
