@@ -343,24 +343,24 @@ add_shortcode('geoip_detect2_user_info', 'geoip_detect_shortcode_user_info');
  *
  * Examples:
  *
- * `[geoip_detect2_hide_unless country="US" state="TX"]<h1>Title</h1>[/geoip_detect2_hide_unless]`
+ * `[geoip_detect2_show_if country="US" state="TX"]<h1>Title</h1>[/geoip_detect2_show_if]`
  * 	    - OR -
- * `[geoip_detect2_hide_unless country="US" region="TX"]<h1>Title</h1>[/geoip_detect2_hide_unless]`
+ * `[geoip_detect2_show_if country="US" region="TX"]<h1>Title</h1>[/geoip_detect2_show_if]`
  * 	    - OR -
- * `[geoip_detect2_hide_unless country="US" region="Texas"]<h1>Title</h1>[/geoip_detect2_hide_unless]`
+ * `[geoip_detect2_show_if country="US" region="Texas"]<h1>Title</h1>[/geoip_detect2_show_if]`
  * Only displays the inner content if the specified attributes match the visitor's country and region/state.
  *
- * `[geoip_detect2_hide_unless country="US" state="TX" and_not="Houston"]<h1>Title</h1>[/geoip_detect2_hide_unless]`
+ * `[geoip_detect2_show_if country="US" state="TX" and_not="Houston"]<h1>Title</h1>[/geoip_detect2_show_if]`
  * Only displays the inner content if the specified attributes match the visitor's country and region/state,
  * and the specified exclusion is not found in any possible GeoIP Detect field (e.g. visitor's country,
  * city, timezone, etc.).
  *
- * `[geoip_detect2_hide_unless continent="North America"]<h1>Title</h1>[/geoip_detect2_hide_unless]`
+ * `[geoip_detect2_show_if continent="North America"]<h1>Title</h1>[/geoip_detect2_show_if]`
  * Only displays the inner content if the specified attributes match the visitor's continent.
  *
  */
 function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName = '') {
-	$expectedResult = ($shortcodeName == 'geoip_detect2_show_if') ? true : false;
+    $expectedResult = ($shortcodeName == 'geoip_detect2_show_if') ? true : false;
 
     $atts_array = shortcode_atts(array(
         'timezone' => null,
@@ -379,6 +379,31 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
     $temp_attribute_values = [''];      // Temporarily stores each value of an attribute (if multiple)
 
     /* Attribute Conditions */
+	$attributeNames = array(
+		'timezone' => 'location.timeZone', // TODO: this will be a special case, not sure yet how I will treat it
+        'continent' => 'continent',
+        'country' => 'country',
+        'most_specific_subdivision' => 'mostSpecificSubdivision',
+        'region' => 'mostSpecificSubdivision',
+        'state' => 'mostSpecificSubdivision',
+        'city' => 'city',
+	);
+
+	foreach ($attributeNames as $shortcodeParamName => $maxmindName) {
+		if (!empty($atts_array[$shortcodeParamName])) {
+			// ...
+			if (isset($info->{$maxmindName}->name)) {
+				$actualValue = $info->{$maxmindName}->name;
+			} else if(isset($info->{$maxmindName}->isoCode)) {
+				// ...
+			} else if(isset($info->{$maxmindName}->code)) {
+				// ...
+			}
+			// ...
+		}
+	}
+
+
     // Timezone
     if ($atts_array['timezone'] != null) {
         if ($info->location->timeZone && $atts_array['timezone'] != $info->location->timeZone) {
