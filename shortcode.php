@@ -375,7 +375,8 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
         $atts);
 
     $info = geoip_detect2_get_info_from_current_ip();
-    $criteria_test_flag = true;       // If set to false, nothing will display
+    $criteria_test_flag = true;                     // If set to false, nothing will display
+    $temp_attribute_values = new Array();           // Temporarily stores each value of an attribute (if multiple)
 
     /* Attribute Conditions */
     // Timezone
@@ -394,9 +395,16 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
 
     // Country
     if ($atts_array['country'] != null) {
-        if ($info->country->name && $atts_array['country'] != $info->country->name
-            && $info->country->isoCode && $atts_array['country'] != $info->country->isoCode) {
-            $criteria_test_flag = false;
+        $temp_attribute_values = explode(',', $atts_array['country']);
+
+        foreach ($temp_attribute_values as &$value) {
+            $value = trim($value);
+            unset($value);
+        }
+
+        if ($info->country->name && !(in_array($info->country->name, $temp_attribute_values))
+            && $info->country->isoCode && !(in_array($info->country->isoCode, $temp_attribute_values))) {
+                $criteria_test_flag = false;
         }
     }
 
@@ -435,7 +443,7 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
             $criteria_test_flag = false;
         }
     }
-	
+
     // Not Country
     if ($atts_array['not_country'] != null) {
         if ($info->country->name && $atts_array['not_country'] == $info->country->name
