@@ -392,8 +392,9 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
 	foreach ($attributeNames as $shortcodeParamName => $maxmindName) {
 		if (!empty($atts_array[$shortcodeParamName])) {
 			// ...
+			$actualValue = array();
 			if (isset($info->{$maxmindName}->name)) {
-				$actualValue = $info->{$maxmindName}->name;
+				$actualValues[] = $info->{$maxmindName}->name;
 			} else if(isset($info->{$maxmindName}->isoCode)) {
 				// ...
 			} else if(isset($info->{$maxmindName}->code)) {
