@@ -371,7 +371,11 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
         'state' => null,
         'city' => null,
         'and_not' => null,
-        'not_country' => null),
+        'not_country' => null,
+        'not_most_specific_subdivision' => null,
+        'not_region' => null,
+        'not_state' => null,
+        'not_city' => null,),
         $atts);
 
     $info = geoip_detect2_get_info_from_current_ip();
@@ -388,6 +392,10 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
         'state' => 'mostSpecificSubdivision',
         'city' => 'city',
         'not_country' => 'country',
+        'not_most_specific_subdivision' => 'mostSpecificSubdivision',
+        'not_region' => 'mostSpecificSubdivision',
+        'not_state' => 'mostSpecificSubdivision',
+        'not_city' => 'city',
 	);
 
 	foreach ($attributeNames as $shortcodeParamName => $maxmindName) {
