@@ -387,6 +387,7 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
         'region' => 'mostSpecificSubdivision',
         'state' => 'mostSpecificSubdivision',
         'city' => 'city',
+        'not_country' => 'country',
 	);
 
 	foreach ($attributeNames as $shortcodeParamName => $maxmindName) {
@@ -405,9 +406,18 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
             array_walk($temp_attribute_values, 'trim');
 
             foreach ($actualValues as $actual_attribute_value) {
-                if (!in_array($actual_attribute_value, $temp_attribute_values)) {
-                    $criteria_test_flag = false;
-                }
+                // If Exclusion Attribute, Fail Test Upon Finding Value
+                if (substr_count($actual_attribute_value, 'not_') > 0
+                && in_array($actual_attribute_value, $temp_attribute_values)) {
+                $criteria_test_flag = false;        // Fail Test
+            }
+
+            // If Inclusion Attribute, Fail Test Upon Not Finding Value
+            elseif (substr_count($actual_attribute_value, 'not_') <= 0
+                && !in_array($actual_attribute_value, $temp_attribute_values)) {
+                $criteria_test_flag = false;        // Fail Test
+            }
+                
             }
 		}
 	}
@@ -468,6 +478,7 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
     }
     */
 
+    /*
     // Negative Conditions (Exclusion)
     // Miscellaneous
     if ($atts_array['and_not'] != null) {
@@ -487,6 +498,7 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
             $criteria_test_flag = false;
         }
     }
+    */
 
     // All Criteria Passed?
     if ($criteria_test_flag === $expectedResult) {
