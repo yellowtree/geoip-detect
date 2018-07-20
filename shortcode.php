@@ -401,7 +401,9 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
 	foreach ($attributeNames as $shortcodeParamName => $maxmindName) {
 		if (!empty($atts_array[$shortcodeParamName])) {
 			// ...
-			$actualValues = array();
+            $actualValues = array();
+            
+            // Determine Actual MaxMind Value(s) for Attribute
 			if (isset($info->{$maxmindName}->name)) {
 				$actualValues[] = $info->{$maxmindName}->name;
 			} else if(isset($info->{$maxmindName}->isoCode)) {
@@ -410,22 +412,23 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
 				$actualValues[] = $info->{$maxmindName}->code;
             }
 
+            // Parse User Input Values of Attribute
             $temp_attribute_values = explode(',', $atts_array[$shortcodeParamName]);
             array_walk($temp_attribute_values, 'trim');
 
+            // Compare MaxMind Values and User Input Values
             foreach ($actualValues as $actual_attribute_value) {
-                // If Exclusion Attribute, Fail Test Upon Finding Value
+                // If Exclusion Attribute, Fail Criteria Test Upon Finding Value
                 if (substr_count($actual_attribute_value, 'not_') > 0
-                && in_array($actual_attribute_value, $temp_attribute_values)) {
-                $criteria_test_flag = false;        // Fail Test
-            }
+                    && in_array($actual_attribute_value, $temp_attribute_values)) {
+                    $criteria_test_flag = false;        // Fail Test
+                }
 
-            // If Inclusion Attribute, Fail Test Upon Not Finding Value
-            elseif (substr_count($actual_attribute_value, 'not_') <= 0
-                && !in_array($actual_attribute_value, $temp_attribute_values)) {
-                $criteria_test_flag = false;        // Fail Test
-            }
-                
+                // If Inclusion Attribute, Fail Criteria Test Upon Not Finding Value
+                elseif (substr_count($actual_attribute_value, 'not_') <= 0
+                    && !in_array($actual_attribute_value, $temp_attribute_values)) {
+                    $criteria_test_flag = false;        // Fail Test
+                }
             }
 		}
 	}
