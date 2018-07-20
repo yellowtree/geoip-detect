@@ -420,6 +420,7 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
         }
     }
 
+    /*
     // Continent
     if ($atts_array['continent'] != null) {
         if ($info->continent->code && $atts_array['continent'] != $info->continent->code) {
@@ -465,6 +466,7 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
             $criteria_test_flag = false;
         }
     }
+    */
 
     // Negative Conditions (Exclusion)
     // Miscellaneous
