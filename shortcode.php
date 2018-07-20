@@ -405,7 +405,7 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
             array_walk($temp_attribute_values, 'trim');
 
             foreach ($actualValues as $actual_attribute_value) {
-                if (!(in_array($actual_attribute_value, $temp_attribute_values))) {
+                if (!in_array($actual_attribute_value, $temp_attribute_values)) {
                     $criteria_test_flag = false;
                 }
             }
