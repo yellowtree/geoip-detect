@@ -372,6 +372,8 @@ add_shortcode('geoip_detect2_user_info', 'geoip_detect_shortcode_user_info');
  *
  * Display <h1>Title</h1> if the visitor is from North America.
  *      `[geoip_detect2_show_if continent="North America"]<h1>Title</h1>[/geoip_detect2_show_if]`
+ *          - OR -
+ *      `[geoip_detect2_hide_if not_continent="North America"]<h1>Title</h1>[/geoip_detect2_hide_if]`
  *
  * Hide <h1>Title</h1> if the visitor is from the US.
  *      `[geoip_detect2_hide_if country="US"]<h1>Title</h1>[/geoip_detect2_hide_if]`
