@@ -422,20 +422,26 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 	foreach ($attributeNames as $shortcodeParamName => $maxmindName) {
 		if (!empty($attr[$shortcodeParamName])) {
 			// ...
-            $actualValues = array();
 
             // Determine Actual MaxMind Value(s) for Attribute
+			$actualValues = array();
 			if (isset($info->{$maxmindName}->name)) {
 				$actualValues[] = $info->{$maxmindName}->name;
-			} else if(isset($info->{$maxmindName}->isoCode)) {
+			}
+			if(isset($info->{$maxmindName}->isoCode)) {
 				$actualValues[] = $info->{$maxmindName}->isoCode;
-			} else if(isset($info->{$maxmindName}->code)) {
+			}
+			if(isset($info->{$maxmindName}->code)) {
 				$actualValues[] = $info->{$maxmindName}->code;
             }
 
             // Parse User Input Values of Attribute
             $attributeValuesArray = explode(',', $attr[$shortcodeParamName]);
             array_walk($attributeValuesArray, 'trim');
+
+			// Compare case-insensitively
+            array_walk($attributeValuesArray, 'mb_strtolower');
+            array_walk($actualValues, 'mb_strtolower');
 
 			if (array_intersect($actualValues, $attributeValuesArray)) {
 				$isConditionMatching = (substr($shortcodeParamName, 0, 4) == 'not_') ? false : true;
