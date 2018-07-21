@@ -333,22 +333,22 @@ add_shortcode('geoip_detect2_user_info', 'geoip_detect_shortcode_user_info');
 
 /**
  *
- * Content Hiding
+ * Geo-Dependent Content Hiding
  *
  * Uses an enclosing shortcode to selectively show or hide content. Use either
  * [geoip_detect2_show_if][/geoip_detect2_show_if] or [geoip_detect2_hide_if][/geoip_detect2_hide_if] at your
  * discretion, as they can both be used to accomplish the same thing.
- * 
+ *
  * Shortcode attributes can be as follows:
- * 
+ *
  * Inclusive Attributes (note that `hide_if` makes them exclusive):
  *      "timezone", "continent", "country", "most_specific_subdivision"/"region"/"state"*, "city"
- * 
+ *
  * * most_specific_subdivision, region, and state are aliases (use the one that makes the most sense to you)
- * 
+ *
  * Exclusive Attributes (note that `hide_if` makes them inclusive):
  *      "not_country", "not_most_specific_subdivision"/"not_region"/"not_state"*, "not_city"
- * 
+ *
  * * most_specific_subdivision, region, and state are aliases (use the one that makes the most sense to you)
  *
  * Each attribute may only appear once in a shortcode or the shortcode will break, showing the contents no matter
@@ -379,7 +379,7 @@ add_shortcode('geoip_detect2_user_info', 'geoip_detect_shortcode_user_info');
  *      `[geoip_detect2_hide_if country="US"]<h1>Title</h1>[/geoip_detect2_hide_if]`
  *          - OR -
  *      `[geoip_detect2_show_if not_country="US"]<h1>Title</h1>[/geoip_detect2_show_if]`
- * 
+ *
  */
 function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName = '') {
     $expectedResult = ($shortcodeName == 'geoip_detect2_show_if') ? true : false;
@@ -403,19 +403,20 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
     $criteria_test_flag = true;             // If set to false, nothing will display
     $temp_attribute_values = array();       // Temporarily stores each value of an attribute (if multiple)
 
-    /* Attribute Conditions */
+    /* Attribute Conditions. Order is important: From generic to specific. */
 	$attributeNames = array(
 		'timezone' => 'location.timeZone', // TODO: this will be a special case, not sure yet how I will treat it
         'continent' => 'continent',
+        'not_continent' => 'continent',
         'country' => 'country',
+		'not_country' => 'country',
         'most_specific_subdivision' => 'mostSpecificSubdivision',
         'region' => 'mostSpecificSubdivision',
         'state' => 'mostSpecificSubdivision',
-        'city' => 'city',
-        'not_country' => 'country',
         'not_most_specific_subdivision' => 'mostSpecificSubdivision',
         'not_region' => 'mostSpecificSubdivision',
         'not_state' => 'mostSpecificSubdivision',
+		'city' => 'city',
         'not_city' => 'city',
 	);
 
@@ -423,7 +424,7 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
 		if (!empty($atts_array[$shortcodeParamName])) {
 			// ...
             $actualValues = array();
-            
+
             // Determine Actual MaxMind Value(s) for Attribute
 			if (isset($info->{$maxmindName}->name)) {
 				$actualValues[] = $info->{$maxmindName}->name;
@@ -437,20 +438,9 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
             $temp_attribute_values = explode(',', $atts_array[$shortcodeParamName]);
             array_walk($temp_attribute_values, 'trim');
 
-            // Compare MaxMind Values and User Input Values
-            foreach ($actualValues as $actual_attribute_value) {
-                // If Exclusion Attribute, Fail Criteria Test Upon Finding Value
-                if (substr_count($actual_attribute_value, 'not_') > 0
-                    && in_array($actual_attribute_value, $temp_attribute_values)) {
-                    $criteria_test_flag = false;        // Fail Test
-                }
-
-                // If Inclusion Attribute, Fail Criteria Test Upon Not Finding Value
-                elseif (substr_count($actual_attribute_value, 'not_') <= 0
-                    && !in_array($actual_attribute_value, $temp_attribute_values)) {
-                    $criteria_test_flag = false;        // Fail Test
-                }
-            }
+			if (array_intersect($actualValues, $temp_attribute_values)) {
+				$criteria_test_flag = (substr($shortcodeParamName, 0, 4) == 'not_') ? false : true;
+			}
 		}
 	}
 
@@ -461,76 +451,6 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
             $criteria_test_flag = false;
         }
     }
-
-    /*
-    // Continent
-    if ($atts_array['continent'] != null) {
-        if ($info->continent->code && $atts_array['continent'] != $info->continent->code) {
-            $criteria_test_flag = false;
-        }
-    }
-
-    // Country
-    if ($atts_array['country'] != null) {
-        $temp_attribute_values = explode(',', $atts_array['country']);
-
-        foreach ($temp_attribute_values as &$value) {
-            $value = trim($value);
-            unset($value);
-        }
-
-        if ($info->country->name && !(in_array($info->country->name, $temp_attribute_values))
-            && $info->country->isoCode && !(in_array($info->country->isoCode, $temp_attribute_values))) {
-                $criteria_test_flag = false;
-        }
-    }
-
-    // Region/State/Subdivision (these are alias parameter names)
-    $subdivision = null;
-    if ($atts_array['most_specific_subdivision'] != null) {
-    	$subdivision = $atts_array['most_specific_subdivision'];
-    } else if ($atts_array['region'] != null) {
-    	$subdivision = $atts_array['region'];
-    } else if ($atts_array['state'] != null) {
-    	$subdivision = $atts_array['state'];
-    }
-
-    if ($subdivision) {
-		if ($info->mostSpecificSubdivision->name && $subdivision != $info->mostSpecificSubdivision->name
-		&& $info->mostSpecificSubdivision->isoCode && $subdivision != $info->mostSpecificSubdivision->isoCode) {
-		    $criteria_test_flag = false;
-		}
-    }
-
-    // City
-    if ($atts_array['city'] != null) {
-        if ($info->city->name && $atts_array['city'] != $info->city->name) {
-            $criteria_test_flag = false;
-        }
-    }
-    */
-
-    /*
-    // Negative Conditions (Exclusion)
-    // Miscellaneous
-    if ($atts_array['and_not'] != null) {
-        if ($info->location->timeZone && $atts_array['and_not'] == $info->location->timeZone
-        || $info->continent->code && $atts_array['and_not'] == $info->continent->code
-        || $info->mostSpecificSubdivision->name && $atts_array['and_not'] == $info->mostSpecificSubdivision->name
-        || $info->mostSpecificSubdivision->isoCode && $atts_array['and_not'] == $info->mostSpecificSubdivision->isoCode
-        || $info->city->name && $atts_array['and_not'] == $info->city->name) {
-            $criteria_test_flag = false;
-        }
-    }
-
-    // Not Country
-    if ($atts_array['not_country'] != null) {
-        if ($info->country->name && $atts_array['not_country'] == $info->country->name
-        || $info->country->isoCode && $atts_array['not_country'] == $info->country->isoCode) {
-            $criteria_test_flag = false;
-        }
-    }
-    */
 
     // All Criteria Passed?
     if ($criteria_test_flag === $expectedResult) {
