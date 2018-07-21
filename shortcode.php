@@ -381,7 +381,6 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
         'region' => null,
         'state' => null,
         'city' => null,
-        'and_not' => null,
         'not_country' => null,
         'not_most_specific_subdivision' => null,
         'not_region' => null,
