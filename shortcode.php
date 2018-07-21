@@ -381,10 +381,10 @@ add_shortcode('geoip_detect2_user_info', 'geoip_detect_shortcode_user_info');
  *      `[geoip_detect2_show_if not_country="US"]<h1>Title</h1>[/geoip_detect2_show_if]`
  *
  */
-function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName = '') {
-    $expectedResult = ($shortcodeName == 'geoip_detect2_show_if') ? true : false;
+function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName = '') {
+    $showContentIfMatch = ($shortcodeName == 'geoip_detect2_show_if') ? true : false;
 
-    $atts_array = shortcode_atts(array(
+    $attr = shortcode_atts(array(
         'timezone' => null,
         'continent' => null,
         'country' => null,
@@ -397,11 +397,10 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
         'not_region' => null,
         'not_state' => null,
         'not_city' => null,),
-        $atts);
+        $attr);
 
     $info = geoip_detect2_get_info_from_current_ip();
-    $criteria_test_flag = true;             // If set to false, nothing will display
-    $temp_attribute_values = array();       // Temporarily stores each value of an attribute (if multiple)
+    $isConditionMatching = true;             // If set to false, nothing will display
 
     /* Attribute Conditions. Order is important: From generic to specific. */
 	$attributeNames = array(
@@ -421,7 +420,7 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
 	);
 
 	foreach ($attributeNames as $shortcodeParamName => $maxmindName) {
-		if (!empty($atts_array[$shortcodeParamName])) {
+		if (!empty($attr[$shortcodeParamName])) {
 			// ...
             $actualValues = array();
 
@@ -435,25 +434,25 @@ function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName 
             }
 
             // Parse User Input Values of Attribute
-            $temp_attribute_values = explode(',', $atts_array[$shortcodeParamName]);
-            array_walk($temp_attribute_values, 'trim');
+            $attributeValuesArray = explode(',', $attr[$shortcodeParamName]);
+            array_walk($attributeValuesArray, 'trim');
 
-			if (array_intersect($actualValues, $temp_attribute_values)) {
-				$criteria_test_flag = (substr($shortcodeParamName, 0, 4) == 'not_') ? false : true;
+			if (array_intersect($actualValues, $attributeValuesArray)) {
+				$isConditionMatching = (substr($shortcodeParamName, 0, 4) == 'not_') ? false : true;
 			}
 		}
 	}
 
 
     // Timezone
-    if ($atts_array['timezone'] != null) {
-        if ($info->location->timeZone && $atts_array['timezone'] != $info->location->timeZone) {
-            $criteria_test_flag = false;
+    if ($attr['timezone'] != null) {
+        if ($info->location->timeZone && $attr['timezone'] != $info->location->timeZone) {
+            $isConditionMatching = false;
         }
     }
 
     // All Criteria Passed?
-    if ($criteria_test_flag === $expectedResult) {
+    if ($isConditionMatching === $showContentIfMatch) {
         return do_shortcode($content);
     }
 	return '';
