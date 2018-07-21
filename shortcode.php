@@ -335,28 +335,39 @@ add_shortcode('geoip_detect2_user_info', 'geoip_detect_shortcode_user_info');
  *
  * Content Hiding
  *
- * Uses an enclosing shortcode (i.e. [shortcode]Content[/shortcode]). Shortcode attributes can be as follows:
- * "timezone", "continent", "country", "region"/"state", "city", and "and_not".
+ * Uses an enclosing shortcode to selectively show or hide content. Shortcode attributes can be as follows:
+ * 
+ * Inclusive Attributes:
+ *      "timezone", "continent", "country", "most_specific_subdivision"/"region"/"state"*, "city"
+ * 
+ * * most_specific_subdivision, region, and state are aliases (use the one that makes the most sense to you)
+ * 
+ * Exclusive Attributes:
+ *      "not_country", "not_most_specific_subdivision"/"not_region"/"not_state"*, "not_city"
+ * 
+ * * most_specific_subdivision, region, and state are aliases (use the one that makes the most sense to you)
  *
- * Each attribute may only appear once in a shortcode, and each attribute can only contain a single value, or
- * the shortcode will break, showing the contents no matter what.
+ * Each attribute may only appear once in a shortcode or the shortcode will break, showing the contents no matter
+ * the visitor's IP address. Country, most specific subdivision, region, and state attributes can take both full
+ * names and ISO abbreviations. All attributes may take multiple values.
  *
  * Examples:
  *
- * `[geoip_detect2_show_if country="US" state="TX"]<h1>Title</h1>[/geoip_detect2_show_if]`
- * 	    - OR -
- * `[geoip_detect2_show_if country="US" region="TX"]<h1>Title</h1>[/geoip_detect2_show_if]`
- * 	    - OR -
- * `[geoip_detect2_show_if country="US" region="Texas"]<h1>Title</h1>[/geoip_detect2_show_if]`
- * Only displays the inner content if the specified attributes match the visitor's country and region/state.
+ * Display <h1>Title</h1> if the visitor is in the US and in Texas.
+ *      `[geoip_detect2_show_if country="US" state="TX"]<h1>Title</h1>[/geoip_detect2_show_if]`
+ * 	        - OR -
+ *      `[geoip_detect2_show_if country="US" region="TX"]<h1>Title</h1>[/geoip_detect2_show_if]`
+ * 	        - OR -
+ *      `[geoip_detect2_show_if country="US" region="Texas"]<h1>Title</h1>[/geoip_detect2_show_if]`
+ *          - OR -
+ *      `[geoip_detect2_show_if country="US" most_specific_subdivision="TX"]<h1>Title</h1>[/geoip_detect2_show_if]`
  *
- * `[geoip_detect2_show_if country="US" state="TX" and_not="Houston"]<h1>Title</h1>[/geoip_detect2_show_if]`
- * Only displays the inner content if the specified attributes match the visitor's country and region/state,
- * and the specified exclusion is not found in any possible GeoIP Detect field (e.g. visitor's country,
- * city, timezone, etc.).
+ * Display <h1>Title</h1> if the visitor is in the US, and in either Texas or Wyoming, but hide this content
+ * from visitors with IP addresses from cities named Houston.
+ *      `[geoip_detect2_show_if country="US" state="TX, WY" not_city="Houston"]<h1>Title</h1>[/geoip_detect2_show_if]`
  *
- * `[geoip_detect2_show_if continent="North America"]<h1>Title</h1>[/geoip_detect2_show_if]`
- * Only displays the inner content if the specified attributes match the visitor's continent.
+ * Display <h1>Title</h1> if the visitor is from North America.
+ *      `[geoip_detect2_show_if continent="North America"]<h1>Title</h1>[/geoip_detect2_show_if]`
  *
  */
 function geoip_detect2_shortcode_show_if($atts, $content = null, $shortcodeName = '') {
