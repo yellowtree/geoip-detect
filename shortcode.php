@@ -400,7 +400,7 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
         $attr);
 
     $info = geoip_detect2_get_info_from_current_ip();
-    $isConditionMatching = true;             // If set to false, nothing will display
+    $isConditionMatching = false;
 
     /* Attribute Conditions. Order is important: From generic to specific. */
 	$attributeNames = array(
