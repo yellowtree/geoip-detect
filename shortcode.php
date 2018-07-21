@@ -341,12 +341,12 @@ add_shortcode('geoip_detect2_user_info', 'geoip_detect_shortcode_user_info');
  * 
  * Shortcode attributes can be as follows:
  * 
- * Inclusive Attributes:
+ * Inclusive Attributes (note that `hide_if` makes them exclusive):
  *      "timezone", "continent", "country", "most_specific_subdivision"/"region"/"state"*, "city"
  * 
  * * most_specific_subdivision, region, and state are aliases (use the one that makes the most sense to you)
  * 
- * Exclusive Attributes:
+ * Exclusive Attributes (note that `hide_if` makes them inclusive):
  *      "not_country", "not_most_specific_subdivision"/"not_region"/"not_state"*, "not_city"
  * 
  * * most_specific_subdivision, region, and state are aliases (use the one that makes the most sense to you)
