@@ -82,7 +82,11 @@ function geoip_detect2_shortcode($attr)
 	if ($userInfo->isEmpty)
 		return $defaultValue . '<!-- GeoIP Detect: No information found for this IP (' . geoip_detect2_get_client_ip() . ') -->';
 
-	$return = geoip_detect2_shortcode_get_property($userInfo, $attr['property'], $defaultValue);
+	try {
+		$return = geoip_detect2_shortcode_get_property($userInfo, $attr['property']);
+	} catch (\RuntimeException $e) {
+		return $defaultValue . '<!-- GeoIP Detect: Invalid property name. -->';
+	}
 
 	if (is_object($return) && $return instanceof \GeoIp2\Record\AbstractPlaceRecord)
 		$return = $return->name;
@@ -99,35 +103,31 @@ function geoip_detect2_shortcode($attr)
 }
 add_shortcode('geoip_detect2', 'geoip_detect2_shortcode');
 
-function geoip_detect2_shortcode_get_property($userInfo, $propertyName, $defaultValue = '') {
+function geoip_detect2_shortcode_get_property($userInfo, $propertyName) {
 	$return = '';
 	$properties = explode('.', $propertyName);
-	try {
-		if (count($properties) == 1) {
-			$return = $userInfo->{$properties[0]};
-		} else if ($properties[0] == 'subdivisions' && (count($properties) == 2 || count($properties) == 3)) {
-			$return = $userInfo->{$properties[0]};
-			if (!is_array($return))
-				throw new \RuntimeException('Invalid property name.');
-			if (!is_numeric($properties[1]))
-				throw new \RuntimeException('Invalid property name (must be numeric, e.g. "subdivisions.0").');
-			$return = $return[(int) $properties[1]];
-
-			if (isset($properties[2])) {
-				if (!is_object($return))
-					throw new \RuntimeException('Invalid property name.');
-				$return = $return->{$properties[2]};
-			}
-		} else if (count($properties) == 2) {
-			$return = $userInfo->{$properties[0]};
-			if (!is_object($return))
+	if (count($properties) == 1) {
+		$return = $userInfo->{$properties[0]};
+	} else if ($properties[0] == 'subdivisions' && (count($properties) == 2 || count($properties) == 3)) {
+		$return = $userInfo->{$properties[0]};
+		if (!is_array($return))
 			throw new \RuntimeException('Invalid property name.');
-			$return = $return->{$properties[1]};
-		} else {
-			throw new \RuntimeException('Only 1 dot supported. Please send a bug report to show me the shortcode you used if you need it ...');
+		if (!is_numeric($properties[1]))
+			throw new \RuntimeException('Invalid property name (must be numeric, e.g. "subdivisions.0").');
+		$return = $return[(int) $properties[1]];
+
+		if (isset($properties[2])) {
+			if (!is_object($return))
+				throw new \RuntimeException('Invalid property name.');
+			$return = $return->{$properties[2]};
 		}
-	} catch (\RuntimeException $e) {
-		return $defaultValue . '<!-- GeoIP Detect: Invalid property name. -->';
+	} else if (count($properties) == 2) {
+		$return = $userInfo->{$properties[0]};
+		if (!is_object($return))
+		throw new \RuntimeException('Invalid property name.');
+		$return = $return->{$properties[1]};
+	} else {
+		throw new \RuntimeException('Only 1 dot supported. Please send a bug report to show me the shortcode you used if you need it ...');
 	}
 	return $return;
 }
