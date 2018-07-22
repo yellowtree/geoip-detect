@@ -437,11 +437,11 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 
             // Parse User Input Values of Attribute
             $attributeValuesArray = explode(',', $attr[$shortcodeParamName]);
-            array_walk($attributeValuesArray, 'trim');
+            $attributeValuesArray = array_map('trim', $attributeValuesArray);
 
 			// Compare case-insensitively
-            array_walk($attributeValuesArray, 'mb_strtolower');
-            array_walk($actualValues, 'mb_strtolower');
+            $attributeValuesArray = array_map('mb_strtolower', $attributeValuesArray);
+            $actualValues = array_map('mb_strtolower', $actualValues);
 
 			if (array_intersect($actualValues, $attributeValuesArray)) {
 				$isConditionMatching = (substr($shortcodeParamName, 0, 4) == 'not_') ? false : true;
