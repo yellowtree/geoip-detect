@@ -199,13 +199,15 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		/* #11 */		array('yes', '[geoip_detect2_show_if most_specific_subdivision="HE"]yes[/geoip_detect2_show_if]' ),
 		/* #12 */		array('',    '[geoip_detect2_show_if state="NN"]yes[/geoip_detect2_show_if]' ),
 		/* #13 */		array('yes', '[geoip_detect2_show_if continent="EU"]yes[/geoip_detect2_show_if]' ),
-		/* #14 */		array('yes', '[geoip_detect2_show_if timezone="Europe/Berlin"]yes[/geoip_detect2_show_if]' ),
-		/* #15 */		array('not_country', '[geoip_detect2_show_if not_country="FR"]not_country[/geoip_detect2_show_if]' ),
-		/* #16 */		array('', '[geoip_detect2_show_if not_country="DE"]yes[/geoip_detect2_show_if]' ),
-		/* #17 */		array('', '[geoip_detect2_show_if continent="EU" not_country="DE"]yes[/geoip_detect2_show_if]' ),
-		/* #18 */		array('yes', '[geoip_detect2_show_if country="US, DE"]yes[/geoip_detect2_show_if]' ),
-		/* #19 */		array('yes', '[geoip_detect2_show_if country="US,DE , FR"]yes[/geoip_detect2_show_if]' ),
-		/* #20 */		array('', '[geoip_detect2_show_if country="US,FR"]yes[/geoip_detect2_show_if]' ),
+		/* #14 */		array('yes', '[geoip_detect2_show_if property="location.timeZone" property_value="Europe/Berlin"]yes[/geoip_detect2_show_if]' ),
+		/* #15 */		array('', '[geoip_detect2_show_if property="location.timeZone" not_property_value="Europe/Berlin"]yes[/geoip_detect2_show_if]' ),
+		/* #16 */		array('', '[geoip_detect2_show_if property="invalid.property" property_value="Europe/Berlin"]yes[/geoip_detect2_show_if]' ),
+		/* #17 */		array('not_country', '[geoip_detect2_show_if not_country="FR"]not_country[/geoip_detect2_show_if]' ),
+		/* #18 */		array('', '[geoip_detect2_show_if not_country="DE"]yes[/geoip_detect2_show_if]' ),
+		/* #19 */		array('', '[geoip_detect2_show_if continent="EU" not_country="DE"]yes[/geoip_detect2_show_if]' ),
+		/* #20 */		array('yes', '[geoip_detect2_show_if country="US, DE"]yes[/geoip_detect2_show_if]' ),
+		/* #21 */		array('yes', '[geoip_detect2_show_if country="US,DE , FR"]yes[/geoip_detect2_show_if]' ),
+		/* #22 */		array('', '[geoip_detect2_show_if country="US,FR"]yes[/geoip_detect2_show_if]' ),
 		);
 	}
 

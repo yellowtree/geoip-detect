@@ -103,7 +103,14 @@ function geoip_detect2_shortcode($attr)
 }
 add_shortcode('geoip_detect2', 'geoip_detect2_shortcode');
 
-function geoip_detect2_shortcode_get_property($userInfo, $propertyName) {
+/**
+ * [geoip_detect2_shortcode_get_property description]
+ * @param  [type] $userInfo     [description]
+ * @param  [type] $propertyName [description]
+ * @return [type]               [description]
+ * @throws \RuntimeException (if Property name invalid)
+ */
+	function geoip_detect2_shortcode_get_property($userInfo, $propertyName) {
 	$return = '';
 	$properties = explode('.', $propertyName);
 	if (count($properties) == 1) {
@@ -391,7 +398,9 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 
     $attr = shortcode_atts(array(
 		'lang' => null,
-        'timezone' => null,
+        'property' => null,
+        'property_value' => null,
+        'not_property_value' => null,
         'continent' => null,
         'country' => null,
         'most_specific_subdivision' => null,
@@ -416,7 +425,6 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 
     /* Attribute Conditions. Order is important: From generic to specific. */
 	$attributeNames = array(
-		'timezone' => 'location.timeZone', // TODO: this will be a special case, not sure yet how I will treat it
         'continent' => 'continent',
         'not_continent' => 'continent',
         'country' => 'country',
@@ -433,8 +441,6 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 
 	foreach ($attributeNames as $shortcodeParamName => $maxmindName) {
 		if (!empty($attr[$shortcodeParamName])) {
-			// ...
-
             // Determine Actual MaxMind Value(s) for Attribute
 			$actualValues = array();
 			if (isset($info->{$maxmindName}->name)) {
@@ -447,15 +453,8 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 				$actualValues[] = $info->{$maxmindName}->code;
             }
 
-            // Parse User Input Values of Attribute
-            $attributeValuesArray = explode(',', $attr[$shortcodeParamName]);
-            $attributeValuesArray = array_map('trim', $attributeValuesArray);
+			$subConditionMatching = geoip_detect2_shortcode_check_subcondition($attr[$shortcodeParamName], $actualValues);
 
-			// Compare case-insensitively
-            $attributeValuesArray = array_map('mb_strtolower', $attributeValuesArray);
-            $actualValues = array_map('mb_strtolower', $actualValues);
-
-			$subConditionMatching = array_intersect($actualValues, $attributeValuesArray);
 			if (substr($shortcodeParamName, 0, 4) == 'not_') {
 				$subConditionMatching = !$subConditionMatching;
 			}
@@ -463,13 +462,22 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 		}
 	}
 
+	if (!empty($attr['property']) && (!empty($attr['property_value']) || !empty($attr['not_property_value'])) ) {
+		try {
+			$actualValue = geoip_detect2_shortcode_get_property($info, $attr['property']);
 
-    // Timezone
-    if ($attr['timezone'] != null) {
-        if ($info->location->timeZone && $attr['timezone'] != $info->location->timeZone) {
-            $isConditionMatching = false;
-        }
-    }
+			if (!empty($attr['property_value'])) {
+				$subConditionMatching = geoip_detect2_shortcode_check_subcondition($attr['property_value'], $actualValue);
+			}
+			if (!empty($attr['not_property_value'])) {
+				$subConditionMatching = ! geoip_detect2_shortcode_check_subcondition($attr['not_property_value'], $actualValue);
+			}
+		} catch (\Exception $e) {
+			$subConditionMatching = false;
+		}
+
+		$isConditionMatching = $isConditionMatching && $subConditionMatching;
+	}
 
     // All Criteria Passed?
     if ($isConditionMatching === $showContentIfMatch) {
@@ -477,6 +485,19 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
     }
 	return '';
 }
-
 add_shortcode('geoip_detect2_show_if', 'geoip_detect2_shortcode_show_if');
 add_shortcode('geoip_detect2_hide_if', 'geoip_detect2_shortcode_show_if');
+
+function geoip_detect2_shortcode_check_subcondition($expectedValuesRaw, $actualValues) {
+	// Parse User Input Values of Attribute
+	$attributeValuesArray = explode(',', $expectedValuesRaw);
+	$attributeValuesArray = array_map('trim', $attributeValuesArray);
+
+	$actualValues = (array) $actualValues;
+
+	// Compare case-insensitively
+	$attributeValuesArray = array_map('mb_strtolower', $attributeValuesArray);
+	$actualValues = array_map('mb_strtolower', $actualValues);
+
+	return count(array_intersect($actualValues, $attributeValuesArray)) > 0;
+}
