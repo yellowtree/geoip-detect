@@ -354,7 +354,7 @@ add_shortcode('geoip_detect2_user_info', 'geoip_detect_shortcode_user_info');
  * Shortcode attributes can be as follows:
  *
  * Inclusive Attributes (note that `hide_if` makes them exclusive):
- *      "timezone", "continent", "country", "most_specific_subdivision"/"region"/"state"*, "city"
+ *      "continent", "country", "most_specific_subdivision"/"region"/"state"*, "city"
  *
  * * most_specific_subdivision, region, and state are aliases (use the one that makes the most sense to you)
  *
@@ -363,34 +363,41 @@ add_shortcode('geoip_detect2_user_info', 'geoip_detect_shortcode_user_info');
  *
  * * most_specific_subdivision, region, and state are aliases (use the one that makes the most sense to you)
  *
- * Each attribute may only appear once in a shortcode or the shortcode will break, showing the contents no matter
- * the visitor's IP address. Country, most specific subdivision, region, and state attributes can take both full
- * names and ISO abbreviations (e.g., US). All attributes may take multiple values.
+ * Each attribute may only appear once in a shortcode! Country, most specific subdivision, region, and state attributes can take each take full names, ISO abbreviations (e.g., US), or the GeonamesId. All attributes may take multiple values seperated by comma (,).
+ *
+ * You can use other property names with the attribute "property" and "property_value" / "not_property_value".
  *
  * Examples:
  *
- * Display <h1>Title</h1> if the visitor is in the US and in Texas.
- *      `[geoip_detect2_show_if country="US" state="TX"]<h1>Title</h1>[/geoip_detect2_show_if]`
+ * Display TEXT if the visitor is in the US and in Texas.
+ *      `[geoip_detect2_show_if country="US" state="TX"]TEXT[/geoip_detect2_show_if]`
  * 	        - OR -
- *      `[geoip_detect2_show_if country="US" region="TX"]<h1>Title</h1>[/geoip_detect2_show_if]`
+ *      `[geoip_detect2_show_if country="US" region="TX"]TEXT[/geoip_detect2_show_if]`
  * 	        - OR -
- *      `[geoip_detect2_show_if country="US" region="Texas"]<h1>Title</h1>[/geoip_detect2_show_if]`
+ *      `[geoip_detect2_show_if country="US" region="Texas"]TEXT[/geoip_detect2_show_if]`
  *          - OR -
- *      `[geoip_detect2_show_if country="US" most_specific_subdivision="TX"]<h1>Title</h1>[/geoip_detect2_show_if]`
+ *      `[geoip_detect2_show_if country="US" most_specific_subdivision="TX"]TEXT[/geoip_detect2_show_if]`
  *
- * Display <h1>Title</h1> if the visitor is in the US, and in either Texas or Louisiana, but hide this content
+ * Display TEXT if the visitor is in the US, and in either Texas or Louisiana, but hide this content
  * from visitors with IP addresses from cities named Houston.
- *      `[geoip_detect2_show_if country="US" state="TX, LA" not_city="Houston"]<h1>Title</h1>[/geoip_detect2_show_if]`
+ *      `[geoip_detect2_show_if country="US" state="TX, LA" not_city="Houston"]TEXT[/geoip_detect2_show_if]`
  *
- * Display <h1>Title</h1> if the visitor is from North America.
- *      `[geoip_detect2_show_if continent="North America"]<h1>Title</h1>[/geoip_detect2_show_if]`
+ * Display TEXT if the visitor is from North America.
+ *      `[geoip_detect2_show_if continent="North America"]TEXT[/geoip_detect2_show_if]`
  *          - OR -
- *      `[geoip_detect2_hide_if not_continent="North America"]<h1>Title</h1>[/geoip_detect2_hide_if]`
+ *      `[geoip_detect2_hide_if not_continent="North America"]TEXT[/geoip_detect2_hide_if]`
  *
- * Hide <h1>Title</h1> if the visitor is from the US.
- *      `[geoip_detect2_hide_if country="US"]<h1>Title</h1>[/geoip_detect2_hide_if]`
+ * Hide TEXT if the visitor is from the US.
+ *      `[geoip_detect2_hide_if country="US"]TEXT[/geoip_detect2_hide_if]`
  *          - OR -
- *      `[geoip_detect2_show_if not_country="US"]<h1>Title</h1>[/geoip_detect2_show_if]`
+ *      `[geoip_detect2_show_if not_country="US"]TEXT[/geoip_detect2_show_if]`
+ *
+ * Show TEXT if the visitor is within the timezone Europe/Berlin
+ *      `[geoip_detect2_show_if property="location.timeZone" property_value="Europe/Berlin"]TEXT[/geoip_detect2_show_if]`
+ *
+ * LIMITATIONS:
+ * - You cannot nest several of these shortcodes within one another. Instead, seperate them into several blocks of shortcodes.
+ * - City names can be ambigous. For example, [geoip_detect2_show_if country="US,FR" not_city="Paris"] will exclude both Paris in France and Paris in Texas, US. Instead, you can find out the geoname_id or seperate the shortcode to make it more specific.
  *
  */
 function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName = '') {
@@ -443,15 +450,17 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 		if (!empty($attr[$shortcodeParamName])) {
             // Determine Actual MaxMind Value(s) for Attribute
 			$actualValues = array();
-			if (isset($info->{$maxmindName}->name)) {
-				$actualValues[] = $info->{$maxmindName}->name;
+			$alternativePropertyNames = array(
+					'name',
+					'isoCode',
+					'code',
+					'geonameId',
+			);
+			foreach ($alternativePropertyNames as $p) {
+				if (isset($info->{$maxmindName}->{$p})) {
+					$actualValues[] = $info->{$maxmindName}->{$p};
+				}
 			}
-			if(isset($info->{$maxmindName}->isoCode)) {
-				$actualValues[] = $info->{$maxmindName}->isoCode;
-			}
-			if(isset($info->{$maxmindName}->code)) {
-				$actualValues[] = $info->{$maxmindName}->code;
-            }
 
 			$subConditionMatching = geoip_detect2_shortcode_check_subcondition($attr[$shortcodeParamName], $actualValues);
 
