@@ -104,6 +104,7 @@ There have been changes to the reverse proxy logic. If you have enabled a revers
 == Changelog ==
 
 = 2.9.0 =
+* NEW: Shortcode to show/hide content dynamically. (`[geoip_detect2_show_if country="US" not_state="Texas"]TEXT[/geoip_detect2_show_if]`)
 * Add default Privacy text for GDPR compliance.
 * NEW: Wizard to get the right ip adress (in order to simplify reverse proxy configuration).
 * The reverse proxy logic was heavily changed. If you run into configuration errors, try the wizard.

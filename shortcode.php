@@ -110,7 +110,7 @@ add_shortcode('geoip_detect2', 'geoip_detect2_shortcode');
  * @return [type]               [description]
  * @throws \RuntimeException (if Property name invalid)
  */
-	function geoip_detect2_shortcode_get_property($userInfo, $propertyName) {
+function geoip_detect2_shortcode_get_property($userInfo, $propertyName) {
 	$return = '';
 	$properties = explode('.', $propertyName);
 	if (count($properties) == 1) {
