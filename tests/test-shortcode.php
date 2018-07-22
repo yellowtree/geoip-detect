@@ -192,7 +192,8 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		/* #5 */		array('',    '[geoip_detect2_show_if country="US"]yes[/geoip_detect2_show_if]' ),
 		/* #6 */		array('',    '[geoip_detect2_show_if country="DE" city="Munic" lang="en"]yes[/geoip_detect2_show_if]' ),
 		/* #7 */		array('yes', '[geoip_detect2_show_if country="DE" city="Eschborn"]yes[/geoip_detect2_show_if]' ),
-		/* #8 */		array('lang', '[geoip_detect2_show_if country="DE" lang="ru" city="Эшборн"]lang[/geoip_detect2_show_if]' ),
+		/* #8 */		array('lang', '[geoip_detect2_show_if lang="es" country="Alemania"]lang[/geoip_detect2_show_if]' ),
+		/* #8 */		array('', '[geoip_detect2_show_if lang="en" country="Alemania"]yes[/geoip_detect2_show_if]' ),
 		/* #9 */		array('yes', '[geoip_detect2_show_if state="HE"]yes[/geoip_detect2_show_if]' ),
 		/* #10 */		array('yes', '[geoip_detect2_show_if region="HE"]yes[/geoip_detect2_show_if]' ),
 		/* #11 */		array('yes', '[geoip_detect2_show_if most_specific_subdivision="HE"]yes[/geoip_detect2_show_if]' ),
@@ -204,7 +205,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		/* #17 */		array('', '[geoip_detect2_show_if continent="EU" not_country="DE"]yes[/geoip_detect2_show_if]' ),
 		/* #18 */		array('yes', '[geoip_detect2_show_if country="US, DE"]yes[/geoip_detect2_show_if]' ),
 		/* #19 */		array('yes', '[geoip_detect2_show_if country="US,DE , FR"]yes[/geoip_detect2_show_if]' ),
-		/* #20 */		array('yes', '[geoip_detect2_show_if country="US,FR"]yes[/geoip_detect2_show_if]' ),
+		/* #20 */		array('', '[geoip_detect2_show_if country="US,FR"]yes[/geoip_detect2_show_if]' ),
 		);
 	}
 

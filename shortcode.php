@@ -72,7 +72,6 @@ function geoip_detect2_shortcode($attr)
 
 	$defaultValue = isset($attr['default']) ? $attr['default'] : '';
 
-	$properties = explode('.', $attr['property']);
 
 	$options = array('skipCache' => $skipCache);
 
@@ -83,7 +82,26 @@ function geoip_detect2_shortcode($attr)
 	if ($userInfo->isEmpty)
 		return $defaultValue . '<!-- GeoIP Detect: No information found for this IP (' . geoip_detect2_get_client_ip() . ') -->';
 
+	$return = geoip_detect2_shortcode_get_property($userInfo, $attr['property'], $defaultValue);
+
+	if (is_object($return) && $return instanceof \GeoIp2\Record\AbstractPlaceRecord)
+		$return = $return->name;
+
+	if (is_object($return) || is_array($return)) {
+		return $defaultValue . '<!-- GeoIP Detect: Invalid property name (sub-property missing). -->';
+	}
+
+	if ($return)
+		return (string) $return;
+	else
+		return $defaultValue;
+
+}
+add_shortcode('geoip_detect2', 'geoip_detect2_shortcode');
+
+function geoip_detect2_shortcode_get_property($userInfo, $propertyName, $defaultValue = '') {
 	$return = '';
+	$properties = explode('.', $propertyName);
 	try {
 		if (count($properties) == 1) {
 			$return = $userInfo->{$properties[0]};
@@ -111,21 +129,8 @@ function geoip_detect2_shortcode($attr)
 	} catch (\RuntimeException $e) {
 		return $defaultValue . '<!-- GeoIP Detect: Invalid property name. -->';
 	}
-
-	if (is_object($return) && $return instanceof \GeoIp2\Record\AbstractPlaceRecord)
-		$return = $return->name;
-
-	if (is_object($return) || is_array($return)) {
-		return $defaultValue . '<!-- GeoIP Detect: Invalid property name (sub-property missing). -->';
-	}
-
-	if ($return)
-		return (string) $return;
-	else
-		return $defaultValue;
-
+	return $return;
 }
-add_shortcode('geoip_detect2', 'geoip_detect2_shortcode');
 
 function geoip_detect2_shortcode_client_ip($attr) {
 	$client_ip = geoip_detect2_get_client_ip();
@@ -385,6 +390,7 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
     $showContentIfMatch = ($shortcodeName == 'geoip_detect2_show_if') ? true : false;
 
     $attr = shortcode_atts(array(
+		'lang' => null,
         'timezone' => null,
         'continent' => null,
         'country' => null,
@@ -399,7 +405,13 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
         'not_city' => null,),
         $attr);
 
-    $info = geoip_detect2_get_info_from_current_ip();
+	$locales = apply_filters('geoip_detect2_locales', $attr['lang']);
+
+	$options = array(
+
+	);
+
+    $info = geoip_detect2_get_info_from_current_ip($locales, $options);
     $isConditionMatching = true;
 
     /* Attribute Conditions. Order is important: From generic to specific. */
