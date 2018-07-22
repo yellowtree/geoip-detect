@@ -400,7 +400,7 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
         $attr);
 
     $info = geoip_detect2_get_info_from_current_ip();
-    $isConditionMatching = false;
+    $isConditionMatching = true;
 
     /* Attribute Conditions. Order is important: From generic to specific. */
 	$attributeNames = array(
@@ -443,9 +443,11 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
             $attributeValuesArray = array_map('mb_strtolower', $attributeValuesArray);
             $actualValues = array_map('mb_strtolower', $actualValues);
 
-			if (array_intersect($actualValues, $attributeValuesArray)) {
-				$isConditionMatching = (substr($shortcodeParamName, 0, 4) == 'not_') ? false : true;
+			$subConditionMatching = array_intersect($actualValues, $attributeValuesArray);
+			if (substr($shortcodeParamName, 0, 4) == 'not_') {
+				$subConditionMatching = !$subConditionMatching;
 			}
+			$isConditionMatching = $isConditionMatching && $subConditionMatching;
 		}
 	}
 
