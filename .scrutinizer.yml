@@ -21,10 +21,10 @@ checks:
         avoid_closing_tag: false
         assignment_of_null_return: true
 build:
+    environment:
+        php:
+            version: '5.4'
     nodes:
-        tests:
-            override:
-                command: "php -v"
         analysis:
             dependencies:
                 before:
