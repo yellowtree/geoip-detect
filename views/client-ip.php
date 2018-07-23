@@ -1,4 +1,6 @@
 <div class="wrap geoip-detect-wrap">
+	<!-- This page cannot be translated yet, as I am not sure how it will look like in the long-term.
+The goal is to have wizard helping to set all the relevant options semi-automatically. -->
 	<h1><?php _e('GeoIP Detection', 'geoip-detect');?> - Client IP Debug Panel</h1>
 	<p>
 		<a href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>"><?php _e('Test IP Detection Lookup', 'geoip-detect')?></a>
@@ -16,7 +18,10 @@ This needs to be known to the plugin to choose the correct IP adress.
 		Real client IP (detected without the plugin): <b><span id="ajax_get_client_ip"><i>Detecting ...</i></span></b>
 		<span class="detail-box">This IP is detected within the browser, so reverse proxies of the server are not affected.<br></span>
 		External Server IP: <b><?php echo geoip_detect2_get_external_ip_adress(); ?></b><br>
-		<span class="detail-box">In some cases, the server is in the same network as the client (e.g. testing server). As the connection does not use Internet, this plugin uses the IP adress of the server as seen from the internet.<br>For performance reasons, this IP is cached for <?php echo human_time_diff(0, GEOIP_DETECT_IP_CACHE_TIME); ?>.</span>
+		<span class="detail-box">In some cases, the server is in the same network as the client (e.g. testing server). As the connection does not use Internet, this plugin uses the IP adress of the server as seen from the internet.<br>
+			For performance reasons, this IP is cached for <?php echo human_time_diff(0, GEOIP_DETECT_IP_CACHE_TIME); ?>.<br>
+			Also, for servers without internet access, this IP can be set in the options.
+		</span>
 	</p>
 	<p>
 		REMOTE_ADDR: <b><?php echo $_SERVER['REMOTE_ADDR']; ?></b><br>
@@ -44,8 +49,8 @@ This needs to be known to the plugin to choose the correct IP adress.
 		dataType: 'text',
 	}).done(function(ret) {
 		jQuery('#ajax_get_client_ip').text(ret);
-	}).fail(function(ret) {
-		jQuery('#ajax_get_client_ip').text('Failed: ' + ret);
+	}).fail(function(xhr, status, ret) {
+		jQuery('#ajax_get_client_ip').text('Failed: ' + status + ret);
 	});
 </script>
 

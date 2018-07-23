@@ -109,7 +109,7 @@ New: Shortcode for showing/hiding content!
 * Add default Privacy text for GDPR compliance.
 * The reverse proxy logic was heavily changed. If you run into configuration errors, try the debug panel (see link after the reverse proxy option).
 * NEW: Reverse proxies can now be whitelisted - all non-whitelisted proxies are treated as user IP.
-* NEW: Shortcode to show/hide content dynamically. (`[geoip_detect2_show_if country="US" not_state="Texas"]TEXT[/geoip_detect2_show_if]`)
+* NEW: Shortcode to show/hide content dynamically. (`[geoip_detect2_show_if country="US" not_state="Texas"]TEXT[/geoip_detect2_show_if]`) (Thanks to @DynAggelos!)
 * NEW: All shortcodes now support multiple subdivisions (`[geoip_detect2 property="subdivisions.0.isoCode"]`)
 * NEW: The CSS classes that are added to the body-tag (if enabled in the options) now also include the most specific subdivisino (province).
 * Maxmind vendor code was updated to the current version (2.9.0).
