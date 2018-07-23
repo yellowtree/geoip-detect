@@ -38,7 +38,7 @@ fi
 
 # Add Travis CI
 
-echo "Tests: [![Build Status](https://travis-ci.org/yellowtree/wp-geoip-detect.png?branch=master)](https://travis-ci.org/yellowtree/wp-geoip-detect)" >> /tmp/file
+echo "Tests: [![Build Status](https://travis-ci.com/yellowtree/wp-geoip-detect.png?branch=master)](https://travis-ci.com/yellowtree/wp-geoip-detect)" >> /tmp/file
 #echo "Composer: [![Dependency Status](https://www.versioneye.com/user/projects/55433d0dd8fe1aea70000041/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55433d0dd8fe1aea70000041)" >> /tmp/file
 echo >> /tmp/file
 
@@ -49,13 +49,13 @@ echo -n Contributors: >> /tmp/file
 # Find No Of Contributors & Send Them To Temp File
 for i in $(cat readme.txt | grep ^Contributor | cut -d: -f2 | tr ',' ' ')
 do
-        echo -n " [$i] (http://profiles.wordpress.org/$i)" | tr '\n' ' ' 
+        echo -n " [$i] (http://profiles.wordpress.org/$i)" | tr '\n' ' '
 done >> /tmp/file
 echo >> /tmp/file
 
 # Find License Details
 echo $LICENSE | grep 3.0 > /dev/null
-if [ $? -eq 0 ] 
+if [ $? -eq 0 ]
 then
         LICENSE="[GPL v3 or later] (http://www.gnu.org/licenses/gpl-3.0.html)"
         #echo $LICENSE
@@ -99,4 +99,3 @@ sed 's/==/##/g' /tmp/file2 &> /tmp/file1
 sed 's/[Cc]ontributors:/* **Contributors:**/' /tmp/file1 &> /tmp/file2
 sed 's/[Dd]onate [Ll]ink:/* **Donate Link:**/' /tmp/file2 &> /tmp/file1
 sed 's/[Ll]icense:/* **License:**/' /tmp/file1 &> README.md
-
