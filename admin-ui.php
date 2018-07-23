@@ -50,7 +50,7 @@ function geoip_detect_lookup_page()
 {
 	if (!is_admin())
 		return;
-	
+
 	$ip_lookup_result = false;
 	$message = '';
 
@@ -62,11 +62,11 @@ function geoip_detect_lookup_page()
 					$request_ip = $_POST['ip'];
 					$request_skipCache = !empty($_POST['skip_cache']);
 					$options = array('skipCache' => $request_skipCache);
-					
+
 					$request_locales = null;
 					if (!empty($_POST['locales']))
 						$request_locales = explode(',', $_POST['locales']);
-					
+
 					$start = microtime(true);
 					$ip_lookup_result = geoip_detect2_get_info_from_ip($request_ip, $request_locales, $options);
 					$end = microtime(true);
@@ -75,51 +75,51 @@ function geoip_detect_lookup_page()
 				break;
 		}
 	}
-	
+
 	include_once(GEOIP_PLUGIN_DIR . '/views/lookup.php');
 }
 
 function geoip_detect_option_page() {
 	if (!is_admin() || !current_user_can('manage_options'))
 		return;
-	
+
 	switch (@$_GET['geoip_detect_part']) {
 		case 'client-ip':
 			return geoip_detect_option_client_ip_page();
 			break;
 	}
-		
+
 	$registry = DataSourceRegistry::getInstance();
 	$sources = $registry->getAllSources();
-	
+
 	$message = '';
-	
+
 	$numeric_options = array('set_css_country', 'has_reverse_proxy', 'disable_pagecache');
-	$text_options = array('external_ip');
+	$text_options = array('external_ip', 'trusted_proxy_ips');
 	$option_names = array_merge($numeric_options, $text_options);
-	
-	if (geoip_detect_verify_nonce()) {	
+
+	if (geoip_detect_verify_nonce()) {
 		switch(@$_POST['action'])
 		{
 			case 'update':
 				$registry->setCurrentSource('auto');
-		
+
 				$s = new \YellowTree\GeoipDetect\DataSources\Auto\AutoDataSource();
 				$ret = $s->maxmindUpdate();
-	
+
 				if ($ret === true)
 					$message .= __('Updated successfully.', 'geoip-detect');
 				else
 					$message .= __('File was not updated', 'geoip-detect') .': '. $ret;
-		
+
 				break;
-	
+
 			case 'choose':
 				$registry->setCurrentSource($_POST['options']['source']);
 				break;
-		
-				
-			case 'options-source':			
+
+
+			case 'options-source':
 				$messages = array();
 				foreach ($sources as $s) {
 					$ret = $s->saveParameters($_POST);
@@ -129,13 +129,13 @@ function geoip_detect_option_page() {
 				}
 				if ($messages)
 					$message .= implode('<br />', $messages);
-				
+
 				break;
-				
-			case 'options':	
+
+			case 'options':
 				// Empty IP Cache
 				delete_transient('geoip_detect_external_ip');
-				
+
 				if (!empty($_POST['options']['external_ip'])) {
 					if (!geoip_detect_is_ip($_POST['options']['external_ip'])) {
 						$message .= 'The external IP "' . esc_html($_POST['options']['external_ip']) . '" is not a valid IP.';
@@ -144,8 +144,8 @@ function geoip_detect_option_page() {
 						$message .= 'Warning: The external IP "' . esc_html($_POST['options']['external_ip']) . '" is not a public internet IP, so it will probably not work.';
 					}
 				}
-				
-				
+
+
 				foreach ($option_names as $opt_name) {
 					if (in_array($opt_name, $numeric_options))
 						$opt_value = isset($_POST['options'][$opt_name]) ? (int) $_POST['options'][$opt_name] : 0;
@@ -158,14 +158,14 @@ function geoip_detect_option_page() {
 	}
 
     $currentSource = $registry->getCurrentSource();
-    
+
 	$wp_options = array();
 	foreach ($option_names as $opt_name) {
 		$wp_options[$opt_name] = get_option('geoip-detect-'. $opt_name);
 	}
-	
+
 	$ipv6_supported = GEOIP_DETECT_IPV6_SUPPORTED;
-	
+
 	include_once(GEOIP_PLUGIN_DIR . '/views/options.php');
 }
 
