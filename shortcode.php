@@ -415,6 +415,7 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 
     $attr = shortcode_atts(array(
 		'lang' => null,
+		'skip_cache' => 'false',
         'property' => null,
         'property_value' => null,
         'not_property_value' => null,
