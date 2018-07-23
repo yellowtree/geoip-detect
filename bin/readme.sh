@@ -49,7 +49,7 @@ echo -n Contributors: >> /tmp/file
 # Find No Of Contributors & Send Them To Temp File
 for i in $(cat readme.txt | grep ^Contributor | cut -d: -f2 | tr ',' ' ')
 do
-        echo -n " [$i] (http://profiles.wordpress.org/$i)" | tr '\n' ' '
+        echo -n " [$i](http://profiles.wordpress.org/$i)" | tr '\n' ' '
 done >> /tmp/file
 echo >> /tmp/file
 

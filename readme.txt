@@ -32,6 +32,7 @@ as a shortcode, or via CSS body classes. The city & country names are translated
   * Hosting-Provider dependent: [Cloudflare](https://support.cloudflare.com/hc/en-us/articles/200168236-What-does-CloudFlare-IP-Geolocation-do-) or [Amazon AWS CloudFront](https://aws.amazon.com/blogs/aws/enhanced-cloudfront-customization/) (Country)
 * For the property names, see the results of a specific IP in the wordpress backend (under *Tools > GeoIP Detection*).
 * You can include these properties into your posts and pages by using the shortcode `[geoip_detect2 property="country.name" default="(country could not be detected)" lang="en"]` (where 'country.name' can be one of the other property names as well, and 'default' and 'lang' are optional).
+* You can show or hide content by using a shortcode ``[geoip_detect2_show_if country="FR, DE" not_city="Berlin"]TEXT[/geoip_detect2_show_if]`. See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-Documentation).
 * When enabled on the options page, it adds CSS classes to the body tag such as `geoip-country-DE` and `geoip-continent-EU`.
 * When enabled on the options page, the client IP respects a reverse proxy of the server.
 * If you are using [Contact Form 7](https://wordpress.org/plugins/contact-form-7/), you can use these shortcodes:
@@ -104,12 +105,12 @@ There have been changes to the reverse proxy logic. If you have enabled a revers
 == Changelog ==
 
 = 2.9.0 =
-* NEW: Shortcode to show/hide content dynamically. (`[geoip_detect2_show_if country="US" not_state="Texas"]TEXT[/geoip_detect2_show_if]`)
 * Add default Privacy text for GDPR compliance.
 * The reverse proxy logic was heavily changed. If you run into configuration errors, try the debug panel (see link after the reverse proxy option).
 * NEW: Reverse proxies can now be whitelisted - all non-whitelisted proxies are treated as user IP.
+* NEW: Shortcode to show/hide content dynamically. (`[geoip_detect2_show_if country="US" not_state="Texas"]TEXT[/geoip_detect2_show_if]`)
+* NEW: All shortcodes now support multiple subdivisions (`[geoip_detect2 property="subdivisions.0.isoCode"]`)
 * NEW: The CSS classes that are added to the body-tag (if enabled in the options) now also include the most specific subdivisino (province).
-* NEW: Shortcodes now support multiple subdivisions (`[geoip_detect2 property="subdivisions.0.isoCode"]`)
 * Maxmind vendor code was updated to the current version (2.9.0).
 
 [Older changelog](https://github.com/yellowtree/wp-geoip-detect/blob/master/CHANGELOG.md)
