@@ -54,28 +54,35 @@ add_shortcode('geoip_detect', 'geoip_detect_shortcode');
  *
  * `[geoip_detect2 property="country" lang="de"]` -> Deutschland
  * `[geoip_detect2 property="country" lang="fr,de"]` -> Allemagne
- * `[geoip_detect2 property="country.confidence" default="default value"]` -> default value
+ * `[geoip_detect2 property="country.confidence" skip_cache="true" default="default value"]` -> default value
  *
  * @param string $property		Property to read. Instead of '->', use '.'
  * @param string $lang			Language(s) (optional. If not set, current site language is used.)
  * @param string $default 		Default Value that will be shown if value not set (optional)
- * @param string $skipCache		if 'true': Do not cache value
+ * @param string $skip_cache		if 'true': Do not cache value
  *
  * @since 2.5.7 New attribute `ip`
  */
-function geoip_detect2_shortcode($attr)
+function geoip_detect2_shortcode($attr, $content, $shortcodeName)
 {
-	$skipCache = isset($attr['skip_cache']) && (strtolower($attr['skip_cache']) == 'true' || $attr['skip_cache'] == '1');
+	$attr = shortcode_atts(array(
+		'skip_cache' => 'false',
+		'lang' => null,
+		'default' => '',
+		'property' => '',
+		'ip' => null,
+	), $attr, $shortcodeName);
+
+	$skipCache = filter_var($attr['skip_cache'], FILTER_VALIDATE_BOOLEAN );
 
 	$locales = isset($attr['lang']) ? $attr['lang'] . ',en' : null;
 	$locales = apply_filters('geoip_detect2_locales', $locales);
 
-	$defaultValue = isset($attr['default']) ? $attr['default'] : '';
-
+	$defaultValue = $attr['default'];
 
 	$options = array('skipCache' => $skipCache);
 
-	$ip = isset($attr['ip']) ? $attr['ip'] : geoip_detect2_get_client_ip();
+	$ip = $attr['ip'] ?: geoip_detect2_get_client_ip();
 
 	$userInfo = geoip_detect2_get_info_from_ip($ip, $locales, $options);
 
@@ -88,8 +95,9 @@ function geoip_detect2_shortcode($attr)
 		return $defaultValue . '<!-- GeoIP Detect: Invalid property name. -->';
 	}
 
-	if (is_object($return) && $return instanceof \GeoIp2\Record\AbstractPlaceRecord)
+	if (is_object($return) && $return instanceof \GeoIp2\Record\AbstractPlaceRecord) {
 		$return = $return->name;
+	}
 
 	if (is_object($return) || is_array($return)) {
 		return $defaultValue . '<!-- GeoIP Detect: Invalid property name (sub-property missing). -->';
@@ -363,9 +371,11 @@ add_shortcode('geoip_detect2_user_info', 'geoip_detect_shortcode_user_info');
  *
  * * most_specific_subdivision, region, and state are aliases (use the one that makes the most sense to you)
  *
- * Each attribute may only appear once in a shortcode! Country, most specific subdivision, region, and state attributes can take each take full names, ISO abbreviations (e.g., US), or the GeonamesId. All attributes may take multiple values seperated by comma (,).
+ * Each attribute may only appear once in a shortcode!
+ * The location attributes can take each take full names, ISO abbreviations (e.g., US), or the GeonamesId.
+ * All attributes may take multiple values seperated by comma (,).
  *
- * You can use other property names with the attribute "property" and "property_value" / "not_property_value".
+ * You can use custom property names with the attribute "property" and "property_value" / "not_property_value".
  *
  * Examples:
  *
@@ -419,18 +429,19 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
         'not_region' => null,
         'not_state' => null,
         'not_city' => null,),
-        $attr);
+        $attr, $shortcodeName);
 
-	$locales = apply_filters('geoip_detect2_locales', $attr['lang']);
+	$skipCache = filter_var($attr['skip_cache'], FILTER_VALIDATE_BOOLEAN );
 
-	$options = array(
+	$locales = isset($attr['lang']) ? $attr['lang'] . ',en' : null;
+	$locales = apply_filters('geoip_detect2_locales', $locales);
 
-	);
+	$options = array('skipCache' => $skipCache);
 
     $info = geoip_detect2_get_info_from_current_ip($locales, $options);
     $isConditionMatching = true;
 
-    /* Attribute Conditions. Order is important: From generic to specific. */
+    /* Attribute Conditions. Order is not important, as they are combined with an transitive AND condition */
 	$attributeNames = array(
         'continent' => 'continent',
         'not_continent' => 'continent',
