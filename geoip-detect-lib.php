@@ -312,6 +312,28 @@ function geoip_detect_is_public_ip($ip) {
 	return $is_public;
 }
 
+function _geoip_detect2_get_external_ip_services($nb = 3, $needsCORS = false) {
+	$ipservicesThatAllowCORS = array(
+			'http://ipv4.icanhazip.com',
+			'http://v4.ident.me',
+	);
+	$ipservicesWithoutCORS = array(
+		'http://ipecho.net/plain',
+		'http://bot.whatismyipaddress.com',
+	);
+
+	$ipservices = $ipservicesThatAllowCORS;
+	if (!$needsCORS) {
+		$ipservices = array_merge($ipservices, $ipservicesWithoutCORS);
+	}
+
+	// Randomizing to avoid querying the same service each time
+	shuffle($ipservices);
+	$ipservices = apply_filters('geiop_detect_ipservices', $ipservices);
+	$ipservices = array_slice($ipservices, 0, $nb);
+	return $ipservices;
+}
+
 /**
  * Sometimes we can only see an local IP adress (local development environment.)
  * In this case we need to ask an internet server which IP adress our internet connection has.
@@ -321,19 +343,7 @@ function geoip_detect_is_public_ip($ip) {
  */
 function _geoip_detect_get_external_ip_adress_without_cache()
 {
-	$ipservices = array(
-		'http://ipv4.icanhazip.com',
-//		'http://ifconfig.me/ip', // seems to be slow
-		'http://ipecho.net/plain',
-		'http://v4.ident.me',
-		'http://bot.whatismyipaddress.com',
-//		'http://ip.appspot.com', // overloaded, 503 Out of Quota
-	);
-
-	// Randomizing to avoid querying the same service each time
-	shuffle($ipservices);
-	$ipservices = apply_filters('geiop_detect_ipservices', $ipservices);
-	$ipservices = array_slice($ipservices, 0, 3);
+	$ipservices = _geoip_detect2_geoip_detect2_get_external_ip_services();
 
 	foreach ($ipservices as $url)
 	{

@@ -1,4 +1,4 @@
-<?php 
+<?php
 use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 $date_format = get_option('date_format') . ' ' . get_option('time_format');
 
@@ -20,28 +20,28 @@ if ($shortcode_options) {
 	<p>
 		<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>"><?php _e('Options', 'geoip-detect');?></a>
 	</p>
-	
+
 	<p>
 		<?php printf(__('<b>Selected data source:</b> %s', 'geoip-detect'), geoip_detect2_get_current_source_description() ); ?>
 	</p>
-		
+
 	<p>
 		<?php echo $current_source->getStatusInformationHTML(); ?>
 		<br />
 		<br />
 	</p>
-	
+
 	<p>
-		<b><?php _e('Current IP:', 'geoip-detect');?></b> <?php echo geoip_detect2_get_client_ip(); ?>
+		<b><?php _e('Your current IP:', 'geoip-detect');?></b> <?php echo geoip_detect2_get_client_ip(); ?>
 		<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_part=client-ip">(<?php _e('Not correct?', 'geoip-detect');?>)</a>
 	</p>
-		
+
 	<h2><?php _e('Test IP Detection Lookup ', 'geoip-detect');?></h2>
 	<form method="post" action="#">
 		<?php wp_nonce_field( 'geoip_detect_lookup' ); ?>
 		<input type="hidden" name="action" value="lookup" />
 		<?php _e('IP', 'geoip-detect')?>: <input type="text" placeholder="<?php _e('Enter an IP (v4 or v6)', 'geoip-detect')?>" name="ip" value="<?php echo isset($_REQUEST['ip']) ? esc_attr($_REQUEST['ip']) : esc_attr(geoip_detect2_get_client_ip()); ?>" /><br />
-		<label><?php _e('Use these locales:', 'geoip-detect'); ?> 
+		<label><?php _e('Use these locales:', 'geoip-detect'); ?>
 			<select name="locales">
 				<option value="" <?php if (empty($_POST['locales'])) echo 'selected="selected"'?>><?php _e('Default (Current site language, English otherwise)', 'geoip-detect')?></option>
 				<option value="en" <?php if (!empty($_POST['locales']) && $_POST['locales'] == 'en') echo 'selected="selected"'?>><?php _e('English only', 'geoip-detect')?></option>
@@ -53,7 +53,7 @@ if ($shortcode_options) {
 	</form>
 	<?php if ($ip_lookup_result !== false) :
 			if (is_object($ip_lookup_result)) :
-				$record = $ip_lookup_result; 
+				$record = $ip_lookup_result;
 
 			?>
 	<h3><?php _e('Lookup Result', 'geoip-detect'); ?></h3>
@@ -64,20 +64,20 @@ if ($shortcode_options) {
 			<br /><?php printf(__('(Served from cache. Was cached %s ago)', 'geoip-detect'), human_time_diff($record->extra->cached));?>
 		<?php endif; ?>
 	</p>
-	
+
 	<?php if ($record->extra->error) : ?>
 	<p class="geoip_detect_error">
 		<?php echo nl2br(esc_html($record->extra->error)); ?>
 	</p>
 	<?php endif; ?>
-	
+
 	<table>
 		<tr>
 			<th><?php _e('Key', 'geoip-detect'); ?></th>
 			<th><?php _e('Value', 'geoip-detect'); ?></th>
 			<th><?php _e('Shortcode equivalent', 'geoip-detect'); ?></th>
 		</tr>
-	
+
 		<tr>
 			<td><code>$record-&gt;city-&gt;name</code></td>
 			<td><?php echo esc_html($record->city->name);?></td>
