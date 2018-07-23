@@ -4,7 +4,7 @@ Tests: [![Build Status](https://travis-ci.com/yellowtree/wp-geoip-detect.png?bra
 
 * **Contributors:** [benjaminpick] (http://profiles.wordpress.org/benjaminpick)
 
-* **License:** [GPL v3 or later] (http://www.gnu.org/licenses/gpl-3.0.html)
+* **License:** [GPL v3 or later](http://www.gnu.org/licenses/gpl-3.0.html)
 
 * **Donate Link:** https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYUZHS8FH3CL
 
