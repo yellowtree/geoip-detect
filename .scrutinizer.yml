@@ -22,7 +22,9 @@ checks:
         assignment_of_null_return: true
 build:
     nodes:
-        tests: true
+        tests:
+            override:
+                command: "php -v"
         analysis:
             dependencies:
                 before:

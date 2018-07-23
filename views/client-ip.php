@@ -32,7 +32,7 @@ This needs to be known to the plugin to choose the correct IP adress.
 		<i>(Probably you should enable the reverse proxy option.)</i>
 		<?php endif; ?>
 	</p>
-	<h3>Settings</h3>
+	<h3>Settings of the plugin</h3>
 	<ul>
 		<li>Use reverse proxy: <b><?php echo get_option('geoip-detect-has_reverse_proxy', 0) ? 'yes' : 'no' ?></b>
 			<span class="detail-box">Enable this option if REMOTE_ADDR is not the correct client IP.</span>
