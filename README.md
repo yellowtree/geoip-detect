@@ -98,6 +98,7 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 = 2.9.0 =
 
 There have been changes to the reverse proxy logic. If you have enabled a reverse proxy, check if the detected IP is correct.
+New: Shortcode for showing/hiding content!
 
 ## Changelog ##
 
