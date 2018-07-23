@@ -72,7 +72,6 @@ function geoip_detect2_shortcode($attr)
 
 	$defaultValue = isset($attr['default']) ? $attr['default'] : '';
 
-	$properties = explode('.', $attr['property']);
 
 	$options = array('skipCache' => $skipCache);
 
@@ -83,31 +82,8 @@ function geoip_detect2_shortcode($attr)
 	if ($userInfo->isEmpty)
 		return $defaultValue . '<!-- GeoIP Detect: No information found for this IP (' . geoip_detect2_get_client_ip() . ') -->';
 
-	$return = '';
 	try {
-		if (count($properties) == 1) {
-			$return = $userInfo->{$properties[0]};
-		} else if ($properties[0] == 'subdivisions' && (count($properties) == 2 || count($properties) == 3)) {
-			$return = $userInfo->{$properties[0]};
-			if (!is_array($return))
-				throw new \RuntimeException('Invalid property name.');
-			if (!is_numeric($properties[1]))
-				throw new \RuntimeException('Invalid property name (must be numeric, e.g. "subdivisions.0").');
-			$return = $return[(int) $properties[1]];
-
-			if (isset($properties[2])) {
-				if (!is_object($return))
-					throw new \RuntimeException('Invalid property name.');
-				$return = $return->{$properties[2]};
-			}
-		} else if (count($properties) == 2) {
-			$return = $userInfo->{$properties[0]};
-			if (!is_object($return))
-			throw new \RuntimeException('Invalid property name.');
-			$return = $return->{$properties[1]};
-		} else {
-			throw new \RuntimeException('Only 1 dot supported. Please send a bug report to show me the shortcode you used if you need it ...');
-		}
+		$return = geoip_detect2_shortcode_get_property($userInfo, $attr['property']);
 	} catch (\RuntimeException $e) {
 		return $defaultValue . '<!-- GeoIP Detect: Invalid property name. -->';
 	}
@@ -126,6 +102,42 @@ function geoip_detect2_shortcode($attr)
 
 }
 add_shortcode('geoip_detect2', 'geoip_detect2_shortcode');
+
+/**
+ * [geoip_detect2_shortcode_get_property description]
+ * @param  [type] $userInfo     [description]
+ * @param  [type] $propertyName [description]
+ * @return [type]               [description]
+ * @throws \RuntimeException (if Property name invalid)
+ */
+function geoip_detect2_shortcode_get_property($userInfo, $propertyName) {
+	$return = '';
+	$properties = explode('.', $propertyName);
+	if (count($properties) == 1) {
+		$return = $userInfo->{$properties[0]};
+	} else if ($properties[0] == 'subdivisions' && (count($properties) == 2 || count($properties) == 3)) {
+		$return = $userInfo->{$properties[0]};
+		if (!is_array($return))
+			throw new \RuntimeException('Invalid property name.');
+		if (!is_numeric($properties[1]))
+			throw new \RuntimeException('Invalid property name (must be numeric, e.g. "subdivisions.0").');
+		$return = $return[(int) $properties[1]];
+
+		if (isset($properties[2])) {
+			if (!is_object($return))
+				throw new \RuntimeException('Invalid property name.');
+			$return = $return->{$properties[2]};
+		}
+	} else if (count($properties) == 2) {
+		$return = $userInfo->{$properties[0]};
+		if (!is_object($return))
+		throw new \RuntimeException('Invalid property name.');
+		$return = $return->{$properties[1]};
+	} else {
+		throw new \RuntimeException('Only 1 dot supported. Please send a bug report to show me the shortcode you used if you need it ...');
+	}
+	return $return;
+}
 
 function geoip_detect2_shortcode_client_ip($attr) {
 	$client_ip = geoip_detect2_get_client_ip();
@@ -330,3 +342,171 @@ function geoip_detect_shortcode_user_info($attr) {
     return geoip_detect2_shortcode_user_info_wpcf7('', 'geoip_detect2_user_info', true);
 }
 add_shortcode('geoip_detect2_user_info', 'geoip_detect_shortcode_user_info');
+
+/**
+ *
+ * Geo-Dependent Content Hiding
+ *
+ * Uses an enclosing shortcode to selectively show or hide content. Use either
+ * [geoip_detect2_show_if][/geoip_detect2_show_if] or [geoip_detect2_hide_if][/geoip_detect2_hide_if] at your
+ * discretion, as they can both be used to accomplish the same thing.
+ *
+ * Shortcode attributes can be as follows:
+ *
+ * Inclusive Attributes (note that `hide_if` makes them exclusive):
+ *      "continent", "country", "most_specific_subdivision"/"region"/"state"*, "city"
+ *
+ * * most_specific_subdivision, region, and state are aliases (use the one that makes the most sense to you)
+ *
+ * Exclusive Attributes (note that `hide_if` makes them inclusive):
+ *      "not_country", "not_most_specific_subdivision"/"not_region"/"not_state"*, "not_city"
+ *
+ * * most_specific_subdivision, region, and state are aliases (use the one that makes the most sense to you)
+ *
+ * Each attribute may only appear once in a shortcode! Country, most specific subdivision, region, and state attributes can take each take full names, ISO abbreviations (e.g., US), or the GeonamesId. All attributes may take multiple values seperated by comma (,).
+ *
+ * You can use other property names with the attribute "property" and "property_value" / "not_property_value".
+ *
+ * Examples:
+ *
+ * Display TEXT if the visitor is in the US and in Texas.
+ *      `[geoip_detect2_show_if country="US" state="TX"]TEXT[/geoip_detect2_show_if]`
+ * 	        - OR -
+ *      `[geoip_detect2_show_if country="US" region="TX"]TEXT[/geoip_detect2_show_if]`
+ * 	        - OR -
+ *      `[geoip_detect2_show_if country="US" region="Texas"]TEXT[/geoip_detect2_show_if]`
+ *          - OR -
+ *      `[geoip_detect2_show_if country="US" most_specific_subdivision="TX"]TEXT[/geoip_detect2_show_if]`
+ *
+ * Display TEXT if the visitor is in the US, and in either Texas or Louisiana, but hide this content
+ * from visitors with IP addresses from cities named Houston.
+ *      `[geoip_detect2_show_if country="US" state="TX, LA" not_city="Houston"]TEXT[/geoip_detect2_show_if]`
+ *
+ * Display TEXT if the visitor is from North America.
+ *      `[geoip_detect2_show_if continent="North America"]TEXT[/geoip_detect2_show_if]`
+ *          - OR -
+ *      `[geoip_detect2_hide_if not_continent="North America"]TEXT[/geoip_detect2_hide_if]`
+ *
+ * Hide TEXT if the visitor is from the US.
+ *      `[geoip_detect2_hide_if country="US"]TEXT[/geoip_detect2_hide_if]`
+ *          - OR -
+ *      `[geoip_detect2_show_if not_country="US"]TEXT[/geoip_detect2_show_if]`
+ *
+ * Show TEXT if the visitor is within the timezone Europe/Berlin
+ *      `[geoip_detect2_show_if property="location.timeZone" property_value="Europe/Berlin"]TEXT[/geoip_detect2_show_if]`
+ *
+ * LIMITATIONS:
+ * - You cannot nest several of these shortcodes within one another. Instead, seperate them into several blocks of shortcodes.
+ * - City names can be ambigous. For example, [geoip_detect2_show_if country="US,FR" not_city="Paris"] will exclude both Paris in France and Paris in Texas, US. Instead, you can find out the geoname_id or seperate the shortcode to make it more specific.
+ *
+ */
+function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName = '') {
+    $showContentIfMatch = ($shortcodeName == 'geoip_detect2_show_if') ? true : false;
+
+    $attr = shortcode_atts(array(
+		'lang' => null,
+        'property' => null,
+        'property_value' => null,
+        'not_property_value' => null,
+        'continent' => null,
+        'country' => null,
+        'most_specific_subdivision' => null,
+        'region' => null,
+        'state' => null,
+        'city' => null,
+        'not_country' => null,
+        'not_most_specific_subdivision' => null,
+        'not_region' => null,
+        'not_state' => null,
+        'not_city' => null,),
+        $attr);
+
+	$locales = apply_filters('geoip_detect2_locales', $attr['lang']);
+
+	$options = array(
+
+	);
+
+    $info = geoip_detect2_get_info_from_current_ip($locales, $options);
+    $isConditionMatching = true;
+
+    /* Attribute Conditions. Order is important: From generic to specific. */
+	$attributeNames = array(
+        'continent' => 'continent',
+        'not_continent' => 'continent',
+        'country' => 'country',
+		'not_country' => 'country',
+        'most_specific_subdivision' => 'mostSpecificSubdivision',
+        'region' => 'mostSpecificSubdivision',
+        'state' => 'mostSpecificSubdivision',
+        'not_most_specific_subdivision' => 'mostSpecificSubdivision',
+        'not_region' => 'mostSpecificSubdivision',
+        'not_state' => 'mostSpecificSubdivision',
+		'city' => 'city',
+        'not_city' => 'city',
+	);
+
+	foreach ($attributeNames as $shortcodeParamName => $maxmindName) {
+		if (!empty($attr[$shortcodeParamName])) {
+            // Determine Actual MaxMind Value(s) for Attribute
+			$actualValues = array();
+			$alternativePropertyNames = array(
+					'name',
+					'isoCode',
+					'code',
+					'geonameId',
+			);
+			foreach ($alternativePropertyNames as $p) {
+				if (isset($info->{$maxmindName}->{$p})) {
+					$actualValues[] = $info->{$maxmindName}->{$p};
+				}
+			}
+
+			$subConditionMatching = geoip_detect2_shortcode_check_subcondition($attr[$shortcodeParamName], $actualValues);
+
+			if (substr($shortcodeParamName, 0, 4) == 'not_') {
+				$subConditionMatching = !$subConditionMatching;
+			}
+			$isConditionMatching = $isConditionMatching && $subConditionMatching;
+		}
+	}
+
+	if (!empty($attr['property']) && (!empty($attr['property_value']) || !empty($attr['not_property_value'])) ) {
+		try {
+			$actualValue = geoip_detect2_shortcode_get_property($info, $attr['property']);
+
+			if (!empty($attr['property_value'])) {
+				$subConditionMatching = geoip_detect2_shortcode_check_subcondition($attr['property_value'], $actualValue);
+			}
+			if (!empty($attr['not_property_value'])) {
+				$subConditionMatching = ! geoip_detect2_shortcode_check_subcondition($attr['not_property_value'], $actualValue);
+			}
+		} catch (\Exception $e) {
+			$subConditionMatching = false;
+		}
+
+		$isConditionMatching = $isConditionMatching && $subConditionMatching;
+	}
+
+    // All Criteria Passed?
+    if ($isConditionMatching === $showContentIfMatch) {
+        return do_shortcode($content);
+    }
+	return '';
+}
+add_shortcode('geoip_detect2_show_if', 'geoip_detect2_shortcode_show_if');
+add_shortcode('geoip_detect2_hide_if', 'geoip_detect2_shortcode_show_if');
+
+function geoip_detect2_shortcode_check_subcondition($expectedValuesRaw, $actualValues) {
+	// Parse User Input Values of Attribute
+	$attributeValuesArray = explode(',', $expectedValuesRaw);
+	$attributeValuesArray = array_map('trim', $attributeValuesArray);
+
+	$actualValues = (array) $actualValues;
+
+	// Compare case-insensitively
+	$attributeValuesArray = array_map('mb_strtolower', $attributeValuesArray);
+	$actualValues = array_map('mb_strtolower', $actualValues);
+
+	return count(array_intersect($actualValues, $attributeValuesArray)) > 0;
+}
