@@ -105,7 +105,8 @@ There have been changes to the reverse proxy logic. If you have enabled a revers
 
 = 2.9.0 =
 * Add default Privacy text for GDPR compliance.
-* The reverse proxy logic was heavily changed. If you run into configuration errors, try the debug console.
+* The reverse proxy logic was heavily changed. If you run into configuration errors, try the debug panel (see link after the reverse proxy option).
+* NEW: Reverse proxies can now be whitelisted - all non-whitelisted proxies are treated as user IP.
 * NEW: The CSS classes that are added to the body-tag (if enabled in the options) now also include the most specific subdivisino (province).
 * NEW: Shortcodes now support multiple subdivisions (`[geoip_detect2 property="subdivisions.0.isoCode"]`)
 * Maxmind vendor code was updated to the current version (2.9.0).

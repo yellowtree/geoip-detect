@@ -5,24 +5,37 @@
 		|
 		<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>"><?php _e('Options', 'geoip-detect');?></a>
 	</p>
-<pre>This debug panel is listing all relevant informations to debug when the detected client ip is wrong (in case of reverse proxies etc.)</pre>
+<pre>This debug panel is listing all relevant informations to debug when the detected client ip is wrong (in case of reverse proxies etc.)
+Sometimes, there are proxies between your user and the wordpress server application (e.g. a <abbr title="Content Delivery Network: Amazon, Cloudflare, etc.">CDN</abbr>, reverse proxies).
+This needs to be known to the plugin to choose the correct IP adress.
+</pre>
 	<h2>Current IP informations (as detected by the plugin)</h2>
 	<p>
-		Detected client IP: <?php echo geoip_detect2_get_client_ip(); ?><br>
-		External Server IP: <?php echo geoip_detect2_get_external_ip_adress(); ?><br>
-		Real client IP (detected without the plugin): <span id="ajax_get_client_ip"><i>Detecting ...</i></span>
+		Detected client IP: <b><?php echo geoip_detect2_get_client_ip(); ?></b><br>
+		<span class="detail-box">This IP is used for detecting the geo-information of the user. It should be the same as the real client IP below.</span>
+		Real client IP (detected without the plugin): <b><span id="ajax_get_client_ip"><i>Detecting ...</i></span></b>
+		<span class="detail-box">This IP is detected within the browser, so reverse proxies of the server are not affected.<br></span>
+		External Server IP: <b><?php echo geoip_detect2_get_external_ip_adress(); ?></b><br>
+		<span class="detail-box">In some cases, the server is in the same network as the client (e.g. testing server). As the connection does not use Internet, this plugin uses the IP adress of the server as seen from the internet.<br>For performance reasons, this IP is cached for <?php echo human_time_diff(0, GEOIP_DETECT_IP_CACHE_TIME); ?>.</span>
 	</p>
 	<p>
-		REMOTE_ADDR: <?php echo $_SERVER['REMOTE_ADDR']; ?><br>
-		HTTP_X_FORWARDED_FOR: <?php echo isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : __('(unset)', 'geoip-detect'); ?><br>
+		REMOTE_ADDR: <b><?php echo $_SERVER['REMOTE_ADDR']; ?></b><br>
+		<span class="detail-box">In server configurations without reverse proxy, this will equal to the "detected client IP". Otherwise, this is the IP of the reverse proxy.</span>
+		HTTP_X_FORWARDED_FOR: <b><?php echo isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : __('(unset)', 'geoip-detect'); ?></b><br>
+		<span class="detail-box">Reverse proxies usually add this header to indicate the original IP. If several IPs are given here (seperated by a comma), the correct user IP usually is the leftmost one.</span>
 		<?php if (isset($_SERVER["HTTP_X_FORWARDED_FOR"]) && !get_option('geoip-detect-has_reverse_proxy')): ?>
 		<i>(Probably you should enable the reverse proxy option.)</i>
 		<?php endif; ?>
 	</p>
 	<h3>Settings</h3>
 	<ul>
-		<li>Use reverse proxy: <?php echo get_option('geoip-detect-has_reverse_proxy', 0) ? 'yes' : 'no' ?></li>
-		<li>Whitelist for known reverse proxies (optional if only one): <?php echo get_option('geoip-detect-trusted_proxy_ips') ?: '(none)'; ?></li>
+		<li>Use reverse proxy: <b><?php echo get_option('geoip-detect-has_reverse_proxy', 0) ? 'yes' : 'no' ?></b>
+			<span class="detail-box">Enable this option if REMOTE_ADDR is not the correct client IP.</span>
+		</li>
+
+		<li>Whitelist for known reverse proxies (optional if only one): <b><?php echo get_option('geoip-detect-trusted_proxy_ips') ?: '(none)'; ?></b>
+			<span class="detail-box">All IPs in HTTP_X_FORWARDED_FOR that are not the correct client IP are probably known reverse proxies.<br>(For security reasons, this is not assumed by default: maybe the reverse proxy is not of the server, but a Man-In-The-Middle-Attack ... not very probable but possible.)</span>
+		</li>
 	</ul>
 
 <script>

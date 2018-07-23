@@ -343,7 +343,7 @@ function _geoip_detect2_get_external_ip_services($nb = 3, $needsCORS = false) {
  */
 function _geoip_detect_get_external_ip_adress_without_cache()
 {
-	$ipservices = _geoip_detect2_geoip_detect2_get_external_ip_services();
+	$ipservices = _geoip_detect2_get_external_ip_services();
 
 	foreach ($ipservices as $url)
 	{
