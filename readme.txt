@@ -51,6 +51,8 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 
 **System Requirements**: You will need at least PHP 5.4.
 
+*GDPR: This plugin does not store any cookie or user-dependent data. If you use a web-based source (hostip.info, Maxmind Precision), the plugin stores all IPs that visited the site in a cache (by default for 7 days) for performance reasons. If you want to disable this behavior, add `define('GEOIP_DETECT_READER_CACHE_TIME', 0);` in your theme's `function.php`. Be especially careful when using this information to change prices or selling options, as this might not be legal.*
+
 *This extension is "charity-ware". If you are happy with it, please [leave a tip](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYUZHS8FH3CL) for the benefit of [this charity](http://www.jmem-hainichen.de/homepage). (See [FAQ](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#what-you-mean-by-this-plugin-is-charity-ware) for more infos.)*
 
 *This product can provide GeoLite2 data created by MaxMind, available from http://www.maxmind.com.*
