@@ -64,7 +64,7 @@ class DataSourceRegistry {
 
 	/**
 	 * Returns the source known by this id.
-	 * @param string Source id
+	 * @param string $id Source id
 	 * @return \YellowTree\GeoipDetect\DataSources\AbstractDataSource
 	 */
 	public function getSource($id) {

@@ -26,7 +26,7 @@ use YellowTree\GeoipDetect\Lib\GetClientIp;
  * @param string 			$ip 		IP-Adress (IPv4 or IPv6). 'me' is the current IP of the server.
  * @param array(string)		$locales 	List of locale codes to use in name property
  * 										from most preferred to least preferred. (Default: Site language, en)
- * @param array				Property names with options.
+ * @param array				$options 	Property names with options.
  * 		@param boolean 		$skipCache		TRUE: Do not use cache for this request. (Default: FALSE)
  * 		@param string       $source         Change the source for this request only. (Valid values: 'auto', 'manual', 'precision', 'header', 'hostinfo')
  * 		@param float 		$timeout		Total transaction timeout in seconds (Precision+HostIP.info API only)
@@ -124,9 +124,9 @@ function geoip_detect2_get_info_from_current_ip($locales = null, $options = arra
  * Get the Reader class of the currently chosen source.
  * (Use this if you want to use other methods than "city" or otherwise customize behavior.)
  *
- * @param array(string)				List of locale codes to use in name property
- * 									from most preferred to least preferred. (Default: Site language, en)
- * @param array				Property names with options.
+ * @param array(string)		$locales		List of locale codes to use in name property
+ * 											from most preferred to least preferred. (Default: Site language, en)
+ * @param array				$options		Property names with options.
  * 		@param string       $source         Change the source for this request only. (Valid values: 'auto', 'manual', 'precision', 'header', 'hostinfo')
  * 		@param float 		$timeout		Total transaction timeout in seconds (Precision+HostIP.info API only)
  * 		@param int			$connectTimeout Initial connection timeout in seconds (Precision API only)
@@ -144,7 +144,7 @@ function geoip_detect2_get_reader($locales = null, $options = array()) {
 
 /**
  * Return a human-readable label of the currently chosen source.
- * @param string|\YellowTree\GeoipDetect\DataSources\City Id of the source or the returned record
+ * @param string|\YellowTree\GeoipDetect\DataSources\City $source Id of the source or the returned record
  * @return string The label.
  *
  * @since 2.3.1
