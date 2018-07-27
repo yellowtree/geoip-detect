@@ -112,10 +112,10 @@ function geoip_detect2_shortcode($attr, $content, $shortcodeName)
 add_shortcode('geoip_detect2', 'geoip_detect2_shortcode');
 
 /**
- * [geoip_detect2_shortcode_get_property description]
- * @param  [type] $userInfo     [description]
- * @param  [type] $propertyName [description]
- * @return [type]               [description]
+ * Get property from object by string
+ * @param  YellowTree\GeoipDetect\DataSources\City $userInfo     GeoIP information object
+ * @param  string $propertyName property name, e.g. "city.isoCode"
+ * @return string               Property Value
  * @throws \RuntimeException (if Property name invalid)
  */
 function geoip_detect2_shortcode_get_property($userInfo, $propertyName) {
@@ -147,9 +147,9 @@ function geoip_detect2_shortcode_get_property($userInfo, $propertyName) {
 	return $return;
 }
 
-function geoip_detect2_shortcode_client_ip($attr) {
+function geoip_detect2_shortcode_client_ip() {
 	$client_ip = geoip_detect2_get_client_ip();
-	geoip_detect_normalize_ip($client_ip);
+	$client_ip = geoip_detect_normalize_ip($client_ip);
 
 	return $client_ip;
 }
@@ -157,15 +157,16 @@ add_shortcode('geoip_detect2_get_client_ip', 'geoip_detect2_shortcode_client_ip'
 
 function geoip_detect2_shortcode_get_external_ip_adress($attr) {
 	$external_ip = geoip_detect2_get_external_ip_adress();
+	$external_ip = geoip_detect_normalize_ip($external_ip);
 
 	return $external_ip;
 }
 add_shortcode('geoip_detect2_get_external_ip_adress', 'geoip_detect2_shortcode_get_external_ip_adress');
 
-function geoip_detect2_shortcode_get_current_source_description($attr) {
-	$external_ip = geoip_detect2_get_current_source_description();
+function geoip_detect2_shortcode_get_current_source_description() {
+	$return = geoip_detect2_get_current_source_description();
 
-	return $external_ip;
+	return $return;
 }
 add_shortcode('geoip_detect2_get_current_source_description', 'geoip_detect2_shortcode_get_current_source_description');
 
@@ -312,8 +313,8 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 	return $html;
 }
 
-add_action( 'wpcf7_init', 'geoip_detect2_add_shortcodes' );
-function geoip_detect2_add_shortcodes() {
+add_action( 'wpcf7_init', 'geoip_detect2_add_wpcf7_shortcodes' );
+function geoip_detect2_add_wpcf7_shortcodes() {
 	if (function_exists('wpcf7_add_form_tag')) {
 		// >=CF 4.6
 		wpcf7_add_form_tag(array('geoip_detect2_countries', 'geoip_detect2_countries*'), 'geoip_detect2_shortcode_country_select_wpcf7', true);
@@ -346,7 +347,7 @@ function geoip_detect2_shortcode_user_info_wpcf7($output, $name, $isHtml) {
 }
 add_filter( 'wpcf7_special_mail_tags', 'geoip_detect2_shortcode_user_info_wpcf7', 15, 3 );
 
-function geoip_detect_shortcode_user_info($attr) {
+function geoip_detect_shortcode_user_info() {
     return geoip_detect2_shortcode_user_info_wpcf7('', 'geoip_detect2_user_info', true);
 }
 add_shortcode('geoip_detect2_user_info', 'geoip_detect_shortcode_user_info');
@@ -413,36 +414,7 @@ add_shortcode('geoip_detect2_user_info', 'geoip_detect_shortcode_user_info');
 function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName = '') {
     $showContentIfMatch = ($shortcodeName == 'geoip_detect2_show_if') ? true : false;
 
-    $attr = shortcode_atts(array(
-		'lang' => null,
-		'skip_cache' => 'false',
-        'property' => null,
-        'property_value' => null,
-        'not_property_value' => null,
-        'continent' => null,
-        'country' => null,
-        'most_specific_subdivision' => null,
-        'region' => null,
-        'state' => null,
-        'city' => null,
-        'not_country' => null,
-        'not_most_specific_subdivision' => null,
-        'not_region' => null,
-        'not_state' => null,
-        'not_city' => null,),
-        $attr, $shortcodeName);
-
-	$skipCache = filter_var($attr['skip_cache'], FILTER_VALIDATE_BOOLEAN );
-
-	$locales = isset($attr['lang']) ? $attr['lang'] . ',en' : null;
-	$locales = apply_filters('geoip_detect2_locales', $locales);
-
-	$options = array('skipCache' => $skipCache);
-
-    $info = geoip_detect2_get_info_from_current_ip($locales, $options);
-    $isConditionMatching = true;
-
-    /* Attribute Conditions. Order is not important, as they are combined with an transitive AND condition */
+	/* Attribute Conditions. Order is not important, as they are combined with an transitive AND condition */
 	$attributeNames = array(
         'continent' => 'continent',
         'not_continent' => 'continent',
@@ -457,6 +429,27 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 		'city' => 'city',
         'not_city' => 'city',
 	);
+
+	$attrDefaults = array(
+		'lang' => null,
+		'skip_cache' => 'false',
+        'property' => null,
+        'property_value' => null,
+        'not_property_value' => null,
+	);
+	$attrDefaults = array_merge($attrDefaults,  array_fill_keys(array_keys($attributeNames), null));
+
+    $attr = shortcode_atts($attrDefaults, $attr, $shortcodeName);
+
+	$skipCache = filter_var($attr['skip_cache'], FILTER_VALIDATE_BOOLEAN );
+
+	$locales = isset($attr['lang']) ? $attr['lang'] . ',en' : null;
+	$locales = apply_filters('geoip_detect2_locales', $locales);
+
+	$options = array('skipCache' => $skipCache);
+
+    $info = geoip_detect2_get_info_from_current_ip($locales, $options);
+    $isConditionMatching = true;
 
 	foreach ($attributeNames as $shortcodeParamName => $maxmindName) {
 		if (!empty($attr[$shortcodeParamName])) {
@@ -483,7 +476,9 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 		}
 	}
 
+	// Custom property
 	if (!empty($attr['property']) && (!empty($attr['property_value']) || !empty($attr['not_property_value'])) ) {
+		$subConditionMatching = false;
 		try {
 			$actualValue = geoip_detect2_shortcode_get_property($info, $attr['property']);
 
@@ -494,7 +489,7 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 				$subConditionMatching = ! geoip_detect2_shortcode_check_subcondition($attr['not_property_value'], $actualValue);
 			}
 		} catch (\Exception $e) {
-			$subConditionMatching = false;
+			// Invalid Property or so... ignore.
 		}
 
 		$isConditionMatching = $isConditionMatching && $subConditionMatching;
