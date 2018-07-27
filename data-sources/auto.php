@@ -146,9 +146,9 @@ HTML;
 		$in = fopen('phar://' . $tmpFile . '/' . $dir . '/GeoLite2-City.mmdb', 'r');
 		$out = fopen($outFile, 'w');
 
-		if (!$in)
+		if (false === $in)
 			return __('Downloaded file could not be opened for reading.', 'geoip-detect');
-		if (!$out)
+		if (false === $out)
 			return sprintf(__('Database could not be written (%s).', 'geoip-detect'), $outFile);
 
 		while ( ($string = fread($in, 4096)) != false )
