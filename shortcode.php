@@ -115,7 +115,7 @@ add_shortcode('geoip_detect2', 'geoip_detect2_shortcode');
  * Get property from object by string
  * @param  YellowTree\GeoipDetect\DataSources\City $userInfo     GeoIP information object
  * @param  string $propertyName property name, e.g. "city.isoCode"
- * @return string               Property Value
+ * @return string|\GeoIp2\Record\AbstractRecord             Property Value
  * @throws \RuntimeException (if Property name invalid)
  */
 function geoip_detect2_shortcode_get_property($userInfo, $propertyName) {

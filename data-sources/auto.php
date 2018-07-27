@@ -151,8 +151,9 @@ HTML;
 		if (false === $out)
 			return sprintf(__('Database could not be written (%s).', 'geoip-detect'), $outFile);
 
-		while ( ($string = fread($in, 4096)) != false )
+		while ( ($string = fread($in, 4096)) !== false ) {
 			fwrite($out, $string, strlen($string));
+		}
 
 		fclose($in);
 		fclose($out);
