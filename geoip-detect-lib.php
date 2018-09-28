@@ -108,8 +108,6 @@ function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &
 }
 
 function _ip_to_s($ip) {
-	if (!geoip_detect_is_ip($ip))
-		return '';
 	$binary = @inet_pton($ip);
 	if (empty($binary))
 		return '';
@@ -255,11 +253,7 @@ add_filter('geoip_detect2_record_data', '_geoip_detect2_add_geonames_data');
  * For IPv4-Adresses, spaces are removed.
  */
 function geoip_detect_normalize_ip($ip) {
-	if (!geoip_detect_is_ip($ip))
-		return $ip;
-
 	$ip = trim($ip);
-
 	$binary = @inet_pton($ip);
 	if (empty($binary))
 		return $ip; // Probably an IPv6 adress & IPv6 is not supported. Or not a valid IP.
@@ -269,9 +263,6 @@ function geoip_detect_normalize_ip($ip) {
 }
 
 function geoip_detect_is_ip_equal($ip1, $ip2) {
-	if (!geoip_detect_is_ip($ip1) || geoip_detect_is_ip($ip2))
-		return false;
-
 	$one = @inet_pton($ip1);
 	$two = @inet_pton($ip2);
 
