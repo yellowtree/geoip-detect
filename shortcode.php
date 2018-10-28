@@ -218,7 +218,7 @@ function geoip_detect2_shortcode_country_select($attr) {
 	$select_attrs = array(
 		'name' => !empty($attr['name']) ? $attr['name'] : 'geoip-countries',
 		'id' => @$attr['id'],
-		'class' => @$attr['class'],
+		'class' => !empty($attr['class']) ? $attr['class'] : 'geoip_detect2_countries',
 		'aria-required' => !empty($attr['required']) ? 'required' : '',
 		'aria-invalid' => !empty($attr['invalid']) ? $attr['invalid'] : '',
 	);
