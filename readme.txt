@@ -83,7 +83,7 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 
 [Does this plugin work in a MultiSite-Network environment?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#does-this-plugin-work-in-a-multisite-network-environment)
 
-[What you mean by "This plugin is charity-ware"?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#what-you-mean-by-this-plugin-is-charity-ware)
+[What do you mean by "This plugin is charity-ware"?](https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#what-do-you-mean-by-this-plugin-is-charity-ware)
 
 **Further documentation**
 
