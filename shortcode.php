@@ -362,11 +362,14 @@ function geoip_detect2_shortcode_user_info_wpcf7($output, $name, $isHtml) {
 			$lines[] = '';
 			$lines[] = sprintf(__('Data from: %s', 'geoip-detect'), geoip_detect2_get_current_source_description());
 			break;
-
+			
+		default:
+			return '';
 	}
 
 	/**
 	 * Filter: geoip2_detect_wpcf7_special_mail_tags
+	 * This filter is called if a GeoIP-detection-tag was used.
 	 *
 	 * @param array $lines - Output lines
 	 * @param string $name - Name of the WPCF 7 Tag that was used
