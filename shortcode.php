@@ -324,28 +324,61 @@ function geoip_detect2_add_wpcf7_shortcodes() {
 	}
 }
 
-
 function geoip_detect2_shortcode_user_info_wpcf7($output, $name, $isHtml) {
-    if ($name != 'geoip_detect2_user_info')
-        return $output;
+	$lines = array();
 
-    $lines = array();
+	switch($name) {
+		case 'geoip_detect2_get_client_ip':
+			$lines[] = geoip_detect2_get_client_ip();
+			break;
+		case 'geoip_detect2_get_current_source_description':
+			$lines[] = geoip_detect2_get_current_source_description();
+			break;
+		case 'geoip_detect2_property_country':
+			$info = geoip_detect2_get_info_from_current_ip();
+			$lines[] = $info->country->name;
+			break;
+		case 'geoip_detect2_property_state':
+		case 'geoip_detect2_property_region':
+			$info = geoip_detect2_get_info_from_current_ip();
+			$lines[] = $info->mostSpecificSubdivision->name;
+			break;
+		case 'geoip_detect2_property_city':
+			$info = geoip_detect2_get_info_from_current_ip();
+			$lines[] = $info->city->name;
+			break;
 
-    $lines[] = sprintf(__('IP of the user: %s', 'geoip-detect'), geoip_detect2_get_client_ip());
-    $info = geoip_detect2_get_info_from_current_ip();
-    if ($info->country->name)
-        $lines[] = sprintf(__('Country: %s', 'geoip-detect'), $info->country->name);
-    if ($info->mostSpecificSubdivision->name)
-        $lines[] = sprintf(__('State or region: %s', 'geoip-detect'), $info->mostSpecificSubdivision->name);
-    if ($info->city->name)
-        $lines[] = sprintf(__('City: %s', 'geoip-detect'), $info->city->name);
-	$lines[] = '';
-	$lines[] = sprintf(__('Data from: %s', 'geoip-detect'), geoip_detect2_get_current_source_description());
+		case 'geoip_detect2_user_info':
+			$lines[] = sprintf(__('IP of the user: %s', 'geoip-detect'), geoip_detect2_get_client_ip());
+
+			$info = geoip_detect2_get_info_from_current_ip();
+			if ($info->country->name)
+				$lines[] = sprintf(__('Country: %s', 'geoip-detect'), $info->country->name);
+			if ($info->mostSpecificSubdivision->name)
+				$lines[] = sprintf(__('State or region: %s', 'geoip-detect'), $info->mostSpecificSubdivision->name);
+			if ($info->city->name)
+				$lines[] = sprintf(__('City: %s', 'geoip-detect'), $info->city->name);
+
+			$lines[] = '';
+			$lines[] = sprintf(__('Data from: %s', 'geoip-detect'), geoip_detect2_get_current_source_description());
+			break;
+
+	}
+
+	/**
+	 * Filter: geoip2_detect_wpcf7_special_mail_tags
+	 *
+	 * @param array $lines - Output lines
+	 * @param string $name - Name of the WPCF 7 Tag that was used
+	 * @param bool $isHtml - Whether HTML or Plain Text output should be used
+	 * @return array Output lines
+	 */
+	$lines = apply_filters('geoip2_detect_wpcf7_special_mail_tags', $lines, $name, $isHtml);
 
     $lineBreak = $isHtml ? "<br>" : "\n";
     return implode($lineBreak, $lines);
 }
-add_filter( 'wpcf7_special_mail_tags', 'geoip_detect2_shortcode_user_info_wpcf7', 15, 3 );
+add_filter( 'wpcf7_special_mail_tags', 'geoip_detect2_shortcode_user_info_wpcf7', 18, 3 );
 
 function geoip_detect_shortcode_user_info() {
     return geoip_detect2_shortcode_user_info_wpcf7('', 'geoip_detect2_user_info', true);
