@@ -134,7 +134,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$userInfo = geoip_detect2_shortcode_user_info_wpcf7('', 'geoip_detect2_get_client_ip', false);
 		$this->assertSame(GEOIP_DETECT_TEST_IP, $userInfo);
 		$userInfo = geoip_detect2_shortcode_user_info_wpcf7('', 'geoip_detect2_get_current_source_description', false);
-		$this->assertSame('Data from: GeoLite2 City database', $userInfo);
+		$this->assertSame('GeoLite2 City database', $userInfo);
     }
 
 	public function testShortcodeCountrySelect() {
