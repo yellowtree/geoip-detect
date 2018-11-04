@@ -338,8 +338,10 @@ function geoip_detect2_shortcode_user_info_wpcf7($output, $name, $isHtml) {
 			$info = geoip_detect2_get_info_from_current_ip();
 			$lines[] = $info->country->name;
 			break;
+		case 'geoip_detect2_property_most_specific_subdivision':
 		case 'geoip_detect2_property_state':
 		case 'geoip_detect2_property_region':
+			$name = 'geoip_detect2_property_most_specific_subdivision';
 			$info = geoip_detect2_get_info_from_current_ip();
 			$lines[] = $info->mostSpecificSubdivision->name;
 			break;
