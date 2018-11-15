@@ -16,13 +16,20 @@ function geoip_detect_defines() {
 
 
 	if (!defined('GEOIP_DETECT_IPV6_SUPPORTED'))
-		define('GEOIP_DETECT_IPV6_SUPPORTED', defined('AF_INET6'));
+		define('GEOIP_DETECT_IPV6_SUPPORTED', geoip_detect_check_ipv6_support());
 
 	if (!defined('GEOIP_DETECT_USER_AGENT'))
 		define('GEOIP_DETECT_USER_AGENT', 'GeoIP Detect ' . GEOIP_DETECT_VERSION);
 }
 add_action('plugins_loaded', 'geoip_detect_defines');
 
+
+function geoip_detect_check_ipv6_support() {
+	if (defined('AF_INET6')) {
+		return true;
+	}
+	return @inet_pton('::1') !== false;
+}
 
 // Load Locales
 function geoip_detect_load_textdomain() {
