@@ -106,6 +106,7 @@ New: Shortcode for showing/hiding content!
 
 = 2.9.1 =
 * NEW: Add ContactForm7-Mailtags so that the user information formatting can be customized: `geoip_detect2_get_client_ip`, `geoip_detect2_get_current_source_description`, `geoip_detect2_property_country`, `geoip_detect2_property_state`, `geoip_detect2_property_city`. Of course you can still use `geoip_detect2_user_info` as shortcode for all these informations.
+* FIX: On some server, the plugin had wrongly assumed that PHP was compiled without IPv6-support.
 
 = 2.9.0 =
 * Add default Privacy text for GDPR compliance.
