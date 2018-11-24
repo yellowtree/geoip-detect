@@ -48,6 +48,7 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 * You could show the store nearest to your customer
 * You show or hide content specific to a geographic target group
 * Etc. ... You tell me! I'm rather curious what you'll do with this plugin!
+* Be careful to comply to the applicable laws. For example, it is illegal in the EU to change prices based on GeoIP-Detection ... See Regulation (EU) 2018/302 (going into effect 03 Dec 2018).
 
 **System Requirements**: You will need at least PHP 5.4.
 
@@ -99,6 +100,10 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 2. Options page (under Preferences > GeoIP Detection)
 
 == Upgrade Notice ==
+
+= 2.9.1 =
+
+Online Shops: Be careful to comply to (EU) 2018/302 (going into effect 03 Dec 2018) in how you use this plugin !
 
 = 2.9.0 =
 
