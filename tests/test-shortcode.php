@@ -142,7 +142,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertSame($unknownTag, apply_filters('wpcf7_special_mail_tags', $unknownTag, $unknownTag, false));
 
 		$knownTag = 'geoip_detect2_get_client_ip';
-		$this->assertContains($GEOIP_DETECT_TEST_IP, apply_filters('wpcf7_special_mail_tags', $knownTag , $knownTag , false));
+		$this->assertContains(GEOIP_DETECT_TEST_IP, apply_filters('wpcf7_special_mail_tags', $knownTag , $knownTag , false));
 	}
 
 	public function testShortcodeCountrySelect() {
