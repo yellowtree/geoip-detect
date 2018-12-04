@@ -33,7 +33,6 @@ class GetClientIp {
 	
 	public function addProxiesToWhitelist($trusted_proxies) {
 		foreach ($trusted_proxies as $proxy) {
-			$proxy = geoip_detect_normalize_ip($proxy);
 			if ($proxy) {
 				$this->proxyWhitelist[] = $proxy;
 				$this->useProxyWhitelist = true;
@@ -57,6 +56,13 @@ class GetClientIp {
 		if ($this->useProxyWhitelist) {
 			// Add the REMOTE_ADDR to the available IP pool
 			$ip_list_reverse = array_merge($ip_list_reverse, $currentIpList);
+
+			foreach ($ip_list_reverse as $key => $value) {
+				if (geoip_detect_is_ip_equal($value, $this->proxyWhitelist)) {
+					unset($ip_list_reverse[$key]);
+				}
+			}
+
 			$ip_list_reverse = array_map('geoip_detect_normalize_ip', $ip_list_reverse);
 			$ip_list_reverse = array_diff($ip_list_reverse, $this->proxyWhitelist);
 		}

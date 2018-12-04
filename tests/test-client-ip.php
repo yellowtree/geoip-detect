@@ -42,13 +42,15 @@ class GetClientIpTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	public function dataReverseProxy() {
 		return array(
-			array('1.2.3.4', '9.9.9.9', '1.2.3.4', '9.9.9.9', '1 proxy'),
-			array('1.2.3.4', '9.9.9.9', '1.2.3.4, 14.14.14.14', '14.14.14.14, 9.9.9.9', '2 proxies'),
-			array('1.2.3.4', '9.9.9.9', '1.2.3.4', '', '1 proxy without whitelist (backwards compat)'),
-			array('1.2.3.4', '1.2.3.4, 9.9.9.9', '', '9.9.9.9', 'REMOTE_ADDR with ,'), // @see https://wordpress.org/support/topic/php-fatal-error-uncaught-exception-invalidargumentexception/?replies=2#post-8128737
-			array('1.2.3.4', '9.9.9.9', '10.10.10.10, 1.2.3.4', '', 'Missing whitelist'),
-			array('1.2.3.4', '9.9.9.9', '10.10.10.10, 1.2.3.4, 11.11.11.11', '9.9.9.9, 11.11.11.11', 'Part whitelist'),
+			array('1.2.3.4', '9.9.9.9', '1.2.3.4', 											'9.9.9.9', '1 proxy'),
+			array('1.2.3.4', '9.9.9.9', '1.2.3.4, 14.14.14.14', 							'14.14.14.14, 9.9.9.9', '2 proxies'),
+			array('1.2.3.4', '9.9.9.9', '1.2.3.4', 											'', '1 proxy without whitelist (backwards compat)'),
+			array('1.2.3.4', '1.2.3.4, 9.9.9.9', '', 										'9.9.9.9', 'REMOTE_ADDR with ,'), // @see https://wordpress.org/support/topic/php-fatal-error-uncaught-exception-invalidargumentexception/?replies=2#post-8128737
+			array('1.2.3.4', '9.9.9.9', '10.10.10.10, 1.2.3.4', 							'', 'Missing whitelist'),
+			array('1.2.3.4', '9.9.9.9', '10.10.10.10, 1.2.3.4, 11.11.11.11', 				'9.9.9.9, 11.11.11.11', 'Part whitelist'),
 			array('1.2.3.4', '9.9.9.9', '10.10.10.10, 1.2.3.4, 11.11.11.11, ::1, 127.0.0.1', '9.9.9.9, 11.11.11.11', 'Localhost'), 
+			array('1.2.3.4', '9.9.9.9', '10.10.10.10, 1.2.3.4, 11.11.11.11', 				'11.11.11.0/24', 'Whitelist with subnets'),
+			array('1.2.3.4', '9.9.9.9', '10.10.10.10, 1.2.3.4, 2001:0db8:a::', 				'1.2.3.178/29, 2001:db8::/32', 'Whitelist with subnets'),
 		);
 	}
 	

@@ -266,11 +266,18 @@ function geoip_detect_normalize_ip($ip) {
 /**
  * Check if the expected IP left matches the actual IP
  * @param string $actual IP
- * @param string $expected IP (can include subnet)
+ * @param string|array $expected IP (can include subnet)
  * @return boolean
  */
 function geoip_detect_is_ip_equal($actual, $expected) {
-	IpUtils::checkIp($actual, $expected);
+	try {
+		return IpUtils::checkIp($actual, $expected);
+	} catch(Exception $e) {
+		if (WP_DEBUG) {
+			throw $e;
+		}
+		return false;
+	}
 }
 
 function geoip_detect_is_ip($ip, $noIpv6 = false) {
