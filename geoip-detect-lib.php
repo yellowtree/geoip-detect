@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // Their name / parameter may change without warning.
 
 use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
+use Symfony\Component\HttpFoundation\IpUtils;
 
 /**
  * Take the parameter options and add the default values.
@@ -262,11 +263,14 @@ function geoip_detect_normalize_ip($ip) {
 	return $ip;
 }
 
-function geoip_detect_is_ip_equal($ip1, $ip2) {
-	$one = @inet_pton($ip1);
-	$two = @inet_pton($ip2);
-
-	return !empty($one) && $one == $two;
+/**
+ * Check if the expected IP left matches the actual IP
+ * @param string $actual IP
+ * @param string $expected IP (can include subnet)
+ * @return boolean
+ */
+function geoip_detect_is_ip_equal($actual, $expected) {
+	IpUtils::checkIp($actual, $expected);
 }
 
 function geoip_detect_is_ip($ip, $noIpv6 = false) {
@@ -295,7 +299,7 @@ function geoip_detect_is_ip_in_range($ip, $range_start, $range_end) {
  */
 function geoip_detect_is_public_ip($ip) {
 	// filver_var only detects 127.0.0.1 as local ...
-	if (geoip_detect_is_ip_in_range($ip, '127.0.0.0', '127.255.255.255'))
+	if (geoip_detect_is_ip_equal($ip, '127.0.0.0/8'))
 		return false;
 	if (trim($ip) === '0.0.0.0')
 		return false;

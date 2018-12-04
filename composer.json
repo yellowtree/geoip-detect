@@ -15,6 +15,7 @@
     ],
     "require": {
         "geoip2/geoip2": "~2.0",
-        "php": ">=5.3.1"
+        "php": ">=5.3.1",
+        "symfony/http-foundation": "^4.2"
     }
 }
