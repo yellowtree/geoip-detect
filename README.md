@@ -47,7 +47,7 @@ See [API Documentation](https://github.com/yellowtree/wp-geoip-detect/wiki/API-D
 * You could show the store nearest to your customer
 * You show or hide content specific to a geographic target group
 * Etc. ... You tell me! I'm rather curious what you'll do with this plugin!
-* Be careful to comply to the applicable laws. For example, it is illegal in the EU to change prices based on GeoIP-Detection ... See Regulation (EU) 2018/302 (going into effect 03 Dec 2018).
+* Be careful to comply to the applicable laws. For example Regulation (EU) 2018/302 (going into effect 03 Dec 2018)...
 
 **System Requirements**: You will need at least PHP 5.4.
 
@@ -98,6 +98,10 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 1. Lookup page (under Tools > GeoIP Lookup)
 2. Options page (under Preferences > GeoIP Detection)
 
+= 2.9.2 =
+
+Hotfix: In 2.9.1, this plugin was incompatible with other Contact Form 7-Special Mailtags (https://contactform7.com/special-mail-tags/).
+
 = 2.9.1 =
 
 Online Shops: Be careful to comply to (EU) 2018/302 (going into effect 03 Dec 2018) in how you use this plugin !
@@ -108,6 +112,9 @@ There have been changes to the reverse proxy logic. If you have enabled a revers
 New: Shortcode for showing/hiding content!
 
 ## Changelog ##
+
+= 2.9.2 =
+* FIX: ContactForm7-Mailtag disabled mailtags from other plugins.
 
 = 2.9.1 =
 * NEW: Add ContactForm7-Mailtags so that the user information formatting can be customized: `geoip_detect2_get_client_ip`, `geoip_detect2_get_current_source_description`, `geoip_detect2_property_country`, `geoip_detect2_property_state`, `geoip_detect2_property_city`. Of course you can still use `geoip_detect2_user_info` as shortcode for all these informations.
