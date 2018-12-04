@@ -116,6 +116,9 @@ New: Shortcode for showing/hiding content!
 
 == Changelog ==
 
+= 2.9.3 =
+* NEW: The whitelisted proxies can now be subnets, as well.
+
 = 2.9.2 =
 * FIX: ContactForm7-Mailtag disabled mailtags from other plugins.
 

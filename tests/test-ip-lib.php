@@ -45,5 +45,11 @@ class IpLibTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertTrue(geoip_detect_is_ip_equal('0:0:0:0:0:0:0:0', '::'));
 		$this->assertTrue(geoip_detect_is_ip_equal('::ffff:192.0.2.128', '::ffff:c000:0280'));
 		$this->assertFalse(geoip_detect_is_ip_equal('2001:0DB8:0:0:2::1', '2001:0db8:0000:0000:1:0000:0000:0001'));
+
+		$this->assertTrue(geoip_detect_is_ip_equal('8.8.8.8', array('1.1.1.1', '::8', '8.8.8.8') ));
+		$this->assertFalse(geoip_detect_is_ip_equal('8.8.8.7', array('1.1.1.1', '::4', '8.8.8.8') ));
+
 	}
+
+
 }

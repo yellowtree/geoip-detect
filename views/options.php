@@ -76,7 +76,7 @@ $options = $currentSource->getParameterHTML();
 			</span>
 		</p>
 		<p>
-			<label><?php _e('IPs of trusted proxies:', 'geoip-detect'); ?><input type="text" name="options[trusted_proxy_ips]" <?php echo esc_attr($wp_options['trusted_proxy_ips']); ?>" placeholder="<?php _e('IPs comma-seperated', 'geoip-detect'); ?>" />
+			<label><?php _e('IPs of trusted proxies:', 'geoip-detect'); ?><input type="text" name="options[trusted_proxy_ips]" <?php echo esc_attr($wp_options['trusted_proxy_ips']); ?>" placeholder="1.1.1.1, 1234::1, 2.2.2.2/24" />
 			<span class="detail-box">
 				<?php _e('If specified, only IPs in this list will be treated as proxy.', 'geoip-detect'); ?><br>
 				<?php _e('Make sure to add both IPv4 and IPv6 adresses of the proxy!', 'geoip-detect'); ?>
