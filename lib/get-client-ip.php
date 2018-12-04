@@ -62,9 +62,6 @@ class GetClientIp {
 					unset($ip_list_reverse[$key]);
 				}
 			}
-
-			$ip_list_reverse = array_map('geoip_detect_normalize_ip', $ip_list_reverse);
-			$ip_list_reverse = array_diff($ip_list_reverse, $this->proxyWhitelist);
 		}
 		
 		return $ip_list_reverse;
