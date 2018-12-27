@@ -135,7 +135,15 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertSame(GEOIP_DETECT_TEST_IP, $userInfo);
 		$userInfo = geoip_detect2_shortcode_user_info_wpcf7('', 'geoip_detect2_get_current_source_description', false);
 		$this->assertSame('GeoLite2 City database', $userInfo);
-    }
+	}
+	
+	public function testShortcodeCF7Filter() {
+		$unknownTag = 'unknown';
+		$this->assertSame($unknownTag, apply_filters('wpcf7_special_mail_tags', $unknownTag, $unknownTag, false));
+
+		$knownTag = 'geoip_detect2_get_client_ip';
+		$this->assertContains(GEOIP_DETECT_TEST_IP, apply_filters('wpcf7_special_mail_tags', $knownTag , $knownTag , false));
+	}
 
 	public function testShortcodeCountrySelect() {
 		$html = do_shortcode('[geoip_detect2_countries include_blank="false"]');

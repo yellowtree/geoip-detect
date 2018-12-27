@@ -366,7 +366,7 @@ function geoip_detect2_shortcode_user_info_wpcf7($output, $name, $isHtml) {
 			break;
 			
 		default:
-			return '';
+			return $output;
 	}
 
 	/**

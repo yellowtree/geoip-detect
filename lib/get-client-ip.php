@@ -26,7 +26,6 @@ class GetClientIp {
 	protected $useProxyWhitelist = false;
 	
 	public function __construct() {
-		$this->proxyWhitelist[] = '';
 		$this->proxyWhitelist[] = '::1';
 		$this->proxyWhitelist[] = '127.0.0.1';
 	}
@@ -57,8 +56,12 @@ class GetClientIp {
 		if ($this->useProxyWhitelist) {
 			// Add the REMOTE_ADDR to the available IP pool
 			$ip_list_reverse = array_merge($ip_list_reverse, $currentIpList);
-			$ip_list_reverse = array_map('geoip_detect_normalize_ip', $ip_list_reverse);
-			$ip_list_reverse = array_diff($ip_list_reverse, $this->proxyWhitelist);
+
+			$ip_list_reverse = array_filter($ip_list_reverse, function($value) {
+				$value = trim($value);
+				if (!$value) return false;
+				return false === geoip_detect_is_ip_equal($value, $this->proxyWhitelist);
+			});
 		}
 		
 		return $ip_list_reverse;

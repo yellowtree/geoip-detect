@@ -4,8 +4,6 @@ language: php
 
 notifications:
   email:
-    recipients:
-        - b.pick@yellowtree.de
     on_success: change
     on_failure: change
 
