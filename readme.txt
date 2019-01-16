@@ -116,6 +116,8 @@ New: Shortcode for showing/hiding content!
 
 == Changelog ==
 
+* Maxmind vendor code was updated to the current version.
+
 = 2.9.3 =
 * NEW: The whitelisted proxies can now be subnets, as well.
 
