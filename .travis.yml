@@ -17,16 +17,16 @@ php:
 env:
     - WP_VERSION=latest WP_MULTISITE=0
     - WP_VERSION=latest WP_MULTISITE=1
-    - WP_VERSION=3.7 WP_MULTISITE=0
+    - WP_VERSION=4.0 WP_MULTISITE=0
 
 matrix:
   exclude:
     - php: '7.0'
-      env: WP_VERSION=3.7 WP_MULTISITE=0
+      env: WP_VERSION=4.0 WP_MULTISITE=0
     - php: '7.2'
-      env: WP_VERSION=3.7 WP_MULTISITE=0
+      env: WP_VERSION=4.0 WP_MULTISITE=0
     - php: '7.3'
-      env: WP_VERSION=3.7 WP_MULTISITE=0
+      env: WP_VERSION=4.0 WP_MULTISITE=0
 
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
