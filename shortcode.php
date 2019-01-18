@@ -375,10 +375,10 @@ add_shortcode('geoip_detect2_input', 'geoip_detect2_shortcode_text_input');
  * 
  * Examples:
  *
- * `[geoip_detect2_text_input property:city lang:fr id:id class:class]`
+ * `[geoip_detect2_text_input city property:city lang:fr id:id class:class]`
  * A text input that has the detetected city as default (with CSS id "#id" and class ".class")
  *
- * `[geoip_detect2_text_input property:city lang:fr id:id class:class default:Paris]`
+ * `[geoip_detect2_text_input city property:city lang:fr id:id class:class default:Paris]`
  * As above, but in case the city is unknown, use "Paris"
  *
  */
@@ -401,7 +401,7 @@ function geoip_detect2_shortcode_text_input_wpcf7($tag) {
 		'id' => $tag->get_id_option(),
 		'class' => $tag->get_class_option( $class ),
 		'lang' => $tag->get_option('lang', '', true),
-		'property' => $tag->get_option('property', 'city', true),
+		'property' => $tag->get_option('property', '', true),
 		'default' => $tag->get_option('default', '', true),
 	);
 	$html = geoip_detect2_shortcode_text_input($attr);
