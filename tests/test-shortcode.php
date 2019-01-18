@@ -175,6 +175,16 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertContains('"selected">A', $html);
 	}
 
+	public function testShortcodeTextInput() {
+		$html = do_shortcode('[geoip_detect2_text_input name="yourcity" property="city" lang="fr" id="thisismyid" class="myclassname" default="Paris" required]');
+		$this->assertContains('<input', $html);
+		$this->assertContains('value="Herborn"', $html);
+		$this->assertContains('class="myclassname"', $html);
+		$this->assertContains('id="thisismyid"', $html);
+		$this->assertContains('name="yourcity"', $html);
+		$this->assertContains('required', $html);
+	}
+
 	/**
 	 * @dataProvider dataShortcodeShowIf
 	 */
