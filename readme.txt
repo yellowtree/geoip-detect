@@ -118,8 +118,11 @@ New: Shortcode for showing/hiding content!
 
 * Maxmind vendor code was updated to the current version.
 
-= 2.9.3 =
+= 2.10.0 =
 * NEW: The whitelisted proxies can now be subnets, as well.
+* NEW: Add a ContactForm7-Tag `geoip_detect2_text_input` (see https://github.com/yellowtree/geoip-detect/wiki/API-Documentation#create-a-text-input-that-is-prefilled-with-a-geodetected-property)
+* NEW: A wordpress filter allows overriding of the detected geo-information inside the `geoip_detect2_shortcode_show_if`-Shortcode. Use `geoip_detect2_record_information` instead if you want to override this information for all shortcodes and API calls.
+* Updated Maxmind vendor code.
 
 = 2.9.2 =
 * FIX: ContactForm7-Mailtag disabled mailtags from other plugins.

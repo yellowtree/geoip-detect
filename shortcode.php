@@ -332,7 +332,7 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
  * A text input that has the detetected city as default (with CSS id "#id" and class ".class")
  *
  * `[geoip_detect2_text_input name="city" property="city" lang="fr" id="id" class="class" default="Paris"]`
- * As above, but in case the city is unknown, use "United States"
+ * As above, but in case the city is unknown, use "Paris"
  *
  * $attr is an array that can have these properties:
  * @param string $property Maxmind property string (e.g. "city" or "postal.code")
@@ -379,7 +379,7 @@ add_shortcode('geoip_detect2_input', 'geoip_detect2_shortcode_text_input');
  * A text input that has the detetected city as default (with CSS id "#id" and class ".class")
  *
  * `[geoip_detect2_text_input property:city lang:fr id:id class:class default:Paris]`
- * As above, but in case the city is unknown, use "United States"
+ * As above, but in case the city is unknown, use "Paris"
  *
  */
 function geoip_detect2_shortcode_text_input_wpcf7($tag) {
@@ -588,7 +588,17 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 
 	$options = array('skipCache' => $skipCache);
 
-    $info = geoip_detect2_get_info_from_current_ip($locales, $options);
+	$info = geoip_detect2_get_info_from_current_ip($locales, $options);
+	
+	/**
+	 * You can override the detected location information here.
+	 * E.g. "Show if in Paris, but if the user has given an adress in his profile, use that city instead"
+	 * @param YellowTree\GeoipDetect\DataSources\City $info
+	 * @param array $attr Shortcode attributes given to the function.
+	 * @param bool $showContentIfMatch Should the content be shown (TRUE) or hidden (FALSE) if the conditions are true?
+	 */
+	$info = apply_filters('geoip_detect2_shortcode_show_if_ip_info_override', $info, $attr, $showContentIfMatch);
+
     $isConditionMatching = true;
 
 	foreach ($attributeNames as $shortcodeParamName => $maxmindName) {
