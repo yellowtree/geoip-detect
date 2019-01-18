@@ -1,4 +1,4 @@
-Tests: [![Build Status](https://travis-ci.com/yellowtree/geoip-detect.png?branch=master)](https://travis-ci.com/yellowtree/wp-geoip-detect)
+Tests: [![Build Status](https://travis-ci.com/yellowtree/geoip-detect.png?branch=master)](https://travis-ci.com/yellowtree/geoip-detect)
 
 # GeoIP Detection #
 
