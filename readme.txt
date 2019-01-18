@@ -1,7 +1,7 @@
 === GeoIP Detection ===
 Contributors: benjaminpick
 Tags: geoip, maxmind, geolocation, locator
-Requires at least: 3.5
+Requires at least: 4.0
 Tested up to: 5.0
 Requires PHP: 5.4
 Stable tag: trunk
@@ -36,8 +36,9 @@ as a shortcode, or via CSS body classes. The city & country names are translated
 * When enabled on the options page, it adds CSS classes to the body tag such as `geoip-province-HE`, `geoip-country-DE` and `geoip-continent-EU`.
 * When enabled on the options page, the client IP respects a reverse proxy of the server.
 * If you are using [Contact Form 7](https://wordpress.org/plugins/contact-form-7/), you can use these shortcodes:
-  * A select input with all countries, the detected country being selected by default `[geoip_detect2_countries mycountry]`
-  * Tracking information for the email text `[geoip_detect2_user_info]`
+  * A select input with all countries, the detected country being selected by default: `[geoip_detect2_countries mycountry]`
+  * A text input that is pre-filled with the detected city (or other property): `[geoip_detect2_text_input city property:city lang:fr id:id class:class default:Paris]`
+  * GeoIP information for the email text: `[geoip_detect2_user_info]`
 
 See [API Documentation](https://github.com/yellowtree/geoip-detect/wiki/API-Documentation) for more info.
 
@@ -123,6 +124,7 @@ New: Shortcode for showing/hiding content!
 * NEW: Add a ContactForm7-Tag `geoip_detect2_text_input` (see https://github.com/yellowtree/geoip-detect/wiki/API-Documentation#create-a-text-input-that-is-prefilled-with-a-geodetected-property)
 * NEW: A wordpress filter allows overriding of the detected geo-information inside the `geoip_detect2_shortcode_show_if`-Shortcode. Use `geoip_detect2_record_information` instead if you want to override this information for all shortcodes and API calls.
 * Updated Maxmind vendor code.
+* Increased WP minimum version to 4.0
 
 = 2.9.2 =
 * FIX: ContactForm7-Mailtag disabled mailtags from other plugins.
