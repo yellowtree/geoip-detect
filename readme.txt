@@ -117,13 +117,11 @@ New: Shortcode for showing/hiding content!
 
 == Changelog ==
 
-* Maxmind vendor code was updated to the current version.
-
 = 2.10.0 =
-* NEW: The whitelisted proxies can now be subnets, as well.
+* NEW: The whitelisted proxies can now be subnets such as `11.11.11.0/24`
 * NEW: Add a ContactForm7-Tag `geoip_detect2_text_input` (see https://github.com/yellowtree/geoip-detect/wiki/API-Documentation#create-a-text-input-that-is-prefilled-with-a-geodetected-property)
-* NEW: A wordpress filter allows overriding of the detected geo-information inside the `geoip_detect2_shortcode_show_if`-Shortcode. Use `geoip_detect2_record_information` instead if you want to override this information for all shortcodes and API calls.
-* Updated Maxmind vendor code.
+* NEW: A new wordpress filter allows overriding of the detected geo-information inside the `geoip_detect2_shortcode_show_if`-Shortcode. Use the already-existing filter `geoip_detect2_record_information` instead if you want to override this information for all shortcodes and API calls.
+* Updated Maxmind vendor code
 * Increased WP minimum version to 4.0
 
 = 2.9.2 =
