@@ -90,7 +90,8 @@ README.md
 .gitignore
 tests
 test
-phpunit.xml" "$SVNPATH/trunk/"
+phpunit.xml
+" "$SVNPATH/trunk/"
 
 svn propset svn:ignore '*' "$SVNPATH/trunk/lib/geonames/generators/"
 

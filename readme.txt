@@ -117,6 +117,8 @@ New: Shortcode for showing/hiding content!
 
 == Changelog ==
 
+* Removed unnecessary file from symfony distribution
+
 = 2.10.0 =
 * NEW: The whitelisted proxies can now be subnets such as `11.11.11.0/24`
 * NEW: Add a ContactForm7-Tag `geoip_detect2_text_input` (see https://github.com/yellowtree/geoip-detect/wiki/API-Documentation#create-a-text-input-that-is-prefilled-with-a-geodetected-property)

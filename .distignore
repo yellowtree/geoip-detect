@@ -32,3 +32,5 @@ deploy.sh
 GeoLite2-City.mmdb
 GeoLite2-Country.mmdb
 lib/geonames/generators/*
+vendor/symfony/http-foundation/Tests
+

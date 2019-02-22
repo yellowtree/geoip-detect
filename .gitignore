@@ -7,3 +7,7 @@ node_modules/
 *.sql
 *.tar.gz
 *.zip
+/vendor/symfony
+!/vendor/symfony/http-foundation/IpUtils.php
+!/vendor/symfony/http-foundation/LICENSE
+
