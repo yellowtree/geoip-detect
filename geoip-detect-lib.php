@@ -22,6 +22,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // Their name / parameter may change without warning.
 
 use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
+
+// This file is outside composer root in order to not distribute all the other symfony files
+require_once(__DIR__ . '/lib/vendor/symfony/http-foundation/IpUtils.php');
 use Symfony\Component\HttpFoundation\IpUtils;
 
 /**

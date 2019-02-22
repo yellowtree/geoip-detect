@@ -1,5 +1,5 @@
 {
-    "name": "yellowtree/wp-geoip-detect",
+    "name": "yellowtree/geoip-detect",
     "description": "Wordpress Plugin GeoIP Detection: Retrieving Geo-Information using the Maxmind GeoIP2 (Lite) Database.",
     "type": "wordpress-plugin",
     "authors": [
@@ -15,7 +15,6 @@
     ],
     "require": {
         "geoip2/geoip2": "~2.0",
-        "php": ">=5.3.1",
-        "symfony/http-foundation": "^4.2"
+        "php": ">=5.4"
     }
 }

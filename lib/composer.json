@@ -1,0 +1,13 @@
+{
+    "name": "yellowtree/geoip-detect-lib",
+    "type": "library",
+    "require": {
+        "symfony/http-foundation": "^4.2"
+    },
+    "authors": [
+        {
+            "name": "Benjamin Pick",
+            "email": "benjaminpick@github.com"
+        }
+    ]
+}
