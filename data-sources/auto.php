@@ -206,3 +206,16 @@ HTML;
 }
 
 geoip_detect2_register_source(new AutoDataSource());
+
+/** 
+ * This function is called when the user clicks on "Remove" in the wp-admin
+ */
+function on_uninstall() {
+	// Delete the automatically downloaded file, if it exists
+	$source = new AutoDataSource();
+	$filename = $source->maxmindGetFilename();
+	if ($filename) {
+		unlink($filename);
+	}
+}
+register_uninstall_hook(GEOIP_PLUGIN_FILE, __NAMESPACE__ . '\\on_uninstall');
