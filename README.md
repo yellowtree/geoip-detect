@@ -114,7 +114,10 @@ New: Shortcode for showing/hiding content!
 
 ## Changelog ##
 
-* Removed unnecessary file from symfony distribution
+* The Maxmind file downloaded by the plugin will be deleted when the plugin is removed (not only deactivated) in the backend. You can remove the file manually from wp-content/uploads/GeoLite2-City.mmdb if needed.
+
+= 2.11.0 =
+* FIX: Improve performance of unpacking the Maxmind file (Source: Automatic download) - important for hosts with a low max_execution_time.
 
 = 2.10.0 =
 * NEW: The whitelisted proxies can now be subnets such as `11.11.11.0/24`

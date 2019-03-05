@@ -129,36 +129,66 @@ HTML;
 
 		$outFile = $this->maxmindGetUploadFilename();
 		$modified = @filemtime($outFile);
-		// Download
-		$tmpFile = $this->download_url($download_url, $modified);
 
+		// Download file
+		$tmpFile = $this->download_url($download_url, $modified);
 		if (is_wp_error($tmpFile)) {
 			return $tmpFile->get_error_message();
 		}
 
-		// Ungzip File
-		if (!file_exists($tmpFile))
-			return __('Downloaded file could not be opened for reading.', 'geoip-detect');
-		$dir = @scandir('phar://' . $tmpFile)[0];
-		if (!$dir)
-			return __('Downloaded file could not be opened for reading.', 'geoip-detect');
-
-		$in = fopen('phar://' . $tmpFile . '/' . $dir . '/GeoLite2-City.mmdb', 'r');
-		$out = fopen($outFile, 'w');
-
-		if (false === $in)
-			return __('Downloaded file could not be opened for reading.', 'geoip-detect');
-		if (false === $out)
-			return sprintf(__('Database could not be written (%s).', 'geoip-detect'), $outFile);
-
-		while ( ($string = fread($in, 4096)) !== false ) {
-			fwrite($out, $string, strlen($string));
+		// Unpack tar.gz
+		$ret = $this->unpackArchive($tmpFile, $outFile);
+		if (is_string($ret)) {
+			return $ret;
 		}
 
-		fclose($in);
-		fclose($out);
+		if (!is_readable($outFile)) {
+			return 'Something went wrong: the downloaded file cannot be found.';
+		}
 
-		unlink($tmpFile);
+		return true;
+	}
+
+	// Ungzip File
+	protected function unpackArchive($downloadedFilename, $outFile) {
+		if (!is_readable($downloadedFilename))
+			return __('Downloaded file could not be opened for reading.', 'geoip-detect');
+		if (!\is_writable(dirname($outFile)))
+			return sprintf(__('Database could not be written (%s).', 'geoip-detect'), $outFile);
+
+		$phar = new \PharData( $downloadedFilename );
+
+		$outDir = get_temp_dir() . 'geoip-detect/';
+
+		global $wp_filesystem;
+		if (!$wp_filesystem) {
+			\WP_Filesystem(false, get_temp_dir());
+		}
+		if (\is_dir($outDir)) {
+			$wp_filesystem->rmdir($outDir, true);
+		}
+
+		mkdir($outDir);
+		$phar->extractTo($outDir, null, true);
+
+		$files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($outDir));
+
+		$inFile = '';
+		foreach($files as $file) {
+			if (!$file->isDir() && mb_substr($file->getFilename(), -5) == '.mmdb') {
+				$inFile = $file->getPathname();
+				break;
+			}
+		}
+
+		if (!\is_readable($inFile))
+			return __('Downloaded file could not be opened for reading.', 'geoip-detect');
+	
+		$ret = copy($inFile, $outFile);
+		if (!$ret)
+			return sprintf(__('Downloaded file could not write or overwrite %s.', 'geoip-detect'), $outFile);
+
+		$wp_filesystem->rmdir($outDir, true);
 
 		return true;
 	}
