@@ -31,6 +31,7 @@ abstract class AbstractDataSource {
 	
 	public function activate() { }
 	public function deactivate() { }
+	public function uninstall() {}
 	
 	public function getReader($locales = array('en'), $options = array()) { return null; }
 	

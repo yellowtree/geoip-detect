@@ -132,3 +132,21 @@ function geoip_detect_add_privacy_policy_content() {
     );
 }
 add_action( 'admin_init', 'geoip_detect_add_privacy_policy_content' );
+
+
+/** 
+ * This function is called when the user clicks on "Remove" in the wp-admin
+ */
+function on_uninstall() {
+	$registry = DataSourceRegistry::getInstance();
+	$registry->uninstall();
+}
+register_uninstall_hook(GEOIP_PLUGIN_FILE, __NAMESPACE__ . '\\on_uninstall');
+
+// For Debugging purposes ...
+if (@$_GET['uninstall'] == 'asdf' && WP_DEBUG) {
+
+add_action('plugins_loaded', function() {
+	on_uninstall();
+});	
+}

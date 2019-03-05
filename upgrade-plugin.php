@@ -84,6 +84,6 @@ function geoip_detect_maybe_upgrade_version( ) {
 		$current_vers = $version;
 	}
 
-	update_option( 'geoip-detect-plugin_version', $current_vers );
+	update_option('geoip-detect-plugin_version', $current_vers );
 }
 add_action('plugins_loaded', 'geoip_detect_maybe_upgrade_version');

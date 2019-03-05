@@ -124,4 +124,18 @@ class DataSourceRegistry {
 	public function isCachingUsed() {
 		return $this->isSourceCachable($this->getCurrentSourceId());
 	}
+
+	public function uninstall() {
+		foreach($this->sources as $source) {
+			$source->deactivate();
+			$source->uninstall();
+		}
+
+		// Delete all options from this plugin
+		foreach ( wp_load_alloptions() as $option => $value ) {
+			if ( strpos( $option, 'geoip-detect-' ) === 0 ) {
+				delete_option( $option );
+			}
+		}
+	}
 }
