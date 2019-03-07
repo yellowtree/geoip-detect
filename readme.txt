@@ -102,6 +102,10 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 
 == Upgrade Notice ==
 
+= 2.11.0 =
+
+The Download code of the automatically updated Maxmind file was rewritten for better performance.
+
 = 2.9.2 =
 
 Hotfix: In 2.9.1, this plugin was incompatible with other Contact Form 7-Special Mailtags (https://contactform7.com/special-mail-tags/).
@@ -121,6 +125,7 @@ New: Shortcode for showing/hiding content!
 
 = 2.11.0 =
 * FIX: Improve performance of unpacking the Maxmind file (Source: Automatic download) - important for hosts with a low max_execution_time.
+* NEW: On removal (in the Backend), the plugin will delete its options from the database and the downloaded Maxmind file
 
 = 2.10.0 =
 * NEW: The whitelisted proxies can now be subnets such as `11.11.11.0/24`

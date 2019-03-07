@@ -130,11 +130,17 @@ HTML;
 		$outFile = $this->maxmindGetUploadFilename();
 		$modified = @filemtime($outFile);
 
-		// Download file
-		$tmpFile = $this->download_url($download_url, $modified);
+		// Check if existing download should be resumed
+		$tmpFile = get_option('geoip-detect-auto_downloaded_file');
+		if (!$tmpFile || !file_exists($tmpFile)) {
+			// Download file
+			$tmpFile = $this->download_url($download_url, $modified);
+		}
+
 		if (is_wp_error($tmpFile)) {
 			return $tmpFile->get_error_message();
 		}
+		update_option('geoip-detect-auto_downloaded_file', $tmpFile);
 
 		// Unpack tar.gz
 		$ret = $this->unpackArchive($tmpFile, $outFile);
@@ -143,8 +149,11 @@ HTML;
 		}
 
 		if (!is_readable($outFile)) {
-			return 'Something went wrong: the downloaded file cannot be found.';
+			return 'Something went wrong: the unpacked file cannot be found.';
 		}
+
+		update_option('geoip-detect-auto_downloaded_file', '');
+		unlink($tmpFile);
 
 		return true;
 	}
