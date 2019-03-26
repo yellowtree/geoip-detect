@@ -41,12 +41,9 @@ add_filter('body_class', 'geoip_detect2_add_body_classes');
 function geoip_detect2_convert_locale_format($locales) {
 	if (is_string($locales)) {
 		$locales = explode(',', $locales);
-	} else if (!is_array($locales)) {
-		$locales = array();
-	}
-
-	$locales = array_map('trim', $locales);
-	$locales = array_unique($locales);
+		$locales = array_map('trim', $locales);
+		$locales = array_unique($locales);
+	} 
 
 	return $locales;
 }
