@@ -43,7 +43,7 @@ function geoip_detect2_convert_locale_format($locales) {
 		$locales = explode(',', $locales);
 		$locales = array_map('trim', $locales);
 		$locales = array_unique($locales);
-	} 
+	}
 
 	return $locales;
 }

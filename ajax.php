@@ -49,7 +49,7 @@ function geoip_detect_ajax_get_info_from_current_ip() {
 	
 	// Referer check
 	
-    $referer = wp_get_referer();
+    $referer = $_SERVER['HTTP_REFERER'];
     if (!$referer) {
         _geoip_detect_ajax_error('This AJAX call does not work when called directly. Do an AJAX call via JS instead.');
     }
