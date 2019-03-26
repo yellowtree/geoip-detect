@@ -123,6 +123,8 @@ New: Shortcode for showing/hiding content!
 
 * The Maxmind file downloaded by the plugin will be deleted when the plugin is removed (not only deactivated) in the backend. You can remove the file manually from wp-content/uploads/GeoLite2-City.mmdb if needed.
 
+* NEW: (Experimental) AJAX support
+
 = 2.11.0 =
 * FIX: Improve performance of unpacking the Maxmind file (Source: Automatic download) - important for hosts with a low max_execution_time.
 * NEW: On removal (in the Backend), the plugin will delete its options from the database and the downloaded Maxmind file

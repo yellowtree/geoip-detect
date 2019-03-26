@@ -1,5 +1,6 @@
 <?php
 $options = $currentSource->getParameterHTML();
+$currentSourceId = $currentSource->getId();
 ?>
 
 <div class="wrap">
@@ -39,7 +40,7 @@ $options = $currentSource->getParameterHTML();
 		<h2><?php _e('Choose data source:', 'geoip-detect'); ?></h2>
 		<a href="https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#which-data-source-should-i-choose">Help</a>
 		<?php foreach ($sources as $s) : $id = $s->getId();?>
-			<p><label><input type="radio" name="options[source]" value="<?php echo $id ?>" <?php if ($currentSource->getId() == $id) { echo 'checked="checked"'; } ?> /><?php echo $s->getLabel(); ?></label></p>
+			<p><label><input type="radio" name="options[source]" value="<?php echo $id ?>" <?php if ($currentSourceId == $id) { echo 'checked="checked"'; } ?> /><?php echo $s->getLabel(); ?></label></p>
 			<span class="detail-box">
 				<?php echo $s->getDescriptionHTML(); ?>
 			</span>
@@ -63,6 +64,12 @@ $options = $currentSource->getParameterHTML();
 				<span class="geoip_detect_error"><?php _e('Warning: As the CSS option above is active, this means that all pages are not cached.', 'geoip-detect'); ?></span>
 				<?php endif; ?>
 		</p>
+		<p>
+			<label><input type="checkbox" name="options[ajax_enabled]" value="1" <?php if (!empty($wp_options['ajax_enabled'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Enable AJAX endpoint to get the information for the current IP.', 'geoip-detect'); ?></label>
+		</p>
+			<?php if ($currentSourceId === 'precision' && !empty($wp_options['ajax_enabled'])): ?>
+				<span class="geoip_detect_error" style="margin-top: 0;"><?php _e('Warning: In theory, other websites could use your Maxmind Precision credits over AJAX, this cannot be prevented. You should use a different data source or disable AJAX.', 'geoip-detect'); ?></span>
+			<?php endif; ?>
 
 		<p>
 			<label><input type="checkbox" name="options[has_reverse_proxy]" value="1" <?php if (!empty($wp_options['has_reverse_proxy'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('The server is behind a reverse proxy', 'geoip-detect')?></label>
