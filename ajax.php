@@ -61,8 +61,9 @@ function geoip_detect_ajax_get_info_from_current_ip() {
 	$locales = null;
 	if (isset($_REQUEST['locales']))
 		$locales = $_REQUEST['locales'];
-	
-	$data = _geoip_detect_ajax_get_data($locales);
+    $options = apply_filters('geoip_detect2_ajax_options', []);
+        
+	$data = _geoip_detect_ajax_get_data($locales, $options);
 	
 	if ($data['extra']['error'])
 		http_response_code(400);
