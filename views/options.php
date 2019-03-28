@@ -64,14 +64,17 @@ $currentSourceId = $currentSource->getId();
 				<span class="geoip_detect_error"><?php _e('Warning: As the CSS option above is active, this means that all pages are not cached.', 'geoip-detect'); ?></span>
 				<?php endif; ?>
 		</p>
-		<p>
-			<label><input type="checkbox" name="options[ajax_enabled]" value="1" <?php if (!empty($wp_options['ajax_enabled'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Enable AJAX endpoint to get the information for the current IP.', 'geoip-detect'); ?></label>
+
+<?php if (get_option('geoip-detect-ajax_beta')) : ?>
+		<p style="color:red">
+			<label><input type="checkbox" name="options[ajax_enabled]" value="1" <?php if (!empty($wp_options['ajax_enabled'])) { echo 'checked="checked"'; } ?>>BETA: &nbsp;<?php _e('Enable AJAX endpoint to get the information for the current IP.', 'geoip-detect'); ?></label>
 		</p>
 			<?php if ($currentSourceId === 'precision' && !empty($wp_options['ajax_enabled'])): ?>
-				<span class="geoip_detect_error" style="margin-top: 0;"><?php _e('Warning: In theory, other websites could use your Maxmind Precision credits over AJAX, this cannot be prevented. You should use a different data source or disable AJAX.', 'geoip-detect'); ?></span>
+				<span class="geoip_detect_error" style="margin-top: 0;"><?php _e('Warning: In theory, other websites could use your Maxmind Precision credits over AJAX, this cannot be prevented completely (see https://github.com/yellowtree/geoip-detect/wiki/JS-API-Documentation for more infos). You should use a different data source or disable AJAX.', 'geoip-detect'); ?></span>
 			<?php endif; ?>
-
 		<p>
+<?php endif; ?>
+
 			<label><input type="checkbox" name="options[has_reverse_proxy]" value="1" <?php if (!empty($wp_options['has_reverse_proxy'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('The server is behind a reverse proxy', 'geoip-detect')?></label>
 			<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_part=client-ip">(<?php _e('Client IP debug panel', 'geoip-detect');?>)</a>
 			<span class="detail-box">

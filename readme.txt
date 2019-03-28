@@ -121,9 +121,9 @@ New: Shortcode for showing/hiding content!
 
 == Changelog ==
 
-* The Maxmind file downloaded by the plugin will be deleted when the plugin is removed (not only deactivated) in the backend. You can remove the file manually from wp-content/uploads/GeoLite2-City.mmdb if needed.
-
-* NEW: (Experimental) AJAX support
+= 2.12.0 =
+* NEW: JS/AJAX support for cached pages (This is in **BETA**. Read https://github.com/yellowtree/geoip-detect/wiki/JS-API-Documentation on how to activate it).
+* FIX: The Maxmind file downloaded by the plugin will be deleted when the plugin is removed (not only deactivated) in the backend.
 
 = 2.11.0 =
 * FIX: Improve performance of unpacking the Maxmind file (Source: Automatic download) - important for hosts with a low max_execution_time.

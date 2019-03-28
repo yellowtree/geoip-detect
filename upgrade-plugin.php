@@ -22,11 +22,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * This function is executed each time a new version is installed.
  * Note that downgrading versions is not supported. (Shouldn't lead to problems, though, normally.)
  * 
+ * These updates are executed ONCE if the old version is smaller than ...
+ * 
  * @param string $old_version
  */
 function geoip_detect_do_upgrade($old_version) {
 	
-	// v2.3.0 Set default source to hostinfo
+	// v2.3.0 Always set default source to hostinfo
 	if (version_compare('2.3.0', $old_version, '>')) {
 		if (!get_option('geoip-detect-source'))
 			update_option('geoip-detect-source', 'hostinfo');
@@ -34,7 +36,7 @@ function geoip_detect_do_upgrade($old_version) {
 	
 	// v2.5.0 Set "DONOTCACHEPAGE"
 	if (version_compare('2.5.0', $old_version, '>')) {
-		if (!get_option('geoip-detect-disable_pagecache')) {
+		if (get_option('geoip-detect-disable_pagecache') === false) {
 			if (get_option('geoip-detect-set_css_country'))
 				update_option('geoip-detect-disable_pagecache', '0');
 			else 
@@ -49,12 +51,21 @@ function geoip_detect_do_upgrade($old_version) {
 		}
 	}
 
-	// Fix auto update hook (re-schedule if necessary)
+	// v 2.8.2 Fix auto update hook (re-schedule if necessary)
 	if (version_compare('2.8.2', $old_version, '>')) {
-		$source = new \YellowTree\GeoipDetect\DataSources\Auto\AutoDataSource;
-		$source->deactivate();
-		if (get_option('geoip-detect-source') == 'auto') {
-			$source->activate();
+		if (wp_next_scheduled( 'geoipdetectupdate' ) === false) {
+			$source = new \YellowTree\GeoipDetect\DataSources\Auto\AutoDataSource;
+			$source->deactivate();
+			if (get_option('geoip-detect-source') == 'auto') {
+				$source->activate();
+			}
+		}
+	}
+
+	// v2.5.0 Set "DONOTCACHEPAGE"
+	if (version_compare('2.12.0', $old_version, '>')) {
+		if (get_option('geoip-detect-ajax_beta') === false) {
+			update_option('geoip-detect-ajax_beta', '0');
 		}
 	}
 }
