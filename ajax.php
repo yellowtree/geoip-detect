@@ -117,15 +117,24 @@ function _geoip_detect_ajax_get_name($names, $locales)
 	return '';
 }
 
-/* Doing Server-side code only for the beginning 
+/**
+ * Call this function if you want to register the JS script only for specific pages
+ */
+function geoip_detect2_enqueue_javascript() {
+	wp_enqueue_script('geoip-detect-js');
+}
+
 function _geoip_detect_register_javascript() {
 	wp_register_script('geoip-detect-js', GEOIP_DETECT_PLUGIN_URI . 'js/geoip_detect.js', array('jquery'), GEOIP_DETECT_VERSION, true);
-
-	$data = array();
-	$data['ajaxurl'] = admin_url('/admin-ajax.php');
+	$data = [
+		'ajaxurl' => admin_url('/admin-ajax.php'),
+	];
+	$data = apply_filters('geoip_detect2_ajax_localize_script_data', $data);
 	wp_localize_script('geoip-detect-js', 'geoip_detect', $data);
+	
+	if (get_option('ajax_enqueue_js')) {
+		geoip_detect2_enqueue_javascript();
+	}
 }
 
 add_action('wp_enqueue_scripts', '_geoip_detect_register_javascript');
-
-*/

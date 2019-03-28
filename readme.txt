@@ -104,7 +104,7 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 
 = 2.11.0 =
 
-The Download code of the automatically updated Maxmind file was rewritten for better performance.
+The Download code of the automatically updated Maxmind file was rewritten for better performance. Also, AJAX support is now in beta (see documentation).
 
 = 2.9.2 =
 
@@ -121,11 +121,8 @@ New: Shortcode for showing/hiding content!
 
 == Changelog ==
 
-= 2.12.0 =
-* NEW: JS/AJAX support for cached pages (This is in **BETA**. Read https://github.com/yellowtree/geoip-detect/wiki/JS-API-Documentation on how to activate it).
-* FIX: The Maxmind file downloaded by the plugin will be deleted when the plugin is removed (not only deactivated) in the backend.
-
 = 2.11.0 =
+* NEW: JS/AJAX support for cached pages (This is in **BETA**. Read https://github.com/yellowtree/geoip-detect/wiki/JS-API-Documentation on how to activate it).
 * FIX: Improve performance of unpacking the Maxmind file (Source: Automatic download) - important for hosts with a low max_execution_time.
 * NEW: On removal (in the Backend), the plugin will delete its options from the database and the downloaded Maxmind file
 
