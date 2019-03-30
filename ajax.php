@@ -65,9 +65,10 @@ function geoip_detect_ajax_get_info_from_current_ip() {
     $options = apply_filters('geoip_detect2_ajax_options', []);
         
 	$data = _geoip_detect_ajax_get_data($locales, $options);
+	$data = apply_filters('geoip_detect2_ajax_record_data', $data, $data['traits']['ip_adress']);
 	
 	if ($data['extra']['error'])
-		http_response_code(400);
+		http_response_code(500);
 	
 	echo json_encode($data);
 	exit;
@@ -91,21 +92,25 @@ function _geoip_detect_ajax_error($error) {
 	exit;
 }
 
+
 function _geoip_detect_ajax_get_data($locales, $options = array()) {
 	$info = geoip_detect2_get_info_from_current_ip($locales, $options);
 	$data = $info->jsonSerialize();
 
-	// Add the 'name' field
-	$locales = apply_filters('geoip_detect2_locales', $locales);
-	foreach ($data as &$prop) {
-		if (isset($prop['names']) && is_array($prop['names'])) {
-			$prop['name'] = _geoip_detect_ajax_get_name($prop['names'], $locales);
-		}
-	}
+	// foreach ($data as &$prop) {
+	// 	if (isset($prop['names']) && is_array($prop['names'])) {
+	// 		$prop['name'] = _geoip_detect_ajax_get_name($prop['names'], $locales);
+	// 	}
+	// }
+
+
+	// For privacy reasons, do not emit the nb of credits left (Maxmind Precision)
+	unset($data['maxmind']);
 	
 	return $data;
 }
 
+/* TODO migrate to JS API
 function _geoip_detect_ajax_get_name($names, $locales)
 {
 	foreach ($locales as $locale) {
@@ -116,6 +121,7 @@ function _geoip_detect_ajax_get_name($names, $locales)
 	// Nothing found ...
 	return '';
 }
+*/
 
 /**
  * Call this function if you want to register the JS script only for specific pages
@@ -128,6 +134,7 @@ function _geoip_detect_register_javascript() {
 	wp_register_script('geoip-detect-js', GEOIP_DETECT_PLUGIN_URI . 'js/geoip_detect.js', array('jquery'), GEOIP_DETECT_VERSION, true);
 	$data = [
 		'ajaxurl' => admin_url('/admin-ajax.php'),
+		'default_locales' => apply_filters('geoip_detect2_locales', null),
 	];
 	$data = apply_filters('geoip_detect2_ajax_localize_script_data', $data);
 	wp_localize_script('geoip-detect-js', 'geoip_detect', $data);
