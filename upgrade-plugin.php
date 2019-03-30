@@ -62,8 +62,8 @@ function geoip_detect_do_upgrade($old_version) {
 		}
 	}
 
-	// v2.5.0 Set "DONOTCACHEPAGE"
-	if (version_compare('2.12.0', $old_version, '>')) {
+	// v2.11.0 Create beta option in database
+	if (version_compare('2.11.0', $old_version, '>')) {
 		if (get_option('geoip-detect-ajax_beta') === false) {
 			update_option('geoip-detect-ajax_beta', '0');
 		}
