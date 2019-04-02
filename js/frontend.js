@@ -15,8 +15,10 @@ function get_info_raw() {
             }
         });
     }
+    // TODO: Cache result in Session Cookie
     return ajaxPromise;
 }
+
 
 export function get_info() {
     // async or new Promise - Syntax?
