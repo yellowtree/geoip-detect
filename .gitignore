@@ -8,3 +8,5 @@ node_modules/
 *.tar.gz
 *.zip
 /lib/vendor
+/*-workspace
+/yarn-error.log
