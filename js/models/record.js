@@ -2,7 +2,7 @@
 import lodash_get from 'lodash.get';
 
 
-_get_localized = function(ret, locales) {
+const _get_localized = function(ret, locales) {
     if (typeof(ret) == 'object' && typeof(ret.names) == 'object') {
         for (let locale of locales) {
             if (ret.names[locale]) {

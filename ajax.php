@@ -94,31 +94,11 @@ function _geoip_detect_ajax_get_data($options = array()) {
 	$info = geoip_detect2_get_info_from_current_ip(['en'], $options);
 	$data = $info->jsonSerialize();
 
-	// foreach ($data as &$prop) {
-	// 	if (isset($prop['names']) && is_array($prop['names'])) {
-	// 		$prop['name'] = _geoip_detect_ajax_get_name($prop['names'], $locales);
-	// 	}
-	// }
-
-
 	// For privacy reasons, do not emit the nb of credits left (Maxmind Precision)
 	unset($data['maxmind']);
 	
 	return $data;
 }
-
-/* TODO migrate to JS API
-function _geoip_detect_ajax_get_name($names, $locales)
-{
-	foreach ($locales as $locale) {
-		if (isset($names[$locale])) {
-			return $names[$locale];
-		}
-	}
-	// Nothing found ...
-	return '';
-}
-*/
 
 /**
  * Call this function if you want to register the JS script only for specific pages
@@ -127,16 +107,37 @@ function geoip_detect2_enqueue_javascript() {
 	wp_enqueue_script('geoip-detect-js');
 }
 
+function _geoip_detect_parcel_get_dist_js($handle) {
+	$urlFile = GEOIP_PLUGIN_DIR . '/js/dist/parcel.json';
+	if (!is_readable($urlFile)) return false;
+
+	$json = file_get_contents($urlFile);
+	$urls = json_decode($json, true);
+
+	if (isset($urls[$handle]))
+		return '/js/dist' .$urls[$handle];
+	return false;
+}
+
 function _geoip_detect_register_javascript() {
-	wp_register_script('geoip-detect-js', GEOIP_DETECT_PLUGIN_URI . 'js/geoip_detect.js', array('jquery'), GEOIP_DETECT_VERSION, true);
+	$file_uri = _geoip_detect_parcel_get_dist_js('frontendJS');
+	if (!$file_uri) {
+		if (WP_DEBUG) {
+			trigger_error('Warning by the geoip-detect-Plugin: the file frontend.js could not be found, JS API will not work.', E_USER_NOTICE);
+			die();
+		}
+		return;
+	}
+
+	wp_register_script('geoip-detect-js', GEOIP_DETECT_PLUGIN_URI . $file_uri, array('jquery'), GEOIP_DETECT_VERSION, true);
 	$data = [
 		'ajaxurl' => admin_url('/admin-ajax.php'),
 		'default_locales' => apply_filters('geoip_detect2_locales', null),
 	];
 	$data = apply_filters('geoip_detect2_ajax_localize_script_data', $data);
-	wp_localize_script('geoip-detect-js', 'geoip_detect', $data);
+	wp_localize_script('geoip-detect-js', 'geoip_detect', [ 'options' => $data ] );
 	
-	if (get_option('ajax_enqueue_js')) {
+	if (get_option('geoip-detect-ajax_enqueue_js')) {
 		geoip_detect2_enqueue_javascript();
 	}
 }

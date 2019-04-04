@@ -10,3 +10,4 @@ node_modules/
 /lib/vendor
 /*-workspace
 /yarn-error.log
+/.cache
