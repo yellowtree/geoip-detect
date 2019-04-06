@@ -7,8 +7,9 @@
   "author": "Benjamin Pick <benjaminpick@github.com>",
   "license": "GPL-3.0-or-later",
   "scripts": {
-    "start": "rm -rf .cache && rm -rf js/dist && parcel parcel.urls --out-dir js/dist",
-    "build": "rm -rf .cache && rm -rf js/dist && parcel build parcel.urls --out-dir js/dist"
+    "clean": "rm -rf .cache",
+    "start": "rm -rf js/dist && parcel parcel.urls --out-dir js/dist",
+    "build": "rm -rf js/dist && parcel build parcel.urls --out-dir js/dist"
   },
   "private": false,
   "dependencies": {

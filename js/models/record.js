@@ -11,7 +11,9 @@ const _get_localized = function(ret, locales) {
         }
         return '';
     }
+    return ret;
 }
+
 
 
 class Record {
@@ -30,8 +32,8 @@ class Record {
     
     get_with_locales(prop, locales, default_value) {
         // Treat pseudo-property 'name' as if it never existed
-        if (prop.substring(-5) === '.name') {
-            prop = prop.substring(0, -5);
+        if (prop.substr(-5) === '.name') {
+            prop = prop.substr(0, prop.length - 5);
         }
 
         let ret = lodash_get(this.data, prop, default_value);
@@ -49,7 +51,7 @@ class Record {
      * @return string Error Message
      */
     message() {
-        return lodash_get(this.data, 'extra.message', '');
+        return lodash_get(this.data, 'extra.error', '');
     }
 }
 

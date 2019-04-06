@@ -86,6 +86,7 @@ function _geoip_detect_ajax_error($error) {
 	http_response_code(412);
 
 	$data = array('extra' => array('error' => $error));
+	$data['is_empty'] = true;
 	echo json_encode($data);
 
 	exit;
@@ -126,6 +127,12 @@ function _geoip_detect_parcel_get_dist_js($handle) {
 }
 
 function _geoip_detect_register_javascript() {
+	// What about CORS usage?
+	// if (!get_option('geoip-detect-ajax_enabled')) {
+	// 	return;
+	// }
+
+
 	$file_uri = _geoip_detect_parcel_get_dist_js('frontendJS');
 	if (!$file_uri) {
 		if (WP_DEBUG) {
@@ -139,6 +146,7 @@ function _geoip_detect_register_javascript() {
 	$data = [
 		'ajaxurl' => admin_url('/admin-ajax.php'),
 		'default_locales' => apply_filters('geoip_detect2_locales', null),
+		'do_body_classes' => false, // TODO add UI option later
 	];
 	$data = apply_filters('geoip_detect2_ajax_localize_script_data', $data);
 	wp_localize_script('geoip-detect-js', 'geoip_detect', [ 'options' => $data ] );
