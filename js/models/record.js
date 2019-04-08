@@ -36,6 +36,8 @@ class Record {
             prop = prop.substr(0, prop.length - 5);
         }
 
+        // TODO handle most_specific_subdivision (here or in PHP)?
+
         let ret = lodash_get(this.data, prop, default_value);
 
         // Localize property, if possible
@@ -43,14 +45,12 @@ class Record {
 
         return ret;
     }
-
     
-
     /**
      * Get error message, if any
      * @return string Error Message
      */
-    message() {
+    error() {
         return lodash_get(this.data, 'extra.error', '');
     }
 }

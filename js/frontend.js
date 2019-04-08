@@ -52,15 +52,15 @@ export async function get_info() {
     }
 
     const record = new Record(response, options.default_locales);
-
-    if (record.message()) {
-        throw record; // Reject promise
-    }
-    return record; // Resolve promise
+    return record;
 }
 
-if (options.do_body_classes || true) {
-    get_info().then((record) => {
+async function add_body_classes() {
+    const record = await get_info();
+
+    if (record.error()) {
+        console.error('Geodata Error (could not add CSS-classes to body): ' + record.error());
+    }
 
     const css_classes = {
         country:   record.get('country.iso_code'),
@@ -68,17 +68,15 @@ if (options.do_body_classes || true) {
         province:  record.get('most_specific_subdivision.iso_code'),
     };
 
-    for(let value of css_classes) {
-        let key = ''; // TODO
+    for(let key of Object.keys(css_classes)) {
+        const value = css_classes[key];
         if (value) {
             $('body').addClass(`geoip-${key}-${value}`);
         }
     }
-
-    }).catch((record) => { 
-        console.error(record);
-        console.error('Geodata Error (could not add CSS-classes to body): ' + record.message());
-    });
+}
+if (options.do_body_classes) {
+    add_body_classes();
 }
 
 // Extend window object 
