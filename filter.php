@@ -42,9 +42,9 @@ function geoip_detect2_convert_locale_format($locales) {
 	if (is_string($locales)) {
 		$locales = explode(',', $locales);
 		$locales = array_map('trim', $locales);
-
 		$locales = array_unique($locales);
 	}
+
 	return $locales;
 }
 add_filter('geoip_detect2_locales', 'geoip_detect2_convert_locale_format', 7);
