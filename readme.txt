@@ -18,7 +18,7 @@ as a shortcode, or via CSS body classes. The city & country names are translated
 
 = Features: =
 
-* Provides these 5 functions (see [API Documentation](https://github.com/yellowtree/geoip-detect/wiki/API-Documentation)):
+* Provides these 5 functions (see [API Documentation](https://github.com/yellowtree/geoip-detect/wiki/API:-PHP)):
   * `geoip_detect2_get_info_from_ip($ip, $locales = array('en'), $options = array())`: Lookup Geo-Information of the specified IP
   * `geoip_detect2_get_info_from_current_ip($locales = array('en'), $options = array())`: Lookup Geo-Information of the current website user
   * `geoip_detect2_get_current_source_description(...)`: Return a human-readable label of the currently chosen source.
@@ -40,7 +40,7 @@ as a shortcode, or via CSS body classes. The city & country names are translated
   * A text input that is pre-filled with the detected city (or other property): `[geoip_detect2_text_input city property:city lang:fr id:id class:class default:Paris]`
   * GeoIP information for the email text: `[geoip_detect2_user_info]`
 
-See [API Documentation](https://github.com/yellowtree/geoip-detect/wiki/API-Documentation) for more info.
+See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more info.
 
 = How can I use these functions? =
 
@@ -89,7 +89,13 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 
 **Further documentation**
 
-[API Documentation](https://github.com/yellowtree/geoip-detect/wiki/API-Documentation)
+[PHP Functions](https://github.com/yellowtree/geoip-detect/wiki/API:-PHP)
+
+[JS Functions for AJAX mode](https://github.com/yellowtree/geoip-detect/wiki/API%3A-AJAX)
+
+[Shortcodes](https://github.com/yellowtree/geoip-detect/wiki/API:-Shortcodes)
+
+[Shortcodes for Contact Form 7](https://github.com/yellowtree/geoip-detect/wiki/API:-Shortcodes-for-Contact-Form-7)
 
 [Record Properties](https://github.com/yellowtree/geoip-detect/wiki/Record-Properties)
 
@@ -122,13 +128,13 @@ New: Shortcode for showing/hiding content!
 == Changelog ==
 
 = 2.11.0 =
-* NEW: JS/AJAX support for cached pages (This is in **BETA**. Read https://github.com/yellowtree/geoip-detect/wiki/JS-API-Documentation on how to activate it).
+* NEW: JS/AJAX support for cached pages (This is in **BETA**. Read https://github.com/yellowtree/geoip-detect/wiki/API%3A-AJAX on how to activate it).
 * FIX: Improve performance of unpacking the Maxmind file (Source: Automatic download) - important for hosts with a low max_execution_time.
 * NEW: On removal (in the Backend), the plugin will delete its options from the database and the downloaded Maxmind file
 
 = 2.10.0 =
 * NEW: The whitelisted proxies can now be subnets such as `11.11.11.0/24`
-* NEW: Add a ContactForm7-Tag `geoip_detect2_text_input` (see https://github.com/yellowtree/geoip-detect/wiki/API-Documentation#create-a-text-input-that-is-prefilled-with-a-geodetected-property)
+* NEW: Add a ContactForm7-Tag `geoip_detect2_text_input` (see https://github.com/yellowtree/geoip-detect/wiki/API:-Shortcodes-for-Contact-Form-7#create-a-text-input-that-is-prefilled-with-a-geodetected-property)
 * NEW: A new wordpress filter allows overriding of the detected geo-information inside the `geoip_detect2_shortcode_show_if`-Shortcode. Use the already-existing filter `geoip_detect2_record_information` instead if you want to override this information for all shortcodes and API calls.
 * Updated Maxmind vendor code
 * Increased WP minimum version to 4.0
