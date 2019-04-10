@@ -59,10 +59,12 @@ function geoip_detect_ajax_get_info_from_current_ip() {
 		_geoip_detect_ajax_error('Incorrect referer.'); // Ajax only works if coming from the same site. No CORS even if headers are enabled.
     }
 	
-    $options = apply_filters('geoip_detect2_ajax_options', []);
-        
+	$options = apply_filters('geoip_detect2_ajax_options', []);
+
+	// Do the API call:
 	$data = _geoip_detect_ajax_get_data($options);
-	$data = apply_filters('geoip_detect2_ajax_record_data', $data, $data['traits']['ip_address']);
+	
+	$data = apply_filters('geoip_detect2_ajax_record_data', $data, isset($data['traits']['ip_address']) ? $data['traits']['ip_adress'] : '' ) ;
 	
 	if ($data['extra']['error'])
 		http_response_code(500);
