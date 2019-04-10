@@ -62,7 +62,7 @@ function geoip_detect_ajax_get_info_from_current_ip() {
     $options = apply_filters('geoip_detect2_ajax_options', []);
         
 	$data = _geoip_detect_ajax_get_data($options);
-	$data = apply_filters('geoip_detect2_ajax_record_data', $data, $data['traits']['ip_adress']);
+	$data = apply_filters('geoip_detect2_ajax_record_data', $data, $data['traits']['ip_address']);
 	
 	if ($data['extra']['error'])
 		http_response_code(500);
