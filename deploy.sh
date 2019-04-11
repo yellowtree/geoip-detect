@@ -58,6 +58,11 @@ echo "Versions match in PHP file. Let's proceed..."
 
 cd $GITPATH
 
+echo "Re-generate JS ..."
+yarn install
+yarn clean
+yarn build
+
 echo "Generate README.md from readme.txt"
 bin/readme.sh "$SVNURL"
 bin/changelog.sh

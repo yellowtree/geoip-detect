@@ -64,7 +64,7 @@ function geoip_detect_ajax_get_info_from_current_ip() {
 	// Do the API call:
 	$data = _geoip_detect_ajax_get_data($options);
 	
-	$data = apply_filters('geoip_detect2_ajax_record_data', $data, isset($data['traits']['ip_address']) ? $data['traits']['ip_adress'] : '' ) ;
+	$data = apply_filters('geoip_detect2_ajax_record_data', $data, isset($data['traits']['ip_address']) ? $data['traits']['ip_address'] : '' ) ;
 	
 	if ($data['extra']['error'])
 		http_response_code(500);
