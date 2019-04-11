@@ -128,8 +128,8 @@ New: Shortcode for showing/hiding content!
 == Changelog ==
 
 = 2.11.0 =
-* NEW: JS/AJAX support for cached pages (This is in **BETA**. Read https://github.com/yellowtree/geoip-detect/wiki/API%3A-AJAX on how to activate it).
-* FIX: Improve performance of unpacking the Maxmind file (Source: Automatic download) - important for hosts with a low max_execution_time.
+* NEW: JS/AJAX support for cached pages (This is in **BETA**. Read https://github.com/yellowtree/geoip-detect/wiki/API%3A-AJAX on how to activate it)
+* FIX: Improve performance of unpacking the Maxmind file (Source: Automatic download) - important for hosts with a low max_execution_time
 * NEW: On removal (in the Backend), the plugin will delete its options from the database and the downloaded Maxmind file
 
 = 2.10.0 =
