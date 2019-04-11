@@ -139,7 +139,7 @@ function _geoip_detect_register_javascript() {
 	$data = apply_filters('geoip_detect2_ajax_localize_script_data', $data);
 	wp_localize_script('geoip-detect-js', 'geoip_detect', [ 'options' => $data ] );
 	
-	if (get_option('geoip-detect-ajax_enqueue_js')) {
+	if (get_option('geoip-detect-ajax_enqueue_js') && !is_admin()) {
 		geoip_detect2_enqueue_javascript();
 	}
 }
