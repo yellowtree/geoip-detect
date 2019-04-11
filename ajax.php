@@ -98,7 +98,11 @@ function _geoip_detect_ajax_get_data($options = array()) {
 
 	// For privacy reasons, do not emit the nb of credits left (Maxmind Precision)
 	unset($data['maxmind']);
-	
+
+	if (is_array($data['subdivisions'])) {
+		$data['most_specific_subdivision'] = end($data['subdivisions']);
+	}
+
 	return $data;
 }
 
