@@ -64,6 +64,7 @@ async function add_body_classes() {
 
     const css_classes = {
         country:   record.get('country.iso_code'),
+        'country-is-in-european-union': record.get('country.is_in_european_union'),
         continent: record.get('continent.code'),
         province:  record.get('most_specific_subdivision.iso_code'),
     };

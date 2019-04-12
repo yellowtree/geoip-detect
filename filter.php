@@ -24,11 +24,14 @@ function geoip_detect2_add_body_classes($classes) {
 
 	$info = geoip_detect2_get_info_from_current_ip();
 
+	if ($info->continent->code)
+		$classes[] = 'geoip-continent-' . $info->continent->code;
+
 	if ($info->country->isoCode)
 		$classes[] = 'geoip-country-' . $info->country->isoCode;
 
-	if ($info->continent->code)
-		$classes[] = 'geoip-continent-' . $info->continent->code;
+	if ($info->country->isInEuropeanUnion)
+		$classes[] = 'geoip-country-is-in-european-union';	
 
 	if ($info->mostSpecificSubdivision->isoCode)
 		$classes[] = 'geoip-province-' . $info->mostSpecificSubdivision->isoCode;
