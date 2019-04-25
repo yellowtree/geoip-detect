@@ -127,6 +127,7 @@ New: Shortcode for showing/hiding content!
 
 == Changelog ==
 
+* FIX: Activation error on Wordpress Multisite
 * NEW: Add body class "geoip-country-is-in-european-union" if the detected country is inside of the European Union
 
 = 2.11.0 =

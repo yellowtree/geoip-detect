@@ -433,7 +433,7 @@ function _geoip_maybe_disable_pagecache() {
 	if (!defined('DONOTCACHEDB'))
 		define('DONOTCACHEDB', true);
 
-	if (!headers_sent() && !is_user_logged_in()) {
+	if (!headers_sent()) {
 		header('Cache-Control: private, proxy-revalidate, s-maxage=0');
 	}
 
