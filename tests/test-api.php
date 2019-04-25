@@ -107,4 +107,11 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertValidGeoIP2Record($record, '8.8.8.8');
 		$this->assertSame('America/Los_Angeles', $record->location->timeZone, 'Timezone must be dectected via country/state');
 	}
+
+	function testBodyClass() {
+		$classes = apply_filters('body_class', []);
+		$this->assertContains('geoip-country-DE', $classes);
+		$this->assertContains('geoip-province-HE', $classes);
+		$this->assertContains('geoip-country-is-in-european-union', $classes);
+	}
 }
