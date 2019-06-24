@@ -62,11 +62,9 @@ function geoip_detect_do_upgrade($old_version) {
 		}
 	}
 
-	// v2.11.0 Create beta option in database
-	if (version_compare('2.11.0', $old_version, '>')) {
-		if (get_option('geoip-detect-ajax_beta') === false) {
-			update_option('geoip-detect-ajax_beta', '0');
-		}
+	// v2.11.1 Create beta option in database
+	if (version_compare('2.11.1', $old_version, '>')) {
+		delete_option('geoip-detect-ajax_beta');
 	}
 }
 

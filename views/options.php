@@ -65,7 +65,6 @@ $currentSourceId = $currentSource->getId();
 				<?php endif; ?>
 		</p>
 
-<?php if (get_option('geoip-detect-ajax_beta')) : ?>
 		<p style="color:red">
 			<label><input type="checkbox" name="options[ajax_enabled]" value="1" <?php if (!empty($wp_options['ajax_enabled'])) { echo 'checked="checked"'; } ?>>BETA: &nbsp;<?php _e('Enable AJAX endpoint to get the information for the current IP.', 'geoip-detect'); ?></label>
 		</p>
@@ -75,7 +74,6 @@ $currentSourceId = $currentSource->getId();
 		<p style="margin-left: 20px; color:red;">
 			<label><input type="checkbox" name="options[ajax_enqueue_js]" value="1" <?php if (!empty($wp_options['ajax_enqueue_js'])) { echo 'checked="checked"'; } ?>>BETA: &nbsp;<?php _e('Add JS to make the access to the AJAX endpoint easier.', 'geoip-detect'); ?></label>
 		</p>
-<?php endif; ?>
 		<p>
 
 			<label><input type="checkbox" name="options[has_reverse_proxy]" value="1" <?php if (!empty($wp_options['has_reverse_proxy'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('The server is behind a reverse proxy', 'geoip-detect')?></label>
