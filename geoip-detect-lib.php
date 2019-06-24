@@ -112,7 +112,10 @@ function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &
 }
 
 function _ip_to_s($ip) {
-	$binary = @inet_pton($ip);
+	$binary = '';
+	try {
+		$binary = @inet_pton($ip);
+	} catch (\Throwable $e) { }
 	if (empty($binary))
 		return '';
 	return base64_encode($binary);
@@ -258,7 +261,10 @@ add_filter('geoip_detect2_record_data', '_geoip_detect2_add_geonames_data');
  */
 function geoip_detect_normalize_ip($ip) {
 	$ip = trim($ip);
-	$binary = @inet_pton($ip);
+	$binary = '';
+	try {
+		$binary = @inet_pton($ip);
+	} catch (\Throwable $e) { }
 	if (empty($binary))
 		return $ip; // Probably an IPv6 adress & IPv6 is not supported. Or not a valid IP.
 
