@@ -60,7 +60,7 @@ $currentSourceId = $currentSource->getId();
 			<span class="detail-box">
 				<?php _e('At least WP SuperCache, W3TotalCache and ZenCache are supported.', 'geoip-detect'); ?>
 			</span>
-				<?php if (!empty($wp_options['set_css_country']) && !empty($wp_options['disable_pagecache'])): ?>
+				<?php if (!empty($wp_options['set_css_country']) && !empty($wp_options['disable_pagecache']) && empty($wp_options['ajax_enabled'])): ?>
 				<span class="geoip_detect_error"><?php _e('Warning: As the CSS option above is active, this means that all pages are not cached.', 'geoip-detect'); ?></span>
 				<?php endif; ?>
 		</p>

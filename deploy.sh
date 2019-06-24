@@ -62,6 +62,7 @@ echo "Re-generate JS ..."
 yarn install
 yarn clean
 yarn build
+git add js/dist
 
 echo "Generate README.md from readme.txt"
 bin/readme.sh "$SVNURL"
