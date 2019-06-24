@@ -132,6 +132,9 @@ function _geoip_detect_register_javascript() {
 	// 	return;
 	// }
 
+	if (!get_option('geoip-detect-ajax_enabled')) {
+		return;
+	}
 
 	$file_uri = _geoip_detect_parcel_get_dist_js('frontendJS');
 	if (!$file_uri) {
@@ -146,12 +149,12 @@ function _geoip_detect_register_javascript() {
 	$data = [
 		'ajaxurl' => admin_url('/admin-ajax.php'),
 		'default_locales' => apply_filters('geoip_detect2_locales', null),
-		'do_body_classes' => false, // TODO add UI option later
+		'do_body_classes' => (bool) get_option('geoip-detect-set_css_country'),
 	];
 	$data = apply_filters('geoip_detect2_ajax_localize_script_data', $data);
 	wp_localize_script('geoip-detect-js', 'geoip_detect', [ 'options' => $data ] );
 	
-	if (get_option('geoip-detect-ajax_enqueue_js') && !is_admin()) {
+	if ((get_option('geoip-detect-ajax_enqueue_js') || get_option('geoip-detect-set_css_country')) && !is_admin()) {
 		geoip_detect2_enqueue_javascript();
 	}
 }

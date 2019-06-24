@@ -19,7 +19,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 function geoip_detect2_add_body_classes($classes) {
-	if (!get_option('geoip-detect-set_css_country'))
+	if (!get_option('geoip-detect-set_css_country') || get_option('geoip-detect-ajax_enabled'))
 		return $classes;
 
 	$info = geoip_detect2_get_info_from_current_ip();

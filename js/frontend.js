@@ -72,7 +72,11 @@ async function add_body_classes() {
     for(let key of Object.keys(css_classes)) {
         const value = css_classes[key];
         if (value) {
-            $('body').addClass(`geoip-${key}-${value}`);
+            if (typeof(value) == 'string') {
+                $('body').addClass(`geoip-${key}-${value}`);
+            } else {
+                $('body').addClass(`geoip-${key}`);
+            }
         }
     }
 }
