@@ -144,7 +144,7 @@ function on_uninstall() {
 register_uninstall_hook(GEOIP_PLUGIN_FILE, __NAMESPACE__ . '\\on_uninstall');
 
 // For Debugging purposes ...
-if (@$_GET['uninstall'] == 'asdf' && WP_DEBUG) {
+if (isset($_GET['uninstall']) && @$_GET['uninstall'] == 'asdf' && WP_DEBUG) {
 
 add_action('plugins_loaded', function() {
 	on_uninstall();
