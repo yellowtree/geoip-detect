@@ -110,8 +110,9 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 
 	function testBodyClass() {
 		$classes = apply_filters('body_class', []);
-		$this->assertContains('geoip-country-DE', $classes);
-		$this->assertContains('geoip-province-HE', $classes);
-		$this->assertContains('geoip-country-is-in-european-union', $classes);
+		$this->assertContains('geoip-continent-EU', $classes, var_export($classes, true));
+		$this->assertContains('geoip-country-DE', $classes, var_export($classes, true));
+		$this->assertContains('geoip-province-HE', $classes, var_export($classes, true));
+		$this->assertContains('geoip-country-is-in-european-union', $classes, var_export($classes, true));
 	}
 }
