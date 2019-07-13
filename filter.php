@@ -18,11 +18,17 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-function geoip_detect2_add_body_classes($classes) {
+function geoip_detect2_add_body_classes_if_needed($classes) {
 	if (!get_option('geoip-detect-set_css_country') || get_option('geoip-detect-ajax_enabled'))
 		return $classes;
 
+	return array_merge($classes, geoip_detect2_get_body_classes());
+}
+add_filter('body_class', 'geoip_detect2_add_body_classes_if_needed');
+
+function geoip_detect2_get_body_classes() {
 	$info = geoip_detect2_get_info_from_current_ip();
+	$classes = array();
 
 	if ($info->continent->code)
 		$classes[] = 'geoip-continent-' . $info->continent->code;
@@ -38,7 +44,7 @@ function geoip_detect2_add_body_classes($classes) {
 
 	return $classes;
 }
-add_filter('body_class', 'geoip_detect2_add_body_classes');
+
 
 
 function geoip_detect2_convert_locale_format($locales) {
