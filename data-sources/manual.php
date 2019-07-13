@@ -44,17 +44,15 @@ class ManualDataSource extends AbstractDataSource {
 
 		$html[] = sprintf(__('Database file: %s', 'geoip-detect'), $relative_file);
 
-		try {
-			$reader = $this->getReader();
-			if ($reader) {
-				$metadata = $reader->metadata();
-				$built = $metadata->buildEpoch;
-				$last_update = @filemtime($file);
-			}
-		} catch (\Exception $e) { /* File is corrupt? */ }
+		$reader = $this->getReader();
+		if ($reader) {
+			$metadata = $reader->metadata();
+			$built = $metadata->buildEpoch;
+			$last_update = is_readable($file) ? filemtime($file) : '';
+			$html[] = sprintf(__('Last updated: %s', 'geoip-detect'), $last_update ? date_i18n($date_format, $last_update) : __('Never', 'geoip-detect'));
+			$html[] = sprintf(__('Database data from: %s', 'geoip-detect'), date_i18n($date_format, $built) );
+		}
 
-		$html[] = sprintf(__('Last updated: %s', 'geoip-detect'), $last_update ? date_i18n($date_format, $last_update) : __('Never', 'geoip-detect'));
-		$html[] = sprintf(__('Database data from: %s', 'geoip-detect'), date_i18n($date_format, $built) );
 
 		return implode('<br>', $html);
 	}

@@ -128,7 +128,10 @@ HTML;
 		$download_url = apply_filters('geoip_detect2_download_url', $download_url);
 
 		$outFile = $this->maxmindGetUploadFilename();
-		$modified = @filemtime($outFile);
+		$modified = 0;
+		if (\is_readable($outFile)) {
+			$modified = filemtime($outFile);
+		} 
 
 		// Check if existing download should be resumed
 		$tmpFile = get_option('geoip-detect-auto_downloaded_file');
