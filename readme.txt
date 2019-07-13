@@ -128,7 +128,7 @@ New: Shortcode for showing/hiding content!
 == Changelog ==
 
 = 2.11.1 =
-* FIX: Activation error on Wordpress Multisite
+* FIX: When activating the plugin on Wordpress MultiSite, an error was thrown before
 * NEW: Add body class "geoip-country-is-in-european-union" if the detected country is inside of the European Union
 * JS/AJAX support for cached pages (Public BETA now. See https://github.com/yellowtree/geoip-detect/wiki/API%3A-AJAX)
 * NEW: If AJAX and body classes are enabled, body classes are added via AJAX.
