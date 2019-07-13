@@ -51,7 +51,7 @@ class GetClientIp {
 	}
 	
 	protected function getIpsFromForwardedFor($currentIpList) {
-		$ip_list_reverse = explode(',', @$_SERVER["HTTP_X_FORWARDED_FOR"]);
+		$ip_list_reverse = explode(',', isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : '');
 
 		if ($this->useProxyWhitelist) {
 			// Add the REMOTE_ADDR to the available IP pool

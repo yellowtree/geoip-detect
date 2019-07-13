@@ -41,9 +41,9 @@ add_filter( "plugin_action_links_" . GEOIP_PLUGIN_BASENAME, 'geoip_detect_add_se
 
 // ------------- Admin GUI --------------------
 
-function geoip_detect_verify_nonce() {
-	$nonce = @$_POST['_wpnonce'];
-	return wp_verify_nonce( $nonce, 'geoip_detect_' . @$_POST['action'] );
+function geoip_detect_verify_nonce($action) {
+	$nonce = isset($_POST['_wpnonce']) ? $_POST['_wpnonce'] : '';
+	return wp_verify_nonce( $nonce, 'geoip_detect_' . $action );
 }
 
 function geoip_detect_lookup_page()
@@ -53,9 +53,10 @@ function geoip_detect_lookup_page()
 
 	$ip_lookup_result = false;
 	$message = '';
+	$action = isset($_POST['action']) ? $_POST['action'] : '';
 
-	if (geoip_detect_verify_nonce()) {
-		switch(@$_POST['action']) {
+	if (geoip_detect_verify_nonce($action)) {
+		switch($action) {
 			case 'lookup':
 				if (isset($_POST['ip']))
 				{
@@ -83,10 +84,12 @@ function geoip_detect_option_page() {
 	if (!is_admin() || !current_user_can('manage_options'))
 		return;
 
-	switch (@$_GET['geoip_detect_part']) {
-		case 'client-ip':
-			return geoip_detect_option_client_ip_page();
-			break;
+	if (isset($_GET['geoip_detect_part'])) {
+		switch ($_GET['geoip_detect_part']) {
+			case 'client-ip':
+				return geoip_detect_option_client_ip_page();
+				break;
+		}
 	}
 
 	$registry = DataSourceRegistry::getInstance();
@@ -98,8 +101,10 @@ function geoip_detect_option_page() {
 	$text_options = array('external_ip', 'trusted_proxy_ips');
 	$option_names = array_merge($numeric_options, $text_options);
 
-	if (geoip_detect_verify_nonce()) {
-		switch(@$_POST['action'])
+	$action = isset($_POST['action']) ? $_POST['action'] : '';
+
+	if (geoip_detect_verify_nonce($action)) {
+		switch($action)
 		{
 			case 'update':
 				$registry->setCurrentSource('auto');

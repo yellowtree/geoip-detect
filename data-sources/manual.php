@@ -84,7 +84,7 @@ HTML;
 	public function saveParameters($post) {
 		$message = '';
 
-		$file = @$post['options_manual']['manual_file'];
+		$file = isset($post['options_manual']['manual_file']) ? $post['options_manual']['manual_file'] : '';
 		if (!empty($file)) {
 			update_option('geoip-detect-manual_file', $file);
 

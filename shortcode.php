@@ -219,8 +219,8 @@ function geoip_detect2_shortcode_country_select($attr) {
 	$locales = apply_filters('geoip_detect2_locales', $locales);
 
 	$select_attrs = array(
-		'name' => !empty($attr['name']) ? $attr['name'] : 'geoip-countries',
-		'id' => @$attr['id'],
+		'name' =>  !empty($attr['name']) ? $attr['name'] : 'geoip-countries',
+		'id' =>    !empty($attr['id']) ? $attr['id'] : '',
 		'class' => !empty($attr['class']) ? $attr['class'] : 'geoip_detect2_countries',
 		'aria-required' => !empty($attr['required']) ? 'required' : '',
 		'aria-invalid' => !empty($attr['invalid']) ? $attr['invalid'] : '',
@@ -354,12 +354,12 @@ function geoip_detect2_shortcode_text_input($attr) {
 	$html_attrs = array(
 		'type' => 'text',
 		'name' => !empty($attr['name']) ? $attr['name'] : 'geoip-text-input',
-		'id' => @$attr['id'],
+		'id' => !empty($attr['id']) ? $attr['id'] : '',
 		'class' => !empty($attr['class']) ? $attr['class'] : 'geoip-text-input',
 		'aria-required' => !empty($attr['required']) ? 'required' : '',
 		'aria-invalid' => !empty($attr['invalid']) ? $attr['invalid'] : '',
 		'value' => $value,
-		'placeholder' => @$attr['placeholder']
+		'placeholder' => !empty($attr['placeholder']) ? $attr['placeholder'] : '',
 	);
 
 	$html = '<input ' . _geoip_detect_flatten_html_attr($html_attrs) . '/>';

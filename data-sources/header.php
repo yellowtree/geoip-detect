@@ -36,13 +36,17 @@ class HeaderReader extends \YellowTree\GeoipDetect\DataSources\AbstractReader {
 		$isoCode = '';
 		switch ($this->options['provider']) {
 			case 'aws':
-				$isoCode = @$_SERVER['CloudFront-Viewer-Country'];
+				if (isset($_SERVER['CloudFront-Viewer-Country'])) {
+					$isoCode = $_SERVER['CloudFront-Viewer-Country'];
+				}
 				break;
 				
-			case 'cloudflare';				
-				$isoCode = @$_SERVER["HTTP_CF_IPCOUNTRY"];
-				if ($isoCode == 'xx')
-					$isoCode = '';	
+			case 'cloudflare';
+				if (isset($_SERVER["HTTP_CF_IPCOUNTRY"])) {
+					$isoCode = $_SERVER["HTTP_CF_IPCOUNTRY"];
+					if ($isoCode == 'xx' /* not a country / unknown */)
+						$isoCode = '';	
+				}
 				break;
 		}
 		$country = '';
@@ -102,7 +106,7 @@ HTML;
 	public function saveParameters($post) {
 		$message = '';
 		
-		$value = @$post['options_header']['provider'];
+		$value = isset($post['options_header']['provider']) ? $post['options_header']['provider'] : '';
 		if (!empty($value)) {
 			update_option('geoip-detect-header-provider', $value);
 		}
