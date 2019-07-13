@@ -8,14 +8,14 @@
   "license": "GPL-3.0-or-later",
   "scripts": {
     "clean": "rm -rf .cache",
-    "start": "rm -rf js/dist && parcel parcel.urls --out-dir js/dist",
-    "build": "rm -rf js/dist && parcel build parcel.urls --out-dir js/dist"
+    "start": "rm -rf js/dist && parcel parcel.urls --out-dir js/dist --experimental-scope-hoisting",
+    "build": "rm -rf js/dist && parcel build parcel.urls --out-dir js/dist --experimental-scope-hoisting"
   },
   "private": false,
   "dependencies": {
     "@babel/runtime": ">=7.4.3",
     "babel-plugin-transform-class-properties": ">=6.24.1",
-    "lodash.get": ">=4.4.2"
+    "lodash-es": "^4.17.14"
   },
   "devDependencies": {
     "@babel/core": ">=7.0.0-0",

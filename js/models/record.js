@@ -1,5 +1,5 @@
 
-import lodash_get from 'lodash.get';
+import { get as lodash_get } from 'lodash-es';
 
 
 const _get_localized = function(ret, locales) {
