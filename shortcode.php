@@ -56,7 +56,7 @@ add_shortcode('geoip_detect', 'geoip_detect_shortcode');
  * `[geoip_detect2 property="country" lang="fr,de"]` -> Allemagne
  * `[geoip_detect2 property="country.confidence" skip_cache="true" default="default value"]` -> default value
  *
- * @param string $property		Property to read. Instead of '->', use '.'
+ * @param string $property		Property to read. For a list of all possible property names, see https://github.com/yellowtree/geoip-detect/wiki/Record-Properties#list-of-all-property-names
  * @param string $lang			Language(s) (optional. If not set, current site language is used.)
  * @param string $default 		Default Value that will be shown if value not set (optional)
  * @param string $skip_cache		if 'true': Do not cache value
