@@ -127,6 +127,9 @@ New: Shortcode for showing/hiding content!
 
 == Changelog ==
 
+= 2.11.2 = 
+* The auto-updater of the Maxmind City Lite source now updates more often (every 1-2weeks) in order to get more accurate data.
+
 = 2.11.1 =
 * FIX: When activating the plugin on Wordpress MultiSite, an error was thrown before
 * NEW: Add body class "geoip-country-is-in-european-union" if the detected country is inside of the European Union
