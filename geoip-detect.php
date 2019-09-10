@@ -79,6 +79,7 @@ include_once(GEOIP_PLUGIN_DIR . '/data-sources/manual.php');
 include_once(GEOIP_PLUGIN_DIR . '/data-sources/auto.php');
 include_once(GEOIP_PLUGIN_DIR . '/data-sources/precision.php');
 include_once(GEOIP_PLUGIN_DIR . '/data-sources/header.php');
+include_once(GEOIP_PLUGIN_DIR . '/data-sources/ipstack.php');
 
 // You can define these constants in your theme/plugin if you like.
 

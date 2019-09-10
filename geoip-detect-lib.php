@@ -202,7 +202,10 @@ function _geoip_detect2_record_enrich_data($record, $ip, $sourceId, $error) {
 	}
 	$data['extra']['source'] = $sourceId;
 	$data['extra']['cached'] = 0;
-	$data['extra']['error'] = $error;
+	
+	if ($error || !isset($data['extra']['error'])) {
+		$data['extra']['error'] = $error;
+	}
 
 	/**
 	 * Filter: geoip_detect2_record_data
