@@ -29,6 +29,7 @@ as a shortcode, or via CSS body classes. The city & country names are translated
   * Commercial Web-API: [Maxmind GeoIP2 Precision](https://www.maxmind.com/en/geoip2-precision-services) (City, Country or Insights)
   * Free (default source): [HostIP.info](http://www.hostip.info/) (IPv4 only)
   * Hosting-Provider dependent: [Cloudflare](https://support.cloudflare.com/hc/en-us/articles/200168236-What-does-CloudFlare-IP-Geolocation-do-) or [Amazon AWS CloudFront](https://aws.amazon.com/blogs/aws/enhanced-cloudfront-customization/) (Country)
+  * Free or Commercial Web-API: [Ipstack](https://ipstack.com)
 * For the property names, see the results of a specific IP in the wordpress backend (under *Tools > GeoIP Detection*).
 * You can include these properties into your posts and pages by using the shortcode `[geoip_detect2 property="country.name" default="(country could not be detected)" lang="en"]` (where 'country.name' can be one of the other property names as well, and 'default' and 'lang' are optional).
 * You can show or hide content by using a shortcode `[geoip_detect2_show_if country="FR, DE" not_city="Berlin"]TEXT[/geoip_detect2_show_if]`. See [Shortcode Documentation](https://github.com/yellowtree/geoip-detect/wiki/API:-Shortcodes#show-or-hide-content-depending-on-the-location).
@@ -52,7 +53,7 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 
 **System Requirements**: You will need at least PHP 5.4.
 
-*GDPR: This plugin does not store any cookie or user-dependent data. If you use a web-based source (hostip.info, Maxmind Precision), the plugin stores all IPs that visited the site in a cache (by default for 7 days) for performance reasons. If you want to disable this behavior, add `define('GEOIP_DETECT_READER_CACHE_TIME', 0);` in your theme's `function.php`. Be especially careful when using this information to change prices or selling options, as this might not be legal.*
+*GDPR: This plugin does not store any cookie or user-dependent data. If you use a web-based source (hostip.info, Maxmind Precision, ipstack), the plugin stores all IPs that visited the site in a cache (by default for 7 days) for performance reasons. If you want to disable this behavior, add `define('GEOIP_DETECT_READER_CACHE_TIME', 0);` in your theme's `function.php`. Be especially careful when using geographic information to change prices or selling options, as this might not be legal.*
 
 *This extension is "charity-ware". If you are happy with it, please [leave a tip](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYUZHS8FH3CL) for the benefit of [this charity](http://www.jmem-hainichen.de/homepage). (See [FAQ](https://github.com/yellowtree/geoip-detect/wiki/FAQ#what-you-mean-by-this-plugin-is-charity-ware) for more infos.)*
 
@@ -105,6 +106,10 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 1. Lookup page (under Tools > GeoIP Lookup)
 2. Options page (under Preferences > GeoIP Detection)
 
+= 2.12.0 =
+
+New: Ipstack.com can be used as data source
+
 = 2.11.0 =
 
 The Download code of the automatically updated Maxmind file was rewritten for better performance. Also, AJAX support is now in beta (see documentation).
@@ -123,6 +128,13 @@ There have been changes to the reverse proxy logic. If you have enabled a revers
 New: Shortcode for showing/hiding content!
 
 ## Changelog ##
+
+= 2.12.0 =
+* NEW: It is now possible to use ipstack.com as a data source.
+* The Backup Lookup UI now can show all properties and you can choose if you want to see the PHP, Shortcode or JS syntax.
+
+= 2.11.2 = 
+* The auto-updater of the Maxmind City Lite source now updates more often (every 1-2weeks) in order to get more accurate data.
 
 = 2.11.1 =
 * FIX: When activating the plugin on Wordpress MultiSite, an error was thrown before
