@@ -41,7 +41,7 @@ function geoip_detect_ajax_get_info_from_current_ip() {
 
 	// Enabled in preferences? If not, do as if the plugin doesn't even exist.
 	if (!get_option('geoip-detect-ajax_enabled')) {
-        _geoip_detect_ajax_error('AJAX must be enabled in the options of the plugin.');
+        return;
     }
 	
 	if (!defined( 'DOING_AJAX' ))	
