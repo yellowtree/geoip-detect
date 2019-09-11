@@ -93,12 +93,12 @@ $is_ajax_enabled = !!get_option('geoip-detect-ajax_enabled');
 		function show_row($record, $key_1, $key_2, $value = null, $class = '') {
 			if (is_array($value)) {
 				if ($key_2 === 'names') {
-					show_row($record, $key_1, 'name', null);
+					show_row($record, $key_1, 'name', null, $class);
 					return;
 				}
 				if ($key_1 === 'subdivisions') {
 					foreach ($value as $key_3 => $v) {
-						show_row($record, 'most_specific_subdivision', $key_3, $v);
+						show_row($record, 'most_specific_subdivision', $key_3, $v, $class);
 					}
 					return;
 				}
