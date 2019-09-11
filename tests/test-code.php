@@ -20,7 +20,6 @@ class CodeTest extends WP_UnitTestCase_GeoIP_Detect {
 			foreach (glob($plugin_dir . '/' . $f . '/**') as $filename) {
 				
 				$code = file_get_contents($filename);
-				$this->assertNotContains('<?= ', $code, 'File ' . $filename . ' contains the shortcode <?= which is not supported in PHP 5.3');
 				$this->assertNotContains('<? ', $code, 'File ' . $filename . ' contains the shortcode <?  which is not supported on all hosts');
 			}
 		}
