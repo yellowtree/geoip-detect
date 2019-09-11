@@ -69,7 +69,7 @@ class HeaderDataSource extends AbstractDataSource {
 	public function getId() { return 'header'; }
 	public function getLabel() { return __('Special Hosting Providers (Cloudflare, Amazon AWS CloudFront)', 'geoip-detect'); }
 
-	public function getDescriptionHTML() { return __('These hosting providers already do geodetection, but only of the visitor\'s country.', 'geoip-detect'); }
+	public function getDescriptionHTML() { return __('These servers already do geodetection, but only of the visitor\'s country.', 'geoip-detect'); }
 	
 	public function getStatusInformationHTML() {
 		$provider = get_option('geoip-detect-header-provider');
