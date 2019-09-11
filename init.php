@@ -118,13 +118,19 @@ function geoip_detect_add_privacy_policy_content() {
         return;
     }
 
+	$registry = DataSourceRegistry::getInstance();
+
 	$caching = '';
- 	if (GEOIP_DETECT_READER_CACHE_TIME > 0 && !DataSourceRegistry::getInstance()->isCachingUsed()) {
+ 	if (GEOIP_DETECT_READER_CACHE_TIME > 0 && !$registry->isCachingUsed()) {
 		$caching = sprintf(__('This site is saving the IP of the visitors of the last %s for performance reasons.', 'geoip-detect'), human_time_diff(0, GEOIP_DETECT_READER_CACHE_TIME));
+	}
+	if ($registry->isCachingUsed()) {
+		$caching = __('This site is sending the visitor\'s IP to (add Provider name) in order to receive the geographic information. (You will need to have a data-processing contract with this provider.)', 'geoip-detect');
 	}
 	$source = geoip_detect2_get_current_source_description();
     $content = sprintf(__( 'This site is using %s to identify the geographic location of your IP adress. %s (Add here: how this information is used, how long it is retained. Be especially careful when using this information to change prices or selling options, as this might not be legal.)', 'geoip-detect' ),
 		$source, $caching);
+
 
     wp_add_privacy_policy_content(
         'GeoIP Detection',
