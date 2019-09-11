@@ -111,7 +111,6 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
             $r['traits']['is_anonymous_vpn'] = $data['security']['is_proxy'] && $data['security']['proxy_type'] == 'vpn';
         if (isset($data['security']['is_tor']))
             $r['traits']['is_tor_exit_node'] = $data['security']['is_tor'];
-            
 
 		$r['traits']['ip_address'] = $ip;
 
@@ -201,7 +200,7 @@ class IpstackSource extends AbstractDataSource {
 $label_key <input type="text" autocomplete="off" size="20" name="options_ipstack[key]" value="$key" /><br />
 $label_ssl <select name="options_ipstack[ssl]">
 HTML;
-        $html .= '<option value="0" ' . (!$this->params['ssl'] ? ' selected="selected"' : '') . '">' . __('HTTP (without encryption)', 'geoip-detect') . '</option>';
+        $html .= '<option value="0" ' . (!$this->params['ssl'] ? ' selected="selected"' : '') . '">' . __('HTTP (without encryption, not GDPR-compatible)', 'geoip-detect') . '</option>';
         $html .= '<option value="1" ' . ($this->params['ssl'] ? ' selected="selected"' : '') . '">' . __('HTTPS (with encryption - paid plans only)', 'geoip-detect') . '</option>';
         $html .= '</select>';
 
