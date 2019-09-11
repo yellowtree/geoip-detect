@@ -28,6 +28,8 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 
 		$r = array();
 
+		$r['traits']['original'] = $data;
+
 		if ($data['country_name'])
 			$r['country']['names'] = array('en' => $data['country_name']);
 		if ($data['country_code'])

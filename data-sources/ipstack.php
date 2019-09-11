@@ -60,8 +60,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
         $r['extra']['original'] = $data;
 
         if (isset($data['success']) && $data['success'] === false) {
-            $r['extra']['is_empty'] = true;
-            $r['extra']['error'] = 'Ipstack API says: ' .  $data['error']['info'];
+            throw new \RuntimeException($data['error']['info']);
             // Example error:
             /* @see https://ipstack.com/documentation#errors
             {
@@ -112,8 +111,6 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
             $r['traits']['is_anonymous_vpn'] = $data['security']['is_proxy'] && $data['security']['proxy_type'] == 'vpn';
         if (isset($data['security']['is_tor']))
             $r['traits']['is_tor_exit_node'] = $data['security']['is_tor'];
-            
-
 
 		$r['traits']['ip_address'] = $ip;
 

@@ -448,3 +448,13 @@ function _geoip_maybe_disable_pagecache() {
 
 	return true;
 }
+
+function _geoip_dashes_to_camel_case($string, $capitalizeFirstCharacter = false) {
+    $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));
+
+    if (!$capitalizeFirstCharacter) {
+        $str = lcfirst($str);
+    }
+
+    return $str;
+}

@@ -177,3 +177,44 @@ function geoip_detect_option_page() {
 function geoip_detect_option_client_ip_page() {
 	include_once(GEOIP_PLUGIN_DIR . '/views/client-ip.php');
 }
+
+function _geoip_detect_improve_data_for_lookup($data, $shorten_attributes = false) {
+	if ($shorten_attributes) {
+		$short = [
+			'city',
+			'subdivisions',
+			'country',
+			'location'	
+		];
+		$short = array_combine($short, $short);
+		$data = array_intersect_key($data, $short);
+	}
+
+	// Logical order
+	$order = [
+		'is_empty',
+		'city',
+		'most_specific_subdivision',
+		'subdivisions',
+		'postal',
+		'country',
+		'registered_country',
+		'represented_country',
+		'continent',
+		'location',
+		'traits',
+		'maxmind',
+		'extra'
+	];
+
+	uksort($data, function($a, $b) use ($order) {
+		$a_found = array_search($a, $order);
+		$b_found = array_search($b, $order);
+
+		if ($a_found === false) $a_found = 1000;
+		if ($b_found === false) $b_found = 1000;
+		return $a_found > $b_found;
+	});
+
+	return $data;
+}
