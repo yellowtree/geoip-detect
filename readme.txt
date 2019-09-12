@@ -132,6 +132,9 @@ New: Shortcode for showing/hiding content!
 
 == Changelog ==
 
+= 2.12.1 =
+* NEW: With the new Wordpress filter `geoip_detect2_record_data_after_cache` you can change the record data for testing purposes ()
+
 = 2.12.0 =
 * NEW: It is now possible to use ipstack.com as a data source.
 * The Backup Lookup UI now can show all properties and you can choose if you want to see the PHP, Shortcode or JS syntax.

@@ -81,6 +81,15 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()
 			_geoip_detect2_add_data_to_cache($data, $ip);
 	}
 
+	/**
+	 * Filter: geoip_detect2_record_data_after_cache
+	 * After loading the information from the GeoIP-Database AND after the cache, you can add information to it.
+	 *
+	 * @param array $data 	Information found.
+	 * @param string	 $orig_ip	IP that originally passed to the function.
+	 * @return array
+	 */
+	$data = apply_filters('geoip_detect2_record_data_after_cache', $data, $ip);
 
 	// 3) Returning the data
 
@@ -89,7 +98,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()
 
 	/**
 	 * Filter: geoip_detect2_record_information
-	 * Use geoip_detect2_record_data instead if you want to modify the data.
+	 * Use geoip_detect2_record_data_after_cache instead if you want to modify the data.
 	 *
 	 * @return \YellowTree\GeoipDetect\DataSources\City
 	 */
