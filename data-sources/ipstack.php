@@ -179,8 +179,6 @@ class IpstackSource extends AbstractDataSource {
 	public function getStatusInformationHTML() { 
         $html = '';
 
-        $html .= __('Last Error Seen: ', 'geoip-detect') . '<br />';
-
         $html .= \sprintf(__('SSL: %s', 'geoip-detect'), $this->params['ssl'] ? __('Enabled', 'geoip-detect') : __('Disabled', 'geoip-detect')) . '<br />';
 
 

@@ -193,8 +193,10 @@ function _geoip_detect_improve_data_for_lookup($data, $shorten_attributes = fals
 		unset($data['country']['geoname_id']);
 		unset($data['country']['is_in_european_union']);
 		unset($data['location']['accuracy_radius']);
-		foreach ($data['subdivisions'] as $i => $s) {
-			unset($data['subdivisions'][$i]['geoname_id']);
+		if (!empty($data['subdivisions'])) {
+			foreach ($data['subdivisions'] as $i => $s) {
+				unset($data['subdivisions'][$i]['geoname_id']);
+			}
 		}
 	}
 
