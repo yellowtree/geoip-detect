@@ -39,7 +39,7 @@ $is_ajax_enabled = !!get_option('geoip-detect-ajax_enabled');
 				<option value="fr,en" <?php if (!empty($_POST['locales']) && $_POST['locales'] == 'fr,en') echo 'selected="selected"'?>><?php _e('French, English otherwise', 'geoip-detect')?></option>
 			</select> 
 		</label><br />
-		<label><?php _e('Which syntax:', 'geoip_detect'); ?>
+		<label><?php _e('Which syntax:', 'geoip-detect'); ?>
 			<select name="syntax">
 				<option value="php" <?php if (empty($_POST['syntax']) || $_POST['syntax'] === 'php') echo 'selected="selected"'?>><?= __('PHP Syntax') ?></option>
 				<option value="shortcode" <?php if (!empty($_POST['syntax']) && $_POST['syntax'] === 'shortcode') echo 'selected="selected"'?>><?= __('Shortcode Syntax') ?></option>
