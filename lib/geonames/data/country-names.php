@@ -1,5 +1,5 @@
 <?php
-// Generated at Fri, 12 Jan 2018 20:51:14 +0100 
+// Generated at Wed, 18 Sep 2019 12:09:48 +0200 
 return array (
   'en' => 
   array (
@@ -40,10 +40,10 @@ return array (
     'BG' => 'Bulgaria',
     'BF' => 'Burkina Faso',
     'BI' => 'Burundi',
+    'CV' => 'Cabo Verde',
     'KH' => 'Cambodia',
     'CM' => 'Cameroon',
     'CA' => 'Canada',
-    'CV' => 'Cape Verde',
     'KY' => 'Cayman Islands',
     'CF' => 'Central African Republic',
     'TD' => 'Chad',
@@ -65,13 +65,13 @@ return array (
     'DJ' => 'Djibouti',
     'DM' => 'Dominica',
     'DO' => 'Dominican Republic',
-    'TL' => 'East Timor',
     'EC' => 'Ecuador',
     'EG' => 'Egypt',
     'SV' => 'El Salvador',
     'GQ' => 'Equatorial Guinea',
     'ER' => 'Eritrea',
     'EE' => 'Estonia',
+    'SZ' => 'Eswatini',
     'ET' => 'Ethiopia',
     'FK' => 'Falkland Islands',
     'FO' => 'Faroe Islands',
@@ -132,7 +132,6 @@ return array (
     'LT' => 'Lithuania',
     'LU' => 'Luxembourg',
     'MO' => 'Macao',
-    'MK' => 'Macedonia',
     'MG' => 'Madagascar',
     'MW' => 'Malawi',
     'MY' => 'Malaysia',
@@ -166,6 +165,7 @@ return array (
     'NU' => 'Niue',
     'NF' => 'Norfolk Island',
     'KP' => 'North Korea',
+    'MK' => 'North Macedonia',
     'MP' => 'Northern Mariana Islands',
     'NO' => 'Norway',
     'OM' => 'Oman',
@@ -216,7 +216,6 @@ return array (
     'SD' => 'Sudan',
     'SR' => 'Suriname',
     'SJ' => 'Svalbard and Jan Mayen',
-    'SZ' => 'Swaziland',
     'SE' => 'Sweden',
     'CH' => 'Switzerland',
     'SY' => 'Syria',
@@ -225,6 +224,7 @@ return array (
     'TJ' => 'Tajikistan',
     'TZ' => 'Tanzania',
     'TH' => 'Thailand',
+    'TL' => 'Timor-Leste',
     'TG' => 'Togo',
     'TK' => 'Tokelau',
     'TO' => 'Tonga',

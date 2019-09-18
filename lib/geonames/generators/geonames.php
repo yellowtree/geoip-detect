@@ -18,27 +18,21 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-// Usage: $ php lib/geonames/generators/geonames.php {api_username} lib/geonames/data
+// Usage: $ php lib/geonames/generators/geonames.php {api_username}
 // Requires PHP 5.4
 
 if (php_sapi_name() != "cli")
 	die('This can only be run from command line.');
 
-function output_to_stderr($text) {
-	fwrite(STDERR, $text);
-}
-
 require_once(__DIR__ . '/vendor/autoload.php');
+require_once(__DIR__ . '/helper.php');
+
+define('OUTPUT_FILE_NAMES', __DIR__ . '/../data/country-names.php');
+define('OUTPUT_FILE_INFO', __DIR__ . '/../data/country-info.php');
 
 $username = @$argv[1];
 if (!$username)
-	die('1st parameter missing: You need to get a free geonames.org-User here: http://www.geonames.org/login');
-
-$output_dir = @$argv[2];
-if (!$output_dir)
-	$output_dir = '.';
-if (!is_dir($output_dir))
-	die('2nd parameter: You need to specify an existing directory');
+	die("1st parameter missing: You need to get a free geonames.org-User here: http://www.geonames.org/login\n");
 
 // List of languages that the Maxmind Database support
 $langs = ['en', 'de', 'it', 'es', 'fr', 'ja', 'pt-BR', 'ru', 'zh-CN'];
@@ -105,21 +99,11 @@ foreach ($lang_geonames as $lang_maxmind => $lang_geoname) {
 	$all_records = array_replace_recursive($all_records, $records);
 }
 
-function geonames_array_to_php($data) {
-	$date_now = date('r');
-	$data = var_export($data, true);
+ksort($all_records);
 
-	$file = <<<PHP
-<?php
-// Generated at {$date_now} 
-return $data;
-PHP;
-	$data = '';
-	return $file;
-}
 
 output_to_stderr("Writing country-info.php...");
-file_put_contents($output_dir . '/country-info.php', geonames_array_to_php(['countries' => $all_records, 'continents' => $continents]));
+file_put_contents(OUTPUT_FILE_INFO, array_to_php(['countries' => $all_records, 'continents' => $continents]));
 output_to_stderr('OK.' . PHP_EOL);
 
 
@@ -137,7 +121,7 @@ foreach ($all_names as $lang_maxmind => $names) {
 	asort($all_names[$lang_maxmind]);
 }
 
-file_put_contents($output_dir . '/country-names.php', geonames_array_to_php($all_names));
+file_put_contents(OUTPUT_FILE_NAMES, array_to_php($all_names));
 
 output_to_stderr('OK.' . PHP_EOL);
 
