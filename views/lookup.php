@@ -181,6 +181,7 @@ $is_ajax_enabled = !!get_option('geoip-detect-ajax_enabled');
 	<p class="short"><a href="#" onclick="geoip_properties_toggle('all', 'short'); return false;"><?= __('Show all available properties', 'geoip-detect') ?></a></p>
 	<p><?= __('(More properties might be available for other IPs and with other data sources.)', 'geoip-detect'); ?></p>
 
+<?php if (WP_DEBUG) { var_Dump($data); } ?>
 		<?php elseif ($ip_lookup_result === 0 || is_null($ip_lookup_result)) : ?>
 			<p>
 				<?php _e('No information found about this IP.', 'geoip-detect')?>

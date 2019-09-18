@@ -84,33 +84,37 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 		if (!empty($data['country_code']))
             $r['country']['iso_code'] = strtoupper($data['country_code']);
             
-        if (!empty($data['region_code'])) {
+            if (!empty($data['region_code'])) {
             $r['subdivisions'][0] = array(
                 'iso_code' => $data['region_code'],
                 'names' => $this->locales($locale, $data['region_name']),
             );
         }
-
+        
 		if (!empty($data['city']))
-			$r['city']['names'] = $this->locales($locale, $data['city']);
+        $r['city']['names'] = $this->locales($locale, $data['city']);
 		if (!empty($data['latitude']))
-			$r['location']['latitude'] = $data['latitude'];
+        $r['location']['latitude'] = $data['latitude'];
 		if (!empty($data['longitude']))
-			$r['location']['longitude'] = $data['longitude'];
-	
+        $r['location']['longitude'] = $data['longitude'];
+        
 		if (isset($data['is_eu']))
-			$r['country']['is_in_european_union'] = $data['is_eu'];
+        $r['country']['is_in_european_union'] = $data['is_eu'];
 		if (isset($data['timezone']['id']))
-            $r['location']['time_zone'] = $data['timezone']['id'];
-
+        $r['location']['time_zone'] = $data['timezone']['id'];
+        
         if (isset($data['connection']['asn']))
-            $r['traits']['autonomous_system_number'] = $data['connection']['asn'];
+        $r['traits']['autonomous_system_number'] = $data['connection']['asn'];
         if (isset($data['connection']['isp']))
-            $r['traits']['isp'] = $data['connection']['isp'];
+        $r['traits']['isp'] = $data['connection']['isp'];
         if (isset($data['security']['is_proxy']))
-            $r['traits']['is_anonymous_vpn'] = $data['security']['is_proxy'] && $data['security']['proxy_type'] == 'vpn';
+        $r['traits']['is_anonymous_vpn'] = $data['security']['is_proxy'] && $data['security']['proxy_type'] == 'vpn';
         if (isset($data['security']['is_tor']))
-            $r['traits']['is_tor_exit_node'] = $data['security']['is_tor'];
+        $r['traits']['is_tor_exit_node'] = $data['security']['is_tor'];
+        
+        if (!empty($data['location']['country_flag_emoji']))
+            $r['extra']['flag'] = strtoupper($data['location']['country_flag_emoji']);
+        
 
 		$r['traits']['ip_address'] = $ip;
 
@@ -139,6 +143,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
     }
 
 	private function api_call($ip) {
+        
 		try {
 			// Setting timeout limit to speed up sites
 			$context = stream_context_create(
