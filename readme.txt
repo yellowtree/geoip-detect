@@ -138,7 +138,7 @@ New: Shortcode for showing/hiding content!
 
 = 2.12.0 =
 * NEW: It is now possible to use ipstack.com as a data source.
-* The Backup Lookup UI now can show all properties and you can choose if you want to see the PHP, Shortcode or JS syntax.
+* The Backend Lookup UI now can show all properties and you can choose if you want to see the PHP, Shortcode or JS syntax.
 
 = 2.11.2 = 
 * The auto-updater of the Maxmind City Lite source now updates more often (every 1-2weeks) in order to get more accurate data.
