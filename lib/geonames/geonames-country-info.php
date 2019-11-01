@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 namespace YellowTree\GeoipDetect\Geonames;
 define ('GEOIP_DETECT_GEONAMES_COUNTRY_INFO', GEOIP_PLUGIN_DIR . '/lib/geonames/data/country-info.php');
 define ('GEOIP_DETECT_GEONAMES_COUNTRY_NAMES', GEOIP_PLUGIN_DIR . '/lib/geonames/data/country-names.php');
+define ('GEOIP_DETECT_GEONAMES_COUNTRY_FLAGS', GEOIP_PLUGIN_DIR . '/lib/geonames/data/country-flags.php');
 
 class CountryInformation {
 	
@@ -52,6 +53,42 @@ class CountryInformation {
 			$country['continent'] = $data['continents'][$country['continent']];
 		return $country;
 	}
+
+	/**
+	 * The Emoji representing the flag
+	 * 
+	 * @param string $iso 2-letter ISO-Code of the country(e.g. 'DE')
+	 * @return string the emoji char
+	 */
+	public function getFlagEmoji($iso) {
+		$data = $this->lazyLoadInformation(GEOIP_DETECT_GEONAMES_COUNTRY_FLAGS);
+
+		if ($iso == 'keys')
+			return array_keys($data);
+
+		if (!isset($data[$iso]['emoji'])) return '';
+
+		return $data[$iso]['emoji'];
+	}
+
+	/**
+	 * The tel code of a country
+	 * 
+	 * @param string $iso 2-letter ISO-Code of the country(e.g. 'DE')
+	 * @return string the emoji char
+	 */
+	public function getTelephonePrefix($iso) {
+		$data = $this->lazyLoadInformation(GEOIP_DETECT_GEONAMES_COUNTRY_FLAGS);
+
+		if ($iso == 'keys')
+			return array_keys($data);
+
+		if (!isset($data[$iso]['tel'])) return '';
+
+		return $data[$iso]['tel'];
+	}
+
+
 	
 	/**
 	 * Get all country names

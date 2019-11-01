@@ -134,6 +134,7 @@ New: Shortcode for showing/hiding content!
 
 = 2.12.1 =
 * NEW: With the new Wordpress filter `geoip_detect2_record_data_after_cache` you can change the record data for testing purposes (see https://github.com/yellowtree/geoip-detect/wiki/API-Usage-Examples#change-record-data-eg-for-testing-purposes)
+* NEW: All datasources now also have the properties `extra->flag` (containing the flag as Unicode Emoji) and `extra->tel` (containing the country dial code)
 * Some cleanup in ipstack & showing all properties in backend.
 
 = 2.12.0 =

@@ -244,6 +244,9 @@ function _geoip_detect2_try_to_fix_timezone($data) {
 }
 add_filter('geoip_detect2_record_data', '_geoip_detect2_try_to_fix_timezone');
 
+/**
+ * Add country name, if not known yet
+ */
 function _geoip_detect2_add_geonames_data($data) {
 	static $countryInfo = null;
 	if (is_null($countryInfo))
@@ -252,11 +255,21 @@ function _geoip_detect2_add_geonames_data($data) {
 	if (!empty($data['country']['iso_code'])) {
 		$geonamesData = $countryInfo->getInformationAboutCountry($data['country']['iso_code']);
 		$data = array_replace_recursive($geonamesData, $data);
+
+		$emoji = $countryInfo->getFlagEmoji($data['country']['iso_code']);
+		if ($emoji && empty($data['extra']['flag'])) {
+			$data['extra']['flag'] = $emoji;
+		}
+		$tel = $countryInfo->getTelephonePrefix($data['country']['iso_code']);
+		if ($tel && empty($data['extra']['tel'])) {
+			$data['extra']['tel'] = $tel;
+		}
 	}
 
 	return $data;
 }
 add_filter('geoip_detect2_record_data', '_geoip_detect2_add_geonames_data');
+
 
 /**
  * IPv6-Adresses can be written in different formats. Make sure they are standardized.
