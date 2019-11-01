@@ -129,9 +129,14 @@ New: Shortcode for showing/hiding content!
 
 ## Changelog ##
 
+= 2.12.1 =
+* NEW: With the new Wordpress filter `geoip_detect2_record_data_after_cache` you can change the record data for testing purposes (see https://github.com/yellowtree/geoip-detect/wiki/API-Usage-Examples#change-record-data-eg-for-testing-purposes)
+* NEW: All datasources now also have the properties `extra->flag` (containing the flag as Unicode Emoji) and `extra->tel` (containing the country dial code)
+* Some cleanup in ipstack & showing all properties in backend.
+
 = 2.12.0 =
 * NEW: It is now possible to use ipstack.com as a data source.
-* The Backup Lookup UI now can show all properties and you can choose if you want to see the PHP, Shortcode or JS syntax.
+* The Backend Lookup UI now can show all properties and you can choose if you want to see the PHP, Shortcode or JS syntax.
 
 = 2.11.2 = 
 * The auto-updater of the Maxmind City Lite source now updates more often (every 1-2weeks) in order to get more accurate data.
