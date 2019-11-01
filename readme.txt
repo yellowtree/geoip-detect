@@ -109,6 +109,10 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 
 == Upgrade Notice ==
 
+= 2.13.0 =
+
+PHP 5.6 is required now.
+
 = 2.12.0 =
 
 New: Ipstack.com can be used as data source
@@ -131,6 +135,9 @@ There have been changes to the reverse proxy logic. If you have enabled a revers
 New: Shortcode for showing/hiding content!
 
 == Changelog ==
+
+= 2.13 =
+* Updated Maxmind vendor code - PHP 5.6 is required now
 
 = 2.12.1 =
 * NEW: With the new Wordpress filter `geoip_detect2_record_data_after_cache` you can change the record data for testing purposes (see https://github.com/yellowtree/geoip-detect/wiki/API-Usage-Examples#change-record-data-eg-for-testing-purposes)

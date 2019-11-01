@@ -3,7 +3,13 @@
 namespace MaxMind\Db\Reader;
 
 // @codingStandardsIgnoreLine
-// We subtract 1 from the log to protect against precision loss.
+use RuntimeException;
+
+/**
+ * @ignore
+ *
+ * We subtract 1 from the log to protect against precision loss.
+ */
 \define(__NAMESPACE__ . '\_MM_MAX_INT_BYTES', (log(PHP_INT_MAX, 2) - 1) / 8);
 
 class Decoder
@@ -15,21 +21,37 @@ class Decoder
     private $pointerTestHack;
     private $switchByteOrder;
 
+    /** @ignore */
     const _EXTENDED = 0;
+    /** @ignore */
     const _POINTER = 1;
+    /** @ignore */
     const _UTF8_STRING = 2;
+    /** @ignore */
     const _DOUBLE = 3;
+    /** @ignore */
     const _BYTES = 4;
+    /** @ignore */
     const _UINT16 = 5;
+    /** @ignore */
     const _UINT32 = 6;
+    /** @ignore */
     const _MAP = 7;
+    /** @ignore */
     const _INT32 = 8;
+    /** @ignore */
     const _UINT64 = 9;
+    /** @ignore */
     const _UINT128 = 10;
+    /** @ignore */
     const _ARRAY = 11;
+    /** @ignore */
     const _CONTAINER = 12;
+    /** @ignore */
     const _END_MARKER = 13;
+    /** @ignore */
     const _BOOLEAN = 14;
+    /** @ignore */
     const _FLOAT = 15;
 
     public function __construct(
@@ -264,7 +286,7 @@ class Decoder
                 } elseif (\extension_loaded('bcmath')) {
                     $pointer = bcadd($pointerOffset, $this->pointerBase);
                 } else {
-                    throw new \RuntimeException(
+                    throw new RuntimeException(
                         'The gmp or bcmath extension must be installed to read this database.'
                     );
                 }
@@ -292,7 +314,7 @@ class Decoder
             } elseif (\extension_loaded('bcmath')) {
                 $integer = bcadd(bcmul($integer, 256), $part);
             } else {
-                throw new \RuntimeException(
+                throw new RuntimeException(
                     'The gmp or bcmath extension must be installed to read this database.'
                 );
             }
