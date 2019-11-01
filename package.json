@@ -8,7 +8,7 @@
   "license": "GPL-3.0-or-later",
   "scripts": {
     "clean": "rm -rf .cache",
-    "start": "rm -rf js/dist && parcel parcel.urls --out-dir js/dist --experimental-scope-hoisting",
+    "start": "rm -rf js/dist && parcel parcel.urls --out-dir js/dist",
     "build": "rm -rf js/dist && parcel build parcel.urls --out-dir js/dist --experimental-scope-hoisting"
   },
   "private": false,
@@ -16,12 +16,14 @@
     "@babel/runtime": ">=7.5.0",
     "babel-plugin-transform-class-properties": ">=6.24.1",
     "emoji-flags": "matiassingers/emoji-flags#master",
+    "js-cookie": "^2.2.1",
     "lodash-es": "^4.17.14"
   },
   "devDependencies": {
     "@babel/core": ">=7.0.0-0",
     "@babel/plugin-transform-runtime": ">=7.5.0",
     "babel-plugin-transform-runtime": ">=6.23.0",
+    "eslint": "^6.6.0",
     "parcel-bundler": ">=1.12.3",
     "parcel-plugin-assets-list": ">=1.7.1"
   }

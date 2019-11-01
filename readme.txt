@@ -137,6 +137,7 @@ New: Shortcode for showing/hiding content!
 == Changelog ==
 
 = 2.13 =
+* NEW: JS/AJAX mode now caches the response as a cookie so that every user only needs to call the AJAX requests once
 * Updated Maxmind vendor code - PHP 5.6 is required now
 
 = 2.12.1 =

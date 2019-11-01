@@ -1,4 +1,5 @@
 import Record from './models/record';
+import Cookies from 'js-cookie';
 
 if (!window.jQuery) {
     console.error('Geoip-detect: window.jQuery is missing!');
@@ -29,15 +30,27 @@ function get_info_raw() {
 }
 
 async function get_info_cached() {
-    // TODO : Load Info from cookie cache, if possible
-
     let response = false;
+
+    // 1) Load Info from cookie cache, if possible
+    if (options.cookie_name) {
+        response = Cookies.get(options.cookie_name)
+        if (response) {
+            return JSON.parse(response);
+        }
+    }
+
+    // 2) Get response
     try {
         response = await get_info_raw();
     } catch(err) {
         response = err.responseJSON || err;
     }
-    // TODO : Save info to cookie cache
+
+    // 3) Save info to cookie cache
+    if (options.cookie_name) {
+        Cookies.set(options.cookie_name, JSON.stringify(response), { expires: options.cookie_duration_in_days, path: '/' });
+    }
 
     return response;
 }
@@ -47,7 +60,7 @@ export async function get_info() {
     let response = await get_info_cached();
 
     if (typeof(response) !== 'object') {
-        console.error('Geoip-detect: Record should be an object', response);
+        console.error('Geoip-detect: Record should be an object, not a ' + typeof(response), response);
         response = { 'extra': { 'error': response || 'Network error, look at the original server response ...' }};
     }
 
