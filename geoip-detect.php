@@ -37,7 +37,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define('GEOIP_REQUIRED_PHP_VERSION', '5.4');
+define('GEOIP_REQUIRED_PHP_VERSION', '5.6');
 
 // In theory, it should still run in 3.5 . But officially supported is only WP 4.0 and above.
 define('GEOIP_REQUIRED_WP_VERSION', '3.5');
