@@ -12,8 +12,6 @@ class GeonamesTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	public function testCountryInfoMemoryUsage() {
-		// return;
-		
 		$this->assertFileExists(GEOIP_DETECT_GEONAMES_COUNTRY_INFO);
 		$mem_before = memory_get_usage();
 		$data = require(GEOIP_DETECT_GEONAMES_COUNTRY_INFO);
@@ -22,6 +20,17 @@ class GeonamesTest extends WP_UnitTestCase_GeoIP_Detect {
 		echo " (Geonames CountryInfo takes up ~$mem_diff kB in Memory.) ";
 		
 		$this->assertLessThan(1024, $mem_diff);
+	}
+	
+	public function testCountryInfoFlagsMemoryUsage() {
+		$this->assertFileExists(GEOIP_DETECT_GEONAMES_COUNTRY_FLAGS);
+		$mem_before = memory_get_usage();
+		$data = require(GEOIP_DETECT_GEONAMES_COUNTRY_FLAGS);
+		$mem_after = memory_get_usage();
+		$mem_diff = floor(($mem_after - $mem_before) / 1024) + 1;
+		echo " (Geonames Flags takes up ~$mem_diff kB in Memory.) ";
+		
+		$this->assertLessThan(512, $mem_diff);
 	}
 	
 	public function testCountryInfoEveryAttributeIsNotEmpty() {
@@ -43,8 +52,6 @@ class GeonamesTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 		
 	public function testCountryNamesMemoryUsage() {
-		// return;
-		
 		$this->assertFileExists(GEOIP_DETECT_GEONAMES_COUNTRY_NAMES);
 		$mem_before = memory_get_usage();
 		$data = require(GEOIP_DETECT_GEONAMES_COUNTRY_NAMES);
