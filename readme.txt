@@ -138,6 +138,7 @@ New: Shortcode for showing/hiding content!
 
 = 2.13 =
 * NEW: JS/AJAX mode now caches the response as a cookie so that every user only needs to call the AJAX requests once
+* NEW: If you install the plugin [SVG Flags](https://wordpress.org/plugins/svg-flags-lite/), you can use this shortcode to show the flag of the current country: `[geoip_detect2_current_flag]`. See [Documentation]() for more infos. 
 * Updated Maxmind vendor code - PHP 5.6 is required now
 
 = 2.12.1 =

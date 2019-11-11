@@ -667,3 +667,62 @@ function geoip_detect2_shortcode_check_subcondition($expectedValuesRaw, $actualV
 
 	return count(array_intersect($actualValues, $attributeValuesArray)) > 0;
 }
+
+
+// ----------------------------------- Flags - This needs the Plugin "SVG Flags" to work ---------------------
+
+/**
+ * @param int|string width   CSS Width of the flag `<span>`-Element (in Pixels or CSS including unit)
+ * @param int|string height  CSS Height of the flag `<span>`-Element (in Pixels or CSS including unit)
+ * @param int squared	     Instead of being 4:3, the flag should be 1:1 in ratio
+ * @param string $class 	 Extra CSS Class of element. All flags will have the class `flag-icon` anyway.
+ * @param string $default 	 Default Country in case the visitor's country cannot be determined
+ */
+function geoip_detect2_shortcode_current_flag($attr, $content = '', $shortcodeName = 'geoip_detect2_current_flag') {
+	if (!wp_style_is('svg-flags-css')) {
+		return '<!-- There should be a flag here. However, the Plugin "SVG Flags" is missing.';
+	}
+
+	$attr = shortcode_atts(array(
+		'width' => '',
+		'height' => '',
+		'squared' => '',
+		'square' => '',
+		'class' => '',
+		'default' => '',
+	), $attr, $shortcodeName);
+
+	$style = '';
+	if ($attr['height']) {
+		if (is_numeric($attr['height'])) {
+			$attr['height'] .= 'px';
+		}
+		$style .= 'height: ' . $attr['height'] . ';';
+	}
+	if ($attr['width']) {
+		if (is_numeric($attr['width'])) {
+			$attr['width'] .= 'px';
+		}
+		$style .= 'width: ' . $attr['width'] . ';';
+	}
+
+	if ($attr['squared'] || $attr['square']) {
+		$attr['class'] .= ' flag-icon-squared';
+	}
+
+	$record = geoip_detect2_get_info_from_current_ip();
+	$country = $attr['default'];
+	if ($record->country->isoCode) {
+		$country = $record->country->isoCode;
+	}
+	if (!$country) {
+		return '<!-- There should be a flag here, but no country could be detected and the parameter "default" was not set. -->';
+	}
+	$country = mb_substr($country, 0, 2);
+	$country = mb_strtolower($country);
+
+	$html = '<span style="'. esc_attr($style) . '" class="' . esc_attr($attr['class']) . ' flag-icon ' . esc_attr('flag-icon-' . $country) . '"></span>';
+
+	return $html;
+}
+add_shortcode('geoip_detect2_current_flag', 'geoip_detect2_shortcode_current_flag');
