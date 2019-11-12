@@ -693,18 +693,18 @@ function geoip_detect2_shortcode_current_flag($attr, $content = '', $shortcodeNa
 	), $attr, $shortcodeName);
 
 	$style = '';
-	if ($attr['height']) {
-		if (is_numeric($attr['height'])) {
-			$attr['height'] .= 'px';
+	$processCssProperty = function($name, $value) {
+		$value = strtr($value, [' ' => '', ':' => '', ';' => '']);
+		if (!$value) {
+			return '';
 		}
-		$style .= 'height: ' . $attr['height'] . ';';
-	}
-	if ($attr['width']) {
-		if (is_numeric($attr['width'])) {
-			$attr['width'] .= 'px';
+		if (is_numeric($value)) {
+			$value .= 'px';
 		}
-		$style .= 'width: ' . $attr['width'] . ';';
-	}
+		return $name . ':' . $value . ';';
+	};
+	$style .= $processCssProperty('height', $attr['height']);
+	$style .= $processCssProperty('width', $attr['width']);
 
 	if ($attr['squared'] || $attr['square']) {
 		$attr['class'] .= ' flag-icon-squared';
