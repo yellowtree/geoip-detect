@@ -1,5 +1,5 @@
 
-import { get as lodash_get } from 'lodash-es';
+import _ from '../lodash.custom';
 
 
 const _get_localized = function(ret, locales) {
@@ -38,7 +38,7 @@ class Record {
 
         // TODO handle most_specific_subdivision (here or in PHP)?
 
-        let ret = lodash_get(this.data, prop, default_value);
+        let ret = _.get(this.data, prop, default_value);
 
         // Localize property, if possible
         ret = _get_localized(ret, locales);
@@ -51,7 +51,7 @@ class Record {
      * @return string Error Message
      */
     error() {
-        return lodash_get(this.data, 'extra.error', '');
+        return _.get(this.data, 'extra.error', '');
     }
 }
 

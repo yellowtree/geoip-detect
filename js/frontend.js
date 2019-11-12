@@ -34,10 +34,7 @@ async function get_info_cached() {
 
     // 1) Load Info from cookie cache, if possible
     if (options.cookie_name) {
-        response = Cookies.get(options.cookie_name)
-        if (response) {
-            return JSON.parse(response);
-        }
+        response = Cookies.getJSON(options.cookie_name)
     }
 
     // 2) Get response
@@ -49,7 +46,11 @@ async function get_info_cached() {
 
     // 3) Save info to cookie cache
     if (options.cookie_name) {
-        Cookies.set(options.cookie_name, JSON.stringify(response), { expires: options.cookie_duration_in_days, path: '/' });
+        let cookie_options = { path: '/' };
+        if (options.cookie_duration_in_days) {
+            cookie_options.expires = options.cookie_duration_in_days;
+        }
+        Cookies.set(options.cookie_name, JSON.stringify(response), cookie_options);
     }
 
     return response;

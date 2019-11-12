@@ -151,7 +151,7 @@ function _geoip_detect_register_javascript() {
 		'default_locales' => apply_filters('geoip_detect2_locales', null),
 		'do_body_classes' => (bool) get_option('geoip-detect-set_css_country'),
 		'cookie_name' => 'geoip-detect-result', /* If you don't want to use the cookie cache, empty this value via the filter */
-		'cookie_duration_in_days' => 1,
+		'cookie_duration_in_days' => 1, /* If you set this to 0, then the cookie will expire when the window closes. */
 	];
 	$data = apply_filters('geoip_detect2_ajax_localize_script_data', $data);
 	wp_localize_script('geoip-detect-js', 'geoip_detect', [ 'options' => $data ] );
