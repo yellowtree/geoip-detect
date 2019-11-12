@@ -53,7 +53,7 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 
 **System Requirements**: You will need at least PHP 5.4.
 
-*GDPR: This plugin does not store any cookie or user-dependent data. If you use a web-based source (hostip.info, Maxmind Precision, ipstack), the plugin stores all IPs that visited the site in a cache (by default for 7 days) for performance reasons. If you want to disable this behavior, add `define('GEOIP_DETECT_READER_CACHE_TIME', 0);` in your theme's `function.php`. Be especially careful when using geographic information to change prices or selling options, as this might not be legal.*
+*GDPR: See [Is this plugin GDPR-compliant?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#is-this-plugin-gdpr-compliant)*
 
 *This extension is "charity-ware". If you are happy with it, please [leave a tip](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYUZHS8FH3CL) for the benefit of [this charity](http://www.jmem-hainichen.de/homepage). (See [FAQ](https://github.com/yellowtree/geoip-detect/wiki/FAQ#what-you-mean-by-this-plugin-is-charity-ware) for more infos.)*
 
@@ -106,6 +106,10 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 1. Lookup page (under Tools > GeoIP Lookup)
 2. Options page (under Preferences > GeoIP Detection)
 
+= 2.13.0 =
+
+PHP 5.6 is required now. If you are using the AJAX mode, this version will drastically reduce the number of requests as it will store the visitor's geo-information in a cookie.
+
 = 2.12.0 =
 
 New: Ipstack.com can be used as data source
@@ -128,6 +132,11 @@ There have been changes to the reverse proxy logic. If you have enabled a revers
 New: Shortcode for showing/hiding content!
 
 ## Changelog ##
+
+= 2.13 =
+* NEW: JS/AJAX mode now caches the response as a cookie so that every user only needs to call the AJAX requests once
+* NEW: If you install the plugin [SVG Flags](https://wordpress.org/plugins/svg-flags-lite/), you can use this shortcode to show the flag of the current country: `[geoip_detect2_current_flag]`. See [Documentation]() for more infos. 
+* Updated Maxmind vendor code - PHP 5.6 is required now
 
 = 2.12.1 =
 * NEW: With the new Wordpress filter `geoip_detect2_record_data_after_cache` you can change the record data for testing purposes (see https://github.com/yellowtree/geoip-detect/wiki/API-Usage-Examples#change-record-data-eg-for-testing-purposes)
