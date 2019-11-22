@@ -129,12 +129,12 @@ function geoip_detect_add_privacy_policy_content() {
 		$caching = __('This site is sending the visitor\'s IP to (add Provider name) in order to receive the geographic information. (You will need to have a data-processing contract with this provider.)', 'geoip-detect');
 	}
 	$source = geoip_detect2_get_current_source_description();
-    $content = sprintf(__( 'This site is using %s to identify the geographic location of your IP adress. %s (Add here: how this information is used, how long it is retained. Be especially careful when using this information to change prices or selling options, as this might not be legal.)', 'geoip-detect' ),
-		$source, $caching);
+    $content = '<p>' . sprintf(__( 'This site is using %s to identify the geographic location of your IP adress. %s (Add here: how this information is used, how long it is retained. Be especially careful when using this information to change prices or selling options, as this might not be legal.)', 'geoip-detect' ),
+		$source, $caching) . '</p>';
 
 	if (get_option('geoip-detect-ajax_enabled') ) {
 		if ((get_option('geoip-detect-ajax_enqueue_js') || get_option('geoip-detect-set_css_country'))) {
-			$content .= __('In order to increase the performance of this site, it is setting a cookie called "geoip-detect-result" containing the geographic information of the current user. (Explain how the information stored in this cookie will be used, e.g.: This information is not used for tracking purposes, but ...) The cookie will automatically deleted after 1 day by your browser.', 'geoip-detect');
+			$content .= '<p>' . __('In order to increase the performance of this site, it is setting a cookie called "geoip-detect-result" containing the geographic information of the current user. (Explain how the information stored in this cookie will be used, e.g.: This information is not used for tracking purposes, but ...) The cookie will automatically deleted after 1 day by your browser.', 'geoip-detect') . '</p>';
 		}
 	}
 
