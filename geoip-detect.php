@@ -13,7 +13,7 @@ Domain Path:     /languages
 GitHub Plugin URI: https://github.com/yellowtree/geoip-detect
 GitHub Branch:   master
 Requires WP:     4.0
-Requires PHP:    5.4
+Requires PHP:    5.6
 */
 
 define('GEOIP_DETECT_VERSION', '2.12.1');
