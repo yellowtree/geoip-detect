@@ -134,7 +134,7 @@ function geoip_detect_add_privacy_policy_content() {
 
 	if (get_option('geoip-detect-ajax_enabled') ) {
 		if ((get_option('geoip-detect-ajax_enqueue_js') || get_option('geoip-detect-set_css_country'))) {
-			$content .= __('In order to increase the performance of this site, it is setting a cookie called "geoip-detect-result" containing the geographic information of the current user. (Explain how the information stored in this cookie will be used, e.g.: This information is not used for tracking purposes, but ...) The cookie will automatically deleted after 1 day by your browser.', 'geoip-detect')
+			$content .= __('In order to increase the performance of this site, it is setting a cookie called "geoip-detect-result" containing the geographic information of the current user. (Explain how the information stored in this cookie will be used, e.g.: This information is not used for tracking purposes, but ...) The cookie will automatically deleted after 1 day by your browser.', 'geoip-detect');
 		}
 	}
 
