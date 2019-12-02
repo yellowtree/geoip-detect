@@ -690,7 +690,11 @@ function geoip_detect2_shortcode_current_flag($attr, $content = '', $shortcodeNa
 		'square' => '',
 		'class' => '',
 		'default' => '',
+		'skip_cache' => false,
 	), $attr, $shortcodeName);
+
+	$skipCache = filter_var($attr['skip_cache'], FILTER_VALIDATE_BOOLEAN );
+	$options = array('skipCache' => $skipCache);
 
 	$style = '';
 	$processCssProperty = function($name, $value) {
@@ -710,7 +714,7 @@ function geoip_detect2_shortcode_current_flag($attr, $content = '', $shortcodeNa
 		$attr['class'] .= ' flag-icon-squared';
 	}
 
-	$record = geoip_detect2_get_info_from_current_ip();
+	$record = geoip_detect2_get_info_from_current_ip(null, $options);
 	$country = $attr['default'];
 	if ($record->country->isoCode) {
 		$country = $record->country->isoCode;
