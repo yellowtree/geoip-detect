@@ -11,3 +11,5 @@ node_modules/
 /*-workspace
 /yarn-error.log
 /.cache
+/.vscode
+*.code

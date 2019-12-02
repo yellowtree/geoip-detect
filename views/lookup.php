@@ -5,6 +5,32 @@ $date_format = get_option('date_format') . ' ' . get_option('time_format');
 $current_source = DataSourceRegistry::getInstance()->getCurrentSource();
 
 $is_ajax_enabled = !!get_option('geoip-detect-ajax_enabled');
+
+// @see https://stackoverflow.com/a/35207172
+function var_export_short($data, $return=true)
+{
+    $dump = var_export($data, true);
+
+    $dump = preg_replace('#(?:\A|\n)([ ]*)array \(#i', '[', $dump); // Starts
+    $dump = preg_replace('#\n([ ]*)\),#', "\n$1],", $dump); // Ends
+	$dump = preg_replace('#=> \[\n\s+\],\n#', "=> [],\n", $dump); // Empties
+
+    if (gettype($data) == 'object') { // Deal with object states
+        $dump = str_replace('__set_state(array(', '__set_state([', $dump);
+        $dump = preg_replace('#\)\)$#', "])", $dump);
+    } else { 
+        $dump = preg_replace('#\)$#', "]", $dump);
+	}
+	
+	$dump = preg_replace('#,[\n\s]*]#m', "\n]", $dump);
+
+    if ($return===true) {
+        return $dump;
+    } else {
+        echo $dump;
+    }
+}
+
 ?>
 <div class="wrap geoip-detect-wrap">
 	<h1><?php _e('GeoIP Detection', 'geoip-detect');?></h1>
@@ -60,7 +86,7 @@ $is_ajax_enabled = !!get_option('geoip-detect-ajax_enabled');
 	<h3><?php _e('Lookup Result', 'geoip-detect'); ?></h3>
 	<p>
 		<?php if ($_POST['syntax'] == 'php') : ?>
-		<?php printf(__('The function %s returns an object:', 'geoip-detect'), "<code>\$record = geoip_detect2_get_info_from_ip('" . esc_html($request_ip) . "', " . var_export($request_locales, true) . ($request_skipCache ? ', TRUE' : '') .");</code>"); ?><br />
+		<?php printf(__('The function %s returns an object:', 'geoip-detect'), "<code>\$record = geoip_detect2_get_info_from_ip('" . esc_html($request_ip) . "', " . var_export_short($request_locales, true) . ($request_skipCache ? ', [ \'skipCache\' => TRUE ]' : '') .");</code>"); ?><br />
 		<?= sprintf(__('See %s for more information.', 'geoip-detect'), '<a href="https://github.com/yellowtree/geoip-detect/wiki/API:-PHP">API: PHP</a>'); ?>
 		<?php elseif ($_POST['syntax'] == 'shortcode') : ?>
 		<?= sprintf(__('You can use the following shortcodes.', 'geoip-detect')); ?><br />
@@ -117,7 +143,7 @@ $is_ajax_enabled = !!get_option('geoip-detect-ajax_enabled');
 				return; // Access did not work.
 			}
 			if (!is_string($value)) {
-				$value = var_export($value, true);
+				$value = var_export_short($value, true);
 			}
 
 			switch($_POST['syntax']) {
