@@ -21,7 +21,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 
 function geoip_detect_menu() {
-	require_once ABSPATH . '/wp-admin/admin.php';
+	if (!function_exists('add_submenu_page')) {
+		require_once ABSPATH . '/wp-admin/admin.php';
+	}
+	
 	add_submenu_page('tools.php', __('GeoIP Detection Lookup', 'geoip-detect'), __('GeoIP Lookup', 'geoip-detect'), 'activate_plugins', GEOIP_PLUGIN_BASENAME, 'geoip_detect_lookup_page');
 	add_options_page(__('GeoIP Detection', 'geoip-detect'), __('GeoIP Detection', 'geoip-detect'), 'manage_options', GEOIP_PLUGIN_BASENAME, 'geoip_detect_option_page');
 }
