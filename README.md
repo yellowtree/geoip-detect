@@ -24,10 +24,10 @@ as a shortcode, or via CSS body classes. The city & country names are translated
   * `geoip_detect2_get_external_ip_adress()`: Fetch the internet adress of the webserver
   * `geoip_detect2_get_client_ip()`: Get client IP (even if it is behind a reverse proxy)
 * You can use one of these data sources (see [comparison](https://github.com/yellowtree/geoip-detect/wiki/FAQ#which-data-source-should-i-choose)):
-  * Free: [Maxmind GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/), automatically updated every month (licensed CC BY-SA. See [FAQ](https://github.com/yellowtree/geoip-detect/wiki/FAQ).)
+  * Free (default source): [HostIP.info](http://www.hostip.info/) (IPv4 only)
+  * Free with registration: [Maxmind GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/), automatically updated weekly
   * Commercial: [Maxmind GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database) or [Maxmind GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
   * Commercial Web-API: [Maxmind GeoIP2 Precision](https://www.maxmind.com/en/geoip2-precision-services) (City, Country or Insights)
-  * Free (default source): [HostIP.info](http://www.hostip.info/) (IPv4 only)
   * Hosting-Provider dependent: [Cloudflare](https://support.cloudflare.com/hc/en-us/articles/200168236-What-does-CloudFlare-IP-Geolocation-do-) or [Amazon AWS CloudFront](https://aws.amazon.com/blogs/aws/enhanced-cloudfront-customization/) (Country)
   * Free or Commercial Web-API: [Ipstack](https://ipstack.com)
 * For the property names, see the results of a specific IP in the wordpress backend (under *Tools > GeoIP Detection*).
@@ -81,9 +81,11 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 
 [Can I change the time period how long the data is cached?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#can-i-change-the-time-period-how-long-the-data-is-cached)
 
-[The Maxmind Lite databases are licensed Creative Commons ShareAlike-Attribution. When do I need to give attribution?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#the-maxmind-lite-databases-are-licensed-creative-commons-sharealike-attribution-when-do-i-need-to-give-attribution)
+[The Maxmind Lite databases are restricted by an EULA. Can I host a form where users can look-up the geographic information of an IP?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#the-maxmind-lite-databases-are-restricted-by-an-eula-can-i-host-a-form-where-users-can-look-up-the-geographic-information-of-an-ip)
 
 [Does this plugin work in a MultiSite-Network environment?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#does-this-plugin-work-in-a-multisite-network-environment)
+
+[Is this plugin GDPR-compliant?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#is-this-plugin-gdpr-compliant)
 
 [What do you mean by "This plugin is charity-ware"?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#what-do-you-mean-by-this-plugin-is-charity-ware)
 
