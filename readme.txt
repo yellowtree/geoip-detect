@@ -26,7 +26,7 @@ as a shortcode, or via CSS body classes. The city & country names are translated
   * `geoip_detect2_get_client_ip()`: Get client IP (even if it is behind a reverse proxy)
 * You can use one of these data sources (see [comparison](https://github.com/yellowtree/geoip-detect/wiki/FAQ#which-data-source-should-i-choose)):
   * Free (default source): [HostIP.info](http://www.hostip.info/) (IPv4 only)
-  * Free with registration: [Maxmind GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/), automatically updated every few days
+  * Free with registration: [Maxmind GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/), automatically updated weekly
   * Commercial: [Maxmind GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database) or [Maxmind GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
   * Commercial Web-API: [Maxmind GeoIP2 Precision](https://www.maxmind.com/en/geoip2-precision-services) (City, Country or Insights)
   * Hosting-Provider dependent: [Cloudflare](https://support.cloudflare.com/hc/en-us/articles/200168236-What-does-CloudFlare-IP-Geolocation-do-) or [Amazon AWS CloudFront](https://aws.amazon.com/blogs/aws/enhanced-cloudfront-customization/) (Country)

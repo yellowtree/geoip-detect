@@ -28,7 +28,7 @@ class AutoDataSource extends ManualDataSource
 {
 	public function getId() { return 'auto'; }
 	public function getLabel() { return __('Automatic download & update of Maxmind GeoIP Lite City', 'geoip-detect'); }
-	public function getShortLabel() { return sprintf(__('%s (updated monthly)', 'geoip-detect'), parent::getShortLabel()); }
+	public function getShortLabel() { return sprintf(__('%s (updated weekly)', 'geoip-detect'), parent::getShortLabel()); }
 	public function getDescriptionHTML() { 
 		return __('(License: See <a href="https://www.maxmind.com/en/site-license-overview" target="_blank">Site Licence Overview</a> or <a href="https://www.maxmind.com/en/end-user-license-agreement" target="_blank">End User Licence Agreement</a>.)', 'geoip-detect'); }
 
