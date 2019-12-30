@@ -45,23 +45,64 @@ class AutoDataSource extends ManualDataSource
 		$html .= '<br />' . sprintf(__('Next update: %s', 'geoip-detect'), $next_cron_update !== false ? date_i18n($date_format, $next_cron_update) : __('Never', 'geoip-detect'));
 		$html .= $rescheduled;
 
+		$html .= $this->updateHTML();
+
 		return $html;
 	}
 
 	public function getParameterHTML() {
-		$text_update = __('Update now', 'geoip-detect');
-		$nonce_field = wp_nonce_field( 'geoip_detect_update' );
+		$key = esc_attr(get_option('geoip-detect-auto_license_key', ''));
+
+		$label_key = __('License key:', 'geoip-detect');
+
 		$html = <<<HTML
-<form method="post" action="#">
-		$nonce_field
-		<input type="hidden" name="action" value="update" />
-		<input type="submit" class="button button-secondary" value="$text_update" />
-</form>
+$label_key <input type="text" autocomplete="off" size="20" name="options_auto[license_key]" value="$key" /><br />
 HTML;
+
 		return $html;
 	}
 
-	public function saveParameters($post) {}
+	protected function updateHTML() {
+		$html = $error = '';
+		$disabled = '';
+
+		$keyAvailable = !! get_option('geoip-detect-auto_license_key', '');
+		if (!$keyAvailable) {
+			$error = '<div class="geoip_detect_error" style="margin-top: 10px;">' . 
+				__('Maxmind Automatic Download only works with a given license key.', 'geoip-detect') .
+				'<p>' . sprintf(__('You can signup for a free Maxmind-Account here: <a href="%s">Sign Up</a>.', 'geoip-detect'), 'https://www.maxmind.com/en/geolite2/signup') . '<br>' .
+				__('After logging in, generate a license key and copy it to the options below.', 'geoip-detect') . '</p>' .
+			'</div>';
+			$disabled = ' disabled="disabled"';
+		}
+
+		$text_update = __('Update now', 'geoip-detect');
+		$nonce_field = wp_nonce_field( 'geoip_detect_update' );
+		$html .= <<<HTML
+<form method="post" action="#">
+		$nonce_field
+		<input type="hidden" name="action" value="update" />
+		<input type="submit" class="button button-secondary" value="$text_update" $disabled />
+</form>
+HTML;
+		return $html . $error;
+	}
+
+	public function saveParameters($post) {
+		$message = '';
+
+		if (isset($post['options_auto']['license_key'])) {
+			$key = trim($post['options_auto']['license_key']);
+			if (mb_strlen($key) < 16) {
+				$message = __('The license key usually is a 16-char alphanumeric string. Are you sure this is the right key? Do not use the "unhashed format" when generating the license key.', 'geoip-detect');
+				// Unhashed: 13char alphanumeric
+			}
+			update_option('geoip-detect-auto_license_key', $key);
+		}
+
+		return $message;
+
+	}
 
 	public function __construct() {
 		parent::__construct();
@@ -123,9 +164,17 @@ HTML;
 	{
 		require_once(ABSPATH.'/wp-admin/includes/file.php');
 
-		$download_url = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz';
-		//$download_url = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz';
+		$download_url = 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&suffix=tar.gz';
+		//$download_url = 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&suffix=tar.gz';
+		
 		$download_url = apply_filters('geoip_detect2_download_url', $download_url);
+		if (strpos($download_url, 'license_key=') === false) {
+			$key = get_option('geoip-detect-auto_license_key', '');
+			if (!$key) {
+				return __('Error: Before updating, you need to enter a license key from maxmind.com.', 'geoip-detect');
+			}
+			$download_url = add_query_arg('license_key', $key, $download_url);
+		}
 
 		$outFile = $this->maxmindGetUploadFilename();
 		$modified = 0;
