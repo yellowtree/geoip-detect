@@ -29,7 +29,8 @@ class AutoDataSource extends ManualDataSource
 	public function getId() { return 'auto'; }
 	public function getLabel() { return __('Automatic download & update of Maxmind GeoIP Lite City', 'geoip-detect'); }
 	public function getShortLabel() { return sprintf(__('%s (updated monthly)', 'geoip-detect'), parent::getShortLabel()); }
-	public function getDescriptionHTML() { return __('(License: Creative Commons Attribution-ShareAlike 3.0 Unported. See <a href="https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#the-maxmind-lite-databases-are-licensed-creative-commons-sharealike-attribution-when-do-i-need-to-give-attribution" target="_blank">Licensing FAQ</a> for more details.)', 'geoip-detect'); }
+	public function getDescriptionHTML() { 
+		return __('(License: See <a href="https://www.maxmind.com/en/site-license-overview" target="_blank">Site Licence Overview</a> or <a href="https://www.maxmind.com/en/end-user-license-agreement" target="_blank">End User Licence Agreement</a>.)', 'geoip-detect'); }
 
 	public function getStatusInformationHTML() {
 		$html = parent::getStatusInformationHTML();
@@ -70,7 +71,7 @@ HTML;
 		if (!$keyAvailable) {
 			$error = '<div class="geoip_detect_error" style="margin-top: 10px;">' . 
 				__('Maxmind Automatic Download only works with a given license key.', 'geoip-detect') .
-				'<p>' . sprintf(__('You can signup for a free Maxmind-Account here: <a href="%s">Sign Up</a>.', 'geoip-detect'), 'https://www.maxmind.com/en/geolite2/signup') . '<br>' .
+				'<p>' . sprintf(__('You can signup for a free Maxmind-Account here: <a href="%s" target="_blank">Sign Up</a>.', 'geoip-detect'), 'https://www.maxmind.com/en/geolite2/signup') . '<br>' .
 				__('After logging in, generate a license key and copy it to the options below.', 'geoip-detect') . '</p>' .
 			'</div>';
 			$disabled = ' disabled="disabled"';

@@ -71,20 +71,13 @@ function geoip_detect_admin_notice_database_missing() {
 
 
 	<h3><?php _e( 'GeoIP Detection: No database installed', 'geoip-detect' ); ?></h3>
-        <p><?php printf(__('The Plugin %s is currently using the Webservice <a href="http://hostip.info" target="_blank">hostip.info</a> as data source. <br />You can click on the button below to download and install Maxmind GeoIPv2 Lite City now.', 'geoip-detect' ), $url); ?></p>
-	<p><?php printf(__('This database is licenced <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA</a>. See <a href="http://dev.maxmind.com/geoip/geoip2/geolite2/#License">License</a> for details.', 'geoip-detect')); ?>
+        <p><?php printf(__('The Plugin %s is currently using the Webservice <a href="http://hostip.info" target="_blank">hostip.info</a> as data source. <br />You can choose a different data source in the options page.', 'geoip-detect' ), $url); ?></p>
+	<p><?php printf(__('For comparison of the different options, see <a href="https://github.com/yellowtree/geoip-detect/wiki/FAQ#which-data-source-should-i-choose" target="_blank">Which data source should I choose?</a>.', 'geoip-detect')); ?>
 
-
-
-	<form action="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME; ?>" method="post">
-		<?php wp_nonce_field( 'geoip_detect_update' ); ?>
-		<input type="hidden" name="source" value="auto" />
-		<input type="hidden" name="action" value="update" />
-		<p>
-				<input type="submit" value="<?php esc_attr_e('Install now', 'geoip-detect');?>" class="button button-primary" /> &nbsp;&nbsp;
-				<a href="?geoip_detect_dismiss_notice=hostinfo_used"><?php _e('Keep using hostip.info', 'geoip-detect'); ?></a>
-		</p>
-	</form>
+	<p>
+			<a class="button button-primary" href="options-general.php?page=geoip-detect/geoip-detect.php#choose-source"><?php _e('Options', 'geoip-detect'); ?></a>
+			<a class="button button-secondary" href="?geoip_detect_dismiss_notice=hostinfo_used"><?php _e('Keep using hostip.info', 'geoip-detect'); ?></a>
+	</p>
     </div>
 <?php
 }

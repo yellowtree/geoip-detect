@@ -33,6 +33,7 @@ $currentSourceId = $currentSource->getId();
 	<?php endif; ?>
 	<br/>
 
+	<a name="choose-source" />
 	<br /><br />
 	<form method="post" action="#">
 		<input type="hidden" name="action" value="choose" />
