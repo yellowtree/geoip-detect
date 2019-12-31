@@ -142,6 +142,9 @@ New: Shortcode for showing/hiding content!
 
 == Changelog ==
 
+= 3.0.1 =
+* FIX: Button "Update now" now works also on the lookup page.
+
 = 3.0 =
 * MAJOR CHANGE: Due to legal reasons, Maxmind now requires registration and some use cases are no longer allowed with the free data. If you use the Maxmind data source with automatic update, the update will fail for versions < 3.0 or if you have not entered a license key yet.
 * Updated the Maxmind update mechanism

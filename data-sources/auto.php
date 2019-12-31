@@ -79,13 +79,16 @@ HTML;
 
 		$text_update = __('Update now', 'geoip-detect');
 		$nonce_field = wp_nonce_field( 'geoip_detect_update' );
-		$html .= <<<HTML
-<form method="post" action="#">
+		if (current_user_can('manage_options')) {
+			$html .= <<<HTML
+<form method="post" action="options-general.php?page=geoip-detect%2Fgeoip-detect.php">
 		$nonce_field
 		<input type="hidden" name="action" value="update" />
 		<input type="submit" class="button button-secondary" value="$text_update" $disabled />
 </form>
 HTML;
+		}
+
 		return $html . $error;
 	}
 
