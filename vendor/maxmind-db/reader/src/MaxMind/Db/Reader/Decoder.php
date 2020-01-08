@@ -70,7 +70,10 @@ class Decoder
 
     public function decode($offset)
     {
-        $ctrlByte = \ord(Util::read($this->fileStream, $offset, 1));
+        list(, $ctrlByte) = unpack(
+            'C',
+            Util::read($this->fileStream, $offset, 1)
+        );
         ++$offset;
 
         $type = $ctrlByte >> 5;
@@ -92,7 +95,10 @@ class Decoder
         }
 
         if ($type === self::_EXTENDED) {
-            $nextByte = \ord(Util::read($this->fileStream, $offset, 1));
+            list(, $nextByte) = unpack(
+                'C',
+                Util::read($this->fileStream, $offset, 1)
+            );
 
             $type = $nextByte + 7;
 
@@ -249,17 +255,17 @@ class Decoder
 
         switch ($pointerSize) {
             case 1:
-                $packed = \chr($ctrlByte & 0x7) . $buffer;
+                $packed = (pack('C', $ctrlByte & 0x7)) . $buffer;
                 list(, $pointer) = unpack('n', $packed);
                 $pointer += $this->pointerBase;
                 break;
             case 2:
-                $packed = "\x00" . \chr($ctrlByte & 0x7) . $buffer;
+                $packed = "\x00" . (pack('C', $ctrlByte & 0x7)) . $buffer;
                 list(, $pointer) = unpack('N', $packed);
                 $pointer += $this->pointerBase + 2048;
                 break;
             case 3:
-                $packed = \chr($ctrlByte & 0x7) . $buffer;
+                $packed = (pack('C', $ctrlByte & 0x7)) . $buffer;
 
                 // It is safe to use 'N' here, even on 32 bit machines as the
                 // first bit is 0.
@@ -335,7 +341,8 @@ class Decoder
             $size = 285 + $adjust;
         } elseif ($size > 30) {
             list(, $adjust) = unpack('N', "\x00" . $bytes);
-            $size = $adjust + 65821;
+            $size = ($adjust & (0x0FFFFFFF >> (32 - (8 * $bytesToRead))))
+                + 65821;
         }
 
         return [$size, $offset + $bytesToRead];

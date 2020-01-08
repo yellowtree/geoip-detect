@@ -10,13 +10,13 @@ namespace MaxMind\WebService\Http;
 interface Request
 {
     /**
-     * @param string $url
-     * @param array  $options
+     * @param $url
+     * @param $options
      */
     public function __construct($url, $options);
 
     /**
-     * @param string $body
+     * @param $body
      *
      * @return mixed
      */

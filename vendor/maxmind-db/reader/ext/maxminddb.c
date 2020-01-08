@@ -79,7 +79,7 @@ typedef struct _maxminddb_obj {
 
 PHP_FUNCTION(maxminddb);
 
-static int
+static void
 get_record(INTERNAL_FUNCTION_PARAMETERS, zval *record, int *prefix_len);
 static const MMDB_entry_data_list_s *
 handle_entry_data_list(const MMDB_entry_data_list_s *entry_data_list,
@@ -163,7 +163,7 @@ PHP_METHOD(MaxMind_Db_Reader, __construct) {
         return;
     }
 
-    MMDB_s *mmdb = (MMDB_s *)ecalloc(1, sizeof(MMDB_s));
+    MMDB_s *mmdb = (MMDB_s *)emalloc(sizeof(MMDB_s));
     uint16_t status = MMDB_open(db_file, MMDB_MODE_MMAP, mmdb);
 
     if (MMDB_SUCCESS != status) {
@@ -200,9 +200,7 @@ PHP_METHOD(MaxMind_Db_Reader, getWithPrefixLen) {
 #endif
 
     int prefix_len = 0;
-    if (get_record(INTERNAL_FUNCTION_PARAM_PASSTHRU, record, &prefix_len)) {
-        return;
-    }
+    get_record(INTERNAL_FUNCTION_PARAM_PASSTHRU, record, &prefix_len);
 
     array_init(return_value);
     add_next_index_zval(return_value, record);
@@ -211,7 +209,7 @@ PHP_METHOD(MaxMind_Db_Reader, getWithPrefixLen) {
     add_next_index_zval(return_value, z_prefix_len);
 }
 
-static int
+static void
 get_record(INTERNAL_FUNCTION_PARAMETERS, zval *record, int *prefix_len) {
     char *ip_address = NULL;
     strsize_t name_len;
@@ -226,7 +224,7 @@ get_record(INTERNAL_FUNCTION_PARAMETERS, zval *record, int *prefix_len) {
                                      &name_len) == FAILURE) {
         THROW_EXCEPTION("InvalidArgumentException",
                         "Method takes exactly one argument.");
-        return 1;
+        return;
     }
 
     const maxminddb_obj *mmdb_obj = (maxminddb_obj *)Z_MAXMINDDB_P(getThis());
@@ -236,7 +234,7 @@ get_record(INTERNAL_FUNCTION_PARAMETERS, zval *record, int *prefix_len) {
     if (NULL == mmdb) {
         THROW_EXCEPTION("BadMethodCallException",
                         "Attempt to read from a closed MaxMind DB.");
-        return 1;
+        return;
     }
 
     struct addrinfo hints = {
@@ -251,13 +249,13 @@ get_record(INTERNAL_FUNCTION_PARAMETERS, zval *record, int *prefix_len) {
         THROW_EXCEPTION("InvalidArgumentException",
                         "The value \"%s\" is not a valid IP address.",
                         ip_address);
-        return 1;
+        return;
     }
     if (!addresses || !addresses->ai_addr) {
         THROW_EXCEPTION(
             "InvalidArgumentException",
             "getaddrinfo was successful but failed to set the addrinfo");
-        return 1;
+        return;
     }
 
     int sa_family = addresses->ai_addr->sa_family;
@@ -279,7 +277,7 @@ get_record(INTERNAL_FUNCTION_PARAMETERS, zval *record, int *prefix_len) {
                         "Error looking up %s. %s",
                         ip_address,
                         MMDB_strerror(mmdb_error));
-        return 1;
+        return;
     }
 
     *prefix_len = result.netmask;
@@ -292,7 +290,7 @@ get_record(INTERNAL_FUNCTION_PARAMETERS, zval *record, int *prefix_len) {
 
     if (!result.found_entry) {
         ZVAL_NULL(record);
-        return 0;
+        return;
     }
 
     MMDB_entry_data_list_s *entry_data_list = NULL;
@@ -304,18 +302,17 @@ get_record(INTERNAL_FUNCTION_PARAMETERS, zval *record, int *prefix_len) {
                         ip_address,
                         MMDB_strerror(status));
         MMDB_free_entry_data_list(entry_data_list);
-        return 1;
+        return;
     } else if (NULL == entry_data_list) {
         THROW_EXCEPTION(PHP_MAXMINDDB_READER_EX_NS,
                         "Error while looking up data for %s. Your database may "
                         "be corrupt or you have found a bug in libmaxminddb.",
                         ip_address);
-        return 1;
+        return;
     }
 
     handle_entry_data_list(entry_data_list, record TSRMLS_CC);
     MMDB_free_entry_data_list(entry_data_list);
-    return 0;
 }
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_maxmindbreader_void, 0, 0, 0)
@@ -668,10 +665,6 @@ PHP_MINIT_FUNCTION(maxminddb) {
     maxminddb_obj_handlers.offset = XtOffsetOf(maxminddb_obj, std);
     maxminddb_obj_handlers.free_obj = maxminddb_free_storage;
 #endif
-    zend_declare_class_constant_string(maxminddb_ce,
-                                       "MMDB_LIB_VERSION",
-                                       sizeof("MMDB_LIB_VERSION") - 1,
-                                       MMDB_lib_version() TSRMLS_CC);
 
     return SUCCESS;
 }
