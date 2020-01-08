@@ -111,6 +111,10 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 
 == Upgrade Notice ==
 
+= 3.0.1 = 
+
+3.0 was not compatible with the WooCommerce plugin.
+
 = 3.0 =
 
 If you use Maxmind "Automatic download" then you need to upgrade to this plugin version in order to continue to receive database update. The Database licence changed and you will need to register at their website and agree to the EULA.
@@ -144,6 +148,7 @@ New: Shortcode for showing/hiding content!
 
 = 3.0.1 =
 * FIX: Button "Update now" now works also on the lookup page.
+* FIX: Reverted the vendor code to the one used in 2.13 because it broke installations with the WooCommerce-plugin. I will update the vendor code again once we found a long-term solution for this interdepency.
 
 = 3.0 =
 * MAJOR CHANGE: Due to legal reasons, Maxmind now requires registration and some use cases are no longer allowed with the free data. If you use the Maxmind data source with automatic update, the update will fail for versions < 3.0 or if you have not entered a license key yet.
