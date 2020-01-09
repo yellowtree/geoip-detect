@@ -1,6 +1,6 @@
 === GeoIP Detection ===
 Contributors: benjaminpick
-Tags: geoip, maxmind, geolocation, locator
+Tags: geoip, geolocation, locator, maxmind, ipstack
 Requires at least: 4.0
 Tested up to: 5.3
 Requires PHP: 5.6
