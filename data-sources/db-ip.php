@@ -32,7 +32,7 @@ class DbIpDataSource extends AbstractMmdbDataSource {
 	public function getLabel() { return __('Automatic download & update of dbip IP to City Lite', 'geoip-detect'); }
 	public function getShortLabel() { return sprintf(__('%s (updated monthly)', 'geoip-detect'), parent::getShortLabel()); }
 	public function getDescriptionHTML() { 
-		return __('(License: See <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 International License</a>. You must include a link back to DB-IP.com on pages that display or use results from the database.)', 'geoip-detect'); }
+		return __('(License: <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 International License</a>. You must include a link back to DB-IP.com on pages that display or use results from the database, see <a href="https://db-ip.com/db/download/ip-to-city-lite">Download page</a>)', 'geoip-detect'); }
 
 	protected function maxmindGetUploadFilename() {
 		$upload_dir = wp_upload_dir();
@@ -42,3 +42,5 @@ class DbIpDataSource extends AbstractMmdbDataSource {
 		return $filename;
 	}
 }
+
+geoip_detect2_register_source(new DbIpDataSource());

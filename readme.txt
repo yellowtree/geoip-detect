@@ -2,7 +2,7 @@
 Contributors: benjaminpick
 Tags: geoip, geolocation, locator, maxmind, ipstack
 Requires at least: 4.0
-Tested up to: 5.3
+Tested up to: 5.4
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv3 or later
@@ -26,6 +26,7 @@ as a shortcode, or via CSS body classes. The city & country names are translated
   * `geoip_detect2_get_client_ip()`: Get client IP (even if it is behind a reverse proxy)
 * You can use one of these data sources (see [comparison](https://github.com/yellowtree/geoip-detect/wiki/FAQ#which-data-source-should-i-choose)):
   * Free (default source): [HostIP.info](http://www.hostip.info/) (IPv4 only)
+  * Free (attribution required): [DB-IP IP to City Lite](https://db-ip.com/db/download/ip-to-city-lite), automatically updated monthly
   * Free with registration: [Maxmind GeoIP2 Lite City](http://dev.maxmind.com/geoip/geoip2/geolite2/), automatically updated weekly
   * Commercial: [Maxmind GeoIP2 City](https://www.maxmind.com/en/geoip2-country-database) or [Maxmind GeoIP2 Country](https://www.maxmind.com/en/geoip2-city)
   * Commercial Web-API: [Maxmind GeoIP2 Precision](https://www.maxmind.com/en/geoip2-precision-services) (City, Country or Insights)
