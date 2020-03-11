@@ -109,9 +109,16 @@ function _geoip_detect_ajax_get_data($options = array()) {
 
 /**
  * Call this function if you want to register the JS script only for specific pages
+ * @api
  */
 function geoip_detect2_enqueue_javascript() {
-	wp_enqueue_script('geoip-detect-js');
+	if (did_action('wp_enqueue_scripts')) {
+		wp_enqueue_script('geoip-detect-js');
+	} else {
+		add_action('wp_enqueue_scripts', function() {
+			wp_enqueue_script('geoip-detect-js');
+		});
+	}
 }
 
 function _geoip_detect_parcel_get_dist_js($handle) {
