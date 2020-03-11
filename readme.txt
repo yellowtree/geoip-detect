@@ -147,11 +147,15 @@ New: Shortcode for showing/hiding content!
 
 == Changelog ==
 
+= 3.1.0 =
+* New data source [DB-IP](https://db-ip.com/db/download/ip-to-city-lite) which uses the same file format as maxmind
+* FIX: `geoip_detect2_enqueue_javascript()` can be used now in function.php or templates (see [PHP Example](https://github.com/yellowtree/geoip-detect/wiki/API-Usage-Examples#ajax-enqueue-the-js-file-manually))
+
 = 3.0.1 =
 * FIX: Button "Update now" now works also on the lookup page.
 * FIX: Reverted the vendor code to the one used in 2.13 because it broke installations with the WooCommerce-plugin. I will update the vendor code again once we found a long-term solution for this interdepency.
 
-= 3.0 =
+= 3.0.0 =
 * MAJOR CHANGE: Due to legal reasons, Maxmind now requires registration and some use cases are no longer allowed with the free data. If you use the Maxmind data source with automatic update, the update will fail for versions < 3.0 or if you have not entered a license key yet.
 * Updated the Maxmind update mechanism
 * Updated Maxmind vendor code 
@@ -159,7 +163,7 @@ New: Shortcode for showing/hiding content!
 The code of the plugin has not changed much, I have named this version 3.0 to indicate the major change on Maxmind's side of things. They explain it in this blog post:
 https://blog.maxmind.com/2019/12/18/significant-changes-to-accessing-and-using-geolite2-databases/
 
-= 2.13 =
+= 2.13.0 =
 * NEW: JS/AJAX mode now caches the response as a cookie so that every user only needs to call the AJAX requests once
 * NEW: If you install the plugin [SVG Flags](https://wordpress.org/plugins/svg-flags-lite/), you can use this shortcode to show the flag of the current country: `[geoip_detect2_current_flag]`. See [Documentation](https://github.com/yellowtree/geoip-detect/wiki/API:-Shortcodes#add-a-flag-of-the-visitors-country) for more infos. 
 * FIX: Example PHP code on Lookup page now displays nicer array syntax (and fixing a deprecation warning)

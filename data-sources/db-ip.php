@@ -29,8 +29,8 @@ require_once(__DIR__ . '/_mmdb.php');
 class DbIpDataSource extends AbstractMmdbDataSource {
 
     public function getId() { return 'dp-ip'; }
-	public function getLabel() { return __('Automatic download & update of dbip IP to City Lite', 'geoip-detect'); }
-	public function getShortLabel() { return sprintf(__('%s (updated monthly)', 'geoip-detect'), parent::getShortLabel()); }
+	public function getLabel() { return __('Automatic download & update of DB-IP IP to City Lite', 'geoip-detect'); }
+	public function getShortLabel() { return sprintf(__('DB-IP IP to City Lite (updated monthly)', 'geoip-detect'), parent::getShortLabel()); }
 	public function getDescriptionHTML() { 
 		return __('(License: <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 International License</a>. You must include a link back to DB-IP.com on pages that display or use results from the database, see <a href="https://db-ip.com/db/download/ip-to-city-lite">Download page</a>)', 'geoip-detect'); }
 
@@ -41,6 +41,20 @@ class DbIpDataSource extends AbstractMmdbDataSource {
 		$filename = $dir . '/DB-IP-City.mmdb';
 		return $filename;
 	}
+
+	protected function getDownloadUrl() {
+		$today = new \DateTime;
+		$download_url = 'https://download.db-ip.com/free/dbip-city-lite-' . $today->format('Y-m') . '.mmdb.gz';
+		
+		$download_url = apply_filters('geoip_detect2_db-ip_download_url', $download_url);
+		return $download_url;
+	}
+
+	public function getParameterHTML() {
+		return '';
+	}
+
+	// Todo schedule begin of month
 }
 
 geoip_detect2_register_source(new DbIpDataSource());

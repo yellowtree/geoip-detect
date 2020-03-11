@@ -54,11 +54,13 @@ abstract class AbstractMmdbDataSource extends ManualDataSource {
 
 		$text_update = __('Update now', 'geoip-detect');
 		$nonce_field = wp_nonce_field( 'geoip_detect_update' );
+		$id = $this->getId();
 		if (current_user_can('manage_options')) {
 			$html .= <<<HTML
 <form method="post" action="options-general.php?page=geoip-detect%2Fgeoip-detect.php">
 		$nonce_field
 		<input type="hidden" name="action" value="update" />
+		<input type="hidden" name="id" value="$id" />
 		<input type="submit" class="button button-secondary" value="$text_update" $disabled />
 </form>
 HTML;
@@ -82,7 +84,7 @@ HTML;
 			define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', false);
     }
     
-    	public function maxmindGetFilename() {
+	public function maxmindGetFilename() {
 		$data_filename = $this->maxmindGetUploadFilename();
 		if (!is_readable($data_filename))
 			$data_filename = '';
@@ -120,21 +122,18 @@ HTML;
 		return $tmpfname;
 	}
 
+	protected abstract function getDownloadUrl();
+
+	protected function updateTreatError($error) {
+		return $error->get_error_message();
+	}
+
 	public function maxmindUpdate()
 	{
+		$file_option_name = 'geoip-detect-' . $this->getId() . '_downloaded_file';
 		require_once(ABSPATH.'/wp-admin/includes/file.php');
 
-		$download_url = 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&suffix=tar.gz';
-		//$download_url = 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&suffix=tar.gz';
-		
-		$download_url = apply_filters('geoip_detect2_download_url', $download_url);
-		if (strpos($download_url, 'license_key=') === false) {
-			$key = get_option('geoip-detect-auto_license_key', '');
-			if (!$key) {
-				return __('Error: Before updating, you need to enter a license key from maxmind.com.', 'geoip-detect');
-			}
-			$download_url = add_query_arg('license_key', $key, $download_url);
-		}
+		$download_url = $this->getDownloadUrl();
 
 		$outFile = $this->maxmindGetUploadFilename();
 		$modified = 0;
@@ -143,19 +142,17 @@ HTML;
 		} 
 
 		// Check if existing download should be resumed
-		$tmpFile = get_option('geoip-detect-auto_downloaded_file');
-		if (!$tmpFile || !file_exists($tmpFile)) {
+		$tmpFile = get_option($file_option_name);
+		if (!$tmpFile || (is_string($tmpFile) && !file_exists($tmpFile)) ) {
 			// Download file
 			$tmpFile = $this->download_url($download_url, $modified);
-		}
+		} 
 
 		if (is_wp_error($tmpFile)) {
-			if(substr($tmpFile->get_error_message(), 0, 4) == '401:') {
-				return __('Error: The license key is invalid. If you have created this license key just now, please wait for some minutes and try again.', 'geoip-detect');
-			}
-			return $tmpFile->get_error_message();
+			update_option($file_option_name, '');
+			return $this->updateTreatError($tmpFile);
 		}
-		update_option('geoip-detect-auto_downloaded_file', $tmpFile);
+		update_option($file_option_name, $tmpFile);
 
 		// Unpack tar.gz
 		$ret = $this->unpackArchive($tmpFile, $outFile);
@@ -167,7 +164,7 @@ HTML;
 			return 'Something went wrong: the unpacked file cannot be found.';
 		}
 
-		update_option('geoip-detect-auto_downloaded_file', '');
+		update_option($file_option_name, '');
 		unlink($tmpFile);
 
 		return true;

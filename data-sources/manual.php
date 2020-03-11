@@ -38,7 +38,7 @@ class ManualDataSource extends AbstractDataSource {
 		$file = $this->maxmindGetFilename();
 
 		if (!$file)
-			return '<b>' . __('No Maxmind database found.', 'geoip-detect') . '</b>';
+			return '<b>' . __('No database file found.', 'geoip-detect') . '</b>';
 
 		$relative_file = geoip_detect_get_relative_path(ABSPATH, $file);
 

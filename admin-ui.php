@@ -110,9 +110,8 @@ function geoip_detect_option_page() {
 		switch($action)
 		{
 			case 'update':
-				$registry->setCurrentSource('auto');
-
-				$s = new \YellowTree\GeoipDetect\DataSources\Auto\AutoDataSource();
+				$registry->setCurrentSource($_POST['id']);
+				$s = $registry->getCurrentSource();
 				$ret = $s->maxmindUpdate();
 
 				if ($ret === true)

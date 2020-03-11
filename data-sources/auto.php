@@ -40,6 +40,28 @@ class AutoDataSource extends AbstractMmdbDataSource
 		return $filename;
 	}
 
+	protected function getDownloadUrl() {
+		$download_url = 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&suffix=tar.gz';
+		//$download_url = 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&suffix=tar.gz';
+		
+		$download_url = apply_filters('geoip_detect2_download_url', $download_url);
+		if (strpos($download_url, 'license_key=') === false) {
+			$key = get_option('geoip-detect-auto_license_key', '');
+			if (!$key) {
+				return __('Error: Before updating, you need to enter a license key from maxmind.com.', 'geoip-detect');
+			}
+			$download_url = add_query_arg('license_key', $key, $download_url);
+		}
+		return $download_url;
+	}
+
+	protected function updateTreatError($tmpFile) {
+		if(substr($tmpFile->get_error_message(), 0, 4) == '401:') {
+			return __('Error: The license key is invalid. If you have created this license key just now, please wait for some minutes and try again.', 'geoip-detect');
+		}
+		return parent::updateTreatError($tmpFile);
+	}
+
 
 	public function getParameterHTML() {
 		$key = esc_attr(get_option('geoip-detect-auto_license_key', ''));
