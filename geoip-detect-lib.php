@@ -37,7 +37,7 @@ function _geoip_detect2_process_options($options) {
 
 	// For backwards compat 2.4.0-2.5.0
 	if (is_bool($options)) {
-		_doing_it_wrong('GeoIP Detection Plugin: geoip_detect2_get_info_from_ip()', '$skipCache has been renamed to $options. Instead of TRUE, now use "[\'skipCache\' => TRUE]".', '2.5.0');
+		_doing_it_wrong('Geolocation IP Detection Plugin: geoip_detect2_get_info_from_ip()', '$skipCache has been renamed to $options. Instead of TRUE, now use "[\'skipCache\' => TRUE]".', '2.5.0');
 		$value = $options;
 		$options = array();
 		$options['skipCache'] = $value;
@@ -209,7 +209,7 @@ function _geoip_detect2_record_enrich_data($record, $ip, $sourceId, $error) {
 
 	/**
 	 * Filter: geoip_detect2_record_data
-	 * After loading the information from the GeoIP-Database, you can add information to it.
+	 * After loading the information from the Geolocation database, you can add information to it.
 	 *
 	 * @param array $data 	Information found.
 	 * @param string	 $orig_ip	IP that originally passed to the function.

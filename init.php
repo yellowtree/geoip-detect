@@ -19,7 +19,7 @@ function geoip_detect_defines() {
 		define('GEOIP_DETECT_IPV6_SUPPORTED', geoip_detect_check_ipv6_support());
 
 	if (!defined('GEOIP_DETECT_USER_AGENT'))
-		define('GEOIP_DETECT_USER_AGENT', 'GeoIP Detect ' . GEOIP_DETECT_VERSION);
+		define('GEOIP_DETECT_USER_AGENT', 'Geolocation Detect ' . GEOIP_DETECT_VERSION);
 }
 add_action('plugins_loaded', 'geoip_detect_defines');
 
@@ -63,14 +63,14 @@ function geoip_detect_admin_notice_database_missing() {
 	if (in_array('hostinfo_used', $ignored_notices) || !current_user_can('manage_options'))
 		return;
 
-	$url = '<a href="tools.php?page=' . GEOIP_PLUGIN_BASENAME . '">GeoIP Detection</a>';
+	$url = '<a href="tools.php?page=' . GEOIP_PLUGIN_BASENAME . '">Geolocation IP Detection</a>';
     ?>
 <div class="error notice is-dismissible">
 	<p style="float: right">
 		<a href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_dismiss_notice=hostinfo_used"><?php _e('Dismiss notice', 'geoip-detect'); ?></a>
 
 
-	<h3><?php _e( 'GeoIP Detection: No database installed', 'geoip-detect' ); ?></h3>
+	<h3><?php _e( 'Geolocation IP Detection: No database installed', 'geoip-detect' ); ?></h3>
         <p><?php printf(__('The Plugin %s is currently using the Webservice <a href="http://hostip.info" target="_blank">hostip.info</a> as data source. <br />You can choose a different data source in the options page.', 'geoip-detect' ), $url); ?></p>
 	<p><?php printf(__('For comparison of the different options, see <a href="https://github.com/yellowtree/geoip-detect/wiki/FAQ#which-data-source-should-i-choose" target="_blank">Which data source should I choose?</a>.', 'geoip-detect')); ?>
 
@@ -132,7 +132,7 @@ function geoip_detect_add_privacy_policy_content() {
 	}
 
     wp_add_privacy_policy_content(
-        'GeoIP Detection',
+        'Geolocation IP Detection',
         wp_kses_post( wpautop( $content, false ) )
     );
 }

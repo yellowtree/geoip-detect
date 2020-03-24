@@ -1,8 +1,8 @@
-=== GeoIP Detection ===
+=== Geolocation IP Detection ===
 Contributors: benjaminpick
-Tags: geoip, geolocation, locator, maxmind, ipstack
+Tags: geolocation, locator, geoip, maxmind, ipstack
 Requires at least: 4.0
-Tested up to: 5.3
+Tested up to: 5.4
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv3 or later
@@ -31,7 +31,7 @@ as a shortcode, or via CSS body classes. The city & country names are translated
   * Commercial Web-API: [Maxmind GeoIP2 Precision](https://www.maxmind.com/en/geoip2-precision-services) (City, Country or Insights)
   * Hosting-Provider dependent: [Cloudflare](https://support.cloudflare.com/hc/en-us/articles/200168236-What-does-CloudFlare-IP-Geolocation-do-) or [Amazon AWS CloudFront](https://aws.amazon.com/blogs/aws/enhanced-cloudfront-customization/) (Country)
   * Free or Commercial Web-API: [Ipstack](https://ipstack.com)
-* For the property names, see the results of a specific IP in the wordpress backend (under *Tools > GeoIP Detection*).
+* For the property names, see the results of a specific IP in the wordpress backend (under *Tools > Geolocation IP Detection*).
 * You can include these properties into your posts and pages by using the shortcode `[geoip_detect2 property="country.name" default="(country could not be detected)" lang="en"]` (where 'country.name' can be one of the other property names as well, and 'default' and 'lang' are optional).
 * You can show or hide content by using a shortcode `[geoip_detect2_show_if country="FR, DE" not_city="Berlin"]TEXT[/geoip_detect2_show_if]`. See [Shortcode Documentation](https://github.com/yellowtree/geoip-detect/wiki/API:-Shortcodes#show-or-hide-content-depending-on-the-location).
 * When enabled on the options page, it adds CSS classes to the body tag such as `geoip-province-HE`, `geoip-country-DE` and `geoip-continent-EU`.
@@ -39,7 +39,7 @@ as a shortcode, or via CSS body classes. The city & country names are translated
 * If you are using [Contact Form 7](https://wordpress.org/plugins/contact-form-7/), you can use these shortcodes:
   * A select input with all countries, the detected country being selected by default: `[geoip_detect2_countries mycountry]`
   * A text input that is pre-filled with the detected city (or other property): `[geoip_detect2_text_input city property:city lang:fr id:id class:class default:Paris]`
-  * GeoIP information for the email text: `[geoip_detect2_user_info]`
+  * Geolocation information for the email text: `[geoip_detect2_user_info]`
 
 See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more info.
 
@@ -106,8 +106,8 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 
 == Screenshots ==
 
-1. Lookup page (under Tools > GeoIP Lookup)
-2. Options page (under Preferences > GeoIP Detection)
+1. Lookup page (under Tools > Geolocation Lookup)
+2. Options page (under Preferences > Geolocation IP Detection)
 
 == Upgrade Notice ==
 
@@ -145,6 +145,11 @@ There have been changes to the reverse proxy logic. If you have enabled a revers
 New: Shortcode for showing/hiding content!
 
 == Changelog ==
+
+= 3.0.2 =
+* The Plugin has been renamed to "Geolocation IP Detection" in order to prevent trademark issues
+* FIX: Minor improvements in the backend UI
+* FIX: 
 
 = 3.0.1 =
 * FIX: Button "Update now" now works also on the lookup page.

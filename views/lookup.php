@@ -33,7 +33,7 @@ function var_export_short($data, $return=true)
 
 ?>
 <div class="wrap geoip-detect-wrap">
-	<h1><?php _e('GeoIP Detection', 'geoip-detect');?></h1>
+	<h1><?php _e('Geolocation IP Detection', 'geoip-detect');?></h1>
 	<p>
 		<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>"><?php _e('Options', 'geoip-detect');?></a>
 	</p>

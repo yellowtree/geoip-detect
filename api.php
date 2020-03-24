@@ -83,7 +83,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()
 
 	/**
 	 * Filter: geoip_detect2_record_data_after_cache
-	 * After loading the information from the GeoIP-Database AND after the cache, you can add information to it.
+	 * After loading the information from the Geolocation-Database AND after the cache, you can add information to it.
 	 *
 	 * @param array $data 	Information found.
 	 * @param string	 $orig_ip	IP that originally passed to the function.

@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name:     GeoIP Detection
+Plugin Name:     Geolocation IP Detection
 Plugin URI:      http://www.yellowtree.de
 Description:     Retrieving Geo-Information using the Maxmind GeoIP (Lite) Database.
 Author:          Yellow Tree (Benjamin Pick)

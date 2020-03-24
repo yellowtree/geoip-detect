@@ -44,7 +44,7 @@ abstract class AbstractDataSource {
  * 
  * @property bool $isEmpty (Wordpress Plugin) If the record is empty or contains any data.
  * 
- * @property \YellowTree\GeoipDetect\DataSources\ExtraInformation $extra (Wordpress Plugin) Extra Information added by the GeoIP Detect plugin
+ * @property \YellowTree\GeoipDetect\DataSources\ExtraInformation $extra (Wordpress Plugin) Extra Information added by the Geolocation IP Detection plugin
  */
 class City extends \GeoIp2\Model\Insights {
 	/**

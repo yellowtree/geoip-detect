@@ -121,7 +121,7 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
         }
         $id = $this->factory->user->create($args);
         wp_set_current_user($id);
-        $this->expectOutputRegex('/' . __('GeoIP Detection: No database installed', 'geoip-detect') . '/');
+        $this->expectOutputRegex('/' . __('Geolocation IP Detection: No database installed', 'geoip-detect') . '/');
         geoip_detect_admin_notice_database_missing();
     }
 

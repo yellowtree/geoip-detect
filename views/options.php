@@ -4,7 +4,7 @@ $currentSourceId = $currentSource->getId();
 ?>
 
 <div class="wrap">
-	<h1><?php _e('GeoIP Detection', 'geoip-detect');?></h1>
+	<h1><?php _e('Geolocation IP Detection', 'geoip-detect');?></h1>
 	<p><a href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>"><?php _e('Test IP Detection Lookup', 'geoip-detect')?></a></p>
 	<?php if (!empty($message)): ?>
 		<p class="geoip_detect_error">

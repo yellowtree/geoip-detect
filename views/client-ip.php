@@ -1,7 +1,7 @@
 <div class="wrap geoip-detect-wrap">
 	<!-- This page cannot be translated yet, as I am not sure how it will look like in the long-term.
 The goal is to have wizard helping to set all the relevant options semi-automatically. -->
-	<h1><?php _e('GeoIP Detection', 'geoip-detect');?> - Client IP Debug Panel</h1>
+	<h1><?php _e('Geolocation IP Detection', 'geoip-detect');?> - Client IP Debug Panel</h1>
 	<p>
 		<a href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>"><?php _e('Test IP Detection Lookup', 'geoip-detect')?></a>
 		|
