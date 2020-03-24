@@ -4,11 +4,16 @@ import _ from '../lodash.custom';
 
 const _get_localized = function(ret, locales) {
     if (typeof(ret) == 'object' && typeof(ret.names) == 'object') {
+        if (typeof(locales) == 'string') {
+            locales = [ locales ];
+        }
+
         for (let locale of locales) {
             if (ret.names[locale]) {
                 return ret.names[locale];
             }
         }
+        
         return '';
     }
     return ret;

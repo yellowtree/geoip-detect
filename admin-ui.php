@@ -63,7 +63,7 @@ function geoip_detect_lookup_page()
 			case 'lookup':
 				if (isset($_POST['ip']))
 				{
-					$request_ip = $_POST['ip'];
+					$request_ip = geoip_detect_is_ip($_POST['ip']) ? $_POST['ip'] : '';
 					$request_skipCache = !empty($_POST['skip_cache']);
 					$options = array('skipCache' => $request_skipCache);
 
@@ -158,7 +158,7 @@ function geoip_detect_option_page() {
 					if (in_array($opt_name, $numeric_options))
 						$opt_value = isset($_POST['options'][$opt_name]) ? (int) $_POST['options'][$opt_name] : 0;
 					else
-						$opt_value = isset($_POST['options'][$opt_name]) ? $_POST['options'][$opt_name] : '';
+						$opt_value = isset($_POST['options'][$opt_name]) ? $_POST['options'][$opt_name] : ''; // ToDo: Sanitation
 					update_option('geoip-detect-' . $opt_name, $opt_value);
 				}
 				break;

@@ -150,7 +150,7 @@ function var_export_short($data, $return=true)
 				case 'shortcode':
 					$extra = '';
 					if (!empty($_POST['locales']) && $key_2 === 'name') {
-						$extra .= ' lang="' . $_POST['locales'] . '"';
+						$extra .= ' lang="' . esc_attr($_POST['locales']) . '"';
 					}
 					if (!empty($_POST['skip_cache'])) {
 						$extra .= ' skip_cache="true"';
@@ -162,7 +162,16 @@ function var_export_short($data, $return=true)
 				case 'js':
 					$prop = '"' . $key_1 . '.' . $key_2 . '"';
 					if (!empty($_POST['locales']) && $key_2 === 'name') {
-						$access = 'record.get_with_locales(' . $prop . ', ' . json_encode(explode(',', $_POST['locales'])) .  ')';
+						$locales_to_js = array(
+							'en' => '"en"',
+							'fr,en' => '["fr", "en"]',
+						);
+						if (isset($locales_to_js[$_POST['locales']])) {
+							$locales_js = $locales_to_js[$_POST['locales']];
+						} else {
+							$locales_js = 'NULL';
+						}
+						$access = 'record.get_with_locales(' . $prop . ', ' . $locales_js .  ')';
 					} else {
 						$access = 'record.get(' . $prop . ')';
 					}
