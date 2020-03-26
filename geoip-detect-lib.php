@@ -288,6 +288,17 @@ function geoip_detect_normalize_ip($ip) {
 	return $ip;
 }
 
+function geoip_detect_sanitize_ip_list($ip_list) {
+	$list = explode(',', $ip_list);
+	$ret = array();
+	foreach ($list as $ip) {
+		if (!geoip_detect_is_ip($ip))
+			continue;
+		$ret[] = $ip;
+	}
+	return implode(', ', $ret);
+}
+
 /**
  * Check if the expected IP left matches the actual IP
  * @param string $actual IP

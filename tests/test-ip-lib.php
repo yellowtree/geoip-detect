@@ -51,5 +51,13 @@ class IpLibTest extends WP_UnitTestCase_GeoIP_Detect {
 
 	}
 
+	function testSanitizeIpList() {
+
+		$this->assertSame('1.2.3.4', geoip_detect_sanitize_ip_list('1.2.3.4'));
+		$this->assertSame('::1', geoip_detect_sanitize_ip_list('::1'));
+		$this->assertSame('', geoip_detect_sanitize_ip_list('1'));
+		$this->assertSame('1.2.3.4, 4.3.2.1', geoip_detect_sanitize_ip_list('1.2.3.4,a,4.3.2.1'));
+	}
+
 
 }

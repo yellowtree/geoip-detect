@@ -83,6 +83,27 @@ function geoip_detect_lookup_page()
 	include_once(GEOIP_PLUGIN_DIR . '/views/lookup.php');
 }
 
+function geoip_detect_sanitize_option($opt_name, $opt_value) {
+	switch($opt_name) {
+		case 'external_ip':
+			if (!geoip_detect_is_ip($opt_value)) {
+				$message .= 'The external IP "' . esc_html($opt_value) . '" is not a valid IP.';
+				return false;
+			} else {
+				if (!geoip_detect_is_public_ip($opt_value)) {
+					$message .= 'Warning: The external IP "' . esc_html($opt_value) . '" is not a public internet IP, so it will probably not work.';
+				}
+				$opt_value = (string) $opt_value;
+			}
+
+		case 'trusted_proxy_ips':
+			$opt_value = geoip_detect_sanitize_ip_list($opt_value);
+	}
+
+	return $opt_value;
+
+}
+
 function geoip_detect_option_page() {
 	if (!is_admin() || !current_user_can('manage_options'))
 		return;
@@ -144,22 +165,16 @@ function geoip_detect_option_page() {
 				// Empty IP Cache
 				delete_transient('geoip_detect_external_ip');
 
-				if (!empty($_POST['options']['external_ip'])) {
-					if (!geoip_detect_is_ip($_POST['options']['external_ip'])) {
-						$message .= 'The external IP "' . esc_html($_POST['options']['external_ip']) . '" is not a valid IP.';
-						unset($_POST['options']['external_ip']);
-					} else if (!geoip_detect_is_public_ip($_POST['options']['external_ip'])) {
-						$message .= 'Warning: The external IP "' . esc_html($_POST['options']['external_ip']) . '" is not a public internet IP, so it will probably not work.';
-					}
-				}
-
-
 				foreach ($option_names as $opt_name) {
 					if (in_array($opt_name, $numeric_options))
 						$opt_value = isset($_POST['options'][$opt_name]) ? (int) $_POST['options'][$opt_name] : 0;
-					else
-						$opt_value = isset($_POST['options'][$opt_name]) ? $_POST['options'][$opt_name] : ''; // ToDo: Sanitation
-					update_option('geoip-detect-' . $opt_name, $opt_value);
+					else {
+						$opt_value = sanitize_option($opt_name, @$_POST['options'][$opt_name]);
+					}
+
+					if ($opt_value !== false) {
+						update_option('geoip-detect-' . $opt_name, $opt_value);
+					}
 				}
 				break;
 		}
