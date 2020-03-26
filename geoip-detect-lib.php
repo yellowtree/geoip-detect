@@ -292,6 +292,7 @@ function geoip_detect_sanitize_ip_list($ip_list) {
 	$list = explode(',', $ip_list);
 	$ret = array();
 	foreach ($list as $ip) {
+		$ip = trim($ip);
 		if (!geoip_detect_is_ip($ip))
 			continue;
 		$ret[] = $ip;

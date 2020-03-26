@@ -191,7 +191,6 @@ function geoip_detect2_get_client_ip() {
 	if (is_null($helper) || defined('GEOIP_DETECT_DOING_UNIT_TESTS')) {
 		$helper = new GetClientIp();
 
-		// TODO: Expose option to UI. comma-seperated list of IPv4 and v6 adresses.
 		$trusted_proxies = explode(',', (string) get_option('geoip-detect-trusted_proxy_ips', ''));
 		$helper->addProxiesToWhitelist($trusted_proxies);
 	}

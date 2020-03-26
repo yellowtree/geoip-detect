@@ -83,7 +83,7 @@ function geoip_detect_lookup_page()
 	include_once(GEOIP_PLUGIN_DIR . '/views/lookup.php');
 }
 
-function geoip_detect_sanitize_option($opt_name, $opt_value) {
+function geoip_detect_sanitize_option($opt_name, $opt_value, &$message = '') {
 	switch($opt_name) {
 		case 'external_ip':
 			if (!geoip_detect_is_ip($opt_value)) {
@@ -169,7 +169,7 @@ function geoip_detect_option_page() {
 					if (in_array($opt_name, $numeric_options))
 						$opt_value = isset($_POST['options'][$opt_name]) ? (int) $_POST['options'][$opt_name] : 0;
 					else {
-						$opt_value = sanitize_option($opt_name, @$_POST['options'][$opt_name]);
+						$opt_value = geoip_detect_sanitize_option($opt_name, @$_POST['options'][$opt_name], $message);
 					}
 
 					if ($opt_value !== false) {
