@@ -15,7 +15,7 @@
   "private": false,
   "dependencies": {
     "@babel/runtime": ">=7.7.2",
-    "babel-plugin-transform-class-properties": ">=6.24.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "emoji-flags": "matiassingers/emoji-flags#master",
     "js-cookie": "^2.2.1"
   },
