@@ -150,6 +150,12 @@ New: Shortcode for showing/hiding content!
 = 3.1.0 =
 * New data source [DB-IP](https://db-ip.com/db/download/ip-to-city-lite) which uses the same file format as maxmind
 * FIX: `geoip_detect2_enqueue_javascript()` can be used now in function.php or templates (see [PHP Example](https://github.com/yellowtree/geoip-detect/wiki/API-Usage-Examples#ajax-enqueue-the-js-file-manually))
+* FIX: ToDo Honor Maxmind's "Do Not Sell My Personal Information Requests" automatically
+
+= 3.0.2 =
+* The Plugin has been renamed to "Geolocation IP Detection" in order to prevent trademark issues
+* FIX: Minor improvements in the backend UI
+* FIX: Security hardening against XSS
 
 = 3.0.1 =
 * FIX: Button "Update now" now works also on the lookup page.
