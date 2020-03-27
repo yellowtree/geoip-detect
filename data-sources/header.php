@@ -106,7 +106,7 @@ HTML;
 	public function saveParameters($post) {
 		$message = '';
 		
-		$value = isset($post['options_header']['provider']) ? $post['options_header']['provider'] : '';
+		$value = isset($post['options_header']['provider']) ? sanitize_key($post['options_header']['provider']) : '';
 		if (!empty($value)) {
 			update_option('geoip-detect-header-provider', $value);
 		}

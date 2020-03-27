@@ -57,7 +57,7 @@ function var_export_short($data, $return=true)
 	<form method="post" action="#">
 		<?php wp_nonce_field( 'geoip_detect_lookup' ); ?>
 		<input type="hidden" name="action" value="lookup" />
-		<?php _e('IP', 'geoip-detect')?>: <input type="text" placeholder="<?php _e('Enter an IP (v4 or v6)', 'geoip-detect')?>" name="ip" value="<?php echo isset($_REQUEST['ip']) ? esc_attr($_REQUEST['ip']) : esc_attr(geoip_detect2_get_client_ip()); ?>" /><br />
+		<?php _e('IP', 'geoip-detect')?>: <input type="text" placeholder="<?php _e('Enter an IP (v4 or v6)', 'geoip-detect')?>" name="ip" value="<?php echo isset($_REQUEST['ip']) ? esc_attr($ip) : esc_attr(geoip_detect2_get_client_ip()); ?>" /><br />
 		<label><?php _e('Use these locales:', 'geoip-detect'); ?>
 			<select name="locales">
 				<option value="" <?php if (empty($_POST['locales'])) echo 'selected="selected"'?>><?php _e('Default (Current site language, English otherwise)', 'geoip-detect')?></option>
@@ -146,11 +146,13 @@ function var_export_short($data, $return=true)
 				$value = var_export_short($value, true);
 			}
 
-			switch($_POST['syntax']) {
+			$locales = sanitize_text_field(@$_POST['locales']);
+
+			switch(sanitize_key($_POST['syntax'])) {
 				case 'shortcode':
 					$extra = '';
-					if (!empty($_POST['locales']) && $key_2 === 'name') {
-						$extra .= ' lang="' . esc_attr($_POST['locales']) . '"';
+					if ($locales && $key_2 === 'name') {
+						$extra .= ' lang="' . esc_attr($locales) . '"';
 					}
 					if (!empty($_POST['skip_cache'])) {
 						$extra .= ' skip_cache="true"';
@@ -161,13 +163,13 @@ function var_export_short($data, $return=true)
 
 				case 'js':
 					$prop = '"' . $key_1 . '.' . $key_2 . '"';
-					if (!empty($_POST['locales']) && $key_2 === 'name') {
+					if ($locales && $key_2 === 'name') {
 						$locales_to_js = array(
 							'en' => '"en"',
 							'fr,en' => '["fr", "en"]',
 						);
-						if (isset($locales_to_js[$_POST['locales']])) {
-							$locales_js = $locales_to_js[$_POST['locales']];
+						if (isset($locales_to_js[$locales])) {
+							$locales_js = $locales_to_js[$locales];
 						} else {
 							$locales_js = 'NULL';
 						}

@@ -214,14 +214,15 @@ HTML;
         $message = '';
 
         if (isset($post['options_ipstack']['key'])) {
-            update_option('geoip-detect-ipstack_key', $post['options_ipstack']['key']);
-            $this->params['key']= $post['options_ipstack']['key'];
+            $key = sanitize_key($post['options_ipstack']['key']);
+            update_option('geoip-detect-ipstack_key', $key);
+            $this->params['key']= $key;
         }
 
         if (isset($post['options_ipstack']['ssl'])) {	
             $ssl = (int) $post['options_ipstack']['ssl'];
             update_option('geoip-detect-ipstack_ssl', $ssl);
-            $this->params['ssl'] = $post['options_ipstack']['ssl'];
+            $this->params['ssl'] = $ssl;
 		}
         
         if (geoip_detect2_is_source_active('ipstack') && !$this->isWorking())
