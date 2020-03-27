@@ -111,7 +111,7 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 
 == Upgrade Notice ==
 
-= 3.0.2 = 
+= 3.0.3 = 
 The Plugin was renamed to Geolocation IP Detection in order to prevent trademark issues. 
 
 = 3.0.1 = 
@@ -149,10 +149,13 @@ New: Shortcode for showing/hiding content!
 
 == Changelog ==
 
-= 3.0.2 =
+= 3.0.3 =
 * The Plugin has been renamed to "Geolocation IP Detection" in order to prevent trademark issues
 * FIX: Minor improvements in the backend UI
 * FIX: Security hardening against XSS
+
+= 3.0.2 =
+(Was not released)
 
 = 3.0.1 =
 * FIX: Button "Update now" now works also on the lookup page.
