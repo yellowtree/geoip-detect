@@ -25,8 +25,8 @@ function geoip_detect_menu() {
 		require_once ABSPATH . '/wp-admin/admin.php';
 	}
 	
-	add_submenu_page('tools.php', __('GeoIP Detection Lookup', 'geoip-detect'), __('GeoIP Lookup', 'geoip-detect'), 'activate_plugins', GEOIP_PLUGIN_BASENAME, 'geoip_detect_lookup_page');
-	add_options_page(__('GeoIP Detection', 'geoip-detect'), __('GeoIP Detection', 'geoip-detect'), 'manage_options', GEOIP_PLUGIN_BASENAME, 'geoip_detect_option_page');
+	add_submenu_page('tools.php', __('Geolocation IP Detection Lookup', 'geoip-detect'), __('Geolocation Lookup', 'geoip-detect'), 'activate_plugins', GEOIP_PLUGIN_BASENAME, 'geoip_detect_lookup_page');
+	add_options_page(__('Geolocation IP Detection', 'geoip-detect'), __('Geolocation IP Detection', 'geoip-detect'), 'manage_options', GEOIP_PLUGIN_BASENAME, 'geoip_detect_option_page');
 }
 add_action('admin_menu', 'geoip_detect_menu');
 
@@ -45,7 +45,7 @@ add_filter( "plugin_action_links_" . GEOIP_PLUGIN_BASENAME, 'geoip_detect_add_se
 // ------------- Admin GUI --------------------
 
 function geoip_detect_verify_nonce($action) {
-	$nonce = isset($_POST['_wpnonce']) ? $_POST['_wpnonce'] : '';
+	$nonce = isset($_POST['_wpnonce']) ? sanitize_text_field($_POST['_wpnonce']) : '';
 	return wp_verify_nonce( $nonce, 'geoip_detect_' . $action );
 }
 
@@ -56,20 +56,22 @@ function geoip_detect_lookup_page()
 
 	$ip_lookup_result = false;
 	$message = '';
-	$action = isset($_POST['action']) ? $_POST['action'] : '';
+	$action = isset($_POST['action']) ? sanitize_key($_POST['action']) : '';
+	$ip = isset($_POST['ip']) ? sanitize_text_field($_POST['ip']) : '';
 
 	if (geoip_detect_verify_nonce($action)) {
 		switch($action) {
 			case 'lookup':
-				if (isset($_POST['ip']))
+				if ($ip)
 				{
-					$request_ip = $_POST['ip'];
+					$request_ip = geoip_detect_is_ip($ip) ? $ip : '';
 					$request_skipCache = !empty($_POST['skip_cache']);
 					$options = array('skipCache' => $request_skipCache);
 
 					$request_locales = null;
-					if (!empty($_POST['locales']))
-						$request_locales = explode(',', $_POST['locales']);
+					if (!empty($_POST['locales'])) {
+						$request_locales = explode(',', sanitize_text_field($_POST['locales']));
+					}
 
 					$start = microtime(true);
 					$ip_lookup_result = geoip_detect2_get_info_from_ip($request_ip, $request_locales, $options);
@@ -81,6 +83,28 @@ function geoip_detect_lookup_page()
 	}
 
 	include_once(GEOIP_PLUGIN_DIR . '/views/lookup.php');
+}
+
+function geoip_detect_sanitize_option($opt_name, $opt_value, &$message = '') {
+	$opt_value = sanitize_text_field($opt_value);
+	switch($opt_name) {
+		case 'external_ip':
+			if (!geoip_detect_is_ip($opt_value)) {
+				$message .= 'The external IP "' . esc_html($opt_value) . '" is not a valid IP.';
+				return false;
+			} else {
+				if (!geoip_detect_is_public_ip($opt_value)) {
+					$message .= 'Warning: The external IP "' . esc_html($opt_value) . '" is not a public internet IP, so it will probably not work.';
+				}
+				$opt_value = (string) $opt_value;
+			}
+
+		case 'trusted_proxy_ips':
+			$opt_value = geoip_detect_sanitize_ip_list($opt_value);
+	}
+
+	return $opt_value;
+
 }
 
 function geoip_detect_option_page() {
@@ -104,7 +128,7 @@ function geoip_detect_option_page() {
 	$text_options = array('external_ip', 'trusted_proxy_ips');
 	$option_names = array_merge($numeric_options, $text_options);
 
-	$action = isset($_POST['action']) ? $_POST['action'] : '';
+	$action = isset($_POST['action']) ? sanitize_key($_POST['action']) : '';
 
 	if (geoip_detect_verify_nonce($action)) {
 		switch($action)
@@ -122,7 +146,8 @@ function geoip_detect_option_page() {
 				break;
 
 			case 'choose':
-				$registry->setCurrentSource($_POST['options']['source']);
+				$sourceId = sanitize_text_field($_POST['options']['source']);
+				$registry->setCurrentSource($sourceId);
 				break;
 
 
@@ -143,22 +168,16 @@ function geoip_detect_option_page() {
 				// Empty IP Cache
 				delete_transient('geoip_detect_external_ip');
 
-				if (!empty($_POST['options']['external_ip'])) {
-					if (!geoip_detect_is_ip($_POST['options']['external_ip'])) {
-						$message .= 'The external IP "' . esc_html($_POST['options']['external_ip']) . '" is not a valid IP.';
-						unset($_POST['options']['external_ip']);
-					} else if (!geoip_detect_is_public_ip($_POST['options']['external_ip'])) {
-						$message .= 'Warning: The external IP "' . esc_html($_POST['options']['external_ip']) . '" is not a public internet IP, so it will probably not work.';
-					}
-				}
-
-
 				foreach ($option_names as $opt_name) {
 					if (in_array($opt_name, $numeric_options))
 						$opt_value = isset($_POST['options'][$opt_name]) ? (int) $_POST['options'][$opt_name] : 0;
-					else
-						$opt_value = isset($_POST['options'][$opt_name]) ? $_POST['options'][$opt_name] : '';
-					update_option('geoip-detect-' . $opt_name, $opt_value);
+					else {
+						$opt_value = geoip_detect_sanitize_option($opt_name, @$_POST['options'][$opt_name], $message);
+					}
+
+					if ($opt_value !== false) {
+						update_option('geoip-detect-' . $opt_name, $opt_value);
+					}
 				}
 				break;
 		}

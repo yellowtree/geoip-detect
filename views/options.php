@@ -4,7 +4,7 @@ $currentSourceId = $currentSource->getId();
 ?>
 
 <div class="wrap">
-	<h1><?php _e('GeoIP Detection', 'geoip-detect');?></h1>
+	<h1><?php _e('Geolocation IP Detection', 'geoip-detect');?></h1>
 	<p><a href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>"><?php _e('Test IP Detection Lookup', 'geoip-detect')?></a></p>
 	<?php if (!empty($message)): ?>
 		<p class="geoip_detect_error">
@@ -91,7 +91,7 @@ $currentSourceId = $currentSource->getId();
 			</span>
 		</p>
 		<p>
-			<label><?php _e('IPs of trusted proxies:', 'geoip-detect'); ?><input type="text" name="options[trusted_proxy_ips]" <?php echo esc_attr($wp_options['trusted_proxy_ips']); ?>" placeholder="1.1.1.1, 1234::1, 2.2.2.2/24" />
+			<label><?php _e('IPs of trusted proxies:', 'geoip-detect'); ?><input type="text" name="options[trusted_proxy_ips]" value="<?php echo esc_attr($wp_options['trusted_proxy_ips']); ?>" placeholder="1.1.1.1, 1234::1, 2.2.2.2/24" />
 			<span class="detail-box">
 				<?php _e('If specified, only IPs in this list will be treated as proxy.', 'geoip-detect'); ?><br>
 				<?php _e('Make sure to add both IPv4 and IPv6 adresses of the proxy!', 'geoip-detect'); ?>

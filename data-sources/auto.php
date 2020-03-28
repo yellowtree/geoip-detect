@@ -95,7 +95,7 @@ HTML;
 		$message = '';
 
 		if (isset($post['options_auto']['license_key'])) {
-			$key = trim($post['options_auto']['license_key']);
+			$key = sanitize_text_field($post['options_auto']['license_key']);
 			$validationResult = $this->validateApiKey($key);
 			if (\is_string($validationResult)) {
 				$message .= $validationResult;

@@ -131,12 +131,14 @@ HTML;
 			update_option('geoip-detect-precision-user_id', $user_id);
 		}
 		if (isset($post['options_precision']['user_secret'])) {
-			$user_secret = trim($post['options_precision']['user_secret']);
+			$user_secret = sanitize_text_field($post['options_precision']['user_secret']);
 			update_option('geoip-detect-precision-user_secret', $user_secret);	
 		}
 		if (isset($post['options_precision']['api_type'])) {
-			if (isset($this->known_api_types[$post['options_precision']['api_type']]))
-				update_option('geoip-detect-precision_api_type', $post['options_precision']['api_type']);
+			$type = sanitize_text_field($post['options_precision']['api_type']);
+			if (isset($this->known_api_types[$type])) {
+				update_option('geoip-detect-precision_api_type', $type);
+			}
 		}
 		
 		if (geoip_detect2_is_source_active('precision') && !$this->isWorking())

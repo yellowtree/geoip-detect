@@ -61,14 +61,14 @@ class LegacyApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertEquals(GEOIP_DETECT_TEST_IP, geoip_detect_get_external_ip_adress());
 		
 		$string = do_shortcode('[geoip_detect property="country_name"]');
-		$this->assertNotEmpty($string, '[geoip_detect property="country_name"]', "The Geoip Detect shortcode did not generate any output");
-		$this->assertNotEquals($string, '[geoip_detect property="country_name"]', "The Geoip Detect shortcode does not seem to be called");
-		$this->assertNotContains('<!--', $string, "Geoip Detect shortcode threw an error: " . $string);
+		$this->assertNotEmpty($string, '[geoip_detect property="country_name"]', "The Geolocation IP Detection shortcode did not generate any output");
+		$this->assertNotEquals($string, '[geoip_detect property="country_name"]', "The Geolocation IP Detection shortcode does not seem to be called");
+		$this->assertNotContains('<!--', $string, "Geolocation IP Detection shortcode threw an error: " . $string);
 		
 		$string = do_shortcode('[geoip_detect property="INVALID"]');
-		$this->assertContains('<!--', $string, "Geoip Detect Shortcode threw no error in spite of invalid property name: " . $string);
+		$this->assertContains('<!--', $string, "Geolocation IP Detection Shortcode threw no error in spite of invalid property name: " . $string);
 		$string = do_shortcode('[geoip_detect property="INVALID" default="here"]');
-		$this->assertContains('here', $string, "Geoip Detect Shortcode does not contain default value: " . $string);
+		$this->assertContains('here', $string, "Geolocation IP Detection Shortcode does not contain default value: " . $string);
 	}
 }
 

@@ -28,7 +28,7 @@ function geoip_detect_shortcode($attr)
 	$defaultValue = isset($attr['default']) ? $attr['default'] : '';
 
 	if (!is_object($userInfo))
-		return $defaultValue . '<!-- GeoIP Detect: No info found for this IP. -->';
+		return $defaultValue . '<!-- Geolocation IP Detection: No info found for this IP. -->';
 
 	$propertyName = $attr['property'];
 
@@ -40,7 +40,7 @@ function geoip_detect_shortcode($attr)
 			return $defaultValue;
 	}
 
-	return $defaultValue . '<!-- GeoIP Detect: Invalid property name. -->';
+	return $defaultValue . '<!-- Geolocation IP Detection: Invalid property name. -->';
 }
 add_shortcode('geoip_detect', 'geoip_detect_shortcode');
 
@@ -88,12 +88,12 @@ function geoip_detect2_shortcode($attr, $content = '', $shortcodeName = 'geoip_d
 	$userInfo = geoip_detect2_get_info_from_ip($ip, $locales, $options);
 
 	if ($userInfo->isEmpty)
-		return $defaultValue . ($attr['add_error'] ? '<!-- GeoIP Detect: No information found for this IP (' . geoip_detect2_get_client_ip() . ') -->' : '');
+		return $defaultValue . ($attr['add_error'] ? '<!-- Geolocation IP Detection: No information found for this IP (' . geoip_detect2_get_client_ip() . ') -->' : '');
 
 	try {
 		$return = geoip_detect2_shortcode_get_property($userInfo, $attr['property']);
 	} catch (\RuntimeException $e) {
-		return $defaultValue . ($attr['add_error'] ? '<!-- GeoIP Detect: Invalid property name. -->' : '');
+		return $defaultValue . ($attr['add_error'] ? '<!-- Geolocation IP Detection: Invalid property name. -->' : '');
 	}
 
 	if (is_object($return) && $return instanceof \GeoIp2\Record\AbstractPlaceRecord) {
@@ -101,7 +101,7 @@ function geoip_detect2_shortcode($attr, $content = '', $shortcodeName = 'geoip_d
 	}
 
 	if (is_object($return) || is_array($return)) {
-		return $defaultValue . ($attr['add_error'] ? '<!-- GeoIP Detect: Invalid property name (sub-property missing). -->' : '');
+		return $defaultValue . ($attr['add_error'] ? '<!-- Geolocation IP Detection: Invalid property name (sub-property missing). -->' : '');
 	}
 
 	if ($return)

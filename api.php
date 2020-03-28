@@ -83,7 +83,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()
 
 	/**
 	 * Filter: geoip_detect2_record_data_after_cache
-	 * After loading the information from the GeoIP-Database AND after the cache, you can add information to it.
+	 * After loading the information from the Geolocation-Database AND after the cache, you can add information to it.
 	 *
 	 * @param array $data 	Information found.
 	 * @param string	 $orig_ip	IP that originally passed to the function.
@@ -191,7 +191,6 @@ function geoip_detect2_get_client_ip() {
 	if (is_null($helper) || defined('GEOIP_DETECT_DOING_UNIT_TESTS')) {
 		$helper = new GetClientIp();
 
-		// TODO: Expose option to UI. comma-seperated list of IPv4 and v6 adresses.
 		$trusted_proxies = explode(',', (string) get_option('geoip-detect-trusted_proxy_ips', ''));
 		$helper->addProxiesToWhitelist($trusted_proxies);
 	}

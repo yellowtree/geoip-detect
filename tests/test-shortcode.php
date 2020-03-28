@@ -24,9 +24,9 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 
 	function testShortcodeOneProperty() {
 		$string = do_shortcode('[geoip_detect2 property="country"]');
-		$this->assertNotEmpty($string, '[geoip_detect2 property="country"]', "The Geoip Detect shortcode did not generate any output");
-		$this->assertNotEquals($string, '[geoip_detect2 property="country"]', "The Geoip Detect shortcode does not seem to be called");
-		$this->assertNotContains('<!--', $string, "Geoip Detect shortcode threw an error: " . $string);
+		$this->assertNotEmpty($string, '[geoip_detect2 property="country"]', "The Geolocation IP Detection shortcode did not generate any output");
+		$this->assertNotEquals($string, '[geoip_detect2 property="country"]', "The Geolocation IP Detection shortcode does not seem to be called");
+		$this->assertNotContains('<!--', $string, "Geolocation IP Detection shortcode threw an error: " . $string);
 	}
 
 	function testShortcodeProperties() {
@@ -75,15 +75,15 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertContains('sub-property missing', do_shortcode('[geoip_detect2 property="location"]'));
 
 		$string = do_shortcode('[geoip_detect2 property="INVALID"]');
-		$this->assertContains('<!--', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"INVALID\"] threw no error in spite of invalid property name: " . $string);
+		$this->assertContains('<!--', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"INVALID\"] threw no error in spite of invalid property name: " . $string);
 		$string = do_shortcode('[geoip_detect2 property="city.INVALID"]');
-		$this->assertContains('<!--', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"city.INVALID\"] threw no error in spite of invalid property name: " . $string);
+		$this->assertContains('<!--', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"city.INVALID\"] threw no error in spite of invalid property name: " . $string);
 		$string = do_shortcode('[geoip_detect2 property="INVALID.city"]');
-		$this->assertContains('<!--', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"INVALID.city\"] threw no error in spite of invalid property name: " . $string);
+		$this->assertContains('<!--', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"INVALID.city\"] threw no error in spite of invalid property name: " . $string);
 		$string = do_shortcode('[geoip_detect2 property="city.names.INVALID"]');
-		$this->assertContains('<!--', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"city.names.INVALID\"] threw no error in spite of invalid property name: " . $string);
+		$this->assertContains('<!--', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"city.names.INVALID\"] threw no error in spite of invalid property name: " . $string);
 		$string = do_shortcode('[geoip_detect2 property="INVALID" default="here"]');
-		$this->assertContains('here', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"INVALID\" default=\"here\"]does not contain default value: " . $string);
+		$this->assertContains('here', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"INVALID\" default=\"here\"]does not contain default value: " . $string);
 	}
 
 	function testEmptyData() {
@@ -92,8 +92,8 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		add_filter('geoip_detect2_reader', 'shortcode_empty_reader', 101);
 
 		$string = do_shortcode('[geoip_detect2 property="city" default="default"]');
-		$this->assertContains('No information found', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"city\"] should inform when no information accessible to this IP: " . $string);
-		$this->assertContains('default', $string, "Geoip Detect Shortcode [geoip_detect2 property=\"city\"] should use default: " . $string);
+		$this->assertContains('No information found', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"city\"] should inform when no information accessible to this IP: " . $string);
+		$this->assertContains('default', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"city\"] should use default: " . $string);
 	}
 
 	function filter_empty_array() {
