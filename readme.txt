@@ -108,6 +108,10 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 
 == Upgrade Notice ==
 
+= 3.0.3.1 = 
+Hotfix for the Manual download Maxmind datasource.
+The Plugin was renamed to Geolocation IP Detection in order to prevent trademark issues. 
+
 = 3.0.3 = 
 The Plugin was renamed to Geolocation IP Detection in order to prevent trademark issues. 
 
@@ -145,6 +149,9 @@ There have been changes to the reverse proxy logic. If you have enabled a revers
 New: Shortcode for showing/hiding content!
 
 == Changelog ==
+
+= 3.0.3.1 =
+* Hotfix: The filename specified in the manual datasource can be changed properly again.
 
 = 3.0.3 =
 * The Plugin has been renamed to "Geolocation IP Detection" in order to prevent trademark issues

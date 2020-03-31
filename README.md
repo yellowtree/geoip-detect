@@ -8,12 +8,9 @@ Tests: [![Build Status](https://travis-ci.com/yellowtree/geoip-detect.png?branch
 
 * **Donate Link:** https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYUZHS8FH3CL
 
-Retrieving Geo-Information using one the Maxmind GeoIP2 databases.
-
 ## Description ##
 
-Provides geographic information detected by an IP adress. This can be used in themes or other plugins,
-as a shortcode, or via CSS body classes. The city & country names are translated in different languages ([supported languages](https://dev.maxmind.com/geoip/geoip2/web-services/#Languages-8)).
+Provides geographic information detected by an IP adress. This can be used in themes or other plugins, as a shortcode, or via CSS body classes. The city & country names are translated in different languages ([supported languages](https://dev.maxmind.com/geoip/geoip2/web-services/#Languages-8)).
 
 = Features: =
 
@@ -108,6 +105,10 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 1. Lookup page (under Tools > Geolocation Lookup)
 2. Options page (under Preferences > Geolocation IP Detection)
 
+= 3.0.3.1 = 
+Hotfix for the Manual download Maxmind datasource.
+The Plugin was renamed to Geolocation IP Detection in order to prevent trademark issues. 
+
 = 3.0.3 = 
 The Plugin was renamed to Geolocation IP Detection in order to prevent trademark issues. 
 
@@ -145,6 +146,9 @@ There have been changes to the reverse proxy logic. If you have enabled a revers
 New: Shortcode for showing/hiding content!
 
 ## Changelog ##
+
+= 3.0.3.1 =
+* Hotfix: The filename specified in the manual datasource can be changed properly again.
 
 = 3.0.3 =
 * The Plugin has been renamed to "Geolocation IP Detection" in order to prevent trademark issues
