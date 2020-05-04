@@ -679,7 +679,7 @@ function geoip_detect2_shortcode_check_subcondition($expectedValuesRaw, $actualV
  * @param string $default 	 Default Country in case the visitor's country cannot be determined
  */
 function geoip_detect2_shortcode_current_flag($attr, $content = '', $shortcodeName = 'geoip_detect2_current_flag') {
-	if (!wp_style_is('svg-flags-css')) {
+	if (!shortcode_exists('svg-flag')) {
 		return '<!-- There should be a flag here. However, the Plugin "SVG Flags" is missing.';
 	}
 
