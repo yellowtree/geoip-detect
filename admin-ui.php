@@ -89,14 +89,16 @@ function geoip_detect_sanitize_option($opt_name, $opt_value, &$message = '') {
 	$opt_value = sanitize_text_field($opt_value);
 	switch($opt_name) {
 		case 'external_ip':
-			if (!geoip_detect_is_ip($opt_value)) {
-				$message .= 'The external IP "' . esc_html($opt_value) . '" is not a valid IP.';
-				return false;
-			} else {
-				if (!geoip_detect_is_public_ip($opt_value)) {
-					$message .= 'Warning: The external IP "' . esc_html($opt_value) . '" is not a public internet IP, so it will probably not work.';
+			if ($opt_value) {
+				if (!geoip_detect_is_ip($opt_value)) {
+					$message .= 'The external IP "' . esc_html($opt_value) . '" is not a valid IP.';
+					return false;
+				} else {
+					if (!geoip_detect_is_public_ip($opt_value)) {
+						$message .= 'Warning: The external IP "' . esc_html($opt_value) . '" is not a public internet IP, so it will probably not work.';
+					}
+					$opt_value = (string) $opt_value;
 				}
-				$opt_value = (string) $opt_value;
 			}
 
 		case 'trusted_proxy_ips':

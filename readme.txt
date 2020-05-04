@@ -151,6 +151,7 @@ New: Shortcode for showing/hiding content!
 == Changelog ==
 
 = 3.0.4 =
+* FIX: In the Options, it was not possible to revert an hardcoded "External IP of this server" back to "automatic detection"
 * FIX: `[geoip_detect2_current_flag]` now compatible with the [SVG Flags](https://wordpress.org/plugins/svg-flags-lite/) version 0.9.0. See [Documentation](https://github.com/yellowtree/geoip-detect/wiki/API:-Shortcodes#add-a-flag-of-the-visitors-country) for more infos. 
 
 = 3.0.3.1 =
