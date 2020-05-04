@@ -93,6 +93,11 @@ $currentSourceId = $currentSource->getId();
 		<p>
 			<label><?php _e('IPs of trusted proxies:', 'geoip-detect'); ?><input type="text" name="options[trusted_proxy_ips]" value="<?php echo esc_attr($wp_options['trusted_proxy_ips']); ?>" placeholder="1.1.1.1, 1234::1, 2.2.2.2/24" />
 			<span class="detail-box">
+				<?php if (empty($wp_options['has_reverse_proxy']) && !empty($wp_options['trusted_proxy_ips'])) : ?>
+					<span style="color:red">
+						<?php printf(__('Warning: As you didn\'t tick the option "%s" above, seting trusted IPs has no effect. This is only used for reverse proxies.', 'geoip-detect'), __('The server is behind a reverse proxy', 'geoip-detect') ); ?>
+					</span><br>
+				<?php endif; ?>
 				<?php _e('If specified, only IPs in this list will be treated as proxy.', 'geoip-detect'); ?><br>
 				<?php _e('Make sure to add both IPv4 and IPv6 adresses of the proxy!', 'geoip-detect'); ?>
 			</span>
