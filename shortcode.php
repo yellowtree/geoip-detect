@@ -545,6 +545,9 @@ add_shortcode('geoip_detect2_user_info', 'geoip_detect_shortcode_user_info');
  *
  * Show TEXT if the visitor is within the timezone Europe/Berlin
  *      `[geoip_detect2_show_if property="location.timeZone" property_value="Europe/Berlin"]TEXT[/geoip_detect2_show_if]`
+ * 
+ * Show TEXT if the visitor is in the european union
+ * 		`[geoip_detect2_show_if property="country.isInEuropeanUnion" property_value="true"]Products list for EU[/geoip_detect2_show_if]`
  *
  * LIMITATIONS:
  * - You cannot nest several of these shortcodes within one another. Instead, seperate them into several blocks of shortcodes.
@@ -662,13 +665,24 @@ function geoip_detect2_shortcode_check_subcondition($expectedValuesRaw, $actualV
 	$attributeValuesArray = explode(',', $expectedValuesRaw);
 	$attributeValuesArray = array_map('trim', $attributeValuesArray);
 
-	$actualValues = (array) $actualValues;
+	if ($actualValues === true) {
+		$actualValues = array("true", "yes", "y", "1");
+	}
+	if ($actualValues === false) {
+		$actualValues = array("false", "no", "n", "0", "");
+	}
+
+	if (!is_array($actualValues)) {
+		$actualValues = array($actualValues);
+	}
 
 	// Compare case-insensitively
 	$attributeValuesArray = array_map('mb_strtolower', $attributeValuesArray);
 	$actualValues = array_map('mb_strtolower', $actualValues);
 
-	return count(array_intersect($actualValues, $attributeValuesArray)) > 0;
+	$intersection = array_intersect($actualValues, $attributeValuesArray);
+
+	return count($intersection) > 0;
 }
 
 
