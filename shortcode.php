@@ -554,18 +554,21 @@ add_shortcode('geoip_detect2_user_info', 'geoip_detect_shortcode_user_info');
 function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName = '') {
     $showContentIfMatch = ($shortcodeName == 'geoip_detect2_show_if') ? true : false;
 
-	/* Attribute Conditions. Order is not important, as they are combined with an transitive AND condition */
+	/* Attribute Conditions. Order is not important, as they are combined with a transitive AND condition */
 	$attributeNames = array(
         'continent' => 'continent',
-        'not_continent' => 'continent',
+		'not_continent' => 'continent',
+		
         'country' => 'country',
 		'not_country' => 'country',
-        'most_specific_subdivision' => 'mostSpecificSubdivision',
+		
+		'most_specific_subdivision' => 'mostSpecificSubdivision',
         'region' => 'mostSpecificSubdivision',
         'state' => 'mostSpecificSubdivision',
         'not_most_specific_subdivision' => 'mostSpecificSubdivision',
         'not_region' => 'mostSpecificSubdivision',
         'not_state' => 'mostSpecificSubdivision',
+		
 		'city' => 'city',
         'not_city' => 'city',
 	);
@@ -603,7 +606,7 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 
 	foreach ($attributeNames as $shortcodeParamName => $maxmindName) {
 		if (!empty($attr[$shortcodeParamName])) {
-            // Determine Actual MaxMind Value(s) for Attribute
+            // Determine actual MaxMind Value(s) for Attribute
 			$actualValues = array();
 			$alternativePropertyNames = array(
 					'name',
