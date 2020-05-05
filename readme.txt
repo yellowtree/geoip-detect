@@ -152,8 +152,8 @@ New: Shortcode for showing/hiding content!
 
 = 3.0.4 =
 * When an error occurs during the Cron update of the Maxmind database, it is now shown in the backend.
-* FIX: All times shown in the backend now use the Timezone set by Wordpress
-* FIX: In the Options, it was not possible to revert an hardcoded "External IP of this server" back to "automatic detection"
+* FIX: All times shown in the Admin backend now use the timezone set by Wordpress
+* FIX: In the Admin Options, it was not possible to revert an hardcoded "External IP of this server" back to "automatic detection"
 * FIX: `[geoip_detect2_show_if property="country.isInEuropeanUnion" property_value="true"]Products list for EU[/geoip_detect2_show_if]` now works properly (boolean values can be "true"/"yes" or "false"/"no")
 * FIX: `[geoip_detect2_current_flag]` now compatible with the [SVG Flags](https://wordpress.org/plugins/svg-flags-lite/) version 0.9.0. See [Documentation](https://github.com/yellowtree/geoip-detect/wiki/API:-Shortcodes#add-a-flag-of-the-visitors-country) for more infos. 
 * Minor admin improvement: If the value "IPs of trusted proxies" is set, but "The server is behind a reverse proxy" is not ticked, issue an warning
