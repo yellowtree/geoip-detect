@@ -34,7 +34,6 @@ class ManualDataSource extends AbstractDataSource {
 		$built = $last_update = 0;
 		$html = array();
 
-		$date_format = get_option('date_format') . ' ' . get_option('time_format');
 		$file = $this->maxmindGetFilename();
 
 		if (!$file)
@@ -49,8 +48,8 @@ class ManualDataSource extends AbstractDataSource {
 			$metadata = $reader->metadata();
 			$built = $metadata->buildEpoch;
 			$last_update = is_readable($file) ? filemtime($file) : '';
-			$html[] = sprintf(__('Last updated: %s', 'geoip-detect'), $last_update ? date_i18n($date_format, $last_update) : __('Never', 'geoip-detect'));
-			$html[] = sprintf(__('Database data from: %s', 'geoip-detect'), date_i18n($date_format, $built) );
+			$html[] = sprintf(__('Last updated: %s', 'geoip-detect'), $last_update ? geoip_detect_format_localtime($last_update) : __('Never', 'geoip-detect'));
+			$html[] = sprintf(__('Database data from: %s', 'geoip-detect'), geoip_detect_format_localtime($built) );
 		}
 
 

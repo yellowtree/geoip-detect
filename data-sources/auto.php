@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 namespace YellowTree\GeoipDetect\DataSources\Auto;
 
 use YellowTree\GeoipDetect\DataSources\Manual\ManualDataSource;
+use YellowTree\GeoipDetect\Logger;
 
 define('GEOIP_DETECT_DATA_UPDATE_FILENAME', 'GeoLite2-City.mmdb');
 
@@ -34,7 +35,6 @@ class AutoDataSource extends ManualDataSource
 
 	public function getStatusInformationHTML() {
 		$html = parent::getStatusInformationHTML();
-		$date_format = get_option('date_format') . ' ' . get_option('time_format');
 
 		$rescheduled = '';
 		$next_cron_update = wp_next_scheduled( 'geoipdetectupdate' );
@@ -43,7 +43,7 @@ class AutoDataSource extends ManualDataSource
 			$this->set_cron_schedule();
 			$next_cron_update = wp_next_scheduled( 'geoipdetectupdate' );
 		}
-		$html .= '<br />' . sprintf(__('Next update: %s', 'geoip-detect'), $next_cron_update !== false ? date_i18n($date_format, $next_cron_update) : __('Never', 'geoip-detect'));
+		$html .= '<br />' . sprintf(__('Next update: %s', 'geoip-detect'), $next_cron_update !== false ? geoip_detect_format_localtime($next_cron_update) : __('Never', 'geoip-detect'));
 		$html .= $rescheduled;
 
 		$html .= $this->updateHTML();
@@ -234,7 +234,7 @@ HTML;
 		}
 
 		if (!is_readable($outFile)) {
-			return 'Something went wrong: the unpacked file cannot be found.';
+			return 'Error: Something went wrong: the unpacked file cannot be found.';
 		}
 
 		update_option('geoip-detect-auto_downloaded_file', '');
@@ -298,10 +298,12 @@ HTML;
 		 */
 		$do_it = apply_filters('geoip_detect_cron_do_update', !GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED, false);
 
-		$this->schedule_next_cron_run();
+		$this->set_cron_schedule();
 
-		if ($do_it)
-			$this->maxmindUpdate();
+		if ($do_it) {
+			$ret = $this->maxmindUpdate();
+			Logger::logIfError($ret, 'cron');
+		}
 	}
 
 	public function set_cron_schedule()
@@ -316,6 +318,7 @@ HTML;
 		// Try to update every 1-2 weeks
 		$next = time() + WEEK_IN_SECONDS;
 		$next += mt_rand(1, WEEK_IN_SECONDS);
+
 		wp_schedule_single_event($next, 'geoipdetectupdate');
 	}
 

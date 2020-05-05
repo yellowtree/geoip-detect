@@ -61,6 +61,7 @@ require_once(GEOIP_PLUGIN_DIR . '/init.php');
 require_once(GEOIP_PLUGIN_DIR . '/geoip-detect-lib.php');
 require_once(GEOIP_PLUGIN_DIR . '/lib/geonames/geonames-country-info.php');
 require_once(GEOIP_PLUGIN_DIR . '/lib/get-client-ip.php');
+require_once(GEOIP_PLUGIN_DIR . '/lib/logger.php');
 
 require_once(GEOIP_PLUGIN_DIR . '/upgrade-plugin.php');
 require_once(GEOIP_PLUGIN_DIR . '/api.php');

@@ -19,6 +19,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
+use YellowTree\GeoipDetect\Logger;
 
 function geoip_detect_menu() {
 	if (!function_exists('add_submenu_page')) {
@@ -121,6 +122,15 @@ function geoip_detect_option_page() {
 		}
 	}
 
+	if (isset($_GET['geoip_detect_dismiss_log_notice'])) {
+		$category = sanitize_key($_GET['geoip_detect_dismiss_log_notice']);
+		if ($category == 'cron') {
+			Logger::reset_last_error_msg($category);
+		}
+	}
+
+	$last_cron_error_msg = Logger::get_last_error_msg('cron');
+
 	$registry = DataSourceRegistry::getInstance();
 	$sources = $registry->getAllSources();
 
@@ -141,10 +151,12 @@ function geoip_detect_option_page() {
 				$s = new \YellowTree\GeoipDetect\DataSources\Auto\AutoDataSource();
 				$ret = $s->maxmindUpdate();
 
-				if ($ret === true)
+				if ($ret === true) {
 					$message .= __('Updated successfully.', 'geoip-detect');
-				else
+				} else {
+					Logger::log($ret, Logger::CATEGORY_UPDATE);
 					$message .= __('File was not updated', 'geoip-detect') .': '. $ret;
+				}
 
 				break;
 

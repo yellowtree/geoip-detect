@@ -6,12 +6,25 @@ $currentSourceId = $currentSource->getId();
 <div class="wrap">
 	<h1><?php _e('Geolocation IP Detection', 'geoip-detect');?></h1>
 	<p><a href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>"><?php _e('Test IP Detection Lookup', 'geoip-detect')?></a></p>
-	<?php if (!empty($message)): ?>
+<?php if (!empty($message)): ?>
 		<p class="geoip_detect_error">
 		<?php echo $message; ?>
 		</p>
 <?php endif; ?>
-
+<?php if (!empty($last_cron_error_msg)): ?>
+<div class="error notice is-dismissible">
+	<p style="float: right">
+		<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_dismiss_log_notice=cron"><?php _e('Dismiss notice', 'geoip-detect'); ?></a>
+	</p>
+	<p>
+			<b><?php _e('An error occured on Cron Execution (background task):', 'geoip-detect'); ?></b><br>
+		<?php echo esc_html($last_cron_error_msg); ?>
+		<p>
+			<a class="button button-secondary" href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_dismiss_log_notice=cron"><?php _e('Dismiss notice', 'geoip-detect'); ?></a>
+		</p>
+	</p>
+</div>
+<?php endif; ?>
 	<p>
 		<?php printf(__('<b>Selected data source:</b> %s', 'geoip-detect'), geoip_detect2_get_current_source_description() ); ?>
 	</p>
