@@ -199,6 +199,9 @@ add_shortcode('geoip_detect2_get_current_source_description', 'geoip_detect2_sho
  * @param string $selected Which country to select by default (2-letter ISO code.) (optional. If not set, the country will be detected by client ip.)
  * @param string $default 		Default Value that will be used if country cannot be detected (optional)
  * @param string $include_blank If this value contains 'true', a empty value will be prepended ('---', i.e. no country) (optional)
+ * @param bool   $flag          If a flag should be added before the country name
+ * @param bool   $tel           If the international code should be added after the country name
+
  *
  * @return string The generated HTML
  */
@@ -228,6 +231,22 @@ function geoip_detect2_shortcode_country_select($attr) {
 
 	$countryInfo = new YellowTree\GeoipDetect\Geonames\CountryInformation();
 	$countries = $countryInfo->getAllCountries($locales);
+
+	if (!empty($attr['flag'])) {
+		array_walk($countries, function(&$value, $key) use($countryInfo) {
+			$flag = $countryInfo->getFlagEmoji($key);
+			$value = $flag . ' ' . $value;
+		});
+	}
+
+	if (!empty($attr['tel'])) {
+		array_walk($countries, function(&$value, $key) use($countryInfo) {
+			$tel = $countryInfo->getTelephonePrefix($key);
+			if ($tel) {
+				$value = $value . ' (' . $tel . ')';
+			}
+		});
+	}
 
 	/**
 	 * Filter: geoip_detect2_shortcode_country_select_countries
@@ -282,6 +301,9 @@ function _geoip_detect_flatten_html_attr($attr) {
  * `[geoip_detect2_countries mycountry include_blank]`
  * Country names are in the current site language. User can also choose '---' for no country at all.
  *
+ * `[geoip_detect2_countries mycountry flag tel]`
+ * Country names have a UTF-8 flag in front of the country name, and the (+1) internation phone code after it
+ * 
  * `[geoip_detect2_countries mycountry "US"]`
  * "United States" is preselected, there is no visitor IP detection going on here
  *
@@ -311,7 +333,10 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 		'lang' => $tag->get_option('lang', '', true),
 		'selected' => $default,
 		'default' => $tag->get_option('default', '', true),
+		'flag' => $tag->has_option('flag'),
+		'tel' => $tag->has_option('tel'),
 	);
+	
 	$html = geoip_detect2_shortcode_country_select($attr);
 
 	$html = sprintf(

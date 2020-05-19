@@ -151,8 +151,10 @@ New: Shortcode for showing/hiding content!
 == Changelog ==
 
 = 3.0.5 =
+* NEW: The (CF7) shortcode `[geoip_detect2_countries mycountry include_blank flag tel]` now adds the flag emoji and the telephone international code to the country name
 * FIX: AJAX mode: Using localStorage instead of Cookies for caching (as we hit the Cookie size limitation sometimes)
-*
+* FIX: AJAX mode: Remove jQuery dependency
+
 
 = 3.0.4 =
 * When an error occurs during the Cron update of the Maxmind database, it is now shown in the backend.
