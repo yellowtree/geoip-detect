@@ -1,5 +1,6 @@
 import Record from './models/record';
-import Cookies from 'js-cookie';
+import { getLocalStorage, setLocalStorage } from './localStorageAccess';
+import _ from './lodash.custom';
 
 if (!window.jQuery) {
     console.error('Geoip-detect: window.jQuery is missing!');
@@ -34,7 +35,11 @@ async function get_info_cached() {
 
     // 1) Load Info from cookie cache, if possible
     if (options.cookie_name) {
-        response = Cookies.getJSON(options.cookie_name)
+        response = getLocalStorage(options.cookie_name)
+        if (response) {
+            // This might be an error object - cache it anyway
+            return response;
+        }
     }
 
     // 2) Get response
@@ -46,11 +51,7 @@ async function get_info_cached() {
 
     // 3) Save info to cookie cache
     if (options.cookie_name) {
-        let cookie_options = { path: '/' };
-        if (options.cookie_duration_in_days) {
-            cookie_options.expires = options.cookie_duration_in_days;
-        }
-        Cookies.set(options.cookie_name, JSON.stringify(response), cookie_options);
+        setLocalStorage(options.cookie_name, response, options.cookie_duration_in_days * 24 * 60 * 60)
     }
 
     return response;
