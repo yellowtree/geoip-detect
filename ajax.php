@@ -122,7 +122,7 @@ function _geoip_detect_parcel_get_dist_js($handle) {
 	$urls = json_decode($json, true);
 
 	if (isset($urls[$handle]))
-		return '/js/dist' .$urls[$handle];
+		return '/js/dist/' .$urls[$handle];
 	return false;
 }
 

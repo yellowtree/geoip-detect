@@ -1,15 +1,15 @@
 import Record from './models/record';
 import { getLocalStorage, setLocalStorage } from './localStorageAccess';
 import _ from './lodash.custom';
+import { makeJSONRequest } from './xhr';
 
 if (!window.jQuery) {
     console.error('Geoip-detect: window.jQuery is missing!');
 }
 const $ = window.jQuery;
 
-
 if (!window.geoip_detect) {
-    console.error('Geoip-detect: window.geoip_detect')
+    console.error('Geoip-detect: the JS variable window.geoip_detect is missing - this is needed for the options')
 }
 const options = window.geoip_detect.options || {};
 
@@ -18,13 +18,9 @@ let ajaxPromise = null;
 function get_info_raw() {
     if (!ajaxPromise) {
         // Do Ajax Request only once per page load
-        ajaxPromise = $.ajax(options.ajaxurl, {
-            dataType: 'json',
-            type: 'GET',
-            data: {
-                action: 'geoip_detect2_get_info_from_current_ip'
-            }
-        });
+        const url = options.ajaxurl + '?action=geoip_detect2_get_info_from_current_ip'
+
+        ajaxPromise = makeJSONRequest(url);
     }
 
     return ajaxPromise;
@@ -36,7 +32,7 @@ async function get_info_cached() {
     // 1) Load Info from cookie cache, if possible
     if (options.cookie_name) {
         response = getLocalStorage(options.cookie_name)
-        if (response) {
+        if (response && response.extra) {
             // This might be an error object - cache it anyway
             return response;
         }

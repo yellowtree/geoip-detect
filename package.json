@@ -9,8 +9,8 @@
   "scripts": {
     "clean": "rm -rf .cache",
     "build-lodash": "lodash include=get -o js/lodash.custom.js",
-    "start": "rm -rf js/dist && parcel parcel.urls --out-dir js/dist",
-    "build": "rm -rf js/dist && parcel build parcel.urls --out-dir js/dist"
+    "start": "rm -rf js/dist && parcel parcel.urls --out-dir js/dist --public-url .",
+    "build": "rm -rf js/dist && parcel build parcel.urls --out-dir js/dist --public-url ."
   },
   "private": false,
   "dependencies": {
