@@ -145,7 +145,7 @@ function _geoip_detect_register_javascript() {
 		return;
 	}
 
-	wp_register_script('geoip-detect-js', GEOIP_DETECT_PLUGIN_URI . $file_uri, array('jquery'), GEOIP_DETECT_VERSION, true);
+	wp_register_script('geoip-detect-js', GEOIP_DETECT_PLUGIN_URI . $file_uri, array(), GEOIP_DETECT_VERSION, true);
 	$data = [
 		'ajaxurl' => admin_url('/admin-ajax.php'),
 		'default_locales' => apply_filters('geoip_detect2_locales', null),

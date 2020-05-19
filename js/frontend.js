@@ -3,11 +3,6 @@ import { getLocalStorage, setLocalStorage } from './localStorageAccess';
 import _ from './lodash.custom';
 import { makeJSONRequest } from './xhr';
 
-if (!window.jQuery) {
-    console.error('Geoip-detect: window.jQuery is missing!');
-}
-const $ = window.jQuery;
-
 if (!window.geoip_detect) {
     console.error('Geoip-detect: the JS variable window.geoip_detect is missing - this is needed for the options')
 }
@@ -80,13 +75,14 @@ async function add_body_classes() {
         province:  record.get('most_specific_subdivision.iso_code'),
     };
 
+    const body = document.getElementsByTagName('body')[0];
     for(let key of Object.keys(css_classes)) {
         const value = css_classes[key];
         if (value) {
             if (typeof(value) == 'string') {
-                $('body').addClass(`geoip-${key}-${value}`);
+                body.classList.add(`geoip-${key}-${value}`);
             } else {
-                $('body').addClass(`geoip-${key}`);
+                body.classList.add(`geoip-${key}`);
             }
         }
     }
