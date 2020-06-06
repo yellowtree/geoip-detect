@@ -4,13 +4,18 @@ export const setLocalStorage = function (variable, value, ttl_sec) {
 };
 
 export const getLocalStorage = function (variable) {
-        var data = JSON.parse(localStorage.getItem(variable.toString()));
-        if (data !== null) {
-            if (data.expires_at !== null && data.expires_at < new Date().getTime()) {
-                localStorage.removeItem(variable.toString());
-            } else {
-                return data.value;
-            }
-        }
+    let data = null;
+    try {
+        data = JSON.parse(localStorage.getItem(variable.toString()));
+    } catch(e) {
         return null;
     }
+    if (data !== null) {
+        if (data.expires_at !== null && data.expires_at < new Date().getTime()) {
+            localStorage.removeItem(variable.toString());
+        } else {
+            return data.value;
+        }
+    }
+    return null;
+}

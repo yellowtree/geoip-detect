@@ -155,7 +155,6 @@ New: Shortcode for showing/hiding content!
 * FIX: AJAX mode: Using localStorage instead of Cookies for caching (as we hit the Cookie size limitation sometimes)
 * FIX: AJAX mode: Remove jQuery dependency
 
-
 = 3.0.4 =
 * When an error occurs during the Cron update of the Maxmind database, it is now shown in the backend.
 * FIX: All times shown in the Admin backend now use the timezone set by Wordpress

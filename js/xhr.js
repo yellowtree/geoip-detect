@@ -50,7 +50,6 @@ export const makeJSONRequest = async function(url, method = 'GET') {
     try {
         const request = await makeRequest(url, method);
         return jsonDecodeIfPossible(request.responseText);
-
     } catch(e) {
         return jsonDecodeIfPossible(e.request.responseText);
     }
