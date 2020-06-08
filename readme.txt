@@ -150,11 +150,11 @@ New: Shortcode for showing/hiding content!
 
 == Changelog ==
 
-= 3.0.5 =
+= 3.1.0 =
+* FIX: The property access for shortcodes has been rewritten so that property names such as "extra.original.zip" (Datasource: ipstack) are possible now.
 * NEW: The (CF7) shortcode `[geoip_detect2_countries mycountry include_blank flag tel]` now adds the flag emoji and the telephone international code to the country name
 * FIX: AJAX mode: Using localStorage instead of Cookies for caching (as we hit the Cookie size limitation sometimes)
 * FIX: AJAX mode: Remove jQuery dependency
-* FIX: The property access for shortcodes has been rewritten so that property names such as "extra.original.zip" (Datasource: ipstack) are possible now.
 
 = 3.0.4 =
 * When an error occurs during the Cron update of the Maxmind database, it is now shown in the backend.
