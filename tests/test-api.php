@@ -119,4 +119,11 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		// Deactivate this test for now - the test file seems to be too old
 		// $this->assertContains('geoip-country-is-in-european-union', $classes, var_export($classes, true));
 	}
+
+	function testCamelcase() {
+
+		$this->assertSame('HelloWorld', _geoip_dashes_to_camel_case('hello_world'));
+		$this->assertSame('HelloWorld.YouAreGreat', _geoip_dashes_to_camel_case('hello_world.you_are_great'));
+		$this->assertSame('HelloWorld.YouAreGreat.Really', _geoip_dashes_to_camel_case('hello_world.you_are_great.really'));
+	}
 }

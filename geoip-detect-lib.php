@@ -493,3 +493,9 @@ function geoip_detect_format_localtime($timestamp = 0) {
 
 	return get_date_from_gmt ( date( 'Y-m-d H:i:s', $timestamp ),  $format);
 }
+
+function _geoip_str_begins_with($string, $startString) 
+{ 
+    $len = mb_strlen($startString); 
+    return (mb_substr($string, 0, $len) === $startString); 
+} 
