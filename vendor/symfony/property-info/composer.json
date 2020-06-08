@@ -1,0 +1,60 @@
+{
+    "name": "symfony/property-info",
+    "type": "library",
+    "description": "Symfony Property Info Component",
+    "keywords": [
+        "property",
+        "type",
+        "PHPDoc",
+        "symfony",
+        "validator",
+        "doctrine"
+    ],
+    "homepage": "https://symfony.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kévin Dunglas",
+            "email": "dunglas@gmail.com"
+        },
+        {
+            "name": "Symfony Community",
+            "homepage": "https://symfony.com/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=7.2.5",
+        "symfony/polyfill-php80": "^1.15",
+        "symfony/string": "^5.1"
+    },
+    "require-dev": {
+        "symfony/serializer": "^4.4|^5.0",
+        "symfony/cache": "^4.4|^5.0",
+        "symfony/dependency-injection": "^4.4|^5.0",
+        "phpdocumentor/reflection-docblock": "^3.0|^4.0",
+        "doctrine/annotations": "~1.7"
+    },
+    "conflict": {
+        "phpdocumentor/reflection-docblock": "<3.2.2",
+        "phpdocumentor/type-resolver": "<0.3.0",
+        "symfony/dependency-injection": "<4.4"
+    },
+    "suggest": {
+        "psr/cache-implementation": "To cache results",
+        "symfony/doctrine-bridge": "To use Doctrine metadata",
+        "phpdocumentor/reflection-docblock": "To use the PHPDoc",
+        "symfony/serializer": "To use Serializer metadata"
+    },
+    "autoload": {
+        "psr-4": { "Symfony\\Component\\PropertyInfo\\": "" },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "5.1-dev"
+        }
+    }
+}
