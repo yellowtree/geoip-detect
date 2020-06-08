@@ -121,7 +121,9 @@ add_shortcode('geoip_detect2', 'geoip_detect2_shortcode');
  */
 function geoip_detect2_shortcode_get_property($userInfo, $propertyName) {
 
-	$propertyAccessor = \Symfony\Component\PropertyAccess\PropertyAccess::createPropertyAccessor();;
+	$propertyAccessor = \Symfony\Component\PropertyAccess\PropertyAccess::createPropertyAccessorBuilder()
+    	->enableExceptionOnInvalidIndex()
+    	->getPropertyAccessor();
 
 	if (_geoip_str_begins_with($propertyName, 'extra.original.')) {
 		$properties = explode('.', $propertyName);

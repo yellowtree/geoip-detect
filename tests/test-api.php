@@ -122,8 +122,8 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 
 	function testCamelcase() {
 
-		$this->assertSame('HelloWorld', _geoip_dashes_to_camel_case('hello_world'));
-		$this->assertSame('HelloWorld.YouAreGreat', _geoip_dashes_to_camel_case('hello_world.you_are_great'));
-		$this->assertSame('HelloWorld.YouAreGreat.Really', _geoip_dashes_to_camel_case('hello_world.you_are_great.really'));
+		$this->assertSame('helloWorld', _geoip_dashes_to_camel_case('hello_world'));
+		$this->assertSame('helloWorld.youAreLoved', _geoip_dashes_to_camel_case('hello_world.you_are_loved'));
+		$this->assertSame('helloWorld.youAreLoved.really', _geoip_dashes_to_camel_case('hello_world.you_are_loved.really'));
 	}
 }
