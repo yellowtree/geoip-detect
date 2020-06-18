@@ -121,6 +121,10 @@ add_shortcode('geoip_detect2', 'geoip_detect2_shortcode');
  */
 function geoip_detect2_shortcode_get_property($userInfo, $propertyName) {
 
+	if (version_compare ( PHP_VERSION, '7.2.5', '<' )) {
+		return _deprecated_geoip_detect2_shortcode_get_property($userInfo, $propertyName);	
+	}
+
 	$propertyAccessor = \Symfony\Component\PropertyAccess\PropertyAccess::createPropertyAccessorBuilder()
     	->enableExceptionOnInvalidIndex()
     	->getPropertyAccessor();
@@ -140,6 +144,45 @@ function geoip_detect2_shortcode_get_property($userInfo, $propertyName) {
 		throw new \RuntimeException('Invalid property name.');
 	}
 }
+
+/**
+ * Get property from object by string (old version, deprecated)
+ * Remove when PHP <= 7.1 not supported anymore (EOL has passed end 2019, but Maxmind lib is still compatible 5.6)
+ * 
+ * @param  YellowTree\GeoipDetect\DataSources\City $userInfo     GeoIP information object
+ * @param  string $propertyName property name, e.g. "city.isoCode"
+ * @return string|\GeoIp2\Record\AbstractRecord             Property Value
+ * @throws \RuntimeException (if Property name invalid)
+ */
+function _deprecated_geoip_detect2_shortcode_get_property($userInfo, $propertyName) {
+	$return = '';
+	$properties = explode('.', $propertyName);
+	if (count($properties) == 1) {
+		$return = $userInfo->{$properties[0]};
+	} else if ($properties[0] == 'subdivisions' && (count($properties) == 2 || count($properties) == 3)) {
+		$return = $userInfo->{$properties[0]};
+		if (!is_array($return))
+			throw new \RuntimeException('Invalid property name.');
+		if (!is_numeric($properties[1]))
+			throw new \RuntimeException('Invalid property name (must be numeric, e.g. "subdivisions.0").');
+		$return = $return[(int) $properties[1]];
+
+		if (isset($properties[2])) {
+			if (!is_object($return))
+				throw new \RuntimeException('Invalid property name.');
+			$return = $return->{$properties[2]};
+		}
+	} else if (count($properties) == 2) {
+		$return = $userInfo->{$properties[0]};
+		if (!is_object($return))
+		throw new \RuntimeException('Invalid property name.');
+		$return = $return->{$properties[1]};
+	} else {
+		throw new \RuntimeException('Only 1 dot supported. Please send a bug report to show me the shortcode you used if you need it ...');
+	}
+	return $return;
+}
+
 
 function geoip_detect2_shortcode_client_ip() {
 	$client_ip = geoip_detect2_get_client_ip();
