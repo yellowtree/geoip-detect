@@ -120,11 +120,11 @@ add_shortcode('geoip_detect2', 'geoip_detect2_shortcode');
  * @throws \RuntimeException (if Property name invalid)
  */
 function geoip_detect2_shortcode_get_property($userInfo, $propertyName) {
-
+/*
 	if (version_compare ( PHP_VERSION, '7.2.5', '<' )) {
 		return _deprecated_geoip_detect2_shortcode_get_property($userInfo, $propertyName);	
 	}
-
+*/
 	$propertyAccessor = \Symfony\Component\PropertyAccess\PropertyAccess::createPropertyAccessorBuilder()
     	->enableExceptionOnInvalidIndex()
     	->getPropertyAccessor();
@@ -153,7 +153,7 @@ function geoip_detect2_shortcode_get_property($userInfo, $propertyName) {
  * @param  string $propertyName property name, e.g. "city.isoCode"
  * @return string|\GeoIp2\Record\AbstractRecord             Property Value
  * @throws \RuntimeException (if Property name invalid)
- */
+ *
 function _deprecated_geoip_detect2_shortcode_get_property($userInfo, $propertyName) {
 	$return = '';
 	$properties = explode('.', $propertyName);
@@ -182,6 +182,7 @@ function _deprecated_geoip_detect2_shortcode_get_property($userInfo, $propertyNa
 	}
 	return $return;
 }
+*/
 
 
 function geoip_detect2_shortcode_client_ip() {
