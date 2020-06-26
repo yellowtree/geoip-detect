@@ -108,6 +108,9 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 
 == Upgrade Notice ==
 
+= 3.1.0 =
+The property access for shortcodes has been rewritten so that property names such as "extra.original.zip" (Datasource: ipstack) are possible now.
+
 = 3.0.3.1 = 
 Hotfix for the Manual download Maxmind datasource.
 The Plugin was renamed to Geolocation IP Detection in order to prevent trademark issues. 
@@ -152,7 +155,7 @@ New: Shortcode for showing/hiding content!
 
 = 3.1.0 =
 * FIX: The property access for shortcodes has been rewritten so that property names such as "extra.original.zip" (Datasource: ipstack) are possible now.
-* NEW: The (CF7) shortcode `[geoip_detect2_countries mycountry include_blank flag tel]` now adds the flag emoji and the telephone international code to the country name
+* NEW: The (CF7) shortcode `[geoip_detect2_countries mycountry include_blank flag tel]` now adds the flag emoji (or ISO code in Windows) and the telephone international code to the country name
 * FIX: AJAX mode: Using localStorage instead of Cookies for caching (as we hit the Cookie size limitation sometimes)
 * FIX: AJAX mode: Remove jQuery dependency
 * FIX: AJAX mode: `geoip_detect2_enqueue_javascript()` can be used now in function.php or templates (see [PHP Example](https://github.com/yellowtree/geoip-detect/wiki/API-Usage-Examples#ajax-enqueue-the-js-file-manually))

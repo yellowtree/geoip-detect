@@ -236,7 +236,7 @@ add_shortcode('geoip_detect2_get_current_source_description', 'geoip_detect2_sho
  * @param string $selected Which country to select by default (2-letter ISO code.) (optional. If not set, the country will be detected by client ip.)
  * @param string $default 		Default Value that will be used if country cannot be detected (optional)
  * @param string $include_blank If this value contains 'true', a empty value will be prepended ('---', i.e. no country) (optional)
- * @param bool   $flag          If a flag should be added before the country name
+ * @param bool   $flag          If a flag should be added before the country name (In Windows, there are no flags, ISO-Country codes instead. This is a design choice by Windows.)
  * @param bool   $tel           If the international code should be added after the country name
 
  *
