@@ -117,16 +117,31 @@ function var_export_short($data, $return=true)
 
 		<?php 
 		function show_row($record, $key_1, $key_2, $value = null, $class = '') {
+			$syntax = sanitize_key($_POST['syntax']);
+			$locales = sanitize_text_field(@$_POST['locales']);
+
 			if (is_array($value)) {
 				if ($key_2 === 'names') {
 					show_row($record, $key_1, 'name', null, $class);
 					return;
 				}
 				if ($key_1 === 'subdivisions') {
-					foreach ($value as $key_3 => $v) {
-						show_row($record, 'most_specific_subdivision', $key_3, $v, $class);
+					$index = (int) $key_2;
+					if ($index === 0) { /* Do it only once! Most specific subdivision is actually not index 0, but the highest index, but it works - as I don't use the index in the following `show_row` */
+						foreach ($value as $key_3 => $v) {
+							show_row($record, 'most_specific_subdivision', $key_3, $v, $class);
+						}
+					}
+					if ($class == 'all') {
+						foreach ($value as $key_3 => $v) {
+							$new_key_1 = 'subdivisions' . ( ($syntax === 'php') ? '[' . $index . ']' : '.' . $index);
+							show_row($record->subdivisions[$index], $new_key_1, $key_3, $v, $class);
+						}
 					}
 					return;
+				}
+				if ($key_2 == 'original') {
+					
 				}
 			}
 			$camel_key_1 = _geoip_dashes_to_camel_case($key_1);
@@ -134,9 +149,13 @@ function var_export_short($data, $return=true)
 
 			try {
 				if (is_object($record) ) {
-					$value = $record->$camel_key_1;
-					if (is_object($value)) {
-						$value = $value->$camel_key_2;
+					if (isset($record->$camel_key_1)) {
+						$value = $record->$camel_key_1;
+						if (is_object($value)) {
+							$value = $value->$camel_key_2;
+						}
+					} else {
+						$value = $record->$camel_key_2;
 					}
 				}
 			} catch(\RuntimeException $e) {
@@ -146,9 +165,7 @@ function var_export_short($data, $return=true)
 				$value = var_export_short($value, true);
 			}
 
-			$locales = sanitize_text_field(@$_POST['locales']);
-
-			switch(sanitize_key($_POST['syntax'])) {
+			switch($syntax) {
 				case 'shortcode':
 					$extra = '';
 					if ($locales && $key_2 === 'name') {

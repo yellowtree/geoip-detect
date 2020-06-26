@@ -38,6 +38,17 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertEquals('Europe', do_shortcode('[geoip_detect2 property="continent"]'));
 		$this->assertEquals('EU', do_shortcode('[geoip_detect2 property="continent.code"]'));
 	}
+
+	/* Does not work.
+	function testShortcodePropertiesUnderscorized() {
+		$this->assertEquals('Europe/Berlin', do_shortcode('[geoip_detect2 property="location.time_zone"]'));
+		$this->assertEquals(GEOIP_DETECT_TEST_IP, do_shortcode('[geoip_detect2 property="traits.ip_address"]'));
+		$this->assertEquals('Hesse', do_shortcode('[geoip_detect2 property="most_specific_subdivision"]'));
+		$this->assertEquals('HE', do_shortcode('[geoip_detect2 property="most_specific_subdivision.iso_code"]'));
+	}
+	*/
+
+
 	function testSubdivisionProperties() {
 		$this->assertEquals('HE', do_shortcode('[geoip_detect2 property="subdivisions.0.isoCode"]'));
 		$this->assertEquals('Hesse', do_shortcode('[geoip_detect2 property="subdivisions.0"]'));

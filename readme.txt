@@ -155,6 +155,7 @@ New: Shortcode for showing/hiding content!
 
 = 3.1.0 =
 * FIX: The property access for shortcodes has been rewritten so that property names such as "extra.original.zip" (Datasource: ipstack) are possible now.
+* FIX: The lookup page now also shows subdivisions (e.g. for IPs from Uk that have 2 levels of subdivisions)
 * NEW: The (CF7) shortcode `[geoip_detect2_countries mycountry include_blank flag tel]` now adds the flag emoji (or ISO code in Windows) and the telephone international code to the country name
 * FIX: AJAX mode: Using localStorage instead of Cookies for caching (as we hit the Cookie size limitation sometimes)
 * FIX: AJAX mode: Remove jQuery dependency
