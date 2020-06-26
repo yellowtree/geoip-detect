@@ -499,3 +499,10 @@ function _geoip_str_begins_with($string, $startString)
     $len = mb_strlen($startString); 
     return (mb_substr($string, 0, $len) === $startString); 
 } 
+
+function _geoip_str_ends_with($string, $startString) 
+{ 
+	$len = mb_strlen($startString); 
+	//if ($len === 0) return true; // Not sure what is "expected behavior"
+    return (mb_substr($string, -$len) === $startString); 
+} 

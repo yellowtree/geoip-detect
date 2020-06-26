@@ -140,9 +140,23 @@ function var_export_short($data, $return=true)
 					}
 					return;
 				}
+				/* This is quite complex to do right. Postponed
 				if ($key_2 == 'original') {
-					
+					// It must be recursive, as we don't know how deep the array is nested. Level 1
+					$new_key_1 = $key_1 . ( ($syntax === 'php') ? '->' : '.') . 'original';
+					foreach($value as $key_3 => $v) {
+						show_row(null, $new_key_1, $key_3, $v, $class);
+					}
 				}
+				if (_geoip_str_ends_with($key_1, 'original')) {
+					// Level 2 and counting
+					$new_key_1 = $key_1 . ( ($syntax === 'php') ? '["' . $key_2 . '"]' : '.' . $key_2);
+					foreach($value as $key_3 => $v) {
+						show_row(null, $new_key_1, $key_3, $v, $class);
+					}
+
+				}
+				*/
 			}
 			$camel_key_1 = _geoip_dashes_to_camel_case($key_1);
 			$camel_key_2 = _geoip_dashes_to_camel_case($key_2);
