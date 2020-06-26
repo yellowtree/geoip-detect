@@ -105,6 +105,9 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 1. Lookup page (under Tools > Geolocation Lookup)
 2. Options page (under Preferences > Geolocation IP Detection)
 
+= 3.1.0 =
+The property access for shortcodes has been rewritten so that property names such as "extra.original.zip" (Datasource: ipstack) are possible now.
+
 = 3.0.3.1 = 
 Hotfix for the Manual download Maxmind datasource.
 The Plugin was renamed to Geolocation IP Detection in order to prevent trademark issues. 
@@ -146,6 +149,14 @@ There have been changes to the reverse proxy logic. If you have enabled a revers
 New: Shortcode for showing/hiding content!
 
 ## Changelog ##
+
+= 3.1.0 =
+* FIX: The property access for shortcodes has been rewritten so that property names such as "extra.original.zip" (Datasource: ipstack) are possible now.
+* FIX: The lookup page now also shows subdivisions (e.g. for IPs from Uk that have 2 levels of subdivisions)
+* NEW: The (CF7) shortcode `[geoip_detect2_countries mycountry include_blank flag tel]` now adds the flag emoji (or ISO code in Windows) and the telephone international code to the country name
+* FIX: AJAX mode: Using localStorage instead of Cookies for caching (as we hit the Cookie size limitation sometimes)
+* FIX: AJAX mode: Remove jQuery dependency
+* FIX: AJAX mode: `geoip_detect2_enqueue_javascript()` can be used now in function.php or templates (see [PHP Example](https://github.com/yellowtree/geoip-detect/wiki/API-Usage-Examples#ajax-enqueue-the-js-file-manually))
 
 = 3.0.4 =
 * When an error occurs during the Cron update of the Maxmind database, it is now shown in the backend.
@@ -192,6 +203,7 @@ https://blog.maxmind.com/2019/12/18/significant-changes-to-accessing-and-using-g
 = 2.12.0 =
 * NEW: It is now possible to use ipstack.com as a data source.
 * The Backend Lookup UI now can show all properties and you can choose if you want to see the PHP, Shortcode or JS syntax.
+* The property "extra->original" now contains the original Web Answer array from the datasources ipstack & hostinfo
 
 = 2.11.2 = 
 * The auto-updater of the Maxmind City Lite source now updates more often (every 1-2weeks) in order to get more accurate data.
