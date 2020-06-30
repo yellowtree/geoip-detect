@@ -264,6 +264,7 @@ function geoip_detect2_shortcode_country_select($attr) {
 		'class' => !empty($attr['class']) ? $attr['class'] : 'geoip_detect2_countries',
 		'aria-required' => !empty($attr['required']) ? 'required' : '',
 		'aria-invalid' => !empty($attr['invalid']) ? $attr['invalid'] : '',
+		'autocomplete' => 'off',
 	);
 
 	$countryInfo = new YellowTree\GeoipDetect\Geonames\CountryInformation();

@@ -153,6 +153,10 @@ New: Shortcode for showing/hiding content!
 
 == Changelog ==
 
+= 3.1.1 =
+* FIX: The (CF7) shortcode `[geoip_detect2_countries]` now selects the selected country on page reload (the HTML tag autocomplete is set to `off` now)
+
+
 = 3.1.0 =
 * FIX: The property access for shortcodes has been rewritten so that property names such as "extra.original.zip" (Datasource: ipstack) are possible now.
 * FIX: The lookup page now also shows subdivisions (e.g. for IPs from Uk that have 2 levels of subdivisions)
