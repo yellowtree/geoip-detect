@@ -155,6 +155,7 @@ New: Shortcode for showing/hiding content!
 
 = 3.1.1 =
 * FIX: The (CF7) shortcode `[geoip_detect2_countries]` now selects the selected country on page reload (the HTML tag autocomplete is set to `off` now)
+* NEW: Add the possibility to access the ISO-3166 alpha3 version of `$record->country`: `$record->extra->isoCode3` or `[geoip_detect2 property="extra.countryIsoCode3"]`
 
 = 3.1.0 =
 * FIX: The property access for shortcodes has been rewritten so that property names such as "extra.original.zip" (Datasource: ipstack) are possible now.

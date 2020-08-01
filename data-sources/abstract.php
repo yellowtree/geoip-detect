@@ -81,7 +81,7 @@ class ExtraInformation extends \GeoIp2\Record\AbstractRecord {
 	/**
 	 * @ignore
 	 */
-	protected $validAttributes = array('source', 'cached', 'error', 'original', 'flag', 'tel');
+	protected $validAttributes = array('source', 'cached', 'error', 'original', 'flag', 'tel', 'countryIsoCode3');
 }
 
 interface ReaderInterface extends \GeoIp2\ProviderInterface {

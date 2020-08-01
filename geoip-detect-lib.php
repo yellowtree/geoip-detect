@@ -255,6 +255,9 @@ function _geoip_detect2_add_geonames_data($data) {
 	if (!empty($data['country']['iso_code'])) {
 		$geonamesData = $countryInfo->getInformationAboutCountry($data['country']['iso_code']);
 		$data = array_replace_recursive($geonamesData, $data);
+		if (!empty($geonamesData['country']['iso_code3'])) {
+			$data['extra']['country_iso_code3'] = $geonamesData['country']['iso_code3'];
+		}
 
 		$emoji = $countryInfo->getFlagEmoji($data['country']['iso_code']);
 		if ($emoji && empty($data['extra']['flag'])) {

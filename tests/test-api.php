@@ -49,6 +49,7 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertSame('Eschborn', $record->city->name);	
 		$this->assertSame('🇩🇪', $record->extra->flag);	
 		$this->assertSame('+49', $record->extra->tel);	
+		$this->assertSame('DEU', $record->extra->isoCode3);	
 	}
 	
 	function testExtendedRemoteAddr() {
