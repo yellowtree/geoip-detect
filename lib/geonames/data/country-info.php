@@ -1,5 +1,5 @@
 <?php
-// Generated at Wed, 18 Sep 2019 12:09:48 +0200 
+// Generated at Sat, 01 Aug 2020 11:56:09 +0200 
 return array (
   'countries' => 
   array (
@@ -46,7 +46,7 @@ return array (
           'fr' => 'Émirats Arabes Unis',
           'ja' => 'アラブ首長国連邦',
           'pt-BR' => 'Emirados Árabes Unidos',
-          'ru' => 'Оаэ',
+          'ru' => 'ОАЭ',
           'zh-CN' => '阿拉伯联合酋长国',
         ),
       ),
@@ -691,7 +691,7 @@ return array (
           'de' => 'St. Barthélemy',
           'it' => 'San Bartolomeo',
           'es' => 'San Bartolomé',
-          'fr' => 'Saint-Barthélémy',
+          'fr' => 'Saint-Barthélemy',
           'ja' => 'サン・バルテルミー',
           'pt-BR' => 'São Bartolomeu',
           'ru' => 'Остров Святого Бартоломея',
@@ -795,7 +795,7 @@ return array (
         'geoname_id' => 7626844,
         'names' => 
         array (
-          'en' => 'Bonaire',
+          'en' => 'Bonaire, Sint Eustatius, and Saba',
           'de' => 'Bonaire',
           'it' => 'Caraibi Olandesi',
           'es' => 'Bonaire',
@@ -880,7 +880,7 @@ return array (
           'de' => 'Bhutan',
           'it' => 'Bhutan',
           'es' => 'Bután',
-          'fr' => 'Bhutan',
+          'fr' => 'Bhoutan',
           'ja' => 'ブータン王国',
           'pt-BR' => 'Butão',
           'ru' => 'Бутан',
@@ -1065,10 +1065,10 @@ return array (
         'geoname_id' => 203312,
         'names' => 
         array (
-          'en' => 'Democratic Republic of the Congo',
-          'de' => 'Demokratische Republik Kongo',
+          'en' => 'DR Congo',
+          'de' => 'Kongo',
           'it' => 'Repubblica Democratica del Congo',
-          'es' => 'República Democrática del Congo',
+          'es' => 'Congo Democrático',
           'fr' => 'RDC',
           'ja' => 'コンゴ民主共和国',
           'pt-BR' => 'Congo-Kinshasa',
@@ -1119,7 +1119,7 @@ return array (
         'geoname_id' => 2260494,
         'names' => 
         array (
-          'en' => 'Republic of the Congo',
+          'en' => 'Congo Republic',
           'de' => 'Kongo (Republik Kongo)',
           'it' => 'Congo',
           'es' => 'Congo [República]',
@@ -1390,7 +1390,7 @@ return array (
         'names' => 
         array (
           'en' => 'Cabo Verde',
-          'de' => 'Kap Verde',
+          'de' => 'Kapverden',
           'it' => 'Capo Verde',
           'es' => 'Cabo Verde',
           'fr' => 'Cap-Vert',
@@ -1416,7 +1416,7 @@ return array (
         'geoname_id' => 7626836,
         'names' => 
         array (
-          'en' => 'Curacao',
+          'en' => 'Curaçao',
           'de' => 'Curaçao',
           'it' => 'Curacao',
           'es' => 'Curazao',
@@ -1499,11 +1499,11 @@ return array (
         array (
           'en' => 'Czechia',
           'de' => 'Tschechien',
-          'it' => 'Repubblica Ceca',
+          'it' => 'Cechia',
           'es' => 'República Checa',
           'fr' => 'République tchèque',
           'ja' => 'チェコ共和国',
-          'pt-BR' => 'República Checa',
+          'pt-BR' => 'Tchéquia',
           'ru' => 'Чешская Республика',
           'zh-CN' => '捷克共和国',
         ),
@@ -1633,7 +1633,7 @@ return array (
         'names' => 
         array (
           'en' => 'Dominican Republic',
-          'de' => 'Dominikanische Republik',
+          'de' => 'Dom. Republik',
           'it' => 'Repubblica Dominicana',
           'es' => 'República Dominicana',
           'fr' => 'République Dominicaine',
@@ -1985,7 +1985,7 @@ return array (
         array (
           'en' => 'Faroe Islands',
           'de' => 'Färöer-Inseln',
-          'it' => 'Isole Fær Øer',
+          'it' => 'Isole Faroe',
           'es' => 'Islas Feroe',
           'fr' => 'Îles Féroé',
           'ja' => 'フェロー諸島',
@@ -2415,11 +2415,11 @@ return array (
         'geoname_id' => 3474415,
         'names' => 
         array (
-          'en' => 'South Georgia and the South Sandwich Islands',
+          'en' => 'South Georgia and South Sandwich Islands',
           'de' => 'Südgeorgien und die Südlichen Sandwichinseln',
           'it' => 'Georgia del Sud e isole Sandwich meridionali',
           'es' => 'Islas Georgia del Sur y Sandwich del Sur',
-          'fr' => 'Géorgie du Sud et les îles Sandwich du Sud',
+          'fr' => 'Géorgie du Sud-et-les îles Sandwich du Sud',
           'ja' => '南ジョージア島・南サンドイッチ諸島',
           'pt-BR' => 'Geórgia do Sul e Ilhas Sandwich do Sul',
           'ru' => 'Южная Джорджия и Южные Сандвичевы Острова',
@@ -2726,8 +2726,8 @@ return array (
       'continent' => 'AS',
       'location' => 
       array (
-        'latitude' => -2.518722,
-        'longitude' => 118.015568,
+        'latitude' => -2.5179379499999306,
+        'longitude' => 118.01527325000004,
       ),
     ),
     'IE' => 
@@ -2807,8 +2807,8 @@ return array (
       'continent' => 'EU',
       'location' => 
       array (
-        'latitude' => 54.23782,
-        'longitude' => -4.555111,
+        'latitude' => 54.235753835920846,
+        'longitude' => -4.551163246336699,
       ),
     ),
     'IN' => 
@@ -3225,7 +3225,7 @@ return array (
         'geoname_id' => 3575174,
         'names' => 
         array (
-          'en' => 'Saint Kitts and Nevis',
+          'en' => 'St Kitts and Nevis',
           'de' => 'Saint Kitts und Nevis',
           'it' => 'Saint Kitts e Nevis',
           'es' => 'San Cristóbal y Nieves',
@@ -3874,13 +3874,13 @@ return array (
         'names' => 
         array (
           'en' => 'North Macedonia',
-          'de' => 'Ehemalige jugoslawische Republik Mazedonien',
-          'it' => 'Macedonia',
-          'es' => 'Macedonia',
-          'fr' => 'Macédoine',
+          'de' => 'Nordmazedonien',
+          'it' => 'Macedonia del Nord',
+          'es' => 'Macedonia del Norte',
+          'fr' => 'Macédoine du Nord',
           'ja' => 'マケドニア旧ユーゴスラビア共和国',
           'pt-BR' => 'Macedônia',
-          'ru' => 'Македония',
+          'ru' => 'Северная Македония',
           'zh-CN' => '前南斯拉夫马其顿共和国',
         ),
       ),
@@ -3927,7 +3927,7 @@ return array (
         'geoname_id' => 1327865,
         'names' => 
         array (
-          'en' => 'Myanmar [Burma]',
+          'en' => 'Myanmar',
           'de' => 'Birma (Myanmar)',
           'it' => 'Birmania',
           'es' => 'Myanmar [Birmania]',
@@ -4252,7 +4252,7 @@ return array (
         'names' => 
         array (
           'en' => 'Malaysia',
-          'de' => 'Malaysien',
+          'de' => 'Malaysia',
           'it' => 'Malesia',
           'es' => 'Malasia',
           'fr' => 'Malaisie',
@@ -4366,7 +4366,7 @@ return array (
           'fr' => 'Niger',
           'ja' => 'ニジェール共和国',
           'pt-BR' => 'Níger',
-          'ru' => 'Нигер1',
+          'ru' => 'Нигер',
           'zh-CN' => '尼日尔',
         ),
       ),
@@ -4427,8 +4427,8 @@ return array (
       'continent' => 'AF',
       'location' => 
       array (
-        'latitude' => 9.0845755,
-        'longitude' => 8.6742525,
+        'latitude' => 9.078115159500044,
+        'longitude' => 8.670771499500034,
       ),
     ),
     'NI' => 
@@ -5416,7 +5416,7 @@ return array (
           'de' => 'Svalbard und Jan Mayen',
           'it' => 'Svalbard e Jan Mayen',
           'es' => 'Svalbard y Jan Mayen',
-          'fr' => 'Svalbard et Île Jan Mayen',
+          'fr' => 'Svalbard et Jan Mayen',
           'ja' => 'スバールバル諸島・ヤンマイエン島',
           'pt-BR' => 'Svalbard e Jan Mayen',
           'ru' => 'Свальбард и Ян-Майен',
@@ -5848,7 +5848,7 @@ return array (
           'de' => 'Togo',
           'it' => 'Togo',
           'es' => 'Togo',
-          'fr' => 'République Togolaise',
+          'fr' => 'Togo',
           'ja' => 'トーゴ共和国',
           'pt-BR' => 'Togo',
           'ru' => 'Того',
@@ -6149,7 +6149,7 @@ return array (
           'ja' => '中華民国',
           'pt-BR' => 'Taiwan',
           'ru' => 'Тайвань',
-          'zh-CN' => '台湾',
+          'zh-CN' => '中华民国',
         ),
       ),
       'continent' => 'AS',
@@ -6283,7 +6283,7 @@ return array (
           'fr' => 'États-Unis',
           'ja' => 'アメリカ合衆国',
           'pt-BR' => 'Estados Unidos',
-          'ru' => 'Сша',
+          'ru' => 'США',
           'zh-CN' => '美国',
         ),
       ),
@@ -6384,11 +6384,11 @@ return array (
         'geoname_id' => 3577815,
         'names' => 
         array (
-          'en' => 'Saint Vincent and the Grenadines',
+          'en' => 'St Vincent and Grenadines',
           'de' => 'St. Vincent und die Grenadinen',
           'it' => 'Saint Vincent e Grenadine',
           'es' => 'San Vicente y las Granadinas',
-          'fr' => 'Saint-Vincent-et-les Grenadines',
+          'fr' => 'Saint-Vincent-et-les-Grenadines',
           'ja' => 'セントビンセント・グレナディーン諸島',
           'pt-BR' => 'São Vincente e Granadinas',
           'ru' => 'Сент-Винсент и Гренадины',
@@ -6688,7 +6688,7 @@ return array (
           'fr' => 'Afrique du Sud',
           'ja' => '南アフリカ',
           'pt-BR' => 'África do Sul',
-          'ru' => 'Юар',
+          'ru' => 'ЮАР',
           'zh-CN' => '南非',
         ),
       ),
@@ -6756,22 +6756,6 @@ return array (
   ),
   'continents' => 
   array (
-    'AS' => 
-    array (
-      'code' => 'AS',
-      'names' => 
-      array (
-        'en' => 'Asia',
-        'de' => 'Asien',
-        'it' => 'Asia',
-        'es' => 'Asia',
-        'fr' => 'Asie',
-        'ja' => 'アジア',
-        'pt-BR' => 'Ásia',
-        'ru' => 'Азия',
-        'zh-CN' => '亚洲',
-      ),
-    ),
     'EU' => 
     array (
       'code' => 'EU',
@@ -6788,36 +6772,20 @@ return array (
         'zh-CN' => '欧洲',
       ),
     ),
-    'AF' => 
+    'AS' => 
     array (
-      'code' => 'AF',
+      'code' => 'AS',
       'names' => 
       array (
-        'en' => 'Africa',
-        'de' => 'Afrika',
-        'it' => 'Africa',
-        'es' => 'África',
-        'fr' => 'Afrique',
-        'ja' => 'アフリカ',
-        'pt-BR' => 'África',
-        'ru' => 'Африка',
-        'zh-CN' => '非洲',
-      ),
-    ),
-    'OC' => 
-    array (
-      'code' => 'OC',
-      'names' => 
-      array (
-        'en' => 'Oceania',
-        'de' => 'Ozeanien',
-        'it' => 'Oceania',
-        'es' => 'Oceanía',
-        'fr' => 'Océanie',
-        'ja' => 'オセアニア',
-        'pt-BR' => 'Oceania',
-        'ru' => 'Океания',
-        'zh-CN' => '大洋洲',
+        'en' => 'Asia',
+        'de' => 'Asien',
+        'it' => 'Asia',
+        'es' => 'Asia',
+        'fr' => 'Asie',
+        'ja' => 'アジア',
+        'pt-BR' => 'Ásia',
+        'ru' => 'Азия',
+        'zh-CN' => '亚洲',
       ),
     ),
     'NA' => 
@@ -6834,6 +6802,22 @@ return array (
         'pt-BR' => 'América do Norte',
         'ru' => 'Северная Америка',
         'zh-CN' => '北美洲',
+      ),
+    ),
+    'AF' => 
+    array (
+      'code' => 'AF',
+      'names' => 
+      array (
+        'en' => 'Africa',
+        'de' => 'Afrika',
+        'it' => 'Africa',
+        'es' => 'África',
+        'fr' => 'Afrique',
+        'ja' => 'アフリカ',
+        'pt-BR' => 'África',
+        'ru' => 'Африка',
+        'zh-CN' => '非洲',
       ),
     ),
     'AN' => 
@@ -6866,6 +6850,22 @@ return array (
         'pt-BR' => 'América do Sul',
         'ru' => 'Южная Америка',
         'zh-CN' => '南美洲',
+      ),
+    ),
+    'OC' => 
+    array (
+      'code' => 'OC',
+      'names' => 
+      array (
+        'en' => 'Oceania',
+        'de' => 'Ozeanien',
+        'it' => 'Oceania',
+        'es' => 'Oceanía',
+        'fr' => 'Océanie',
+        'ja' => 'オセアニア',
+        'pt-BR' => 'Oceania',
+        'ru' => 'Океания',
+        'zh-CN' => '大洋洲',
       ),
     ),
   ),
