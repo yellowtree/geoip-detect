@@ -340,5 +340,13 @@ HTML;
 	}
 }
 
+if (WP_DEBUG && !empty($_GET['test_auto_update_now'])) {
+	add_filter('plugins_loaded', function() {
+		if (current_user_can('manage_options')) {
+			do_action('geoipdetectupdate');
+		}
+	}, 60);
+};
+
 geoip_detect2_register_source(new AutoDataSource());
 
