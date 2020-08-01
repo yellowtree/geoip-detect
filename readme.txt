@@ -2,7 +2,7 @@
 Contributors: benjaminpick
 Tags: geolocation, locator, geoip, maxmind, ipstack
 Requires at least: 4.0
-Tested up to: 5.4
+Tested up to: 5.5
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv3 or later
