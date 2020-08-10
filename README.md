@@ -150,6 +150,12 @@ New: Shortcode for showing/hiding content!
 
 ## Changelog ##
 
+= 3.1.1 =
+* NEW: Add the possibility to access the ISO-3166 alpha3 version of `$record->country`: `$record->extra->isoCode3` or `[geoip_detect2 property="extra.countryIsoCode3"]`
+* FIX: The (CF7) shortcode `[geoip_detect2_countries]` now selects the selected country on page reload (the HTML tag autocomplete is set to `off` now)
+* FIX: Subnets can now be entered in the preferences of the reverse proxy again (this was a regression of the Admin UI changes in 3.0.3)
+* FIX: Do not log "It has not changed since the last update." as a cron-related error that should be shown to the user.
+
 = 3.1.0 =
 * FIX: The property access for shortcodes has been rewritten so that property names such as "extra.original.zip" (Datasource: ipstack) are possible now.
 * FIX: The lookup page now also shows subdivisions (e.g. for IPs from Uk that have 2 levels of subdivisions)
