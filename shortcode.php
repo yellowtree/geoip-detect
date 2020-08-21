@@ -396,6 +396,9 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
  *
  * `[geoip_detect2_text_input name="city" property="city" lang="fr" id="id" class="class" default="Paris"]`
  * As above, but in case the city is unknown, use "Paris"
+ * 
+ * `[geoip_detect2_text_input name="postal" property="postal.code" type="hidden"]`
+ * An invisible text input containing the postal code. 
  *
  * $attr is an array that can have these properties:
  * @param string $property Maxmind property string (e.g. "city" or "postal.code")
@@ -403,6 +406,7 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
  * @param bool   $required If the field is required or not
  * @param string $id CSS Id of element
  * @param string $class CSS Class of element
+ * @param string $type HTML input type of element ("text" by default) (@since 3.1.2)
  * @param string $lang Language(s) (optional. If not set, current site language is used.)
  * @param string $default 		Default Value that will be used if country cannot be detected (optional)
  * @param bool 	 $skip_cache
@@ -414,11 +418,13 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 function geoip_detect2_shortcode_text_input($attr) {
 	$value = geoip_detect2_shortcode($attr + array('add_error' => false));
 
+	$type = !empty($attr['type']) ? sanitize_key($attr['type']) : '';
+
 	$html_attrs = array(
-		'type' => 'text',
 		'name' => !empty($attr['name']) ? $attr['name'] : 'geoip-text-input',
 		'id' => !empty($attr['id']) ? $attr['id'] : '',
 		'class' => !empty($attr['class']) ? $attr['class'] : 'geoip-text-input',
+		'type' => $type ? $type : 'text',
 		'aria-required' => !empty($attr['required']) ? 'required' : '',
 		'aria-invalid' => !empty($attr['invalid']) ? $attr['invalid'] : '',
 		'value' => $value,
@@ -443,6 +449,9 @@ add_shortcode('geoip_detect2_input', 'geoip_detect2_shortcode_text_input');
  *
  * `[geoip_detect2_text_input city property:city lang:fr id:id class:class default:Paris]`
  * As above, but in case the city is unknown, use "Paris"
+ * 
+ * `[geoip_detect2_text_input postal property:postal.code type:hidden]`
+ * An invisible text input containing the postal code. 
  *
  */
 function geoip_detect2_shortcode_text_input_wpcf7($tag) {
@@ -463,6 +472,7 @@ function geoip_detect2_shortcode_text_input_wpcf7($tag) {
 		'invalid' => $validation_error ? 'true' : 'false',
 		'id' => $tag->get_id_option(),
 		'class' => $tag->get_class_option( $class ),
+		'type' => $tag->get_option('type', '', true),
 		'lang' => $tag->get_option('lang', '', true),
 		'property' => $tag->get_option('property', '', true),
 		'default' => $tag->get_option('default', '', true),
