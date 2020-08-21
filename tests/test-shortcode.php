@@ -197,6 +197,11 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 
 		$html = do_shortcode('[geoip_detect2_text_input name="yourcity" property="country" lang="fr" id="thisismyid" class="myclassname" default="Paris" required="true"]');
 		$this->assertContains('value="Allemagne"', $html);
+
+		$html = do_shortcode('[geoip_detect2_text_input name="postal" property="location.timeZone" type="hidden"]');
+		$this->assertContains('name="postal"', $html);
+		$this->assertContains('type="hidden"', $html);
+		$this->assertContains('value="Europe/Berlin"', $html);
 	}
 
 	/**
