@@ -8,3 +8,4 @@ function geoip_detect2_get_reader($locales = null, $options = array()) { return 
 function geoip_detect2_get_current_source_description($source = null) { return ''; }
 function geoip_detect2_get_client_ip() { return ''; }
 function geoip_detect2_get_external_ip_adress($unfiltered = false) { return ''; }
+function geoip_detect2_enqueue_javascript() { return false; }

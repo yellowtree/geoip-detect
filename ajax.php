@@ -111,7 +111,7 @@ function _geoip_detect_ajax_get_data($options = array()) {
  * Call this function if you want to register the JS script only for specific pages
  * @api
  */
-function geoip_detect2_enqueue_javascript() {
+function _geoip_detect2_enqueue_javascript() {
 	if (did_action('wp_enqueue_scripts')) {
 		wp_enqueue_script('geoip-detect-js');
 	} else {

@@ -86,7 +86,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()
 	 * After loading the information from the Geolocation-Database AND after the cache, you can add information to it.
 	 *
 	 * @param array $data 	Information found.
-	 * @param string	 $orig_ip	IP that originally passed to the function.
+	 * @param string $orig_ip	IP that originally passed to the function.
 	 * @return array
 	 */
 	$data = apply_filters('geoip_detect2_record_data_after_cache', $data, $ip);
@@ -231,4 +231,12 @@ function geoip_detect2_get_external_ip_adress($unfiltered = false) {
 	$ip_cache = apply_filters('geoip_detect_get_external_ip_adress', $ip_cache);
 
 	return $ip_cache;
+}
+
+/**
+ * Call this function if you want to register the JS script for AJAX mode only for specific pages
+ * @see https://github.com/yellowtree/geoip-detect/wiki/API-Usage-Examples#ajax-enqueue-the-js-file-manually
+ */
+function geoip_detect2_enqueue_javascript() {
+	_geoip_detect2_enqueue_javascript();
 }

@@ -127,4 +127,8 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertSame('helloWorld.youAreLoved', _geoip_dashes_to_camel_case('hello_world.you_are_loved'));
 		$this->assertSame('helloWorld.youAreLoved.really', _geoip_dashes_to_camel_case('hello_world.you_are_loved.really'));
 	}
+
+	function testEnqueue() {
+		geoip_detect2_enqueue_javascript();
+	}
 }
