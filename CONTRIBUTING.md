@@ -48,6 +48,6 @@ This plugin is [charity-ware](https://github.com/yellowtree/geoip-detect/wiki/FA
 
 https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYUZHS8FH3CL
 
-
+# Just do it ;-)
 
 If you have any further question or suggestion, please get in touch with me on https://github.com/yellowtree/geoip-detect/issues or privately at wp-geoip-detect posteo de
