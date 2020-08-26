@@ -57,9 +57,17 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()
 
 	// 2) Doing the Lookup
 	$data = array();
+	/**
+	 * Filter: geoip_detect2_record_data_override_lookup
+	 * Before doing the lookup, changing the data (similar to a cache but also when skipCache is on).
+	 * 
+	 * @param array $data Empty array
+	 * @param array $ip   Ip to lookup information from
+	 */
+	$data = apply_filters('geoip_detect2_record_data_override_lookup', $data, $ip, $options);
 
-	// Have a look at the cache first
-	if (!$options['skipCache']) {
+	// Have a look at the cache
+	if (!$data && !$options['skipCache']) {
 		$data = _geoip_detect2_get_data_from_cache($ip, $options['source']);
 	}
 
