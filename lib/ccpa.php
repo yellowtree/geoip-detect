@@ -35,7 +35,7 @@ class CcpaBlacklist {
     }
 
     public function onBeforeLookup($data, $ip, $options) {
-        $exclusionReason = $this->isIpOnList($ip);
+        $exclusionReason = $this->ipOnListGetReason($ip);
         
         if ($exclusionReason) {
             $data = array();
@@ -47,12 +47,12 @@ class CcpaBlacklist {
         return $data;
     }
 
-    protected function isIpOnList($ip) {
+    protected function ipOnListGetReason($ip) {
         $this->lazyLoadList();
 
         foreach ($this->list as $row) {
             if ($this->doesIpMatchRow($ip, $row)) {
-                return true;
+                return $row['exclusion_type'];
             }
         }
         return false;
@@ -70,10 +70,10 @@ class CcpaBlacklist {
     }
 
     protected function lazyLoadList() {
+        // Only load once
         if (!is_null($this->list)) return;
 
         $list = array();
-        // ToDo Load from cache
 
         /**
          * Filter: geoip_detect2_maxmind_ccpa_blacklist_ip_subnets
@@ -84,10 +84,11 @@ class CcpaBlacklist {
          * @see https://dev.maxmind.com/geoip/privacy-exclusions-api/
          */
         $list = apply_filters('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', $list);
-
+var_dump($list);
         $this->list = $list;
     }
 
     
 }
+
 new CcpaBlacklist;

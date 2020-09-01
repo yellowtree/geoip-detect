@@ -8,7 +8,7 @@ class CcpaTest extends WP_UnitTestCase_GeoIP_Detect {
 
     protected $ccpaBlacklistStub = [];
 
-    public function setBlacklist() 
+    public function createBlacklist() 
     {
         $this->ccpaBlacklistStub = [];
 
@@ -27,25 +27,29 @@ class CcpaTest extends WP_UnitTestCase_GeoIP_Detect {
             'data_type' => 'network',
             'value' => CCPA_TEST_IP_NETWORK_IPV6
         ];
-
+    }
+    public function setBlacklist($list)
+    {var_dump($this->ccpaBlacklistStub);die('dd');
         return $this->ccpaBlacklistStub;
     }
 
 	public function setUp() {
-		parent::setUp();
-        $this->setBlacklist();
-		add_filter('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', array($this, 'setBlacklist'), 101);
+        parent::setUp();
+        $this->createBlacklist();
+		add_filter   ('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', array($this, 'setBlacklist'));
 	}
 	public function tearDown() {
 		parent::tearDown();
-		remove_filter('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', array($this, 'setBlacklist'), 101);
+        
+        remove_filter('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', array($this, 'setBlacklist'));
 	}
 
 
     public function testLookup() {
+        add_filter   ('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', array($this, 'setBlacklist'));
         $record = geoip_detect2_get_info_from_ip(CCPA_TEST_IP);
-        $this->assertEmpty($record->country->name);
-        $this->assertSame(true, $record->isEmpty, 'The CCPA blacklist didnt work');
+        $this->assertEmpty($record->country->name, 'The CCPA blacklist didnt work');
+        $this->assertSame(true, $record->isEmpty);
         $this->assertNotEmpty($record->extra->error);
         $this->assertContains('mytest', $record->extra->error);
     }
