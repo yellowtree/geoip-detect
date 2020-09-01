@@ -1,55 +1,52 @@
 <?php
 
-define('CCPA_TEST_IP', '1.1.1.1');
-define('CCPA_TEST_IP_NETWORK', '2.2.2.2/24');
-define('CCPA_TEST_IP_NETWORK_IPV6', '2:2:2:2::2/24');
-
 class CcpaTest extends WP_UnitTestCase_GeoIP_Detect {
 
     protected $ccpaBlacklistStub = [];
 
     public function createBlacklist() 
     {
-        $this->ccpaBlacklistStub = [];
+        $ccpaBlacklistStub = [];
 
-        $this->ccpaBlacklistStub[] = [   
+        $ccpaBlacklistStub[] = [   
             'exclusion_type' => 'mytest',
             'data_type' => 'network',
-            'value' => CCPA_TEST_IP
+            'value' => '1.1.1.1'
         ];
-        $this->ccpaBlacklistStub[] = [   
+        $ccpaBlacklistStub[] = [   
             'exclusion_type' => 'mytest',
             'data_type' => 'network',
-            'value' => CCPA_TEST_IP_NETWORK
+            'value' => '2.2.2.2/24'
         ];
-        $this->ccpaBlacklistStub[] = [   
+        $ccpaBlacklistStub[] = [   
             'exclusion_type' => 'mytest',
             'data_type' => 'network',
-            'value' => CCPA_TEST_IP_NETWORK_IPV6
+            'value' => '2:2:2::2/48' // @see https://www.vultr.com/resources/subnet-calculator-ipv6/?ipv6_address=2%3A2%3A2%3A2%3A%3A2&display=short&prefix_length=48
         ];
+        $this->ccpaBlacklistStub = $ccpaBlacklistStub;
     }
     public function setBlacklist($list)
-    {var_dump($this->ccpaBlacklistStub);die('dd');
+    {
         return $this->ccpaBlacklistStub;
     }
 
 	public function setUp() {
         parent::setUp();
         $this->createBlacklist();
-		add_filter   ('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', array($this, 'setBlacklist'));
+        YellowTree\GeoipDetect\Lib\CcpaBlacklistOnLookup::resetList();
+        add_filter   ('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', array($this, 'setBlacklist'), 101);
 	}
 	public function tearDown() {
-		parent::tearDown();
+        parent::tearDown();
         
-        remove_filter('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', array($this, 'setBlacklist'));
+        remove_filter('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', array($this, 'setBlacklist'), 101);
 	}
 
 
     public function testLookup() {
-        add_filter   ('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', array($this, 'setBlacklist'));
-        $record = geoip_detect2_get_info_from_ip(CCPA_TEST_IP);
+        $record = geoip_detect2_get_info_from_ip('1.1.1.1');
+        $this->assertEmptyGeoIP2Record($record, '1.1.1.1');
         $this->assertEmpty($record->country->name, 'The CCPA blacklist didnt work');
-        $this->assertSame(true, $record->isEmpty);
         $this->assertNotEmpty($record->extra->error);
         $this->assertContains('mytest', $record->extra->error);
     }
@@ -67,12 +64,21 @@ class CcpaTest extends WP_UnitTestCase_GeoIP_Detect {
 
     public function testOtherIpsV6() {
         $record = geoip_detect2_get_info_from_ip('2:2:2:2::2');
+        $this->assertEmptyGeoIP2Record($record, '2:2:2:2::2');
         $this->assertContains('mytest', $record->extra->error);
 
         $record = geoip_detect2_get_info_from_ip('2:2:2:2::1');
         $this->assertContains('mytest', $record->extra->error);
-        
-        $record = geoip_detect2_get_info_from_ip('2:2:3:2::2');
+    }
+
+    public function testIpsThatAreNotBlacklisted() {
+        $ipv4 = '8.8.8.8';
+        $record = geoip_detect2_get_info_from_ip($ipv4);
+        $this->assertValidGeoIP2Record($record, $ipv4);
+        $this->assertNotContains('mytest', $record->extra->error);
+
+        $ipv6 = '2:2:3:2::2';
+        $record = geoip_detect2_get_info_from_ip($ipv6);
         $this->assertNotContains('mytest', $record->extra->error);
     }
 }

@@ -23,8 +23,8 @@ namespace YellowTree\GeoipDetect\Lib;
 
 use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 
-class CcpaBlacklist {
-    protected $list = null;
+class CcpaBlacklistOnLookup {
+    protected static $list = null;
 
     public function __construct() {
         $this->addFilters();
@@ -48,9 +48,9 @@ class CcpaBlacklist {
     }
 
     protected function ipOnListGetReason($ip) {
-        $this->lazyLoadList();
+        self::lazyLoadList();
 
-        foreach ($this->list as $row) {
+        foreach (self::$list as $row) {
             if ($this->doesIpMatchRow($ip, $row)) {
                 return $row['exclusion_type'];
             }
@@ -59,7 +59,9 @@ class CcpaBlacklist {
     }
 
     protected function doesIpMatchRow($ip, $row) {
-        if (empty($row['data_type']) || empty($row['value'])) return false;
+        if (empty($row['data_type']) || empty($row['value'])) {
+            return false;
+        }
 
         switch($row['data_type']) {
             case 'network':
@@ -69,9 +71,9 @@ class CcpaBlacklist {
         }
     }
 
-    protected function lazyLoadList() {
-        // Only load once
-        if (!is_null($this->list)) return;
+    protected static function lazyLoadList() {
+        // Only load once        
+        if (!is_null(self::$list)) return;
 
         $list = array();
 
@@ -84,11 +86,98 @@ class CcpaBlacklist {
          * @see https://dev.maxmind.com/geoip/privacy-exclusions-api/
          */
         $list = apply_filters('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', $list);
-var_dump($list);
-        $this->list = $list;
+
+        self::$list = $list;
     }
 
-    
+    public static function resetList() {
+        self::$list = null;
+    }
 }
+new CcpaBlacklistOnLookup;
+/*
+if (WP_DEBUG) {
 
-new CcpaBlacklist;
+    add_filter('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', function() {
+        $ccpaBlacklistStub = [];
+
+        $ccpaBlacklistStub[] = [   
+            'exclusion_type' => 'mytest',
+            'data_type' => 'network',
+            'value' => '1.1.1.1'
+        ];
+        $ccpaBlacklistStub[] = [   
+            'exclusion_type' => 'mytest',
+            'data_type' => 'network',
+            'value' => '2.2.2.2/24'
+        ];
+        $ccpaBlacklistStub[] = [   
+            'exclusion_type' => 'mytest',
+            'data_type' => 'network',
+            'value' => '2:2:2:2::2/24'
+        ];
+        return $ccpaBlacklistStub;
+    });
+}
+*/
+
+class RetrieveCcpaBlacklist {
+    public function __construct() {
+        $this->addFilters();
+    }
+
+    public function addFilters() {
+        add_filter('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', array($this, 'onBlacklistLoad'));
+    }
+
+    public function onBlacklistLoad($list) {
+        $loadedList = get_option('geoip_detect2_maxmind_ccpa_blacklist');
+        if (!is_array($loadedList)) {
+            return $list;
+        }
+
+        $list = array_merge($list, $loadedList);
+        return $list;
+    }
+
+    public function retrieveBlacklist() {
+        $credentials = $this->getCredentials();
+        $url = 'https://' . apply_filters('geoip_detect2_maxmind_ccpa_blacklist_url', 'api.maxmind.com/privacy/exclusions');
+        $args = array(
+            'headers' => array(
+                'Authorization' => 'Basic ' . base64_encode( $credentials['user'] . ':' . $credentials['password'] )
+            )
+        );
+        $time = time();
+        $response = wp_remote_request($url, $args);
+        $body = wp_remote_retrieve_body($response);
+        $bodyDecoded = json_decode($body, true);
+        if (wp_remote_retrieve_response_code($response) != 200) {
+            if (isset($bodyDecoded['error'])) {
+                return $bodyDecoded['error'];
+            }
+            return 'HTTP Error ' . wp_remote_retrieve_response_code($response) . ': ' . $body;
+        }
+        if (!is_array($bodyDecoded)) {
+            return 'Strange: Invalid Json: '  . $body;
+        }
+        
+        update_option('geoip_detect2_maxmind_ccpa_blacklist', $bodyDecoded);
+        update_option('geoip_detect2_maxmind_ccpa_blacklist_last_updated', $time);
+        return true;
+    }
+
+    protected function getCredentials() {
+        $user = get_option(); // ToDo
+        $password = get_option(); // ToDO
+        return array(
+            'user' => $user,
+            'password' => $password,
+        );
+    }
+}
+new RetrieveCcpaBlacklist;
+
+class CcpaBlacklistCron {
+
+}
