@@ -1,5 +1,7 @@
 <?php
 
+use YellowTree\GeoipDetect\Lib\RetrieveCcpaBlacklist;
+
 class CcpaTest extends WP_UnitTestCase_GeoIP_Detect {
 
     protected $ccpaBlacklistStub = [];
@@ -81,4 +83,40 @@ class CcpaTest extends WP_UnitTestCase_GeoIP_Detect {
         $record = geoip_detect2_get_info_from_ip($ipv6);
         $this->assertNotContains('mytest', $record->extra->error);
     }
+
+    /**
+     * @group external-http
+     */
+    public function testRetrieveBlacklistWrongPassword() {
+        $retrieve = new RetrieveCcpaBlacklist();
+        $retrieve->setCredentials('1', 'wrong');
+
+        $ret = $retrieve->retrieveBlacklist();
+        $this->assertContains('could not be authenticated', $ret);
+    }
+
+    /**
+     * @group external-http
+     */
+    public function testRetrieve() {
+        $user = getenv('WP_MAXMIND_USER_ID');
+        $password = getenv('WP_MAXMIND_USER_SECRET');
+        if (empty($user) || empty($password)) {
+            $this->markTestSkipped('No maxmind credentials found. Set the environment variables WP_MAXMIND_USER_ID and WP_MAXMIND_USER_SECRET to fix this');
+        }
+
+        $retrieve = new RetrieveCcpaBlacklist();
+        $retrieve->setCredentials($user, $password);
+
+        $ret = $retrieve->retrieveBlacklist();
+        $this->assertNotContains('could not be authenticated', $ret);
+        $this->assertInternalType('array', $ret);
+        $this->assertInternalType('array', $ret['exclusions']);
+        $row = reset($ret['exclusions']);
+        $rowKeys = array_keys($row);
+        $this->assertSame(array('exclusion_type', 'data_type', 'value', 'last_updated'), $rowKeys);
+        $this->assertNotEmpty(geoip_detect_sanitize_ip_list($row['value']));
+    }
+
+
 }

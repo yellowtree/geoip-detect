@@ -141,14 +141,13 @@ class RetrieveCcpaBlacklist {
     }
 
     public function retrieveBlacklist() {
-        $credentials = $this->getCredentials();
+        $this->loadCredentials();
         $url = 'https://' . apply_filters('geoip_detect2_maxmind_ccpa_blacklist_url', 'api.maxmind.com/privacy/exclusions');
         $args = array(
             'headers' => array(
-                'Authorization' => 'Basic ' . base64_encode( $credentials['user'] . ':' . $credentials['password'] )
+                'Authorization' => 'Basic ' . base64_encode( $this->user . ':' . $this->password )
             )
         );
-        $time = time();
         $response = wp_remote_request($url, $args);
         $body = wp_remote_retrieve_body($response);
         $bodyDecoded = json_decode($body, true);
@@ -162,18 +161,34 @@ class RetrieveCcpaBlacklist {
             return 'Strange: Invalid Json: '  . $body;
         }
         
-        update_option('geoip_detect2_maxmind_ccpa_blacklist', $bodyDecoded);
-        update_option('geoip_detect2_maxmind_ccpa_blacklist_last_updated', $time);
-        return true;
+        return $bodyDecoded;
+    }
+    
+    public function storeBlacklist() {
+        $time = time();
+        $ret = $this->retrieveBlacklist();
+        if (is_string($ret)) {
+
+        } else {
+            $exclusions = $ret['exclusions'];
+            update_option('geoip_detect2_maxmind_ccpa_blacklist', $exclusions);
+            update_option('geoip_detect2_maxmind_ccpa_blacklist_last_updated', $time);
+        }
     }
 
-    protected function getCredentials() {
-        $user = get_option(); // ToDo
-        $password = get_option(); // ToDO
-        return array(
-            'user' => $user,
-            'password' => $password,
-        );
+    protected $user = null;
+    protected $password = null;
+
+    protected function loadCredentials() {
+        if (!is_null($this->user)) return;
+
+        $this->user = get_option(); // ToDo
+        $this->password = get_option(); // ToDO
+    }
+
+    public function setCredentials($user, $password) {
+        $this->user = $user;
+        $this->password = $password;
     }
 }
 new RetrieveCcpaBlacklist;
