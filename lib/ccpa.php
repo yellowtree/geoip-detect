@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 namespace YellowTree\GeoipDetect\Lib;
 
 use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
+use  YellowTree\GeoipDetect\Logger;
 
 class CcpaBlacklistOnLookup {
     protected static $list = null;
@@ -168,11 +169,15 @@ class RetrieveCcpaBlacklist {
         $time = time();
         $ret = $this->retrieveBlacklist();
         if (is_string($ret)) {
-
+            if (defined('DOING_CRON') && DOING_CRON) {
+                Logger::logIfError($ret, Logger::CATEGORY_CRON);
+            }
+            return $ret;
         } else {
             $exclusions = $ret['exclusions'];
             update_option('geoip_detect2_maxmind_ccpa_blacklist', $exclusions);
             update_option('geoip_detect2_maxmind_ccpa_blacklist_last_updated', $time);
+            return true;
         }
     }
 

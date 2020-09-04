@@ -56,7 +56,67 @@ class ManualDataSource extends AbstractDataSource {
 		return implode('<br>', $html);
 	}
 
+	protected function getParameterHTMLMaxmindAccount() {
+		$key = esc_attr(get_option('geoip-detect-auto_license_key', ''));
+		$id = esc_attr((int) get_option('geoip-detect-auto_license_id', ''));
+
+		$label_id = __('Account Id:', 'geoip-detect');
+		$label_key = __('License key:', 'geoip-detect');
+
+
+		$html = <<<HTML
+$label_id <input type="number" autocomplete="off" size="10" name="options_auto[license_id]" value="$id" /><br />
+$label_key <input type="text" autocomplete="off" size="20" name="options_auto[license_key]" value="$key" /><br />
+HTML;
+		return $html;
+	}
+
+	protected function saveParametersMaxmindAccount($post) {
+		$message = '';
+
+		if (isset($post['options_auto']['license_key'])) {
+			$key = sanitize_text_field($post['options_auto']['license_key']);
+			$validationResult = $this->validateApiKey($key);
+			if (\is_string($validationResult)) {
+				$message .= $validationResult;
+			}
+			update_option('geoip-detect-auto_license_key', $key);
+		}
+		if (isset($post['options_auto']['license_id'])) {
+			$id = (int) $post['options_auto']['license_id'];
+			if ($id <= 0) {
+				$message .= __('This is not a valid Maxmind Account Id.', 'geoip-detect');
+			}
+			update_option('geoip-detect-auto_license_id', $id);
+		}
+
+		return $message;
+	}
+
+	public function validateApiKey($key) {
+		$message = '';
+		$key = trim($key);
+		if (mb_strlen($key) != 16) {
+			$message = __('The license key usually is a 16-char alphanumeric string. Are you sure this is the right key?', 'geoip-detect');
+			if (mb_strlen($key) < 16) {
+				$message .= ' ' . __('Do not use the "unhashed format" when generating the license key.', 'geoip-detect');
+				// Unhashed: 13char alphanumeric
+			}
+			$message .= ' ' . sprintf(__('This key is %d chars long.', 'geoip-detect'), mb_strlen($key));
+		} else if (1 !== preg_match('/^[a-z0-9]+$/i', $key)) {
+			$message = __('The license key usually is a 16-char alphanumeric string. Are you sure this is the right key?', 'geoip-detect');
+			$message .= ' ' . __('This key contains characters other than a-z and 0-9.', 'geoip-detect');
+		}
+		if ($message) return $message;
+
+		return true;
+	}
+
+
+
 	public function getParameterHTML() {
+		$html = $this->getParameterHTMLMaxmindAccount();
+
 		$manual_file = esc_attr(get_option('geoip-detect-manual_file'));
 		$current_value = '';
 
@@ -69,7 +129,7 @@ class ManualDataSource extends AbstractDataSource {
 
 		$label = __('Filepath to mmdb-file:', 'geoip-detect');
 		$desc = __('e.g. wp-content/uploads/GeoLite2-Country.mmdb or absolute filepath', 'geoip-detect');
-		$html = <<<HTML
+		$html .= <<<HTML
 		<p>$label <input type="text" size="40" name="options_manual[manual_file]" value="$manual_file" /></p>
 		<span class="detail-box">$desc $current_value</span>
 		<br />

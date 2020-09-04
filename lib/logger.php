@@ -54,6 +54,9 @@ class Logger {
         $time = geoip_detect_format_localtime();
 
         $str = '[' . $time . '] ' . $str;
+
+        // ToDo implement $data
+
         update_option('geoip-detect-logger-last-error' . $category, $str);
     }
 

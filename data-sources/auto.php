@@ -52,13 +52,7 @@ class AutoDataSource extends ManualDataSource
 	}
 
 	public function getParameterHTML() {
-		$key = esc_attr(get_option('geoip-detect-auto_license_key', ''));
-
-		$label_key = __('License key:', 'geoip-detect');
-
-		$html = <<<HTML
-$label_key <input type="text" autocomplete="off" size="20" name="options_auto[license_key]" value="$key" /><br />
-HTML;
+		$html = $this->getParameterHTMLMaxmindAccount();
 
 		return $html;
 	}
@@ -72,14 +66,21 @@ HTML;
 			$error .= 
 				__('Maxmind Automatic Download only works with a given license key.', 'geoip-detect') .
 				'<p>' . sprintf(__('You can signup for a free Maxmind-Account here: <a href="%s" target="_blank">Sign Up</a>.', 'geoip-detect'), 'https://www.maxmind.com/en/geolite2/signup') . '<br>' .
-				__('After logging in, generate a license key and copy it to the options below.', 'geoip-detect') . '</p>';
+				__('After logging in, generate a license key and copy the account id and the key to the options below.', 'geoip-detect') . '</p>';
 			$disabled = ' disabled="disabled"';
 		} else {
 			$keyValidationMessage = $this->validateApiKey(get_option('geoip-detect-auto_license_key', ''));
 			if ($keyValidationMessage !== true) {
 				$error .= $keyValidationMessage;
 			}
+
+			$idAvailable = get_option('geoip-detect-auto_license_id', '') > 0;
+			if (!$idAvailable) {
+				$error .= 
+					__('Please enter your Maxmind Account Id. You find it in your Maxmind Account under "My License Key". This will enable the Maxmind Privacy Exclusions API.', 'geoip-detect');
+			}
 		}
+
 
 		$text_update = __('Update now', 'geoip-detect');
 		$nonce_field = wp_nonce_field( 'geoip_detect_update' );
@@ -100,39 +101,6 @@ HTML;
 		return $html . $error;
 	}
 
-	public function saveParameters($post) {
-		$message = '';
-
-		if (isset($post['options_auto']['license_key'])) {
-			$key = sanitize_text_field($post['options_auto']['license_key']);
-			$validationResult = $this->validateApiKey($key);
-			if (\is_string($validationResult)) {
-				$message .= $validationResult;
-			}
-			update_option('geoip-detect-auto_license_key', $key);
-		}
-
-		return $message;
-	}
-
-	public function validateApiKey($key) {
-		$message = '';
-		$key = trim($key);
-		if (mb_strlen($key) != 16) {
-			$message = __('The license key usually is a 16-char alphanumeric string. Are you sure this is the right key?', 'geoip-detect');
-			if (mb_strlen($key) < 16) {
-				$message .= ' ' . __('Do not use the "unhashed format" when generating the license key.', 'geoip-detect');
-				// Unhashed: 13char alphanumeric
-			}
-			$message .= ' ' . sprintf(__('This key is %d chars long.', 'geoip-detect'), mb_strlen($key));
-		} else if (1 !== preg_match('/^[a-z0-9]+$/i', $key)) {
-			$message = __('The license key usually is a 16-char alphanumeric string. Are you sure this is the right key?', 'geoip-detect');
-			$message .= ' ' . __('This key contains characters other than a-z and 0-9.', 'geoip-detect');
-		}
-		if ($message) return $message;
-
-		return true;
-	}
 
 	public function __construct() {
 		parent::__construct();
@@ -160,6 +128,12 @@ HTML;
 
 		$filename = $dir . '/' . GEOIP_DETECT_DATA_UPDATE_FILENAME;
 		return $filename;
+	}
+
+	public function saveParameters($post) {
+		$message = '';
+		$message .= $this->saveParametersMaxmindAccount($post);
+		return $message;
 	}
 
 	protected function download_url($url, $modified = 0) {

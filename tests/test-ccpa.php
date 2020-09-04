@@ -84,9 +84,6 @@ class CcpaTest extends WP_UnitTestCase_GeoIP_Detect {
         $this->assertNotContains('mytest', $record->extra->error);
     }
 
-    /**
-     * @group external-http
-     */
     public function testRetrieveBlacklistWrongPassword() {
         $retrieve = new RetrieveCcpaBlacklist();
         $retrieve->setCredentials('1', 'wrong');
