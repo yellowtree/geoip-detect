@@ -497,9 +497,12 @@ function _geoip_dashes_to_camel_case($string, $capitalizeFirstCharacter = false)
     return $str;
 }
 
-function geoip_detect_format_localtime($timestamp = 0) {
-	if ($timestamp === 0) {
+function geoip_detect_format_localtime($timestamp = -1) {
+	if ($timestamp === -1) {
 		$timestamp = time();
+	}
+	if ($timestamp == 0) {
+		return __('Never', 'geoip-detect');
 	}
 	
 	$format = get_option('date_format') . ' '. get_option('time_format');

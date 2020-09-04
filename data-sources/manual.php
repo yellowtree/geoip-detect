@@ -48,12 +48,22 @@ class ManualDataSource extends AbstractDataSource {
 			$metadata = $reader->metadata();
 			$built = $metadata->buildEpoch;
 			$last_update = is_readable($file) ? filemtime($file) : '';
-			$html[] = sprintf(__('Last updated: %s', 'geoip-detect'), $last_update ? geoip_detect_format_localtime($last_update) : __('Never', 'geoip-detect'));
-			$html[] = sprintf(__('Database data from: %s', 'geoip-detect'), geoip_detect_format_localtime($built) );
+			$html[] = sprintf(__('Database last updated: %s', 'geoip-detect'), geoip_detect_format_localtime($last_update) );
+			$html[] = sprintf(__('Database generated: %s', 'geoip-detect'), geoip_detect_format_localtime($built) );
 		}
+
+		$html[] = $this->getStatusInformationHTMLMaxmindAccount();
 
 
 		return implode('<br>', $html);
+	}
+
+	protected function getStatusInformationHTMLMaxmindAccount() {
+		$html = '';
+		$last_update = get_option('geoip_detect2_maxmind_ccpa_blacklist_last_updated', 0);
+		$html .= sprintf(__('Privacy Exclusions last updated: %s', 'geoip-detect'), geoip_detect_format_localtime($last_update) );
+
+		return $html;
 	}
 
 	protected function getParameterHTMLMaxmindAccount() {
@@ -74,6 +84,13 @@ HTML;
 	protected function saveParametersMaxmindAccount($post) {
 		$message = '';
 
+		if (isset($post['options_auto']['license_id'])) {
+			$id = (int) $post['options_auto']['license_id'];
+			if ($id <= 0) {
+				$message .= __('This is not a valid Maxmind Account Id.', 'geoip-detect');
+			}
+			update_option('geoip-detect-auto_license_id', $id);
+		}
 		if (isset($post['options_auto']['license_key'])) {
 			$key = sanitize_text_field($post['options_auto']['license_key']);
 			$validationResult = $this->validateApiKey($key);
@@ -81,13 +98,6 @@ HTML;
 				$message .= $validationResult;
 			}
 			update_option('geoip-detect-auto_license_key', $key);
-		}
-		if (isset($post['options_auto']['license_id'])) {
-			$id = (int) $post['options_auto']['license_id'];
-			if ($id <= 0) {
-				$message .= __('This is not a valid Maxmind Account Id.', 'geoip-detect');
-			}
-			update_option('geoip-detect-auto_license_id', $id);
 		}
 
 		return $message;

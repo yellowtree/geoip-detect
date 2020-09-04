@@ -43,7 +43,7 @@ class AutoDataSource extends ManualDataSource
 			$this->set_cron_schedule();
 			$next_cron_update = wp_next_scheduled( 'geoipdetectupdate' );
 		}
-		$html .= '<br />' . sprintf(__('Next update: %s', 'geoip-detect'), $next_cron_update !== false ? geoip_detect_format_localtime($next_cron_update) : __('Never', 'geoip-detect'));
+		$html .= '<br /><br />' . sprintf(__('Next database update: %s', 'geoip-detect'), geoip_detect_format_localtime($next_cron_update) );
 		$html .= $rescheduled;
 
 		$html .= $this->updateHTML();
