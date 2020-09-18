@@ -23,6 +23,11 @@ class CcpaTest extends WP_UnitTestCase_GeoIP_Detect {
         $ccpaBlacklistStub[] = [   
             'exclusion_type' => 'mytest',
             'data_type' => 'network',
+            'value' => '1.2.3.4/32'
+        ];
+        $ccpaBlacklistStub[] = [   
+            'exclusion_type' => 'mytest',
+            'data_type' => 'network',
             'value' => '2:2:2::2/48' // @see https://www.vultr.com/resources/subnet-calculator-ipv6/?ipv6_address=2%3A2%3A2%3A2%3A%3A2&display=short&prefix_length=48
         ];
         $this->ccpaBlacklistStub = $ccpaBlacklistStub;
@@ -59,8 +64,16 @@ class CcpaTest extends WP_UnitTestCase_GeoIP_Detect {
 
         $record = geoip_detect2_get_info_from_ip('2.2.2.254');
         $this->assertContains('mytest', $record->extra->error);
+
+        $record = geoip_detect2_get_info_from_ip('1.2.3.4');
+        $this->assertContains('mytest', $record->extra->error);
         
         $record = geoip_detect2_get_info_from_ip('2.2.3.2');
+        $this->assertNotContains('mytest', $record->extra->error);
+
+        $record = geoip_detect2_get_info_from_ip('1.2.3.5');
+        $this->assertNotContains('mytest', $record->extra->error);
+        $record = geoip_detect2_get_info_from_ip('1.2.3.3');
         $this->assertNotContains('mytest', $record->extra->error);
     }
 

@@ -129,6 +129,7 @@ class RetrieveCcpaBlacklist {
 
     public function addFilters() {
         add_filter('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', array($this, 'onBlacklistLoad'));
+        add_action('geoip_detect2_maxmind_ccpa_blacklist_do_upate', array($this, 'doUpdate'));
     }
 
     public function onBlacklistLoad($list) {
@@ -165,6 +166,10 @@ class RetrieveCcpaBlacklist {
         return $bodyDecoded;
     }
     
+    public function doUpdate() {
+        return $this->storeBlacklist();
+    }
+
     public function storeBlacklist() {
         $time = time();
         $ret = $this->retrieveBlacklist();
@@ -199,5 +204,52 @@ class RetrieveCcpaBlacklist {
 new RetrieveCcpaBlacklist;
 
 class CcpaBlacklistCron {
+    public function addFilter() {
+        add_action('geoipdetectccpaupdate', array($this, 'hook_cron', 10, 1));
+    }
 
+    public function hook_cron() {
+		/**
+		 * Filter:
+		 * Cron has fired.
+		 * Find out if ccpa data should be updated now.
+		 *
+		 * @param $do_it False if deactivated by define
+		 */
+        $do_it = apply_filters('geoip_detect2_maxmind_ccpa_do_automatic_update', true);
+        
+        $this->schedule();
+
+        if ($do_it) {
+            $this->run();
+        }
+    }
+
+    public function run() {
+        $last = get_option('geoip_detect2_maxmind_ccpa_blacklist_last_updated');
+        if( time() - $last < HOUR_IN_SECONDS) {
+            return false;
+        }
+
+        do_action('geoip_detect2_maxmind_ccpa_blacklist_do_upate');
+    }
+
+    public function schedule($forceReschedule = false) {
+        $next = wp_next_scheduled('geoipdetectccpaupdate');
+
+        if (!$next || $forceReschedule) {
+            $this->schedule_next_cron_run();
+        }
+
+        if ($forceReschedule) {
+            $this->run();
+        }
+    }
+
+    protected function schedule_next_cron_run() {
+        $next = time() + DAY_IN_SECONDS;
+        $next += mt_rand(1, HOUR_IN_SECONDS);
+        wp_schedule_single_event($next, 'geoipdetectccpaupdate');
+    }
 }
+(new CcpaBlacklistCron)->addFilter();

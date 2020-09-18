@@ -61,7 +61,12 @@ class ManualDataSource extends AbstractDataSource {
 	protected function getStatusInformationHTMLMaxmindAccount() {
 		$html = '';
 		$last_update = get_option('geoip_detect2_maxmind_ccpa_blacklist_last_updated', 0);
+		$entries = get_option('geoip_detect2_maxmind_ccpa_blacklist');
+
 		$html .= sprintf(__('Privacy Exclusions last updated: %s', 'geoip-detect'), geoip_detect_format_localtime($last_update) );
+		if ($entries) {
+			$html .= ' ' . sprintf(__('(has %d entries)', 'geoip-detect'), count($entries));
+		}
 
 		return $html;
 	}
@@ -84,20 +89,30 @@ HTML;
 	protected function saveParametersMaxmindAccount($post) {
 		$message = '';
 
-		if (isset($post['options_auto']['license_id'])) {
-			$id = (int) $post['options_auto']['license_id'];
-			if ($id <= 0) {
-				$message .= __('This is not a valid Maxmind Account Id.', 'geoip-detect');
-			}
-			update_option('geoip-detect-auto_license_id', $id);
-		}
 		if (isset($post['options_auto']['license_key'])) {
 			$key = sanitize_text_field($post['options_auto']['license_key']);
 			$validationResult = $this->validateApiKey($key);
 			if (\is_string($validationResult)) {
 				$message .= $validationResult;
 			}
-			update_option('geoip-detect-auto_license_key', $key);
+			$keyChanged = update_option('geoip-detect-auto_license_key', $key);
+		}
+
+		if (isset($post['options_auto']['license_id'])) {
+			$id = (int) $post['options_auto']['license_id'];
+			if ($id <= 0) {
+				$message .= __('This is not a valid Maxmind Account Id.', 'geoip-detect');
+			}
+			$idChanged = update_option('geoip-detect-auto_license_id', $id);
+			if ($id && class_exists('\\YellowTree\\GeoipDetect\\Lib\\CcpaBlacklistCron')) {
+				$ccpaCronScheduler = new \YellowTree\GeoipDetect\Lib\CcpaBlacklistCron;
+				if ($idChanged || $keyChanged) {
+					// Re-schedule and run it right now
+					$ccpaCronScheduler->schedule(true);
+				} else {
+					$ccpaCronScheduler->schedule();
+				}
+			}
 		}
 
 		return $message;

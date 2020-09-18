@@ -109,8 +109,9 @@ HTML;
 	}
 
 	public function on_plugins_loaded() {
-		if (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED'))
+		if (!defined('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED')) {
 			define('GEOIP_DETECT_AUTO_UPDATE_DEACTIVATED', false);
+		}
 	}
 
 	public function maxmindGetFilename() {
