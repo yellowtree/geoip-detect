@@ -43,11 +43,12 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 = How can I use these functions? =
 
 * You could choose the currency of the store based on the country name
-* You could suggest an timezone to use when displaying dates
+* You could pre-fill the shipping country
 * You could show the store nearest to your customer
 * You show or hide content specific to a geographic target group
 * Etc. ... You tell me! I'm rather curious what you'll do with this plugin!
 * Be careful to comply to the applicable laws. For example Regulation (EU) 2018/302 (going into effect 03 Dec 2018)...
+* If you need to get the user's timezone, it is more accurate to use JS solutions.
 
 **System Requirements**: You will need at least PHP 5.4.
 
