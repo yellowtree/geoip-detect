@@ -248,7 +248,7 @@ HTML;
 	protected function maxmindGetFileDescription() {
 		$reader = $this->getReader();
 
-		if (!method_exists($reader, 'metadata'))
+		if (!is_object($reader) || !method_exists($reader, 'metadata'))
 			return __('Maxmind File Database (file does not exist or is not readable)', 'geoip-detect');
 
 		try {
