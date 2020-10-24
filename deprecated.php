@@ -17,7 +17,7 @@ function geoip_detect_get_abs_db_filename()
 	_doing_it_wrong('Geolocation IP Detection: geoip_detect_get_abs_db_filename', 'geoip_detect_get_abs_db_filename should not be called directly', '2.4.0');
 
 	$source = \YellowTree\GeoipDetect\DataSources\DataSourceRegistry::getInstance()->getCurrentSource();
-	if (method_exists($source, 'maxmindGetFilename'))
+	if (is_object($reader) && method_exists($source, 'maxmindGetFilename'))
 		return $source->maxmindGetFilename();
 	return '';
 }
