@@ -13,6 +13,11 @@ cache:
   directories:
     - $HOME/.composer/cache
 
+jobs:
+  allow_failures:
+    - php: 8.0
+      env: WP_VERSION=latest
+
 matrix:
   include:
     - php: 8.0
