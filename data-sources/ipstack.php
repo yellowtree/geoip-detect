@@ -114,6 +114,10 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
         
         if (!empty($data['location']['country_flag_emoji']))
             $r['extra']['flag'] = strtoupper($data['location']['country_flag_emoji']);
+
+        if (!empty($data['currency']['code'])) {
+            $r['extra']['currency_code'] = $data['currency']['code'];
+        }
         
 
 		$r['traits']['ip_address'] = $ip;

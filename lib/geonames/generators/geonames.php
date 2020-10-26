@@ -62,7 +62,9 @@ foreach ($lang_geonames as $lang_maxmind => $lang_geoname) {
 				$id = $row['countryCode'];
 				if (!$id)
 					continue;
-				
+
+//	var_dump($row);	die();
+
 				// Country data
 				$r['country']['iso_code'] = $id;
 				if (!empty($row['isoAlpha3']))
@@ -85,6 +87,11 @@ foreach ($lang_geonames as $lang_maxmind => $lang_geoname) {
 					$r['location']['latitude'] = ($row['north'] + $row['south']) / 2.0;
 				if (isset($row['west']) && isset($row['east']))
 					$r['location']['longitude'] = ($row['west'] + $row['east']) / 2.0;
+
+				// Currency
+				if (!empty($row['currencyCode'])) {
+					$r['extra']['currency_code'] = $row['currencyCode'];
+				}
 				
 				$records[$id] = $r;
 			}
