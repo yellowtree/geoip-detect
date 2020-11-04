@@ -42,11 +42,12 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 = How can I use these functions? =
 
 * You could choose the currency of the store based on the country name
-* You could suggest an timezone to use when displaying dates
+* You could pre-fill the shipping country
 * You could show the store nearest to your customer
 * You show or hide content specific to a geographic target group
 * Etc. ... You tell me! I'm rather curious what you'll do with this plugin!
 * Be careful to comply to the applicable laws. For example Regulation (EU) 2018/302 (going into effect 03 Dec 2018)...
+* If you need to get the user's timezone, it is more accurate to use JS solutions.
 
 **System Requirements**: You will need at least PHP 5.4.
 
@@ -152,6 +153,8 @@ New: Shortcode for showing/hiding content!
 
 = 3.1.2 =
 * NEW: The shortcode `[geoip_detect2_text_input]` now has a parameter `type` for hidden or other HTML5 input types (see [Postal code example](https://github.com/yellowtree/geoip-detect/wiki/API:-Shortcodes-for-Contact-Form-7#create-a-text-input-that-is-prefilled-with-a-geodetected-property))
+* NEW: In all datasources, the new record property `$record->extra->currencyCode` for the currency code of the detected country has been added
+* FIX: Compatibility with PHP 8.0
 
 = 3.1.1 =
 * NEW: Add the possibility to access the ISO-3166 alpha3 version of `$record->country`: `$record->extra->countryIsoCode3` or `[geoip_detect2 property="extra.countryIsoCode3"]`
