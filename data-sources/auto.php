@@ -150,6 +150,9 @@ HTML;
 		if (!is_readable($data_filename))
 			$data_filename = '';
 
+		/**
+		 * @deprecated - use `geoip_detect_get_abs_mmdb_filename` instead
+		 */
 		$data_filename = apply_filters('geoip_detect_get_abs_db_filename', $data_filename);
 		return $data_filename;
 	}
@@ -159,6 +162,7 @@ HTML;
 		$dir = $upload_dir['basedir'];
 
 		$filename = $dir . '/' . GEOIP_DETECT_DATA_UPDATE_FILENAME;
+		$data_filename = apply_filters('geoip_detect_get_abs_mmdb_filename', $data_filename);
 		return $filename;
 	}
 
