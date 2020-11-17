@@ -260,7 +260,10 @@ HTML;
 
 		global $wp_filesystem;
 		if (!$wp_filesystem) {
-			\WP_Filesystem(false, get_temp_dir());
+			$ret = \WP_Filesystem(false, get_temp_dir());
+			if (!$ret) {
+				return __('WP Filesystem could not be initialized (does not support FTP credential access. Can you upload files to the media library?).', 'geoip-detect');
+			}
 		}
 		if (\is_dir($outDir)) {
 			$wp_filesystem->rmdir($outDir, true);
