@@ -162,7 +162,7 @@ HTML;
 		$dir = $upload_dir['basedir'];
 
 		$filename = $dir . '/' . GEOIP_DETECT_DATA_UPDATE_FILENAME;
-		$data_filename = apply_filters('geoip_detect_get_abs_mmdb_filename', $data_filename);
+		$filename = apply_filters('geoip_detect_get_abs_mmdb_filename', $filename);
 		return $filename;
 	}
 
