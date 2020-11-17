@@ -154,6 +154,9 @@ New: Shortcode for showing/hiding content!
 
 == Changelog ==
 
+* FIX: If timeZone is unknown, leave empty value instead of NULL
+* FIX: Improve compatibility with PHP 8.0
+
 = 3.1.2 =
 * NEW: The shortcode `[geoip_detect2_text_input]` now has a parameter `type` for hidden or other HTML5 input types (see [Postal code example](https://github.com/yellowtree/geoip-detect/wiki/API:-Shortcodes-for-Contact-Form-7#create-a-text-input-that-is-prefilled-with-a-geodetected-property))
 * NEW: In all datasources, the new record property `$record->extra->currencyCode` for the currency code of the detected country has been added
