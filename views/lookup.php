@@ -102,7 +102,11 @@ function var_export_short($data, $return=true)
 			<br /><?php printf(__('(Served from cache. Was cached %s ago)', 'geoip-detect'), human_time_diff($record->extra->cached));?>
 		<?php endif; ?>
 	</p>
-
+	<?php if ($record->isEmpty) : ?>
+	<p class="geoip_detect_error">
+		<?php printf(__('No information has been found for the IP %s ...', 'geoip-detect'), esc_html($record->traits->ipAddress)); ?>
+	</p>
+	<?php endif; ?>
 	<?php if ($record->extra->error) : ?>
 	<p class="geoip_detect_error">
 		<?php echo nl2br(esc_html($record->extra->error)); ?>
