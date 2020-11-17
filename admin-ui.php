@@ -259,7 +259,7 @@ function _geoip_detect_improve_data_for_lookup($data, $shorten_attributes = fals
 
 		if ($a_found === false) $a_found = 1000;
 		if ($b_found === false) $b_found = 1000;
-		return $a_found > $b_found;
+		return $a_found - $b_found;
 	});
 
 	return $data;
