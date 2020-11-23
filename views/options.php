@@ -80,13 +80,13 @@ $currentSourceId = $currentSource->getId();
 		</p>
 
 		<p>
-			<label><input type="checkbox" name="options[ajax_enabled]" value="1" <?php if (!empty($wp_options['ajax_enabled'])) { echo 'checked="checked"'; } ?>>BETA: &nbsp;<?php _e('Enable AJAX endpoint to get the information for the current IP even on cached pages.', 'geoip-detect'); ?></label>
+			<label><input type="checkbox" name="options[ajax_enabled]" value="1" <?php if (!empty($wp_options['ajax_enabled'])) { echo 'checked="checked"'; } ?>><?php _e('Enable AJAX endpoint to get the information for the current IP even on cached pages.', 'geoip-detect'); ?></label>
 		</p>
 			<?php if (in_array($currentSourceId, array('precision', 'ipstack')) && !empty($wp_options['ajax_enabled'])): ?>
 				<span class="geoip_detect_error" style="margin-top: 0;"><?php printf(__('Warning: In theory, other websites could use your API credits over AJAX, this cannot be prevented completely (see <a href="%s" target="_blank">documentation</a> for more infos). You should use a different data source or disable AJAX.', 'geoip-detect'), 'https://github.com/yellowtree/geoip-detect/wiki/JS-API-Documentation'); ?></span>
 			<?php endif; ?>
 		<p style="margin-left: 20px;">
-			<label><input type="checkbox" name="options[ajax_enqueue_js]" value="1" <?php if (!empty($wp_options['ajax_enqueue_js'])) { echo 'checked="checked"'; } ?>>BETA: &nbsp;<?php _e('Add JS to make the access to the AJAX endpoint easier.', 'geoip-detect'); ?></label>
+			<label><input type="checkbox" name="options[ajax_enqueue_js]" value="1" <?php if (!empty($wp_options['ajax_enqueue_js'])) { echo 'checked="checked"'; } ?>><?php _e('Add JS to make the access to the AJAX endpoint easier.', 'geoip-detect'); ?></label>
 			<span class="detail-box">
 				<?php _e('You will need to code JS (see <a href="https://github.com/yellowtree/geoip-detect/wiki/API%3A-AJAX">documentation</a>) in order to make this work. Shortcodes are not automatically converted to their AJAX equivalent.', 'geoip-detect'); ?>
 			</span>
