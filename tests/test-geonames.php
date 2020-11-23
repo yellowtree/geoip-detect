@@ -16,7 +16,7 @@ class GeonamesTest extends WP_UnitTestCase_GeoIP_Detect {
 		$mem_before = memory_get_usage();
 		$data = require(GEOIP_DETECT_GEONAMES_COUNTRY_INFO);
 		$mem_after = memory_get_usage();
-		$mem_diff = floor(($mem_after - $mem_before) / 1024) + 1;
+		$mem_diff = floor(($mem_after - $mem_before) / 1500) + 1;
 		echo " (Geonames CountryInfo takes up ~$mem_diff kB in Memory.) ";
 		
 		$this->assertLessThan(1024, $mem_diff);
