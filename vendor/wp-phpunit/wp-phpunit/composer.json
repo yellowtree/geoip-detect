@@ -1,0 +1,30 @@
+{
+    "name": "wp-phpunit/wp-phpunit",
+    "description": "WordPress core PHPUnit library",
+    "type": "library",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Evan Mattson",
+            "email": "me@aaemnnost.tv"
+        },
+        {
+            "name": "WordPress Community",
+            "homepage": "https://wordpress.org/about/"
+        }
+    ],
+    "keywords": [
+        "wordpress",
+        "phpunit",
+        "test"
+    ],
+    "homepage": "https://github.com/wp-phpunit",
+    "support": {
+        "source": "https://github.com/wp-phpunit/wp-phpunit",
+        "issues": "https://github.com/wp-phpunit/issues",
+        "docs": "https://github.com/wp-phpunit/docs"
+    },
+    "autoload": {
+        "files": ["__loaded.php"]
+    }
+}

@@ -19,8 +19,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^5.0",
-        "roots/wordpress": "^5.0",
-        "wp-phpunit/wp-phpunit": "^5.0"
+        "roots/wordpress": "^5.5",
+        "wp-phpunit/wp-phpunit": "^5.5"
     },
     "scripts": {
         "test": "phpunit"
