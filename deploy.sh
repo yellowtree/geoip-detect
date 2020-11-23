@@ -100,6 +100,11 @@ README.md
 tests
 test
 phpunit.xml
+vendor/phpspec
+vendor/phpunit
+vendor/wp-phpunit
+vendor/webmozart
+vendor/sebastian
 " "$SVNPATH/trunk/"
 
 svn propset svn:ignore '*' "$SVNPATH/trunk/lib/geonames/generators/"
