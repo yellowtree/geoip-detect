@@ -1,5 +1,5 @@
 <?php
-// Generated at Sat, 01 Aug 2020 11:56:09 +0200 
+// Generated at Mon, 26 Oct 2020 11:17:35 +0100 
 return array (
   'countries' => 
   array (
@@ -29,6 +29,10 @@ return array (
         'latitude' => 42.54225400050004,
         'longitude' => 1.600168000500048,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'AE' => 
     array (
@@ -55,6 +59,10 @@ return array (
       array (
         'latitude' => 24.3504517995001,
         'longitude' => 53.98581541150005,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'AED',
       ),
     ),
     'AF' => 
@@ -83,6 +91,10 @@ return array (
         'latitude' => 33.933928305646205,
         'longitude' => 67.68076727267155,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'AFN',
+      ),
     ),
     'AG' => 
     array (
@@ -109,6 +121,10 @@ return array (
       array (
         'latitude' => 17.363873463715656,
         'longitude' => -61.7892360685,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'XCD',
       ),
     ),
     'AI' => 
@@ -137,6 +153,10 @@ return array (
         'latitude' => 18.218597472984868,
         'longitude' => -63.067322670909135,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'XCD',
+      ),
     ),
     'AL' => 
     array (
@@ -163,6 +183,10 @@ return array (
       array (
         'latitude' => 41.15301471062055,
         'longitude' => 20.160672377352647,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'ALL',
       ),
     ),
     'AM' => 
@@ -191,6 +215,10 @@ return array (
         'latitude' => 40.07061850000005,
         'longitude' => 45.04081976250005,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'AMD',
+      ),
     ),
     'AO' => 
     array (
@@ -217,6 +245,10 @@ return array (
       array (
         'latitude' => -11.209451000000001,
         'longitude' => 17.880668999999997,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'AOA',
       ),
     ),
     'AQ' => 
@@ -272,6 +304,10 @@ return array (
         'latitude' => -38.41782481349995,
         'longitude' => -63.60213268449999,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'ARS',
+      ),
     ),
     'AS' => 
     array (
@@ -298,6 +334,10 @@ return array (
       array (
         'latitude' => -12.7108165,
         'longitude' => -170.2544835,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'USD',
       ),
     ),
     'AT' => 
@@ -326,6 +366,10 @@ return array (
         'latitude' => 47.69690739538185,
         'longitude' => 13.346510468834115,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'AU' => 
     array (
@@ -352,6 +396,10 @@ return array (
       array (
         'latitude' => -26.8511629395,
         'longitude' => 133.279920484,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'AUD',
       ),
     ),
     'AW' => 
@@ -380,6 +428,10 @@ return array (
         'latitude' => 12.51771291667182,
         'longitude' => -69.96511246032716,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'AWG',
+      ),
     ),
     'AX' => 
     array (
@@ -406,6 +458,10 @@ return array (
       array (
         'latitude' => 60.1978055,
         'longitude' => 20.164778,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
       ),
     ),
     'AZ' => 
@@ -434,6 +490,10 @@ return array (
         'latitude' => 40.1522785010001,
         'longitude' => 47.56738292800005,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'AZN',
+      ),
     ),
     'BA' => 
     array (
@@ -460,6 +520,10 @@ return array (
       array (
         'latitude' => 43.9160067475,
         'longitude' => 17.67621689400005,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'BAM',
       ),
     ),
     'BB' => 
@@ -488,6 +552,10 @@ return array (
         'latitude' => 13.190347195500099,
         'longitude' => -59.53669357299995,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'BBD',
+      ),
     ),
     'BD' => 
     array (
@@ -514,6 +582,10 @@ return array (
       array (
         'latitude' => 23.687639500000003,
         'longitude' => 90.351002,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'BDT',
       ),
     ),
     'BE' => 
@@ -542,6 +614,10 @@ return array (
         'latitude' => 50.50104018639075,
         'longitude' => 4.47463321196499,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'BF' => 
     array (
@@ -568,6 +644,10 @@ return array (
       array (
         'latitude' => 12.24725261100004,
         'longitude' => -1.554440901999955,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'XOF',
       ),
     ),
     'BG' => 
@@ -596,6 +676,10 @@ return array (
         'latitude' => 42.725396246500054,
         'longitude' => 25.48371696450005,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'BGN',
+      ),
     ),
     'BH' => 
     array (
@@ -622,6 +706,10 @@ return array (
       array (
         'latitude' => 26.060862501000052,
         'longitude' => 50.51823850000005,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'BHD',
       ),
     ),
     'BI' => 
@@ -650,6 +738,10 @@ return array (
         'latitude' => -3.38952958099995,
         'longitude' => 29.925254000000052,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'BIF',
+      ),
     ),
     'BJ' => 
     array (
@@ -676,6 +768,10 @@ return array (
       array (
         'latitude' => 9.32169447050008,
         'longitude' => 2.3092376820000338,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'XOF',
       ),
     ),
     'BL' => 
@@ -704,6 +800,10 @@ return array (
         'latitude' => 17.90349600967743,
         'longitude' => -62.83144759918213,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'BM' => 
     array (
@@ -730,6 +830,10 @@ return array (
       array (
         'latitude' => 32.3191096873836,
         'longitude' => -64.7671842924268,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'BMD',
       ),
     ),
     'BN' => 
@@ -758,6 +862,10 @@ return array (
         'latitude' => 4.52417778150577,
         'longitude' => 114.72029899750001,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'BND',
+      ),
     ),
     'BO' => 
     array (
@@ -784,6 +892,10 @@ return array (
       array (
         'latitude' => -16.283706499499985,
         'longitude' => -63.54937128649995,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'BOB',
       ),
     ),
     'BQ' => 
@@ -812,6 +924,10 @@ return array (
         'latitude' => 12.168205000812044,
         'longitude' => -68.30758245947933,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'USD',
+      ),
     ),
     'BR' => 
     array (
@@ -838,6 +954,10 @@ return array (
       array (
         'latitude' => -14.242914500000001,
         'longitude' => -53.1892665,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'BRL',
       ),
     ),
     'BS' => 
@@ -866,6 +986,10 @@ return array (
         'latitude' => 24.885993,
         'longitude' => -76.711701079509,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'BSD',
+      ),
     ),
     'BT' => 
     array (
@@ -892,6 +1016,10 @@ return array (
       array (
         'latitude' => 27.474503993,
         'longitude' => 90.43537673850005,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'BTN',
       ),
     ),
     'BV' => 
@@ -920,6 +1048,10 @@ return array (
         'latitude' => -54.419768851630295,
         'longitude' => 3.360811002897833,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'NOK',
+      ),
     ),
     'BW' => 
     array (
@@ -946,6 +1078,10 @@ return array (
       array (
         'latitude' => -22.342840999499998,
         'longitude' => 24.6871035,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'BWP',
       ),
     ),
     'BY' => 
@@ -974,6 +1110,10 @@ return array (
         'latitude' => 53.71725250050005,
         'longitude' => 27.97750900100005,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'BYN',
+      ),
     ),
     'BZ' => 
     array (
@@ -1000,6 +1140,10 @@ return array (
       array (
         'latitude' => 17.1929285,
         'longitude' => -88.5009,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'BZD',
       ),
     ),
     'CA' => 
@@ -1028,6 +1172,10 @@ return array (
         'latitude' => 62.393303,
         'longitude' => -96.8181455,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'CAD',
+      ),
     ),
     'CC' => 
     array (
@@ -1054,6 +1202,10 @@ return array (
       array (
         'latitude' => -12.1405924665,
         'longitude' => 96.873215376,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'AUD',
       ),
     ),
     'CD' => 
@@ -1082,6 +1234,10 @@ return array (
         'latitude' => -4.033515999499976,
         'longitude' => 21.75848674550005,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'CDF',
+      ),
     ),
     'CF' => 
     array (
@@ -1108,6 +1264,10 @@ return array (
       array (
         'latitude' => 6.6205050000000245,
         'longitude' => 20.936701500000098,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'XAF',
       ),
     ),
     'CG' => 
@@ -1136,6 +1296,10 @@ return array (
         'latitude' => -0.66646529399995,
         'longitude' => 14.90124862500005,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'XAF',
+      ),
     ),
     'CH' => 
     array (
@@ -1162,6 +1326,10 @@ return array (
       array (
         'latitude' => 46.81451094229815,
         'longitude' => 8.225043641892114,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'CHF',
       ),
     ),
     'CI' => 
@@ -1190,6 +1358,10 @@ return array (
         'latitude' => 7.550183740000035,
         'longitude' => -5.547544999999955,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'XOF',
+      ),
     ),
     'CK' => 
     array (
@@ -1216,6 +1388,10 @@ return array (
       array (
         'latitude' => -15.983639,
         'longitude' => -159.202896,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'NZD',
       ),
     ),
     'CL' => 
@@ -1244,6 +1420,10 @@ return array (
         'latitude' => -36.70378567749995,
         'longitude' => -73.62659049299995,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'CLP',
+      ),
     ),
     'CM' => 
     array (
@@ -1270,6 +1450,10 @@ return array (
       array (
         'latitude' => 7.369617000000015,
         'longitude' => 12.346421014500084,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'XAF',
       ),
     ),
     'CN' => 
@@ -1298,6 +1482,10 @@ return array (
         'latitude' => 34.6681950005,
         'longitude' => 104.13743515000004,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'CNY',
+      ),
     ),
     'CO' => 
     array (
@@ -1324,6 +1512,10 @@ return array (
       array (
         'latitude' => 4.578805493500015,
         'longitude' => -74.29149552349995,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'COP',
       ),
     ),
     'CR' => 
@@ -1352,6 +1544,10 @@ return array (
         'latitude' => 9.62969311513248,
         'longitude' => -84.25128567329276,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'CRC',
+      ),
     ),
     'CU' => 
     array (
@@ -1378,6 +1574,10 @@ return array (
       array (
         'latitude' => 21.5270625,
         'longitude' => -79.5446015,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'CUP',
       ),
     ),
     'CV' => 
@@ -1406,6 +1606,10 @@ return array (
         'latitude' => 16.01000023000005,
         'longitude' => -24.0141716004999,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'CVE',
+      ),
     ),
     'CW' => 
     array (
@@ -1432,6 +1636,10 @@ return array (
       array (
         'latitude' => 12.209208499999999,
         'longitude' => -68.94557599999999,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'ANG',
       ),
     ),
     'CX' => 
@@ -1460,6 +1668,10 @@ return array (
         'latitude' => -10.49141950325,
         'longitude' => 105.622936992,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'AUD',
+      ),
     ),
     'CY' => 
     array (
@@ -1486,6 +1698,10 @@ return array (
       array (
         'latitude' => 35.1674058361454,
         'longitude' => 33.43549949999999,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
       ),
     ),
     'CZ' => 
@@ -1514,6 +1730,10 @@ return array (
         'latitude' => 49.803835553233554,
         'longitude' => 15.474971770021849,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'CZK',
+      ),
     ),
     'DE' => 
     array (
@@ -1540,6 +1760,10 @@ return array (
       array (
         'latitude' => 51.1642536027537,
         'longitude' => 10.45406545999425,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
       ),
     ),
     'DJ' => 
@@ -1568,6 +1792,10 @@ return array (
         'latitude' => 11.8133248960001,
         'longitude' => 42.5941779960001,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'DJF',
+      ),
     ),
     'DK' => 
     array (
@@ -1594,6 +1822,10 @@ return array (
       array (
         'latitude' => 55.943643117506,
         'longitude' => 11.61474095523926,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'DKK',
       ),
     ),
     'DM' => 
@@ -1622,6 +1854,10 @@ return array (
         'latitude' => 15.42322117603375,
         'longitude' => -61.361229664948894,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'XCD',
+      ),
     ),
     'DO' => 
     array (
@@ -1648,6 +1884,10 @@ return array (
       array (
         'latitude' => 18.7358162165838,
         'longitude' => -70.16721579756275,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'DOP',
       ),
     ),
     'DZ' => 
@@ -1676,6 +1916,10 @@ return array (
         'latitude' => 28.0289741905,
         'longitude' => 1.665444371500075,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'DZD',
+      ),
     ),
     'EC' => 
     array (
@@ -1702,6 +1946,10 @@ return array (
       array (
         'latitude' => -1.7904610797626752,
         'longitude' => -78.13541522506975,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'USD',
       ),
     ),
     'EE' => 
@@ -1730,6 +1978,10 @@ return array (
         'latitude' => 58.592312052510394,
         'longitude' => 25.0188134014756,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'EG' => 
     array (
@@ -1756,6 +2008,10 @@ return array (
       array (
         'latitude' => 26.69797250000005,
         'longitude' => 30.2451595510001,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'EGP',
       ),
     ),
     'EH' => 
@@ -1784,6 +2040,10 @@ return array (
         'latitude' => 24.221916,
         'longitude' => -12.886728999999999,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'MAD',
+      ),
     ),
     'ER' => 
     array (
@@ -1810,6 +2070,10 @@ return array (
       array (
         'latitude' => 15.1813195,
         'longitude' => 39.786709,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'ERN',
       ),
     ),
     'ES' => 
@@ -1838,6 +2102,10 @@ return array (
         'latitude' => 39.895730508715744,
         'longitude' => -2.48686547093969,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'ET' => 
     array (
@@ -1864,6 +2132,10 @@ return array (
       array (
         'latitude' => 9.14917550050002,
         'longitude' => 40.49939500100005,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'ETB',
       ),
     ),
     'FI' => 
@@ -1892,6 +2164,10 @@ return array (
         'latitude' => 64.9524155,
         'longitude' => 26.068944000000002,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'FJ' => 
     array (
@@ -1918,6 +2194,10 @@ return array (
       array (
         'latitude' => -16.5777497691242,
         'longitude' => -0.642211360009,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'FJD',
       ),
     ),
     'FK' => 
@@ -1946,6 +2226,10 @@ return array (
         'latitude' => -51.80856182349995,
         'longitude' => -59.53277216299995,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'FKP',
+      ),
     ),
     'FM' => 
     array (
@@ -1972,6 +2256,10 @@ return array (
       array (
         'latitude' => 5.557665,
         'longitude' => 150.186825,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'USD',
       ),
     ),
     'FO' => 
@@ -2000,6 +2288,10 @@ return array (
         'latitude' => 61.892459353514354,
         'longitude' => -6.972375624847877,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'DKK',
+      ),
     ),
     'FR' => 
     array (
@@ -2026,6 +2318,10 @@ return array (
       array (
         'latitude' => 46.22677421171325,
         'longitude' => 2.20940851669801,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
       ),
     ),
     'GA' => 
@@ -2054,6 +2350,10 @@ return array (
         'latitude' => -0.8218493794999502,
         'longitude' => 11.613166223500075,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'XAF',
+      ),
     ),
     'GB' => 
     array (
@@ -2080,6 +2380,10 @@ return array (
       array (
         'latitude' => 54.631818205118,
         'longitude' => -3.424404333849145,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'GBP',
       ),
     ),
     'GD' => 
@@ -2108,6 +2412,10 @@ return array (
         'latitude' => 12.15258846408565,
         'longitude' => -61.68955685054016,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'XCD',
+      ),
     ),
     'GE' => 
     array (
@@ -2134,6 +2442,10 @@ return array (
       array (
         'latitude' => 42.320784500000045,
         'longitude' => 43.371361500000006,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'GEL',
       ),
     ),
     'GF' => 
@@ -2162,6 +2474,10 @@ return array (
         'latitude' => 3.929163770525865,
         'longitude' => -53.11074068592585,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'GG' => 
     array (
@@ -2188,6 +2504,10 @@ return array (
       array (
         'latitude' => 49.5696846927372,
         'longitude' => -2.4154549023503478,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'GBP',
       ),
     ),
     'GH' => 
@@ -2216,6 +2536,10 @@ return array (
         'latitude' => 7.95694917750002,
         'longitude' => -1.03065230949994,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'GHS',
+      ),
     ),
     'GI' => 
     array (
@@ -2242,6 +2566,10 @@ return array (
       array (
         'latitude' => 36.132234918536604,
         'longitude' => -5.352273330719015,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'GIP',
       ),
     ),
     'GL' => 
@@ -2270,6 +2598,10 @@ return array (
         'latitude' => 71.70237900000001,
         'longitude' => -42.1771745,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'DKK',
+      ),
     ),
     'GM' => 
     array (
@@ -2296,6 +2628,10 @@ return array (
       array (
         'latitude' => 13.444388084,
         'longitude' => -15.30249809649995,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'GMD',
       ),
     ),
     'GN' => 
@@ -2324,6 +2660,10 @@ return array (
         'latitude' => 9.934886500000001,
         'longitude' => -11.283845,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'GNF',
+      ),
     ),
     'GP' => 
     array (
@@ -2350,6 +2690,10 @@ return array (
       array (
         'latitude' => 16.19049772251395,
         'longitude' => -61.276388467147,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
       ),
     ),
     'GQ' => 
@@ -2378,6 +2722,10 @@ return array (
         'latitude' => 1.6339245,
         'longitude' => 10.3412945,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'XAF',
+      ),
     ),
     'GR' => 
     array (
@@ -2404,6 +2752,10 @@ return array (
       array (
         'latitude' => 38.275283162055345,
         'longitude' => 23.81034336692405,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
       ),
     ),
     'GS' => 
@@ -2432,6 +2784,10 @@ return array (
         'latitude' => -56.722045023,
         'longitude' => -32.15001033799995,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'GBP',
+      ),
     ),
     'GT' => 
     array (
@@ -2458,6 +2814,10 @@ return array (
       array (
         'latitude' => 15.777858085000052,
         'longitude' => -90.2320725175,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'GTQ',
       ),
     ),
     'GU' => 
@@ -2486,6 +2846,10 @@ return array (
         'latitude' => 13.444081,
         'longitude' => 144.78760599999998,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'USD',
+      ),
     ),
     'GW' => 
     array (
@@ -2512,6 +2876,10 @@ return array (
       array (
         'latitude' => 11.802527000000001,
         'longitude' => -15.1770285,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'XOF',
       ),
     ),
     'GY' => 
@@ -2540,6 +2908,10 @@ return array (
         'latitude' => 4.8663235,
         'longitude' => -58.9325065,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'GYD',
+      ),
     ),
     'HK' => 
     array (
@@ -2566,6 +2938,10 @@ return array (
       array (
         'latitude' => 22.358587498573748,
         'longitude' => 114.140602967237,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'HKD',
       ),
     ),
     'HM' => 
@@ -2594,6 +2970,10 @@ return array (
         'latitude' => -53.0507085,
         'longitude' => 73.2278405,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'AUD',
+      ),
     ),
     'HN' => 
     array (
@@ -2620,6 +3000,10 @@ return array (
       array (
         'latitude' => 14.746333499999999,
         'longitude' => -86.2530975,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'HNL',
       ),
     ),
     'HR' => 
@@ -2648,6 +3032,10 @@ return array (
         'latitude' => 44.495426477924354,
         'longitude' => 16.4603055,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'HRK',
+      ),
     ),
     'HT' => 
     array (
@@ -2674,6 +3062,10 @@ return array (
       array (
         'latitude' => 19.054426,
         'longitude' => -73.04597100000001,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'HTG',
       ),
     ),
     'HU' => 
@@ -2702,6 +3094,10 @@ return array (
         'latitude' => 47.16119277950005,
         'longitude' => 19.505179668,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'HUF',
+      ),
     ),
     'ID' => 
     array (
@@ -2728,6 +3124,10 @@ return array (
       array (
         'latitude' => -2.5179379499999306,
         'longitude' => 118.01527325000004,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'IDR',
       ),
     ),
     'IE' => 
@@ -2756,6 +3156,10 @@ return array (
         'latitude' => 53.41524615711785,
         'longitude' => -8.239026741703576,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'IL' => 
     array (
@@ -2782,6 +3186,10 @@ return array (
       array (
         'latitude' => 31.39074493100005,
         'longitude' => 34.968793500000004,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'ILS',
       ),
     ),
     'IM' => 
@@ -2810,6 +3218,10 @@ return array (
         'latitude' => 54.235753835920846,
         'longitude' => -4.551163246336699,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'GBP',
+      ),
     ),
     'IN' => 
     array (
@@ -2836,6 +3248,10 @@ return array (
       array (
         'latitude' => 21.14025058611815,
         'longitude' => 82.94965549313615,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'INR',
       ),
     ),
     'IO' => 
@@ -2864,6 +3280,10 @@ return array (
         'latitude' => -6.353180500000001,
         'longitude' => 71.87656799999999,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'USD',
+      ),
     ),
     'IQ' => 
     array (
@@ -2890,6 +3310,10 @@ return array (
       array (
         'latitude' => 33.22097700050005,
         'longitude' => 43.7027050000001,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'IQD',
       ),
     ),
     'IR' => 
@@ -2918,6 +3342,10 @@ return array (
         'latitude' => 32.421313950000055,
         'longitude' => 53.682987854000004,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'IRR',
+      ),
     ),
     'IS' => 
     array (
@@ -2944,6 +3372,10 @@ return array (
       array (
         'latitude' => 64.96609304421385,
         'longitude' => -19.0136480053063,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'ISK',
       ),
     ),
     'IT' => 
@@ -2972,6 +3404,10 @@ return array (
         'latitude' => 41.86793270385435,
         'longitude' => 12.57350138452484,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'JE' => 
     array (
@@ -2998,6 +3434,10 @@ return array (
       array (
         'latitude' => 49.2174455,
         'longitude' => -2.1410555000000002,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'GBP',
       ),
     ),
     'JM' => 
@@ -3026,6 +3466,10 @@ return array (
         'latitude' => 18.1153814024428,
         'longitude' => -77.27605264016915,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'JMD',
+      ),
     ),
     'JO' => 
     array (
@@ -3052,6 +3496,10 @@ return array (
       array (
         'latitude' => 31.27988550050005,
         'longitude' => 37.12831251950006,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'JOD',
       ),
     ),
     'JP' => 
@@ -3080,6 +3528,10 @@ return array (
         'latitude' => 34.8890634005,
         'longitude' => 134.37555597300002,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'JPY',
+      ),
     ),
     'KE' => 
     array (
@@ -3106,6 +3558,10 @@ return array (
       array (
         'latitude' => 0.17676325450003016,
         'longitude' => 37.9083830000001,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'KES',
       ),
     ),
     'KG' => 
@@ -3134,6 +3590,10 @@ return array (
         'latitude' => 41.205528,
         'longitude' => 74.779888,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'KGS',
+      ),
     ),
     'KH' => 
     array (
@@ -3160,6 +3620,10 @@ return array (
       array (
         'latitude' => 12.54775,
         'longitude' => 104.98385999999999,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'KHR',
       ),
     ),
     'KI' => 
@@ -3188,6 +3652,10 @@ return array (
         'latitude' => -3.7533109999996856,
         'longitude' => 9.657090248354748,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'AUD',
+      ),
     ),
     'KM' => 
     array (
@@ -3214,6 +3682,10 @@ return array (
       array (
         'latitude' => -11.875119,
         'longitude' => 43.8770065,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'KMF',
       ),
     ),
     'KN' => 
@@ -3242,6 +3714,10 @@ return array (
         'latitude' => 17.2562145143877,
         'longitude' => -62.70224033893547,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'XCD',
+      ),
     ),
     'KP' => 
     array (
@@ -3268,6 +3744,10 @@ return array (
       array (
         'latitude' => 40.339693,
         'longitude' => 127.4953765,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'KPW',
       ),
     ),
     'KR' => 
@@ -3296,6 +3776,10 @@ return array (
         'latitude' => 35.8943997034617,
         'longitude' => 127.7352292667875,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'KRW',
+      ),
     ),
     'KW' => 
     array (
@@ -3322,6 +3806,10 @@ return array (
       array (
         'latitude' => 29.310278,
         'longitude' => 47.493515,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'KWD',
       ),
     ),
     'KY' => 
@@ -3350,6 +3838,10 @@ return array (
         'latitude' => 19.5123645,
         'longitude' => -80.58002450000001,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'KYD',
+      ),
     ),
     'KZ' => 
     array (
@@ -3376,6 +3868,10 @@ return array (
       array (
         'latitude' => 48.005336250000056,
         'longitude' => 66.9045435005001,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'KZT',
       ),
     ),
     'LA' => 
@@ -3404,6 +3900,10 @@ return array (
         'latitude' => 18.2093824755,
         'longitude' => 103.85948296800001,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'LAK',
+      ),
     ),
     'LB' => 
     array (
@@ -3430,6 +3930,10 @@ return array (
       array (
         'latitude' => 33.8735580000001,
         'longitude' => 35.8636941065,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'LBP',
       ),
     ),
     'LC' => 
@@ -3458,6 +3962,10 @@ return array (
         'latitude' => 13.9087932550721,
         'longitude' => -60.97659397191231,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'XCD',
+      ),
     ),
     'LI' => 
     array (
@@ -3484,6 +3992,10 @@ return array (
       array (
         'latitude' => 47.1595267755215,
         'longitude' => 9.55365820459405,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'CHF',
       ),
     ),
     'LK' => 
@@ -3512,6 +4024,10 @@ return array (
         'latitude' => 7.87727986907553,
         'longitude' => 80.7648209296629,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'LKR',
+      ),
     ),
     'LR' => 
     array (
@@ -3538,6 +4054,10 @@ return array (
       array (
         'latitude' => 6.45262371650006,
         'longitude' => -9.434283202999925,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'LRD',
       ),
     ),
     'LS' => 
@@ -3566,6 +4086,10 @@ return array (
         'latitude' => -29.62318750149995,
         'longitude' => 28.23346997000005,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'LSL',
+      ),
     ),
     'LT' => 
     array (
@@ -3592,6 +4116,10 @@ return array (
       array (
         'latitude' => 55.17360075000005,
         'longitude' => 23.88852555,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
       ),
     ),
     'LU' => 
@@ -3620,6 +4148,10 @@ return array (
         'latitude' => 49.81531556578108,
         'longitude' => 6.133298502823369,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'LV' => 
     array (
@@ -3646,6 +4178,10 @@ return array (
       array (
         'latitude' => 56.880117861500054,
         'longitude' => 24.60525674450005,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
       ),
     ),
     'LY' => 
@@ -3674,6 +4210,10 @@ return array (
         'latitude' => 26.338521999999998,
         'longitude' => 17.268816,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'LYD',
+      ),
     ),
     'MA' => 
     array (
@@ -3700,6 +4240,10 @@ return array (
       array (
         'latitude' => 31.794805285000052,
         'longitude' => -7.0846364104999235,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'MAD',
       ),
     ),
     'MC' => 
@@ -3728,6 +4272,10 @@ return array (
         'latitude' => 43.738347784533026,
         'longitude' => 7.424450755119324,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'MD' => 
     array (
@@ -3754,6 +4302,10 @@ return array (
       array (
         'latitude' => 46.97973348300005,
         'longitude' => 28.3900074995001,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'MDL',
       ),
     ),
     'ME' => 
@@ -3782,6 +4334,10 @@ return array (
         'latitude' => 42.7134908795,
         'longitude' => 19.393242790000052,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'MF' => 
     array (
@@ -3808,6 +4364,10 @@ return array (
       array (
         'latitude' => 18.086233691138208,
         'longitude' => -63.08047605105372,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
       ),
     ),
     'MG' => 
@@ -3836,6 +4396,10 @@ return array (
         'latitude' => -18.777192499999998,
         'longitude' => 46.854328,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'MGA',
+      ),
     ),
     'MH' => 
     array (
@@ -3862,6 +4426,10 @@ return array (
       array (
         'latitude' => 10.1038195,
         'longitude' => 168.728363,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'USD',
       ),
     ),
     'MK' => 
@@ -3890,6 +4458,10 @@ return array (
         'latitude' => 41.6137974700001,
         'longitude' => 21.7432335155001,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'MKD',
+      ),
     ),
     'ML' => 
     array (
@@ -3916,6 +4488,10 @@ return array (
       array (
         'latitude' => 17.574447499999998,
         'longitude' => -3.98683838699997,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'XOF',
       ),
     ),
     'MM' => 
@@ -3944,6 +4520,10 @@ return array (
         'latitude' => 19.163916,
         'longitude' => 96.6830295,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'MMK',
+      ),
     ),
     'MN' => 
     array (
@@ -3970,6 +4550,10 @@ return array (
       array (
         'latitude' => 46.8650940010001,
         'longitude' => 103.83299442950005,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'MNT',
       ),
     ),
     'MO' => 
@@ -3998,6 +4582,10 @@ return array (
         'latitude' => 22.16350585200005,
         'longitude' => 113.56045440700001,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'MOP',
+      ),
     ),
     'MP' => 
     array (
@@ -4024,6 +4612,10 @@ return array (
       array (
         'latitude' => 17.331834999999998,
         'longitude' => 145.47577,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'USD',
       ),
     ),
     'MQ' => 
@@ -4052,6 +4644,10 @@ return array (
         'latitude' => 14.63670969830225,
         'longitude' => -61.01936554081615,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'MR' => 
     array (
@@ -4078,6 +4674,10 @@ return array (
       array (
         'latitude' => 21.00681,
         'longitude' => -10.947097500000002,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'MRU',
       ),
     ),
     'MS' => 
@@ -4106,6 +4706,10 @@ return array (
         'latitude' => 16.74941457037737,
         'longitude' => -62.19274124998475,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'XCD',
+      ),
     ),
     'MT' => 
     array (
@@ -4132,6 +4736,10 @@ return array (
       array (
         'latitude' => 35.9441682997729,
         'longitude' => 14.379958300000151,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
       ),
     ),
     'MU' => 
@@ -4160,6 +4768,10 @@ return array (
         'latitude' => -15.43101978299995,
         'longitude' => 60.04387297000005,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'MUR',
+      ),
     ),
     'MV' => 
     array (
@@ -4186,6 +4798,10 @@ return array (
       array (
         'latitude' => 3.199446747707383,
         'longitude' => 73.165249,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'MVR',
       ),
     ),
     'MW' => 
@@ -4214,6 +4830,10 @@ return array (
         'latitude' => -13.24837454899993,
         'longitude' => 34.2955468265001,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'MWK',
+      ),
     ),
     'MX' => 
     array (
@@ -4240,6 +4860,10 @@ return array (
       array (
         'latitude' => 23.6248125,
         'longitude' => -102.57867049999999,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'MXN',
       ),
     ),
     'MY' => 
@@ -4268,6 +4892,10 @@ return array (
         'latitude' => 4.1093195,
         'longitude' => 109.455475,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'MYR',
+      ),
     ),
     'MZ' => 
     array (
@@ -4294,6 +4922,10 @@ return array (
       array (
         'latitude' => -18.670668815999953,
         'longitude' => 35.52682710550005,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'MZN',
       ),
     ),
     'NA' => 
@@ -4322,6 +4954,10 @@ return array (
         'latitude' => -22.967063586499947,
         'longitude' => 18.49962703050005,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'NAD',
+      ),
     ),
     'NC' => 
     array (
@@ -4348,6 +4984,10 @@ return array (
       array (
         'latitude' => -21.123889,
         'longitude' => 165.846901,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'XPF',
       ),
     ),
     'NE' => 
@@ -4376,6 +5016,10 @@ return array (
         'latitude' => 17.6043779960001,
         'longitude' => 8.08061382150006,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'XOF',
+      ),
     ),
     'NF' => 
     array (
@@ -4402,6 +5046,10 @@ return array (
       array (
         'latitude' => -29.02912371495158,
         'longitude' => 167.9565848518066,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'AUD',
       ),
     ),
     'NG' => 
@@ -4430,6 +5078,10 @@ return array (
         'latitude' => 9.078115159500044,
         'longitude' => 8.670771499500034,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'NGN',
+      ),
     ),
     'NI' => 
     array (
@@ -4456,6 +5108,10 @@ return array (
       array (
         'latitude' => 12.866726,
         'longitude' => -85.2142985,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'NIO',
       ),
     ),
     'NL' => 
@@ -4484,6 +5140,10 @@ return array (
         'latitude' => 52.1330400319425,
         'longitude' => 5.29293843207461,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'NO' => 
     array (
@@ -4510,6 +5170,10 @@ return array (
       array (
         'latitude' => 64.58267716739468,
         'longitude' => 17.852782042042108,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'NOK',
       ),
     ),
     'NP' => 
@@ -4538,6 +5202,10 @@ return array (
         'latitude' => 28.39767790950005,
         'longitude' => 84.12998828450006,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'NPR',
+      ),
     ),
     'NR' => 
     array (
@@ -4564,6 +5232,10 @@ return array (
       array (
         'latitude' => -0.5284018617376145,
         'longitude' => 166.934343,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'AUD',
       ),
     ),
     'NU' => 
@@ -4592,6 +5264,10 @@ return array (
         'latitude' => -19.051631,
         'longitude' => -169.8630905,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'NZD',
+      ),
     ),
     'NZ' => 
     array (
@@ -4618,6 +5294,10 @@ return array (
       array (
         'latitude' => -40.837847,
         'longitude' => -6.642250000000004,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'NZD',
       ),
     ),
     'OM' => 
@@ -4646,6 +5326,10 @@ return array (
         'latitude' => 21.5182085045001,
         'longitude' => 55.9189586640001,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'OMR',
+      ),
     ),
     'PA' => 
     array (
@@ -4672,6 +5356,10 @@ return array (
       array (
         'latitude' => 8.42489122796366,
         'longitude' => -80.10438130784925,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'PAB',
       ),
     ),
     'PE' => 
@@ -4700,6 +5388,10 @@ return array (
         'latitude' => -9.194766852163408,
         'longitude' => -74.9902372332577,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'PEN',
+      ),
     ),
     'PF' => 
     array (
@@ -4726,6 +5418,10 @@ return array (
       array (
         'latitude' => -17.7785725,
         'longitude' => -143.903496,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'XPF',
       ),
     ),
     'PG' => 
@@ -4754,6 +5450,10 @@ return array (
         'latitude' => -6.486708401499975,
         'longitude' => 148.4053747595,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'PGK',
+      ),
     ),
     'PH' => 
     array (
@@ -4780,6 +5480,10 @@ return array (
       array (
         'latitude' => 12.88199172124097,
         'longitude' => 121.76691925886163,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'PHP',
       ),
     ),
     'PK' => 
@@ -4808,6 +5512,10 @@ return array (
         'latitude' => 30.42681721800005,
         'longitude' => 68.9431347320001,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'PKR',
+      ),
     ),
     'PL' => 
     array (
@@ -4834,6 +5542,10 @@ return array (
       array (
         'latitude' => 51.9189175894306,
         'longitude' => 19.1343339362561,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'PLN',
       ),
     ),
     'PM' => 
@@ -4862,6 +5574,10 @@ return array (
         'latitude' => 46.963208868962745,
         'longitude' => -56.266211037608116,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'PN' => 
     array (
@@ -4888,6 +5604,10 @@ return array (
       array (
         'latitude' => -24.50125180992745,
         'longitude' => -126.56492005559713,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'NZD',
       ),
     ),
     'PR' => 
@@ -4916,6 +5636,10 @@ return array (
         'latitude' => 18.22143458321385,
         'longitude' => -66.59517222021375,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'USD',
+      ),
     ),
     'PS' => 
     array (
@@ -4942,6 +5666,10 @@ return array (
       array (
         'latitude' => 31.8860700515001,
         'longitude' => 34.896375715000104,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'ILS',
       ),
     ),
     'PT' => 
@@ -4970,6 +5698,10 @@ return array (
         'latitude' => 39.557780563704,
         'longitude' => -7.84484295732438,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'PW' => 
     array (
@@ -4996,6 +5728,10 @@ return array (
       array (
         'latitude' => 5.636629999999999,
         'longitude' => 132.920475,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'USD',
       ),
     ),
     'PY' => 
@@ -5024,6 +5760,10 @@ return array (
         'latitude' => -23.440716782554,
         'longitude' => -58.45177067417295,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'PYG',
+      ),
     ),
     'QA' => 
     array (
@@ -5050,6 +5790,10 @@ return array (
       array (
         'latitude' => 25.314496505500102,
         'longitude' => 51.190792372500056,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'QAR',
       ),
     ),
     'RE' => 
@@ -5078,6 +5822,10 @@ return array (
         'latitude' => -21.13072895774475,
         'longitude' => 55.52657761220275,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'RO' => 
     array (
@@ -5104,6 +5852,10 @@ return array (
       array (
         'latitude' => 45.942203927915045,
         'longitude' => 24.98864679799815,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'RON',
       ),
     ),
     'RS' => 
@@ -5132,6 +5884,10 @@ return array (
         'latitude' => 44.21047450050005,
         'longitude' => 20.92221552450005,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'RSD',
+      ),
     ),
     'RU' => 
     array (
@@ -5158,6 +5914,10 @@ return array (
       array (
         'latitude' => 61.523496965000106,
         'longitude' => -74.9,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'RUB',
       ),
     ),
     'RW' => 
@@ -5186,6 +5946,10 @@ return array (
         'latitude' => -1.9436984046076602,
         'longitude' => 29.8807387311076,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'RWF',
+      ),
     ),
     'SA' => 
     array (
@@ -5212,6 +5976,10 @@ return array (
       array (
         'latitude' => 24.26690600050005,
         'longitude' => 45.081196500000004,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'SAR',
       ),
     ),
     'SB' => 
@@ -5240,6 +6008,10 @@ return array (
         'latitude' => -9.23519650499998,
         'longitude' => 161.25174954,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'SBD',
+      ),
     ),
     'SC' => 
     array (
@@ -5266,6 +6038,10 @@ return array (
       array (
         'latitude' => -7.0187919999999995,
         'longitude' => 51.251235939686495,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'SCR',
       ),
     ),
     'SD' => 
@@ -5294,6 +6070,10 @@ return array (
         'latitude' => 16.317648107000068,
         'longitude' => 30.1984424045001,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'SDG',
+      ),
     ),
     'SE' => 
     array (
@@ -5320,6 +6100,10 @@ return array (
       array (
         'latitude' => 62.19870554434405,
         'longitude' => 17.6323723126125,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'SEK',
       ),
     ),
     'SG' => 
@@ -5348,6 +6132,10 @@ return array (
         'latitude' => 1.3407146971663,
         'longitude' => 103.824659076324,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'SGD',
+      ),
     ),
     'SH' => 
     array (
@@ -5374,6 +6162,10 @@ return array (
       array (
         'latitude' => -11.953679,
         'longitude' => -10.0299915,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'SHP',
       ),
     ),
     'SI' => 
@@ -5402,6 +6194,10 @@ return array (
         'latitude' => 46.14922027499175,
         'longitude' => 14.99298269358545,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'SJ' => 
     array (
@@ -5428,6 +6224,10 @@ return array (
       array (
         'latitude' => 79.9911955,
         'longitude' => 25.4933615,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'NOK',
       ),
     ),
     'SK' => 
@@ -5456,6 +6256,10 @@ return array (
         'latitude' => 48.6725475000001,
         'longitude' => 19.699580868000098,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'SL' => 
     array (
@@ -5482,6 +6286,10 @@ return array (
       array (
         'latitude' => 8.461705000500045,
         'longitude' => -11.786905538499951,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'SLL',
       ),
     ),
     'SM' => 
@@ -5510,6 +6318,10 @@ return array (
         'latitude' => 43.94289659391745,
         'longitude' => 12.459727152803566,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'SN' => 
     array (
@@ -5536,6 +6348,10 @@ return array (
       array (
         'latitude' => 14.50012314800005,
         'longitude' => -14.437644203000001,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'XOF',
       ),
     ),
     'SO' => 
@@ -5564,6 +6380,10 @@ return array (
         'latitude' => 5.163351504500065,
         'longitude' => 46.204702198000106,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'SOS',
+      ),
     ),
     'SR' => 
     array (
@@ -5590,6 +6410,10 @@ return array (
       array (
         'latitude' => 3.92640529150006,
         'longitude' => -56.024634499499996,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'SRD',
       ),
     ),
     'SS' => 
@@ -5618,6 +6442,10 @@ return array (
         'latitude' => 7.862684500000015,
         'longitude' => 29.6949230000001,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'SSP',
+      ),
     ),
     'ST' => 
     array (
@@ -5644,6 +6472,10 @@ return array (
       array (
         'latitude' => 0.8630445,
         'longitude' => 6.968272000000001,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'STN',
       ),
     ),
     'SV' => 
@@ -5672,6 +6504,10 @@ return array (
         'latitude' => 13.801780696,
         'longitude' => -88.91340823799999,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'USD',
+      ),
     ),
     'SX' => 
     array (
@@ -5698,6 +6534,10 @@ return array (
       array (
         'latitude' => 18.034607349062924,
         'longitude' => -63.07641157683608,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'ANG',
       ),
     ),
     'SY' => 
@@ -5726,6 +6566,10 @@ return array (
         'latitude' => 34.81585245300005,
         'longitude' => 38.98176,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'SYP',
+      ),
     ),
     'SZ' => 
     array (
@@ -5752,6 +6596,10 @@ return array (
       array (
         'latitude' => -26.51766099999995,
         'longitude' => 31.4627733305001,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'SZL',
       ),
     ),
     'TC' => 
@@ -5780,6 +6628,10 @@ return array (
         'latitude' => 21.692252,
         'longitude' => -71.80375649999999,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'USD',
+      ),
     ),
     'TD' => 
     array (
@@ -5806,6 +6658,10 @@ return array (
       array (
         'latitude' => 15.447668058000076,
         'longitude' => 18.73500000000005,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'XAF',
       ),
     ),
     'TF' => 
@@ -5834,6 +6690,10 @@ return array (
         'latitude' => -43.762952999999996,
         'longitude' => 63.884533000000005,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'TG' => 
     array (
@@ -5860,6 +6720,10 @@ return array (
       array (
         'latitude' => 8.62587900600007,
         'longitude' => 0.832432614500052,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'XOF',
       ),
     ),
     'TH' => 
@@ -5888,6 +6752,10 @@ return array (
         'latitude' => 13.036597,
         'longitude' => 101.4925155,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'THB',
+      ),
     ),
     'TJ' => 
     array (
@@ -5914,6 +6782,10 @@ return array (
       array (
         'latitude' => 38.85820200050005,
         'longitude' => 71.24798400000009,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'TJS',
       ),
     ),
     'TK' => 
@@ -5942,6 +6814,10 @@ return array (
         'latitude' => -8.967362403869629,
         'longitude' => -171.8558807373047,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'NZD',
+      ),
     ),
     'TL' => 
     array (
@@ -5968,6 +6844,10 @@ return array (
       array (
         'latitude' => -8.815760135650635,
         'longitude' => 125.6933822631836,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'USD',
       ),
     ),
     'TM' => 
@@ -5996,6 +6876,10 @@ return array (
         'latitude' => 38.9636773630001,
         'longitude' => 59.576465532500094,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'TMT',
+      ),
     ),
     'TN' => 
     array (
@@ -6022,6 +6906,10 @@ return array (
       array (
         'latitude' => 33.8917860230001,
         'longitude' => 9.565335616000034,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'TND',
       ),
     ),
     'TO' => 
@@ -6050,6 +6938,10 @@ return array (
         'latitude' => -18.5113152721258,
         'longitude' => -174.79088175544848,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'TOP',
+      ),
     ),
     'TR' => 
     array (
@@ -6076,6 +6968,10 @@ return array (
       array (
         'latitude' => 38.95853556500005,
         'longitude' => 35.242316863461284,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'TRY',
       ),
     ),
     'TT' => 
@@ -6104,6 +7000,10 @@ return array (
         'latitude' => 10.69480562300005,
         'longitude' => -61.2265281675,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'TTD',
+      ),
     ),
     'TV' => 
     array (
@@ -6130,6 +7030,10 @@ return array (
       array (
         'latitude' => -8.217020259675145,
         'longitude' => 177.965053256326,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'AUD',
       ),
     ),
     'TW' => 
@@ -6158,6 +7062,10 @@ return array (
         'latitude' => 23.59844841916755,
         'longitude' => 120.7707154116575,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'TWD',
+      ),
     ),
     'TZ' => 
     array (
@@ -6184,6 +7092,10 @@ return array (
       array (
         'latitude' => -6.372825499999972,
         'longitude' => 34.89241399800005,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'TZS',
       ),
     ),
     'UA' => 
@@ -6212,6 +7124,10 @@ return array (
         'latitude' => 48.3807142575001,
         'longitude' => 31.178779165,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'UAH',
+      ),
     ),
     'UG' => 
     array (
@@ -6238,6 +7154,10 @@ return array (
       array (
         'latitude' => 1.374919369207445,
         'longitude' => 32.2872594352759,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'UGX',
       ),
     ),
     'UM' => 
@@ -6266,6 +7186,10 @@ return array (
         'latitude' => 13.917965576354545,
         'longitude' => -5.369376448117578,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'USD',
+      ),
     ),
     'US' => 
     array (
@@ -6292,6 +7216,10 @@ return array (
       array (
         'latitude' => 36.9642255,
         'longitude' => -95.8416495,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'USD',
       ),
     ),
     'UY' => 
@@ -6320,6 +7248,10 @@ return array (
         'latitude' => -32.52977836779445,
         'longitude' => -55.81019995755815,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'UYU',
+      ),
     ),
     'UZ' => 
     array (
@@ -6346,6 +7278,10 @@ return array (
       array (
         'latitude' => 41.38117241450005,
         'longitude' => 64.5735820000001,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'UZS',
       ),
     ),
     'VA' => 
@@ -6374,6 +7310,10 @@ return array (
         'latitude' => 41.90385895596215,
         'longitude' => 12.452041123993428,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
+      ),
     ),
     'VC' => 
     array (
@@ -6400,6 +7340,10 @@ return array (
       array (
         'latitude' => 12.983197636997994,
         'longitude' => -61.287127564044425,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'XCD',
       ),
     ),
     'VE' => 
@@ -6428,6 +7372,10 @@ return array (
         'latitude' => 6.414107,
         'longitude' => -66.5789265,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'VES',
+      ),
     ),
     'VG' => 
     array (
@@ -6454,6 +7402,10 @@ return array (
       array (
         'latitude' => 18.570465949105653,
         'longitude' => -64.49094776365182,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'USD',
       ),
     ),
     'VI' => 
@@ -6482,6 +7434,10 @@ return array (
         'latitude' => 18.044656500000002,
         'longitude' => -64.83326299999999,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'USD',
+      ),
     ),
     'VN' => 
     array (
@@ -6508,6 +7464,10 @@ return array (
       array (
         'latitude' => 15.9742225,
         'longitude' => 105.806431,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'VND',
       ),
     ),
     'VU' => 
@@ -6536,6 +7496,10 @@ return array (
         'latitude' => -16.6620734584832,
         'longitude' => 168.22283743616651,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'VUV',
+      ),
     ),
     'WF' => 
     array (
@@ -6562,6 +7526,10 @@ return array (
       array (
         'latitude' => -13.76469135387595,
         'longitude' => -177.1718670625525,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'XPF',
       ),
     ),
     'WS' => 
@@ -6590,6 +7558,10 @@ return array (
         'latitude' => -13.744586729681782,
         'longitude' => -172.11343564025879,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'WST',
+      ),
     ),
     'XK' => 
     array (
@@ -6616,6 +7588,10 @@ return array (
       array (
         'latitude' => 42.56266308700005,
         'longitude' => 20.902075500000052,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
       ),
     ),
     'YE' => 
@@ -6644,6 +7620,10 @@ return array (
         'latitude' => 15.55554496477355,
         'longitude' => 48.53153912387585,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'YER',
+      ),
     ),
     'YT' => 
     array (
@@ -6670,6 +7650,10 @@ return array (
       array (
         'latitude' => -12.8254080842168,
         'longitude' => 45.1698993758395,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'EUR',
       ),
     ),
     'ZA' => 
@@ -6698,6 +7682,10 @@ return array (
         'latitude' => -28.4796000304999,
         'longitude' => 24.6984374725,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'ZAR',
+      ),
     ),
     'ZM' => 
     array (
@@ -6725,6 +7713,10 @@ return array (
         'latitude' => -13.14035099999997,
         'longitude' => 27.85419070300005,
       ),
+      'extra' => 
+      array (
+        'currency_code' => 'ZMW',
+      ),
     ),
     'ZW' => 
     array (
@@ -6751,6 +7743,10 @@ return array (
       array (
         'latitude' => -19.015658999,
         'longitude' => 29.1528020000001,
+      ),
+      'extra' => 
+      array (
+        'currency_code' => 'ZWL',
       ),
     ),
   ),

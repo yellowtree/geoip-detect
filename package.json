@@ -26,5 +26,8 @@
     "lodash-cli": ">=4.17.5",
     "parcel-bundler": ">=1.12.4",
     "parcel-plugin-assets-list": ">=1.7.1"
+  },
+  "resolutions": {
+    "node-forge": "0.10.0"
   }
 }
