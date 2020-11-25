@@ -75,7 +75,7 @@ class ManualDataSource extends AbstractDataSource {
 		$key = esc_attr(get_option('geoip-detect-auto_license_key', ''));
 		$id = esc_attr((int) get_option('geoip-detect-auto_license_id', ''));
 
-		$label_id = __('Account Id:', 'geoip-detect');
+		$label_id = __('Account ID:', 'geoip-detect');
 		$label_key = __('License key:', 'geoip-detect');
 
 
@@ -101,7 +101,7 @@ HTML;
 		if (isset($post['options_auto']['license_id'])) {
 			$id = (int) $post['options_auto']['license_id'];
 			if ($id <= 0) {
-				$message .= __('This is not a valid Maxmind Account Id.', 'geoip-detect');
+				$message .= __('This is not a valid Maxmind Account ID.', 'geoip-detect');
 			}
 			$idChanged = update_option('geoip-detect-auto_license_id', $id);
 			if ($id && class_exists('\\YellowTree\\GeoipDetect\\Lib\\CcpaBlacklistCron')) {

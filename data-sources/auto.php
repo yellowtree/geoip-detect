@@ -66,7 +66,7 @@ class AutoDataSource extends ManualDataSource
 			$error .= 
 				__('Maxmind Automatic Download only works with a given license key.', 'geoip-detect') .
 				'<p>' . sprintf(__('You can signup for a free Maxmind-Account here: <a href="%s" target="_blank">Sign Up</a>.', 'geoip-detect'), 'https://www.maxmind.com/en/geolite2/signup') . '<br>' .
-				__('After logging in, generate a license key and copy the account id and the key to the options below.', 'geoip-detect') . '</p>';
+				__('After logging in, generate a license key and copy the Account ID and the key to the options below.', 'geoip-detect') . '</p>';
 			$disabled = ' disabled="disabled"';
 		} else {
 			$keyValidationMessage = $this->validateApiKey(get_option('geoip-detect-auto_license_key', ''));
@@ -77,7 +77,7 @@ class AutoDataSource extends ManualDataSource
 			$idAvailable = get_option('geoip-detect-auto_license_id', '') > 0;
 			if (!$idAvailable) {
 				$error .= 
-					__('Please enter your Maxmind Account Id. You find it in your Maxmind Account under "My License Key". This will enable the Maxmind Privacy Exclusions API.', 'geoip-detect');
+					__('Please add your Maxmind Account ID to the options. You find it in your Maxmind Account under "My License Key". This will enable the Maxmind Privacy Exclusions API.', 'geoip-detect');
 			}
 		}
 

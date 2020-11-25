@@ -39,47 +39,105 @@ add_action( 'plugins_loaded', 'geoip_detect_load_textdomain' );
 
 
 function geoip_detect_enqueue_admin_notices() {
-	// Nobody would see them anyway.
+	// Nobody would see these notices them anyway.
 	if (!is_admin() ||
 		!is_user_logged_in() ||
 		(defined('DOING_CRON') && DOING_CRON) ||
-		(defined('DOING_AJAX') && DOING_AJAX) )
+		(defined('DOING_AJAX') && DOING_AJAX) ) {
+
 		return;
+	}
 
 	global $plugin_page;
 
-	if (get_option('geoip-detect-source') == 'hostinfo' && get_option('geoip-detect-ui-has-chosen-source', false) == false) {
+	// Suggest Maxmind database installation
+	if (get_option('geoip-detect-source') === 'hostinfo' && !get_option('geoip-detect-ui-has-chosen-source', false) && current_user_can('manage_options')) {
 		if ($plugin_page == GEOIP_PLUGIN_BASENAME && isset($_POST['action']) && $_POST['action'] == 'update') {
 			// Skip because maybe he is currently updating the database
 		} else {
 			add_action( 'all_admin_notices', 'geoip_detect_admin_notice_database_missing' );
 		}
 	}
+
+	// Nag user to enter Account ID
+	$c = new \YellowTree\GeoipDetect\Lib\RetrieveCcpaBlacklist();
+	if ((get_option('geoip-detect-source') === 'auto' || get_option('geoip-detect-source') === 'manual')
+		&& ! $c->getCredentialsUser() && $c->getCredentialsPassword() 
+		&& current_user_can('manage_options')
+		&& $plugin_page !== GEOIP_PLUGIN_BASENAME ) {
+		add_action( 'all_admin_notices', 'geoip_detect_admin_notice_license_id_missing' );
+	}
+
 }
 add_action('admin_init', 'geoip_detect_enqueue_admin_notices');
 
-function geoip_detect_admin_notice_database_missing() {
+function geoip_detect_is_ignored_notice($id) {
 	$ignored_notices = (array) get_user_meta(get_current_user_id(), 'geoip_detect_dismissed_notices', true);
-	if (in_array('hostinfo_used', $ignored_notices) || !current_user_can('manage_options'))
-		return;
+	if (in_array($id, $ignored_notices))
+		return true;
+	return false;
+}
 
-	$url = '<a href="tools.php?page=' . GEOIP_PLUGIN_BASENAME . '">Geolocation IP Detection</a>';
-    ?>
+function geoip_detect_admin_notice_template($id, $title, $body) {
+	if (geoip_detect_is_ignored_notice($id))
+		return;
+?>
 <div class="error notice is-dismissible">
 	<p style="float: right">
-		<a href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_dismiss_notice=hostinfo_used"><?php _e('Dismiss notice', 'geoip-detect'); ?></a>
-
-
-	<h3><?php _e( 'Geolocation IP Detection: No database installed', 'geoip-detect' ); ?></h3>
-        <p><?php printf(__('The Plugin %s is currently using the Webservice <a href="http://hostip.info" target="_blank">hostip.info</a> as data source. <br />You can choose a different data source in the options page.', 'geoip-detect' ), $url); ?></p>
-	<p><?php printf(__('For comparison of the different options, see <a href="https://github.com/yellowtree/geoip-detect/wiki/FAQ#which-data-source-should-i-choose" target="_blank">Which data source should I choose?</a>.', 'geoip-detect')); ?>
-
-	<p>
-			<a class="button button-primary" href="options-general.php?page=geoip-detect/geoip-detect.php#choose-source"><?php _e('Options', 'geoip-detect'); ?></a>
-			<a class="button button-secondary" href="?geoip_detect_dismiss_notice=hostinfo_used"><?php _e('Keep using hostip.info', 'geoip-detect'); ?></a>
+		<a href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_dismiss_notice=<?php echo $id ?>"><?php _e('Dismiss notice', 'geoip-detect'); ?></a>
 	</p>
-    </div>
+
+	<h3><?php echo $title; ?></h3>
+
+	<?php echo $body; ?>
+</div>
 <?php
+}
+
+function geoip_detect_admin_notice_database_missing() {
+	$id = 'hostinfo_used';
+	$title = __( 'Geolocation IP Detection: No database installed', 'geoip-detect' );
+	$url = '<a href="tools.php?page=' . GEOIP_PLUGIN_BASENAME . '">Geolocation IP Detection</a>';
+
+	$line1 = sprintf(__('The Plugin %s is currently using the Webservice <a href="http://hostip.info" target="_blank">hostip.info</a> as data source. <br />You can choose a different data source in the options page.', 'geoip-detect' ), $url);
+	$line2 = __('For comparison of the different options, see <a href="https://github.com/yellowtree/geoip-detect/wiki/FAQ#which-data-source-should-i-choose" target="_blank">Which data source should I choose?</a>.', 'geoip-detect');
+
+	$label_options = __('Options', 'geoip-detect');
+	$label_keep_using_hostinfo = __('Keep using hostip.info', 'geoip-detect');
+	$body = <<<BODY
+<p>$line1</p>
+<p>$line2</p>
+
+<p>
+	<a class="button button-primary" href="options-general.php?page=geoip-detect/geoip-detect.php#choose-source">$label_options</a>
+	<a class="button button-secondary" href="?geoip_detect_dismiss_notice=$id">$label_keep_using_hostinfo</a>
+</p>
+BODY;
+
+	geoip_detect_admin_notice_template($id, $title, $body);
+}
+
+function geoip_detect_admin_notice_license_id_missing() {
+	$id = 'license_id_missing';
+	$title = __( 'Geolocation IP Detection: Maxmind Account ID is missing', 'geoip-detect' );
+	$url = '<a href="tools.php?page=' . GEOIP_PLUGIN_BASENAME . '">Geolocation IP Detection</a>';
+
+	$line1 = __('You have entered a License Key in the options, but no Account ID.', 'geoip-detect');
+	$line2 = __('Please go to your <a href="https://www.maxmind.com/en/account/login" target="_blank">Maxmind Account</a>, click on "My License Key" and copy your Account ID ("Account/User ID") to the options here.', 'geoip-detect');
+	$line3 = __('(It will be used to enable the Privacy Exclusions API.)', 'geoip-detect');
+
+	$label_options = __('Options', 'geoip-detect');
+	$body = <<<BODY
+<p><i>$line1</i></p>
+<p>$line2</p>
+<p>$line3</p>
+
+<p>
+	<a class="button button-primary" href="options-general.php?page=geoip-detect/geoip-detect.php">$label_options</a>
+</p>
+BODY;
+
+	geoip_detect_admin_notice_template($id, $title, $body);
 }
 
 function geoip_detect_dismiss_message() {

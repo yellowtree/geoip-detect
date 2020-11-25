@@ -28,7 +28,6 @@ class CcpaBlacklistOnLookup {
     protected static $list = null;
 
     public function __construct() {
-        $this->addFilters();
     }
 
     public function addFilters() {
@@ -36,6 +35,17 @@ class CcpaBlacklistOnLookup {
     }
 
     public function onBeforeLookup($data, $ip, $options) {
+        /**
+         * With this filter, you can disable checking the blacklist from Maxmind.
+         * If you do so, make sure you are compliant to the EULA in a different way.
+         * 
+         * @return boolean if FALSE, then the CCPA blacklist is deactivated
+         */
+        $do_it = apply_filters('geoip_detect2_maxmind_ccpa_enabled', true);
+        if (!$do_it) {
+            return $data;
+        }
+
         $exclusionReason = $this->ipOnListGetReason($ip);
         
         if ($exclusionReason) {
@@ -95,7 +105,8 @@ class CcpaBlacklistOnLookup {
         self::$list = null;
     }
 }
-new CcpaBlacklistOnLookup;
+(new CcpaBlacklistOnLookup)->addFilters();
+
 /*
 if (WP_DEBUG) {
 
@@ -124,7 +135,6 @@ if (WP_DEBUG) {
 
 class RetrieveCcpaBlacklist {
     public function __construct() {
-        $this->addFilters();
     }
 
     public function addFilters() {
@@ -144,6 +154,9 @@ class RetrieveCcpaBlacklist {
 
     public function retrieveBlacklist() {
         $this->loadCredentials();
+        if (!$this->user) {
+            return __('Please enter your Maxmind Account ID.', 'geoip-detect');
+        }
         $url = 'https://' . apply_filters('geoip_detect2_maxmind_ccpa_blacklist_url', 'api.maxmind.com/privacy/exclusions');
         $args = array(
             'headers' => array(
@@ -167,10 +180,18 @@ class RetrieveCcpaBlacklist {
     }
     
     public function doUpdate() {
+        /**
+         * With this filter, you can disable checking the Maxmind Server for CCPA blacklist updates.
+         * @return boolean if the Update should be done (TRUE) or not (FALSE)
+         */
+        $do_it = apply_filters('geoip_detect2_maxmind_ccpa_do_update', true);
+        if (!$do_it)
+            return 'Updating CCPA Blacklisted is disabled via filter "geoip_detect2_maxmind_ccpa_do_update".';
+
         return $this->storeBlacklist();
     }
 
-    public function storeBlacklist() {
+    protected function storeBlacklist() {
         $time = time();
         $ret = $this->retrieveBlacklist();
         if (is_string($ret)) {
@@ -196,12 +217,21 @@ class RetrieveCcpaBlacklist {
         $this->password = get_option('geoip-detect-auto_license_key', ''); // ToDO
     }
 
+    public function getCredentialsUser() {
+        $this->loadCredentials();
+        return $this->user;
+    }
+    public function getCredentialsPassword() {
+        $this->loadCredentials();
+        return $this->password;
+    }
+
     public function setCredentials($user, $password) {
         $this->user = $user;
         $this->password = $password;
     }
 }
-new RetrieveCcpaBlacklist;
+(new RetrieveCcpaBlacklist)->addFilters();
 
 class CcpaBlacklistCron {
     public function addFilter() {

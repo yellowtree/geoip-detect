@@ -122,7 +122,7 @@ The Plugin was renamed to Geolocation IP Detection in order to prevent trademark
 
 = 3.0 =
 
-If you use Maxmind "Automatic download" then you need to upgrade to this plugin version in order to continue to receive database update. The Database licence changed and you will need to register at their website and agree to the EULA.
+If you use Maxmind "Automatic download" then you need to upgrade to this plugin version in order to continue to receive database update. The Database license changed and you will need to register at their website and agree to the EULA.
 
 = 2.13.0 =
 
