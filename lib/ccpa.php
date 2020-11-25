@@ -213,8 +213,8 @@ class RetrieveCcpaBlacklist {
     protected function loadCredentials() {
         if (!is_null($this->user)) return;
 
-        $this->user = get_option('geoip-detect-auto_license_id', ''); // ToDo
-        $this->password = get_option('geoip-detect-auto_license_key', ''); // ToDO
+        $this->user = get_option('geoip-detect-auto_license_id', '');
+        $this->password = get_option('geoip-detect-auto_license_key', '');
     }
 
     public function getCredentialsUser() {
