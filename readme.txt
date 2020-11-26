@@ -162,6 +162,7 @@ New: Shortcode for showing/hiding content!
 * NEW: The plugin now integrates the Maxmind Privacy Exclusion API. If you are using a Maxmind datasource, the plugin will return an empty result when looking up an IP that is on the privacy blacklist. You need to enter your Account ID for this.
 * FIX: If timeZone is unknown, leave empty value instead of NULL
 * FIX: Improve compatibility with PHP 8.0
+* Improving some strings for clearer documentation
 * AJAX mode is now declared stable (no code change)
 
 = 3.1.2 =
