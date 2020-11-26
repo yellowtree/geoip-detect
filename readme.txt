@@ -50,7 +50,7 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 * Be careful to comply to the applicable laws. For example Regulation (EU) 2018/302 (going into effect 03 Dec 2018)...
 * If you need to get the user's timezone, it is more accurate to use JS solutions.
 
-**System Requirements**: You will need at least PHP 5.4.
+**System Requirements**: You will need at least PHP 5.6 (soon: PHP 7.2)
 
 *GDPR: See [Is this plugin GDPR-compliant?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#is-this-plugin-gdpr-compliant)*
 
@@ -66,7 +66,10 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 
 === Troubleshooting ===
 
-Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardless of where you are visiting the site from? Maybe your server has a reverse proxy configured. You can check this: Go to the options page and look for "reverse proxy". Are there 2 IPs listed there? If so, which one corresponds to your [public IP](https://www.whatismyip.com/)?
+Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardless of where you are visiting the site from? 
+Maybe your server has a reverse proxy configured. You can check this: Go to the options page and look for "reverse proxy". Are there 2 IPs listed there? If so, which one corresponds to your [public IP](https://www.whatismyip.com/)?
+
+[More Troubleshooting Hints](https://github.com/yellowtree/geoip-detect/wiki/Troubleshooting)
 
 == Frequently Asked Questions ==
 

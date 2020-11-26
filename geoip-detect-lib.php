@@ -163,6 +163,14 @@ function _geoip_detect2_add_data_to_cache($data, $ip) {
 	set_transient('geoip_detect_c_' . $source . '_' . $ip_s, $data, GEOIP_DETECT_READER_CACHE_TIME);
 }
 
+function _geoip_detect2_empty_cache() {
+	// This does not work for memcache. But it doesn't hurt either
+	// ToDo expose to UI if Source is cacheable
+	global $wpdb;
+
+	$wpdb->query( "DELETE FROM `$wpdb->options` WHERE `option_name` LIKE ('_transient_geoip_detect_c_%')" );
+}
+
 function _geoip_detect2_get_record_from_reader($reader, $ip, &$error) {
 	$record = null;
 
