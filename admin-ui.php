@@ -134,7 +134,7 @@ function geoip_detect_option_page() {
 	$registry = DataSourceRegistry::getInstance();
 	$sources = $registry->getAllSources();
 
-	$message = '';
+	$messages = array();
 
 	$numeric_options = array('set_css_country', 'has_reverse_proxy', 'disable_pagecache', 'ajax_enabled', 'ajax_enqueue_js');
 	$text_options = array('external_ip', 'trusted_proxy_ips');
@@ -151,11 +151,22 @@ function geoip_detect_option_page() {
 				$s = new \YellowTree\GeoipDetect\DataSources\Auto\AutoDataSource();
 				$ret = $s->maxmindUpdate();
 
-				if ($ret === true) {
-					$message .= __('Updated successfully.', 'geoip-detect');
+				$c = new \YellowTree\GeoipDetect\Lib\RetrieveCcpaBlacklist();
+				$ret2 = $c->doUpdate();
+
+				if ($ret === true && $ret2 === true) {
+					$messages[] = __('Updated successfully.', 'geoip-detect');
 				} else {
-					Logger::log($ret, Logger::CATEGORY_UPDATE);
-					$message .= __('File was not updated', 'geoip-detect') .': '. $ret;
+					if ($ret !== true) {
+						Logger::log($ret , Logger::CATEGORY_UPDATE);
+						$messages[] = __('File was not updated', 'geoip-detect') .': '. $ret;
+					 } 
+					 
+					 if ($ret2 !== true) {
+						Logger::log($ret2, Logger::CATEGORY_UPDATE);
+					
+						$messages[] = __('Privacy Exclusions could not be updated', 'geoip-detect') .': '. $ret2;
+					 }
 				}
 
 				break;
@@ -167,15 +178,12 @@ function geoip_detect_option_page() {
 
 
 			case 'options-source':
-				$messages = array();
 				foreach ($sources as $s) {
 					$ret = $s->saveParameters($_POST);
 					if (is_string($ret) && $ret) {
 						$messages[] = $ret;
 					}
 				}
-				if ($messages)
-					$message .= implode('<br />', $messages);
 
 				break;
 
@@ -184,10 +192,14 @@ function geoip_detect_option_page() {
 				delete_transient('geoip_detect_external_ip');
 
 				foreach ($option_names as $opt_name) {
+					$m = '';
 					if (in_array($opt_name, $numeric_options))
 						$opt_value = isset($_POST['options'][$opt_name]) ? (int) $_POST['options'][$opt_name] : 0;
 					else {
-						$opt_value = geoip_detect_sanitize_option($opt_name, @$_POST['options'][$opt_name], $message);
+						$opt_value = geoip_detect_sanitize_option($opt_name, @$_POST['options'][$opt_name], $m);
+					}
+					if ($m) {
+						$messages[] = $m;
 					}
 
 					if ($opt_value !== false) {
@@ -196,6 +208,12 @@ function geoip_detect_option_page() {
 				}
 				break;
 		}
+	}
+
+	if ($messages) {
+		$message = implode('<br />', $messages);
+	} else {
+		$message = '';
 	}
 
     $currentSource = $registry->getCurrentSource();

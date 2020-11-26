@@ -40,6 +40,7 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	function testEmptyLookup() {
 		$this->assertFalse(geoip_detect_is_public_ip('0.0.0.0'), '0.0.0.0 should not be a public IP');
+		$this->assertTrue(geoip_detect_is_internal_ip('0.0.0.0'), '0.0.0.0 should be a private IP');
 		$this->assertTrue(geoip_detect_is_ip('0.0.0.0'), '0.0.0.0 should be an IP');
 		$this->assertTrue(geoip_detect_is_ip_equal('0.0.0.0', '0.0.0.0'), '0.0.0.0 should work with equal');
 		

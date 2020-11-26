@@ -163,6 +163,14 @@ function _geoip_detect2_add_data_to_cache($data, $ip) {
 	set_transient('geoip_detect_c_' . $source . '_' . $ip_s, $data, GEOIP_DETECT_READER_CACHE_TIME);
 }
 
+function _geoip_detect2_empty_cache() {
+	// This does not work for memcache. But it doesn't hurt either
+	// ToDo expose to UI if Source is cacheable
+	global $wpdb;
+
+	$wpdb->query( "DELETE FROM `$wpdb->options` WHERE `option_name` LIKE ('_transient_geoip_detect_c_%')" );
+}
+
 function _geoip_detect2_get_record_from_reader($reader, $ip, &$error) {
 	$record = null;
 
@@ -172,7 +180,7 @@ function _geoip_detect2_get_record_from_reader($reader, $ip, &$error) {
 		// When plugin installed on development boxes:
 		// If the client IP is not a public IP, use the public IP of the server instead.
 		// Of course this only works if the internet can be accessed.
-		if ($ip == 'me' || (geoip_detect_is_ip($ip) && !geoip_detect_is_public_ip($ip))) {
+		if ($ip == 'me' || geoip_detect_is_internal_ip($ip)) {
 			$ip = geoip_detect2_get_external_ip_adress();
 		}
 
@@ -236,6 +244,8 @@ function _geoip_detect2_try_to_fix_timezone($data) {
 
 	if (!empty($data['country']['iso_code'])) {
 		$data['location']['time_zone'] = _geoip_detect_get_time_zone($data['country']['iso_code'], isset($data['subdivisions'][0]['iso_code']) ? $data['subdivisions'][0]['iso_code'] : null);
+	} else {
+		unset($data['location']['time_zone']);
 	}
 
 	return $data;
@@ -372,6 +382,10 @@ function geoip_detect_is_public_ip($ip) {
 	return $is_public;
 }
 
+function geoip_detect_is_internal_ip($ip) {
+	return geoip_detect_is_ip($ip) && !geoip_detect_is_public_ip($ip);
+}
+
 function _geoip_detect2_get_external_ip_services($nb = 3, $needsCORS = false) {
 	$ipservicesThatAllowCORS = array(
 			'http://ipv4.icanhazip.com',
@@ -407,7 +421,7 @@ function _geoip_detect_get_external_ip_adress_without_cache()
 
 	foreach ($ipservices as $url)
 	{
-		$ret = wp_remote_get($url, array('timeout' => defined('WP_TESTS_TITLE') ? 3 : 1));
+		$ret = wp_remote_get($url, array('timeout' => defined('WP_TESTS_TITLE') ? 3 : 1.5));
 
 		if (is_wp_error($ret)) {
 			if (WP_DEBUG || defined('WP_TESTS_TITLE')) {
@@ -496,9 +510,12 @@ function _geoip_dashes_to_camel_case($string, $capitalizeFirstCharacter = false)
     return $str;
 }
 
-function geoip_detect_format_localtime($timestamp = 0) {
-	if ($timestamp === 0) {
+function geoip_detect_format_localtime($timestamp = -1) {
+	if ($timestamp === -1) {
 		$timestamp = time();
+	}
+	if ($timestamp == 0) {
+		return __('Never', 'geoip-detect');
 	}
 	
 	$format = get_option('date_format') . ' '. get_option('time_format');

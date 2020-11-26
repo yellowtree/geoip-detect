@@ -99,7 +99,7 @@ class HostInfoDataSource extends AbstractDataSource {
 	public function getLabel() { return __('HostIP.info Web-API', 'geoip-detect'); }
 
 	public function getDescriptionHTML() { return __('Free (Licence: GPL)<br />(only English names, does only have some fields)', 'geoip-detect'); }
-	public function getStatusInformationHTML() { return __('You can choose a Maxmind database below.', 'geoip-detect'); }
+	public function getStatusInformationHTML() { return __('You can choose a different data source below.', 'geoip-detect'); }
 	public function getParameterHTML() { return ''; }
 
 	public function getReader($locales = array('en'), $options = array()) { return new Reader($options); }

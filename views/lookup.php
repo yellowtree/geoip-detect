@@ -51,6 +51,9 @@ function var_export_short($data, $return=true)
 	<p>
 		<b><?php _e('Your current IP:', 'geoip-detect');?></b> <?php echo geoip_detect2_get_client_ip(); ?>
 		<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_part=client-ip">(<?php _e('Not correct?', 'geoip-detect');?>)</a>
+		<?php if (geoip_detect_is_internal_ip(geoip_detect2_get_client_ip())) : ?>
+		<br><i>(<?php printf(__('This is an IP internal to your network. When looking up this IP, it will use the external IP of the server instead: %s', 'geoip-detect'), geoip_detect2_get_external_ip_adress()); ?>)</i>
+		<?php endif; ?>
 	</p>
 
 	<h2><?php _e('Test IP Detection Lookup ', 'geoip-detect');?></h2>
@@ -76,6 +79,7 @@ function var_export_short($data, $return=true)
 		<br />
 		<input type="submit" class="button button-primary" value="<?php _e('Lookup', 'geoip-detect'); ?>" />
 	</form>
+
 	<?php if ($ip_lookup_result !== false) :
 			if (is_object($ip_lookup_result)) :
 				$record = $ip_lookup_result;
@@ -84,6 +88,11 @@ function var_export_short($data, $return=true)
 
 			?>
 	<h3><?php _e('Lookup Result', 'geoip-detect'); ?></h3>
+	<?php if (geoip_detect_is_internal_ip($request_ip)) : ?>
+		<p>
+			<i>(<?php printf(__('This is an IP internal to your network. When looking up this IP, it will use the external IP of the server instead: %s', 'geoip-detect'), geoip_detect2_get_external_ip_adress()); ?>)</i>
+		</p>
+	<?php endif; ?>
 	<p>
 		<?php if ($_POST['syntax'] == 'php') : ?>
 		<?php printf(__('The function %s returns an object:', 'geoip-detect'), "<code>\$record = geoip_detect2_get_info_from_ip('" . esc_html($request_ip) . "', " . var_export_short($request_locales, true) . ($request_skipCache ? ', [ \'skipCache\' => TRUE ]' : '') .");</code>"); ?><br />
