@@ -68,6 +68,7 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 
 Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardless of where you are visiting the site from? 
 Maybe your server has a reverse proxy configured. You can check this: Go to the options page and look for "reverse proxy". Are there 2 IPs listed there? If so, which one corresponds to your [public IP](https://www.whatismyip.com/)?
+Or maybe you are using a site cache plugin. Then enable the option `Disable caching a page that contains a shortcode or API call to geo-dependent functions.`
 
 [More Troubleshooting Hints](https://github.com/yellowtree/geoip-detect/wiki/Troubleshooting)
 
@@ -88,6 +89,8 @@ Maybe your server has a reverse proxy configured. You can check this: Go to the 
 [Does this plugin work in a MultiSite-Network environment?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#does-this-plugin-work-in-a-multisite-network-environment)
 
 [Is this plugin GDPR-compliant?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#is-this-plugin-gdpr-compliant)
+
+[What does "Privacy Exclusions" mean?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#what-does-privacy-exclusions-mean)
 
 [What do you mean by "This plugin is charity-ware"?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#what-do-you-mean-by-this-plugin-is-charity-ware)
 
