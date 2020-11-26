@@ -49,7 +49,7 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 * Be careful to comply to the applicable laws. For example Regulation (EU) 2018/302 (going into effect 03 Dec 2018)...
 * If you need to get the user's timezone, it is more accurate to use JS solutions.
 
-**System Requirements**: You will need at least PHP 5.4.
+**System Requirements**: You will need at least PHP 5.6 (soon: PHP 7.2)
 
 *GDPR: See [Is this plugin GDPR-compliant?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#is-this-plugin-gdpr-compliant)*
 
@@ -65,7 +65,11 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 
 # Troubleshooting #
 
-Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardless of where you are visiting the site from? Maybe your server has a reverse proxy configured. You can check this: Go to the options page and look for "reverse proxy". Are there 2 IPs listed there? If so, which one corresponds to your [public IP](https://www.whatismyip.com/)?
+Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardless of where you are visiting the site from? 
+Maybe your server has a reverse proxy configured. You can check this: Go to the options page and look for "reverse proxy". Are there 2 IPs listed there? If so, which one corresponds to your [public IP](https://www.whatismyip.com/)?
+Or maybe you are using a site cache plugin. Then enable the option `Disable caching a page that contains a shortcode or API call to geo-dependent functions.`
+
+[More Troubleshooting Hints](https://github.com/yellowtree/geoip-detect/wiki/Troubleshooting)
 
 ## Frequently Asked Questions ##
 
@@ -84,6 +88,8 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 [Does this plugin work in a MultiSite-Network environment?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#does-this-plugin-work-in-a-multisite-network-environment)
 
 [Is this plugin GDPR-compliant?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#is-this-plugin-gdpr-compliant)
+
+[What does "Privacy Exclusions" mean?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#what-does-privacy-exclusions-mean)
 
 [What do you mean by "This plugin is charity-ware"?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#what-do-you-mean-by-this-plugin-is-charity-ware)
 
@@ -106,6 +112,12 @@ Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardl
 1. Lookup page (under Tools > Geolocation Lookup)
 2. Options page (under Preferences > Geolocation IP Detection)
 
+= 3.2.0 =
+
+This plugin version simplifies complying the the EULA of Maxmind by automatically retrieving and honouring their Privacy Exclusion List. 
+You need to enter your Account ID in the options. 
+You can find more informations about the Privacy Exclusion API in the FAQ of the plugin.
+
 = 3.1.0 =
 The property access for shortcodes has been rewritten so that property names such as "extra.original.zip" (Datasource: ipstack) are possible now.
 
@@ -122,7 +134,8 @@ The Plugin was renamed to Geolocation IP Detection in order to prevent trademark
 
 = 3.0 =
 
-If you use Maxmind "Automatic download" then you need to upgrade to this plugin version in order to continue to receive database update. The Database license changed and you will need to register at their website and agree to the EULA.
+If you use Maxmind "Automatic download" then you need to upgrade to this plugin version in order to continue to receive database update. 
+The Database license changed and you will need to register at their website and agree to the EULA.
 
 = 2.13.0 =
 
@@ -151,8 +164,16 @@ New: Shortcode for showing/hiding content!
 
 ## Changelog ##
 
+= 3.2.0 =
+* NEW: The plugin now integrates the Maxmind Privacy Exclusion API. If you are using a Maxmind datasource, the plugin will return an empty result when looking up an IP that is on the privacy blacklist. You need to enter your Account ID for this.
+* FIX: If timeZone is unknown, leave empty value instead of NULL
+* FIX: Improve compatibility with PHP 8.0
+* UI: Improving some strings for clearer documentation
+* AJAX mode is now declared stable (no code change)
+
 = 3.1.2 =
 * NEW: The shortcode `[geoip_detect2_text_input]` now has a parameter `type` for hidden or other HTML5 input types (see [Postal code example](https://github.com/yellowtree/geoip-detect/wiki/API:-Shortcodes-for-Contact-Form-7#create-a-text-input-that-is-prefilled-with-a-geodetected-property))
+* FIX: The Backend UI "Lookup" does not show an empty timezone anymore if there is no data attached to this IP.
 * NEW: In all datasources, the new record property `$record->extra->currencyCode` for the currency code of the detected country has been added
 * FIX: Compatibility with PHP 8.0
 

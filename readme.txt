@@ -117,7 +117,9 @@ Or maybe you are using a site cache plugin. Then enable the option `Disable cach
 
 = 3.2.0 =
 
-This plugin version simplifies complying the the EULA of Maxmind by automatically retrieving and honoring their Privacy Exclusion List. You need to enter your Account ID in the options. More info in the FAQ of the plugin.
+This plugin version simplifies complying the the EULA of Maxmind by automatically retrieving and honouring their Privacy Exclusion List. 
+You need to enter your Account ID in the options. 
+You can find more informations about the Privacy Exclusion API in the FAQ of the plugin.
 
 = 3.1.0 =
 The property access for shortcodes has been rewritten so that property names such as "extra.original.zip" (Datasource: ipstack) are possible now.
@@ -135,7 +137,8 @@ The Plugin was renamed to Geolocation IP Detection in order to prevent trademark
 
 = 3.0 =
 
-If you use Maxmind "Automatic download" then you need to upgrade to this plugin version in order to continue to receive database update. The Database license changed and you will need to register at their website and agree to the EULA.
+If you use Maxmind "Automatic download" then you need to upgrade to this plugin version in order to continue to receive database update. 
+The Database license changed and you will need to register at their website and agree to the EULA.
 
 = 2.13.0 =
 
@@ -168,7 +171,7 @@ New: Shortcode for showing/hiding content!
 * NEW: The plugin now integrates the Maxmind Privacy Exclusion API. If you are using a Maxmind datasource, the plugin will return an empty result when looking up an IP that is on the privacy blacklist. You need to enter your Account ID for this.
 * FIX: If timeZone is unknown, leave empty value instead of NULL
 * FIX: Improve compatibility with PHP 8.0
-* Improving some strings for clearer documentation
+* UI: Improving some strings for clearer documentation
 * AJAX mode is now declared stable (no code change)
 
 = 3.1.2 =
