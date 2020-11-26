@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Something doesn't work
+about: Something doesn't work...
 title: ''
 labels: ''
 assignees: ''
