@@ -93,7 +93,7 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
      * @group admin_notices
      *
      * @ticket 22
-     */
+     *
     public function testAdminNoticeDatabaseMissingRequiresManageOptionsCapability () {
         $args = array('role' => 'subscriber');
         if (!$this->factory) {
@@ -106,7 +106,7 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
         $this->expectOutputString('');
         geoip_detect_admin_notice_database_missing();
     }
-
+*/
     /**
      * @group admin_notices
      *

@@ -48,15 +48,100 @@ class ManualDataSource extends AbstractDataSource {
 			$metadata = $reader->metadata();
 			$built = $metadata->buildEpoch;
 			$last_update = is_readable($file) ? filemtime($file) : '';
-			$html[] = sprintf(__('Last updated: %s', 'geoip-detect'), $last_update ? geoip_detect_format_localtime($last_update) : __('Never', 'geoip-detect'));
-			$html[] = sprintf(__('Database data from: %s', 'geoip-detect'), geoip_detect_format_localtime($built) );
+			$html[] = sprintf(__('Database last updated: %s', 'geoip-detect'), geoip_detect_format_localtime($last_update) );
+			$html[] = sprintf(__('Database generated: %s', 'geoip-detect'), geoip_detect_format_localtime($built) );
 		}
+
+		$html[] = $this->getStatusInformationHTMLMaxmindAccount();
 
 
 		return implode('<br>', $html);
 	}
 
+	protected function getStatusInformationHTMLMaxmindAccount() {
+		$html = '';
+		$last_update = get_option('geoip_detect2_maxmind_ccpa_blacklist_last_updated', 0);
+		$entries = get_option('geoip_detect2_maxmind_ccpa_blacklist');
+
+		$html .= sprintf(__('Privacy Exclusions last updated: %s', 'geoip-detect'), geoip_detect_format_localtime($last_update) );
+		if ($entries) {
+			$html .= ' ' . sprintf(__('(has %d entries)', 'geoip-detect'), count($entries));
+		}
+
+		return $html;
+	}
+
+	protected function getParameterHTMLMaxmindAccount() {
+		$key = esc_attr(get_option('geoip-detect-auto_license_key', ''));
+		$id = esc_attr((int) get_option('geoip-detect-auto_license_id', ''));
+
+		$label_id = __('Account ID:', 'geoip-detect');
+		$label_key = __('License key:', 'geoip-detect');
+
+
+		$html = <<<HTML
+$label_id <input type="number" autocomplete="off" size="10" name="options_auto[license_id]" value="$id" /><br />
+$label_key <input type="text" autocomplete="off" size="20" name="options_auto[license_key]" value="$key" /><br />
+HTML;
+		return $html;
+	}
+
+	protected function saveParametersMaxmindAccount($post) {
+		$message = '';
+
+		if (isset($post['options_auto']['license_key'])) {
+			$key = sanitize_text_field($post['options_auto']['license_key']);
+			$validationResult = $this->validateApiKey($key);
+			if (\is_string($validationResult)) {
+				$message .= $validationResult;
+			}
+			$keyChanged = update_option('geoip-detect-auto_license_key', $key);
+		}
+
+		if (isset($post['options_auto']['license_id'])) {
+			$id = (int) $post['options_auto']['license_id'];
+			if ($id <= 0) {
+				$message .= __('This is not a valid Maxmind Account ID.', 'geoip-detect');
+			}
+			$idChanged = update_option('geoip-detect-auto_license_id', $id);
+			if ($id && class_exists('\\YellowTree\\GeoipDetect\\Lib\\CcpaBlacklistCron')) {
+				$ccpaCronScheduler = new \YellowTree\GeoipDetect\Lib\CcpaBlacklistCron;
+				if ($idChanged || $keyChanged) {
+					// Re-schedule and run it right now
+					$ccpaCronScheduler->schedule(true);
+				} else {
+					$ccpaCronScheduler->schedule();
+				}
+			}
+		}
+
+		return $message;
+	}
+
+	public function validateApiKey($key) {
+		$message = '';
+		$key = trim($key);
+		if (mb_strlen($key) != 16) {
+			$message = __('The license key usually is a 16-char alphanumeric string. Are you sure this is the right key?', 'geoip-detect');
+			if (mb_strlen($key) < 16) {
+				$message .= ' ' . __('Do not use the "unhashed format" when generating the license key.', 'geoip-detect');
+				// Unhashed: 13char alphanumeric
+			}
+			$message .= ' ' . sprintf(__('This key is %d chars long.', 'geoip-detect'), mb_strlen($key));
+		} else if (1 !== preg_match('/^[a-z0-9]+$/i', $key)) {
+			$message = __('The license key usually is a 16-char alphanumeric string. Are you sure this is the right key?', 'geoip-detect');
+			$message .= ' ' . __('This key contains characters other than a-z and 0-9.', 'geoip-detect');
+		}
+		if ($message) return $message;
+
+		return true;
+	}
+
+
+
 	public function getParameterHTML() {
+		$html = $this->getParameterHTMLMaxmindAccount();
+
 		$manual_file = esc_attr(get_option('geoip-detect-manual_file'));
 		$current_value = '';
 
@@ -69,7 +154,7 @@ class ManualDataSource extends AbstractDataSource {
 
 		$label = __('Filepath to mmdb-file:', 'geoip-detect');
 		$desc = __('e.g. wp-content/uploads/GeoLite2-Country.mmdb or absolute filepath', 'geoip-detect');
-		$html = <<<HTML
+		$html .= <<<HTML
 		<p>$label <input type="text" size="40" name="options_manual[manual_file]" value="$manual_file" /></p>
 		<span class="detail-box">$desc $current_value</span>
 		<br />

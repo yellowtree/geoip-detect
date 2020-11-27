@@ -1,6 +1,6 @@
 <div class="wrap geoip-detect-wrap">
 	<!-- This page cannot be translated yet, as I am not sure how it will look like in the long-term.
-The goal is to have wizard helping to set all the relevant options semi-automatically. -->
+The final goal would be to have a step-by-step wizard helping to set all the relevant options semi-automatically. -->
 	<h1><?php _e('Geolocation IP Detection', 'geoip-detect');?> - Client IP Debug Panel</h1>
 	<p>
 		<a href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>"><?php _e('Test IP Detection Lookup', 'geoip-detect')?></a>
@@ -16,7 +16,7 @@ This needs to be known to the plugin to choose the correct IP adress.
 		Detected client IP: <b><?php echo geoip_detect2_get_client_ip(); ?></b><br>
 		<span class="detail-box">This IP is used for detecting the geo-information of the user. It should be the same as the real client IP below.</span>
 		Real client IP (detected without the plugin): <b><span id="ajax_get_client_ip"><i>Detecting ...</i></span></b>
-		<span class="detail-box">This IP is detected within the browser, so reverse proxies of the server are not affected.<br></span>
+		<span class="detail-box">This IP is detected within the browser, so reverse proxies of the server are not affected. If you see an error instead of an IP there, try using external websites such as <a href="https://www.whatismyip.com/ " target="_blank">https://www.whatismyip.com/</a> or <a href="https://www.showmyip.com/" target="_blank">https://www.showmyip.com/</a><br></span>
 		External Server IP: <b><?php echo geoip_detect2_get_external_ip_adress(); ?></b><br>
 		<span class="detail-box">In some cases, the server is in the same network as the client (e.g. testing server). As the connection does not use Internet, this plugin uses the IP adress of the server as seen from the internet.<br>
 			For performance reasons, this IP is cached for <?php echo human_time_diff(0, GEOIP_DETECT_IP_CACHE_TIME); ?>.<br>
