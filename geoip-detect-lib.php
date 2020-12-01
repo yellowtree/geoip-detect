@@ -332,7 +332,11 @@ function geoip_detect_is_ip_equal($actual, $expected) {
 	try {
 		return IpUtils::checkIp($actual, $expected);
 	} catch(\Exception $e) {
-		return false;
+		if (is_array($expected)) {
+			return in_array($actual, $expected, true);
+		} else {
+			return $actual === $expected;
+		}
 	}
 }
 
