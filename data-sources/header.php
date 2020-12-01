@@ -139,8 +139,9 @@ HTML;
 					'provider' => $provider,
 				) );
 			} catch ( \Exception $e ) {
-				if (WP_DEBUG)
-					echo printf(__('Error while creating reader for "%s": %s', 'geoip-detect'), $filename, $e->getMessage ());
+				if (WP_DEBUG) {
+					trigger_error(sprintf(__('Error while creating reader for "%s": %s', 'geoip-detect'), $filename, $e->getMessage ()), E_USER_NOTICE);
+				}
 			}
 		}
 		

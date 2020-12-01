@@ -166,6 +166,9 @@ New: Shortcode for showing/hiding content!
 
 == Changelog ==
 
+= 3.2.1 =
+* FIX: Fix a fatal error if WP_DEBUG is enabled on your installation.
+
 = 3.2.0 =
 * NEW: The plugin now integrates the Maxmind Privacy Exclusion API. If you are using a Maxmind datasource, the plugin will return an empty result when looking up an IP that is on the privacy blacklist. You need to enter your Account ID for this.
 * FIX: If timeZone is unknown, leave empty value instead of NULL

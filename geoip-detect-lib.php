@@ -331,10 +331,7 @@ function geoip_detect_sanitize_ip_list($ip_list) {
 function geoip_detect_is_ip_equal($actual, $expected) {
 	try {
 		return IpUtils::checkIp($actual, $expected);
-	} catch(Exception $e) {
-		if (WP_DEBUG) {
-			throw $e;
-		}
+	} catch(\Exception $e) {
 		return false;
 	}
 }
