@@ -332,6 +332,8 @@ function geoip_detect_is_ip_equal($actual, $expected) {
 	try {
 		return IpUtils::checkIp($actual, $expected);
 	} catch(\Exception $e) {
+		// IPv6 not supported by PHP
+		// Do string comparison instead (very rough: no subnet, no IP noramlization)
 		if (is_array($expected)) {
 			return in_array($actual, $expected, true);
 		} else {

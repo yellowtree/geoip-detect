@@ -112,6 +112,9 @@ Or maybe you are using a site cache plugin. Then enable the option `Disable cach
 1. Lookup page (under Tools > Geolocation Lookup)
 2. Options page (under Preferences > Geolocation IP Detection)
 
+= 3.2.1 = 
+This update fixes an issue of 3.2.0 if your installation has WP_DEBUG enabled.
+
 = 3.2.0 =
 
 This plugin version simplifies complying the the EULA of Maxmind by automatically retrieving and honoring their Privacy Exclusion List. 
@@ -162,6 +165,9 @@ There have been changes to the reverse proxy logic. If you have enabled a revers
 New: Shortcode for showing/hiding content!
 
 ## Changelog ##
+
+= 3.2.1 =
+* FIX: Fix a fatal error that can occur in 3.2.0 if WP_DEBUG is enabled on your installation.
 
 = 3.2.0 =
 * NEW: The plugin now integrates the Maxmind Privacy Exclusion API. If you are using a Maxmind datasource, the plugin will return an empty result when looking up an IP that is on the privacy blacklist. You need to enter your Account ID for this.
