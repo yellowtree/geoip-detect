@@ -229,8 +229,6 @@ HTML;
 		if (!\is_writable(dirname($outFile)))
 			return sprintf(__('Database could not be written (%s).', 'geoip-detect'), $outFile);
 
-		$phar = new \PharData( $downloadedFilename );
-
 		$outDir = get_temp_dir() . 'geoip-detect/';
 
 		global $wp_filesystem;
@@ -245,7 +243,16 @@ HTML;
 		}
 
 		mkdir($outDir);
-		$phar->extractTo($outDir, null, true);
+
+		try {
+			$phar = new \PharData( $downloadedFilename );
+			$phar->extractTo($outDir, null, true);
+		} catch(\Throwable $e) {
+			// Fallback method of unpacking?
+			unlink($downloadedFilename); // Do not try to unpack this file again, instead re-download
+			return __('Is the downloaded file corrupt?', 'geoip-detect');
+		}
+
 
 		$files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($outDir));
 
