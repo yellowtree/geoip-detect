@@ -250,7 +250,7 @@ HTML;
 		} catch(\Throwable $e) {
 			// Fallback method of unpacking?
 			unlink($downloadedFilename); // Do not try to unpack this file again, instead re-download
-			return __('Is the downloaded file corrupt?', 'geoip-detect');
+			return __('The downloaded file seems to be corrupt. Try again ...', 'geoip-detect');
 		}
 
 
