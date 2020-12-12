@@ -155,15 +155,15 @@ function _geoip_detect_register_javascript() {
 	$data = [
 		'ajaxurl' => admin_url('/admin-ajax.php'),
 		'default_locales' => apply_filters('geoip_detect2_locales', null),
-		'do_body_classes' => (bool) get_option('geoip-detect-set_css_country'),
+		'do_body_classes' => (bool) get_option('geoip-detect-ajax_set_css_country'),
+		'do_shortcodes' => false,
 		'cookie_name' => 'geoip-detect-result', /* If you don't want to use the cookie cache, empty this value via the filter */
 		'cookie_duration_in_days' => 1, /* If you set this to 0, then the cookie will expire when the window closes. */
 	];
 	$data = apply_filters('geoip_detect2_ajax_localize_script_data', $data);
 	wp_localize_script('geoip-detect-js', 'geoip_detect', [ 'options' => $data ] );
-// Problem: UI does not make clear that set_css_country interacts with AJAX. What if JS only for a certain page? etc.
-// ToDo - New option `geoip-detect-ajax-set_css_country` with default on plugin upgrade `geoip-detect-set_css_country` ?
-	if ((get_option('geoip-detect-ajax_enqueue_js') || get_option('geoip-detect-set_css_country')) && !is_admin()) {
+
+	if ((get_option('geoip-detect-ajax_enqueue_js') || get_option('geoip-detect-ajax_set_css_country')) && !is_admin()) {
 		geoip_detect2_enqueue_javascript();
 	}
 }

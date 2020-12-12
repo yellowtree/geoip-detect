@@ -66,6 +66,15 @@ function geoip_detect_do_upgrade($old_version) {
 	if (version_compare('2.11.1', $old_version, '>')) {
 		delete_option('geoip-detect-ajax_beta');
 	}
+
+	// v3.3.0 AJAX css body classes new option - set default value to avoid bc break
+	if (version_compare('3.3.0', $old_version, '>')) {
+		$value = get_option('geoip-detect-set_css_country') && get_option('geoip-detect-ajax_enabled');
+		if ($value) {
+			update_option('geoip-detect-ajax_set_css_country', $value);
+		}
+	}
+
 }
 
 /**
