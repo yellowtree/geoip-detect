@@ -242,7 +242,8 @@ function geoip_detect2_get_external_ip_adress($unfiltered = false) {
 }
 
 /**
- * Call this function if you want to register the JS script for AJAX mode only for specific pages
+ * Call this function if you want to register the JS script for AJAX mode only for specific pages.
+ * Can be called via the shortcode `[geoip_detect2_enqueue_javascript]`
  * @see https://github.com/yellowtree/geoip-detect/wiki/API-Usage-Examples#ajax-enqueue-the-js-file-manually
  */
 function geoip_detect2_enqueue_javascript() {

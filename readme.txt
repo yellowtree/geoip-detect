@@ -169,6 +169,10 @@ New: Shortcode for showing/hiding content!
 
 == Changelog ==
 
+= 3.3.0 =
+* NEW shortcode `[geoip_detect2_enqueue_javascript]` if you are using AJAX mode, but only on certain wordpress pages.
+* FIX: Better error message (instead of PHP Error) when file download of the Maxmind database fails
+
 = 3.2.1 =
 * FIX: Fix a fatal error that can occur in 3.2.0 if WP_DEBUG is enabled on your installation.
 

@@ -820,3 +820,9 @@ function geoip_detect2_shortcode_current_flag($attr, $content = '', $shortcodeNa
 	return $html;
 }
 add_shortcode('geoip_detect2_current_flag', 'geoip_detect2_shortcode_current_flag');
+
+function geoip_detect2_shortcode_enqueue_javascript() {
+	geoip_detect2_enqueue_javascript();
+	return '';
+}
+add_shortcode('geoip_detect2_enqueue_javascript', 'geoip_detect2_shortcode_enqueue_javascript');

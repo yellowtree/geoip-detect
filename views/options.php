@@ -88,7 +88,10 @@ $currentSourceId = $currentSource->getId();
 		<p style="margin-left: 20px;">
 			<label><input type="checkbox" name="options[ajax_enqueue_js]" value="1" <?php if (!empty($wp_options['ajax_enqueue_js'])) { echo 'checked="checked"'; } ?>><?php _e('Add JS to make the access to the AJAX endpoint easier.', 'geoip-detect'); ?></label>
 			<span class="detail-box">
-				<?php _e('You will need to code JS (see <a href="https://github.com/yellowtree/geoip-detect/wiki/API%3A-AJAX">documentation</a>) in order to make this work. Shortcodes are not automatically converted to their AJAX equivalent.', 'geoip-detect'); ?>
+				<?php if (!empty($wp_options['set_css_country'])) : ?>
+				<?php _e('The country-specific CSS class for the &lt;body&gt;-Tag is also added via AJAX then.', 'geoip-detect'); ?><br>
+				<?php endif; ?>
+				<?php _e('You might need to code JS (see <a href="https://github.com/yellowtree/geoip-detect/wiki/API%3A-AJAX" target="_blank">documentation</a>) in order to make this work, as shortcodes are not automatically converted to their AJAX equivalent.', 'geoip-detect'); ?>
 			</span>
 		</p>
 		<p>

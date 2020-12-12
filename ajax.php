@@ -161,7 +161,8 @@ function _geoip_detect_register_javascript() {
 	];
 	$data = apply_filters('geoip_detect2_ajax_localize_script_data', $data);
 	wp_localize_script('geoip-detect-js', 'geoip_detect', [ 'options' => $data ] );
-	
+// Problem: UI does not make clear that set_css_country interacts with AJAX. What if JS only for a certain page? etc.
+// ToDo - New option `geoip-detect-ajax-set_css_country` with default on plugin upgrade `geoip-detect-set_css_country` ?
 	if ((get_option('geoip-detect-ajax_enqueue_js') || get_option('geoip-detect-set_css_country')) && !is_admin()) {
 		geoip_detect2_enqueue_javascript();
 	}
