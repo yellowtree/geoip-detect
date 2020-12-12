@@ -72,6 +72,7 @@ function geoip_detect_do_upgrade($old_version) {
 		$value = get_option('geoip-detect-set_css_country') && get_option('geoip-detect-ajax_enabled');
 		if ($value) {
 			update_option('geoip-detect-ajax_set_css_country', '1');
+			update_option('geoip-detect-ajax_enqueue_js', '1');
 		}
 	}
 
