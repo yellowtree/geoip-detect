@@ -19,7 +19,7 @@ Requires PHP:    5.6
 define('GEOIP_DETECT_VERSION', '3.3.0');
 
 /*
-Copyright 2013-2020 Yellow Tree, Siegen, Germany
+Copyright 2013-2021 Yellow Tree, Siegen, Germany
 Author: Benjamin Pick (wp-geoip-detect| |posteo.de)
 
 This program is free software; you can redistribute it and/or modify
