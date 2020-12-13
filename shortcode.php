@@ -86,6 +86,7 @@ function geoip_detect2_shortcode($orig_attr, $content = '', $shortcodeName = 'ge
 			'skip_cache' => $skipCache,
 			'lang' => $locales,
 			'property' => $attr['property'],
+			'default' => $defaultValue,
 		]);
 	}
 

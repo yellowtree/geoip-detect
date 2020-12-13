@@ -22,7 +22,13 @@ async function do_shortcode_normal() {
     }
 
     Array.from(elements).forEach(el => {
+        const opt = get_options(el);
+        if (opt.skip_cache) {
+            console.warn("The property 'skip_cache' is ignored in AJAX mode. You could disable the response caching on the server by setting the constant GEOIP_DETECT_READER_CACHE_TIME.");
+        }
 
+        let output = record.get_with_locales(opt.property, opt.lang, opt.default);
+        el.innerText = output;
     });
 
 }
