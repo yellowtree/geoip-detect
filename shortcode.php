@@ -63,7 +63,7 @@ add_shortcode('geoip_detect', 'geoip_detect_shortcode');
  *
  * @since 2.5.7 New attribute `ip`
  */
-function geoip_detect2_shortcode($attr, $content = '', $shortcodeName = 'geoip_detect2')
+function geoip_detect2_shortcode($orig_attr, $content = '', $shortcodeName = 'geoip_detect2')
 {
 	$attr = shortcode_atts(array(
 		'skip_cache' => 'false',
@@ -72,7 +72,7 @@ function geoip_detect2_shortcode($attr, $content = '', $shortcodeName = 'geoip_d
 		'property' => '',
 		'ip' => null,
 		'add_error' => true,
-	), $attr, $shortcodeName);
+	), $orig_attr, $shortcodeName);
 
 	$skipCache = filter_var($attr['skip_cache'], FILTER_VALIDATE_BOOLEAN );
 
@@ -80,6 +80,14 @@ function geoip_detect2_shortcode($attr, $content = '', $shortcodeName = 'geoip_d
 	$locales = apply_filters('geoip_detect2_locales', $locales);
 
 	$defaultValue = $attr['default'];
+
+	if (geoip_detect2_shortcode_is_ajax_mode($orig_attr)) {
+		return _geoip_detect2_create_placeholder('span', [ 'class' => 'js-geoip-detect-shortcode' ], [
+			'skip_cache' => $skipCache,
+			'lang' => $locales,
+			'property' => $attr['property'],
+		]);
+	}
 
 	$options = array('skipCache' => $skipCache);
 
@@ -768,7 +776,7 @@ function geoip_detect2_shortcode_check_subcondition($expectedValuesRaw, $actualV
  * @param string $class 	 Extra CSS Class of element. All flags will have the class `flag-icon` anyway.
  * @param string $default 	 Default Country in case the visitor's country cannot be determined
  */
-function geoip_detect2_shortcode_current_flag($attr, $content = '', $shortcodeName = 'geoip_detect2_current_flag') {
+function geoip_detect2_shortcode_current_flag($orig_attr, $content = '', $shortcodeName = 'geoip_detect2_current_flag') {
 	if (!shortcode_exists('svg-flag')) {
 		return '<!-- There should be a flag here. However, the Plugin "SVG Flags" is missing.';
 	}
@@ -781,7 +789,8 @@ function geoip_detect2_shortcode_current_flag($attr, $content = '', $shortcodeNa
 		'class' => '',
 		'default' => '',
 		'skip_cache' => false,
-	), $attr, $shortcodeName);
+		'ajax' => false,
+	), $orig_attr, $shortcodeName);
 
 	$skipCache = filter_var($attr['skip_cache'], FILTER_VALIDATE_BOOLEAN );
 	$options = array('skipCache' => $skipCache);
@@ -804,25 +813,70 @@ function geoip_detect2_shortcode_current_flag($attr, $content = '', $shortcodeNa
 		$attr['class'] .= ' flag-icon-squared';
 	}
 
-	$record = geoip_detect2_get_info_from_current_ip(null, $options);
-	$country = $attr['default'];
-	if ($record->country->isoCode) {
-		$country = $record->country->isoCode;
-	}
-	if (!$country) {
-		return '<!-- There should be a flag here, but no country could be detected and the parameter "default" was not set. -->';
-	}
-	$country = mb_substr($country, 0, 2);
-	$country = mb_strtolower($country);
+	$attr['class'] .= ' flag-icon';
 
-	$html = '<span style="'. esc_attr($style) . '" class="' . esc_attr($attr['class']) . ' flag-icon ' . esc_attr('flag-icon-' . $country) . '"></span>';
+	$options = [];
+	if (geoip_detect2_shortcode_is_ajax_mode($orig_attr)) {
+		$attr['class'] .= ' js-geoip-detect-flag';
+		$options['default'] = $attr['default'];
+	} else {
+		$record = geoip_detect2_get_info_from_current_ip(null, $options);
+		$country = $attr['default'];
+		if ($record->country->isoCode) {
+			$country = $record->country->isoCode;
+		}
+		if (!$country) {
+			return '<!-- There should be a flag here, but no country could be detected and the parameter "default" was not set. -->';
+		}
+		$country = mb_substr($country, 0, 2);
+		$country = mb_strtolower($country);
 
-	return $html;
+		$attr['class'] .= ' flag-icon-' . $country;
+	}
+
+	return _geoip_detect2_create_placeholder('span', [
+		'style' => $style,
+		'class' => $attr['class'],
+	], $options);
 }
 add_shortcode('geoip_detect2_current_flag', 'geoip_detect2_shortcode_current_flag');
+
+// ----------------------- AJAX support --------------------------------
+
+/**
+ * Shortcodes can be executed on the server or via AJAX. Which mode should be used?
+ * 
+ * If the shortcode has a property called "ajax", then use that.
+ * Otherwise check if AJAX is enabled globally, and the use of shortcodes as well.
+ */
+function geoip_detect2_shortcode_is_ajax_mode($attr) {
+	if (isset($attr['ajax'])) {
+		$value = filter_var($attr['ajax'], FILTER_VALIDATE_BOOLEAN );
+		return $value;
+	}
+
+	if (get_option('geoip-detect-ajax_enabled') && get_option('geoip-detect-ajax_shortcodes')) {
+		return true;
+	}
+	return false;
+}
 
 function geoip_detect2_shortcode_enqueue_javascript() {
 	geoip_detect2_enqueue_javascript();
 	return '';
 }
 add_shortcode('geoip_detect2_enqueue_javascript', 'geoip_detect2_shortcode_enqueue_javascript');
+
+function _geoip_detect2_create_placeholder($tag = "span", $attr = [], $data = null) {
+	$tag = sanitize_key($tag);
+	$html = "<$tag";
+	if ($attr) {
+		$html .= ' ' . _geoip_detect_flatten_html_attr($attr);
+	}
+	if ($data) {
+		$html .= ' data-options="' . esc_attr(json_encode($data)) . '"';
+	}
+	$html .= "></$tag>";
+
+	return $html;
+}

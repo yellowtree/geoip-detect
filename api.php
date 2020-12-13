@@ -248,4 +248,5 @@ function geoip_detect2_get_external_ip_adress($unfiltered = false) {
  */
 function geoip_detect2_enqueue_javascript() {
 	_geoip_detect2_enqueue_javascript();
+	return true;
 }

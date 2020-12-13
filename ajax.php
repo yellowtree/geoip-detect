@@ -118,6 +118,7 @@ function _geoip_detect2_enqueue_javascript() {
 			wp_enqueue_script('geoip-detect-js');
 		});
 	}
+	return true;
 }
 
 function _geoip_detect_parcel_get_dist_js($handle) {

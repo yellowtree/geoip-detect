@@ -2,6 +2,7 @@ import Record from './models/record';
 import { getLocalStorage, setLocalStorage } from './localStorageAccess';
 import _ from './lodash.custom';
 import { makeJSONRequest } from './xhr';
+import { do_shortcodes } from './shortcodes';
 
 if (!window.geoip_detect) {
     console.error('Geoip-detect: the JS variable window.geoip_detect is missing - this is needed for the options')
@@ -89,6 +90,9 @@ async function add_body_classes() {
 }
 if (options.do_body_classes) {
     add_body_classes();
+}
+if (options.do_shortcodes) {
+    do_shortcodes();
 }
 
 // Extend window object 

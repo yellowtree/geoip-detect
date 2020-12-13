@@ -94,7 +94,7 @@ $currentSourceId = $currentSource->getId();
 			<span class="detail-box">
 				<?php _e('This requires the JS Helper functions, either by ticking the option above, or by enqueuing it manually for the sites that need it.', 'geoip-detect'); ?>
 			</span>
-			<label style="color:#777"><input type="checkbox" name="options[ajax_shortcodes]" disabled value="1" <?php if (!empty($wp_options['ajax_shortcodes'])) { echo 'checked="checked"'; } ?>><?php _e('Resolve shortcodes (via AJAX).', 'geoip-detect'); ?></label>
+			<label><input type="checkbox" name="options[ajax_shortcodes]" value="1" <?php if (!empty($wp_options['ajax_shortcodes'])) { echo 'checked="checked"'; } ?>><?php _e('Resolve shortcodes (via AJAX).', 'geoip-detect'); ?></label>
 			<span class="detail-box">
 				<?php _e('(Shortcodes are not supported yet.)', 'geoip-detect'); ?>
 			</span>
