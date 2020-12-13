@@ -19,7 +19,9 @@ const _get_localized = function(ret, locales) {
     return ret;
 }
 
-
+export const camelToUnderscore = function(key) {
+    return key.replace(/([A-Z])/g, "_$1").toLowerCase();
+}
 
 class Record {
     data = {};
@@ -36,12 +38,12 @@ class Record {
     
     
     get_with_locales(prop, locales, default_value) {
+        prop = camelToUnderscore(prop);
+
         // Treat pseudo-property 'name' as if it never existed
         if (prop.substr(-5) === '.name') {
             prop = prop.substr(0, prop.length - 5);
         }
-
-        // TODO handle most_specific_subdivision (here or in PHP)?
 
         let ret = _.get(this.data, prop, default_value);
 
