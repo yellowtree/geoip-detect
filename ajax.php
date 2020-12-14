@@ -165,7 +165,7 @@ function _geoip_detect_register_javascript() {
 	wp_localize_script('geoip-detect-js', 'geoip_detect', [ 'options' => $data ] );
 
 	if (get_option('geoip-detect-ajax_enqueue_js') && !is_admin()) {
-		geoip_detect2_enqueue_javascript();
+		geoip_detect2_enqueue_javascript('option');
 	}
 }
 

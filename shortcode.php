@@ -82,6 +82,7 @@ function geoip_detect2_shortcode($orig_attr, $content = '', $shortcodeName = 'ge
 	$defaultValue = $attr['default'];
 
 	if (geoip_detect2_shortcode_is_ajax_mode($orig_attr)) {
+		geoip_detect2_enqueue_javascript('shortcode');
 		return _geoip_detect2_create_placeholder('span', [ 'class' => 'js-geoip-detect-shortcode' ], [
 			'skip_cache' => $skipCache,
 			'lang' => $locales,
@@ -818,6 +819,7 @@ function geoip_detect2_shortcode_current_flag($orig_attr, $content = '', $shortc
 
 	$options = [];
 	if (geoip_detect2_shortcode_is_ajax_mode($orig_attr)) {
+		geoip_detect2_enqueue_javascript('shortcode');
 		$attr['class'] .= ' js-geoip-detect-flag';
 		$options['default'] = $attr['default'];
 	} else {
@@ -863,7 +865,7 @@ function geoip_detect2_shortcode_is_ajax_mode($attr) {
 }
 
 function geoip_detect2_shortcode_enqueue_javascript() {
-	geoip_detect2_enqueue_javascript();
+	geoip_detect2_enqueue_javascript('user_shortcode');
 	return '';
 }
 add_shortcode('geoip_detect2_enqueue_javascript', 'geoip_detect2_shortcode_enqueue_javascript');

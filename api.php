@@ -246,7 +246,12 @@ function geoip_detect2_get_external_ip_adress($unfiltered = false) {
  * Can be called via the shortcode `[geoip_detect2_enqueue_javascript]`
  * @see https://github.com/yellowtree/geoip-detect/wiki/API-Usage-Examples#ajax-enqueue-the-js-file-manually
  */
-function geoip_detect2_enqueue_javascript() {
-	_geoip_detect2_enqueue_javascript();
-	return true;
+function geoip_detect2_enqueue_javascript($reason = 'user') {
+	$do_it = apply_filters('geoip_detect_enqueue_javascript', true, $reason);
+	$do_it = apply_filters('geoip_detect_enqueue_javascript_' . $reason, $do_it);
+
+	if ($do_it) {
+		_geoip_detect2_enqueue_javascript();
+	}
+	return $do_it;
 }
