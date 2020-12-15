@@ -27,7 +27,7 @@ async function do_shortcode_normal() {
             console.warn("The property 'skip_cache' is ignored in AJAX mode. You could disable the response caching on the server by setting the constant GEOIP_DETECT_READER_CACHE_TIME.");
         }
 
-        let output = record.get_with_locales(opt.property, opt.lang, opt.default);
+        const output = record.get_with_locales(opt.property, opt.lang, opt.default);
         el.innerText = output;
     });
 
@@ -59,6 +59,9 @@ async function do_shortcode_flags() {
 }
 
 export const do_shortcodes = async function do_shortcodes() {
+    // ToDo await dom:ready
+    
+    // These are called in parallel, as they are ajax functions
     do_shortcode_normal();
     do_shortcode_flags();
 };
