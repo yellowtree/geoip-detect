@@ -1,4 +1,4 @@
-import { domReady } from "./lib/html";
+import { domReady, selectItemByValue } from "./lib/html";
 import { get_info } from "./lookup";
 
 // Get Options from data-options and json parse them
@@ -26,6 +26,9 @@ async function action_on_elements(className, errorMessage, callback) {
         .forEach(el => callback(el, record));
 }
 
+
+
+
 function do_shortcode_normal(el, record) {
     const opt = get_options(el);
     if (opt.skip_cache) {
@@ -47,6 +50,24 @@ function do_shortcode_flags(el, record) {
         el.classList.add('flag-icon-' + country)
     }
 }
+
+function do_shortcode_country_select(el, record) {
+    let country = ''; // ToDo
+
+    selectItemByValue(el, country);
+}
+
+function do_shortcode_text_input(el, record) {
+    let value = ''; // ToDo
+
+    el.value = value;
+}
+
+
+function do_shortcode_show_if(el, record) {
+
+}
+
 
 export const do_shortcodes = async function do_shortcodes() {
     await domReady;

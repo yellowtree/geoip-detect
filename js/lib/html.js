@@ -6,4 +6,12 @@ export const domReady = new Promise(resolve => {
         resolve();
     }
 });
-console.info(domReady);
+
+export function selectItemByValue(el, value) {
+    for (var i = 0; i < el.options.length; i++) {
+        if (el.options[i].value === value) {
+            el.selectedIndex = i;
+            break;
+        }
+    }
+}
