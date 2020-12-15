@@ -26,17 +26,18 @@ async function action_on_elements(className, errorMessage, callback) {
         .forEach(el => callback(el, record));
 }
 
-
-
-
-function do_shortcode_normal(el, record) {
+function get_value_from_record(el, record) {
     const opt = get_options(el);
     if (opt.skip_cache) {
         console.warn("The property 'skip_cache' is ignored in AJAX mode. You could disable the response caching on the server by setting the constant GEOIP_DETECT_READER_CACHE_TIME.");
     }
 
-    const output = record.get_with_locales(opt.property, opt.lang, opt.default);
-    el.innerText = output;
+    return record.get_with_locales(opt.property, opt.lang, opt.default);
+}
+
+
+function do_shortcode_normal(el, record) {
+    el.innerText = get_value_from_record(el, record);
 }
 
 function do_shortcode_flags(el, record) {
@@ -58,14 +59,12 @@ function do_shortcode_country_select(el, record) {
 }
 
 function do_shortcode_text_input(el, record) {
-    let value = ''; // ToDo
-
-    el.value = value;
+    el.value = get_value_from_record(el, record);
 }
 
 
 function do_shortcode_show_if(el, record) {
-
+    // later ...
 }
 
 
@@ -74,8 +73,11 @@ export const do_shortcodes = async function do_shortcodes() {
 
     // These are called in parallel, as they are ajax functions
     action_on_elements('js-geoip-detect-shortcode', 
-        'could not execute shortcode [geoip_detect2]', do_shortcode_normal);
+        'could not execute shortcode(s) [geoip_detect2]', do_shortcode_normal);
 
     action_on_elements('js-geoip-detect-flag', 
-        'could not configure the flags', do_shortcode_flags);
+        'could not configure the flag(s)', do_shortcode_flags);
+
+    action_on_elements('js-geoip-text-input', 
+        'could not set the value of the text input field(s)', do_shortcode_text_input);
 };

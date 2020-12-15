@@ -426,8 +426,6 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
  * @return string The generated HTML
  */
 function geoip_detect2_shortcode_text_input($attr) {
-	$value = geoip_detect2_shortcode($attr + array('add_error' => false));
-
 	$type = !empty($attr['type']) ? sanitize_key($attr['type']) : '';
 
 	$html_attrs = array(
@@ -437,9 +435,16 @@ function geoip_detect2_shortcode_text_input($attr) {
 		'type' => $type ? $type : 'text',
 		'aria-required' => !empty($attr['required']) ? 'required' : '',
 		'aria-invalid' => !empty($attr['invalid']) ? $attr['invalid'] : '',
-		'value' => $value,
 		'placeholder' => !empty($attr['placeholder']) ? $attr['placeholder'] : '',
 	);
+
+	if (geoip_detect2_shortcode_is_ajax_mode($attr)) {
+		geoip_detect2_enqueue_javascript('shortcode');
+		$html_attrs['class'] .= ' js-geoip-text-input';
+		$html_attrs['data-options'] = []; // ToDo data from geoip_detect2_shortcode
+	} else {
+		$html_attrs['value'] = geoip_detect2_shortcode($attr + array('add_error' => false));
+	}
 
 	$html = '<input ' . _geoip_detect_flatten_html_attr($html_attrs) . '/>';
 	return $html;
