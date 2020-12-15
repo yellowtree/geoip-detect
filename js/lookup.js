@@ -1,7 +1,7 @@
 import Record from './models/record';
-import { getLocalStorage, setLocalStorage } from './localStorageAccess';
+import { getLocalStorage, setLocalStorage } from './lib/localStorageAccess';
 import _ from './lodash.custom';
-import { makeJSONRequest } from './xhr';
+import { makeJSONRequest } from './lib/xhr';
 
 
 if (!window.geoip_detect) {

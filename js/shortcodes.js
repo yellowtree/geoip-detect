@@ -5,7 +5,7 @@ function get_options(el) {
     const raw = el.getAttribute('data-options');
     try {
         return JSON.parse(raw);
-    } catch(e) {
+    } catch (e) {
         return {};
     }
 }
@@ -59,8 +59,8 @@ async function do_shortcode_flags() {
 }
 
 export const do_shortcodes = async function do_shortcodes() {
-    // ToDo await dom:ready
-    
+    await domReady();
+
     // These are called in parallel, as they are ajax functions
     do_shortcode_normal();
     do_shortcode_flags();
