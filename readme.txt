@@ -116,14 +116,12 @@ Or maybe you are using a site cache plugin. Then enable the option `Disable cach
 == Upgrade Notice ==
 
 = 3.3.0 =
-
 Improving AJAX mode - now you can use it for specific pages.
 
 = 3.2.1 = 
 This update fixes an issue of 3.2.0 if your installation has WP_DEBUG enabled.
 
 = 3.2.0 =
-
 This plugin version simplifies complying the the EULA of Maxmind by automatically retrieving and honoring their Privacy Exclusion List. 
 You need to enter your Account ID in the options. 
 Find more information about the Privacy Exclusion API in the FAQ of the plugin.
@@ -150,7 +148,7 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 = 3.3.0 =
 * NEW shortcode `[geoip_detect2_enqueue_javascript]` if you are using AJAX mode, but only on certain wordpress pages.
-* NEW option "Add a country-specific CSS class to the <body>-Tag (via AJAX)." It is enabled on upgrade if AJAX and the body tag was enabled before.
+* NEW option "Add a country-specific CSS class to the <body>-Tag (via AJAX)." It is enabled automatically when upgrading the plugin, if the options "AJAX" and the "body tag" was enabled before.
 * Some UI fixes
 
 = 3.2.1 =
