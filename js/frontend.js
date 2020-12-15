@@ -18,7 +18,7 @@ async function add_body_classes() {
         province:  record.get('most_specific_subdivision.iso_code'),
     };
 
-    await domReady();
+    await domReady;
 
     const body = document.getElementsByTagName('body')[0];
     for(let key of Object.keys(css_classes)) {

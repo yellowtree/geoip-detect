@@ -6,3 +6,4 @@ export const domReady = new Promise(resolve => {
         resolve();
     }
 });
+console.info(domReady);
