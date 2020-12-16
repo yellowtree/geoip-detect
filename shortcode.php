@@ -45,6 +45,24 @@ function geoip_detect_shortcode($attr)
 add_shortcode('geoip_detect', 'geoip_detect_shortcode');
 
 /**
+ * Prepare the options
+ */
+function _geoip_detect2_shortcode_options($attr) {
+	$locales = isset($attr['lang']) ? $attr['lang'] . ',en' : null;
+	$locales = apply_filters('geoip_detect2_locales', $locales);
+
+	$opt = [
+			'skip_cache' => isset($attr['skip_cache']) ? filter_var($attr['skip_cache'], FILTER_VALIDATE_BOOLEAN ) : false,
+			'lang' => $locales,
+			'default' =>  isset($attr['default']) ? $attr['default'] : '',
+	];
+	if (isset($attr['property'])) {
+		$opt['property'] = $attr['property'];
+	}
+	return $opt;
+}
+
+/**
  * Short Code
  *
  * Examples:
@@ -74,28 +92,21 @@ function geoip_detect2_shortcode($orig_attr, $content = '', $shortcodeName = 'ge
 		'add_error' => true,
 	), $orig_attr, $shortcodeName);
 
-	$skipCache = filter_var($attr['skip_cache'], FILTER_VALIDATE_BOOLEAN );
+	$shortcode_options = _geoip_detect2_shortcode_options($attr);
 
-	$locales = isset($attr['lang']) ? $attr['lang'] . ',en' : null;
-	$locales = apply_filters('geoip_detect2_locales', $locales);
-
-	$defaultValue = $attr['default'];
-
+	
 	if (geoip_detect2_shortcode_is_ajax_mode($orig_attr) && !$attr['ip']) {
 		geoip_detect2_enqueue_javascript('shortcode');
-		return _geoip_detect2_create_placeholder('span', [ 'class' => 'js-geoip-detect-shortcode' ], [
-			'skip_cache' => $skipCache,
-			'lang' => $locales,
-			'property' => $attr['property'],
-			'default' => $defaultValue,
-		]);
+		return _geoip_detect2_create_placeholder('span', [ 'class' => 'js-geoip-detect-shortcode' ], $shortcode_options);
 	}
-
-	$options = array('skipCache' => $skipCache);
-
+	
+	$options = array('skipCache' => $shortcode_options['skip_cache']);
+	
 	$ip = $attr['ip'] ?: geoip_detect2_get_client_ip();
-
-	$userInfo = geoip_detect2_get_info_from_ip($ip, $locales, $options);
+	
+	$userInfo = geoip_detect2_get_info_from_ip($ip, $shortcode_options['lang'], $options);
+	
+	$defaultValue = $attr['default'];
 
 	if ($userInfo->isEmpty)
 		return $defaultValue . ($attr['add_error'] ? '<!-- Geolocation IP Detection: No information found for this IP (' . geoip_detect2_get_client_ip() . ') -->' : '');
@@ -265,8 +276,7 @@ function geoip_detect2_shortcode_country_select($attr) {
 			$selected = $attr['default'];
 	}
 
-	$locales = !empty($attr['lang']) ? $attr['lang'] : null;
-	$locales = apply_filters('geoip_detect2_locales', $locales);
+	$shortcode_options = _geoip_detect2_shortcode_options($attr);
 
 	$select_attrs = array(
 		'name' =>  !empty($attr['name']) ? $attr['name'] : 'geoip-countries',
@@ -278,7 +288,7 @@ function geoip_detect2_shortcode_country_select($attr) {
 	);
 
 	$countryInfo = new YellowTree\GeoipDetect\Geonames\CountryInformation();
-	$countries = $countryInfo->getAllCountries($locales);
+	$countries = $countryInfo->getAllCountries($shortcode_options['lang']);
 
 	if (!empty($attr['flag'])) {
 		array_walk($countries, function(&$value, $key) use($countryInfo) {
@@ -441,7 +451,7 @@ function geoip_detect2_shortcode_text_input($attr) {
 	if (geoip_detect2_shortcode_is_ajax_mode($attr)) {
 		geoip_detect2_enqueue_javascript('shortcode');
 		$html_attrs['class'] .= ' js-geoip-text-input';
-		$html_attrs['data-options'] = []; // ToDo data from geoip_detect2_shortcode
+		$html_attrs['data-options'] = _geoip_detect2_shortcode_options($attr);
 	} else {
 		$html_attrs['value'] = geoip_detect2_shortcode($attr + array('add_error' => false));
 	}
@@ -675,14 +685,14 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 
     $attr = shortcode_atts($attrDefaults, $attr, $shortcodeName);
 
-	$skipCache = filter_var($attr['skip_cache'], FILTER_VALIDATE_BOOLEAN );
+	$shortcode_options = _geoip_detect2_shortcode_options($attr);
+	$shortcode_options += [
+		'attribute_names' => $attributeNames
+	];
 
-	$locales = isset($attr['lang']) ? $attr['lang'] . ',en' : null;
-	$locales = apply_filters('geoip_detect2_locales', $locales);
+	$options = array('skipCache' => $shortcode_options['skip_cache']);
 
-	$options = array('skipCache' => $skipCache);
-
-	$info = geoip_detect2_get_info_from_current_ip($locales, $options);
+	$info = geoip_detect2_get_info_from_current_ip($shortcode_options['lang'], $options);
 	
 	/**
 	 * You can override the detected location information here.
