@@ -1,6 +1,13 @@
 export const domReady = new Promise(resolve => {
     if (document.readyState === "loading") {
-        document.addEventListener('DOMContentLoaded', resolve);
+        if (document.addEventListener) {
+            document.addEventListener('DOMContentLoaded', resolve);
+        } else {
+            document.attachEvent('onreadystatechange', function () {
+                if (document.readyState != 'loading')
+                    resolve();
+            });
+        }
     }
     else {
         resolve();
@@ -13,5 +20,15 @@ export function selectItemByValue(el, value) {
             el.selectedIndex = i;
             break;
         }
+    }
+}
+
+export function triggerNativeEvent(el, name) {
+    if (document.createEvent) {
+        const event = document.createEvent('HTMLEvents');
+        event.initEvent(name, true, false);
+        el.dispatchEvent(event);
+    } else {
+        el.fireEvent('on' + name);
     }
 }

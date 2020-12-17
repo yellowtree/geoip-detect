@@ -1,4 +1,4 @@
-import { domReady, selectItemByValue } from "./lib/html";
+import { domReady, selectItemByValue, triggerNativeEvent } from "./lib/html";
 import { get_info } from "./lookup";
 
 // Get Options from data-options and json parse them
@@ -56,10 +56,12 @@ function do_shortcode_country_select(el, record) {
     let country = ''; // ToDo
 
     selectItemByValue(el, country);
+    triggerNativeEvent(el, 'change');
 }
 
 function do_shortcode_text_input(el, record) {
     el.value = get_value_from_record(el, record);
+    triggerNativeEvent(el, 'change');
 }
 
 
