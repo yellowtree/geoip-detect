@@ -306,6 +306,11 @@ function geoip_detect2_shortcode_country_select($attr) {
 		});
 	}
 
+	if (geoip_detect2_shortcode_is_ajax_mode($attr)) {
+		$select_attr['class'] .= ' js-geoip-detect-country-select';
+		$select_attr['data-options'] = _geoip_detect2_shortcode_options($attr);
+	}
+
 	/**
 	 * Filter: geoip_detect2_shortcode_country_select_countries
 	 * Change the list of countries that should show up in the select box.
@@ -325,11 +330,11 @@ function geoip_detect2_shortcode_country_select($attr) {
 	foreach ($countries as $code => $label) {
 		if (substr($code, 0, 6) == 'blank_')
 		{
-			$html .= '<option value="">' . esc_html($label) . '</option>';
+			$html .= '<option value="" data-c="">' . esc_html($label) . '</option>';
 		}
 		else
 		{
-			$html .= '<option' . ($code == $selected ? ' selected="selected"' : '') . '>' . esc_html($label) . '</option>';
+			$html .= '<option' . ($code == $selected ? ' selected="selected"' : '') . ' data-c="' . esc_attr($code).  '">' . esc_html($label) . '</option>';
 		}
 	}
 	$html .= '</select>';
@@ -697,6 +702,8 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 	/**
 	 * You can override the detected location information here.
 	 * E.g. "Show if in Paris, but if the user has given an adress in his profile, use that city instead"
+	 * (Does not work in AJAX mode)
+	 * 
 	 * @param YellowTree\GeoipDetect\DataSources\City $info
 	 * @param array $attr Shortcode attributes given to the function.
 	 * @param bool $showContentIfMatch Should the content be shown (TRUE) or hidden (FALSE) if the conditions are true?

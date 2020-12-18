@@ -41,21 +41,16 @@ function do_shortcode_normal(el, record) {
 }
 
 function do_shortcode_flags(el, record) {
-    let country = record.get('country.iso_code');
-    if (country) {
-        country = country.substr(0, 2).toLowerCase();
-    }
-
-    country = country || get_options(el).default;
+    const country = record.get_country_iso() || get_options(el).default;
     if (country) {
         el.classList.add('flag-icon-' + country)
     }
 }
 
 function do_shortcode_country_select(el, record) {
-    let country = ''; // ToDo
+    let country = record.get_country_iso();
 
-    selectItemByValue(el, country);
+    selectItemByAttribute(el, 'data-c', country);
     triggerNativeEvent(el, 'change');
 }
 
@@ -82,4 +77,7 @@ export const do_shortcodes = async function do_shortcodes() {
 
     action_on_elements('js-geoip-text-input', 
         'could not set the value of the text input field(s)', do_shortcode_text_input);
+
+    action_on_elements('js-geoip-detect-country-select', 
+        'could not set the value of the select field(s)', do_shortcode_country_select);
 };

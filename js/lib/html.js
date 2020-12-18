@@ -23,6 +23,16 @@ export function selectItemByValue(el, value) {
     }
 }
 
+export function selectItemByAttribute(el, attributeName, attributeValue) {
+    for (var i = 0; i < el.options.length; i++) {
+        if (el.options[i].getAttribute(attributeName) === attributeValue) {
+            el.selectedIndex = i;
+            break;
+        }
+    }
+}
+
+
 export function triggerNativeEvent(el, name) {
     if (document.createEvent) {
         const event = document.createEvent('HTMLEvents');

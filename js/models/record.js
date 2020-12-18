@@ -20,7 +20,8 @@ const _get_localized = function(ret, locales) {
 }
 
 export const camelToUnderscore = function(key) {
-    return key.replace(/([A-Z])/g, "_$1").toLowerCase();
+    // Tolerate PascalCase. But _key stays _key [ (?<=[a-z0-9]) means Look-ahead]
+    return key.replace(/(?<=[a-z0-9])([A-Z])/g, "_$1").toLowerCase();
 }
 
 class Record {
@@ -51,6 +52,14 @@ class Record {
         ret = _get_localized(ret, locales);
 
         return ret;
+    }
+
+    get_country_iso() {
+        let country = this.get('country.iso_code');
+        if(country) {
+            country = country.substr(0, 2).toLowerCase();
+        }
+        return country;
     }
     
     /**
