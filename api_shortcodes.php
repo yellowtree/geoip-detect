@@ -19,32 +19,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 /**
- * @deprecated
- */
-function geoip_detect_shortcode($attr)
-{
-	$userInfo = geoip_detect_get_info_from_current_ip();
-
-	$defaultValue = isset($attr['default']) ? $attr['default'] : '';
-
-	if (!is_object($userInfo))
-		return $defaultValue . '<!-- Geolocation IP Detection: No info found for this IP. -->';
-
-	$propertyName = $attr['property'];
-
-
-	if (property_exists($userInfo, $propertyName)) {
-		if ($userInfo->$propertyName)
-			return $userInfo->$propertyName;
-		else
-			return $defaultValue;
-	}
-
-	return $defaultValue . '<!-- Geolocation IP Detection: Invalid property name. -->';
-}
-add_shortcode('geoip_detect', 'geoip_detect_shortcode');
-
-/**
  * Prepare the options
  */
 function _geoip_detect2_shortcode_options($attr) {
@@ -205,8 +179,10 @@ function _deprecated_geoip_detect2_shortcode_get_property($userInfo, $propertyNa
 }
 */
 
-
-function geoip_detect2_shortcode_client_ip() {
+/**
+ * Get the client ip
+ */
+function geoip_detect2_shortcode_client_ip($attr) {
 	$client_ip = geoip_detect2_get_client_ip();
 	$client_ip = geoip_detect_normalize_ip($client_ip);
 
@@ -259,7 +235,7 @@ add_shortcode('geoip_detect2_get_current_source_description', 'geoip_detect2_sho
  * @param string $include_blank If this value contains 'true', a empty value will be prepended ('---', i.e. no country) (optional)
  * @param bool   $flag          If a flag should be added before the country name (In Windows, there are no flags, ISO-Country codes instead. This is a design choice by Windows.)
  * @param bool   $tel           If the international code should be added after the country name
-
+ * @param bool   $ajax          1: Execute this shortcode as AJAX | 0: Execute this shortcode on the server | Unset: Use AJAX settings
  *
  * @return string The generated HTML
  */
@@ -307,8 +283,9 @@ function geoip_detect2_shortcode_country_select($attr) {
 	}
 
 	if (geoip_detect2_shortcode_is_ajax_mode($attr)) {
-		$select_attr['class'] .= ' js-geoip-detect-country-select';
-		$select_attr['data-options'] = _geoip_detect2_shortcode_options($attr);
+		geoip_detect2_enqueue_javascript('shortcode');
+		$select_attrs['class'] = (isset($select_attr['class']) ?: '') . ' js-geoip-detect-country-select';
+		$select_attrs['data-options'] = wp_json_encode(_geoip_detect2_shortcode_options($attr));
 	}
 
 	/**
@@ -330,11 +307,11 @@ function geoip_detect2_shortcode_country_select($attr) {
 	foreach ($countries as $code => $label) {
 		if (substr($code, 0, 6) == 'blank_')
 		{
-			$html .= '<option value="" data-c="">' . esc_html($label) . '</option>';
+			$html .= '<option data-c="" value="">' . esc_html($label) . '</option>';
 		}
 		else
 		{
-			$html .= '<option' . ($code == $selected ? ' selected="selected"' : '') . ' data-c="' . esc_attr($code).  '">' . esc_html($label) . '</option>';
+			$html .= '<option data-c="' . esc_attr($code).  '"' . ($code == $selected ? ' selected="selected"' : '') . '>' . esc_html($label) . '</option>';
 		}
 	}
 	$html .= '</select>';
@@ -354,63 +331,7 @@ function _geoip_detect_flatten_html_attr($attr) {
 }
 
 /**
- * Generating a country select field that has the geoip value as default
- * 
- * Examples:
- *
- * `[geoip_detect2_countries mycountry id:id class:class lang:fr]`
- * A list of all country names in French (with CSS id "#id" and class ".class"), the visitor's country is preselected.
- *
- * `[geoip_detect2_countries mycountry include_blank]`
- * Country names are in the current site language. User can also choose '---' for no country at all.
- *
- * `[geoip_detect2_countries mycountry flag tel]`
- * Country names have a UTF-8 flag in front of the country name, and the (+1) internation phone code after it
- * 
- * `[geoip_detect2_countries mycountry "US"]`
- * "United States" is preselected, there is no visitor IP detection going on here
- *
- * `[geoip_detect2_countries mycountry default:US]`
- * Visitor's country is preselected, but in case the country is unknown, use "United States"
- *
- */
-function geoip_detect2_shortcode_country_select_wpcf7($tag) {
-	$tag = new WPCF7_FormTag( $tag );
-
-	$default = (string) reset( $tag->values );
-	$default = $tag->get_default_option($default, array('multiple' => false));
-	$default = wpcf7_get_hangover( $tag->name, $default ); // Get from $_POST if available
-
-	$class = wpcf7_form_controls_class( $tag->type );
-	$validation_error = wpcf7_get_validation_error( $tag->name );
-	if ($validation_error)
-		$class .= ' wpcf7-not-valid';
-
-	$attr = array(
-		'name' => $tag->name,
-		'include_blank' => $tag->has_option( 'include_blank' ),
-		'required' => substr($tag->type, -1) == '*',
-		'invalid' => $validation_error ? 'true' : 'false',
-		'id' => $tag->get_id_option(),
-		'class' => $tag->get_class_option( $class ),
-		'lang' => $tag->get_option('lang', '', true),
-		'selected' => $default,
-		'default' => $tag->get_option('default', '', true),
-		'flag' => $tag->has_option('flag'),
-		'tel' => $tag->has_option('tel'),
-	);
-	
-	$html = geoip_detect2_shortcode_country_select($attr);
-
-	$html = sprintf(
-		'<span class="wpcf7-form-control-wrap %1$s">%2$s %3$s</span>',
-		sanitize_html_class( $tag->name ), $html, $validation_error );
-
-	return $html;
-}
-
-/**
- * Generating a <input />-field that has a geoip value as default
+ * Generating an <input />-field that has a geoip value as default
  * 
  * Property can be: continent, country, city, postal.code or any other property understood by `geoip_detect2_get_info_from_ip`
  * 
@@ -456,7 +377,7 @@ function geoip_detect2_shortcode_text_input($attr) {
 	if (geoip_detect2_shortcode_is_ajax_mode($attr)) {
 		geoip_detect2_enqueue_javascript('shortcode');
 		$html_attrs['class'] .= ' js-geoip-text-input';
-		$html_attrs['data-options'] = _geoip_detect2_shortcode_options($attr);
+		$html_attrs['data-options'] = wp_json_encode(_geoip_detect2_shortcode_options($attr));
 	} else {
 		$html_attrs['value'] = geoip_detect2_shortcode($attr + array('add_error' => false));
 	}
@@ -468,128 +389,8 @@ add_shortcode('geoip_detect2_text_input', 'geoip_detect2_shortcode_text_input');
 add_shortcode('geoip_detect2_input', 'geoip_detect2_shortcode_text_input');
 
 /**
- * Generating a text field that has a geoip value as default
- * 
- * Property can be: continent, country, city, postal.code or any other property understood by `geoip_detect2_get_info_from_ip`
- * 
- * Examples:
- *
- * `[geoip_detect2_text_input city property:city lang:fr id:id class:class]`
- * A text input that has the detetected city as default (with CSS id "#id" and class ".class")
- *
- * `[geoip_detect2_text_input city property:city lang:fr id:id class:class default:Paris]`
- * As above, but in case the city is unknown, use "Paris"
- * 
- * `[geoip_detect2_text_input postal property:postal.code type:hidden]`
- * An invisible text input containing the postal code. 
- *
+ * Just in case somebody really wants to use this shortcode outside of cf7
  */
-function geoip_detect2_shortcode_text_input_wpcf7($tag) {
-	$tag = new WPCF7_FormTag( $tag );
-
-	$default = (string) reset( $tag->values );
-	$default = $tag->get_default_option($default, array('multiple' => false));
-	$default = wpcf7_get_hangover( $tag->name, $default ); // Get from $_POST if available
-
-	$class = wpcf7_form_controls_class( $tag->type );
-	$validation_error = wpcf7_get_validation_error( $tag->name );
-	if ($validation_error)
-		$class .= ' wpcf7-not-valid';
-
-	$attr = array(
-		'name' => $tag->name,
-		'required' => substr($tag->type, -1) == '*',
-		'invalid' => $validation_error ? 'true' : 'false',
-		'id' => $tag->get_id_option(),
-		'class' => $tag->get_class_option( $class ),
-		'type' => $tag->get_option('type', '', true),
-		'lang' => $tag->get_option('lang', '', true),
-		'property' => $tag->get_option('property', '', true),
-		'default' => $tag->get_option('default', '', true),
-	);
-	$html = geoip_detect2_shortcode_text_input($attr);
-
-	$html = sprintf(
-		'<span class="wpcf7-form-control-wrap %1$s">%2$s %3$s</span>',
-		sanitize_html_class( $tag->name ), $html, $validation_error );
-
-	return $html;
-}
-
-add_action( 'wpcf7_init', 'geoip_detect2_add_wpcf7_shortcodes' );
-function geoip_detect2_add_wpcf7_shortcodes() {
-	if (function_exists('wpcf7_add_form_tag')) {
-		// >=CF 4.6
-		wpcf7_add_form_tag(array('geoip_detect2_countries', 'geoip_detect2_countries*'), 'geoip_detect2_shortcode_country_select_wpcf7', true);
-		wpcf7_add_form_tag(array('geoip_detect2_text_input', 'geoip_detect2_text_input*'), 'geoip_detect2_shortcode_text_input_wpcf7', true);
-	} else if (function_exists('wpcf7_add_shortcode')) {
-		// < CF 4.6
-		wpcf7_add_shortcode(array('geoip_detect2_countries', 'geoip_detect2_countries*'), 'geoip_detect2_shortcode_country_select_wpcf7', true);
-		wpcf7_add_shortcode(array('geoip_detect2_text_input', 'geoip_detect2_text_input*'), 'geoip_detect2_shortcode_text_input_wpcf7', true);
-	}
-}
-
-function geoip_detect2_shortcode_user_info_wpcf7($output, $name, $isHtml) {
-	$lines = array();
-
-	switch($name) {
-		case 'geoip_detect2_get_client_ip':
-			$lines[] = geoip_detect2_get_client_ip();
-			break;
-		case 'geoip_detect2_get_current_source_description':
-			$lines[] = geoip_detect2_get_current_source_description();
-			break;
-		case 'geoip_detect2_property_country':
-			$info = geoip_detect2_get_info_from_current_ip();
-			$lines[] = $info->country->name;
-			break;
-		case 'geoip_detect2_property_most_specific_subdivision':
-		case 'geoip_detect2_property_state':
-		case 'geoip_detect2_property_region':
-			$name = 'geoip_detect2_property_most_specific_subdivision';
-			$info = geoip_detect2_get_info_from_current_ip();
-			$lines[] = $info->mostSpecificSubdivision->name;
-			break;
-		case 'geoip_detect2_property_city':
-			$info = geoip_detect2_get_info_from_current_ip();
-			$lines[] = $info->city->name;
-			break;
-
-		case 'geoip_detect2_user_info':
-			$lines[] = sprintf(__('IP of the user: %s', 'geoip-detect'), geoip_detect2_get_client_ip());
-
-			$info = geoip_detect2_get_info_from_current_ip();
-			if ($info->country->name)
-				$lines[] = sprintf(__('Country: %s', 'geoip-detect'), $info->country->name);
-			if ($info->mostSpecificSubdivision->name)
-				$lines[] = sprintf(__('State or region: %s', 'geoip-detect'), $info->mostSpecificSubdivision->name);
-			if ($info->city->name)
-				$lines[] = sprintf(__('City: %s', 'geoip-detect'), $info->city->name);
-
-			$lines[] = '';
-			$lines[] = sprintf(__('Data from: %s', 'geoip-detect'), geoip_detect2_get_current_source_description());
-			break;
-			
-		default:
-			return $output;
-	}
-
-	/**
-	 * Filter: geoip2_detect_wpcf7_special_mail_tags
-	 * This filter is called if a GeoIP-detection-tag was used.
-	 *
-	 * @param array $lines - Output lines
-	 * @param string $name - Name of the WPCF 7 Tag that was used
-	 * @param bool $isHtml - Whether HTML or Plain Text output should be used
-	 * @return array Output lines
-	 */
-	$lines = apply_filters('geoip2_detect_wpcf7_special_mail_tags', $lines, $name, $isHtml);
-
-    $lineBreak = $isHtml ? "<br>" : "\n";
-    return implode($lineBreak, $lines);
-}
-add_filter( 'wpcf7_special_mail_tags', 'geoip_detect2_shortcode_user_info_wpcf7', 18, 3 );
-
 function geoip_detect_shortcode_user_info() {
     return geoip_detect2_shortcode_user_info_wpcf7('', 'geoip_detect2_user_info', true);
 }
@@ -794,6 +595,14 @@ function geoip_detect2_shortcode_check_subcondition($expectedValuesRaw, $actualV
 // ----------------------------------- Flags - This needs the Plugin "SVG Flags" to work ---------------------
 
 /**
+ * Simple use:
+ * 
+ * [geoip_detect2_current_flag]
+ * 
+ * All possible parameters:
+ * 
+ * [geoip_detect2_current_flag height="10% !important", width="30" class="extra-flag-class" squared="0" default="it" ajax="0"]
+ * 
  * @param int|string width   CSS Width of the flag `<span>`-Element (in Pixels or CSS including unit)
  * @param int|string height  CSS Height of the flag `<span>`-Element (in Pixels or CSS including unit)
  * @param int squared	     Instead of being 4:3, the flag should be 1:1 in ratio
@@ -801,7 +610,7 @@ function geoip_detect2_shortcode_check_subcondition($expectedValuesRaw, $actualV
  * @param string $default 	 Default Country in case the visitor's country cannot be determined
  */
 function geoip_detect2_shortcode_current_flag($orig_attr, $content = '', $shortcodeName = 'geoip_detect2_current_flag') {
-	if (!shortcode_exists('svg-flag')) {
+	if (!shortcode_exists('svg-flag') && !defined('GEOIP_DETECT_DOING_UNIT_TESTS')) {
 		return '<!-- There should be a flag here. However, the Plugin "SVG Flags" is missing.';
 	}
 
@@ -895,11 +704,12 @@ add_shortcode('geoip_detect2_enqueue_javascript', 'geoip_detect2_shortcode_enque
 function _geoip_detect2_create_placeholder($tag = "span", $attr = [], $data = null) {
 	$tag = sanitize_key($tag);
 	$html = "<$tag";
+
+	if ($data) {
+		$attr['data-options'] = wp_json_encode($data);
+	}
 	if ($attr) {
 		$html .= ' ' . _geoip_detect_flatten_html_attr($attr);
-	}
-	if ($data) {
-		$html .= ' data-options="' . esc_attr(json_encode($data)) . '"';
 	}
 	$html .= "></$tag>";
 
