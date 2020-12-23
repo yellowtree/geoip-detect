@@ -44,7 +44,7 @@ This needs to be known to the plugin to choose the correct IP adress.
 	</ul>
 
 <script>
-	jQuery.ajax(<?php echo json_encode(_geoip_detect2_get_external_ip_services(1, true)[0]); ?>, {
+	jQuery.ajax(<?php echo wp_json_encode(_geoip_detect2_get_external_ip_services(1, true)[0]); ?>, {
 		type: 'GET',
 		dataType: 'text',
 	}).done(function(ret) {

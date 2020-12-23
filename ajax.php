@@ -66,11 +66,7 @@ function geoip_detect_ajax_get_info_from_current_ip() {
 	
 	$data = apply_filters('geoip_detect2_ajax_record_data', $data, isset($data['traits']['ip_address']) ? $data['traits']['ip_address'] : '' ) ;
 	
-	if ($data['extra']['error'])
-		http_response_code(500);
-	
-	echo json_encode($data);
-	exit;
+	wp_send_json($data, !empty($data['extra']['error']) ? 500 : 200 );
 }
 
 add_action(        'wp_ajax_geoip_detect2_get_info_from_current_ip', 'geoip_detect_ajax_get_info_from_current_ip' );
@@ -83,13 +79,9 @@ function _geoip_detect_get_domain_name($url) {
 }
 
 function _geoip_detect_ajax_error($error) {
-	http_response_code(412);
-
 	$data = array('extra' => array('error' => $error));
 	$data['is_empty'] = true;
-	echo json_encode($data);
-
-	exit;
+	wp_send_json($data, 412);
 }
 
 

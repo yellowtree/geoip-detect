@@ -39,11 +39,6 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertEquals('EU', do_shortcode('[geoip_detect2 property="continent.code"]'));
 	}
 
-	function testShortcodeAjax() {
-		$this->assertContains('traits.ipAddress', do_shortcode('[geoip_detect2 property="traits.ipAddress" ajax="1"]'));
-		$this->assertContains('js-geoip-detect-shortcode', do_shortcode('[geoip_detect2 property="traits.ipAddress" ajax="1"]'));
-	}
-
 	/* Does not work.
 	function testShortcodePropertiesUnderscorized() {
 		$this->assertEquals('Europe/Berlin', do_shortcode('[geoip_detect2 property="location.time_zone"]'));
@@ -268,6 +263,23 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 			'b' => 'B'
 		);
 	}
+
+
+
+	function testShortcodeAjax() {
+		$this->assertContains('traits.ipAddress', do_shortcode('[geoip_detect2 property="traits.ipAddress" ajax="1"]'));
+		$this->assertContains('js-geoip-detect-shortcode', do_shortcode('[geoip_detect2 property="traits.ipAddress" ajax="1"]'));
+		
+		$this->assertContains('data-options', do_shortcode('[geoip_detect2_countries_select name="mycountry" lang="fr" ajax="1"]'));
+		$this->assertContains('js-geoip-detect-country-select', do_shortcode('[geoip_detect2_countries_select name="mycountry" lang="fr" ajax="1"]'));
+		
+		$this->assertContains('postal.code', do_shortcode('[geoip_detect2_text_input name="postal" property="postal.code" type="hidden" ajax="1"]'));
+		$this->assertContains('js-geoip-text-input', do_shortcode('[geoip_detect2_text_input name="postal" property="postal.code" type="hidden" ajax="true"]'));
+		
+		$this->assertContains('it', do_shortcode('[geoip_detect2_current_flag height="10% !important", width="30" class="extra-flag-class" squared="0" default="it" ajax="1"]'));
+		$this->assertContains('js-geoip-detect-flag', do_shortcode('[geoip_detect2_current_flag height="10% !important", width="30" class="extra-flag-class" squared="0" default="it" ajax="1"]'));
+	}
+
 }
 
 /* Data of Test IP:
