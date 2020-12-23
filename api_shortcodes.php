@@ -244,7 +244,7 @@ add_shortcode('geoip_detect2_get_current_source_description', 'geoip_detect2_sho
  * @param bool   $required If the field is required or not
  * @param string $class CSS Class of element
  * @param string $lang Language(s) (optional. If not set, current site language is used.)
- * @param string $selected Which country to select by default (2-letter ISO code.) (optional. If not set, the country will be detected by client ip.)
+ * @param string $selected Which country to select by default (2-letter ISO code.) (optional. If not set, the country will be detected by client ip.) (This parameter does not work with AJAX mode.)
  * @param string $default 		Default Value that will be used if country cannot be detected (optional)
  * @param string $include_blank If this value contains 'true', a empty value will be prepended ('---', i.e. no country) (optional)
  * @param bool   $flag          If a flag should be added before the country name (In Windows, there are no flags, ISO-Country codes instead. This is a design choice by Windows.)
@@ -254,18 +254,6 @@ add_shortcode('geoip_detect2_get_current_source_description', 'geoip_detect2_sho
  * @return string The generated HTML
  */
 function geoip_detect2_shortcode_country_select($attr) {
-	$selected = '';
-	if (!empty($attr['selected'])) {
-		$selected = $attr['selected'];
-	} else {
-		$record = geoip_detect2_get_info_from_current_ip();
-		$selected = $record->country->isoCode;
-	}
-	if (empty($selected)) {
-		if (isset($attr['default']))
-			$selected = $attr['default'];
-	}
-
 	$shortcode_options = _geoip_detect2_shortcode_options($attr);
 
 	$select_attrs = array(
@@ -277,16 +265,36 @@ function geoip_detect2_shortcode_country_select($attr) {
 		'autocomplete' => 'off',
 	);
 
+	$selected = '';
+	if (geoip_detect2_shortcode_is_ajax_mode($attr) && !isset($attr['selected']) ) {
+		geoip_detect2_enqueue_javascript('shortcode');
+		$select_attrs['class'] .= ' js-geoip-detect-country-select';
+		$select_attrs['data-options'] = wp_json_encode($shortcode_options);
+	} else {
+		if (!empty($attr['selected'])) {
+			$selected = $attr['selected'];
+		} else {
+			$record = geoip_detect2_get_info_from_current_ip();
+			$selected = $record->country->isoCode;
+		}
+		if (empty($selected)) {
+			if (isset($attr['default']))
+				$selected = $attr['default'];
+		}
+	}
+
+
+	
 	$countryInfo = new YellowTree\GeoipDetect\Geonames\CountryInformation();
 	$countries = $countryInfo->getAllCountries($shortcode_options['lang']);
-
+	
 	if (!empty($attr['flag'])) {
 		array_walk($countries, function(&$value, $key) use($countryInfo) {
 			$flag = $countryInfo->getFlagEmoji($key);
 			$value = $flag . ' ' . $value;
 		});
 	}
-
+	
 	if (!empty($attr['tel'])) {
 		array_walk($countries, function(&$value, $key) use($countryInfo) {
 			$tel = $countryInfo->getTelephonePrefix($key);
@@ -295,13 +303,7 @@ function geoip_detect2_shortcode_country_select($attr) {
 			}
 		});
 	}
-
-	if (geoip_detect2_shortcode_is_ajax_mode($attr)) {
-		geoip_detect2_enqueue_javascript('shortcode');
-		$select_attrs['class'] = (isset($select_attr['class']) ?: '') . ' js-geoip-detect-country-select';
-		$select_attrs['data-options'] = wp_json_encode(_geoip_detect2_shortcode_options($attr));
-	}
-
+	
 	/**
 	 * Filter: geoip_detect2_shortcode_country_select_countries
 	 * Change the list of countries that should show up in the select box.
@@ -325,7 +327,7 @@ function geoip_detect2_shortcode_country_select($attr) {
 		}
 		else
 		{
-			$html .= '<option data-c="' . esc_attr($code).  '"' . ($code == $selected ? ' selected="selected"' : '') . '>' . esc_html($label) . '</option>';
+			$html .= '<option data-c="' . esc_attr(mb_strtolower($code)).  '"' . ($code == $selected ? ' selected="selected"' : '') . '>' . esc_html($label) . '</option>';
 		}
 	}
 	$html .= '</select>';

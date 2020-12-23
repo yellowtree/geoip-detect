@@ -1,4 +1,4 @@
-import { domReady, selectItemByValue, triggerNativeEvent } from "./lib/html";
+import { domReady, selectItemByAttribute, triggerNativeEvent } from "./lib/html";
 import { get_info } from "./lookup";
 
 // Get Options from data-options and json parse them
