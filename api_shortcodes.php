@@ -51,7 +51,9 @@ function _geoip_detect2_shortcode_options($attr) {
  * @param string $property		Property to read. For a list of all possible property names, see https://github.com/yellowtree/geoip-detect/wiki/Record-Properties#list-of-all-property-names
  * @param string $lang			Language(s) (optional. If not set, current site language is used.)
  * @param string $default 		Default Value that will be shown if value not set (optional)
- * @param string $skip_cache		if 'true': Do not cache value
+ * @param bool   $skip_cache	If 'true': Do not cache value (This parameter is ignored in AJAX mode)
+ * @param string $ip			Lookup the data of a specific IP instead of the current client IP (this parameter does not work in AJAX mode)
+ * @param bool   $ajax          1: Execute this shortcode as AJAX | 0: Execute this shortcode on the server | Unset: Use the global settings (execute as AJAX if both 'AJAX' and 'Resolve shortcodes (via Ajax)' are enabled)
  *
  * @since 2.5.7 New attribute `ip`
  */
@@ -185,7 +187,7 @@ function _deprecated_geoip_detect2_shortcode_get_property($userInfo, $propertyNa
  * 
  * [geoip_detect2_get_client_ip]
  * 
- * @param bool $ajax
+ * @param bool   $ajax          1: Execute this shortcode as AJAX | 0: Execute this shortcode on the server | Unset: Use the global settings (execute as AJAX if both 'AJAX' and 'Resolve shortcodes (via Ajax)' are enabled)
  * 
  * @since 2.5.2 
  */
@@ -249,7 +251,7 @@ add_shortcode('geoip_detect2_get_current_source_description', 'geoip_detect2_sho
  * @param string $include_blank If this value contains 'true', a empty value will be prepended ('---', i.e. no country) (optional)
  * @param bool   $flag          If a flag should be added before the country name (In Windows, there are no flags, ISO-Country codes instead. This is a design choice by Windows.)
  * @param bool   $tel           If the international code should be added after the country name
- * @param bool   $ajax          1: Execute this shortcode as AJAX | 0: Execute this shortcode on the server | Unset: Use AJAX settings
+ * @param bool   $ajax          1: Execute this shortcode as AJAX | 0: Execute this shortcode on the server | Unset: Use the global settings (execute as AJAX if both 'AJAX' and 'Resolve shortcodes (via Ajax)' are enabled)
  *
  * @return string The generated HTML
  */
@@ -371,9 +373,11 @@ function _geoip_detect_flatten_html_attr($attr) {
  * @param string $type HTML input type of element ("text" by default) (@since 3.1.2)
  * @param string $lang Language(s) (optional. If not set, current site language is used.)
  * @param string $default 		Default Value that will be used if country cannot be detected (optional)
- * @param bool 	 $skip_cache
- * @param string $ip
- * @param string $placeholder
+ * @param bool 	 $skip_cache    If 'true': Do not cache value (This parameter is ignored in AJAX mode)
+ * @param string $ip            Lookup the data of a specific IP instead of the current client IP (this parameter does not work in AJAX mode)
+ * @param string $placeholder	HZML attribute "plaecholer"
+ * @param bool   $ajax          1: Execute this shortcode as AJAX | 0: Execute this shortcode on the server | Unset: Use the global settings (execute as AJAX if both 'AJAX' and 'Resolve shortcodes (via Ajax)' are enabled)
+
  *
  * @return string The generated HTML
  */
