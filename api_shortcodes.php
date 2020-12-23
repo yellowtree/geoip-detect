@@ -181,12 +181,26 @@ function _deprecated_geoip_detect2_shortcode_get_property($userInfo, $propertyNa
 
 /**
  * Get the client ip
+ * IPv4 or IPv6-Adress of the client. This takes reverse proxies into account, if they are configured on the options page.
+ * 
+ * [geoip_detect2_get_client_ip]
+ * 
+ * @param bool $ajax
+ * 
+ * @since 2.5.2 
  */
 function geoip_detect2_shortcode_client_ip($attr) {
-	$client_ip = geoip_detect2_get_client_ip();
-	$client_ip = geoip_detect_normalize_ip($client_ip);
-
-	return $client_ip;
+	if (geoip_detect2_shortcode_is_ajax_mode($attr)) {
+		return geoip_detect2_shortcode([
+			'property' => 'traits.ipAddress',
+			'ajax' => isset($attr['ajax']) ? $attr['ajax'] : null,
+		]);
+	} else {
+		$client_ip = geoip_detect2_get_client_ip();
+		$client_ip = geoip_detect_normalize_ip($client_ip);
+	
+		return $client_ip;
+	}
 }
 add_shortcode('geoip_detect2_get_client_ip', 'geoip_detect2_shortcode_client_ip');
 
