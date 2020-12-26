@@ -3,18 +3,22 @@ import _ from '../lodash.custom';
 
 
 const _get_localized = function(ret, locales) {
-    if (typeof(ret) == 'object' && typeof(ret.names) == 'object') {
+    if (typeof(ret) == 'object') {
         if (typeof(locales) == 'string') {
             locales = [ locales ];
         }
 
-        for (let locale of locales) {
-            if (ret.names[locale]) {
-                return ret.names[locale];
+        if (typeof (ret.names) == 'object') {
+            for (let locale of locales) {
+                if (ret.names[locale]) {
+                    return ret.names[locale];
+                }
             }
         }
-        
-        return '';
+
+        if (ret.name) {
+            return ret.name;
+        }
     }
     return ret;
 }
@@ -50,6 +54,10 @@ class Record {
 
         // Localize property, if possible
         ret = _get_localized(ret, locales);
+
+        if (typeof (ret) !== 'string' && typeof (ret) !== 'undefined' ) {
+            console.warn('Geolocation IP Detection: The property "' + prop + '" is of type "' + typeof (ret) + '", should be string', {property: prop, value: ret})
+        }
 
         return ret;
     }

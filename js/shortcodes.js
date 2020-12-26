@@ -18,7 +18,7 @@ async function action_on_elements(className, errorMessage, callback) {
     const record = await get_info();
 
     if (record.error()) {
-        console.error('Geodata Error (' + errorMessage + '): ' + record.error());
+        console.error('Geolocation IP Detection Error (' + errorMessage + '): ' + record.error());
         return;
     }
 
@@ -29,7 +29,7 @@ async function action_on_elements(className, errorMessage, callback) {
 function get_value_from_record(el, record) {
     const opt = get_options(el);
     if (opt.skip_cache) {
-        console.warn("The property 'skip_cache' is ignored in AJAX mode. You could disable the response caching on the server by setting the constant GEOIP_DETECT_READER_CACHE_TIME.");
+        console.warn("Geolocation IP Detection: The property 'skip_cache' is ignored in AJAX mode. You could disable the response caching on the server by setting the constant GEOIP_DETECT_READER_CACHE_TIME.");
     }
 
     return record.get_with_locales(opt.property, opt.lang, opt.default);
