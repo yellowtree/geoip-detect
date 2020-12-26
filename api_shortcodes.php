@@ -512,9 +512,6 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
     $attr = shortcode_atts($attrDefaults, $attr, $shortcodeName);
 
 	$shortcode_options = _geoip_detect2_shortcode_options($attr);
-	$shortcode_options += [
-		'attribute_names' => $attributeNames
-	];
 
 	$options = array('skipCache' => $shortcode_options['skip_cache']);
 
@@ -531,7 +528,21 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 	 */
 	$info = apply_filters('geoip_detect2_shortcode_show_if_ip_info_override', $info, $attr, $showContentIfMatch);
 
-    $isConditionMatching = true;
+	$isConditionMatching = true;
+	
+	/** ToDo Compiling the conditions to an array first:
+	 * 
+	 * [
+	 * 	 "expected": true, // false if hide_if 
+	 *   "operator": "AND" // OR not supported yet
+	 *   "conditions": [
+	 *      [ 
+	 * 			"property": "city", 
+	 * 			"values": "Paris,Berlin", 
+	 * 			"expected": true ] // false if not operator
+	 *   ]
+	 * ]
+	 */
 
 	foreach ($attributeNames as $shortcodeParamName => $maxmindName) {
 		if (!empty($attr[$shortcodeParamName])) {
