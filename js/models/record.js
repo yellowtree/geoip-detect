@@ -41,22 +41,36 @@ class Record {
         return this.get_with_locales(prop, this.default_locales, default_value);
     }
     
-    
-    get_with_locales(prop, locales, default_value) {
-        prop = camelToUnderscore(prop);
+    has_property(prop) {
+        const ret = this._lookup_with_locales(prop, this.default_locales)
+        return typeof(ret) !== 'undefined';
+    }
 
+    _lookup_with_locales(prop, locales, default_value = '') {
+        prop = camelToUnderscore(prop);
+    
         // Treat pseudo-property 'name' as if it never existed
         if (prop.substr(-5) === '.name') {
             prop = prop.substr(0, prop.length - 5);
         }
-
+    
         let ret = _.get(this.data, prop, default_value);
-
+    
         // Localize property, if possible
         ret = _get_localized(ret, locales);
 
-        if (typeof (ret) !== 'string' && typeof (ret) !== 'undefined' ) {
-            console.warn('Geolocation IP Detection: The property "' + prop + '" is of type "' + typeof (ret) + '", should be string', {property: prop, value: ret})
+        return ret;
+    }
+    
+    get_with_locales(prop, locales, default_value) {
+        const ret = this._lookup_with_locales(prop, locales, default_value);
+
+        if (typeof(ret) === 'object') {
+            console.warn('Geolocation IP Detection: The property "' + prop + '" is of type "' + typeof (ret) + '", should be string or similar', {property: prop, value: ret})
+        }
+        if (typeof(ret) === 'undefined') {
+            console.warn('Geolocation IP Detection: The property "' + prop + '" is not defined, please check spelling or maybe you need a different data source', { data: this.data })
+            return '';
         }
 
         return ret;
