@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright 2013-2020 Yellow Tree, Siegen, Germany
+Copyright 2013-2021 Yellow Tree, Siegen, Germany
 Author: Benjamin Pick (wp-geoip-detect| |posteo.de)
 
 This program is free software; you can redistribute it and/or modify
@@ -73,6 +73,7 @@ function geoip_detect_do_upgrade($old_version) {
 		if ($value) {
 			update_option('geoip-detect-ajax_set_css_country', '1');
 			update_option('geoip-detect-ajax_enqueue_js', '1');
+			update_option('geoip-detect-set_css_country', '0');
 		}
 	}
 

@@ -115,11 +115,13 @@ Or maybe you are using a site cache plugin. Then enable the option `Disable cach
 
 == Upgrade Notice ==
 
+= 3.3.0 =
+Improving AJAX mode - now you can use it for specific pages.
+
 = 3.2.1 = 
 This update fixes an issue of 3.2.0 if your installation has WP_DEBUG enabled.
 
 = 3.2.0 =
-
 This plugin version simplifies complying the the EULA of Maxmind by automatically retrieving and honoring their Privacy Exclusion List. 
 You need to enter your Account ID in the options. 
 Find more information about the Privacy Exclusion API in the FAQ of the plugin.
@@ -142,36 +144,11 @@ The Plugin was renamed to Geolocation IP Detection in order to prevent trademark
 
 If you use Maxmind "Automatic download" then you need to upgrade to this plugin version in order to continue to receive database update. The Database license changed and you will need to register at their website and agree to the EULA.
 
-= 2.13.0 =
-
-PHP 5.6 is required now. If you are using the AJAX mode, this version will drastically reduce the number of requests as it will store the visitor's geo-information in a cookie.
-
-= 2.12.0 =
-
-New: Ipstack.com can be used as data source
-
-= 2.11.0 =
-
-The Download code of the automatically updated Maxmind file was rewritten for better performance. Also, AJAX support is now in beta (see documentation).
-
-= 2.9.2 =
-
-Hotfix: In 2.9.1, this plugin was incompatible with other Contact Form 7-Special Mailtags (https://contactform7.com/special-mail-tags/).
-
-= 2.9.1 =
-
-Online Shops: Be careful to comply to (EU) 2018/302 (going into effect 03 Dec 2018) in how you use this plugin !
-
-= 2.9.0 =
-
-There have been changes to the reverse proxy logic. If you have enabled a reverse proxy, check if the detected IP is correct.
-New: Shortcode for showing/hiding content!
-
 == Changelog ==
 
 = 3.3.0 =
 * NEW shortcode `[geoip_detect2_enqueue_javascript]` if you are using AJAX mode, but only on certain wordpress pages.
-* NEW option "Add a country-specific CSS class to the <body>-Tag (via AJAX)."
+* NEW option "Add a country-specific CSS class to the <body>-Tag (via AJAX)." It is enabled automatically when upgrading the plugin, if the options "AJAX" and the "body tag" was enabled before.
 * Some UI fixes
 
 = 3.2.1 =
@@ -234,58 +211,5 @@ New: Shortcode for showing/hiding content!
 
 The code of the plugin has not changed much, I have named this version 3.0 to indicate the major change on Maxmind's side of things. They explain it in this blog post:
 https://blog.maxmind.com/2019/12/18/significant-changes-to-accessing-and-using-geolite2-databases/
-
-= 2.13 =
-* NEW: JS/AJAX mode now caches the response as a cookie so that every user only needs to call the AJAX requests once
-* NEW: If you install the plugin [SVG Flags](https://wordpress.org/plugins/svg-flags-lite/), you can use this shortcode to show the flag of the current country: `[geoip_detect2_current_flag]`. See [Documentation](https://github.com/yellowtree/geoip-detect/wiki/API:-Shortcodes#add-a-flag-of-the-visitors-country) for more infos. 
-* FIX: Example PHP code on Lookup page now displays nicer array syntax (and fixing a deprecation warning)
-* Updated Maxmind vendor code - PHP 5.6 is required now
-
-= 2.12.1 =
-* NEW: With the new Wordpress filter `geoip_detect2_record_data_after_cache` you can change the record data for testing purposes (see https://github.com/yellowtree/geoip-detect/wiki/API-Usage-Examples#change-record-data-eg-for-testing-purposes)
-* NEW: All datasources now also have the properties `extra->flag` (containing the flag as Unicode Emoji) and `extra->tel` (containing the country dial code)
-* Some cleanup in ipstack & showing all properties in backend.
-
-= 2.12.0 =
-* NEW: It is now possible to use ipstack.com as a data source.
-* The Backend Lookup UI now can show all properties and you can choose if you want to see the PHP, Shortcode or JS syntax.
-* The property "extra->original" now contains the original Web Answer array from the datasources ipstack & hostinfo
-
-= 2.11.2 = 
-* The auto-updater of the Maxmind City Lite source now updates more often (every 1-2weeks) in order to get more accurate data.
-
-= 2.11.1 =
-* FIX: When activating the plugin on Wordpress MultiSite, an error was thrown before
-* NEW: Add body class "geoip-country-is-in-european-union" if the detected country is inside of the European Union
-* JS/AJAX support for cached pages (Public BETA now. See https://github.com/yellowtree/geoip-detect/wiki/API%3A-AJAX)
-* NEW: If AJAX and body classes are enabled, body classes are added via AJAX.
-
-= 2.11.0 =
-* NEW: JS/AJAX support for cached pages (This is in **BETA**. Read https://github.com/yellowtree/geoip-detect/wiki/API%3A-AJAX on how to activate it)
-* FIX: Improve performance of unpacking the Maxmind file (Source: Automatic download) - important for hosts with a low max_execution_time
-* NEW: On removal (in the Backend), the plugin will delete its options from the database and the downloaded Maxmind file
-
-= 2.10.0 =
-* NEW: The whitelisted proxies can now be subnets such as `11.11.11.0/24`
-* NEW: Add a ContactForm7-Tag `geoip_detect2_text_input` (see https://github.com/yellowtree/geoip-detect/wiki/API:-Shortcodes-for-Contact-Form-7#create-a-text-input-that-is-prefilled-with-a-geodetected-property)
-* NEW: A new wordpress filter allows overriding of the detected geo-information inside the `geoip_detect2_shortcode_show_if`-Shortcode. Use the already-existing filter `geoip_detect2_record_information` instead if you want to override this information for all shortcodes and API calls.
-* Updated Maxmind vendor code
-* Increased WP minimum version to 4.0
-
-= 2.9.2 =
-* FIX: ContactForm7-Mailtag disabled mailtags from other plugins.
-
-= 2.9.1 =
-* NEW: Add ContactForm7-Mailtags so that the user information formatting can be customized: `geoip_detect2_get_client_ip`, `geoip_detect2_get_current_source_description`, `geoip_detect2_property_country`, `geoip_detect2_property_state`, `geoip_detect2_property_city`. Of course you can still use `geoip_detect2_user_info` as shortcode for all these informations.
-* FIX: On some server, the plugin had wrongly assumed that PHP was compiled without IPv6-support.
-
-= 2.9.0 =
-* Add default Privacy text for GDPR compliance.
-* The reverse proxy logic was heavily changed. If you run into configuration errors, try the debug panel (see link after the reverse proxy option).
-* NEW: Reverse proxies can now be whitelisted - all non-whitelisted proxies are treated as user IP.
-* NEW: Shortcode to show/hide content dynamically. (`[geoip_detect2_show_if country="US" not_state="Texas"]TEXT[/geoip_detect2_show_if]`) (Thanks to @DynAggelos!)
-* NEW: All shortcodes now support multiple subdivisions (`[geoip_detect2 property="subdivisions.0.isoCode"]`)
-* NEW: The CSS classes that are added to the body-tag (if enabled in the options) now also include the most specific subdivision (`geoip-province-HE`).
-* Maxmind vendor code was updated to the current version (2.9.0).
 
 [Older changelog](https://github.com/yellowtree/geoip-detect/blob/master/CHANGELOG.md)
