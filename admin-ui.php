@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright 2013-2020 Yellow Tree, Siegen, Germany
+Copyright 2013-2021 Yellow Tree, Siegen, Germany
 Author: Benjamin Pick (wp-geoip-detect| |posteo.de)
 
 This program is free software; you can redistribute it and/or modify
@@ -136,7 +136,7 @@ function geoip_detect_option_page() {
 
 	$messages = array();
 
-	$numeric_options = array('set_css_country', 'has_reverse_proxy', 'disable_pagecache', 'ajax_enabled', 'ajax_enqueue_js');
+	$numeric_options = array('set_css_country', 'has_reverse_proxy', 'disable_pagecache', 'ajax_enabled', 'ajax_enqueue_js', 'ajax_set_css_country', 'ajax_shortcodes');
 	$text_options = array('external_ip', 'trusted_proxy_ips');
 	$option_names = array_merge($numeric_options, $text_options);
 

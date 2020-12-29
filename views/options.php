@@ -67,7 +67,7 @@ $currentSourceId = $currentSource->getId();
 		<?php wp_nonce_field( 'geoip_detect_options' ); ?>
 		<h3><?php _e('General Options', 'geoip-detect'); ?></h3>
 		<p>
-			<label><input type="checkbox" name="options[set_css_country]" value="1" <?php if (!empty($wp_options['set_css_country'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Add a country-specific CSS class to the &lt;body&gt;-Tag.', 'geoip-detect'); ?></label><br />
+			<label><input type="checkbox" name="options[set_css_country]" value="1" <?php if (!empty($wp_options['set_css_country'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Add a country-specific CSS class to the &lt;body&gt;-Tag on every page.', 'geoip-detect'); ?></label><br />
 		</p>
 		<p>
 			<label><input type="checkbox" name="options[disable_pagecache]" value="1" <?php if (!empty($wp_options['disable_pagecache'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Disable caching a page that contains a shortcode or API call to geo-dependent functions.', 'geoip-detect'); ?></label><br />
@@ -80,16 +80,25 @@ $currentSourceId = $currentSource->getId();
 		</p>
 
 		<p>
-			<label><input type="checkbox" name="options[ajax_enabled]" value="1" <?php if (!empty($wp_options['ajax_enabled'])) { echo 'checked="checked"'; } ?>><?php _e('Enable AJAX endpoint to get the information for the current IP even on cached pages.', 'geoip-detect'); ?></label>
+			<label><input type="checkbox" name="options[ajax_enabled]" value="1" <?php if (!empty($wp_options['ajax_enabled'])) { echo 'checked="checked"'; } ?>> <?php _e('Enable AJAX endpoint to get the information for the current IP even on cached pages.', 'geoip-detect'); ?></label>
 		</p>
 			<?php if (in_array($currentSourceId, array('precision', 'ipstack')) && !empty($wp_options['ajax_enabled'])): ?>
 				<span class="geoip_detect_error" style="margin-top: 0;"><?php printf(__('Warning: In theory, other websites could use your API credits over AJAX, this cannot be prevented completely (see <a href="%s" target="_blank">documentation</a> for more infos). You should use a different data source or disable AJAX.', 'geoip-detect'), 'https://github.com/yellowtree/geoip-detect/wiki/JS-API-Documentation'); ?></span>
 			<?php endif; ?>
-		<p style="margin-left: 20px;">
-			<label><input type="checkbox" name="options[ajax_enqueue_js]" value="1" <?php if (!empty($wp_options['ajax_enqueue_js'])) { echo 'checked="checked"'; } ?>><?php _e('Add JS to make the access to the AJAX endpoint easier.', 'geoip-detect'); ?></label>
+		<p style="margin-left: 30px;">
+			<label><input type="checkbox" name="options[ajax_enqueue_js]" value="1" <?php if (!empty($wp_options['ajax_enqueue_js'])) { echo 'checked="checked"'; } ?>> <?php _e('Add JS Helper functions to all pages.', 'geoip-detect'); ?></label>
 			<span class="detail-box">
-				<?php _e('You will need to code JS (see <a href="https://github.com/yellowtree/geoip-detect/wiki/API%3A-AJAX">documentation</a>) in order to make this work. Shortcodes are not automatically converted to their AJAX equivalent.', 'geoip-detect'); ?>
+				<?php _e('This enables you code geo-dependent behavior in JS (see <a href="https://github.com/yellowtree/geoip-detect/wiki/API%3A-AJAX" target="_blank">documentation</a>)', 'geoip-detect'); ?>
 			</span>
+			<label><input type="checkbox" name="options[ajax_set_css_country]" value="1" <?php if (!empty($wp_options['ajax_set_css_country'])) { echo 'checked="checked"'; } ?>> <?php _e('Add a country-specific CSS class to the &lt;body&gt;-Tag (via AJAX).', 'geoip-detect'); ?></label>
+			<span class="detail-box">
+				<?php _e('This requires the JS Helper functions, either by ticking the option above, or by enqueuing it manually for the sites that need it.', 'geoip-detect'); ?>
+			</span>
+			<label style="color:#777"><input type="checkbox" name="options[ajax_shortcodes]" disabled value="1" <?php if (!empty($wp_options['ajax_shortcodes'])) { echo 'checked="checked"'; } ?>><?php _e('Resolve shortcodes (via AJAX).', 'geoip-detect'); ?></label>
+			<span class="detail-box">
+				<?php _e('(Shortcodes are not supported yet.)', 'geoip-detect'); ?>
+			</span>
+
 		</p>
 		<p>
 
@@ -103,7 +112,7 @@ $currentSourceId = $currentSource->getId();
 			<?php endif; ?>
 			</span>
 		</p>
-		<p>
+		<p style="margin-left: 30px;">
 			<label><?php _e('IPs of trusted proxies:', 'geoip-detect'); ?><input type="text" name="options[trusted_proxy_ips]" value="<?php echo esc_attr($wp_options['trusted_proxy_ips']); ?>" placeholder="1.1.1.1, 1234::1, 2.2.2.2/24" />
 			<span class="detail-box">
 				<?php if (empty($wp_options['has_reverse_proxy']) && !empty($wp_options['trusted_proxy_ips'])) : ?>

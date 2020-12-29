@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright 2013-2020 Yellow Tree, Siegen, Germany
+Copyright 2013-2021 Yellow Tree, Siegen, Germany
 Author: Benjamin Pick (wp-geoip-detect| |posteo.de)
 
 This program is free software; you can redistribute it and/or modify
@@ -242,7 +242,8 @@ function geoip_detect2_get_external_ip_adress($unfiltered = false) {
 }
 
 /**
- * Call this function if you want to register the JS script for AJAX mode only for specific pages
+ * Call this function if you want to register the JS script for AJAX mode only for specific pages.
+ * Can be called via the shortcode `[geoip_detect2_enqueue_javascript]`
  * @see https://github.com/yellowtree/geoip-detect/wiki/API-Usage-Examples#ajax-enqueue-the-js-file-manually
  */
 function geoip_detect2_enqueue_javascript() {

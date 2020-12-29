@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright 2013-2020 Yellow Tree, Siegen, Germany
+Copyright 2013-2021 Yellow Tree, Siegen, Germany
 Author: Benjamin Pick (wp-geoip-detect| |posteo.de)
 
 This program is free software; you can redistribute it and/or modify
@@ -331,11 +331,14 @@ function geoip_detect_sanitize_ip_list($ip_list) {
 function geoip_detect_is_ip_equal($actual, $expected) {
 	try {
 		return IpUtils::checkIp($actual, $expected);
-	} catch(Exception $e) {
-		if (WP_DEBUG) {
-			throw $e;
+	} catch(\Exception $e) {
+		// IPv6 not supported by PHP
+		// Do string comparison instead (very rough: no subnet, no IP noramlization)
+		if (is_array($expected)) {
+			return in_array($actual, $expected, true);
+		} else {
+			return $actual === $expected;
 		}
-		return false;
 	}
 }
 
