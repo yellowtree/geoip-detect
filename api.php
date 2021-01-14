@@ -42,6 +42,11 @@ use YellowTree\GeoipDetect\Lib\GetClientIp;
  * @since 2.7.0 Parameter $options['source'] has been introduced
  */
 function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()) {
+	if(defined('GEOIP_DETECT_LOOKUP_DISABLED') && GEOIP_DETECT_LOOKUP_DISABLED) {
+		trigger_error('Geolocation IP Detection: The lookup is currently disabled.');
+		return false;
+	}
+
 	_geoip_maybe_disable_pagecache();
 	// 1) Processing the parameters.
 

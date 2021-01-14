@@ -5,18 +5,18 @@ Plugin URI:      http://www.yellowtree.de
 Description:     Retrieving Geo-Information using the Maxmind GeoIP (Lite) Database.
 Author:          Yellow Tree (Benjamin Pick)
 Author URI:      http://www.yellowtree.de
-Version:         3.3.0
+Version:         4.0.0
 License:         GPLv3 or later
 License URI:     http://www.gnu.org/licenses/gpl-3.0.html
 Text Domain:     geoip-detect
 Domain Path:     /languages
 GitHub Plugin URI: https://github.com/yellowtree/geoip-detect
 GitHub Branch:   master
-Requires WP:     4.0
-Requires PHP:    5.6
+Requires WP:     5.0
+Requires PHP:    7.2
 */
 
-define('GEOIP_DETECT_VERSION', '3.4.0-beta');
+define('GEOIP_DETECT_VERSION', '4.0.0-beta');
 
 /*
 Copyright 2013-2021 Yellow Tree, Siegen, Germany
@@ -39,8 +39,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 define('GEOIP_REQUIRED_PHP_VERSION', '5.6');
 
-// In theory, it should still run in 3.5 . But officially supported is only WP 4.0 and above.
+// In theory, it should still run in 3.5 . But officially supported is only WP 5.0 and above.
 define('GEOIP_REQUIRED_WP_VERSION', '3.5');
+
+// We need this requirement because WooCommerce hardcoded Maxmind code instead of using composer. This would result in an PHP fatal error when there is a lookup.
+define('GEOIP_REQUIRED_WOOCOMMERCE_VERSION', '3.9.0');
 
 define('GEOIP_PLUGIN_FILE', __FILE__);
 define('GEOIP_PLUGIN_DIR', dirname(GEOIP_PLUGIN_FILE));
@@ -54,6 +57,11 @@ if (!geoip_detect_version_check()) {
 	require_once(GEOIP_PLUGIN_DIR . '/api-stubs.php');
 	return; // Do nothing except emitting the admin notice
 }
+add_action('plugins_loaded', function() {
+	if (!geoip_detect_version_check_after_plugins_loaded()) {
+		define('GEOIP_DETECT_LOOKUP_DISABLED', true);
+	}
+});
 
 require_once(GEOIP_PLUGIN_DIR . '/vendor/autoload.php');
 require_once(GEOIP_PLUGIN_DIR . '/init.php');
