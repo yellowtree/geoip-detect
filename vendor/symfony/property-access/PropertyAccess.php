@@ -20,20 +20,13 @@ final class PropertyAccess
 {
     /**
      * Creates a property accessor with the default configuration.
-     *
-     * @return PropertyAccessor
      */
-    public static function createPropertyAccessor()
+    public static function createPropertyAccessor(): PropertyAccessor
     {
         return self::createPropertyAccessorBuilder()->getPropertyAccessor();
     }
 
-    /**
-     * Creates a property accessor builder.
-     *
-     * @return PropertyAccessorBuilder
-     */
-    public static function createPropertyAccessorBuilder()
+    public static function createPropertyAccessorBuilder(): PropertyAccessorBuilder
     {
         return new PropertyAccessorBuilder();
     }

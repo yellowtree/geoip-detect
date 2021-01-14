@@ -15,6 +15,6 @@
     "require": {
         "geoip2/geoip2": "~2.0",
         "php": ">=7.2",
-        "symfony/property-access": "^3.4"
+        "symfony/property-access": "^4.4"
     }
 }
