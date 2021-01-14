@@ -51,7 +51,7 @@ class HeaderReader extends \YellowTree\GeoipDetect\DataSources\AbstractReader {
 		}
 		$country = '';
 		if (!$isoCode) {
-			return null;
+			return _geoip_detect2_get_new_empty_record();
 		}
 		
 		$r['country']['iso_code'] = strtoupper($isoCode);

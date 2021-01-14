@@ -24,7 +24,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 		$data = $this->api_call($ip);
 
 		if (!$data)
-			return null;
+			return _geoip_detect2_get_new_empty_record();
 
 		$r = array();
 

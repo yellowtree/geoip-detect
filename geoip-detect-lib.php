@@ -202,6 +202,11 @@ function _geoip_detect2_get_record_from_reader($reader, $ip, &$error) {
 	return $record;
 }
 
+function _geoip_detect2_get_new_empty_record() {
+	$data = array('traits' => array('ip_address' => $ip), 'is_empty' => true);
+	return new \GeoIp2\Model\City($data);
+}
+
 function _geoip_detect2_record_enrich_data($record, $ip, $sourceId, $error) {
 	$data = array('traits' => array('ip_address' => $ip), 'is_empty' => true);
 	if (is_object($record) && method_exists($record, 'jsonSerialize')) {
