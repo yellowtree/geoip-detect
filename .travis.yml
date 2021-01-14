@@ -33,10 +33,10 @@ matrix:
     - php: 8.0
       env: WP_VERSION=latest
     - php: 7.4
-      env: WP_VERSION=trunk
-    - php: 7.4
       env: WP_VERSION=latest
     - php: 7.3
+      env: WP_VERSION=latest
+    - php: 7.2
       env: WP_VERSION=latest
     - php: 7.2
       env: WP_VERSION=5.0
@@ -46,7 +46,7 @@ before_script:
   - mysql -u root -e "CREATE DATABASE ${WP_DB_NAME};"
 
 install:
-  - composer require --no-update --dev roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION}
+  - composer require --dev roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION}
   - composer install
   - composer show
 
