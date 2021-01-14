@@ -17,7 +17,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 		$this->options = $options + $default_options;
 	}
 
-	public function city($ip) {
+	public function city($ip): \GeoIp2\Model\City {
 		if (!geoip_detect_is_ip($ip, true))
 			throw new \Exception('The Hostip.info-Database only contains IPv4 adresses.');
 
@@ -46,7 +46,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 		return $record;
 	}
 
-	public function country($ip) {
+	public function country($ip): \GeoIp2\Model\Country {
 		return $this->city($ip); // too much info shouldn't hurt ...
 	}
 

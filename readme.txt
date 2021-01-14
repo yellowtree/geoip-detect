@@ -158,6 +158,7 @@ The following shortcodes are currently not implemented: [geoip_detect2_show_if] 
 * Minimum PHP version is now 7.2
 * Minimum Wordpress version is now 5.0
 * If you are using WooCommerce, you need at least version 3.9.0 (released Jan 2020) - otherwise this plugin lookup disables itself
+* Updated vendor code
 
 
 = 3.3.0 =

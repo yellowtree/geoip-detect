@@ -20,8 +20,11 @@ use Symfony\Component\Process\PhpProcess;
  */
 class CaBundle
 {
+    /** @var string|null */
     private static $caPath;
+    /** @var array<string, bool> */
     private static $caFileValidity = array();
+    /** @var bool|null */
     private static $useOpensslParse;
 
     /**
@@ -68,14 +71,13 @@ class CaBundle
         }
         $caBundlePaths = array();
 
-
         // If SSL_CERT_FILE env variable points to a valid certificate/bundle, use that.
         // This mimics how OpenSSL uses the SSL_CERT_FILE env variable.
-        $caBundlePaths[] = getenv('SSL_CERT_FILE');
+        $caBundlePaths[] = self::getEnvVariable('SSL_CERT_FILE');
 
         // If SSL_CERT_DIR env variable points to a valid certificate/bundle, use that.
         // This mimics how OpenSSL uses the SSL_CERT_FILE env variable.
-        $caBundlePaths[] = getenv('SSL_CERT_DIR');
+        $caBundlePaths[] = self::getEnvVariable('SSL_CERT_DIR');
 
         $caBundlePaths[] = ini_get('openssl.cafile');
         $caBundlePaths[] = ini_get('openssl.capath');
@@ -92,6 +94,7 @@ class CaBundle
             '/etc/ssl/cert.pem', // OpenBSD
             '/usr/local/etc/ssl/cert.pem', // FreeBSD 10.x
             '/usr/local/etc/openssl/cert.pem', // OS X homebrew, openssl package
+            '/usr/local/etc/openssl@1.1/cert.pem', // OS X homebrew, openssl@1.1 package
         );
 
         foreach($otherLocations as $location) {
@@ -101,11 +104,11 @@ class CaBundle
         $caBundlePaths = array_merge($caBundlePaths, $otherLocations);
 
         foreach ($caBundlePaths as $caBundle) {
-            if (self::caFileUsable($caBundle, $logger)) {
+            if ($caBundle && self::caFileUsable($caBundle, $logger)) {
                 return self::$caPath = $caBundle;
             }
 
-            if (self::caDirUsable($caBundle)) {
+            if ($caBundle && self::caDirUsable($caBundle)) {
                 return self::$caPath = $caBundle;
             }
         }
@@ -127,8 +130,13 @@ class CaBundle
         // cURL does not understand 'phar://' paths
         // see https://github.com/composer/ca-bundle/issues/10
         if (0 === strpos($caBundleFile, 'phar://')) {
+            $tempCaBundleFile = tempnam(sys_get_temp_dir(), 'openssl-ca-bundle-');
+            if (false === $tempCaBundleFile) {
+                throw new \RuntimeException('Could not create a temporary file to store the bundled CA file');
+            }
+
             file_put_contents(
-                $tempCaBundleFile = tempnam(sys_get_temp_dir(), 'openssl-ca-bundle-'),
+                $tempCaBundleFile,
                 file_get_contents($caBundleFile)
             );
 
@@ -172,8 +180,16 @@ class CaBundle
             }
 
             $isValid = !empty($contents);
+        } elseif (is_string($contents) && strlen($contents) > 0) {
+            $contents = preg_replace("/^(\\-+(?:BEGIN|END))\\s+TRUSTED\\s+(CERTIFICATE\\-+)\$/m", '$1 $2', $contents);
+            if (null === $contents) {
+                // regex extraction failed
+                $isValid = false;
+            } else {
+                $isValid = (bool) openssl_x509_parse($contents);
+            }
         } else {
-            $isValid = (bool) openssl_x509_parse($contents);
+            $isValid = false;
         }
 
         if ($logger) {
@@ -208,7 +224,7 @@ class CaBundle
         if (
                (PHP_VERSION_ID < 50400 && PHP_VERSION_ID >= 50328)
             || (PHP_VERSION_ID < 50500 && PHP_VERSION_ID >= 50423)
-            || (PHP_VERSION_ID < 50600 && PHP_VERSION_ID >= 50507)
+            || PHP_VERSION_ID >= 50507
         ) {
             // This version of PHP has the fix for CVE-2013-6420 applied.
             return self::$useOpensslParse = true;
@@ -275,7 +291,8 @@ EOT;
         $errorOutput = trim($process->getErrorOutput());
 
         if (
-            count($output) === 3
+            is_array($output)
+            && count($output) === 3
             && $output[0] === sprintf('string(%d) "%s"', strlen(PHP_VERSION), PHP_VERSION)
             && $output[1] === 'string(27) "stefan.esser@sektioneins.de"'
             && $output[2] === 'int(-1)'
@@ -290,6 +307,7 @@ EOT;
 
     /**
      * Resets the static caches
+     * @return void
      */
     public static function reset()
     {
@@ -298,11 +316,36 @@ EOT;
         self::$useOpensslParse = null;
     }
 
+    /**
+     * @param  string $name
+     * @return string|false
+     */
+    private static function getEnvVariable($name)
+    {
+        if (isset($_SERVER[$name])) {
+            return (string) $_SERVER[$name];
+        }
+
+        if (PHP_SAPI === 'cli' && ($value = getenv($name)) !== false && $value !== null) {
+            return (string) $value;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param  string|false $certFile
+     * @return bool
+     */
     private static function caFileUsable($certFile, LoggerInterface $logger = null)
     {
         return $certFile && @is_file($certFile) && @is_readable($certFile) && static::validateCaFile($certFile, $logger);
     }
 
+    /**
+     * @param  string|false $certDir
+     * @return bool
+     */
     private static function caDirUsable($certDir)
     {
         return $certDir && @is_dir($certDir) && @is_readable($certDir) && glob($certDir . '/*');

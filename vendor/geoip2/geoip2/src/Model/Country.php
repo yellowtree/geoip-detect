@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeoIp2\Model;
 
 /**
@@ -7,7 +9,7 @@ namespace GeoIp2\Model;
  *
  * The only difference between the City and Insights model classes is which
  * fields in each record may be populated. See
- * http://dev.maxmind.com/geoip/geoip2/web-services more details.
+ * https://dev.maxmind.com/geoip/geoip2/web-services for more details.
  *
  * @property-read \GeoIp2\Record\Continent $continent Continent data for the
  * requested IP address.
@@ -39,11 +41,8 @@ class Country extends AbstractModel
 
     /**
      * @ignore
-     *
-     * @param mixed $raw
-     * @param mixed $locales
      */
-    public function __construct($raw, $locales = ['en'])
+    public function __construct(array $raw, array $locales = ['en'])
     {
         parent::__construct($raw);
 

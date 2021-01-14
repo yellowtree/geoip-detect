@@ -100,6 +100,7 @@ README.md
 tests
 test
 phpunit.xml
+vendor/symfony/property-access/Tests/
 " "$SVNPATH/trunk/"
 
 svn propset svn:ignore '*' "$SVNPATH/trunk/lib/geonames/generators/"
