@@ -1,7 +1,4 @@
 sudo: false
-dist: trusty
-
-language: php
 
 notifications:
   email:
@@ -16,49 +13,34 @@ cache:
 jobs:
   allow_failures:
     - php: 8.0
-      env: WP_VERSION=latest
 
-matrix:
-  include:
-    - php: 8.0
-      env: WP_VERSION=latest
-    - php: 7.4
-      env: WP_VERSION=latest
-    - php: 7.3
-      env: WP_VERSION=latest
-    - php: 7.2
-      env: WP_VERSION=trunk
-    - php: 7.2
-      env: WP_VERSION=latest WP_MULTISITE=1
-    - php: 7.2
-      env: WP_VERSION=latest WP_MULTISITE=0
-    - php: 7.1
-      env: WP_VERSION=latest
-    - php: 7.0
-      env: WP_VERSION=latest
-    - php: 5.6
-      env: WP_VERSION=4.5
-    - php: 5.6
-      env: WP_VERSION=latest
+
+language: php
+
+services:
+  - mysql
+
+env:
+  global:
+    - WP_DB_USER=wp
+    - WP_DB_PASS=password
+    - WP_DB_NAME=wp_tests
+    - WP_VERSION=*
+
+php:
+  - 8.0
+  - 7.4
+  - 7.3
+  - 7.2
 
 before_script:
-  - export PATH="$HOME/.composer/vendor/bin:$PATH"
-  - |
-    if [ -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
-      phpenv config-rm xdebug.ini
-    else
-      echo "xdebug.ini does not exist"
-    fi
-  - |
-    if [[ ! -z "$WP_VERSION" ]] ; then
-      bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
-      composer global require "phpunit/phpunit=4.8.*|5.7.*"
-    fi
-  - |
-    if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
-      composer global require wp-coding-standards/wpcs
-      phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
-    fi
+  - mysql -u root -e "GRANT ALL PRIVILEGES ON ${WP_DB_NAME}.* TO ${WP_DB_USER} IDENTIFIED BY '${WP_DB_PASS}';"
+  - mysql -u root -e "CREATE DATABASE ${WP_DB_NAME};"
 
-script: 
-    - phpunit --verbose
+install:
+  - composer require --no-update --dev roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION}
+  - composer install
+  - composer show
+
+script:
+  - composer test
