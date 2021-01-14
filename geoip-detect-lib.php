@@ -171,6 +171,9 @@ function _geoip_detect2_empty_cache() {
 	$wpdb->query( "DELETE FROM `$wpdb->options` WHERE `option_name` LIKE ('_transient_geoip_detect_c_%')" );
 }
 
+/**
+ * @return \GeoIp2\Model\Country
+ */
 function _geoip_detect2_get_record_from_reader($reader, $ip, &$error) {
 	$record = null;
 
@@ -199,20 +202,33 @@ function _geoip_detect2_get_record_from_reader($reader, $ip, &$error) {
 		$error = 'No reader was found. Check if the configuration is complete and correct.';
 	}
 
+	if (is_null($record)) {
+		return _geoip_detect2_get_new_empty_record();
+	}
+
 	return $record;
 }
 
-function _geoip_detect2_get_new_empty_record() {
+function _geoip_detect2_get_new_empty_record($ip = '') {
 	$data = array('traits' => array('ip_address' => $ip), 'is_empty' => true);
 	return new \GeoIp2\Model\City($data);
 }
 
 function _geoip_detect2_record_enrich_data($record, $ip, $sourceId, $error) {
-	$data = array('traits' => array('ip_address' => $ip), 'is_empty' => true);
 	if (is_object($record) && method_exists($record, 'jsonSerialize')) {
 		$data = $record->jsonSerialize();
+	} else {
+		$data = array('traits' => array('ip_address' => $ip), 'is_empty' => true);
+	}
+
+	if (!isset($data['is_empty'])) {
 		$data['is_empty'] = false;
 	}
+	
+	if (empty($data['traits']['ip_address'])) {
+		$data['traits']['ip_address'] = $ip;
+	}
+	
 	$data['extra']['source'] = $sourceId;
 	$data['extra']['cached'] = 0;
 	

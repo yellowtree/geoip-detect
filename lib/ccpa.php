@@ -49,11 +49,10 @@ class CcpaBlacklistOnLookup {
         $exclusionReason = $this->ipOnListGetReason($ip);
         
         if ($exclusionReason) {
-            $data = array();
             $currentSourceId = DataSourceRegistry::getInstance()->getSource($options['source'])->getId();
             $errorMessage = sprintf(__('This IP has no informations attached by request of the IP owner (Reason: %s).', 'geoip-detect'), $exclusionReason);
             
-            $data = _geoip_detect2_record_enrich_data($data, $ip, $currentSourceId, $errorMessage);
+            $data = _geoip_detect2_record_enrich_data(null, $ip, $currentSourceId, $errorMessage);
         }
         return $data;
     }

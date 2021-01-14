@@ -41,10 +41,10 @@ use YellowTree\GeoipDetect\Lib\GetClientIp;
  * @since 2.5.0 Parameter $skipCache has been renamed to $options with 'skipCache' property
  * @since 2.7.0 Parameter $options['source'] has been introduced
  */
-function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()) {
+function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()) : \YellowTree\GeoipDetect\DataSources\City {
 	if(defined('GEOIP_DETECT_LOOKUP_DISABLED') && GEOIP_DETECT_LOOKUP_DISABLED) {
 		trigger_error('Geolocation IP Detection: The lookup is currently disabled.');
-		return false;
+		return _geoip_detect2_get_new_empty_record();
 	}
 
 	_geoip_maybe_disable_pagecache();
@@ -107,7 +107,7 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()
 	// 3) Returning the data
 
 	// Always return a city record for API compatability. City attributes etc. return empty values.
-	$record = new \YellowTree\GeoipDetect\DataSources\City($data, $locales);
+	$original_record = new \YellowTree\GeoipDetect\DataSources\City($data, $locales);
 
 	/**
 	 * Filter: geoip_detect2_record_information
@@ -115,7 +115,14 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()
 	 *
 	 * @return \YellowTree\GeoipDetect\DataSources\City
 	 */
-	$record = apply_filters('geoip_detect2_record_information', $record, $ip, $locales);
+	$record = apply_filters('geoip_detect2_record_information', $original_record, $ip, $locales);
+	if (! ($record instanceof \YellowTree\GeoipDetect\DataSources\City) ) {
+		if (method_exists($record, 'jsonSerialize')) {
+			$data = $record->jsonSerialize();
+			return new \YellowTree\GeoipDetect\DataSources\City($data, $locales);
+		}
+		return $original_record;
+	}
 
 	return $record;
 }
