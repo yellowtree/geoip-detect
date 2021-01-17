@@ -132,5 +132,6 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 
 	function testEnqueue() {
 		geoip_detect2_enqueue_javascript();
+		$this->assertSame(true, true);
 	}
 }

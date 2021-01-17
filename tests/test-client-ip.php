@@ -5,7 +5,7 @@ class GetClientIpTest extends WP_UnitTestCase_GeoIP_Detect {
 	protected $trusted;
 	protected $useProxy = 0;
 	
-	function test_set_trusted_proxies() {
+	function set_trusted_proxies() {
 		return $this->trusted;
 	}
 	
@@ -17,13 +17,13 @@ class GetClientIpTest extends WP_UnitTestCase_GeoIP_Detect {
 	public function setUp() {
 		parent::setUp();
 		add_filter('pre_option_geoip-detect-has_reverse_proxy', array($this, 'option_use_proxy'), 101);
-		add_filter('pre_option_geoip-detect-trusted_proxy_ips', array($this, 'test_set_trusted_proxies'), 101);
+		add_filter('pre_option_geoip-detect-trusted_proxy_ips', array($this, 'set_trusted_proxies'), 101);
 		$this->trusted = '';
 	}
 	public function tearDown() {
 		parent::tearDown();
 		remove_filter('pre_option_geoip-detect-has_reverse_proxy', array($this, 'option_use_proxy'), 101);
-		remove_filter('pre_option_geoip-detect-trusted_proxy_ips', array($this, 'test_set_trusted_proxies'), 101);
+		remove_filter('pre_option_geoip-detect-trusted_proxy_ips', array($this, 'set_trusted_proxies'), 101);
 		unset($_SERVER['REMOTE_ADDR']);
 		unset($_SERVER['HTTP_X_FORWARDED_FOR']);
 		$this->useProxy = 0;

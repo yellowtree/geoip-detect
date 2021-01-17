@@ -28,6 +28,7 @@ class ReverseProxyTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	function testGetClientIpWithoutOption() {
+		$this->assertSame(false, false);
 		remove_filter('pre_option_geoip-detect-has_reverse_proxy', 'option_use_proxy', 101);
 		$ip = geoip_detect2_get_client_ip();
 		if ($ip !== '::1' && $ip !== '127.0.0.1')

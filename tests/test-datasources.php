@@ -39,8 +39,9 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	public function testInvalidDatasources() {
 		try {
-			$this->assertNotNull($this->registry->getSource('invalid'));
+			$ret = $this->registry->getSource('invalid');
 		} catch (PHPUnit_Framework_Error_Notice $e) {
+			$this->assertSame(false, false);
 			$msg = $e->getMessage();
 			if (strpos($msg, 'no such source was found') !== false)
 				return;
@@ -55,6 +56,7 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
 		try {
 			$source = $this->registry->getCurrentSource();
 		} catch (PHPUnit_Framework_Error_Notice $e) {
+			$this->assertSame(false, false);
 			$msg = $e->getMessage();
 			if (strpos($msg, 'no such source was found') !== false)
 				return;
@@ -77,6 +79,9 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
 	public function testEachSourceForFormalValidity() {
 		$sources = $this->registry->getAllSources();
 		
+		if (!count($sources)) {
+			$this->fail('There should be at least one source available?!');
+		}
 		foreach ($sources as $source) {
 			$id = $source->getId();
 			$this->assertRegExp('/^[-_a-z0-9]+$/i', $id, 'Invalid chars in id name');
