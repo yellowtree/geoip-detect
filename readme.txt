@@ -156,6 +156,7 @@ You can keep using the same shortcodes as before - just tick the options "Enable
 Instead of doing the geo-lookup while generating the HTML, it will generate boilerplate HTML (for the cache) that will be filled by the plugin's JS automatically (in the client's browser).
 The following shortcodes are currently not implemented: [geoip_detect2_show_if] and [geoip_detect2_hide_if]
 * Minimum PHP version is now 7.2
+* Using PHP Type-Hinting for API functions - if you used the PHP API, please test it (I didn't change parameter types but just in case)
 * Minimum Wordpress version is now 5.0
 * If you are using WooCommerce, you need at least version 3.9.0 (released Jan 2020) - otherwise this plugin lookup disables itself
 * Updated vendor code

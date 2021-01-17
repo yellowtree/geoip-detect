@@ -67,7 +67,7 @@ class GetClientIp {
 		return $ip_list_reverse;
 	}
 	
-	public function getIp($useReverseProxy = false) {
+	public function getIp($useReverseProxy = false) : string {
 		$ip_list = $this->getIpsFromRemoteAddr();
 
 		if ($useReverseProxy)

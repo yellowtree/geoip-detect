@@ -111,7 +111,7 @@ function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &
 	return $reader;
 }
 
-function _ip_to_s($ip) {
+function _ip_to_s($ip) : string {
 	$binary = '';
 	try {
 		$binary = @inet_pton($ip);
@@ -214,7 +214,7 @@ function _geoip_detect2_get_new_empty_record($ip = '') {
 	return new \GeoIp2\Model\City($data);
 }
 
-function _geoip_detect2_record_enrich_data($record, $ip, $sourceId, $error) {
+function _geoip_detect2_record_enrich_data($record, $ip, $sourceId, $error) : array {
 	if (is_object($record) && method_exists($record, 'jsonSerialize')) {
 		$data = $record->jsonSerialize();
 	} else {
@@ -308,7 +308,7 @@ add_filter('geoip_detect2_record_data', '_geoip_detect2_add_geonames_data');
  * IPv6-Adresses can be written in different formats. Make sure they are standardized.
  * For IPv4-Adresses, spaces are removed.
  */
-function geoip_detect_normalize_ip($ip) {
+function geoip_detect_normalize_ip(string $ip) : string {
 	$ip = trim($ip);
 	$binary = '';
 	try {
@@ -321,7 +321,7 @@ function geoip_detect_normalize_ip($ip) {
 	return $ip;
 }
 
-function geoip_detect_sanitize_ip_list($ip_list) {
+function geoip_detect_sanitize_ip_list(string $ip_list) : string {
 	$list = explode(',', $ip_list);
 	$ret = array();
 	foreach ($list as $ip) {
@@ -349,7 +349,7 @@ function geoip_detect_sanitize_ip_list($ip_list) {
  * @param string|array $expected IP (can include subnet)
  * @return boolean
  */
-function geoip_detect_is_ip_equal($actual, $expected) {
+function geoip_detect_is_ip_equal(string $actual, $expected) : bool {
 	try {
 		return IpUtils::checkIp($actual, $expected);
 	} catch(\Exception $e) {
@@ -363,7 +363,7 @@ function geoip_detect_is_ip_equal($actual, $expected) {
 	}
 }
 
-function geoip_detect_is_ip($ip, $noIpv6 = false) {
+function geoip_detect_is_ip(string $ip, bool $noIpv6 = false) : bool {
 	$flags = FILTER_FLAG_IPV4;
 
 	if (GEOIP_DETECT_IPV6_SUPPORTED && !$noIpv6)
@@ -372,7 +372,7 @@ function geoip_detect_is_ip($ip, $noIpv6 = false) {
 	return filter_var($ip, FILTER_VALIDATE_IP, $flags) !== false;
 }
 
-function geoip_detect_is_ip_in_range($ip, $range_start, $range_end) {
+function geoip_detect_is_ip_in_range(string $ip, string $range_start, string $range_end) : bool {
 	$long_ip = ip2long($ip);
 	if ($long_ip === false) // Not IPv4
 		return false;
@@ -387,7 +387,7 @@ function geoip_detect_is_ip_in_range($ip, $range_start, $range_end) {
  * @param string $ip	IP (IPv4 or IPv6)
  * @return boolean TRUE if private
  */
-function geoip_detect_is_public_ip($ip) {
+function geoip_detect_is_public_ip(string $ip) : bool {
 	// filver_var only detects 127.0.0.1 as local ...
 	if (geoip_detect_is_ip_equal($ip, '127.0.0.0/8'))
 		return false;
@@ -406,11 +406,11 @@ function geoip_detect_is_public_ip($ip) {
 	return $is_public;
 }
 
-function geoip_detect_is_internal_ip($ip) {
+function geoip_detect_is_internal_ip(string $ip) : bool {
 	return geoip_detect_is_ip($ip) && !geoip_detect_is_public_ip($ip);
 }
 
-function _geoip_detect2_get_external_ip_services($nb = 3, $needsCORS = false) {
+function _geoip_detect2_get_external_ip_services(int $nb = 3, bool $needsCORS = false) : array {
 	$ipservicesThatAllowCORS = array(
 			'http://ipv4.icanhazip.com',
 			'http://v4.ident.me',
@@ -439,7 +439,7 @@ function _geoip_detect2_get_external_ip_services($nb = 3, $needsCORS = false) {
  *
  * @return string The detected IPv4 Adress. If none is found, '0.0.0.0' is returned instead.
  */
-function _geoip_detect_get_external_ip_adress_without_cache()
+function _geoip_detect_get_external_ip_adress_without_cache() : string 
 {
 	$ipservices = _geoip_detect2_get_external_ip_services();
 
@@ -503,7 +503,7 @@ function geoip_detect_get_relative_path($from, $to)
 	return implode('/', $relPath);
 }
 
-function _geoip_maybe_disable_pagecache() {
+function _geoip_maybe_disable_pagecache() : bool {
 	if (!get_option('geoip-detect-disable_pagecache'))
 		return false;
 
@@ -524,7 +524,7 @@ function _geoip_maybe_disable_pagecache() {
 	return true;
 }
 
-function _geoip_dashes_to_camel_case($string, $capitalizeFirstCharacter = false) {
+function _geoip_dashes_to_camel_case(string $string, bool $capitalizeFirstCharacter = false) : string {
     $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));
 
     if (!$capitalizeFirstCharacter) {
@@ -534,7 +534,7 @@ function _geoip_dashes_to_camel_case($string, $capitalizeFirstCharacter = false)
     return $str;
 }
 
-function geoip_detect_format_localtime($timestamp = -1) {
+function geoip_detect_format_localtime($timestamp = -1) : string {
 	if ($timestamp === -1) {
 		$timestamp = time();
 	}
@@ -547,13 +547,13 @@ function geoip_detect_format_localtime($timestamp = -1) {
 	return get_date_from_gmt ( date( 'Y-m-d H:i:s', $timestamp ),  $format);
 }
 
-function _geoip_str_begins_with($string, $startString) 
+function _geoip_str_begins_with($string, $startString) : bool
 { 
     $len = mb_strlen($startString); 
     return (mb_substr($string, 0, $len) === $startString); 
 } 
 
-function _geoip_str_ends_with($string, $startString) 
+function _geoip_str_ends_with($string, $startString) : bool
 { 
 	$len = mb_strlen($startString); 
 	//if ($len === 0) return true; // Not sure what is "expected behavior"

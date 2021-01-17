@@ -41,7 +41,7 @@ use YellowTree\GeoipDetect\Lib\GetClientIp;
  * @since 2.5.0 Parameter $skipCache has been renamed to $options with 'skipCache' property
  * @since 2.7.0 Parameter $options['source'] has been introduced
  */
-function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()) : \YellowTree\GeoipDetect\DataSources\City {
+function geoip_detect2_get_info_from_ip(string $ip, $locales = null, $options = array()) : \YellowTree\GeoipDetect\DataSources\City {
 	if(defined('GEOIP_DETECT_LOOKUP_DISABLED') && GEOIP_DETECT_LOOKUP_DISABLED) {
 		trigger_error('Geolocation IP Detection: The lookup is currently disabled.');
 		return _geoip_detect2_get_new_empty_record();
@@ -49,7 +49,6 @@ function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()
 
 	_geoip_maybe_disable_pagecache();
 	// 1) Processing the parameters.
-
 	$options = _geoip_detect2_process_options($options);
 
 	/**
@@ -204,7 +203,7 @@ function geoip_detect2_get_current_source_description($source = null) {
  *
  * @since 2.0.0
  */
-function geoip_detect2_get_client_ip() {
+function geoip_detect2_get_client_ip() : string {
 	_geoip_maybe_disable_pagecache();
 
 	static $helper = null;
@@ -229,7 +228,7 @@ function geoip_detect2_get_client_ip() {
  * @since 2.4.3 Reading option 'external_ip' first.
  * @since 2.5.2 New param $unfiltered that can bypass the option.
  */
-function geoip_detect2_get_external_ip_adress($unfiltered = false) {
+function geoip_detect2_get_external_ip_adress(bool $unfiltered = false) : string {
 	$ip_cache = '';
 
 	if (!$unfiltered)
@@ -257,8 +256,9 @@ function geoip_detect2_get_external_ip_adress($unfiltered = false) {
  * Call this function if you want to register the JS script for AJAX mode only for specific pages.
  * Can be called via the shortcode `[geoip_detect2_enqueue_javascript]`
  * @see https://github.com/yellowtree/geoip-detect/wiki/API-Usage-Examples#ajax-enqueue-the-js-file-manually
+ * @return bool was enqueued
  */
-function geoip_detect2_enqueue_javascript($reason = 'user') {
+function geoip_detect2_enqueue_javascript(string $reason = 'user') : bool {
 	$do_it = apply_filters('geoip_detect_enqueue_javascript', true, $reason);
 	$do_it = apply_filters('geoip_detect_enqueue_javascript_' . $reason, $do_it);
 
