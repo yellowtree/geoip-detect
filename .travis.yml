@@ -13,8 +13,6 @@ cache:
 jobs:
   allow_failures:
     - php: 8.0
-      env: WP_VERSION=latest
-
 
 language: php
 
