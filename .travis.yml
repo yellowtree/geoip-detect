@@ -28,16 +28,14 @@ env:
     - WP_DB_NAME=wp_tests
     - WP_VERSION=*
 
+php:
+  - 8.0
+  - 7.4
+  - 7.3
+  - 7.2
+
 matrix:
   include:
-    - php: 8.0
-      env: WP_VERSION=5.6
-    - php: 7.4
-      env: WP_VERSION=5.6
-    - php: 7.3
-      env: WP_VERSION=5.6
-    - php: 7.2
-      env: WP_VERSION=5.6
     - php: 7.2
       env: WP_VERSION=5.0
 
