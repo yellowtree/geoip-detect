@@ -3,14 +3,21 @@
 .DS_Store
 Thumbs.db
 wp-cli.local.yml
-node_modules/
+/git anode_modules/
 *.sql
 *.tar.gz
 *.zip
-/lib/vendor
 /*-workspace
 /yarn-error.log
 /.cache
 /.vscode
 *.code
+
+/lib/vendor
+
 /wordpress/
+
+/vendor/geoip2/geoip2/examples/
+/vendor/symfony/http-foundation/*
+!/vendor/symfony/http-foundation/LICENSE
+!/vendor/symfony/http-foundation/IpUtils.php
