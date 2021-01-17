@@ -260,7 +260,7 @@ function _geoip_detect2_try_to_fix_timezone($data) {
 		return $data;
 
 	if (!function_exists('_geoip_detect_get_time_zone')) {
-		require_once(GEOIP_PLUGIN_DIR . '/vendor/timezone.php');
+		require_once(GEOIP_PLUGIN_DIR . '/lib/timezone.php');
 	}
 
 	if (!empty($data['country']['iso_code'])) {

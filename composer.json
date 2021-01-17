@@ -13,8 +13,8 @@
         "GPL-3.0-or-later"
     ],
     "require": {
-        "geoip2/geoip2": "~2.0",
         "php": ">=7.2",
+        "geoip2/geoip2": "~2.0",
         "symfony/property-access": "^4.4"
     },
     "require-dev": {

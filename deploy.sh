@@ -64,8 +64,9 @@ yarn clean
 yarn build
 git add js/dist
 
-echo "Re-generate composer autoload for prod ..."
-composer install --no-dev --optimize-autoloader
+echo "Set composer for production use ..."
+composer install --prefer-dist --optimize-autoloader --no-dev
+
 
 echo "Generate README.md from readme.txt"
 bin/readme.sh "$SVNURL"

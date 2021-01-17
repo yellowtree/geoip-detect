@@ -46,6 +46,7 @@ before_script:
   - mysql -u root -e "CREATE DATABASE ${WP_DB_NAME};"
 
 install:
+  - composer validate
   - composer require --dev roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION}
   - composer install
   - composer show

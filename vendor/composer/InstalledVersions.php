@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '1eeda40946b2da09c4a441d23b7ac3492f19f034',
+    'reference' => '4e14b684c6d0af4e6b06af65686e91da84eb72b8',
     'name' => 'yellowtree/geoip-detect',
   ),
   'versions' => 
@@ -158,7 +158,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '1eeda40946b2da09c4a441d23b7ac3492f19f034',
+      'reference' => '4e14b684c6d0af4e6b06af65686e91da84eb72b8',
     ),
   ),
 );

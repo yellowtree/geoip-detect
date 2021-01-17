@@ -1,9 +1,9 @@
 <?php
 // From: https://github.com/maxmind/geoip-api-php/blob/master/src/timezone.php
-// GNU GPL 2.1+
+// Licenced GNU GPL 2.1+
 
 
-function _geoip_detect_get_time_zone($country, $region)
+function _geoip_detect_get_time_zone($country, $region = '')
 {
 	$timezone = "";
 	
