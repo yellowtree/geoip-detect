@@ -436,8 +436,41 @@ add_shortcode('geoip_detect2_user_info', 'geoip_detect_shortcode_user_info');
  *
  */
 function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName = '') {
-    $showContentIfMatch = ($shortcodeName == 'geoip_detect2_show_if') ? true : false;
+	$shortcode_options = _geoip_detect2_shortcode_options($attr);
+	$options = array('skipCache' => $shortcode_options['skip_cache']);
 
+	$info = geoip_detect2_get_info_from_current_ip($shortcode_options['lang'], $options);
+	
+	$showContentIfMatch = ($shortcodeName === 'geoip_detect2_show_if');
+
+	$attr = (array) $attr;
+
+	/**
+	 * You can override the detected location information here.
+	 * E.g. "Show if in Paris, but if the user has given an adress in his profile, use that city instead"
+	 * (Does not work in AJAX mode)
+	 * 
+	 * @param YellowTree\GeoipDetect\DataSources\City $info
+	 * @param array $attr Shortcode attributes given to the function.
+	 * @param bool $showContentIfMatch Should the content be shown (TRUE) or hidden (FALSE) if the conditions are true?
+	 */
+	$info = apply_filters('geoip_detect2_shortcode_show_if_ip_info_override', $info, $attr, $showContentIfMatch);
+
+	
+	$parsed = geoip_detect2_shortcode_parse_conditions_from_attributes($attr, !$showContentIfMatch);
+
+	$evaluated = geoip_detect2_shortcode_evaluate_conditions($parsed, $info);
+
+    // All Criteria Passed?
+    if ($evaluated) {
+        return do_shortcode($content);
+    }
+	return '';
+}
+add_shortcode('geoip_detect2_show_if', 'geoip_detect2_shortcode_show_if');
+add_shortcode('geoip_detect2_hide_if', 'geoip_detect2_shortcode_show_if');
+
+function geoip_detect2_shortcode_parse_conditions_from_attributes(array $attr, bool $hide_if) {
 	/* Attribute Conditions. Order is not important, as they are combined with a transitive AND condition */
 	$attributeNames = array(
         'continent' => 'continent',
@@ -457,102 +490,102 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
         'not_city' => 'city',
 	);
 
-	$attrDefaults = array(
-		'lang' => null,
-		'skip_cache' => 'false',
-        'property' => null,
-        'property_value' => null,
-        'not_property_value' => null,
-	);
-	$attrDefaults = array_merge($attrDefaults,  array_fill_keys(array_keys($attributeNames), null));
+	$parsed = [
+		'op' => 'AND', // Operator OR is not supported yet
+	];
+	if ($hide_if) {
+		$parsed['not'] = 1;
+	}
 
-    $attr = shortcode_atts($attrDefaults, $attr, $shortcodeName);
+	$conditions = [];
 
-	$shortcode_options = _geoip_detect2_shortcode_options($attr);
-
-	$options = array('skipCache' => $shortcode_options['skip_cache']);
-
-	$info = geoip_detect2_get_info_from_current_ip($shortcode_options['lang'], $options);
-	
-	/**
-	 * You can override the detected location information here.
-	 * E.g. "Show if in Paris, but if the user has given an adress in his profile, use that city instead"
-	 * (Does not work in AJAX mode)
-	 * 
-	 * @param YellowTree\GeoipDetect\DataSources\City $info
-	 * @param array $attr Shortcode attributes given to the function.
-	 * @param bool $showContentIfMatch Should the content be shown (TRUE) or hidden (FALSE) if the conditions are true?
-	 */
-	$info = apply_filters('geoip_detect2_shortcode_show_if_ip_info_override', $info, $attr, $showContentIfMatch);
-
-	$isConditionMatching = true;
-	
-	/** ToDo Compiling the conditions to an array first:
-	 * 
-	 * [
-	 * 	 "expected": true, // false if hide_if 
-	 *   "operator": "AND" // OR not supported yet
-	 *   "conditions": [
-	 *      [ 
-	 * 			"property": "city", 
-	 * 			"values": "Paris,Berlin", 
-	 * 			"expected": true ] // false if not operator
-	 *   ]
-	 * ]
-	 */
 
 	foreach ($attributeNames as $shortcodeParamName => $maxmindName) {
 		if (!empty($attr[$shortcodeParamName])) {
-            // Determine actual MaxMind Value(s) for Attribute
-			$actualValues = array();
-			$alternativePropertyNames = array(
-					'name',
-					'isoCode',
-					'code',
-					'geonameId',
-			);
-			foreach ($alternativePropertyNames as $p) {
-				if (isset($info->{$maxmindName}->{$p})) {
-					$actualValues[] = $info->{$maxmindName}->{$p};
-				}
-			}
-
-			$subConditionMatching = geoip_detect2_shortcode_check_subcondition($attr[$shortcodeParamName], $actualValues);
-
+			$condition = [
+				'property' => $maxmindName,
+				'value' => $attr[$shortcodeParamName],
+			];
 			if (substr($shortcodeParamName, 0, 4) == 'not_') {
-				$subConditionMatching = !$subConditionMatching;
+				$condition['not'] = 1;
 			}
-			$isConditionMatching = $isConditionMatching && $subConditionMatching;
+			$conditions[] = $condition;
 		}
 	}
 
 	// Custom property
-	if (!empty($attr['property']) && (!empty($attr['property_value']) || !empty($attr['not_property_value'])) ) {
-		$subConditionMatching = false;
-		try {
-			$actualValue = geoip_detect2_shortcode_get_property($info, $attr['property']);
-
-			if (!empty($attr['property_value'])) {
-				$subConditionMatching = geoip_detect2_shortcode_check_subcondition($attr['property_value'], $actualValue);
-			}
-			if (!empty($attr['not_property_value'])) {
-				$subConditionMatching = ! geoip_detect2_shortcode_check_subcondition($attr['not_property_value'], $actualValue);
-			}
-		} catch (\Exception $e) {
-			// Invalid Property or so... ignore.
+	if (!empty($attr['property'])) {
+		if (!empty($attr['property_value'])) {
+			$condition = [
+				'property' => $attr['property'],
+				'value' => $attr['property_value'],
+			];
+			$conditions[] = $condition;			
+		} else if (!empty($attr['not_property_value'])) {
+			$condition = [
+				'property' => $attr['property'],
+				'value' => $attr['not_property_value'],
+				'not' => 1
+			];
+			$conditions[] = $condition;
 		}
-
-		$isConditionMatching = $isConditionMatching && $subConditionMatching;
 	}
 
-    // All Criteria Passed?
-    if ($isConditionMatching === $showContentIfMatch) {
-        return do_shortcode($content);
-    }
-	return '';
+	$parsed['conditions'] = $conditions;
+
+	return apply_filters('geoip_detect2_shortcode_show_if_parsed_result', $parsed, $attr, !$hide_if);
 }
-add_shortcode('geoip_detect2_show_if', 'geoip_detect2_shortcode_show_if');
-add_shortcode('geoip_detect2_hide_if', 'geoip_detect2_shortcode_show_if');
+
+function geoip_detect2_shortcode_evaluate_conditions(array $parsed, \GeoIp2\Model\AbstractModel $info) {
+	$alternativePropertyNames = array(
+			'name',
+			'isoCode',
+			'code',
+			'geonameId',
+	);
+
+	$isConditionMatching = ($parsed['op'] === 'OR') ? false : true;
+
+	foreach ($parsed['conditions'] as $condition) {
+		// Actual value(s)
+		try {
+			$value = geoip_detect2_shortcode_get_property($info, $condition['property']);
+
+			if (is_object($value)) {
+				$values = [];
+				foreach($alternativePropertyNames as $p) {
+					if (isset($value->{$p})) {
+						$values[] = $value->{$p};
+					}
+				}
+				$value = $values;
+			}
+	
+			$subConditionMatching = geoip_detect2_shortcode_check_subcondition($condition['value'], $value);
+	
+		} catch (\Exception $e) {
+			// Invalid Property or so... ignore this condition.
+			$subConditionMatching = false;
+		}
+
+		if (!empty($condition['not'])) {
+			$subConditionMatching = ! $subConditionMatching;
+		}
+
+
+		if ($parsed['op'] === 'OR') {
+			$isConditionMatching = $isConditionMatching || $subConditionMatching;
+		} else {
+			$isConditionMatching = $isConditionMatching && $subConditionMatching;
+		}
+	}
+
+	if (!empty($parsed['not'])) {
+		$isConditionMatching = ! $isConditionMatching;
+	}
+
+	return $isConditionMatching;
+}
 
 function geoip_detect2_shortcode_check_subcondition($expectedValuesRaw, $actualValues) {
 	// Parse User Input Values of Attribute

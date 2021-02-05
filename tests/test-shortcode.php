@@ -246,12 +246,13 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		/* #17 */		array('yes', '[geoip_detect2_show_if property="location.timeZone" property_value="Europe/Berlin"]yes[/geoip_detect2_show_if]' ),
 		/* #18 */		array('', '[geoip_detect2_show_if property="location.timeZone" not_property_value="Europe/Berlin"]yes[/geoip_detect2_show_if]' ),
 		/* #19 */		array('', '[geoip_detect2_show_if property="invalid.property" property_value="Europe/Berlin"]yes[/geoip_detect2_show_if]' ),
-		/* #20 */		array('not_country', '[geoip_detect2_show_if not_country="FR"]not_country[/geoip_detect2_show_if]' ),
-		/* #21 */		array('', '[geoip_detect2_show_if not_country="DE"]yes[/geoip_detect2_show_if]' ),
-		/* #22 */		array('', '[geoip_detect2_show_if continent="EU" not_country="DE"]yes[/geoip_detect2_show_if]' ),
-		/* #23 */		array('yes', '[geoip_detect2_show_if country="US, DE"]yes[/geoip_detect2_show_if]' ),
-		/* #24 */		array('yes', '[geoip_detect2_show_if country="US,DE , FR"]yes[/geoip_detect2_show_if]' ),
-		/* #25 */		array('', '[geoip_detect2_show_if country="US,FR"]yes[/geoip_detect2_show_if]' ),
+		/* #20 */		array('yes', '[geoip_detect2_show_if property="invalid.property" not_property_value="Europe/Berlin"]yes[/geoip_detect2_show_if]' ),
+		/* #21 */		array('not_country', '[geoip_detect2_show_if not_country="FR"]not_country[/geoip_detect2_show_if]' ),
+		/* #22 */		array('', '[geoip_detect2_show_if not_country="DE"]yes[/geoip_detect2_show_if]' ),
+		/* #23 */		array('', '[geoip_detect2_show_if continent="EU" not_country="DE"]yes[/geoip_detect2_show_if]' ),
+		/* #24 */		array('yes', '[geoip_detect2_show_if country="US, DE"]yes[/geoip_detect2_show_if]' ),
+		/* #25 */		array('yes', '[geoip_detect2_show_if country="US,DE , FR"]yes[/geoip_detect2_show_if]' ),
+		/* #26 */		array('', '[geoip_detect2_show_if country="US,FR"]yes[/geoip_detect2_show_if]' ),
 		);
 	}
 
