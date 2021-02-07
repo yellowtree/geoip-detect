@@ -31,7 +31,9 @@ class ShowIfShortcode {
  * All attributes may take multiple values seperated by comma (,).
  *
  * You can use custom property names with the attribute "property" and "property_value" / "not_property_value".
- *
+ * 
+ * Conditions are chained by an AND operator by default, but you can also use operator="or" instead.
+ * 
  * Examples:
  *
  * Display TEXT if the visitor is in the US and in Texas.
@@ -62,11 +64,14 @@ class ShowIfShortcode {
  * 
  * Show TEXT if the visitor is in the european union
  * 		`[geoip_detect2_show_if property="country.isInEuropeanUnion" property_value="true"]TEXT[/geoip_detect2_show_if]`
+ * 
+ * Show TEXT if the visitor is from Berlin OR France (since 4.0.0)
+ * 		`[geoip_detect2_show_if city="Berlin" operator="or" country="France"]TEXT[/geoip_detect2_show_if]`
  *
  * LIMITATIONS:
  * - You cannot nest several of these shortcodes within one another. Instead, seperate them into several blocks of shortcodes.
  * - City names can be ambigous. For example, [geoip_detect2_show_if country="US,FR" not_city="Paris"] will exclude both Paris in France and Paris in Texas, US. Instead, you can find out the geoname_id or seperate the shortcode to make it more specific.
- *
+ * - Conditions can either be combined by AND or OR. It is not possible to write this condition within a shortcode: (city = Berlin AND country = Germany) OR country = France
  */
 function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName = '') {
 	$shortcode_options = _geoip_detect2_shortcode_options($attr);
@@ -124,7 +129,7 @@ function geoip_detect2_shortcode_parse_conditions_from_attributes(array $attr, b
 	);
 
 	$parsed = [
-		'op' => 'AND', // Operator OR is not supported yet
+		'op' => ( !empty($attr['operator']) && strtolower($attr['operator']) === 'or' ) ? 'or' : 'and',
 	];
 	if ($hide_if) {
 		$parsed['not'] = 1;
@@ -182,7 +187,7 @@ function geoip_detect2_shortcode_evaluate_conditions(array $parsed, \GeoIp2\Mode
 			'geonameId',
 	);
 
-	$isConditionMatching = ($parsed['op'] === 'OR') ? false : true;
+	$isConditionMatching = ($parsed['op'] === 'or') ? false : true;
 
 	foreach ($parsed['conditions'] as $condition) {
 		// Actual value(s)
@@ -211,7 +216,7 @@ function geoip_detect2_shortcode_evaluate_conditions(array $parsed, \GeoIp2\Mode
 		}
 
 
-		if ($parsed['op'] === 'OR') {
+		if ($parsed['op'] === 'or') {
 			$isConditionMatching = $isConditionMatching || $subConditionMatching;
 		} else {
 			$isConditionMatching = $isConditionMatching && $subConditionMatching;

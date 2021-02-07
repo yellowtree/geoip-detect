@@ -209,7 +209,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	 */
 	public function testShortcodeShowIf($result, $txt) {
 		$return = do_shortcode($txt);
-		$this->assertSame($result, $return);
+		$this->assertSame($result, $return, "Shortcode failed: " . $txt);
 	}
 
 	/**
@@ -221,7 +221,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$result = $result ? '' : 'yes';
 
 		$return = do_shortcode($txt);
-		$this->assertSame($result, $return);
+		$this->assertSame($result, $return, "Shortcode failed: " . $txt);
 	}
 
 	public function dataShortcodeShowIf() {
@@ -241,7 +241,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		/* #9 */		array('yes', '[geoip_detect2_show_if continent="EU" not_country="FR" city="Eschborn"]yes[/geoip_detect2_show_if]' ),
 		
 		/* #10 */		array('lang', '[geoip_detect2_show_if lang="es" country="Alemania"]lang[/geoip_detect2_show_if]' ),
-		/* #11 */		array('', '[geoip_detect2_show_if lang="en" country="Alemania"]yes[/geoip_detect2_show_if]' ),
+		/* #11 */		array('',     '[geoip_detect2_show_if lang="en" country="Alemania"]yes[/geoip_detect2_show_if]' ),
 		
 		/* #12 */		array('yes', '[geoip_detect2_show_if state="HE"]yes[/geoip_detect2_show_if]' ),
 		/* #13 */		array('yes', '[geoip_detect2_show_if region="HE"]yes[/geoip_detect2_show_if]' ),
@@ -250,22 +250,29 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		/* #16 */		array('yes', '[geoip_detect2_show_if continent="EU"]yes[/geoip_detect2_show_if]' ),
 		
 		/* #17 */		array('yes', '[geoip_detect2_show_if property="location.timeZone" property_value="Europe/Berlin"]yes[/geoip_detect2_show_if]' ),
-		/* #18 */		array('', '[geoip_detect2_show_if property="location.timeZone" not_property_value="Europe/Berlin"]yes[/geoip_detect2_show_if]' ),
-		/* #19 */		array('', '[geoip_detect2_show_if property="invalid.property" property_value="Europe/Berlin"]yes[/geoip_detect2_show_if]' ),
+		/* #18 */		array('',    '[geoip_detect2_show_if property="location.timeZone" not_property_value="Europe/Berlin"]yes[/geoip_detect2_show_if]' ),
+		/* #19 */		array('',    '[geoip_detect2_show_if property="invalid.property" property_value="Europe/Berlin"]yes[/geoip_detect2_show_if]' ),
 		/* #20 */		array('yes', '[geoip_detect2_show_if property="invalid.property" not_property_value="Europe/Berlin"]yes[/geoip_detect2_show_if]' ),
 		
 		/* #21 */		array('not_country', '[geoip_detect2_show_if not_country="FR"]not_country[/geoip_detect2_show_if]' ),
-		/* #22 */		array('', '[geoip_detect2_show_if not_country="DE"]yes[/geoip_detect2_show_if]' ),
-		/* #23 */		array('', '[geoip_detect2_show_if continent="EU" not_country="DE"]yes[/geoip_detect2_show_if]' ),
+		/* #22 */		array('',    '[geoip_detect2_show_if not_country="DE"]yes[/geoip_detect2_show_if]' ),
+		/* #23 */		array('',    '[geoip_detect2_show_if continent="EU" not_country="DE"]yes[/geoip_detect2_show_if]' ),
 		/* #24 */		array('yes', '[geoip_detect2_show_if country="US, DE"]yes[/geoip_detect2_show_if]' ),
 		/* #25 */		array('yes', '[geoip_detect2_show_if country="US,DE , FR"]yes[/geoip_detect2_show_if]' ),
-		/* #26 */		array('', '[geoip_detect2_show_if country="US,FR"]yes[/geoip_detect2_show_if]' ),
+		/* #26 */		array('',    '[geoip_detect2_show_if country="US,FR"]yes[/geoip_detect2_show_if]' ),
 
 		// Boolean values
-		/* #27 */		array('', '[geoip_detect2_show_if property="isEmpty" property_value="1"]yes[/geoip_detect2_show_if]' ),
+		/* #27 */		array('',    '[geoip_detect2_show_if property="isEmpty" property_value="1"]yes[/geoip_detect2_show_if]' ),
 		/* #28 */		array('yes', '[geoip_detect2_show_if property="isEmpty" property_value="false"]yes[/geoip_detect2_show_if]' ),
 		/* #29 */		array('yes', '[geoip_detect2_show_if property="isEmpty" property_value="no"]yes[/geoip_detect2_show_if]' ),
-		/* #30 */		array('', '[geoip_detect2_show_if property="isEmpty" property_value="yes"]yes[/geoip_detect2_show_if]' ),
+		/* #30 */		array('',    '[geoip_detect2_show_if property="isEmpty" property_value="yes"]yes[/geoip_detect2_show_if]' ),
+
+		// Operator OR
+		/* #31 */		array('', '[geoip_detect2_show_if operator="or"]yes[/geoip_detect2_show_if]' ), /* weird input, weird output. But actually consistent. */
+		/* #32 */		array('yes', '[geoip_detect2_show_if region="HE" operator="or" country="France"]yes[/geoip_detect2_show_if]' ),
+		/* #33 */		array('',    '[geoip_detect2_show_if region="BY" operator="or" country="France"]yes[/geoip_detect2_show_if]' ),
+		/* #34 */		array('yes', '[geoip_detect2_show_if region="BY" operator="or" country="Germany"]yes[/geoip_detect2_show_if]' ),
+		/* #35 */		array('yes', '[geoip_detect2_show_if region="BY" operator="or" country="France" property="extra.countryIsoCode3" property_value="DEU"]yes[/geoip_detect2_show_if]' ),
 
 		);
 	}
