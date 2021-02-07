@@ -1,5 +1,6 @@
 import { domReady, selectItemByAttribute, triggerNativeEvent } from "./lib/html";
 import { get_info } from "./lookup";
+import _ from './lodash.custom'; // we might use lodash-es in the future
 
 // Get Options from data-options and json parse them
 function get_options(el) {
@@ -28,7 +29,7 @@ async function action_on_elements(className, errorMessage, callback) {
 
 function get_value_from_record(el, record, property = null) {
     const opt = get_options(el);
-    const property = property || opt.property;
+    property = property || opt.property;
     if (opt.skip_cache) {
         console.warn("Geolocation IP Detection: The property 'skip_cache' is ignored in AJAX mode. You could disable the response caching on the server by setting the constant GEOIP_DETECT_READER_CACHE_TIME.");
     }
@@ -63,7 +64,7 @@ function do_shortcode_text_input(el, record) {
 
 function do_shortcode_show_if(el, record) {
     const opt = get_options(el);
-    const evaluated = shortcode_evaluate_options(opt.c, el, record);
+    const evaluated = geoip_detect2_shortcode_evaluate_conditions(opt.parsed, opt, record);
 
     if (!evaluated) {
         el.style.display = "none !important";
@@ -72,9 +73,74 @@ function do_shortcode_show_if(el, record) {
     }
 }
 
-function shortcode_evaluate_options(condtions, el, record) {
-    return false;
-    const value = get_value_from_record(el, record, property);
+function geoip_detect2_shortcode_evaluate_conditions(parsed, opt, record) {
+    const alternativePropertyNames = [
+        'name',
+        'iso_code',
+        'iso_code3',
+        'code',
+        'geoname_id',
+    ];
+
+    let isConditionMatching = (parsed.op === 'or') ? false : true;
+
+    parsed.conditions.forEach(c => {
+        let subConditionMatching = false;
+        let values = [];
+        
+        const raw_value = record.get_raw(c.p);
+
+        if (raw_value === null) {
+            subConditionMatching = false;
+        } else {
+            if (typeof(raw_value) === 'object') {
+                alternativePropertyNames.forEach(name => {
+                    if (raw_value[name]) {
+                        values.push(raw_value[name]);
+                    } else if (name == 'name') {
+                        values.push(record.get_with_locales(c.p, opt.lang, opt.default));
+                    }
+                })
+            } else {
+                values = [ raw_value ]
+            }
+        }
+
+        subConditionMatching = geoip_detect2_shortcode_check_subcondition(c.v, values);
+
+        if (c.not) {
+            subConditionMatching = ! subConditionMatching;
+        }
+
+        if (parsed.op === 'or') {
+            isConditionMatching = isConditionMatching || subConditionMatching;
+        } else {
+            isConditionMatching = isConditionMatching && subConditionMatching;
+        }
+
+    });
+
+    if (parsed.not) {
+        isConditionMatching = ! isConditionMatching;
+    }
+    
+    return isConditionMatching;
+}
+
+function geoip_detect2_shortcode_check_subcondition(expectedValues, actualValues) {
+    if (actualValues[0] === true) {
+        actualValues = ['true', 'yes', 'y', '1'];
+    } else if (actualValues[0] === false) {
+        actualValues = ['false', 'no', 'n', '0', ''];
+    }
+
+    actualValues = actualValues.map(x => String(x).toLowerCase())
+
+    expectedValues = expectedValues.split(',');
+
+    const intersect = _.intersection(expectedValues, actualValues);
+
+    return intersect.length > 0;
 }
 
 

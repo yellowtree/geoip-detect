@@ -40,6 +40,11 @@ class Record {
     get(prop, default_value) {
         return this.get_with_locales(prop, this.default_locales, default_value);
     }
+
+    get_raw(prop) {
+        prop = camelToUnderscore(prop);
+        return _.get(this.data, prop, null);
+    }
     
     has_property(prop) {
         const ret = this._lookup_with_locales(prop, this.default_locales)

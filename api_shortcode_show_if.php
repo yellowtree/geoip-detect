@@ -97,13 +97,21 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 	
 	$parsed = geoip_detect2_shortcode_parse_conditions_from_attributes($attr, !$showContentIfMatch);
 
-	$evaluated = geoip_detect2_shortcode_evaluate_conditions($parsed, $info);
+	if (geoip_detect2_shortcode_is_ajax_mode($attr)) {
+		geoip_detect2_enqueue_javascript('shortcode');
+		$shortcode_options['parsed'] = $parsed;
+		$innerHTML= do_shortcode($content);
+		return _geoip_detect2_create_placeholder('span', [ 'class' => 'js-geoip-detect-show-if', 'style' => 'display: none !important' ], $shortcode_options, $innerHTML);
+	} else {
+		$evaluated = geoip_detect2_shortcode_evaluate_conditions($parsed, $info);
+		// All Criteria Passed?
+		if ($evaluated) {
+			return do_shortcode($content);
+		}
+		return '';
+	}
 
-    // All Criteria Passed?
-    if ($evaluated) {
-        return do_shortcode($content);
-    }
-	return '';
+
 }
 add_shortcode('geoip_detect2_show_if', 'geoip_detect2_shortcode_show_if');
 add_shortcode('geoip_detect2_hide_if', 'geoip_detect2_shortcode_show_if');
@@ -177,15 +185,15 @@ function geoip_detect2_shortcode_parse_conditions_from_attributes(array $attr, b
 /**
  * This function has its JS equivalent. If the code is changed here, it also needs to be changed in the JS file.
  * 
- * @see ./js/shortcodes.js : function shortcode_evaluate_options()
+ * @see ./js/shortcodes.js : function geoip_detect2_shortcode_evaluate_conditions()
  */
 function geoip_detect2_shortcode_evaluate_conditions(array $parsed, \GeoIp2\Model\AbstractModel $info) : bool {
-	$alternativePropertyNames = array(
-			'name',
-			'isoCode',
-			'code',
-			'geonameId',
-	);
+	$alternativePropertyNames = [
+		'name',
+		'isoCode',
+		'code',
+		'geonameId',
+	];
 
 	$isConditionMatching = ($parsed['op'] === 'or') ? false : true;
 
@@ -194,17 +202,18 @@ function geoip_detect2_shortcode_evaluate_conditions(array $parsed, \GeoIp2\Mode
 		try {
 			$value = geoip_detect2_shortcode_get_property($info, $condition['p']);
 
+			$values = [];
 			if (is_object($value)) {
-				$values = [];
 				foreach($alternativePropertyNames as $p) {
 					if (isset($value->{$p})) {
 						$values[] = $value->{$p};
 					}
 				}
-				$value = $values;
+			} else {
+				$values = [ $value ];
 			}
 	
-			$subConditionMatching = geoip_detect2_shortcode_check_subcondition($condition['v'], $value);
+			$subConditionMatching = geoip_detect2_shortcode_check_subcondition($condition['v'], $values);
 	
 		} catch (\Exception $e) {
 			// Invalid Property or so... ignore this condition.
@@ -243,18 +252,13 @@ function geoip_detect2_shortcode_prepare_values(string $value) : string {
 /**
  * This function has its JS equivalent. If the code is changed here, it also needs to be changed in the JS file.
  * 
- * @see ./js/shortcodes.js : function shortcode_evaluate_options()
+ * @see ./js/shortcodes.js : function geoip_detect2_shortcode_check_subcondition()
  */
-function geoip_detect2_shortcode_check_subcondition($expectedValues, $actualValues) : bool {
-	if ($actualValues === true) {
-		$actualValues = array("true", "yes", "y", "1");
-	}
-	if ($actualValues === false) {
-		$actualValues = array("false", "no", "n", "0", "");
-	}
-
-	if (!is_array($actualValues)) {
-		$actualValues = array($actualValues);
+function geoip_detect2_shortcode_check_subcondition(string $expectedValues, array $actualValues) : bool {
+	if ($actualValues[0] === true) {
+		$actualValues = ['true', 'yes', 'y', '1'];
+	} else if ($actualValues[0] === false) {
+		$actualValues = ['false', 'no', 'n', '0', ''];
 	}
 
 	$expectedValues = explode(',', $expectedValues);
@@ -262,7 +266,6 @@ function geoip_detect2_shortcode_check_subcondition($expectedValues, $actualValu
 	// Compare case-insensitively
 	$actualValues = array_map('mb_strtolower', $actualValues);
 	
-
 	$intersection = array_intersect($actualValues, $expectedValues);
 
 	return count($intersection) > 0;

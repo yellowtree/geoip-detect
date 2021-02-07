@@ -97,7 +97,6 @@ $currentSourceId = $currentSource->getId();
 			<label><input type="checkbox" name="options[ajax_shortcodes]" value="1" <?php if (!empty($wp_options['ajax_shortcodes'])) { echo 'checked="checked"'; } ?>>BETA: <?php _e('Resolve shortcodes (via AJAX).', 'geoip-detect'); ?></label>
 			<span class="detail-box">
 				<?php _e('(JS Helper functions are added automatically for pages that contain ajax shortcodes.)', 'geoip-detect'); ?><br>
-				The following shortcodes are currently not implemented in AJAX mode: <code>[geoip_detect2_show_if]</code> and <code>[geoip_detect2_hide_if]</code>
 			</span>
 
 		</p>

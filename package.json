@@ -8,7 +8,7 @@
   "license": "GPL-3.0-or-later",
   "scripts": {
     "clean": "rm -rf .cache",
-    "build-lodash": "lodash include=get -o js/lodash.custom.js",
+    "build-lodash": "lodash include=get,intersection -o js/lodash.custom.js",
     "start": "rm -rf js/dist && parcel parcel.urls --out-dir js/dist --public-url .",
     "build": "rm -rf js/dist && parcel build parcel.urls --out-dir js/dist --public-url ."
   },

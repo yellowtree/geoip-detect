@@ -485,7 +485,7 @@ function geoip_detect2_shortcode_enqueue_javascript() {
 }
 add_shortcode('geoip_detect2_enqueue_javascript', 'geoip_detect2_shortcode_enqueue_javascript');
 
-function _geoip_detect2_create_placeholder($tag = "span", $attr = [], $data = null) {
+function _geoip_detect2_create_placeholder($tag = "span", $attr = [], $data = null, $innerHTML = '') {
 	$tag = sanitize_key($tag);
 	$html = "<$tag";
 
@@ -495,7 +495,7 @@ function _geoip_detect2_create_placeholder($tag = "span", $attr = [], $data = nu
 	if ($attr) {
 		$html .= ' ' . _geoip_detect_flatten_html_attr($attr);
 	}
-	$html .= "></$tag>";
+	$html .= ">$innerHTML</$tag>";
 
 	return $html;
 }
