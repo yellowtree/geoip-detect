@@ -116,27 +116,35 @@ Or maybe you are using a site cache plugin. Then enable the option `Disable cach
 == Upgrade Notice ==
 
 = 4.0.0 =
+
+Improving Shortcodes (and Shortcodes for AJAX!)
 New Minimum Requirements: PHP 7.2, and if you use WooCommerce it needs to be 3.9.0 or later.
 
 = 3.3.0 =
+
 Improving AJAX mode - now you can use it for specific pages.
 
 = 3.2.1 = 
+
 This update fixes an issue of 3.2.0 if your installation has WP_DEBUG enabled.
 
 = 3.2.0 =
+
 This plugin version simplifies complying the the EULA of Maxmind by automatically retrieving and honoring their Privacy Exclusion List. 
 You need to enter your Account ID in the options. 
 Find more information about the Privacy Exclusion API in the FAQ of the plugin.
 
 = 3.1.0 =
+
 The property access for shortcodes has been rewritten so that property names such as "extra.original.zip" (Datasource: ipstack) are possible now.
 
 = 3.0.3.1 = 
+
 Hotfix for the Manual download Maxmind datasource.
 The Plugin was renamed to Geolocation IP Detection in order to prevent trademark issues. 
 
 = 3.0.3 = 
+
 The Plugin was renamed to Geolocation IP Detection in order to prevent trademark issues. 
 
 = 3.0.1 = 
