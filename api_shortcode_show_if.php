@@ -141,8 +141,8 @@ function geoip_detect2_shortcode_parse_conditions_from_attributes(array $attr, b
 	foreach ($attributeNames as $shortcodeParamName => $maxmindName) {
 		if (!empty($attr[$shortcodeParamName])) {
 			$condition = [
-				'property' => $maxmindName,
-				'value' => $attr[$shortcodeParamName],
+				'p' => $maxmindName,
+				'v' => geoip_detect2_shortcode_prepare_values($attr[$shortcodeParamName]),
 			];
 			if (substr($shortcodeParamName, 0, 4) == 'not_') {
 				$condition['not'] = 1;
@@ -155,14 +155,14 @@ function geoip_detect2_shortcode_parse_conditions_from_attributes(array $attr, b
 	if (!empty($attr['property'])) {
 		if (!empty($attr['property_value'])) {
 			$condition = [
-				'property' => $attr['property'],
-				'value' => $attr['property_value'],
+				'p' => $attr['property'],
+				'v' => geoip_detect2_shortcode_prepare_values($attr['property_value']),
 			];
 			$conditions[] = $condition;			
 		} else if (!empty($attr['not_property_value'])) {
 			$condition = [
-				'property' => $attr['property'],
-				'value' => $attr['not_property_value'],
+				'p' => $attr['property'],
+				'v' => geoip_detect2_shortcode_prepare_values($attr['not_property_value']),
 				'not' => 1
 			];
 			$conditions[] = $condition;
@@ -179,7 +179,7 @@ function geoip_detect2_shortcode_parse_conditions_from_attributes(array $attr, b
  * 
  * @see ./js/shortcodes.js : function shortcode_evaluate_options()
  */
-function geoip_detect2_shortcode_evaluate_conditions(array $parsed, \GeoIp2\Model\AbstractModel $info) {
+function geoip_detect2_shortcode_evaluate_conditions(array $parsed, \GeoIp2\Model\AbstractModel $info) : bool {
 	$alternativePropertyNames = array(
 			'name',
 			'isoCode',
@@ -192,7 +192,7 @@ function geoip_detect2_shortcode_evaluate_conditions(array $parsed, \GeoIp2\Mode
 	foreach ($parsed['conditions'] as $condition) {
 		// Actual value(s)
 		try {
-			$value = geoip_detect2_shortcode_get_property($info, $condition['property']);
+			$value = geoip_detect2_shortcode_get_property($info, $condition['p']);
 
 			if (is_object($value)) {
 				$values = [];
@@ -204,7 +204,7 @@ function geoip_detect2_shortcode_evaluate_conditions(array $parsed, \GeoIp2\Mode
 				$value = $values;
 			}
 	
-			$subConditionMatching = geoip_detect2_shortcode_check_subcondition($condition['value'], $value);
+			$subConditionMatching = geoip_detect2_shortcode_check_subcondition($condition['v'], $value);
 	
 		} catch (\Exception $e) {
 			// Invalid Property or so... ignore this condition.
@@ -230,16 +230,22 @@ function geoip_detect2_shortcode_evaluate_conditions(array $parsed, \GeoIp2\Mode
 	return $isConditionMatching;
 }
 
+
+function geoip_detect2_shortcode_prepare_values(string $value) : string {
+	// Parse User Input Values of Attribute
+	$attributeValuesArray = explode(',', $value);
+	$attributeValuesArray = array_map('trim', $attributeValuesArray);
+	$attributeValuesArray = array_map('mb_strtolower', $attributeValuesArray);
+
+	return implode(',', $attributeValuesArray);
+}
+
 /**
  * This function has its JS equivalent. If the code is changed here, it also needs to be changed in the JS file.
  * 
  * @see ./js/shortcodes.js : function shortcode_evaluate_options()
  */
-function geoip_detect2_shortcode_check_subcondition($expectedValuesRaw, $actualValues) {
-	// Parse User Input Values of Attribute
-	$attributeValuesArray = explode(',', $expectedValuesRaw);
-	$attributeValuesArray = array_map('trim', $attributeValuesArray);
-
+function geoip_detect2_shortcode_check_subcondition($expectedValues, $actualValues) : bool {
 	if ($actualValues === true) {
 		$actualValues = array("true", "yes", "y", "1");
 	}
@@ -251,11 +257,13 @@ function geoip_detect2_shortcode_check_subcondition($expectedValuesRaw, $actualV
 		$actualValues = array($actualValues);
 	}
 
-	// Compare case-insensitively
-	$attributeValuesArray = array_map('mb_strtolower', $attributeValuesArray);
-	$actualValues = array_map('mb_strtolower', $actualValues);
+	$expectedValues = explode(',', $expectedValues);
 
-	$intersection = array_intersect($actualValues, $attributeValuesArray);
+	// Compare case-insensitively
+	$actualValues = array_map('mb_strtolower', $actualValues);
+	
+
+	$intersection = array_intersect($actualValues, $expectedValues);
 
 	return count($intersection) > 0;
 }
