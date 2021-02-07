@@ -172,7 +172,7 @@ function geoip_detect2_shortcode_parse_conditions_from_attributes(array $attr, b
 /**
  * This function has its JS equivalent. If the code is changed here, it also needs to be changed in the JS file.
  * 
- * @see ./js/shortcode_show_if.js
+ * @see ./js/shortcodes.js : function shortcode_evaluate_options()
  */
 function geoip_detect2_shortcode_evaluate_conditions(array $parsed, \GeoIp2\Model\AbstractModel $info) {
 	$alternativePropertyNames = array(
@@ -228,7 +228,7 @@ function geoip_detect2_shortcode_evaluate_conditions(array $parsed, \GeoIp2\Mode
 /**
  * This function has its JS equivalent. If the code is changed here, it also needs to be changed in the JS file.
  * 
- * @see ./js/shortcode_show_if.js
+ * @see ./js/shortcodes.js : function shortcode_evaluate_options()
  */
 function geoip_detect2_shortcode_check_subcondition($expectedValuesRaw, $actualValues) {
 	// Parse User Input Values of Attribute

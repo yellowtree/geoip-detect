@@ -262,12 +262,11 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		/* #26 */		array('', '[geoip_detect2_show_if country="US,FR"]yes[/geoip_detect2_show_if]' ),
 
 		// Boolean values
-		/* #27 */		array('yes', '[geoip_detect2_show_if property="country.isInEuropeanUnion" property_value="1"]yes[/geoip_detect2_show_if]' ),
-		/* #28 */		array('yes', '[geoip_detect2_show_if property="country.isInEuropeanUnion" property_value="true"]yes[/geoip_detect2_show_if]' ),
-		/* #29 */		array('yes', '[geoip_detect2_show_if property="country.isInEuropeanUnion" property_value="yes"]yes[/geoip_detect2_show_if]' ),
-		/* #29 */		array('yes', '[geoip_detect2_show_if property="country.isInEuropeanUnion" property_value="y"]yes[/geoip_detect2_show_if]' ),
-		/* #29 */		array('', '[geoip_detect2_show_if property="country.isInEuropeanUnion" property_value="no"]yes[/geoip_detect2_show_if]' ),
-		/* #30 */		array('yes', '[geoip_detect2_show_if property="isEmpty" property_value="no"]yes[/geoip_detect2_show_if]' ),
+		/* #27 */		array('', '[geoip_detect2_show_if property="isEmpty" property_value="1"]yes[/geoip_detect2_show_if]' ),
+		/* #28 */		array('yes', '[geoip_detect2_show_if property="isEmpty" property_value="false"]yes[/geoip_detect2_show_if]' ),
+		/* #29 */		array('yes', '[geoip_detect2_show_if property="isEmpty" property_value="no"]yes[/geoip_detect2_show_if]' ),
+		/* #30 */		array('', '[geoip_detect2_show_if property="isEmpty" property_value="yes"]yes[/geoip_detect2_show_if]' ),
+
 		);
 	}
 
