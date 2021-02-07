@@ -78,6 +78,7 @@ require_once(GEOIP_PLUGIN_DIR . '/legacy-api.php');
 require_once(GEOIP_PLUGIN_DIR . '/deprecated.php');
 require_once(GEOIP_PLUGIN_DIR . '/filter.php');
 require_once(GEOIP_PLUGIN_DIR . '/api_shortcodes.php');
+require_once(GEOIP_PLUGIN_DIR . '/api_shortcode_show_if.php');
 require_once(GEOIP_PLUGIN_DIR . '/api_cf7_shortcodes.php');
 require_once(GEOIP_PLUGIN_DIR . '/ajax.php');
 
