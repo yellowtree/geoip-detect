@@ -49,7 +49,7 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 * Be careful to comply to the applicable laws. For example Regulation (EU) 2018/302 (going into effect 03 Dec 2018)...
 * If you need to get the user's timezone, it is more accurate to use JS solutions.
 
-**System Requirements**: You will need at least PHP 5.6 (soon: PHP 7.2)
+**System Requirements**: You will need at least PHP 7.2. If you use the plugin WooCommerce, you'll need at least 3.9.0
 
 *GDPR: See [Is this plugin GDPR-compliant?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#is-this-plugin-gdpr-compliant)*
 
@@ -112,6 +112,9 @@ Or maybe you are using a site cache plugin. Then enable the option `Disable cach
 1. Lookup page (under Tools > Geolocation Lookup)
 2. Options page (under Preferences > Geolocation IP Detection)
 
+= 4.0.0 =
+New Minimum Requirements: PHP 7.2, and if you use WooCommerce it needs to be 3.9.0 or later.
+
 = 3.3.0 =
 Improving AJAX mode - now you can use it for specific pages.
 
@@ -142,6 +145,23 @@ The Plugin was renamed to Geolocation IP Detection in order to prevent trademark
 If you use Maxmind "Automatic download" then you need to upgrade to this plugin version in order to continue to receive database update. The Database license changed and you will need to register at their website and agree to the EULA.
 
 ## Changelog ##
+
+= 4.0.0 =
+This version has many changes regarding the Shortcodes API. It is a major version because it increases some system requirements (see below).
+
+* NEW: Shortcodes can now also be resolved in AJAX mode (without coding JS). 
+If you are using a page cache, AJAX mode is the best solution for you. And thanks to shortcodes, this doesn't need custom coding anymore. 
+You can keep using the same shortcodes as before - just tick the options "Enable AJAX endpoint" and "Resolve shortcodes (via AJAX)". 
+Instead of doing the geo-lookup while generating the HTML, it will generate boilerplate HTML (for the cache) that will be filled by the plugin's JS automatically (in the client's browser).
+The following shortcodes are currently not implemented: [geoip_detect2_show_if] and [geoip_detect2_hide_if]
+* NEW: [geoip_detect2_show_if] and [geoip_detect2_hide_if] now have a new attribute `operator="OR"` - this can be used to create conditions such as "continent = EU OR country = US"
+
+* Minimum PHP version is now 7.2
+* Using PHP Type-Hinting for API functions - if you used the PHP API, please test it (I didn't change parameter types of the function arguments but just in case)
+* Minimum Wordpress version is now 5.0
+* If you are using WooCommerce, you need at least version 3.9.0 (released Jan 2020) - otherwise this plugin lookup disables itself
+* Updated vendor code
+
 
 = 3.3.0 =
 * NEW shortcode `[geoip_detect2_enqueue_javascript]` if you are using AJAX mode, but only on certain wordpress pages.

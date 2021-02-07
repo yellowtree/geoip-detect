@@ -150,11 +150,15 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 == Changelog ==
 
 = 4.0.0 =
+This version has many changes regarding the Shortcodes API. It is a major version because it increases some system requirements (see below).
+
 * NEW: Shortcodes can now also be resolved in AJAX mode (without coding JS). 
 If you are using a page cache, AJAX mode is the best solution for you. And thanks to shortcodes, this doesn't need custom coding anymore. 
 You can keep using the same shortcodes as before - just tick the options "Enable AJAX endpoint" and "Resolve shortcodes (via AJAX)". 
 Instead of doing the geo-lookup while generating the HTML, it will generate boilerplate HTML (for the cache) that will be filled by the plugin's JS automatically (in the client's browser).
 The following shortcodes are currently not implemented: [geoip_detect2_show_if] and [geoip_detect2_hide_if]
+* NEW: [geoip_detect2_show_if] and [geoip_detect2_hide_if] now have a new attribute `operator="OR"` - this can be used to create conditions such as "continent = EU OR country = US"
+
 * Minimum PHP version is now 7.2
 * Using PHP Type-Hinting for API functions - if you used the PHP API, please test it (I didn't change parameter types of the function arguments but just in case)
 * Minimum Wordpress version is now 5.0
