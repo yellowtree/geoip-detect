@@ -18,9 +18,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if( defined('WOOCOMMERCE_VERSION') || class_exists('WooCommerce')) {
-	die('ddd');
-}
 function geoip_detect_version_check() {
 	if (empty($GLOBALS['wp_version']))
 		require(ABSPATH . '/wp-includes/version.php');
