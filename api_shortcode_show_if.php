@@ -76,24 +76,10 @@ class ShowIfShortcode {
 function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName = '') {
 	$shortcode_options = _geoip_detect2_shortcode_options($attr);
 	$options = array('skipCache' => $shortcode_options['skip_cache']);
-
-	$info = geoip_detect2_get_info_from_current_ip($shortcode_options['lang'], $options);
 	
 	$showContentIfMatch = ($shortcodeName === 'geoip_detect2_show_if');
-
+	
 	$attr = (array) $attr;
-
-	/**
-	 * You can override the detected location information here.
-	 * E.g. "Show if in Paris, but if the user has given an adress in his profile, use that city instead"
-	 * (Does not work in AJAX mode)
-	 * 
-	 * @param YellowTree\GeoipDetect\DataSources\City $info
-	 * @param array $attr Shortcode attributes given to the function.
-	 * @param bool $showContentIfMatch Should the content be shown (TRUE) or hidden (FALSE) if the conditions are true?
-	 */
-	$info = apply_filters('geoip_detect2_shortcode_show_if_ip_info_override', $info, $attr, $showContentIfMatch);
-
 	
 	$parsed = geoip_detect2_shortcode_parse_conditions_from_attributes($attr, !$showContentIfMatch);
 
@@ -103,6 +89,19 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 		$innerHTML= do_shortcode($content);
 		return _geoip_detect2_create_placeholder('span', [ 'class' => 'js-geoip-detect-show-if', 'style' => 'display: none !important' ], $shortcode_options, $innerHTML);
 	} else {
+		$info = geoip_detect2_get_info_from_current_ip($shortcode_options['lang'], $options);
+
+		/**
+		 * You can override the detected location information here.
+		 * E.g. "Show if in Paris, but if the user has given an adress in his profile, use that city instead"
+		 * (Does not work in AJAX mode)
+		 * 
+		 * @param YellowTree\GeoipDetect\DataSources\City $info
+		 * @param array $attr Shortcode attributes given to the function.
+		 * @param bool $showContentIfMatch Should the content be shown (TRUE) or hidden (FALSE) if the conditions are true?
+		 */
+		$info = apply_filters('geoip_detect2_shortcode_show_if_ip_info_override', $info, $attr, $showContentIfMatch);
+
 		$evaluated = geoip_detect2_shortcode_evaluate_conditions($parsed, $info);
 		// All Criteria Passed?
 		if ($evaluated) {

@@ -206,7 +206,7 @@ function var_export_short($data, $return=true)
 					break;
 
 				case 'js':
-					$prop = '"' . $key_1 . '.' . $key_2 . '"';
+					$prop = '"' . $camel_key_1 . '.' . $camel_key_2 . '"';
 					if ($locales && $key_2 === 'name') {
 						$locales_to_js = array(
 							'en' => '"en"',
