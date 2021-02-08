@@ -179,6 +179,8 @@ class RetrieveCcpaBlacklist {
     }
     
     public function doUpdate() {
+        (new CcpaBlacklistCron)->schedule();
+
         /**
          * With this filter, you can disable checking the Maxmind Server for CCPA blacklist updates.
          * @return boolean if the Update should be done (TRUE) or not (FALSE)

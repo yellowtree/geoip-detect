@@ -62,10 +62,14 @@ class ManualDataSource extends AbstractDataSource {
 		$html = '';
 		$last_update = get_option('geoip_detect2_maxmind_ccpa_blacklist_last_updated', 0);
 		$entries = get_option('geoip_detect2_maxmind_ccpa_blacklist');
+		$next_update = wp_next_scheduled('geoipdetectccpaupdate');
 
 		$html .= sprintf(__('Privacy Exclusions last updated: %s', 'geoip-detect'), geoip_detect_format_localtime($last_update) );
 		if ($entries) {
 			$html .= ' ' . sprintf(__('(has %d entries)', 'geoip-detect'), count($entries));
+		}
+		if (WP_DEBUG) {
+			$html .= '<br>' . sprintf(__('Privacy Exclusions next Update: %s', 'geoip-detect'), geoip_detect_format_localtime($next_update) );
 		}
 
 		return $html;
@@ -86,6 +90,25 @@ HTML;
 		return $html;
 	}
 
+	protected function scheduleCcpa($forceRunNow = false) {
+		if (!class_exists('\\YellowTree\\GeoipDetect\\Lib\\CcpaBlacklistCron')) {
+			return;
+		}
+		$ccpaCronScheduler = new \YellowTree\GeoipDetect\Lib\CcpaBlacklistCron;
+		$ccpaCronScheduler->schedule(true);
+	}
+
+	protected function unscheduleCcpa() {
+		wp_clear_scheduled_hook('geoipdetectccpaupdate');
+	}
+
+	public function activate() {
+		$this->scheduleCcpa();
+	}
+	public function deactivate() {
+		$this->unscheduleCcpa();
+	}
+
 	protected function saveParametersMaxmindAccount($post) {
 		$message = '';
 
@@ -104,14 +127,9 @@ HTML;
 				$message .= __('This is not a valid Maxmind Account ID.', 'geoip-detect');
 			}
 			$idChanged = update_option('geoip-detect-auto_license_id', $id);
-			if ($id && class_exists('\\YellowTree\\GeoipDetect\\Lib\\CcpaBlacklistCron')) {
-				$ccpaCronScheduler = new \YellowTree\GeoipDetect\Lib\CcpaBlacklistCron;
-				if ($idChanged || $keyChanged) {
-					// Re-schedule and run it right now
-					$ccpaCronScheduler->schedule(true);
-				} else {
-					$ccpaCronScheduler->schedule();
-				}
+			$forceRunNow = $idChanged || $keyChanged;
+			if ($id) {
+				$this->scheduleCcpa($forceRunNow);
 			}
 		}
 

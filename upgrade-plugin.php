@@ -77,6 +77,14 @@ function geoip_detect_do_upgrade($old_version) {
 		}
 	}
 
+	// v 4.0.0 Fix CCPA auto update hook (re-schedule if necessary)
+	if (version_compare('4.0.0', $old_version, '>') && class_exists('\\YellowTree\\GeoipDetect\\Lib\\CcpaBlacklistCron')) {
+		if (wp_next_scheduled('geoipdetectccpaupdate') === false) {
+			$ccpaCronScheduler = new \YellowTree\GeoipDetect\Lib\CcpaBlacklistCron;
+			$ccpaCronScheduler->schedule();
+		}
+	}
+
 }
 
 /**

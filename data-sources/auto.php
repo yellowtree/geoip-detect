@@ -312,11 +312,13 @@ HTML;
 	}
 
 	public function activate() {
+		parent::activate();
 		$this->set_cron_schedule();
 	}
 
 	public function deactivate()
 	{
+		parent::deactivate();
 		wp_clear_scheduled_hook('geoipdetectupdate');
 	}
 
