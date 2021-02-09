@@ -17,6 +17,22 @@ SVNURL="http://plugins.svn.wordpress.org/geoip-detect/" # Remote SVN repo on wor
 SVNUSER="benjamin4" # your svn username
 
 
+# This also changes the current branch to MERGE_TO
+function merge_branch_and_checkout()
+{
+	local MERGE_FROM=$1
+	local MERGE_TO=$2
+
+	echo "Merging $MERGE_FROM into $MERGE_TO ..."
+	git checkout "$MERGE_TO" && git merge --ff-only "$MERGE_FROM"
+	if [ $? != 0 ] ; then 
+		echo "No merge possible with fast-forward, please merge $MERGE_FROM into $MERGE_TO manually ..."
+		exit 1;
+	fi
+}
+
+
+
 if [ "$1" = "checkout" ] ; then
 	echo "Only Checkout"
 	echo 
@@ -32,7 +48,7 @@ fi
 # Let's begin...
 echo ".........................................."
 echo 
-echo "Preparing to deploy wordpress plugin"
+echo "Start the deploying process ..."
 echo 
 echo ".........................................."
 echo 
@@ -43,35 +59,29 @@ echo "$MAINFILE version: $NEWVERSION"
 NEWVERSION2=`grep "^define.*GEOIP_DETECT_VERSION" $GITPATH/$MAINFILE | awk -F"'" '{print $4}'`
 echo "$MAINFILE define version: $NEWVERSION"
 
-if [ "$NEWVERSION" != "$NEWVERSION2" ]; then echo "Versions don't match. (php: '$NEWVERSION', define: '$NEWVERSION2') Exiting...."; exit 1; fi
+if [ "$NEWVERSION" != "$NEWVERSION2" ] ; then echo "Versions don't match. (php: '$NEWVERSION', define: '$NEWVERSION2') Exiting...."; exit 1; fi
 
 echo "Versions match in PHP file. Let's proceed..."
 
-if [[ $NEWVERSION == *"beta"* ]]; then BETA=1
-if [ "$1" = "beta" ] ; then BETA=1
-if [ "$BETA" = "1" ] ; then 
+BETA=0
+case "$NEWVERSION" in
+	*beta*)
+		BETA=1
+		;;
+esac
+if [ "$1" = "beta" ] ; then 
+	BETA=1 
+fi
+
+
+if [ "$BETA" = 1 ] ; then 
 	echo
-	echo "Release Beta version only"
+	echo "Releasing Beta version only."
 	echo
 fi
 
-function merge() {
-	local MERGE_FROM = $1
-	local MERGE_TO = $2
 
-	echo "Merging $MERGE_FROM into $MERGE_TO ..."
-	git checkout "$MERGE_TO" && git merge --strategy=fast-forward "$MERGE_FROM"
-	if [ $? != 0 ]; then 
-		echo "No merge possible with fast-forward, please merge $MERGE_FROM into $MERGE_TO manually ..."
-		exit 1;
-	fi
-}
-
-merge develop beta
-
-#echo "Compressing JS files..."
-#java -jar ~/bin/yuicompressor.jar --nomunge --preserve-semi -o "$GITPATH/tinymce/editor_plugin.js" $GITPATH/tinymce/editor_plugin_src.js
-#java -jar ~/bin/yuicompressor.jar --nomunge --preserve-semi -o "$GITPATH/tinymce/wpcf-select-box.js" $GITPATH/tinymce/wpcf-select-box_src.js
+merge_branch_and_checkout develop beta
 
 cd $GITPATH
 
@@ -89,21 +99,25 @@ echo "Generate README.md from readme.txt"
 bin/readme.sh "$SVNURL"
 bin/changelog.sh
 
-echo -e "Enter a commit message for this new version: \c"
+COMMITMSG_DEFAULT="Release $NEWVERSION"
+echo -e "Enter a commit message for this new version (default: $COMMITMSG_DEFAULT): \c"
 read COMMITMSG
+: ${COMMITMSG:=$COMMITMSG_DEFAULT}
 git commit -am "$COMMITMSG"
 
 echo "Tagging new version in git"
 git tag -a "$NEWVERSION" -m "Tagging version $NEWVERSION"
 
-merge beta develop
+# Merging back into develop
+merge_branch_and_checkout beta develop
 
-if [ "$BETA" = 1 ] then
+if [ "$BETA" = 1 ] ; then
 	git checkout develop
 	echo "Beta version released."
 	exit 0;
 fi
 
+# Merging all changes to master, then continue in master
 merge beta master
 
 echo "Pushing latest commit to origin, with tags"
@@ -112,7 +126,9 @@ git push origin master --tags
 
 # ---------------------- now updating SVN -----------------------
 
-echo 
+echo
+echo "--------------------------------------------------"
+echo
 echo "Creating local copy of SVN repo ..."
 svn co $SVNURL -N $SVNPATH
 svn up $SVNPATH/trunk
