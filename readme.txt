@@ -56,7 +56,7 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 
 *This extension is "charity-ware". If you are happy with it, please [leave a tip](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYUZHS8FH3CL) for the benefit of [this charity](http://www.jmem-hainichen.de/homepage). (See [FAQ](https://github.com/yellowtree/geoip-detect/wiki/FAQ#what-you-mean-by-this-plugin-is-charity-ware) for more infos.)*
 
-*[Here are other ways to contribute to the development of this plugin.](https://github.com/yellowtree/geoip-detect/blob/master/CONTRIBUTING.md) to it.
+*[Here are other ways to contribute to the development of this plugin.](https://github.com/yellowtree/geoip-detect/blob/master/CONTRIBUTING.md)
 
 *This product can provide GeoLite2 data created by MaxMind, available from http://www.maxmind.com.*
 

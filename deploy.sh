@@ -111,18 +111,22 @@ git tag -a "$NEWVERSION" -m "Tagging version $NEWVERSION"
 # Merging back into develop
 merge_branch_and_checkout beta develop
 
+echo "Pushing latest commit to origin, with tags"
+git push origin --all --tags
+git push origin master --tags
+
 if [ "$BETA" = 1 ] ; then
 	git checkout develop
-	echo "Beta version released."
-	exit 0;
+	echo 
+	echo "OK. Beta version released."
+	echo
+	exit 0;git push origin master --tags
 fi
 
 # Merging all changes to master, then continue in master
 merge beta master
 
-echo "Pushing latest commit to origin, with tags"
-git push origin --all
-git push origin master --tags
+git push origin master 
 
 # ---------------------- now updating SVN -----------------------
 
