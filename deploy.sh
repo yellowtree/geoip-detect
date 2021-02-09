@@ -38,19 +38,36 @@ echo ".........................................."
 echo 
 
 # Check version in readme.txt is the same as plugin file
-#NEWVERSION1=`grep "^Stable tag" $GITPATH/readme.txt | awk -F' ' '{print $3}'`
-#echo "readme version: $NEWVERSION1"
-NEWVERSION2=`grep "^Version" $GITPATH/$MAINFILE | awk -F' ' '{print $2}'`
-NEWVERSION="$NEWVERSION2"
+NEWVERSION=`grep "^Version" $GITPATH/$MAINFILE | awk -F' ' '{print $2}'`
+echo "$MAINFILE version: $NEWVERSION"
+NEWVERSION2=`grep "^define.*GEOIP_DETECT_VERSION" $GITPATH/$MAINFILE | awk -F"'" '{print $4}'`
+echo "$MAINFILE define version: $NEWVERSION"
 
-echo "$MAINFILE version: $NEWVERSION2"
-NEWVERSION3=`grep "^define.*GEOIP_DETECT_VERSION" $GITPATH/$MAINFILE | awk -F"'" '{print $4}'`
-echo "$MAINFILE define version: $NEWVERSION3"
-
-# if [ "$NEWVERSION1" != "$NEWVERSION2" ] || [ "$NEWVERSION1" != "$NEWVERSION3" ]; then echo "Versions don't match. Exiting...."; exit 1; fi
-if [ "$NEWVERSION2" != "$NEWVERSION3" ]; then echo "Versions don't match. (php: '$NEWVERSION2', define: '$NEWVERSION3') Exiting...."; exit 1; fi
+if [ "$NEWVERSION" != "$NEWVERSION2" ]; then echo "Versions don't match. (php: '$NEWVERSION', define: '$NEWVERSION2') Exiting...."; exit 1; fi
 
 echo "Versions match in PHP file. Let's proceed..."
+
+if [[ $NEWVERSION == *"beta"* ]]; then BETA=1
+if [ "$1" = "beta" ] ; then BETA=1
+if [ "$BETA" = "1" ] ; then 
+	echo
+	echo "Release Beta version only"
+	echo
+fi
+
+function merge() {
+	local MERGE_FROM = $1
+	local MERGE_TO = $2
+
+	echo "Merging $MERGE_FROM into $MERGE_TO ..."
+	git checkout "$MERGE_TO" && git merge --strategy=fast-forward "$MERGE_FROM"
+	if [ $? != 0 ]; then 
+		echo "No merge possible with fast-forward, please merge $MERGE_FROM into $MERGE_TO manually ..."
+		exit 1;
+	fi
+}
+
+merge develop beta
 
 #echo "Compressing JS files..."
 #java -jar ~/bin/yuicompressor.jar --nomunge --preserve-semi -o "$GITPATH/tinymce/editor_plugin.js" $GITPATH/tinymce/editor_plugin_src.js
@@ -79,9 +96,21 @@ git commit -am "$COMMITMSG"
 echo "Tagging new version in git"
 git tag -a "$NEWVERSION" -m "Tagging version $NEWVERSION"
 
+merge beta develop
+
+if [ "$BETA" = 1 ] then
+	git checkout develop
+	echo "Beta version released."
+	exit 0;
+fi
+
+merge beta master
+
 echo "Pushing latest commit to origin, with tags"
 git push origin --all
 git push origin master --tags
+
+# ---------------------- now updating SVN -----------------------
 
 echo 
 echo "Creating local copy of SVN repo ..."
@@ -136,5 +165,6 @@ svn commit --username=$SVNUSER -m "Tagging version $NEWVERSION"
 echo "Removing temporary directory $SVNPATH"
 rm -fr $SVNPATH/
 
+git checkout develop
 echo "*** FIN ***"
 
