@@ -7,6 +7,9 @@ const _get_localized = function(ret, locales) {
         if (typeof(locales) == 'string') {
             locales = [ locales ];
         }
+        if (typeof(locales) != 'object') {
+            locales = [];
+        }
 
         if (typeof (ret.names) == 'object') {
             for (let locale of locales) {

@@ -1,7 +1,7 @@
 import Record from "../models/record"
 
 // From Maxmind City Lite
-export function getTestRecord() {
+export function getTestRecord(locales) {
     return new Record({
             "country": {
                 "iso_code": "DE",
@@ -98,7 +98,7 @@ export function getTestRecord() {
                     "fr": "Hesse"
                 }
             }
-        });
+        }, locales);
 }
 
 export function getTestRecordError() {

@@ -38,7 +38,7 @@ export function geoip_detect2_shortcode_evaluate_conditions(parsed, opt, record)
                     if (raw_value[name]) {
                         values.push(raw_value[name]);
                     } else if (name == 'name') {
-                        values.push(record.get_with_locales(c.p, opt.lang, opt.default));
+                        values.push(record.get_with_locales(c.p, opt.lang));
                     }
                 })
             } else {

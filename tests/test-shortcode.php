@@ -245,12 +245,9 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 			do_shortcode($input);
 			if ($this->last_atts !== false) {
 				$parsed = geoip_detect2_shortcode_parse_conditions_from_attributes($this->last_atts);
+				$opt = _geoip_detect2_shortcode_options($this->last_atts);
 				
-				$data_set[] = [
-					'nb' => $i,
-					'expected' => !!$expected,
-					'parsed' => $parsed,
-				];
+				$data_set[] = [$i, $input, !!$expected, $parsed, $opt ];
 
 			}
 			$i++;
