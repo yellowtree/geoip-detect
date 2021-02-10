@@ -1,11 +1,5 @@
 <?php 
 
-//namespace YellowTree\GeoipDetect\Shortcodes;
-
-class ShowIfShortcode {
-
-}
-
 /**
  *
  * Geo-Dependent Content Hiding
@@ -115,7 +109,7 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 add_shortcode('geoip_detect2_show_if', 'geoip_detect2_shortcode_show_if');
 add_shortcode('geoip_detect2_hide_if', 'geoip_detect2_shortcode_show_if');
 
-function geoip_detect2_shortcode_parse_conditions_from_attributes(array $attr, bool $hide_if) {
+function geoip_detect2_shortcode_parse_conditions_from_attributes(array $attr, bool $hide_if = false) {
 	/* Attribute Conditions. Order is not important, as they are combined with a transitive AND condition */
 	$attributeNames = array(
         'continent' => 'continent',

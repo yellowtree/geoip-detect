@@ -1,4 +1,4 @@
-import { do_shortcodes } from './shortcodes';
+import { do_shortcodes } from './shortcodes/index';
 import { get_info, options } from './lookup';
 import { domReady } from './lib/html';
 

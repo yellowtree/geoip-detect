@@ -150,6 +150,8 @@ README.md
 tests
 test
 phpunit.xml
+babel.config.js
+jest.config.js
 vendor/symfony/property-access/Tests
 vendor/phpspec
 vendor/phpunit

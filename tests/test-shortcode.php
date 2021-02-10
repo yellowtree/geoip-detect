@@ -224,6 +224,43 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertSame($result, $return, "Shortcode failed: " . $txt);
 	}
 
+	public function do_shortcode_geoip_detect2_test_show_if($atts) {
+		$this->last_atts = (array) $atts;
+	}
+
+	protected $last_atts = false;
+
+	public function testGenerateForJS() {
+		$data = $this->dataShortcodeShowIf();
+
+		add_shortcode('geoip_detect2_test_show_if', array($this, 'do_shortcode_geoip_detect2_test_show_if'));
+
+		$data_set = [];
+		$i = 0;
+		foreach ($data as $row) {
+			list($expected, $input) = $row;
+
+			$input = str_replace('geoip_detect2_show_if', 'geoip_detect2_test_show_if', $input);
+			$this->last_atts = false;
+			do_shortcode($input);
+			if ($this->last_atts !== false) {
+				$parsed = geoip_detect2_shortcode_parse_conditions_from_attributes($this->last_atts);
+				
+				$data_set[] = [
+					'nb' => $i,
+					'expected' => !!$expected,
+					'parsed' => $parsed,
+				];
+
+			}
+			$i++;
+		}
+
+		file_put_contents(__DIR__ . '/fixture_shortcode_show_if.json', json_encode($data_set, JSON_PRETTY_PRINT));
+
+		$this->assertSame(true, true);
+	}
+
 	public function dataShortcodeShowIf() {
 		return array(
 		/* #0 */		array('no condition', '[geoip_detect2_show_if]no condition[/geoip_detect2_show_if]' ),
