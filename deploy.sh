@@ -86,10 +86,8 @@ merge_branch_and_checkout develop beta
 cd $GITPATH
 
 echo "Re-generate JS ..."
-yarn install
-yarn clean
-yarn build
-git add js/dist
+# yarn install && yarn clean && yarn build && git add js/dist
+if [ $? != 0 ]; then echo ; echo "Yarn Failed."; echo ; exit 1; fi 
 
 echo "Set composer for production use ..."
 composer install --prefer-dist --optimize-autoloader --no-dev

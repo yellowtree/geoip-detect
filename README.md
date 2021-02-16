@@ -55,7 +55,7 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 
 *This extension is "charity-ware". If you are happy with it, please [leave a tip](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYUZHS8FH3CL) for the benefit of [this charity](http://www.jmem-hainichen.de/homepage). (See [FAQ](https://github.com/yellowtree/geoip-detect/wiki/FAQ#what-you-mean-by-this-plugin-is-charity-ware) for more infos.)*
 
-*[Here are other ways to contribute to the development of this plugin.](https://github.com/yellowtree/geoip-detect/blob/master/CONTRIBUTING.md) to it.
+*[Here are other ways to contribute to the development of this plugin.](https://github.com/yellowtree/geoip-detect/blob/master/CONTRIBUTING.md)
 
 *This product can provide GeoLite2 data created by MaxMind, available from http://www.maxmind.com.*
 
@@ -166,6 +166,7 @@ Instead of doing the geo-lookup while generating the HTML, it will generate boil
 * NEW: [geoip_detect2_show_if] and [geoip_detect2_hide_if] now have a new attribute `operator="OR"` - this can be used to create conditions such as "continent = EU OR country = US"
 * NEW: The JS syntax of the shortcodes now supports both underscore_case and camelCase (e.g. both country.is_in_european_union and country.isInEuropeanUnion are valid)
 * FIX: In some cases, the Privacy Exclusions Update wasn't rescheduled properly before
+* FIX: Ipstack: The property country.isInEuropeanUnion is now filled properly.
 
 * Minimum PHP version is now 7.2
 * Using PHP Type-Hinting for API functions - if you used the PHP API, please test it (I didn't change parameter types of the function arguments but just in case)
