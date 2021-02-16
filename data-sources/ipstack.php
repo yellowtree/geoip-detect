@@ -98,7 +98,11 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 		if (!empty($data['longitude']))
         $r['location']['longitude'] = $data['longitude'];
         
-		if (isset($data['is_eu']))
+        if (!empty($data['location']['is_eu'])) {
+            $r['country']['is_in_european_union'] = $data['location']['is_eu'];
+        }
+
+        if (isset($data['is_eu']))
         $r['country']['is_in_european_union'] = $data['is_eu'];
 		if (isset($data['timezone']['id']))
         $r['location']['time_zone'] = $data['timezone']['id'];
