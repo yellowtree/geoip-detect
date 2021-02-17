@@ -62,6 +62,15 @@ function geoip_detect_lookup_page()
 
 	if (geoip_detect_verify_nonce($action)) {
 		switch($action) {
+			case 'clear_cache':
+				$registry = DataSourceRegistry::getInstance();
+				$ret = $registry->clearCache();
+				if ($ret === true) {
+					$message = __('The cache has been emptied successfully.', 'geoip-detect');
+				} else {
+					$message = $ret;
+				}
+				break;
 			case 'lookup':
 				if ($ip)
 				{
@@ -92,11 +101,11 @@ function geoip_detect_sanitize_option($opt_name, $opt_value, &$message = '') {
 		case 'external_ip':
 			if ($opt_value) {
 				if (!geoip_detect_is_ip($opt_value)) {
-					$message .= 'The external IP "' . esc_html($opt_value) . '" is not a valid IP.';
+					$message .= sprintf(__('The external IP "%s" is not a valid IP.', 'geoip-detect'), esc_html($opt_value));
 					return false;
 				} else {
 					if (!geoip_detect_is_public_ip($opt_value)) {
-						$message .= 'Warning: The external IP "' . esc_html($opt_value) . '" is not a public internet IP, so it will probably not work.';
+						$message .= sprintf(__('Warning: The external IP "%s" is not a public internet IP, so it will probably not work.', 'geoip-detect'), esc_html($opt_value));
 					}
 					$opt_value = (string) $opt_value;
 				}

@@ -170,6 +170,7 @@ Instead of doing the geo-lookup while generating the HTML, it will generate boil
 * NEW: The JS syntax of the shortcodes now supports both underscore_case and camelCase (e.g. both country.is_in_european_union and country.isInEuropeanUnion are valid)
 * FIX: In some cases, the Privacy Exclusions Update wasn't rescheduled properly before
 * FIX: Ipstack: The property country.isInEuropeanUnion is now filled properly.
+* NEW: Add a "Empty Cache"-Button on the Lookup page if the data source is caching the results
 
 * Minimum PHP version is now 7.2
 * Using PHP Type-Hinting for API functions - if you used the PHP API, please test it (I didn't change parameter types of the function arguments but just in case)

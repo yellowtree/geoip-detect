@@ -126,6 +126,17 @@ class DataSourceRegistry {
 		return $this->isSourceCachable($this->getCurrentSourceId());
 	}
 
+	public function clearCache() {
+		if (wp_using_ext_object_cache()) {
+			if (WP_DEBUG) {
+				\trigger_error('Object caching is active, so transient deletion routine does not do anything ...', E_USER_NOTICE);
+				return 'Object caching is active, so transient deletion routine does not do anything ...';
+			}
+		} else {
+			return _geoip_detect2_empty_cache();
+		}
+	}
+
 	public function uninstall() {
 		foreach($this->sources as $source) {
 			$source->deactivate();
@@ -138,5 +149,7 @@ class DataSourceRegistry {
 				delete_option( $option );
 			}
 		}
+
+		$this->clearCache();
 	}
 }
