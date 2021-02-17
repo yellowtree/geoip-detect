@@ -168,15 +168,18 @@ You can keep using the same shortcodes as before - just tick the options "Enable
 Instead of doing the geo-lookup while generating the HTML, it will generate boilerplate HTML (for the cache) that will be filled by the plugin's JS automatically (in the client's browser).
 * NEW: [geoip_detect2_show_if] and [geoip_detect2_hide_if] now have a new attribute `operator="OR"` - this can be used to create conditions such as "continent = EU OR country = US"
 * NEW: The JS syntax of the shortcodes now supports both underscore_case and camelCase (e.g. both country.is_in_european_union and country.isInEuropeanUnion are valid)
+
+Other Improvements:
+* NEW (UI): Add a "Empty Cache"-Button on the Lookup page if the data source is caching the results
 * FIX: In some cases, the Privacy Exclusions Update wasn't rescheduled properly before
 * FIX: Ipstack: The property country.isInEuropeanUnion is now filled properly.
-* NEW: Add a "Empty Cache"-Button on the Lookup page if the data source is caching the results
-
-* Minimum PHP version is now 7.2
-* Using PHP Type-Hinting for API functions - if you used the PHP API, please test it (I didn't change parameter types of the function arguments but just in case)
-* Minimum Wordpress version is now 5.0
-* If you are using WooCommerce, you need at least version 3.9.0 (released Jan 2020) - otherwise this plugin lookup disables itself
 * Updated vendor code
+
+Also note:
+* The minimum PHP version is now 7.2
+* Minimum Wordpress version is now 5.0
+* The plugin is now using PHP Type-Hinting for API functions - if you used the PHP API, please check if you see PHP errors
+* If you are using WooCommerce, you need at least version 3.9.0 (released Jan 2020) - otherwise this plugin lookup disables itself
 
 As always, if you are happy about the plugin, please consider [donating](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYUZHS8FH3CL), [becoming a Beta-Tester](https://github.com/yellowtree/geoip-detect/wiki/Beta_Testing) or otherwise [contributing](https://github.com/yellowtree/geoip-detect/blob/master/CONTRIBUTING.md) to it.
 
