@@ -23,10 +23,13 @@ function merge_branch_and_checkout()
 	local MERGE_FROM=$1
 	local MERGE_TO=$2
 
+	echo
 	echo "Merging $MERGE_FROM into $MERGE_TO ..."
 	git checkout "$MERGE_TO" && git merge --ff-only "$MERGE_FROM"
+	echo 
 	if [ $? != 0 ] ; then 
 		echo "No merge possible with fast-forward, please merge $MERGE_FROM into $MERGE_TO manually ..."
+		echo
 		exit 1;
 	fi
 }
@@ -86,7 +89,7 @@ merge_branch_and_checkout develop beta
 cd $GITPATH
 
 echo "Re-generate JS ..."
-# yarn install && yarn clean && yarn build && git add js/dist
+yarn install && yarn clean && yarn build && git add js/dist
 if [ $? != 0 ]; then echo ; echo "Yarn Failed."; echo ; exit 1; fi 
 
 echo "Set composer for production use ..."
@@ -110,7 +113,7 @@ git tag -a "$NEWVERSION" -m "Tagging version $NEWVERSION"
 merge_branch_and_checkout beta develop
 
 echo "Pushing latest commit to origin, with tags"
-git push origin --all --tags
+git push origin --all
 git push origin master --tags
 
 if [ "$BETA" = 1 ] ; then
