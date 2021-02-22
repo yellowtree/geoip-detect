@@ -4,15 +4,18 @@ import _ from '../lodash.custom';
 
 const _get_localized = function(ret, locales) {
     if (typeof(ret) == 'object') {
-        if (typeof(locales) == 'string') {
+        
+        if (typeof(locales) === 'string') {
             locales = [ locales ];
         }
-        if (typeof(locales) != 'object') {
+        if (typeof(locales) !== 'object') {
             locales = [];
         }
 
-        if (typeof (ret.names) == 'object') {
-            for (let locale of locales) {
+        if (typeof (ret.names) === 'object') {
+            for (let i = 0 ; i < locales.length ; i++) {
+                let locale = locales[i];
+
                 if (ret.names[locale]) {
                     return ret.names[locale];
                 }
@@ -41,7 +44,7 @@ class Record {
     }
 
     get(prop, default_value) {
-        return this.get_with_locales(prop, this.default_locales, default_value);
+        return this.get_with_locales(prop, null, default_value);
     }
 
     get_raw(prop) {
@@ -71,10 +74,14 @@ class Record {
     }
     
     get_with_locales(prop, locales, default_value) {
+        if (typeof(locales) !== 'object' || locales.length === 0) {
+            locales = this.default_locales;
+        }
+
         const ret = this._lookup_with_locales(prop, locales, default_value);
 
         if (typeof(ret) === 'object') {
-            console.warn('Geolocation IP Detection: The property "' + prop + '" is of type "' + typeof (ret) + '", should be string or similar', {property: prop, value: ret})
+            console.warn('Geolocation IP Detection: The property "' + prop + '" is of type "' + typeof (ret) + '", should be string or similar', ret)
         }
         if (typeof(ret) === 'undefined') {
             console.warn('Geolocation IP Detection: The property "' + prop + '" is not defined, please check spelling or maybe you need a different data source', { data: this.data })

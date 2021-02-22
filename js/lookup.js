@@ -4,10 +4,10 @@ import _ from './lodash.custom';
 import { makeJSONRequest } from './lib/xhr';
 
 
-if (!window.geoip_detect) {
-    console.error('Geoip-detect: the JS variable window.geoip_detect is missing - this is needed for the options')
-}
-export const options = window.geoip_detect?.options || {};
+export const options = window.geoip_detect?.options || {
+    ajaxurl: "/wp-admin/admin-ajax.php",
+    default_locales: ['en']
+};
 
 let ajaxPromise = null;
 
