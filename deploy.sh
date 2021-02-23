@@ -26,12 +26,12 @@ function merge_branch_and_checkout()
 	echo
 	echo "Merging $MERGE_FROM into $MERGE_TO ..."
 	git checkout "$MERGE_TO" && git merge --ff-only "$MERGE_FROM"
-	echo 
 	if [ $? != 0 ] ; then 
 		echo "No merge possible with fast-forward, please merge $MERGE_FROM into $MERGE_TO manually ..."
 		echo
 		exit 1;
 	fi
+	echo 
 }
 
 

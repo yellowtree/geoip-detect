@@ -3,7 +3,7 @@ import _ from '../lodash.custom';
 
 
 const _get_localized = function(ret, locales) {
-    if (typeof(ret) == 'object') {
+    if (typeof(ret) === 'object') {
         
         if (typeof(locales) === 'string') {
             locales = [ locales ];
