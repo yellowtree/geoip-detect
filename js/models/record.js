@@ -12,7 +12,7 @@ const _get_localized = function(ret, locales) {
             locales = [];
         }
 
-        if (typeof (ret.names) === 'object') {
+        if (typeof(ret.names) === 'object') {
             for (let i = 0 ; i < locales.length ; i++) {
                 let locale = locales[i];
 
@@ -74,7 +74,7 @@ class Record {
     }
     
     get_with_locales(prop, locales, default_value) {
-        if (typeof(locales) !== 'object' || locales.length === 0) {
+        if (!Array.isArray(locales) || locales.length === 0) {
             locales = this.default_locales;
         }
 

@@ -27,3 +27,9 @@ test('localisation', () => {
     expect(defaultRecord.get_with_locales('country.name', ['en', 'de'])).toBe('Germany');
     expect(defaultRecord.get_with_locales('country.name', ['nn', 'mm', 'de', 'en'])).toBe('Deutschland');
 });
+
+test('country iso', () => {
+    expect(defaultRecord.get_country_iso()).toBe('de');
+    expect(emptyRecord.get_country_iso()).toBe('');
+    expect(errorRecord.get_country_iso()).toBe('');
+});
