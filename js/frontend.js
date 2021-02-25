@@ -1,5 +1,5 @@
 import { do_shortcodes } from './shortcodes/index';
-import { get_info, options } from './lookup';
+import { get_info, options, remove_override, set_override, set_override_data } from './lookup';
 import { domReady } from './lib/html';
 
 
@@ -41,3 +41,7 @@ if (options.do_shortcodes) {
 
 // Extend window object 
 window.geoip_detect.get_info = get_info;
+
+window.geoip_detect.set_override = set_override;
+window.geoip_detect.set_override_data = set_override_data;
+window.geoip_detect.remove_override = remove_override;

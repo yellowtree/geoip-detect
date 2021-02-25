@@ -106,6 +106,10 @@ class Record {
     error() {
         return _.get(this.data, 'extra.error', '');
     }
+
+    serialize() {
+        return this.data;
+    }
 }
 
 export default Record;

@@ -103,8 +103,6 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 		}
 		return '';
 	}
-
-
 }
 add_shortcode('geoip_detect2_show_if', 'geoip_detect2_shortcode_show_if');
 add_shortcode('geoip_detect2_hide_if', 'geoip_detect2_shortcode_show_if');
@@ -175,6 +173,18 @@ function geoip_detect2_shortcode_parse_conditions_from_attributes(array $attr, b
 	return apply_filters('geoip_detect2_shortcode_show_if_parsed_result', $parsed, $attr, !$hide_if);
 }
 
+function geoip_detect2_shortcode_prepare_values(string $value) : string {
+	// Parse User Input Values of Attribute
+	$attributeValuesArray = explode(',', $value);
+	$attributeValuesArray = array_map('trim', $attributeValuesArray);
+	$attributeValuesArray = array_map('mb_strtolower', $attributeValuesArray);
+
+	return implode(',', $attributeValuesArray);
+}
+
+// --------------------------------------------------------------------------------------------------------
+// 
+
 /**
  * This function has its JS equivalent. If the code is changed here, it also needs to be changed in the JS file.
  * 
@@ -230,16 +240,6 @@ function geoip_detect2_shortcode_evaluate_conditions(array $parsed, \GeoIp2\Mode
 	}
 
 	return $isConditionMatching;
-}
-
-
-function geoip_detect2_shortcode_prepare_values(string $value) : string {
-	// Parse User Input Values of Attribute
-	$attributeValuesArray = explode(',', $value);
-	$attributeValuesArray = array_map('trim', $attributeValuesArray);
-	$attributeValuesArray = array_map('mb_strtolower', $attributeValuesArray);
-
-	return implode(',', $attributeValuesArray);
 }
 
 /**

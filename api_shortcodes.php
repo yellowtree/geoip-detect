@@ -18,7 +18,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-// The wordpress shortcodes are considered official API, the function names are not.
+// API: The wordpress shortcodes are considered official API, the function names are not.
 
 require_once(GEOIP_PLUGIN_DIR . '/shortcodes/_helpers.php');
 require_once(GEOIP_PLUGIN_DIR . '/shortcodes/main.php');
