@@ -50,7 +50,7 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 * Be careful to comply to the applicable laws. For example Regulation (EU) 2018/302 (going into effect 03 Dec 2018)...
 * If you need to get the user's timezone, it is more accurate to use JS solutions.
 
-**System Requirements**: You will need at least PHP 7.2. If you use the plugin WooCommerce, you'll need at least 3.9.0
+**System Requirements**: You will need at least PHP 7.2. If you use the plugin WooCommerce, you'll need at least WooCommerce 3.9.0 .
 
 *GDPR: See [Is this plugin GDPR-compliant?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#is-this-plugin-gdpr-compliant)*
 

@@ -1,4 +1,4 @@
-import { set_override, get_info, set_override_data } from "./lookup";
+import { set_override, get_info } from "./lookup";
 import { getTestRecord } from "./test-lib/test-records";
 import Record from "./models/record";
 
@@ -33,27 +33,27 @@ test('override', async () => {
 test('override data', async () => {
     let record;
 
-    set_override_data({ country: { iso_code: 'fr' } });
+    set_override({ country: { iso_code: 'fr' } });
     record = await get_info();
     expect(record.get_country_iso()).toBe('fr');
 
-    set_override_data({});
+    set_override({});
     record = await get_info();
     expect(record.get_country_iso()).toBe('');
 
-    set_override_data({ country: { iso_code: 'ru' } });
+    set_override({ country: { iso_code: 'ru' } });
     record = await get_info();
     expect(record.get_country_iso()).toBe('ru');
 
-    set_override_data();
+    set_override();
     record = await get_info();
     expect(record.get_country_iso()).toBe('');
 });
 
-test('warning if negative', () => {
+test('warning if negative duration', () => {
     const spy = jest.spyOn(console, 'warn').mockImplementation(() => { })
 
-    const ret = set_override_data({ country: { iso_code: 'fr' } }, -4);
+    const ret = set_override({ country: { iso_code: 'fr' } }, -4);
     expect(ret).toBe(false);
 
     expect(spy).toHaveBeenCalled();

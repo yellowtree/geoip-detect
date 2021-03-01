@@ -58,21 +58,28 @@ async function get_info_cached() {
 }
 
 
-// These functions allow to override the geodetected data manually (e.g. a country selector)
-
+/**
+ * This functions allows to override the geodetected data manually (e.g. a country selector)
+ * 
+ * @api
+ * @param {*} record 
+ * @param {number} duration_in_days When this override expires (default: 1 week later)
+ * @return boolean
+ */
 export function set_override(record, duration_in_days) {
     if (record && typeof(record.serialize) === 'function') {
         record = record.serialize();
     }
-    return set_override_data(record, duration_in_days);
-}
-export function set_override_data(data, duration_in_days) {
+
     duration_in_days = duration_in_days || options.cookie_duration_in_days;
     if (duration_in_days < 0) {
         console.warn('set_override_data() did nothing: A negative duration doesn\'t make sense. If you want to remove the override, use remove_override() instead.');
         return false;
     }
 
+    return set_override_data(record, duration_in_days);
+}
+function set_override_data(data, duration_in_days) {
     if (!data) {
         data = {};
     }
@@ -84,13 +91,27 @@ export function set_override_data(data, duration_in_days) {
     setLocalStorage(options.cookie_name, data, duration_in_days * 24 * 60 * 60);
     return true;
 }
+
+/**
+ * Remove the override data.
+ * On next page load, the record data will be loaded from the server again.
+ * 
+ * @return boolean
+ */
 export function remove_override() {
     setLocalStorage(options.cookie_name, {}, -1);
     return true;
 }
 
 
-
+/**
+ * Load the data from the server
+ * 
+ * (It can also be loaded from the browser localstorage, if the record data is present there already.)
+ * 
+ * @api
+ * @return Promise(Record)
+ */
 export async function get_info() {
     let response = await get_info_cached();
 
