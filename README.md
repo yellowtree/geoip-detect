@@ -117,7 +117,7 @@ Or maybe you are using a site cache plugin. Then enable the option `Disable cach
 = 4.0.0 =
 
 Improving Shortcodes (and Shortcodes for AJAX!)
-New Minimum Requirements: PHP 7.2, and if you use WooCommerce it needs to be 3.9.0 or later.
+New Minimum Requirements: PHP 7.2.5, and if you use WooCommerce it needs to be 3.9.0 or later.
 
 = 3.3.0 =
 
@@ -174,7 +174,7 @@ Other Improvements:
 * Updated vendor code
 
 Also note:
-* The minimum PHP version is now 7.2
+* The minimum PHP version is now 7.2.5
 * Minimum Wordpress version is now 5.0
 * The plugin is now using PHP Type-Hinting for API functions - if you used the PHP API, please check if you see PHP errors
 * If you are using WooCommerce, you need at least version 3.9.0 (released Jan 2020) - otherwise this plugin lookup disables itself
