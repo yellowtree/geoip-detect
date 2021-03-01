@@ -16,11 +16,13 @@
         }
     ],
     "require": {
-        "php": ">=7.1.3",
-        "symfony/inflector": "^3.4|^4.0|^5.0"
+        "php": ">=7.2.5",
+        "symfony/deprecation-contracts": "^2.1",
+        "symfony/polyfill-php80": "^1.15",
+        "symfony/property-info": "^5.2"
     },
     "require-dev": {
-        "symfony/cache": "^3.4|^4.0|^5.0"
+        "symfony/cache": "^4.4|^5.0"
     },
     "suggest": {
         "psr/cache-implementation": "To cache access methods."
