@@ -49,7 +49,7 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 * Be careful to comply to the applicable laws. For example Regulation (EU) 2018/302 (going into effect 03 Dec 2018)...
 * If you need to get the user's timezone, it is more accurate to use JS solutions.
 
-**System Requirements**: You will need at least PHP 7.2. If you use the plugin WooCommerce, you'll need at least 3.9.0
+**System Requirements**: You will need at least PHP 7.2. If you use the plugin WooCommerce, you'll need at least WooCommerce 3.9.0 .
 
 *GDPR: See [Is this plugin GDPR-compliant?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#is-this-plugin-gdpr-compliant)*
 
@@ -163,8 +163,9 @@ This version has many changes regarding the Shortcodes API. It is a major versio
 If you are using a page cache, AJAX mode is the best solution for you. And thanks to shortcodes, this doesn't need custom coding anymore. 
 You can keep using the same shortcodes as before - just tick the options "Enable AJAX endpoint" and "Resolve shortcodes (via AJAX)". 
 Instead of doing the geo-lookup while generating the HTML, it will generate boilerplate HTML (for the cache) that will be filled by the plugin's JS automatically (in the client's browser).
-* NEW: [geoip_detect2_show_if] and [geoip_detect2_hide_if] now have a new attribute `operator="OR"` - this can be used to create conditions such as "continent = EU OR country = US"
+* NEW: JS has a new function called `set_override(record, duration_in_days)` (see [AJAX documentation](https://github.com/yellowtree/geoip-detect/wiki/API:-AJAX)) so that the record information can be overridden manually (e.g. when the user selects a certain country manually). A PHP equivalent will follow.
 * NEW: The JS syntax of the shortcodes now supports both underscore_case and camelCase (e.g. both country.is_in_european_union and country.isInEuropeanUnion are valid)
+* NEW: [geoip_detect2_show_if] and [geoip_detect2_hide_if] now have a new attribute `operator="OR"` - this can be used to create conditions such as "continent = EU OR country = US"
 
 Other Improvements:
 * NEW (UI): Add a "Empty Cache"-Button on the Lookup page if the data source is caching the results
