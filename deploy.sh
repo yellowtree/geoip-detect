@@ -106,15 +106,11 @@ read COMMITMSG
 : ${COMMITMSG:=$COMMITMSG_DEFAULT}
 git commit -am "$COMMITMSG"
 
-echo "Tagging new version in git"
-git tag -a "$NEWVERSION" -m "Tagging version $NEWVERSION"
-
 # Merging back into develop
 merge_branch_and_checkout beta develop
 
-echo "Pushing latest commit to origin, with tags"
+echo "Pushing latest commit to origin"
 git push origin --all
-git push origin master --tags
 
 if [ "$BETA" = 1 ] ; then
 	git checkout develop
@@ -178,12 +174,28 @@ cd $SVNPATH/trunk/
 svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn add
 echo "Committing to trunk"
 svn commit --username=$SVNUSER -m "$COMMITMSG"
+if [ $? != 0 ] ; then 
+	echo "Error while committing ..."
+	echo
+	exit 1;
+fi
+
 
 echo "Creating new SVN tag & committing it"
 cd $SVNPATH
 svn copy trunk/ tags/$NEWVERSION/
 cd $SVNPATH/tags/$NEWVERSION
 svn commit --username=$SVNUSER -m "Tagging version $NEWVERSION"
+if [ $? != 0 ] ; then 
+	echo "Error while committing ..."
+	echo
+	exit 1;
+fi
+
+echo "Tagging new version in git"
+git tag -a "$NEWVERSION" -m "Tagging version $NEWVERSION"
+git push origin master --tags
+
 
 echo "Removing temporary directory $SVNPATH"
 rm -fr $SVNPATH/
