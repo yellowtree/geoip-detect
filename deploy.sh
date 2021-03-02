@@ -196,11 +196,12 @@ if [ $? != 0 ] ; then
 	echo "Removing temporary directory $SVNPATH"
 	rm -fr $SVNPATH/
 	echo
-	
+
 	exit 1;
 fi
 
 echo "Tagging new version in git"
+cd "$CURRENTDIR"
 git tag -a "$NEWVERSION" -m "Tagging version $NEWVERSION"
 git push origin master --tags
 

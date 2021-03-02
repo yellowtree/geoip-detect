@@ -47,16 +47,16 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 * You could show the store nearest to your customer
 * You show or hide content specific to a geographic target group
 * Etc. ... You tell me! I'm rather curious what you'll do with this plugin!
-* Be careful to comply to the applicable laws. For example Regulation (EU) 2018/302 (going into effect 03 Dec 2018)...
+* Be careful to comply to the applicable laws. For example Regulation (EU) 2018/302 ...
 * If you need to get the user's timezone, it is more accurate to use JS solutions.
 
-**System Requirements**: You will need at least PHP 7.2. If you use the plugin WooCommerce, you'll need at least WooCommerce 3.9.0 .
+**System Requirements**: You will need at least PHP 7.2.5 If you use the plugin WooCommerce, you'll need at least WooCommerce 3.9.0 .
 
 *GDPR: See [Is this plugin GDPR-compliant?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#is-this-plugin-gdpr-compliant)*
 
 *This extension is "charity-ware". If you are happy with it, please [leave a tip](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYUZHS8FH3CL) for the benefit of [this charity](http://www.jmem-hainichen.de/homepage). (See [FAQ](https://github.com/yellowtree/geoip-detect/wiki/FAQ#what-you-mean-by-this-plugin-is-charity-ware) for more infos.)*
 
-*[Here are other ways to contribute to the development of this plugin.](https://github.com/yellowtree/geoip-detect/blob/master/CONTRIBUTING.md)
+*[Here are other ways to contribute to the development of this plugin.](https://github.com/yellowtree/geoip-detect/blob/master/CONTRIBUTING.md)*
 
 *This product can provide GeoLite2 data created by MaxMind, available from http://www.maxmind.com.*
 
@@ -68,9 +68,9 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 
 === Troubleshooting ===
 
-Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardless of where you are visiting the site from? 
-Maybe your server has a reverse proxy configured. You can check this: Go to the options page and look for "reverse proxy". Are there 2 IPs listed there? If so, which one corresponds to your [public IP](https://www.whatismyip.com/)?
-Or maybe you are using a site cache plugin. Then enable the option `Disable caching a page that contains a shortcode or API call to geo-dependent functions.`
+* Does `geoip_detect2_get_info_from_current_ip()` return the same country, regardless of where you are visiting the site from? 
+* Maybe your server has a reverse proxy configured. You can check this: Go to the options page and look for "reverse proxy". Are there 2 IPs listed there? If so, which one corresponds to your [public IP](https://www.whatismyip.com/)?
+* Or maybe you are using a site cache plugin. Then enable the option `Disable caching a page that contains a shortcode or API call to geo-dependent functions.`
 
 [More Troubleshooting Hints](https://github.com/yellowtree/geoip-detect/wiki/Troubleshooting)
 
