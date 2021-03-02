@@ -29,7 +29,7 @@ class HeaderReader extends \YellowTree\GeoipDetect\DataSources\AbstractReader {
 		'cloudflare' => 'Cloudflare',
 	);
 	
-	public function country($ip) : \GeoIp2\Model\Country {
+	public function country($ip) {
 		
 		$r = array();
 

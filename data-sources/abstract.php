@@ -98,11 +98,11 @@ abstract class AbstractReader implements \YellowTree\GeoipDetect\DataSources\Rea
 		$this->options = $options;	
 	}
 	
-	public function city(string $ip): \GeoIp2\Model\City {
+	public function city($ip) {
 		throw new \BadMethodCallException('This datasource does not provide data for city()');
 	}
 	
-	public function country(string $ip): \GeoIp2\Model\Country {
+	public function country($ip) {
 		throw new \BadMethodCallException('This datasource does not provide data for country()');
 	}
 		

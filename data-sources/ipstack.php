@@ -49,7 +49,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
         return $locales;
     }
 
-	public function city($ip) : \GeoIp2\Model\City {
+	public function city($ip) {
 		$data = $this->api_call($ip);
 
 		if (!$data)
@@ -128,7 +128,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 		return $record;
 	}
 
-	public function country($ip) : \GeoIp2\Model\Country {
+	public function country($ip) {
 		return $this->city($ip); // too much info shouldn't hurt ...
 	}
 
