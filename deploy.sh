@@ -175,8 +175,12 @@ svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn a
 echo "Committing to trunk"
 svn commit --username=$SVNUSER -m "$COMMITMSG"
 if [ $? != 0 ] ; then 
-	echo "Error while committing ... Exiting!"
+	echo "Error while committing to TRUNK ... Exiting!"
 	echo
+	echo "Removing temporary directory $SVNPATH"
+	rm -fr $SVNPATH/
+	echo
+
 	exit 1;
 fi
 
@@ -187,8 +191,12 @@ svn copy trunk/ tags/$NEWVERSION/
 cd $SVNPATH/tags/$NEWVERSION
 svn commit --username=$SVNUSER -m "Tagging version $NEWVERSION"
 if [ $? != 0 ] ; then 
-	echo "Error while committing ... Exiting!"
+	echo "Error while committing to TAGS ... Exiting!"
 	echo
+	echo "Removing temporary directory $SVNPATH"
+	rm -fr $SVNPATH/
+	echo
+	
 	exit 1;
 fi
 
