@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace GeoIp2\Model;
 
 /**
@@ -41,8 +39,11 @@ class Country extends AbstractModel
 
     /**
      * @ignore
+     *
+     * @param mixed $raw
+     * @param mixed $locales
      */
-    public function __construct(array $raw, array $locales = ['en'])
+    public function __construct($raw, $locales = ['en'])
     {
         parent::__construct($raw);
 

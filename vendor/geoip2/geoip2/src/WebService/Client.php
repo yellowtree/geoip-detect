@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace GeoIp2\WebService;
 
 use GeoIp2\Exception\AddressNotFoundException;
@@ -49,7 +47,7 @@ class Client implements ProviderInterface
     private $client;
     private static $basePath = '/geoip/v2.1';
 
-    const VERSION = 'v2.11.0';
+    const VERSION = 'v2.10.0';
 
     /**
      * Constructor.
@@ -67,10 +65,10 @@ class Client implements ProviderInterface
      *                           `http://username:password@127.0.0.1:10`.
      */
     public function __construct(
-        int $accountId,
-        string $licenseKey,
-        array $locales = ['en'],
-        array $options = []
+        $accountId,
+        $licenseKey,
+        $locales = ['en'],
+        $options = []
     ) {
         $this->locales = $locales;
 
@@ -89,7 +87,7 @@ class Client implements ProviderInterface
         $this->client = new WsClient($accountId, $licenseKey, $options);
     }
 
-    private function userAgent(): string
+    private function userAgent()
     {
         return 'GeoIP2-API/' . self::VERSION;
     }
@@ -117,8 +115,10 @@ class Client implements ProviderInterface
      * @throws \GeoIp2\Exception\GeoIp2Exception          This serves as the parent
      *                                                    class to the above exceptions. It will be thrown directly
      *                                                    if a 200 status code is returned but the body is invalid.
+     *
+     * @return \GeoIp2\Model\City
      */
-    public function city(string $ipAddress = 'me'): \GeoIp2\Model\City
+    public function city($ipAddress = 'me')
     {
         return $this->responseFor('city', 'City', $ipAddress);
     }
@@ -146,8 +146,10 @@ class Client implements ProviderInterface
      * @throws \GeoIp2\Exception\GeoIp2Exception          This serves as the parent class to the above exceptions. It
      *                                                    will be thrown directly if a 200 status code is returned but
      *                                                    the body is invalid.
+     *
+     * @return \GeoIp2\Model\Country
      */
-    public function country(string $ipAddress = 'me'): \GeoIp2\Model\Country
+    public function country($ipAddress = 'me')
     {
         return $this->responseFor('country', 'Country', $ipAddress);
     }
@@ -175,13 +177,15 @@ class Client implements ProviderInterface
      * @throws \GeoIp2\Exception\GeoIp2Exception          This serves as the parent
      *                                                    class to the above exceptions. It will be thrown directly
      *                                                    if a 200 status code is returned but the body is invalid.
+     *
+     * @return \GeoIp2\Model\Insights
      */
-    public function insights(string $ipAddress = 'me'): \GeoIp2\Model\Insights
+    public function insights($ipAddress = 'me')
     {
         return $this->responseFor('insights', 'Insights', $ipAddress);
     }
 
-    private function responseFor(string $endpoint, string $class, string $ipAddress)
+    private function responseFor($endpoint, $class, $ipAddress)
     {
         $path = implode('/', [self::$basePath, $endpoint, $ipAddress]);
 

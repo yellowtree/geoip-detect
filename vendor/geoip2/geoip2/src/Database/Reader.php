@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace GeoIp2\Database;
 
 use GeoIp2\Exception\AddressNotFoundException;
@@ -50,8 +48,8 @@ class Reader implements ProviderInterface
      *                                                     is corrupt or invalid
      */
     public function __construct(
-        string $filename,
-        array $locales = ['en']
+        $filename,
+        $locales = ['en']
     ) {
         $this->dbReader = new DbReader($filename);
         $this->dbType = $this->dbReader->metadata()->databaseType;
@@ -67,8 +65,10 @@ class Reader implements ProviderInterface
      *                                                     not in the database
      * @throws \MaxMind\Db\Reader\InvalidDatabaseException if the database
      *                                                     is corrupt or invalid
+     *
+     * @return \GeoIp2\Model\City
      */
-    public function city(string $ipAddress): \GeoIp2\Model\City
+    public function city($ipAddress)
     {
         return $this->modelFor('City', 'City', $ipAddress);
     }
@@ -82,8 +82,10 @@ class Reader implements ProviderInterface
      *                                                     not in the database
      * @throws \MaxMind\Db\Reader\InvalidDatabaseException if the database
      *                                                     is corrupt or invalid
+     *
+     * @return \GeoIp2\Model\Country
      */
-    public function country(string $ipAddress): \GeoIp2\Model\Country
+    public function country($ipAddress)
     {
         return $this->modelFor('Country', 'Country', $ipAddress);
     }
@@ -97,8 +99,10 @@ class Reader implements ProviderInterface
      *                                                     not in the database
      * @throws \MaxMind\Db\Reader\InvalidDatabaseException if the database
      *                                                     is corrupt or invalid
+     *
+     * @return \GeoIp2\Model\AnonymousIp
      */
-    public function anonymousIp(string $ipAddress): \GeoIp2\Model\AnonymousIp
+    public function anonymousIp($ipAddress)
     {
         return $this->flatModelFor(
             'AnonymousIp',
@@ -116,8 +120,10 @@ class Reader implements ProviderInterface
      *                                                     not in the database
      * @throws \MaxMind\Db\Reader\InvalidDatabaseException if the database
      *                                                     is corrupt or invalid
+     *
+     * @return \GeoIp2\Model\Asn
      */
-    public function asn(string $ipAddress): \GeoIp2\Model\Asn
+    public function asn($ipAddress)
     {
         return $this->flatModelFor(
             'Asn',
@@ -135,8 +141,10 @@ class Reader implements ProviderInterface
      *                                                     not in the database
      * @throws \MaxMind\Db\Reader\InvalidDatabaseException if the database
      *                                                     is corrupt or invalid
+     *
+     * @return \GeoIp2\Model\ConnectionType
      */
-    public function connectionType(string $ipAddress): \GeoIp2\Model\ConnectionType
+    public function connectionType($ipAddress)
     {
         return $this->flatModelFor(
             'ConnectionType',
@@ -154,8 +162,10 @@ class Reader implements ProviderInterface
      *                                                     not in the database
      * @throws \MaxMind\Db\Reader\InvalidDatabaseException if the database
      *                                                     is corrupt or invalid
+     *
+     * @return \GeoIp2\Model\Domain
      */
-    public function domain(string $ipAddress): \GeoIp2\Model\Domain
+    public function domain($ipAddress)
     {
         return $this->flatModelFor(
             'Domain',
@@ -173,8 +183,10 @@ class Reader implements ProviderInterface
      *                                                     not in the database
      * @throws \MaxMind\Db\Reader\InvalidDatabaseException if the database
      *                                                     is corrupt or invalid
+     *
+     * @return \GeoIp2\Model\Enterprise
      */
-    public function enterprise(string $ipAddress): \GeoIp2\Model\Enterprise
+    public function enterprise($ipAddress)
     {
         return $this->modelFor('Enterprise', 'Enterprise', $ipAddress);
     }
@@ -188,8 +200,10 @@ class Reader implements ProviderInterface
      *                                                     not in the database
      * @throws \MaxMind\Db\Reader\InvalidDatabaseException if the database
      *                                                     is corrupt or invalid
+     *
+     * @return \GeoIp2\Model\Isp
      */
-    public function isp(string $ipAddress): \GeoIp2\Model\Isp
+    public function isp($ipAddress)
     {
         return $this->flatModelFor(
             'Isp',
@@ -198,7 +212,7 @@ class Reader implements ProviderInterface
         );
     }
 
-    private function modelFor(string $class, string $type, string $ipAddress)
+    private function modelFor($class, $type, $ipAddress)
     {
         list($record, $prefixLen) = $this->getRecord($class, $type, $ipAddress);
 
@@ -210,7 +224,7 @@ class Reader implements ProviderInterface
         return new $class($record, $this->locales);
     }
 
-    private function flatModelFor(string $class, string $type, string $ipAddress)
+    private function flatModelFor($class, $type, $ipAddress)
     {
         list($record, $prefixLen) = $this->getRecord($class, $type, $ipAddress);
 
@@ -221,7 +235,7 @@ class Reader implements ProviderInterface
         return new $class($record);
     }
 
-    private function getRecord(string $class, string $type, string $ipAddress): array
+    private function getRecord($class, $type, $ipAddress)
     {
         if (strpos($this->dbType, $type) === false) {
             $method = lcfirst($class);
@@ -258,7 +272,7 @@ class Reader implements ProviderInterface
      *
      * @return \MaxMind\Db\Reader\Metadata object for the database
      */
-    public function metadata(): \MaxMind\Db\Reader\Metadata
+    public function metadata()
     {
         return $this->dbReader->metadata();
     }
@@ -266,7 +280,7 @@ class Reader implements ProviderInterface
     /**
      * Closes the GeoIP2 database and returns the resources to the system.
      */
-    public function close(): void
+    public function close()
     {
         $this->dbReader->close();
     }

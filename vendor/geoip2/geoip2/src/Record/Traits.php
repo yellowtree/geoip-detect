@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace GeoIp2\Record;
 
 use GeoIp2\Util;
@@ -58,9 +56,6 @@ use GeoIp2\Util;
  * @property-read bool $isPublicProxy This is true if the IP address belongs to
  * a public proxy. This property is only available from GeoIP2 Precision
  * Insights.
- * @property-read bool $isResidentialProxy This is true if the IP address is
- * on a suspected anonymizing network and belongs to a residential ISP. This
- * property is only available from GeoIP2 Precision Insights.
  * @property-read bool $isSatelliteProvider *Deprecated.* Due to the
  * increased coverage by mobile carriers, very few satellite providers now
  * serve multiple countries. As a result, the output does not provide
@@ -125,7 +120,6 @@ class Traits extends AbstractRecord
         'isLegitimateProxy',
         'isp',
         'isPublicProxy',
-        'isResidentialProxy',
         'isSatelliteProvider',
         'isTorExitNode',
         'network',
@@ -135,7 +129,7 @@ class Traits extends AbstractRecord
         'userType',
     ];
 
-    public function __construct(?array $record)
+    public function __construct($record)
     {
         if (!isset($record['network']) && isset($record['ip_address']) && isset($record['prefix_len'])) {
             $record['network'] = Util::cidr($record['ip_address'], $record['prefix_len']);

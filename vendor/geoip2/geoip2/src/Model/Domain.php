@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace GeoIp2\Model;
 
 use GeoIp2\Util;
@@ -26,8 +24,10 @@ class Domain extends AbstractModel
 
     /**
      * @ignore
+     *
+     * @param mixed $raw
      */
-    public function __construct(array $raw)
+    public function __construct($raw)
     {
         parent::__construct($raw);
 

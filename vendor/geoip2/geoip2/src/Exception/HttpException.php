@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace GeoIp2\Exception;
 
 /**
@@ -15,9 +13,9 @@ class HttpException extends GeoIp2Exception
     public $uri;
 
     public function __construct(
-        string $message,
-        int $httpStatus,
-        string $uri,
+        $message,
+        $httpStatus,
+        $uri,
         \Exception $previous = null
     ) {
         $this->uri = $uri;

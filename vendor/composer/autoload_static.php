@@ -259,6 +259,7 @@ class ComposerStaticInit18fc54d84025f2e5d2b2ac2dd487f107
         'Symfony\\Component\\PropertyAccess\\PropertyPathInterface' => __DIR__ . '/..' . '/symfony/property-access/PropertyPathInterface.php',
         'Symfony\\Component\\PropertyAccess\\PropertyPathIterator' => __DIR__ . '/..' . '/symfony/property-access/PropertyPathIterator.php',
         'Symfony\\Component\\PropertyAccess\\PropertyPathIteratorInterface' => __DIR__ . '/..' . '/symfony/property-access/PropertyPathIteratorInterface.php',
+        'Symfony\\Component\\PropertyAccess\\StringUtil' => __DIR__ . '/..' . '/symfony/property-access/StringUtil.php',
         'Symfony\\Component\\PropertyInfo\\DependencyInjection\\PropertyInfoConstructorPass' => __DIR__ . '/..' . '/symfony/property-info/DependencyInjection/PropertyInfoConstructorPass.php',
         'Symfony\\Component\\PropertyInfo\\DependencyInjection\\PropertyInfoPass' => __DIR__ . '/..' . '/symfony/property-info/DependencyInjection/PropertyInfoPass.php',
         'Symfony\\Component\\PropertyInfo\\Extractor\\ConstructorArgumentTypeExtractorInterface' => __DIR__ . '/..' . '/symfony/property-info/Extractor/ConstructorArgumentTypeExtractorInterface.php',

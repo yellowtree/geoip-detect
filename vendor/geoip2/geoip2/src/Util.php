@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace GeoIp2;
 
 class Util
@@ -12,8 +10,11 @@ class Util
      *
      * @internal
      * @ignore
+     *
+     * @param mixed $ipAddress
+     * @param mixed $prefixLen
      */
-    public static function cidr(string $ipAddress, int $prefixLen): string
+    public static function cidr($ipAddress, $prefixLen)
     {
         $ipBytes = inet_pton($ipAddress);
         $networkBytes = str_repeat("\0", \strlen($ipBytes));
