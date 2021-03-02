@@ -117,6 +117,10 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 
 == Upgrade Notice ==
 
+= 4.0.1 =
+
+Hotfix - avoid fatal erros if another plugin also has the Maxmind library included
+
 = 4.0.0 =
 
 Improving Shortcodes (and Shortcodes for AJAX!)
@@ -158,6 +162,9 @@ The Plugin was renamed to Geolocation IP Detection in order to prevent trademark
 If you use Maxmind "Automatic download" then you need to upgrade to this plugin version in order to continue to receive database update. The Database license changed and you will need to register at their website and agree to the EULA.
 
 == Changelog ==
+
+= 4.0.1 =
+* Revert Maxmind library to 2.10.0 for now as the most current version seems to be incompatible with Wordfence and other plugins using the older version of the Maxmind library
 
 = 4.0.0 =
 This version has many changes regarding the Shortcodes API. It is a major version because it increases some system requirements (see below).
