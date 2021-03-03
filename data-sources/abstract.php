@@ -84,11 +84,29 @@ class ExtraInformation extends \GeoIp2\Record\AbstractRecord {
 	protected $validAttributes = array('source', 'cached', 'error', 'original', 'flag', 'tel', 'countryIsoCode3', 'currencyCode');
 }
 
-interface ReaderInterface extends \GeoIp2\ProviderInterface {
+/**
+ * This interface is basically extending \GeoIp2\ProviderInterface ,
+ * but due to signature changes in the Maxmind lib, extending it would not be wise (as it breaks as soon as other plugins are using a different version of the Maxmind lib)
+ */
+interface ReaderInterface {
 	/**
      * Closes the database and returns the resources to the system.
      */
 	public function close();
+
+	/**
+     * @param string $ipAddress an IPv4 or IPv6 address to lookup
+     *
+     * @return \GeoIp2\Model\Country a Country model for the requested IP address
+     */
+    public function country($ipAddress);
+
+    /**
+     * @param string $ipAddress an IPv4 or IPv6 address to lookup
+     *
+     * @return \GeoIp2\Model\City a City model for the requested IP address
+     */
+	public function city($ipAddress);
 }
 	
 abstract class AbstractReader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {

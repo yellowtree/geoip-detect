@@ -162,6 +162,9 @@ function geoip_detect2_get_info_from_current_ip($locales = null, $options = arra
  * @since 2.0.0
  * @since 2.5.0 new parameter $options
  * @since 2.7.0 Parameter $options['source'] has been introduced
+ * @since 4.1.0 This does not return a Maxmind Reader anymore, as the plugin readers have been decoupled from the Maxmind Readers (API incompability). But the method names stay the same.
+ * 
+ * @return \YellowTree\GeoipDetect\DataSources\ReaderInterface $reader
  */
 function geoip_detect2_get_reader($locales = null, $options = array()) {
 	_geoip_maybe_disable_pagecache();
