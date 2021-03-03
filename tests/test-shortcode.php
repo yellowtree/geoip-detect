@@ -218,7 +218,13 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	public function testShortcodeHideIf($result, $txt) {
 		// Negate the tests
 		$txt = str_replace('geoip_detect2_show_if', 'geoip_detect2_hide_if', $txt);
-		$result = $result ? '' : 'yes';
+		if ($result === 'hu') {
+			$result = 'ha';
+		} elseif ($result === 'ha') {
+			$result = 'hu';
+		} else {
+			$result = $result ? '' : 'yes';
+		}
 
 		$return = do_shortcode($txt);
 		$this->assertSame($result, $return, "Shortcode failed: " . $txt);
@@ -247,7 +253,12 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 				$parsed = geoip_detect2_shortcode_parse_conditions_from_attributes($this->last_atts);
 				$opt = _geoip_detect2_shortcode_options($this->last_atts);
 				
-				$data_set[] = [$i, $input, !!$expected, $parsed, $opt ];
+				if ($expected === 'ha') {
+					$expected = false;
+				} else {
+					$expected = !!$expected;
+				}
+				$data_set[] = [$i, $input, $expected, $parsed, $opt ];
 
 			}
 			$i++;
@@ -307,6 +318,11 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		/* #33 */		array('',    '[geoip_detect2_show_if region="BY" operator="or" country="France"]yes[/geoip_detect2_show_if]' ),
 		/* #34 */		array('yes', '[geoip_detect2_show_if region="BY" operator="or" country="Germany"]yes[/geoip_detect2_show_if]' ),
 		/* #35 */		array('yes', '[geoip_detect2_show_if region="BY" operator="or" country="France" property="extra.countryIsoCode3" property_value="DEU"]yes[/geoip_detect2_show_if]' ),
+
+		// Else
+		/* #36 */		array('hu', '[geoip_detect2_show_if country="DE"]hu[else]ha[/geoip_detect2_show_if]' ),
+		/* #37 */		array('ha',  '[geoip_detect2_show_if country="EN"]hu[else]ha[/geoip_detect2_show_if]' ),
+
 
 		);
 	}

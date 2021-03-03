@@ -873,5 +873,51 @@
             "default": "",
             "property": "extra.countryIsoCode3"
         }
+    ],
+    [
+        36,
+        "[geoip_detect2_test_show_if country=\"DE\"]hu[else]ha[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "de"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        37,
+        "[geoip_detect2_test_show_if country=\"EN\"]hu[else]ha[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "en"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
     ]
 ]
