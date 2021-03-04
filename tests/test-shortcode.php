@@ -352,6 +352,26 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertContains('js-geoip-detect-flag', do_shortcode('[geoip_detect2_current_flag height="10% !important", width="30" class="extra-flag-class" squared="0" default="it" ajax="1"]'));
 	}
 
+	/**
+	 * @dataProvider dataShortcodeAjaxElse
+	 */
+	function testShortcodeAjaxElse($expected, $shortcode) {
+		$output = do_shortcode($shortcode);
+
+		$this->assertContains('hu', $output);
+		$this->assertContains('ha', $output);
+		$this->assertSame(2, substr_count($output, '<span'));
+		$this->assertContains('&quot;not&quot;:0', $output);
+		$this->assertContains('&quot;not&quot;:1', $output);
+	}
+
+	function dataShortcodeAjaxElse() {
+		return [
+			[ 'hu', '[geoip_detect2_show_if country="DE" ajax="1"]hu[else]ha[/geoip_detect2_show_if]' ],
+			[ 'hu', '[geoip_detect2_hide_if country="DE" ajax="1"]ha[else]hu[/geoip_detect2_show_if]' ],
+		];
+	}
+
 }
 
 /* Data of Test IP:

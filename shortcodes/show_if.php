@@ -75,8 +75,8 @@ function geoip_detect2_shortcode_show_if($attr, $content = '', $shortcodeName = 
 	
 	$attr = (array) $attr;
 
-	$else_shortcode = '[else]';
-	$parts = explode($else_shortcode, $content, 2);
+	$else_seperator = apply_filters('geoip_detect2_shortcode_show_if_else_seperator', '[else]');
+	$parts = explode($else_seperator, $content, 2);
 	$content_if = $parts[0];
 	$content_else = isset($parts[1]) ? $parts[1] : '';
 	
@@ -84,11 +84,15 @@ function geoip_detect2_shortcode_show_if($attr, $content = '', $shortcodeName = 
 
 	if (geoip_detect2_shortcode_is_ajax_mode($attr)) {
 		geoip_detect2_enqueue_javascript('shortcode');
+		
 		$shortcode_options['parsed'] = $parsed;
 		$span_attributes = [ 'class' => 'js-geoip-detect-show-if', 'style' => 'display: none !important' ];
+		
 		$span_if = _geoip_detect2_create_placeholder('span', $span_attributes, $shortcode_options, do_shortcode($content_if));
-		$shortcode_options['parsed']['not'] = ($shortcode_options['parsed']['not'] === 1 ? 1 : 0); 
+
+		$shortcode_options['parsed']['not'] = ($shortcode_options['parsed']['not'] === 1 ? 0 : 1); // negate
 		$span_else = _geoip_detect2_create_placeholder('span', $span_attributes, $shortcode_options, do_shortcode($content_else));
+		
 		return $span_if . $span_else;
 	} else {
 		$info = geoip_detect2_get_info_from_current_ip($shortcode_options['lang'], $options);
