@@ -1,0 +1,6 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "ignoreDeps": ["geoip2/geoip2", "maxmind-db/reader", "maxmind/web-service-common"]
+}
