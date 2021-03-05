@@ -62,6 +62,9 @@
  * Show TEXT if the visitor is from Berlin OR France (since 4.0.0)
  * 		`[geoip_detect2_show_if city="Berlin" operator="or" country="France"]TEXT[/geoip_detect2_show_if]`
  *
+ * Show TEXT if the visitor is from Berlin, otherwise show OTHER (since 4.1.0)
+ * 		`[geoip_detect2_show_if city="Berlin"]TEXT[else]OTHER[/geoip_detect2_show_if]`
+ *
  * LIMITATIONS:
  * - You cannot nest several of these shortcodes within one another. Instead, seperate them into several blocks of shortcodes.
  * - City names can be ambigous. For example, [geoip_detect2_show_if country="US,FR" not_city="Paris"] will exclude both Paris in France and Paris in Texas, US. Instead, you can find out the geoname_id or seperate the shortcode to make it more specific.

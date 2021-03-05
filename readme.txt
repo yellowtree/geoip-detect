@@ -163,8 +163,11 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 == Changelog ==
 
+= 4.1.0 =
+* NEW: An `else` shortcode for `geoip_detect2_show_if` and `geoip_detect2_hide_if`: `[geoip_detect2_show_if city="Berlin"]Hallo Berlin![else]Not in Berlin[/geoip_detect2_show_if]`
+
 = 4.0.1 =
-* Revert Maxmind library to 2.10.0 for now as the most current version seems to be incompatible with Wordfence and other plugins using the older version of the Maxmind library
+* FIX: Revert Maxmind library to 2.10.0 for now as the most current version seems to be incompatible with Wordfence and other plugins using the older version of the Maxmind library
 
 = 4.0.0 =
 This version has many changes regarding the Shortcodes API. It is a major version because it increases some system requirements (see below).
