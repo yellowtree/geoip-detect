@@ -169,6 +169,7 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 = 4.0.2 =
 * FIX: Revert more Maxmind libraries to fix incompatibility with WooCommerce
+* FIX: The JS for AJAX wasn't working for Safari browsers
 
 = 4.0.1 =
 * FIX: Revert Maxmind library to 2.10.0 for now as the most current version seems to be incompatible with Wordfence and other plugins using the older version of the Maxmind library
