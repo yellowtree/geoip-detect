@@ -30,8 +30,13 @@ const _get_localized = function(ret, locales) {
 }
 
 export const camelToUnderscore = function(key) {
-    // Tolerate PascalCase. But _key stays _key [ (?<=[a-z0-9]) means Look-ahead]
-    return key.replace(/(?<=[a-z0-9])([A-Z])/g, "_$1").toLowerCase();
+    key = key.split('.').map((x) => {
+        x = x[0].toLowerCase() + x.slice(1)
+        x = x.replace(/([A-Z])/g, "_$1").toLowerCase();
+        return x;
+    }).join('.');
+
+    return key;
 }
 
 class Record {
