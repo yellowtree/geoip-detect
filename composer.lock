@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aa850e1713998f685089a2c6c723856a",
+    "content-hash": "43cdc359395ba142c745e032b2f10112",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1642,15 +1642,15 @@
         },
         {
             "name": "roots/wordpress",
-            "version": "5.6",
+            "version": "5.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPress/WordPress.git",
-                "reference": "5.6"
+                "reference": "5.6.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPress/WordPress/zipball/5.6"
+                "url": "https://api.github.com/repos/WordPress/WordPress/zipball/5.6.2"
             },
             "require": {
                 "php": ">=5.3.2",
@@ -1684,7 +1684,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2020-12-08T22:15:57+00:00"
+            "time": "2021-02-22T15:12:53+00:00"
         },
         {
             "name": "roots/wordpress-core-installer",
