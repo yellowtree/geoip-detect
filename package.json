@@ -24,7 +24,7 @@
     "@babel/preset-env": "7.12.17",
     "babel-jest": "26.6.3",
     "babel-plugin-transform-class-properties": "6.24.1",
-    "eslint": "7.20.0",
+    "eslint": "7.21.0",
     "jest": "26.6.3",
     "lodash-cli": "4.17.5",
     "parcel-bundler": "1.12.4",
