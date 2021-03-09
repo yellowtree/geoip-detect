@@ -3,8 +3,7 @@ import _ from '../lodash.custom';
 
 
 const _get_localized = function(ret, locales) {
-    if (typeof(ret) === 'object') {
-        
+    if (typeof(ret) === 'object' && ret !== null) {
         if (typeof(locales) === 'string') {
             locales = [ locales ];
         }
@@ -25,13 +24,16 @@ const _get_localized = function(ret, locales) {
         if (ret.name) {
             return ret.name;
         }
+
+        return '';
     }
     return ret;
 }
 
 export const camelToUnderscore = function(key) {
     key = key.split('.').map((x) => {
-        x = x[0].toLowerCase() + x.slice(1)
+        if (typeof (x) !== 'string' || typeof (x[0]) !== 'string') return '';
+        x = x[0].toLowerCase() + x.slice(1);
         x = x.replace(/([A-Z])/g, "_$1").toLowerCase();
         return x;
     }).join('.');
@@ -44,7 +46,7 @@ class Record {
     default_locales = [];
 
     constructor(data, default_locales) {
-        this.data = data || {};
+        this.data = data || { is_empty: true };
         this.default_locales = default_locales || ['en']; 
     }
 
@@ -63,17 +65,19 @@ class Record {
     }
 
     _lookup_with_locales(prop, locales, default_value = '') {
-        prop = camelToUnderscore(prop);
-    
         // Treat pseudo-property 'name' as if it never existed
         if (prop.substr(-5) === '.name') {
             prop = prop.substr(0, prop.length - 5);
         }
-    
-        let ret = _.get(this.data, prop, default_value);
-    
+
+        let ret = this.get_raw(prop);
+        
         // Localize property, if possible
         ret = _get_localized(ret, locales);
+        
+        if (ret === null || ret === '') {
+            ret = default_value;
+        }
 
         return ret;
     }
@@ -103,13 +107,21 @@ class Record {
         }
         return country;
     }
+
+    /**
+     * Check if there is information available for this IP
+     * @returns 
+     */
+    is_empty() {
+        return this.get('is_empty', false);
+    }
     
     /**
      * Get error message, if any
      * @return string Error Message
      */
     error() {
-        return _.get(this.data, 'extra.error', '');
+        return this.get_raw('extra.error') || '';
     }
 
     serialize() {
