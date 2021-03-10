@@ -62,26 +62,42 @@
  * Show TEXT if the visitor is from Berlin OR France (since 4.0.0)
  * 		`[geoip_detect2_show_if city="Berlin" operator="or" country="France"]TEXT[/geoip_detect2_show_if]`
  *
+ * Show TEXT if the visitor is from Berlin, otherwise show OTHER (since 4.1.0)
+ * 		`[geoip_detect2_show_if city="Berlin"]TEXT[else]OTHER[/geoip_detect2_show_if]`
+ *
  * LIMITATIONS:
  * - You cannot nest several of these shortcodes within one another. Instead, seperate them into several blocks of shortcodes.
  * - City names can be ambigous. For example, [geoip_detect2_show_if country="US,FR" not_city="Paris"] will exclude both Paris in France and Paris in Texas, US. Instead, you can find out the geoname_id or seperate the shortcode to make it more specific.
  * - Conditions can either be combined by AND or OR. It is not possible to write this condition within a shortcode: (city = Berlin AND country = Germany) OR country = France
  */
-function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName = '') {
+function geoip_detect2_shortcode_show_if($attr, $content = '', $shortcodeName = '') {
 	$shortcode_options = _geoip_detect2_shortcode_options($attr);
 	$options = array('skipCache' => $shortcode_options['skip_cache']);
 	
 	$showContentIfMatch = ($shortcodeName === 'geoip_detect2_show_if');
 	
 	$attr = (array) $attr;
+
+	$else_seperator = apply_filters('geoip_detect2_shortcode_show_if_else_seperator', '[else]');
+	$parts = explode($else_seperator, $content, 2);
+	$content_if = $parts[0];
+	$content_else = isset($parts[1]) ? $parts[1] : '';
 	
 	$parsed = geoip_detect2_shortcode_parse_conditions_from_attributes($attr, !$showContentIfMatch);
 
 	if (geoip_detect2_shortcode_is_ajax_mode($attr)) {
 		geoip_detect2_enqueue_javascript('shortcode');
+		
 		$shortcode_options['parsed'] = $parsed;
-		$innerHTML= do_shortcode($content);
-		return _geoip_detect2_create_placeholder('span', [ 'class' => 'js-geoip-detect-show-if', 'style' => 'display: none !important' ], $shortcode_options, $innerHTML);
+		$span_attributes = [ 'class' => 'js-geoip-detect-show-if', 'style' => 'display: none !important' ];
+		$span_tagname = 'span'; // TODO: Should be 'div' under certain cirumstances, to test
+		
+		$span_if = _geoip_detect2_create_placeholder($span_tagname, $span_attributes, $shortcode_options, do_shortcode($content_if));
+
+		$shortcode_options['parsed']['not'] = ($shortcode_options['parsed']['not'] === 1 ? 0 : 1); // negate
+		$span_else = _geoip_detect2_create_placeholder($span_tagname, $span_attributes, $shortcode_options, do_shortcode($content_else));
+		
+		return $span_if . $span_else;
 	} else {
 		$info = geoip_detect2_get_info_from_current_ip($shortcode_options['lang'], $options);
 
@@ -97,11 +113,12 @@ function geoip_detect2_shortcode_show_if($attr, $content = null, $shortcodeName 
 		$info = apply_filters('geoip_detect2_shortcode_show_if_ip_info_override', $info, $attr, $showContentIfMatch);
 
 		$evaluated = geoip_detect2_shortcode_evaluate_conditions($parsed, $info);
-		// All Criteria Passed?
+
 		if ($evaluated) {
-			return do_shortcode($content);
+			return do_shortcode($content_if);
+		} else {
+			return do_shortcode($content_else);
 		}
-		return '';
 	}
 }
 add_shortcode('geoip_detect2_show_if', 'geoip_detect2_shortcode_show_if');
@@ -130,9 +147,7 @@ function geoip_detect2_shortcode_parse_conditions_from_attributes(array $attr, b
 	$parsed = [
 		'op' => ( !empty($attr['operator']) && strtolower($attr['operator']) === 'or' ) ? 'or' : 'and',
 	];
-	if ($hide_if) {
-		$parsed['not'] = 1;
-	}
+	$parsed['not'] = $hide_if ? 1 : 0;
 
 	$conditions = [];
 

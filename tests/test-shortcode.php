@@ -218,7 +218,13 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	public function testShortcodeHideIf($result, $txt) {
 		// Negate the tests
 		$txt = str_replace('geoip_detect2_show_if', 'geoip_detect2_hide_if', $txt);
-		$result = $result ? '' : 'yes';
+		if ($result === 'hu') {
+			$result = 'ha';
+		} elseif ($result === 'ha') {
+			$result = 'hu';
+		} else {
+			$result = $result ? '' : 'yes';
+		}
 
 		$return = do_shortcode($txt);
 		$this->assertSame($result, $return, "Shortcode failed: " . $txt);
@@ -247,7 +253,12 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 				$parsed = geoip_detect2_shortcode_parse_conditions_from_attributes($this->last_atts);
 				$opt = _geoip_detect2_shortcode_options($this->last_atts);
 				
-				$data_set[] = [$i, $input, !!$expected, $parsed, $opt ];
+				if ($expected === 'ha') {
+					$expected = false;
+				} else {
+					$expected = !!$expected;
+				}
+				$data_set[] = [$i, $input, $expected, $parsed, $opt ];
 
 			}
 			$i++;
@@ -310,6 +321,11 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		/* #36 */		array('yes', '[geoip_detect2_show_if region="BY" operator="or" country="Germany"]yes[/geoip_detect2_show_if]' ),
 		/* #37 */		array('yes', '[geoip_detect2_show_if region="BY" operator="or" country="France" property="extra.countryIsoCode3" property_value="DEU"]yes[/geoip_detect2_show_if]' ),
 
+		// Else
+		/* #36 */		array('hu', '[geoip_detect2_show_if country="DE"]hu[else]ha[/geoip_detect2_show_if]' ),
+		/* #37 */		array('ha',  '[geoip_detect2_show_if country="EN"]hu[else]ha[/geoip_detect2_show_if]' ),
+
+
 		);
 	}
 
@@ -336,6 +352,26 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		
 		$this->assertContains('it', do_shortcode('[geoip_detect2_current_flag height="10% !important", width="30" class="extra-flag-class" squared="0" default="it" ajax="1"]'));
 		$this->assertContains('js-geoip-detect-flag', do_shortcode('[geoip_detect2_current_flag height="10% !important", width="30" class="extra-flag-class" squared="0" default="it" ajax="1"]'));
+	}
+
+	/**
+	 * @dataProvider dataShortcodeAjaxElse
+	 */
+	function testShortcodeAjaxElse($expected, $shortcode) {
+		$output = do_shortcode($shortcode);
+
+		$this->assertContains('hu', $output);
+		$this->assertContains('ha', $output);
+		$this->assertSame(2, substr_count($output, '<span'));
+		$this->assertContains('&quot;not&quot;:0', $output);
+		$this->assertContains('&quot;not&quot;:1', $output);
+	}
+
+	function dataShortcodeAjaxElse() {
+		return [
+			[ 'hu', '[geoip_detect2_show_if country="DE" ajax="1"]hu[else]ha[/geoip_detect2_show_if]' ],
+			[ 'hu', '[geoip_detect2_hide_if country="DE" ajax="1"]ha[else]hu[/geoip_detect2_show_if]' ],
+		];
 	}
 
 }
