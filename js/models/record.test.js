@@ -43,15 +43,22 @@ test('localisation variants', () => {
     expect(defaultRecord.get_with_locales('country', ['de', 'en'])).toBe('Deutschland');
     expect(defaultRecord.get_with_locales('country.names.de', ['de', 'en'])).toBe('Deutschland');
     expect(defaultRecord.get_with_locales('country.names.en', ['de', 'en'])).toBe('Germany');
-
+    
     expect(defaultRecord.get_with_locales('most_specific_subdivision', ['de', 'en'])).toBe('Hessen');
-
+    
     const otherRecord = new Record({country: {name: 'Deutschland'}});
     expect(otherRecord.get_with_locales('country.name', ['de', 'en'])).toBe('Deutschland');
-
+    
     expect(defaultRecord.get_with_locales('extra', ['de', 'en'])).toBe('');
     expect(defaultRecord.get_with_locales('xyz.name', ['de', 'en'])).toBe('');
     expect(otherRecord.get_with_locales('city.name', ['de', 'en'])).toBe('');
+
+    expect(defaultRecord.get_with_locales('country.name', 'de')).toBe('Deutschland');
+    expect(defaultRecord.get_with_locales('country.name', [])).toBe('Germany');
+    expect(defaultRecord.get_with_locales('country.name', null)).toBe('Germany');
+    expect(defaultRecord.get_with_locales('country.name', undefined)).toBe('Germany');
+    expect(defaultRecord.get_with_locales('country.name')).toBe('Germany');
+    expect(defaultRecord.get('country.name')).toBe('Germany');
 });
 
 test('localisation', () => {

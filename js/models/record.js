@@ -4,14 +4,7 @@ import _ from '../lodash.custom';
 
 const _get_localized = function(ret, locales) {
     if (typeof(ret) === 'object' && ret !== null) {
-        if (typeof(locales) === 'string') {
-            locales = [ locales ];
-        }
-        if (typeof(locales) !== 'object') {
-            locales = [];
-        }
-
-        if (typeof(ret.names) === 'object') {
+        if (typeof (ret.names) === 'object' && typeof (locales) === 'object') {
             for (let i = 0 ; i < locales.length ; i++) {
                 let locale = locales[i];
 
@@ -47,7 +40,9 @@ class Record {
 
     constructor(data, default_locales) {
         this.data = data || { is_empty: true };
-        this.default_locales = default_locales || ['en']; 
+        
+        this.default_locales = ['en']; 
+        this.default_locales = this._process_locales(default_locales);
     }
 
     get(prop, default_value) {
@@ -65,6 +60,8 @@ class Record {
     }
 
     _lookup_with_locales(prop, locales, default_value = '') {
+        locales = this._process_locales(locales);
+
         // Treat pseudo-property 'name' as if it never existed
         if (prop.substr(-5) === '.name') {
             prop = prop.substr(0, prop.length - 5);
@@ -82,11 +79,17 @@ class Record {
         return ret;
     }
     
-    get_with_locales(prop, locales, default_value) {
+    _process_locales(locales) {
+        if (typeof(locales) === 'string') {
+            locales = [ locales ];
+        }
         if (!Array.isArray(locales) || locales.length === 0) {
             locales = this.default_locales;
         }
+        return locales;
+    }
 
+    get_with_locales(prop, locales, default_value) {
         const ret = this._lookup_with_locales(prop, locales, default_value);
 
         if (typeof(ret) === 'object') {
@@ -110,7 +113,7 @@ class Record {
 
     /**
      * Check if there is information available for this IP
-     * @returns 
+     * @returns boolean 
      */
     is_empty() {
         return this.get('is_empty', false);
@@ -124,6 +127,10 @@ class Record {
         return this.get_raw('extra.error') || '';
     }
 
+    /**
+     * Get the raw data of this object
+     * @returns object
+     */
     serialize() {
         return this.data;
     }
