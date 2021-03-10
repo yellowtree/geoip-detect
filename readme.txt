@@ -117,10 +117,6 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 
 == Upgrade Notice ==
 
-= 4.0.2 =
-
-Hotfix - avoid fatal erros if another plugin also has the Maxmind library included
-
 = 4.0.1 =
 
 Hotfix - avoid fatal erros if another plugin also has the Maxmind library included
@@ -172,7 +168,7 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 * NEW: An `else` shortcode for `geoip_detect2_show_if` and `geoip_detect2_hide_if`: `[geoip_detect2_show_if city="Berlin"]Hallo Berlin![else]Not in Berlin[/geoip_detect2_show_if]`
 * FIX: Revert more Maxmind libraries to fix incompatibility with WooCommerce
 * FIX: The JS for AJAX wasn't working for Safari browsers
-* FIX: Improving some edge cases of Record.get_with_locales() to be consistent with non-AJAX mode
+* FIX: Improving some edge cases of `Record.get_with_locales()` and other methods of `Record` to be consistent with non-AJAX mode
 
 = 4.0.1 =
 * FIX: Revert Maxmind library to 2.10.0 for now as the most current version seems to be incompatible with Wordfence and other plugins using the older version of the Maxmind library
