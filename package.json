@@ -11,7 +11,7 @@
     "build-lodash": "lodash include=get,intersection -o js/lodash.custom.js",
     "start": "rm -rf js/dist && parcel parcel.urls --out-dir js/dist --public-url .",
     "build": "rm -rf js/dist && parcel build parcel.urls --out-dir js/dist --public-url .",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "private": false,
   "dependencies": {

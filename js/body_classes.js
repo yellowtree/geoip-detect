@@ -1,6 +1,15 @@
 import { domReady } from './lib/html';
 import { get_info } from './lookup';
 
+export function calc_classes(record) {
+    return {
+        country: record.get('country.iso_code'),
+        'country-is-in-european-union': record.get('country.is_in_european_union', false),
+        continent: record.get('continent.code'),
+        province: record.get('most_specific_subdivision.iso_code'),
+    };
+}
+
 export async function add_body_classes() {
     const record = await get_info();
 
@@ -9,12 +18,7 @@ export async function add_body_classes() {
         return;
     }
 
-    const css_classes = {
-        country: record.get('country.iso_code'),
-        'country-is-in-european-union': record.has_property('country.is_in_european_union') && record.get('country.is_in_european_union'),
-        continent: record.get('continent.code'),
-        province: record.get('most_specific_subdivision.iso_code'),
-    };
+    const css_classes = calc_classes(record);
 
     await domReady;
 

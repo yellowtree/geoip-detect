@@ -88,3 +88,14 @@ test('country iso', () => {
     expect(emptyRecord.get_country_iso()).toBe('');
     expect(errorRecord.get_country_iso()).toBe('');
 });
+
+test('has_property', () => {
+    expect(defaultRecord.has_property('country')).toBe(true);
+    expect(emptyRecord.has_property('country')).toBe(false);
+    expect(defaultRecord.has_property('xyz')).toBe(false);
+    expect(defaultRecord.has_property('is_empty')).toBe(true);
+    expect(emptyRecord.has_property('is_empty')).toBe(true);
+
+    expect(defaultRecord.has_property('country.name')).toBe(true);
+    expect(emptyRecord.has_property('country')).toBe(false);
+});

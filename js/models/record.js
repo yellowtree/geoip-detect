@@ -25,8 +25,10 @@ const _get_localized = function(ret, locales) {
 
 export const camelToUnderscore = function(key) {
     key = key.split('.').map((x) => {
-        if (typeof (x) !== 'string' || typeof (x[0]) !== 'string') return '';
-        x = x[0].toLowerCase() + x.slice(1);
+        if (typeof (x) !== 'string' || typeof (x[0]) !== 'string') {
+            return '';
+        }
+        x = x[0].toLowerCase() + x.slice(1); // to allow "MostSpecificSubdivision"
         x = x.replace(/([A-Z])/g, "_$1").toLowerCase();
         return x;
     }).join('.');
@@ -55,8 +57,8 @@ class Record {
     }
     
     has_property(prop) {
-        const ret = this._lookup_with_locales(prop, this.default_locales)
-        return typeof(ret) !== 'undefined';
+        const ret = this._lookup_with_locales(prop, this.default_locales, null)
+        return ret !== null;
     }
 
     _lookup_with_locales(prop, locales, default_value = '') {

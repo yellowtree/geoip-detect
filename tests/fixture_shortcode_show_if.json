@@ -691,7 +691,7 @@
     ],
     [
         30,
-        "[geoip_detect2_test_show_if property=\"isEmpty\" property_value=\"yes\"]yes[\/geoip_detect2_test_show_if]",
+        "[geoip_detect2_test_show_if property=\"isEmpty\" property_value=\"YES\"]yes[\/geoip_detect2_test_show_if]",
         false,
         {
             "op": "and",
