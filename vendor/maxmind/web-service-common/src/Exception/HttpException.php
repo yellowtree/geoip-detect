@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace MaxMind\Exception;
 
 /**
@@ -21,21 +19,21 @@ class HttpException extends WebServiceException
      * @param \Exception $previous   the previous exception, if any
      */
     public function __construct(
-        string $message,
-        int $httpStatus,
-        string $uri,
+        $message,
+        $httpStatus,
+        $uri,
         \Exception $previous = null
     ) {
         $this->uri = $uri;
         parent::__construct($message, $httpStatus, $previous);
     }
 
-    public function getUri(): string
+    public function getUri()
     {
         return $this->uri;
     }
 
-    public function getStatusCode(): int
+    public function getStatusCode()
     {
         return $this->getCode();
     }

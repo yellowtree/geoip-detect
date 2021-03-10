@@ -160,7 +160,6 @@ return array(
     'Symfony\\Component\\PropertyAccess\\PropertyPathInterface' => $vendorDir . '/symfony/property-access/PropertyPathInterface.php',
     'Symfony\\Component\\PropertyAccess\\PropertyPathIterator' => $vendorDir . '/symfony/property-access/PropertyPathIterator.php',
     'Symfony\\Component\\PropertyAccess\\PropertyPathIteratorInterface' => $vendorDir . '/symfony/property-access/PropertyPathIteratorInterface.php',
-    'Symfony\\Component\\PropertyAccess\\StringUtil' => $vendorDir . '/symfony/property-access/StringUtil.php',
     'Symfony\\Component\\PropertyInfo\\DependencyInjection\\PropertyInfoConstructorPass' => $vendorDir . '/symfony/property-info/DependencyInjection/PropertyInfoConstructorPass.php',
     'Symfony\\Component\\PropertyInfo\\DependencyInjection\\PropertyInfoPass' => $vendorDir . '/symfony/property-info/DependencyInjection/PropertyInfoPass.php',
     'Symfony\\Component\\PropertyInfo\\Extractor\\ConstructorArgumentTypeExtractorInterface' => $vendorDir . '/symfony/property-info/Extractor/ConstructorArgumentTypeExtractorInterface.php',

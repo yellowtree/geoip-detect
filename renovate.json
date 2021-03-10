@@ -1,0 +1,42 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "ignoreDeps": ["geoip2/geoip2", "maxmind-db/reader", "maxmind/web-service-common"],
+  "packageRules": [
+    {
+      "matchPackagePatterns": [
+        "eslint",
+        "jest"
+      ],
+      "groupName": "testing (JS)",
+      "schedule": [
+        "before 2am on monday"
+      ],
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
+      "matchPackagePatterns": [
+        "phpunit",
+        "roots/wordpress"
+      ],
+      "groupName": "testing (PHP)",
+      "schedule": [
+        "before 2am on monday"
+      ],
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
+      "matchPackagePatterns": [
+        "symfony"
+      ],
+      "groupName": "symfony",
+      "schedule": [
+        "before 3am on the first day of the month"
+      ],
+      "automerge": false
+    }
+  ]
+}

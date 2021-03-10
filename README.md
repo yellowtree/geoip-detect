@@ -114,6 +114,10 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 1. Lookup page (under Tools > Geolocation Lookup)
 2. Options page (under Preferences > Geolocation IP Detection)
 
+= 4.0.2 =
+
+Hotfix - avoid fatal erros if another plugin also has the Maxmind library included
+
 = 4.0.1 =
 
 Hotfix - avoid fatal erros if another plugin also has the Maxmind library included
@@ -160,8 +164,13 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 ## Changelog ##
 
+= 4.0.2 =
+* FIX: Revert more Maxmind libraries to fix incompatibility with WooCommerce
+* FIX: The JS for AJAX wasn't working for Safari browsers
+* FIX: Improving some edge cases of Record.get_with_locales() to be consistent with non-AJAX mode
+
 = 4.0.1 =
-* Revert Maxmind library to 2.10.0 for now as the most current version seems to be incompatible with Wordfence and other plugins using the older version of the Maxmind library
+* FIX: Revert Maxmind library to 2.10.0 for now as the most current version seems to be incompatible with Wordfence and other plugins using the older version of the Maxmind library
 
 = 4.0.0 =
 This version has many changes regarding the Shortcodes API. It is a major version because it increases some system requirements (see below).

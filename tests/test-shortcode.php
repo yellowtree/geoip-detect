@@ -310,14 +310,16 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		/* #27 */		array('',    '[geoip_detect2_show_if property="isEmpty" property_value="1"]yes[/geoip_detect2_show_if]' ),
 		/* #28 */		array('yes', '[geoip_detect2_show_if property="isEmpty" property_value="false"]yes[/geoip_detect2_show_if]' ),
 		/* #29 */		array('yes', '[geoip_detect2_show_if property="isEmpty" property_value="no"]yes[/geoip_detect2_show_if]' ),
-		/* #30 */		array('',    '[geoip_detect2_show_if property="isEmpty" property_value="yes"]yes[/geoip_detect2_show_if]' ),
+		/* #30 */		array('',    '[geoip_detect2_show_if property="isEmpty" property_value="YES"]yes[/geoip_detect2_show_if]' ),
+		/* #31 */		// array('yes', '[geoip_detect2_show_if property="country.isInEuropeanUnion" property_value="true"]yes[/geoip_detect2_show_if]' ),
+		/* #32 */		// array('', '[geoip_detect2_show_if property="country.isInEuropeanUnion" property_value="0"]yes[/geoip_detect2_show_if]' ),
 
 		// Operator OR
-		/* #31 */		array('', '[geoip_detect2_show_if operator="or"]yes[/geoip_detect2_show_if]' ), /* weird input, weird output. But actually consistent. */
-		/* #32 */		array('yes', '[geoip_detect2_show_if region="HE" operator="or" country="France"]yes[/geoip_detect2_show_if]' ),
-		/* #33 */		array('',    '[geoip_detect2_show_if region="BY" operator="or" country="France"]yes[/geoip_detect2_show_if]' ),
-		/* #34 */		array('yes', '[geoip_detect2_show_if region="BY" operator="or" country="Germany"]yes[/geoip_detect2_show_if]' ),
-		/* #35 */		array('yes', '[geoip_detect2_show_if region="BY" operator="or" country="France" property="extra.countryIsoCode3" property_value="DEU"]yes[/geoip_detect2_show_if]' ),
+		/* #33 */		array('', '[geoip_detect2_show_if operator="or"]yes[/geoip_detect2_show_if]' ), /* weird input, weird output. But actually consistent. */
+		/* #34 */		array('yes', '[geoip_detect2_show_if region="HE" operator="or" country="France"]yes[/geoip_detect2_show_if]' ),
+		/* #35 */		array('',    '[geoip_detect2_show_if region="BY" operator="or" country="France"]yes[/geoip_detect2_show_if]' ),
+		/* #36 */		array('yes', '[geoip_detect2_show_if region="BY" operator="or" country="Germany"]yes[/geoip_detect2_show_if]' ),
+		/* #37 */		array('yes', '[geoip_detect2_show_if region="BY" operator="or" country="France" property="extra.countryIsoCode3" property_value="DEU"]yes[/geoip_detect2_show_if]' ),
 
 		// Else
 		/* #36 */		array('hu', '[geoip_detect2_show_if country="DE"]hu[else]ha[/geoip_detect2_show_if]' ),

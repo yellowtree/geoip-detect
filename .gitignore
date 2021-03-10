@@ -12,10 +12,24 @@ wp-cli.local.yml
 /.cache
 /.vscode
 *.code
+/coverage
 
 /lib/vendor
 
 /wordpress/
+
+/vendor/bin/phpunit
+/vendor/doctrine
+/vendor/myclabs
+/vendor/phar-io/
+/vendor/phpdocumentor/
+/vendor/phpspec/
+/vendor/phpunit/
+/vendor/roots/
+/vendor/sebastian/
+/vendor/theseer/
+/vendor/webmozart/
+/vendor/wp-phpunit/
 
 /vendor/geoip2/geoip2/examples/
 /vendor/symfony/http-foundation/*

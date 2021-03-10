@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace MaxMind\WebService\Http;
 
 use MaxMind\Exception\HttpException;
@@ -28,7 +26,11 @@ class CurlRequest implements Request
      */
     private $options;
 
-    public function __construct(string $url, array $options)
+    /**
+     * @param string $url
+     * @param array  $options
+     */
+    public function __construct($url, $options)
     {
         $this->url = $url;
         $this->options = $options;
@@ -36,9 +38,13 @@ class CurlRequest implements Request
     }
 
     /**
+     * @param string $body
+     *
      * @throws HttpException
+     *
+     * @return array
      */
-    public function post(string $body): array
+    public function post($body)
     {
         $curl = $this->createCurl();
 
@@ -48,7 +54,7 @@ class CurlRequest implements Request
         return $this->execute($curl);
     }
 
-    public function get(): array
+    public function get()
     {
         $curl = $this->createCurl();
 
@@ -106,8 +112,10 @@ class CurlRequest implements Request
      * @param resource $curl
      *
      * @throws HttpException
+     *
+     * @return array
      */
-    private function execute($curl): array
+    private function execute($curl)
     {
         $body = curl_exec($curl);
         if ($errno = curl_errno($curl)) {
@@ -123,14 +131,6 @@ class CurlRequest implements Request
         $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         $contentType = curl_getinfo($curl, CURLINFO_CONTENT_TYPE);
 
-        return [
-          $statusCode,
-          // The PHP docs say "Content-Type: of the requested document. NULL
-          // indicates server did not send valid Content-Type: header" for
-          // CURLINFO_CONTENT_TYPE. However, it will return FALSE if no header
-          // is set. To keep our types simple, we return null in this case.
-          ($contentType === false ? null : $contentType),
-          $body,
-        ];
+        return [$statusCode, $contentType, $body];
     }
 }
