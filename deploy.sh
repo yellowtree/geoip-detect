@@ -142,6 +142,7 @@ echo "Ignoring github specific files, tests and deployment script"
 svn propset svn:ignore "deploy.sh
 bin
 README.md
+CHANGELOG.md
 .git
 .gitignore
 tests
@@ -149,6 +150,10 @@ test
 phpunit.xml
 babel.config.js
 jest.config.js
+renovate.json
+parcel.urls
+composer.lock
+yarn.lock
 vendor/symfony/property-access/Tests
 vendor/phpspec
 vendor/phpunit
@@ -210,5 +215,5 @@ echo "Removing temporary directory $SVNPATH"
 rm -fr $SVNPATH/
 
 git checkout develop
-echo "*** FIN ***"
+echo "---- FIN ----"
 
