@@ -51,9 +51,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @param string $selected Which country to select by default (2-letter ISO code.) (optional. If not set, the country will be detected by client ip.) (This parameter does not work with AJAX mode.)
  * @param string $default 		Default Value that will be used if country cannot be detected (optional)
  * @param string $include_blank If this value contains 'true', a empty value will be prepended ('---', i.e. no country) (optional)
+ * @param string $list			Add only these countries (e.g. DE,US,FR)
  * @param bool   $flag          If a flag should be added before the country name (In Windows, there are no flags, ISO-Country codes instead. This is a design choice by Windows.)
  * @param bool   $tel           If the international code should be added after the country name
- * @param bool   $ajax          1: Execute this shortcode as AJAX | 0: Execute this shortcode on the server | Unset: Use the global settings (execute as AJAX if both 'AJAX' and 'Resolve shortcodes (via Ajax)' are enabled)
+ * @param int   $ajax          1: Execute this shortcode as AJAX | 0: Execute this shortcode on the server | Unset: Use the global settings (execute as AJAX if both 'AJAX' and 'Resolve shortcodes (via Ajax)' are enabled)
+ * @param bool   $save          1: 
  *
  * @return string The generated HTML
  */

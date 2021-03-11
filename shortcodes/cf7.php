@@ -36,6 +36,9 @@ function geoip_detect2_add_wpcf7_shortcodes() {
  * `[geoip_detect2_countries mycountry default:US]`
  * Visitor's country is preselected, but in case the country is unknown, use "United States"
  *
+ * `[geoip_detect2_countries mycountry ajax:1]`
+ * 1: Execute this shortcode as AJAX | 0: Execute this shortcode on the server | Unset: Use the global settings (execute as AJAX if both 'AJAX' and 'Resolve shortcodes (via Ajax)' are enabled)
+ *
  */
 function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 	$tag = new WPCF7_FormTag( $tag );
@@ -61,6 +64,9 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 		'default' => $tag->get_option('default', '', true),
 		'flag' => $tag->has_option('flag'),
 		'tel' => $tag->has_option('tel'),
+		'ajax' => $tag->has_option('ajax'),
+		'save' => $tag->has_option('save'),
+		'list' => $tag->has_option('list'),
 	);
 	
 	$html = geoip_detect2_shortcode_country_select($attr);
