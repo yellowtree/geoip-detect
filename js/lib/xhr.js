@@ -38,17 +38,29 @@ export const makeRequest = function (url, method = 'GET') {
     });
 };
 
-const jsonDecodeIfPossible = function(str) {
+export const jsonDecodeIfPossible = function(str) {
     try {
         return JSON.parse(str);
     } catch(e) {
-        return str;
+        return createErrorObject('Invalid JSON: ' + str);
     }
+}
+
+function createErrorObject(errorMsg) {
+    return {
+        is_empty: true,
+        extra: {
+            error: errorMsg
+        }
+    };
 }
 
 export const makeJSONRequest = async function(url, method = 'GET') {
     try {
         const request = await makeRequest(url, method);
+        if (!request.responseText || request.responseText === '0') {
+            return createErrorObject('Got an empty response from server. Did you enable AJAX in the options?');
+        }
         return jsonDecodeIfPossible(request.responseText);
     } catch(e) {
         return jsonDecodeIfPossible(e.request.responseText);

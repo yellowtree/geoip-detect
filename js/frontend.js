@@ -7,9 +7,9 @@ import { add_body_classes } from './body_classes';
 if (options.do_body_classes) {
     add_body_classes();
 }
-if (options.do_shortcodes) {
-    do_shortcodes();
-}
+
+// Always do shortcodes because there might be AJAX exceptions
+do_shortcodes();
 
 // Extend window object 
 window.geoip_detect.get_info = get_info;

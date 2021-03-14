@@ -14,7 +14,7 @@ export async function add_body_classes() {
     const record = await get_info();
 
     if (record.error()) {
-        console.error('Geodata Error (could not add CSS-classes to body): ' + record.error());
+        console.error('Geolocation IP Detection Error (could not add CSS-classes to body): ' + record.error());
         return;
     }
 

@@ -65,7 +65,7 @@ function geoip_detect_ajax_get_info_from_current_ip() {
 	$data = _geoip_detect_ajax_get_data($options);
 	
 	$data = apply_filters('geoip_detect2_ajax_record_data', $data, isset($data['traits']['ip_address']) ? $data['traits']['ip_address'] : '' ) ;
-	
+
 	wp_send_json($data, !empty($data['extra']['error']) ? 500 : 200 );
 }
 
@@ -130,10 +130,6 @@ function _geoip_detect_register_javascript() {
 	// if (!get_option('geoip-detect-ajax_enabled')) {
 	// 	return;
 	// }
-
-	if (!get_option('geoip-detect-ajax_enabled')) {
-		return;
-	}
 
 	$file_uri = _geoip_detect_parcel_get_dist_js('frontendJS');
 	if (!$file_uri) {

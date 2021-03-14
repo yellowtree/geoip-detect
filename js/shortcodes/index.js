@@ -9,7 +9,7 @@ export const do_shortcodes = async function do_shortcodes() {
 
     // These are called in parallel, as they are async functions
     action_on_elements('js-geoip-detect-shortcode',
-        'could not execute shortcode(s) [geoip_detect2]', do_shortcode_normal);
+        'could not execute shortcode(s) [geoip_detect2 ...]', do_shortcode_normal);
 
     action_on_elements('js-geoip-detect-flag',
         'could not configure the flag(s)', do_shortcode_flags);

@@ -263,10 +263,12 @@ function geoip_detect2_shortcode_evaluate_conditions(array $parsed, \GeoIp2\Mode
  * @see ./js/shortcodes.js : function geoip_detect2_shortcode_check_subcondition()
  */
 function geoip_detect2_shortcode_check_subcondition(string $expectedValues, array $actualValues) : bool {
-	if ($actualValues[0] === true) {
-		$actualValues = ['true', 'yes', 'y', '1'];
-	} else if ($actualValues[0] === false) {
-		$actualValues = ['false', 'no', 'n', '0', ''];
+	if (isset($actualValues[0])) {
+		if ($actualValues[0] === true) {
+			$actualValues = ['true', 'yes', 'y', '1'];
+		} else if ($actualValues[0] === false) {
+			$actualValues = ['false', 'no', 'n', '0', ''];
+		}
 	}
 
 	$expectedValues = explode(',', $expectedValues);

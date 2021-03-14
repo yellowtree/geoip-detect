@@ -19,6 +19,12 @@ function get_info_raw() {
         const url = options.ajaxurl + '?action=geoip_detect2_get_info_from_current_ip'
 
         ajaxPromise = makeJSONRequest(url);
+        
+        ajaxPromise.then((response) => {
+            if (response?.extra?.error) {
+                console.error('Geolocation IP Detection Error: Server returned an error: ' + response.extra.error);
+            }
+        })
     }
 
     return ajaxPromise;
@@ -32,6 +38,11 @@ async function get_info_cached() {
     if (options.cookie_name) {
         storedResponse = getLocalStorage(options.cookie_name)
         if (storedResponse && storedResponse.extra) {
+            if (storedResponse.extra.override === true) {
+                console.info('Geolocation IP Detection: Using cached response (override)');
+            } else {
+                console.info('Geolocation IP Detection: Using cached response');
+            }
             return storedResponse;
         }
     }
@@ -40,18 +51,25 @@ async function get_info_cached() {
     try {
         response = await get_info_raw();
     } catch (err) {
+        console.log('Uncaught ERROR ??');
         response = err.responseJSON || err;
     }
 
     // 3) Save info to localstorage cookie cache
     if (options.cookie_name) {
+
+        // Check if Override has been set now
         storedResponse = getLocalStorage(options.cookie_name)
         if (storedResponse?.extra?.override === true) {
+            console.info('Geolocation IP Detection: Using cached response (override)');
             return storedResponse;
         }
 
-        // This might be an error object - cache it anyway
-        setLocalStorage(options.cookie_name, response, options.cookie_duration_in_days * 24 * 60 * 60);
+        let cache_duration = options.cookie_duration_in_days * 24 * 60 * 60;
+        if (response?.extra?.error)
+            cache_duration = 60; // Cache errors only for 1 minute, then try again
+        
+        setLocalStorage(options.cookie_name, response, cache_duration);
     }
 
     return response;
@@ -73,7 +91,7 @@ export function set_override(record, duration_in_days) {
 
     duration_in_days = duration_in_days || options.cookie_duration_in_days;
     if (duration_in_days < 0) {
-        console.warn('set_override_data() did nothing: A negative duration doesn\'t make sense. If you want to remove the override, use remove_override() instead.');
+        console.warn('Geolocation IP Detection set_override_data() did nothing: A negative duration doesn\'t make sense. If you want to remove the override, use remove_override() instead.');
         return false;
     }
 
@@ -116,7 +134,7 @@ export async function get_info() {
     let response = await get_info_cached();
 
     if (typeof (response) !== 'object') {
-        console.error('Geoip-detect: Record should be an object, not a ' + typeof (response), response);
+        console.error('Geolocation IP Detection Error: Record should be an object, not a ' + typeof (response), response);
         response = { 'extra': { 'error': response || 'Network error, look at the original server response ...' } };
     }
 

@@ -165,6 +165,8 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 == Changelog ==
 
+= 4.2.0 =
+* FIX: AJAX improve error handling
 
 = 4.1.0 =
 * NEW: An `else` shortcode for `geoip_detect2_show_if` and `geoip_detect2_hide_if`: `[geoip_detect2_show_if city="Berlin"]You are in Berlin[else]You are not in Berlin[/geoip_detect2_show_if]`
