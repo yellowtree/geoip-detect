@@ -1,6 +1,5 @@
 import Record from './models/record';
 import { getLocalStorage, setLocalStorage } from './lib/localStorageAccess';
-import _ from './lodash.custom';
 import { makeJSONRequest } from './lib/xhr';
 
 

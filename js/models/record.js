@@ -1,5 +1,4 @@
-
-import _ from '../lodash.custom';
+import _get from 'just-safe-get';
 
 
 const _get_localized = function(ret, locales) {
@@ -53,7 +52,7 @@ class Record {
 
     get_raw(prop) {
         prop = camelToUnderscore(prop);
-        return _.get(this.data, prop, null);
+        return _get(this.data, prop, null);
     }
     
     has_property(prop) {
