@@ -1,1 +1,2 @@
 sphinx_rtd_theme
+pygments>=2.7.4 # not directly required, pinned by Snyk to avoid a vulnerability
