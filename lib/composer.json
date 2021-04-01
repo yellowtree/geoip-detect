@@ -2,7 +2,7 @@
     "name": "yellowtree/geoip-detect-lib",
     "type": "library",
     "require": {
-        "symfony/http-foundation": "^4.2"
+        "symfony/http-foundation": "^5.0"
     },
     "authors": [
         {
