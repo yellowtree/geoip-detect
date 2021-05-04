@@ -18,7 +18,6 @@
     },
     {
       "matchPackagePatterns": [
-        "phpunit",
         "roots/wordpress"
       ],
       "groupName": "testing (PHP)",
