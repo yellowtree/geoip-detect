@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99c8df50d6cf79edba748144b338f058",
+    "content-hash": "07cee4d754af0eb4ee7761913fd139bf",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2470,7 +2470,7 @@
         },
         {
             "name": "wp-phpunit/wp-phpunit",
-            "version": "5.7.0",
+            "version": "5.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-phpunit/wp-phpunit.git",
