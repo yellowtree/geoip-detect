@@ -1,5 +1,5 @@
 import { get_options } from './helpers';
-import _ from '../lodash.custom'; // we might use lodash-es in the future
+import _intersect from 'just-intersect';
 
 
 export function do_shortcode_show_if(el, record) {
@@ -78,7 +78,7 @@ function geoip_detect2_shortcode_check_subcondition(expectedValues, actualValues
 
     expectedValues = expectedValues.split(',');
 
-    const intersect = _.intersection(expectedValues, actualValues);
+    const intersect = _intersect(expectedValues, actualValues);
 
     return intersect.length > 0;
 }
