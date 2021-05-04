@@ -18,7 +18,6 @@ wp-cli.local.yml
 
 /wordpress/
 
-/vendor/bin/phpunit
 /vendor/doctrine
 /vendor/myclabs
 /vendor/phar-io/
@@ -30,6 +29,9 @@ wp-cli.local.yml
 /vendor/theseer/
 /vendor/webmozart/
 /vendor/wp-phpunit/
+/vendor/nikic/php-parser/
+/vendor/bin/phpunit
+/vendor/bin/php-parse
 
 /vendor/geoip2/geoip2/examples/
 /vendor/symfony/http-foundation/*
