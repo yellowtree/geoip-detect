@@ -5110,10 +5110,10 @@ just-intersect@3.1.0:
   resolved "https://registry.yarnpkg.com/just-intersect/-/just-intersect-3.1.0.tgz#448bf5cdb11ea17489bf3441c555aa0d68d31d08"
   integrity sha512-067SEOhtX24TOJuQIZYor2PuIocRjCRwHEL+SRQBj0iuDf7ZQXR7w++cYnjMFBb5+W0SNWWz/Q7MpkCuen6U0A==
 
-just-safe-get@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/just-safe-get/-/just-safe-get-2.1.1.tgz#77b807b6c51a628f5b92633c04a94d66b4a354c6"
-  integrity sha512-8nIBVR4twf5VzlNhQ5gwwl6O6vwImUTRPPMGVQfle1Wz5XtGknthAJWDA/nFnS3tnpAl0iewb0cVCxbhC+dKKg==
+just-safe-get@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/just-safe-get/-/just-safe-get-2.1.2.tgz#82c2df6bbb929bf4de8d46c06ef79e1a4dd98918"
+  integrity sha512-DPWEh00QFgJNyfULPwgc9rTvdiPYVyt69hcgjWbN3lzKMmISW43Hwc+nlRAIo+su6PLVqUOMEUJNYR1xFog7xQ==
 
 kind-of@^3.0.2, kind-of@^3.0.3, kind-of@^3.2.0:
   version "3.2.2"
