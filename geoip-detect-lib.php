@@ -384,7 +384,7 @@ function geoip_detect_is_ip_equal(string $actual, $expected, bool $stripPort = f
 		return IpUtils::checkIp($actual, $expected);
 	} catch(\Exception $e) {
 		// IPv6 not supported by PHP
-		// Do string comparison instead (very rough: no subnet, no IP noramlization)
+		// Do string comparison instead (very rough: no subnet, no IP normalization)
 		if (is_array($expected)) {
 			return in_array($actual, $expected, true);
 		} else {
