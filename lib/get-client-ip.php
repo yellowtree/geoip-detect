@@ -60,7 +60,7 @@ class GetClientIp {
 			$ip_list_reverse = array_filter($ip_list_reverse, function($value) {
 				$value = trim($value);
 				if (!$value) return false;
-				return false === geoip_detect_is_ip_equal($value, $this->proxyWhitelist);
+				return false === geoip_detect_is_ip_equal($value, $this->proxyWhitelist, true);
 			});
 		}
 		

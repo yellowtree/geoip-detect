@@ -342,12 +342,44 @@ function geoip_detect_sanitize_ip_list(string $ip_list) : string {
 }
 
 /**
+ * Remove port from IP string
+ * @param string
+ * @return string
+ */
+function geoip_detect_ip_remove_port(string $ip) : string {
+	$ip = trim($ip);
+	
+	if (mb_strpos($ip, '.')) {  // IPv4 
+		// 1.1.1.1:80
+		$end = mb_stripos($ip, ':');
+		if ($end) {
+			$ip = mb_substr($ip, 0, $end);
+		}
+	} else {
+		// [::1]:8080
+		$end = mb_stripos($ip, ']:');
+		if ($ip[0] === '[' && $end) {
+			$ip = mb_substr($ip, 1, $end - 1);
+		}
+	}
+
+	return $ip;
+}
+
+/**
  * Check if the expected IP left matches the actual IP
  * @param string $actual IP
  * @param string|array $expected IP (can include subnet)
+ * @param boolean $stripPort Remove ports if it is given (Limitation: not from $expected if array)
  * @return boolean
  */
-function geoip_detect_is_ip_equal(string $actual, $expected) : bool {
+function geoip_detect_is_ip_equal(string $actual, $expected, bool $stripPort = false ) : bool {
+	if ($stripPort) {
+		$actual = geoip_detect_ip_remove_port($actual);
+		if (is_string($expected)) {
+			$expected = geoip_detect_ip_remove_port($expected);
+		}
+	}
 	try {
 		return IpUtils::checkIp($actual, $expected);
 	} catch(\Exception $e) {

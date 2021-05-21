@@ -52,13 +52,21 @@ class ReverseProxyTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	function testTwoProxies() {
+		// Without trusted proxies set
 		$_SERVER['HTTP_X_FORWARDED_FOR'] = '1.1.1.1, ' . GEOIP_DETECT_TEST_IP;
 		$this->assertSame(GEOIP_DETECT_TEST_IP, geoip_detect2_get_client_ip());
 		
-		$_SERVER['HTTP_X_FORWARDED_FOR'] = '1.1.1.1 , ' . GEOIP_DETECT_TEST_IP;
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = GEOIP_DETECT_TEST_IP . ', 1.1.1.1';
+		$this->assertNotSame(GEOIP_DETECT_TEST_IP, geoip_detect2_get_client_ip());
+	}
+
+	function testProxiesWithPort() {
+		add_filter('pre_option_geoip-detect-trusted_proxy_ips', 'test_set_trusted_proxies', 101);
+
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = GEOIP_DETECT_TEST_IP . ', 1.1.1.1, 2.2.2.2:45';
 		$this->assertSame(GEOIP_DETECT_TEST_IP, geoip_detect2_get_client_ip());
 
-		$_SERVER['HTTP_X_FORWARDED_FOR'] = '1.1.1.1,' . GEOIP_DETECT_TEST_IP;
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = GEOIP_DETECT_TEST_IP . ', 1.1.1.1, [FE80::0202:B3FF:FE1E:8329]:45';
 		$this->assertSame(GEOIP_DETECT_TEST_IP, geoip_detect2_get_client_ip());
 	}
 	

@@ -51,6 +51,31 @@ class IpLibTest extends WP_UnitTestCase_GeoIP_Detect {
 
 	}
 
+	function testEqualIpAdressesWithPort() {
+		$this->assertTrue(geoip_detect_is_ip_equal('2001:0DB8:0:0:1::1', '2001:0db8:0000:0000:0001:0000:0000:0001', true));
+		$this->assertTrue(geoip_detect_is_ip_equal('[2001:0DB8:0:0:1::1]:15', '2001:0db8:0000:0000:0001:0000:0000:0001', true));
+		$this->assertTrue(geoip_detect_is_ip_equal('[2001:0DB8:0:0:1::1]:15', '[2001:0db8:0000:0000:0001:0000:0000:0001]:15', true));
+		$this->assertFalse(geoip_detect_is_ip_equal('[2001:0DB8:0:0:1::2]:15', '2001:0db8:0000:0000:0001:0000:0000:0001', true));
+
+		$this->assertTrue(geoip_detect_is_ip_equal('8.8.8.8:56', array('1.1.1.1', '::8', '8.8.8.8'), true ));
+		$this->assertFalse(geoip_detect_is_ip_equal('8.8.8.8:56', array('1.1.1.1', '::8', '8.8.8.8'), false ));
+// Not supported
+//		$this->assertTrue(geoip_detect_is_ip_equal('8.8.8.8', array('1.1.1.1', '::8', '8.8.8.8:80'), true ));
+//		$this->assertFalse(geoip_detect_is_ip_equal('8.8.8.7', array('1.1.1.1', '::8', '8.8.8.8:80'), true ));
+	}
+
+	function testStripPort() {
+		$this->assertSame('1.2.3.1', geoip_detect_ip_remove_port('1.2.3.1'));
+		$this->assertSame('1.2.3.2', geoip_detect_ip_remove_port(' 1.2.3.2  '));
+		$this->assertSame('1.2.3.3', geoip_detect_ip_remove_port(' 1.2.3.3:80'));
+		$this->assertSame('::1', geoip_detect_ip_remove_port('::1'));
+		$this->assertSame('::2', geoip_detect_ip_remove_port('[::2]:8'));
+		$this->assertSame('a:b::2', geoip_detect_ip_remove_port('[a:b::2]:8080'));
+		$this->assertSame('[a:b::2]8080', geoip_detect_ip_remove_port('[a:b::2]8080'));
+		$this->assertSame('a:b::2]:8080', geoip_detect_ip_remove_port('a:b::2]:8080'));
+		$this->assertSame('[a:b::2:8080', geoip_detect_ip_remove_port('[a:b::2:8080'));
+	}
+
 	function testSanitizeIpList() {
 		$this->assertSame('1.2.3.4', geoip_detect_sanitize_ip_list('1.2.3.4'));
 		$this->assertSame('::1', geoip_detect_sanitize_ip_list('::1'));
