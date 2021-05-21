@@ -58,7 +58,7 @@ class HeaderReader extends \YellowTree\GeoipDetect\DataSources\AbstractReader {
 		
 		$r['traits']['ip_address'] = $ip;
 		
-		$record = new \GeoIp2\Model\City($r, array('en'));
+		$record = new \YellowTree\GeoipDetect\DataSources\City($r, array('en'));
 		
 		return $record;
 	}

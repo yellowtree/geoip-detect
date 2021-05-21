@@ -73,7 +73,7 @@ function _geoip_detect2_process_options($options) {
  * @param array(string)				List of locale codes to use in name property
  * from most preferred to least preferred. (Default: Site language, en)
  * @param boolean					If locale filter should be skipped (default: No)
- * @return GeoIp2\Database\Reader 	The reader, ready to do its work. Don't forget to `close()` it afterwards. NULL if file not found (or other problems).
+ * @return \YellowTree\GeoipDetect\DataSources\ReaderInterface 	The reader, ready to do its work. Don't forget to `close()` it afterwards. NULL if file not found (or other problems).
  * NULL if initialization went wrong (e.g., File not found.)
  */
 function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &$sourceId = '', $options = array()) {
@@ -209,7 +209,7 @@ function _geoip_detect2_get_record_from_reader($reader, $ip, &$error) {
 
 function _geoip_detect2_get_new_empty_record($ip = '') {
 	$data = array('traits' => array('ip_address' => $ip), 'is_empty' => true);
-	return new \GeoIp2\Model\City($data);
+	return new \YellowTree\GeoipDetect\DataSources\City($data);
 }
 
 function _geoip_detect2_record_enrich_data($record, $ip, $sourceId, $error) : array {

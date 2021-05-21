@@ -207,6 +207,7 @@ HTML;
 		$data_file = $this->maxmindGetFilename();
 		if ($data_file) {
 			try {
+				// ToDo this needs to be wrapped?
 				$reader = new \GeoIp2\Database\Reader ( $data_file, $locales );
 			} catch ( \Exception $e ) {
 				if (WP_DEBUG)
