@@ -43,8 +43,8 @@ use YellowTree\GeoipDetect\Lib\GetClientIp;
  */
 function geoip_detect2_get_info_from_ip(string $ip, $locales = null, $options = array()) : \YellowTree\GeoipDetect\DataSources\City {
 	if(defined('GEOIP_DETECT_LOOKUP_DISABLED') && GEOIP_DETECT_LOOKUP_DISABLED) {
-		trigger_error('Geolocation IP Detection: The lookup is currently disabled.');
-		return _geoip_detect2_get_new_empty_record();
+		trigger_error('Geolocation IP Detection: The lookup is currently disabled (Error: could not initialize the plugin).');
+		return _geoip_detect2_get_new_empty_record('', 'The lookup is currently disabled (Error: could not initialize the plugin).');
 	}
 
 	_geoip_maybe_disable_pagecache();

@@ -207,9 +207,13 @@ function _geoip_detect2_get_record_from_reader($reader, $ip, &$error) {
 	return $record;
 }
 
-function _geoip_detect2_get_new_empty_record($ip = '') {
+function _geoip_detect2_get_new_empty_record($ip = '', $error = '') {
 	$data = array('traits' => array('ip_address' => $ip), 'is_empty' => true);
-	return new \GeoIp2\Model\City($data);
+	if ($error) {
+		$data['extra']['error'] = $error;
+	}
+
+	return new  \YellowTree\GeoipDetect\DataSources\City($data, []);
 }
 
 function _geoip_detect2_record_enrich_data($record, $ip, $sourceId, $error) : array {

@@ -123,6 +123,7 @@ function geoip_detect_option_page() {
 	if (!is_admin() || !current_user_can('manage_options'))
 		return;
 
+
 	if (isset($_GET['geoip_detect_part'])) {
 		switch ($_GET['geoip_detect_part']) {
 			case 'client-ip':
@@ -238,6 +239,9 @@ function geoip_detect_option_page() {
 }
 
 function geoip_detect_option_client_ip_page() {
+	$maxmind = new \YellowTree\GeoipDetect\CheckCompatibility\Maxmind;
+	$maxmind_files_loaded_by_others = $maxmind->getFiles();
+
 	include_once(GEOIP_PLUGIN_DIR . '/views/client-ip.php');
 }
 

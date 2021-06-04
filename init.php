@@ -24,6 +24,7 @@ function geoip_detect_defines() {
 add_action('plugins_loaded', 'geoip_detect_defines');
 
 
+
 function geoip_detect_check_ipv6_support() {
 	if (defined('AF_INET6')) {
 		return true;
