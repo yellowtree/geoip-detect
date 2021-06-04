@@ -95,7 +95,8 @@ class PrecisionDataSource extends AbstractDataSource {
 		if (!$this->isWorking())
 			$html .= '<div class="geoip_detect_error">' . __('Maxmind Precision only works with a given user id and secret.', 'geoip-detect') . '</div>';
 
-		return $html;
+		
+		return apply_filters('geoip_detect_source_get_status_HTML_maxmind', $html, $this->getId());;
 	}
 	
 	public function getParameterHTML() { 

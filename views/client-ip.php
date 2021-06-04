@@ -42,21 +42,6 @@ This needs to be known to the plugin to choose the correct IP adress.
 			<span class="detail-box">All IPs in HTTP_X_FORWARDED_FOR that are not the correct client IP are probably known reverse proxies.<br>(For security reasons, this is not assumed by default: maybe the reverse proxy is not of the server, but a Man-In-The-Middle-Attack ... not very probable but possible.)</span>
 		</li>
 	</ul>
-	<h2>Other debug info</h2>
-	<h3>Plugins that use the Maxmind Libraries</h3>
-	<?php if ($maxmind_files_loaded_by_others) : ?>
-	<p class="geoip_detect_error">
-		Warning: These Maxmind files were loaded from other plugins:<br />
-		<?php foreach ($maxmind_files_loaded_by_others as $file) : ?>
-		<b>- <?= esc_html($file) ?></b><br />
-		<?php endforeach; ?>
-		<br />
-		<i>(This can result in errors if that plugin uses a different version than Geolocation IP Detection)</i>
-		<i>(There might be more plugins that also use these libraries. It depends on the order the plugins where activated on this site.)</i>
-	</p>
-	<?php else: ?>
-		<p>No other plugin found.</p>
-	<?php endif; ?>
 
 <script>
 	jQuery.ajax(<?php echo wp_json_encode(_geoip_detect2_get_external_ip_services(1, true)[0]); ?>, {

@@ -27,7 +27,7 @@ define('GEOIP_DETECT_DATA_FILENAME', 'GeoLite2-City.mmdb');
 class ManualDataSource extends AbstractDataSource {
 
 	public function getId() { return 'manual'; }
-	public function getLabel() { return __('Manual download & update of a Maxmind City or Country database', 'geoip-detect'); }
+	public function getLabel() { return __('Maxmind City or Country database (Manual download & update)', 'geoip-detect'); }
 
 	public function getDescriptionHTML() { return __('<a href="http://dev.maxmind.com/geoip/geoip2/geolite2/" target="_blank">Free version</a> - <a href="https://www.maxmind.com/en/geoip2-country-database" target="_blank">Commercial Version</a>', 'geoip-detect'); }
 	public function getStatusInformationHTML() {
@@ -72,7 +72,7 @@ class ManualDataSource extends AbstractDataSource {
 			$html .= '<br>' . sprintf(__('Privacy Exclusions next Update: %s', 'geoip-detect'), geoip_detect_format_localtime($next_update) );
 		}
 
-		return $html;
+		return apply_filters('geoip_detect_source_get_status_HTML_maxmind', $html, $this->getId());
 	}
 
 	protected function getParameterHTMLMaxmindAccount() {
@@ -280,3 +280,16 @@ HTML;
 }
 
 geoip_detect2_register_source(new ManualDataSource());
+
+add_filter('geoip_detect_source_get_status_HTML_maxmind', function($html) {
+	$maxmind = new \YellowTree\GeoipDetect\CheckCompatibility\Maxmind;
+	$maxmind_files_loaded_by_others = $maxmind->getFiles();
+
+	if ($maxmind_files_loaded_by_others) {
+		$html .= '<div class="geoip_detect_error"><b>' . __('Warning: These Maxmind files were loaded from other plugins:', 'geoip-detect') . '</b><br />';
+		$html .= implode('<br>', $maxmind_files_loaded_by_others) . ' <br>';
+		$html .= '<i>(' . __('This can result in errors if that plugin uses a different version than Geolocation IP Detection', 'geoip-detect') . ')</i>';
+		$html .= '</div>';
+	}
+	return $html;
+});

@@ -239,9 +239,6 @@ function geoip_detect_option_page() {
 }
 
 function geoip_detect_option_client_ip_page() {
-	$maxmind = new \YellowTree\GeoipDetect\CheckCompatibility\Maxmind;
-	$maxmind_files_loaded_by_others = $maxmind->getFiles();
-
 	include_once(GEOIP_PLUGIN_DIR . '/views/client-ip.php');
 }
 
