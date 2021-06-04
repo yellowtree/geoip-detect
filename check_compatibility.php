@@ -36,7 +36,7 @@ class Maxmind {
 
     function checkCompatible() {
         $readerClassInfo = new \ReflectionClass('\MaxMind\Db\Reader');
-        if (!$readerClassInfo->hasMethod('getWithPrefixLen2')) {
+        if (!$readerClassInfo->hasMethod('getWithPrefixLen')) {
             // This would raise an Fatal error during lookup.
             define('GEOIP_DETECT_LOOKUP_DISABLED', true);
 

@@ -164,6 +164,7 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 = 4.2.0 =
 * JS: Replace the internally used library 'lodash' with 'just' to reduce the total file size
+* NEW: Try to detect incompatibilities with other plugins that also use the Maxmind libraries. You can see such plugins on the Client IP debug page (for now).
 * FIX: AJAX improve error handling
 * FIX: Remove an incompatibility with Toolset or other Laravel-based plugins
 * FIX: Port numbers in reverse proxies are ignored now (removes incompatibility with Azure reverse proxies)
