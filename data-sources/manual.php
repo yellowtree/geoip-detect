@@ -283,11 +283,14 @@ geoip_detect2_register_source(new ManualDataSource());
 
 add_filter('geoip_detect_source_get_status_HTML_maxmind', function($html) {
 	$maxmind = new \YellowTree\GeoipDetect\CheckCompatibility\Maxmind;
-	$maxmind_files_loaded_by_others = $maxmind->getFiles();
-
-	if ($maxmind_files_loaded_by_others) {
-		$html .= '<div class="geoip_detect_error"><b>' . __('Warning: These Maxmind files were loaded from other plugins:', 'geoip-detect') . '</b><br />';
-		$html .= implode('<br>', $maxmind_files_loaded_by_others) . ' <br>';
+	$maxmind->filesChecksums();
+	
+	if ($maxmind->filesByOthers) {
+		$html .= '<div style="clear:both"></div><div class="geoip_detect_error"><b>' . __('Warning: These Maxmind files were loaded from other plugins:', 'geoip-detect') . '</b><br />';
+		foreach($maxmind->checksumResult as $file => $result) {
+			$file = $maxmind->makePathRelative($file);
+			$html .= $file . ' (' . ($result ? 'same version' : 'different version' ).  ')<br>';
+		}
 		$html .= '<i>(' . __('This can result in errors if that plugin uses a different version than Geolocation IP Detection', 'geoip-detect') . ')</i>';
 		$html .= '</div>';
 	}

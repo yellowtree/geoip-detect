@@ -5,9 +5,13 @@ namespace YellowTree\GeoipDetect\CheckCompatibility;
 class Maxmind {
     public $files = null;
     public $filesByOthers = null;
+    public $checksumResult = null;
+
     protected $adminNotices = [];
 
     function getFiles() {
+        if (is_array($this->filesByOthers)) return;
+
         // Load files from autocomposer
         try {
             new \GeoIp2\Database\Reader('');
@@ -18,20 +22,52 @@ class Maxmind {
     
     
         $loaded = get_included_files();
-        $loaded = array_map(function($absolutePath) {
-            // Simplistic: no realpath used
-            if (str_starts_with($absolutePath, ABSPATH)) {
-                return mb_substr($absolutePath, mb_strlen(ABSPATH) - 1);
-            };
-            return $absolutePath;
-        }, $loaded);
         $this->files = array_filter($loaded, function($value) {
             return str_ends_with($value, 'Reader.php');
         });
         $this->filesByOthers = array_filter($this->files, function($value) {
             return !str_contains($value, '/plugins/geoip-detect/');
         });
+
         return $this->filesByOthers;
+    }
+
+    function makePathRelative($absolutePath) {
+            // Simplistic: no realpath used
+            if (str_starts_with($absolutePath, ABSPATH)) {
+                return mb_substr($absolutePath, mb_strlen(ABSPATH) - 1);
+            };
+            return $absolutePath;
+        }
+
+    function filesChecksums() {
+        $this->getFiles();
+
+        if (!$this->filesByOthers) {
+            $this->checksumResult = [];
+            return false;
+        }
+
+        $localFiles = [
+            '/vendor/maxmind-db/reader/src/MaxMind/Db/Reader.php',
+            '/vendor/geoip2/geoip2/src/Database/Reader.php',
+        ];
+
+        $md5_whitelist = [];
+        foreach($localFiles as $file) {
+            if (!is_file(GEOIP_PLUGIN_DIR . $file) && WP_DEBUG) {
+                \trigger_error('Weird. The file ' . $file . ' missing.');
+                continue;
+            }
+            $md5_whitelist[] = md5_file(GEOIP_PLUGIN_DIR . $file);
+        }
+
+        foreach($this->filesByOthers as $file) {
+            $checksum = md5_file($file);
+            $this->checksumResult[$file] = in_array($checksum, $md5_whitelist);
+        }
+        var_dump($this->checksumResult);
+        return in_array(true, $this->checksumResult); // at least one file is different
     }
 
     function checkCompatible() {
@@ -41,7 +77,7 @@ class Maxmind {
             define('GEOIP_DETECT_LOOKUP_DISABLED', true);
 
             $this->getFiles();
-            $data = implode(' , ', $this->filesByOthers);
+            $data = implode(' , ', array_map([$this, 'makePathRelative'], $this->filesByOthers));
             $line1 = __('Appearently, there is another plugin installed that also uses the Maxmind libraries, but their version of these libraries is outdated.', 'geoip-detect');
             $line2 = __('These files have been found to be loaded from another plugin: ', 'geoip-detect') . $data;
             $line3 = __('Please disable that plugin, update that plugin or use a different data source in Geolocation IP Detection. Until then, the lookup for Maxmind sources is disabled.', 'geoip-detect');
