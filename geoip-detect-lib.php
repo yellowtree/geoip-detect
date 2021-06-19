@@ -541,6 +541,11 @@ function _geoip_maybe_disable_pagecache() : bool {
 	if (!get_option('geoip-detect-disable_pagecache'))
 		return false;
 
+	_geoip_detect_disable_pagecache();
+	return true;
+}
+
+function _geoip_detect_disable_pagecache() {
 	// WP Super Cache, W3 Total Cache
 	if (!defined('DONOTCACHEPAGE'))
 		define('DONOTCACHEPAGE', true);
@@ -553,9 +558,8 @@ function _geoip_maybe_disable_pagecache() : bool {
 
 	if (!headers_sent()) {
 		header('Cache-Control: private, proxy-revalidate, s-maxage=0');
+		header( 'cf-edge-cache: no-cache' ); // Disable Cloudflare APO
 	}
-
-	return true;
 }
 
 function _geoip_dashes_to_camel_case(string $string, bool $capitalizeFirstCharacter = false) : string {
