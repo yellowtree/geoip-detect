@@ -167,10 +167,11 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 = 4.2.0 =
 * JS: Replace the internally used library 'lodash' with 'just' to reduce the total file size
-* NEW: Show a warning on the options page when there are incompatibilities with other plugins (that also use the Maxmind libraries).
+* NEW: Show a warning on the options page when there are incompatibilities with other plugins that also use the Maxmind libraries.
+* FIX: Remove an incompatibility of the libraries with Toolset or other Laravel-based plugins
 * FIX: AJAX improve error handling
-* FIX: Remove an incompatibility with Toolset or other Laravel-based plugins
 * FIX: Port numbers in reverse proxies are ignored now (removes incompatibility with Azure reverse proxies)
+* FIX: Prevent Cloudflare APO from caching when using AJAX mode or page caching is disabled in the plugin options
 
 = 4.1.0 =
 * NEW: An `else` shortcode for `geoip_detect2_show_if` and `geoip_detect2_hide_if`: `[geoip_detect2_show_if city="Berlin"]You are in Berlin[else]You are not in Berlin[/geoip_detect2_show_if]`
