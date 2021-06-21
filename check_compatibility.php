@@ -9,6 +9,16 @@ class Maxmind {
 
     protected $adminNotices = [];
 
+    /**
+     * Get a unique Id for the situation
+     */
+    function getId() {
+        $this->filesChecksums();
+
+        $encoded = md5(serialize($this->checksumResult));
+        return $encoded;
+    }
+
     function getFiles() {
         if (is_array($this->filesByOthers)) return;
 
@@ -41,6 +51,9 @@ class Maxmind {
         }
 
     function filesChecksums() {
+        if ($this->checksumResult) {
+            return;
+        }
         $this->getFiles();
 
         if (!$this->filesByOthers) {
@@ -66,8 +79,6 @@ class Maxmind {
             $checksum = md5_file($file);
             $this->checksumResult[$file] = in_array($checksum, $md5_whitelist);
         }
-        var_dump($this->checksumResult);
-        return in_array(true, $this->checksumResult); // at least one file is different
     }
 
     function checkCompatible() {

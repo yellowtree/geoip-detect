@@ -286,13 +286,43 @@ add_filter('geoip_detect_source_get_status_HTML_maxmind', function($html) {
 	$maxmind->filesChecksums();
 	
 	if ($maxmind->filesByOthers) {
-		$html .= '<div style="clear:both"></div><div class="geoip_detect_error"><b>' . __('Warning: These Maxmind files were loaded from other plugins:', 'geoip-detect') . '</b><br />';
+
+		$id = 'maxmind-conflict-' . $maxmind->getId();
+	
+		if (geoip_detect_is_ignored_notice($id))
+			return;
+
+		// Which files are conflicting?
+		$files = '';
+		$sameVersion = true;
 		foreach($maxmind->checksumResult as $file => $result) {
 			$file = $maxmind->makePathRelative($file);
-			$html .= $file . ' (' . ($result ? 'same version' : 'different version' ).  ')<br>';
+			$files .= '&nbsp;&nbsp;-&nbsp;&nbsp;' . $file . ' (' . ($result ? 'same version' : 'different version' ).  ')<br>';
+			$sameVersion = $sameVersion && $result;
 		}
-		$html .= '<i>(' . __('This can result in errors if that plugin uses a different version than Geolocation IP Detection', 'geoip-detect') . ')</i>';
-		$html .= '</div>';
+
+		// Ok, create warning / error message now
+		$html = '<div style="clear:both"></div>'; 
+		if ($sameVersion) {
+			$html .= '<div class="notice is-dismissible">';
+			$html .= '<p style="float: right">';
+			$html .= '<a href="tools.php?page=' . GEOIP_PLUGIN_BASENAME . '&geoip_detect_dismiss_notice=' . $id . '">' . __('Dismiss notice', 'geoip-detect') . '</a>';
+			$html .= '</p>';
+		
+			$html .= '<b>' . __('Notice') . ':</b><br>';
+			$html .= __('Another plugin has loaded Maxmind files already that are included with this plugin as well:', 'geoip-detect') . '<br />';
+			$html .= $files;
+			$html .= '<i>(' . __('Be careful when you update that plugin as it might break the Maxmind functionality of Geolocation IP Detection.', 'geoip-detect') . ')</i>';
+			$html .= '</div>';
+		} else {
+			// Higher risk, so not dismissible
+			$html .= '<div class="geoip_detect_error">';
+			$html .= '<b>' . __('Warning: These Maxmind files were loaded from other plugins:', 'geoip-detect') . '</b><br />';
+			$html .= $files;
+			$html .= '<i>(' . __('This can result in errors.', 'geoip-detect') . ')</i>';
+			$html .= '</div>';
+		}
+
 	}
 	return $html;
 });
