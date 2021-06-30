@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+5.3
+---
+
+ * Add support for multiple types for collection keys & values
+ * Deprecate the `Type::getCollectionKeyType()` and `Type::getCollectionValueType()` methods, use `Type::getCollectionKeyTypes()` and `Type::getCollectionValueTypes()` instead
+
 5.2.0
 -----
 
