@@ -141,11 +141,36 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
         $this->assertContains('State or region: Hesse' , $userInfo);
         $this->assertContains('City: Eschborn' , $userInfo);
 		$this->assertContains('Data from: GeoLite2 City database' , $userInfo);
+	}
 
-		$userInfo = geoip_detect2_shortcode_user_info_wpcf7('', 'geoip_detect2_get_client_ip', false);
-		$this->assertSame(GEOIP_DETECT_TEST_IP, $userInfo);
-		$userInfo = geoip_detect2_shortcode_user_info_wpcf7('', 'geoip_detect2_get_current_source_description', false);
-		$this->assertSame('GeoLite2 City database', $userInfo);
+	/**
+	 * @dataProvider dataShortcodeCF7UserInfo
+	 */
+	public function testDataShortcodeCF7UserInfo($expected, $name) {
+		$userInfo = geoip_detect2_shortcode_user_info_wpcf7('', $name, false);
+		$this->assertSame($expected, $userInfo, 'Wrong output for CF7 special Tag [' . $name .']');
+	}
+
+	public function dataShortcodeCF7UserInfo() {
+		return [
+			[ GEOIP_DETECT_TEST_IP, 'geoip_detect2_get_client_ip' ],
+			[ 'GeoLite2 City database', 'geoip_detect2_get_current_source_description' ],
+			[ 'Germany', 'geoip_detect2_property_country' ],
+			[ 'Hesse', 'geoip_detect2_property_most_specific_subdivision' ],
+			[ 'Hesse', 'geoip_detect2_property_region' ],
+			[ 'Hesse', 'geoip_detect2_property_state' ],
+			[ 'HE', 'geoip_detect2_property_subdivisions__0__iso_code' ],
+			[ 'Eschborn', 'geoip_detect2_property_city' ],
+			[ 'DE', 'geoip_detect2_property_country__iso_code' ],
+			[ 'DE', 'geoip_detect2_property_country__isoCode' ],
+			[ '🇩🇪', 'geoip_detect2_property_extra__flag' ],
+			[ '+49', 'geoip_detect2_property_extra__tel' ],
+			[ 'manual', 'geoip_detect2_property_extra__source' ],
+			[ 'DEU', 'geoip_detect2_property_extra__country_iso_code_3' ],
+			[ 'DEU', 'geoip_detect2_property_extra__country_iso_code3' ],
+			[ 'EUR', 'geoip_detect2_property_extra__currency_code' ],
+			[ GEOIP_DETECT_TEST_IP, 'geoip_detect2_property_traits__ip_address' ],
+		];
 	}
 	
 	public function testShortcodeCF7Filter() {

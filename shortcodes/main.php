@@ -92,6 +92,33 @@ function geoip_detect2_shortcode($orig_attr, $content = '', $shortcodeName = 'ge
 add_shortcode('geoip_detect2', 'geoip_detect2_shortcode');
 
 /**
+ * High-level API to simplify access to property
+ * @param  YellowTree\GeoipDetect\DataSources\City $userInfo     GeoIP information object
+ * @param  string $propertyName property name, e.g. "city.isoCode"
+ * @return string 
+ */
+function geoip_detect2_shortcode_get_property_simplified($userInfo, $propertyName, $defaultValue = '') {
+	try {
+		$return = geoip_detect2_shortcode_get_property($userInfo, $propertyName);
+	} catch (\RuntimeException $e) {
+		if (WP_DEBUG) {
+			trigger_error('Undefined property `' . $propertyName . '`');
+		}
+		$return = $defaultValue;
+	}
+
+	if (is_object($return) && $return instanceof \GeoIp2\Record\AbstractPlaceRecord) {
+		$return = $return->name;
+	}
+
+	if ($return) {
+		return (string) $return;
+	} else {
+		return $defaultValue;
+	}
+}
+
+/**
  * Get property from object by string
  * @param  YellowTree\GeoipDetect\DataSources\City $userInfo     GeoIP information object
  * @param  string $propertyName property name, e.g. "city.isoCode"
