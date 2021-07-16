@@ -163,11 +163,11 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 ## Changelog ##
 
 = 4.2.0 =
-* JS: Replace the internally used library 'lodash' with 'just' to reduce the total file size
 * NEW: Show a warning on the options page when there are incompatibilities with other plugins that also use the Maxmind libraries.
-* NEW: In CF7, you can now add any property to the mail body with a special syntax, e.g. `[geoip_detect2_property_country__iso_code]`
 * FIX: Remove an incompatibility of the libraries with Toolset or other Laravel-based plugins
-* FIX: AJAX improve error handling
+* NEW: In CF7, you can now add any property to the mail body with a special syntax, e.g. `[geoip_detect2_property_country__iso_code]`
+* FIX (JS): Replace the internally used library 'lodash' with 'just' to reduce the total file size
+* FIX (JS): Improve error handling in AJAX mode
 * FIX: Port numbers in reverse proxies are ignored now (removes incompatibility with Azure reverse proxies)
 * FIX: Prevent Cloudflare APO from caching when using AJAX mode or page caching is disabled in the plugin options
 
