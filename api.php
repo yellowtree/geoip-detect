@@ -132,7 +132,8 @@ function geoip_detect2_get_info_from_ip(string $ip, $locales = null, $options = 
  * @param array(string)		$locales	List of locale codes to use in name property
  * 										from most preferred to least preferred. (Default: Site language, en)
  * @param array				Property names with options.
- * 		@param boolean 		$skipCache		TRUE: Do not use cache for this request. (Default: FALSE)
+ * 		@param boolean 		$skipCache		TRUE: Do not use persistent cache for this request. (Default: FALSE)
+ * 		@param boolean		$skipLocalCache	TRUE: Do not use caching in memory (Default: FALSE)
  * 		@param string       $source         Change the source for this request only. (Valid values: 'auto', 'manual', 'precision', 'header', 'hostinfo')
  * 		@param float 		$timeout		Total transaction timeout in seconds (Precision+HostIP.info API only)
  * 		@param int			$connectTimeout Initial connection timeout in seconds (Precision API only)
@@ -142,9 +143,23 @@ function geoip_detect2_get_info_from_ip(string $ip, $locales = null, $options = 
  * @since 2.4.0 New parameter $skipCache
  * @since 2.5.0 Parameter $skipCache has been renamed to $options with 'skipCache' property
  * @since 2.7.0 Parameter $options['source'] has been introduced
+ * @since 4.3.0 The result of this function is cached for the duration of the PHP execution (except if you use skipLocalCache)
  */
 function geoip_detect2_get_info_from_current_ip($locales = null, $options = array()) {
-	return geoip_detect2_get_info_from_ip(geoip_detect2_get_client_ip(), $locales, $options);
+	static $cache = null;
+
+	if (empty($options['skipLocalCache'])) {
+		if (!is_null($cache)) {
+			return $cache;
+		}
+	}
+
+	$ret = geoip_detect2_get_info_from_ip(geoip_detect2_get_client_ip(), $locales, $options);
+	if (empty($options['skipLocalCache'])) {
+		$cache = $ret;
+	}
+
+	return $ret;
 }
 
 

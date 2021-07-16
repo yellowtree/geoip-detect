@@ -59,6 +59,7 @@ function geoip_detect_lookup_page()
 	$message = '';
 	$action = isset($_POST['action']) ? sanitize_key($_POST['action']) : '';
 	$ip = isset($_POST['ip']) ? sanitize_text_field($_POST['ip']) : '';
+	$current_ip = geoip_detect2_get_client_ip();
 
 	if (geoip_detect_verify_nonce($action)) {
 		switch($action) {
@@ -76,23 +77,35 @@ function geoip_detect_lookup_page()
 				{
 					$request_ip = geoip_detect_is_ip($ip) ? $ip : '';
 					$request_skipCache = !empty($_POST['skip_cache']);
-					$options = array('skipCache' => $request_skipCache);
+					$request_skipLocalCache = !empty($_POST['skip_local_cache']);
+					$options = array('skipCache' => $request_skipCache, 'skipLocalCache' => $request_skipLocalCache);
 
 					$request_locales = null;
 					if (!empty($_POST['locales'])) {
 						$request_locales = explode(',', sanitize_text_field($_POST['locales']));
 					}
 
-					$start = microtime(true);
-					$ip_lookup_result = geoip_detect2_get_info_from_ip($request_ip, $request_locales, $options);
-					$end = microtime(true);
-					$ip_lookup_duration = $end - $start;
+					$ip_lookup_result = geoip_detect_lookup_page_timed_lookup($request_ip, $request_locales, $options, $current_ip, $ip_lookup_duration);
+					geoip_detect_lookup_page_timed_lookup($request_ip, $request_locales, $options, $current_ip, $ip_lookup_2nd_duration);
 				}
 				break;
 		}
 	}
 
 	include_once(GEOIP_PLUGIN_DIR . '/views/lookup.php');
+}
+
+function geoip_detect_lookup_page_timed_lookup($request_ip, $request_locales, $options, $current_ip, &$ip_lookup_duration) {
+	$start = microtime(true);
+	if ($request_ip === $current_ip) {
+		$ip_lookup_result = geoip_detect2_get_info_from_current_ip($request_locales, $options);
+	} else {
+		$ip_lookup_result = geoip_detect2_get_info_from_ip($request_ip, $request_locales, $options);
+	}
+	$end = microtime(true);
+	$ip_lookup_duration = $end - $start;
+
+	return $ip_lookup_result;
 }
 
 function geoip_detect_sanitize_option($opt_name, $opt_value, &$message = '') {

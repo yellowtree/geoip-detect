@@ -5,6 +5,7 @@ import { do_shortcode_show_if } from "./show-if";
 
 
 export const do_shortcodes = async function do_shortcodes() {
+    // Before doing any of these, the DOM tree needs to be loaded
     await domReady;
 
     // These are called in parallel, as they are async functions

@@ -165,6 +165,10 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 == Changelog ==
 
+= 4.3.0 =
+* NEW: Drastically improving performance if the the lookup is performed for the current IP more than once (e.g. because of shortcodes)
+* UI: Showing the time for the subsequent lookup on the Test Lookup page
+
 = 4.2.0 =
 * NEW: Show a warning on the options page when there are incompatibilities with other plugins that also use the Maxmind libraries.
 * FIX: Remove an incompatibility of the libraries with Toolset or other Laravel-based plugins
