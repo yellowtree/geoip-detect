@@ -41,8 +41,9 @@ function geoip_detect_version_check() {
 		return true;
 	}
 
-	if (WP_DEBUG)
+	if (WP_DEBUG) {
 		trigger_error($message);
+	}
 
 	add_action ( 'all_admin_notices', 'geoip_detect_version_minimum_requirements_notice' );
 
@@ -78,8 +79,9 @@ function geoip_detect_version_check_after_plugins_loaded() {
 		return true;
 	}
 
-	if (WP_DEBUG)
+	if (WP_DEBUG) {
 		trigger_error($message);
+	}
 
 	add_action ( 'all_admin_notices', 'geoip_detect_version_minimum_requirements_notice_woocommerce' );
 

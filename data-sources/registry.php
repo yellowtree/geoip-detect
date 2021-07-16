@@ -130,8 +130,8 @@ class DataSourceRegistry {
 		if (wp_using_ext_object_cache()) {
 			if (WP_DEBUG) {
 				\trigger_error('Object caching is active, so transient deletion routine does not do anything ...', E_USER_NOTICE);
-				return 'Object caching is active, so transient deletion routine does not do anything ...';
 			}
+			return 'Object caching is active, so transient deletion routine does not do anything ...';
 		} else {
 			return _geoip_detect2_empty_cache();
 		}

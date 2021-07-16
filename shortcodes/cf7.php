@@ -147,7 +147,7 @@ function geoip_detect2_shortcode_user_info_wpcf7($output, $name, $isHtml) {
 		$property = geoip_detect2_cf7_property_underscore_to_normal($property);
 
 		$info = geoip_detect2_get_info_from_current_ip();
-		$lines[] = geoip_detect2_shortcode_get_property_simplified($info, $property, WP_DEBUG ? '(Debug warning: this property is undefined or empty)' : '');
+		$lines[] = geoip_detect2_shortcode_get_property_simplified($info, $property);
 	} else {
 		switch($name) {
 			case 'geoip_detect2_get_client_ip':
