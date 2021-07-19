@@ -162,6 +162,9 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 ## Changelog ##
 
+= 4.2.1 =
+* FIX: Do not disable lookup automatically when potentially incompatible Maxmind libraries are found.
+
 = 4.2.0 =
 * NEW: Show a warning on the options page when there are incompatibilities with other plugins that also use the Maxmind libraries.
 * FIX: Remove an incompatibility of the libraries with Toolset or other Laravel-based plugins

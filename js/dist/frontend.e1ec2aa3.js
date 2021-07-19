@@ -38,4 +38,4 @@ function r(r,e){if(!Array.isArray(r)||!Array.isArray(e))throw new Error("expecte
 },{"@babel/runtime/helpers/asyncToGenerator":"fwsn","@babel/runtime/regenerator":"m4eR","./lib/html":"YIwO","./lookup":"yyFn"}],"ZVsn":[function(require,module,exports) {
 "use strict";var e=require("./lookup"),o=require("./shortcodes/index"),d=require("./body_classes");e.options.do_body_classes&&(0,d.add_body_classes)(),(0,o.do_shortcodes)(),window.geoip_detect.get_info=e.get_info,window.geoip_detect.set_override=e.set_override,window.geoip_detect.remove_override=e.remove_override;
 },{"./lookup":"yyFn","./shortcodes/index":"d5ii","./body_classes":"EtfF"}]},{},["ZVsn"], null)
-//# sourceMappingURL=frontend.e2558764.js.map
+//# sourceMappingURL=frontend.e1ec2aa3.js.map
