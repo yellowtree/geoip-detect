@@ -82,6 +82,14 @@ class Maxmind {
     }
 
     function checkCompatible() {
+        if (empty($_GET['page'])) {
+            return;
+        }
+
+        if ($_GET['page'] !== 'geoip-detect/geoip-detect.php') {
+            return;
+        }
+
         $readerClassInfo = new \ReflectionClass('\MaxMind\Db\Reader');
         if (!$readerClassInfo->hasMethod('getWithPrefixLen')) {
             $this->getFiles();
