@@ -84,14 +84,11 @@ class Maxmind {
     function checkCompatible() {
         $readerClassInfo = new \ReflectionClass('\MaxMind\Db\Reader');
         if (!$readerClassInfo->hasMethod('getWithPrefixLen')) {
-            // This would raise an Fatal error during lookup.
-            define('GEOIP_DETECT_LOOKUP_DISABLED', true);
-
             $this->getFiles();
             $data = implode(' , ', array_map([$this, 'makePathRelative'], $this->filesByOthers));
             $line1 = __('Appearently, there is another plugin installed that also uses the Maxmind libraries, but their version of these libraries is outdated.', 'geoip-detect');
-            $line2 = __('These files have been found to be loaded from another plugin: ', 'geoip-detect') . $data;
-            $line3 = __('Please disable that plugin, update that plugin or use a different data source in Geolocation IP Detection. Until then, the lookup for Maxmind sources is disabled.', 'geoip-detect');
+            $line2 = __('These incompatible files have been found to be loaded from another plugin: ', 'geoip-detect') . $data;
+            $line3 = __('Please test if looking up an IP adress works without an PHP Error. If it works, you can dismiss this notice. It will appear again when their libraries are changed.', 'geoip-detect');
 
             $body = <<<BODY
 <p><i>$line1</i></p>
