@@ -1,7 +1,10 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { getTestRecord, getTestRecordError } from "./test-lib/test-records";
 import { calc_classes } from "./body_classes";
 import Record from "./models/record";
-
 
 const emptyRecord = new Record();
 const defaultRecord = getTestRecord();
