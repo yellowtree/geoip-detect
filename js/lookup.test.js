@@ -1,10 +1,13 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { set_override, get_info } from "./lookup";
 import { getTestRecord } from "./test-lib/test-records";
 import Record from "./models/record";
 
 const defaultRecord = getTestRecord();
 const emptyRecord = new Record();
-
 
 test('override', async () => {
     let record;
