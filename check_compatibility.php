@@ -82,11 +82,7 @@ class Maxmind {
     }
 
     function checkCompatible() {
-        if (empty($_GET['page'])) {
-            return;
-        }
-
-        if ($_GET['page'] !== 'geoip-detect/geoip-detect.php') {
+        if (empty($_GET['page']) || $_GET['page'] !== 'geoip-detect/geoip-detect.php') {
             return;
         }
 
