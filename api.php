@@ -137,7 +137,7 @@ function geoip_detect2_get_info_from_ip(string $ip, $locales = null, $options = 
  * 		@param string       $source         Change the source for this request only. (Valid values: 'auto', 'manual', 'precision', 'header', 'hostinfo')
  * 		@param float 		$timeout		Total transaction timeout in seconds (Precision+HostIP.info API only)
  * 		@param int			$connectTimeout Initial connection timeout in seconds (Precision API only)
- * @return YellowTree\GeoipDetect\DataSources\City	GeoInformation.
+ * @return \YellowTree\GeoipDetect\DataSources\City	GeoInformation.
  *
  * @since 2.0.0
  * @since 2.4.0 New parameter $skipCache
@@ -146,11 +146,16 @@ function geoip_detect2_get_info_from_ip(string $ip, $locales = null, $options = 
  * @since 4.3.0 The result of this function is cached for the duration of the PHP execution (except if you use skipLocalCache)
  */
 function geoip_detect2_get_info_from_current_ip($locales = null, $options = array()) {
+	/** @var \YellowTree\GeoipDetect\DataSources\City  */
 	static $cache = null;
 
 	if (empty($options['skipLocalCache'])) {
 		if (!is_null($cache)) {
-			return $cache;
+			$locales = apply_filters('geoip_detect2_locales', $locales);
+			$data = $cache->jsonSerialize();
+			$data = apply_filters('geoip_detect2_record_data_after_cache', $data, $cache->traits->ipAddress);
+			$record = new \YellowTree\GeoipDetect\DataSources\City($data, $locales);
+			return $record;
 		}
 	}
 
