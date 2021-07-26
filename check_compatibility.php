@@ -82,6 +82,7 @@ class Maxmind {
     }
 
     function checkCompatible() {
+        // Only show on plugin pages
         if (empty($_GET['page']) || $_GET['page'] !== 'geoip-detect/geoip-detect.php') {
             return;
         }
@@ -101,7 +102,7 @@ class Maxmind {
 BODY;
             $this->adminNotices[] = [
                 'id' => 'maxmind_vendor_old_' . md5($data),
-                'title' => __('Geolocation IP Detection: Error: Old Maxmind Libraries detected.', 'geoip-detect'),
+                'title' => __('Geolocation IP Detection: Warning: Old Maxmind Libraries detected.', 'geoip-detect'),
                 'body' => $body,
             ];
             add_action( 'all_admin_notices', [$this, 'admin_notice'] );
@@ -112,7 +113,7 @@ BODY;
 
     function admin_notice() {
         foreach ($this->adminNotices as $notice) {
-            geoip_detect_admin_notice_template($notice['id'], $notice['title'], $notice['body']);
+            geoip_detect_admin_notice_template($notice['id'], $notice['title'], $notice['body'], true);
         }
     }
 }

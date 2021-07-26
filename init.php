@@ -79,7 +79,7 @@ function geoip_detect_is_ignored_notice($id) {
 	return false;
 }
 
-function geoip_detect_admin_notice_template($id, $title, $body) {
+function geoip_detect_admin_notice_template($id, $title, $body, $addButtonDismiss = false) {
 	if (geoip_detect_is_ignored_notice($id))
 		return;
 ?>
@@ -91,6 +91,11 @@ function geoip_detect_admin_notice_template($id, $title, $body) {
 	<h3><?php echo $title; ?></h3>
 
 	<?php echo $body; ?>
+	<?php if ($addButtonDismiss) : ?>
+	<p>
+		<a class="button button-secondary" href="?geoip_detect_dismiss_notice=<?= $id ?>">Hide this notice</a>
+	</p>
+	<?php endif; ?>
 </div>
 <?php
 }
