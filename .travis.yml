@@ -46,7 +46,7 @@ install:
   - composer require --ignore-platform-reqs --dev roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION}
   - composer install --ignore-platform-reqs
   - composer show
-  - nvm use 12
+  - nvm install 12 && nvm use 12
   - yarn install
 
 script:
