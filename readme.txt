@@ -167,6 +167,7 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 = 4.2.3 =
 * FIX: Further improve the Maxmind admin notice UI
+* Update some smaller libraries
 
 = 4.2.2 =
 * FIX: Show Maxmind admin notice only on GeoIP pages to make it less intrusive

@@ -46,6 +46,8 @@ install:
   - composer require --dev roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION}
   - composer install
   - composer show
+  - yarn install
 
 script:
   - composer test
+  - yarn test
