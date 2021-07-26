@@ -32,6 +32,9 @@ php:
   - 7.3
   - 7.2
 
+node_js:
+  - 12
+
 matrix:
   include:
     - php: 7.2
