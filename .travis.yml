@@ -32,9 +32,6 @@ php:
   - 7.3
   - 7.2
 
-node_js:
-  - 12
-
 matrix:
   include:
     - php: 7.2
@@ -49,6 +46,7 @@ install:
   - composer require --dev roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION}
   - composer install
   - composer show
+  - nvm use 12
   - yarn install
 
 script:
