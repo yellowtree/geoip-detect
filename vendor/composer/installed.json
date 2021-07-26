@@ -2548,8 +2548,8 @@
     },
     {
         "name": "wp-phpunit/wp-phpunit",
-        "version": "5.7.1",
-        "version_normalized": "5.7.1.0",
+        "version": "5.7.2",
+        "version_normalized": "5.7.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/wp-phpunit/wp-phpunit.git",
