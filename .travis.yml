@@ -43,8 +43,8 @@ before_script:
 
 install:
   - composer validate
-  - composer require --dev roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION}
-  - composer install
+  - composer require --ignore-platform-reqs --dev roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION}
+  - composer install --ignore-platform-reqs
   - composer show
   - nvm use 12
   - yarn install
