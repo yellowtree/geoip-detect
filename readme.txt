@@ -165,6 +165,9 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 == Changelog ==
 
+= 4.3.0 =
+* Minimum Wordpress version is 5.4 now. 
+
 = 4.2.3 =
 * FIX: Further improve the Maxmind admin notice UI
 * Update some smaller libraries
