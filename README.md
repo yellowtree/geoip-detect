@@ -162,6 +162,12 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 ## Changelog ##
 
+= 4.3.0 =
+* NEW: Drastically improving performance if the the lookup is performed for the current IP more than once (e.g. because of shortcodes)
+* UI: Showing the time for the subsequent lookup on the Test Lookup page
+* Minimum Wordpress version is 5.4 now. 
+* Update some smaller libraries
+
 = 4.2.3 =
 * FIX: Further improve the Maxmind admin notice UI
 * Update some smaller libraries
