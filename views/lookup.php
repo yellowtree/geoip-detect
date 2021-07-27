@@ -6,6 +6,15 @@ $registry = DataSourceRegistry::getInstance();
 $current_source = $registry->getCurrentSource();
 $can_be_cached = $registry->isSourceCachable($current_source->getId());
 
+if (!empty($request_ip)) {
+	$code = "<code>\$record = ";
+	if ($request_ip == $current_ip) {
+		$code .= "geoip_detect2_get_info_from_current_ip(";
+	} else {
+		$code .= "geoip_detect2_get_info_from_ip('" . esc_html($request_ip) . "', ";
+	}
+	$code .= var_export_short($request_locales, true) . ($request_skipCache ? ', [ \'skipCache\' => TRUE ]' : '') .");</code>";
+}
 
 $is_ajax_enabled = !!get_option('geoip-detect-ajax_enabled');
 
@@ -57,7 +66,7 @@ function var_export_short($data, $return=true)
 	</p>
 
 	<p>
-		<b><?= __('Your current IP:', 'geoip-detect');?></b> <?php echo geoip_detect2_get_client_ip(); ?>
+		<b><?= __('Your current IP:', 'geoip-detect');?></b> <?php echo $current_ip; ?>
 		<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_part=client-ip">(<?= __('Not correct?', 'geoip-detect');?>)</a>
 		<?php if (geoip_detect_is_internal_ip(geoip_detect2_get_client_ip())) : ?>
 		<br><i>(<?php printf(__('This is an IP internal to your network. When looking up this IP, it will use the external IP of the server instead: %s', 'geoip-detect'), geoip_detect2_get_external_ip_adress()); ?>)</i>
@@ -84,6 +93,7 @@ function var_export_short($data, $return=true)
 			</select>
 		</label><br>
 		<label><input type="checkbox" name="skip_cache" value="1" <?php if (!empty($_POST['skip_cache'])) echo 'checked="checked"'?>/><?= __('Skip cache', 'geoip-detect')?></label><br />
+		<label><input type="checkbox" name="skip_local_cache" value="1" <?php if (!empty($_POST['skip_local_cache'])) echo 'checked="checked"'?>/><?= __('Skip local cache (only works for <code>geoip_detect2_get_info_from_current_ip</code>)', 'geoip-detect')?></label><br />
 		<br />
 		<input type="submit" class="button button-primary" value="<?= __('Lookup', 'geoip-detect'); ?>" />
 	</form>
@@ -109,7 +119,7 @@ function var_export_short($data, $return=true)
 	<?php endif; ?>
 	<p>
 		<?php if ($_POST['syntax'] == 'php') : ?>
-		<?php printf(__('The function %s returns an object:', 'geoip-detect'), "<code>\$record = geoip_detect2_get_info_from_ip('" . esc_html($request_ip) . "', " . var_export_short($request_locales, true) . ($request_skipCache ? ', [ \'skipCache\' => TRUE ]' : '') .");</code>"); ?><br />
+		<?php printf(__('The function %s returns an object:', 'geoip-detect'), $code); ?><br />
 		<?= sprintf(__('See %s for more information.', 'geoip-detect'), '<a href="https://github.com/yellowtree/geoip-detect/wiki/API:-PHP">API: PHP</a>'); ?>
 		<?php elseif ($_POST['syntax'] == 'shortcode') : ?>
 		<?= sprintf(__('You can use the following shortcodes.', 'geoip-detect')); ?><br />
@@ -120,8 +130,9 @@ function var_export_short($data, $return=true)
 		<?php endif; ?>
 	</p>
 	<p>
-		<?php printf(__('Lookup duration: %.5f s', 'geoip-detect'), $ip_lookup_duration); ?>
-		<?php if ($record->extra->cached) : ?><i><?= __('(From cache.)', 'geoip-detect');?></i><?php endif; ?>
+		<?php printf(__('Lookup duration: %.2f ms', 'geoip-detect'), $ip_lookup_duration * 1000); ?>
+		<?php if ($record->extra->cached) : ?><i><?= __('(From cache.)', 'geoip-detect');?></i><?php endif; ?><br>
+		<?php printf(__('Lookup duration when called for the second time in the same request: %.4f ms', 'geoip-detect'), $ip_lookup_2nd_duration * 1000); ?>
 	</p>
 	<?php if ($record->isEmpty) : ?>
 	<p class="geoip_detect_error">
