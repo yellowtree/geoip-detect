@@ -20,9 +20,9 @@
     "just-safe-get": "2.1.2"
   },
   "devDependencies": {
-    "@babel/core": "7.13.8",
-    "@babel/plugin-transform-runtime": "7.13.9",
-    "@babel/preset-env": "7.13.9",
+    "@babel/core": "7.14.8",
+    "@babel/plugin-transform-runtime": "7.14.5",
+    "@babel/preset-env": "7.14.8",
     "babel-jest": "27.0.6",
     "babel-plugin-transform-class-properties": "6.24.1",
     "eslint": "7.31.0",
