@@ -74,6 +74,15 @@ async function get_info_cached() {
     return response;
 }
 
+/**
+ * Override only one property, leave the other properties as-is.
+ * @param {string} property 
+ * @param {*} value 
+ * @param {number} duration_in_days 
+ */
+export function set_override_with_merge(property, value, duration_in_days) {
+
+}
 
 /**
  * This functions allows to override the geodetected data manually (e.g. a country selector)

@@ -1,6 +1,6 @@
 import { domReady } from "../lib/html";
 import { action_on_elements } from "./helpers";
-import { do_shortcode_country_select, do_shortcode_flags, do_shortcode_normal, do_shortcode_text_input } from "./normal";
+import { do_shortcode_country_select, do_shortcode_flags, do_shortcode_normal, do_shortcode_text_input, event_listener_autosave_on_change } from "./normal";
 import { do_shortcode_show_if } from "./show-if";
 
 
@@ -24,4 +24,5 @@ export const do_shortcodes = async function do_shortcodes() {
     action_on_elements('js-geoip-detect-show-if',
         'could not execute the show-if/hide-if conditions', do_shortcode_show_if);
 
+    document.addEventListener('change', event_listener_autosave_on_change, false);
 };

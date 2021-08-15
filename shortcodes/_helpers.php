@@ -34,6 +34,9 @@ function _geoip_detect2_shortcode_options($attr) {
 	if (isset($attr['property'])) {
 		$opt['property'] = $attr['property'];
 	}
+	if (isset($attr['autosave'])) {
+		$opt['autosave'] = $attr['autosave'];
+	}
 	return $opt;
 }
 
