@@ -1,6 +1,10 @@
 import Record from './models/record';
 import { getLocalStorage, setLocalStorage } from './lib/localStorageAccess';
 import { makeJSONRequest } from './lib/xhr';
+import _set from 'just-safe-set';
+import _compare from 'just-compare';
+import { do_shortcodes } from './shortcodes';
+import { main } from './main';
 
 
 export const options = window.geoip_detect?.options || {
@@ -81,7 +85,9 @@ async function get_info_cached() {
  * @param {number} duration_in_days 
  */
 export function set_override_with_merge(property, value, duration_in_days) {
-
+    let record = getLocalStorage(options.cookie_name);
+    _set(record, property, value);
+    set_override(record, duration_in_days);
 }
 
 /**
@@ -105,16 +111,21 @@ export function set_override(record, duration_in_days) {
 
     return set_override_data(record, duration_in_days);
 }
-function set_override_data(data, duration_in_days) {
-    if (!data) {
-        data = {};
+function set_override_data(newData, duration_in_days) {
+    if (!newData) {
+        newData = {};
     }
-    if (!data.extra) {
-        data.extra = {};
+    if (!newData.extra) {
+        newData.extra = {};
     }
-    data.extra.override = true;
+    newData.extra.override = true;
 
-    setLocalStorage(options.cookie_name, data, duration_in_days * 24 * 60 * 60);
+    const oldData = getLocalStorage(options.cookie_name);
+    setLocalStorage(options.cookie_name, newData, duration_in_days * 24 * 60 * 60);
+    if (!_compare(newData, oldData)) {
+        // if data has changed, trigger re-evaluation for shortcodes etc
+        main();
+    }
     return true;
 }
 
