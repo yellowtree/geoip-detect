@@ -68,6 +68,9 @@ function geoip_detect2_shortcode_text_input($attr) {
 	if (geoip_detect2_shortcode_is_ajax_mode($attr)) {
 		geoip_detect2_enqueue_javascript('shortcode');
 		$html_attrs['class'] .= ' js-geoip-text-input';
+		if (!empty($shortcode_options['autosave'])) {
+			$select_attrs['class'] .= ' js-geoip-detect-input-autosave';
+		}
 		$html_attrs['data-options'] = wp_json_encode(_geoip_detect2_shortcode_options($attr));
 	} else {
 		$html_attrs['value'] = geoip_detect2_shortcode($attr + array('add_error' => false));
