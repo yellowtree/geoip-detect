@@ -10,6 +10,11 @@ export function calc_classes(record) {
     };
 }
 
+function remove_css_classes_by_prefix(el, prefix) {
+    const classes = el.className.split(" ").filter(c => !c.startsWith(prefix));
+    el.className = classes.join(" ").trim();
+}
+
 export async function add_body_classes() {
     const record = await get_info();
 
@@ -18,11 +23,19 @@ export async function add_body_classes() {
         return;
     }
 
-    const css_classes = calc_classes(record);
-
     await domReady;
 
+    add_classes_to_body(record);
+}
+
+export function add_classes_to_body(record) {
+    const css_classes = calc_classes(record);
+
     const body = document.getElementsByTagName('body')[0];
+    
+    // Remove old classes in case there are any
+    remove_css_classes_by_prefix(body, 'geoip-');
+    
     for (let key of Object.keys(css_classes)) {
         const value = css_classes[key];
         if (value) {

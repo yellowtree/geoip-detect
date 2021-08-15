@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { set_override, get_info } from "./lookup";
+import { set_override, get_info, set_override_with_merge, get_info_stored_locally_record } from "./lookup";
 import { getTestRecord } from "./test-lib/test-records";
 import Record from "./models/record";
 
@@ -23,34 +23,42 @@ test('override', async () => {
     expect(record.get_country_iso()).toBe('');
 
     set_override({country:{iso_code: 'fr'}});
-    record = await get_info();
+    record = get_info_stored_locally_record();
 
     expect(record.get_country_iso()).toBe('fr');
 
     set_override({ });
-    record = await get_info();
+    record = get_info_stored_locally_record();
 
     expect(record.get_country_iso()).toBe('');
 })
 
-test('override data', async () => {
+test('override data', () => {
     let record;
 
     set_override({ country: { iso_code: 'fr' } });
-    record = await get_info();
+    record = get_info_stored_locally_record();
     expect(record.get_country_iso()).toBe('fr');
 
     set_override({});
-    record = await get_info();
+    record = get_info_stored_locally_record();
     expect(record.get_country_iso()).toBe('');
 
     set_override({ country: { iso_code: 'ru' } });
-    record = await get_info();
+    record = get_info_stored_locally_record();
     expect(record.get_country_iso()).toBe('ru');
 
     set_override();
-    record = await get_info();
+    record = get_info_stored_locally_record();
     expect(record.get_country_iso()).toBe('');
+
+    set_override_with_merge('country.iso_code', 'fr');
+    record = get_info_stored_locally_record();
+    expect(record.get_country_iso()).toBe('fr');
+    set_override_with_merge('city.name', 'Paris');
+    record = get_info_stored_locally_record();
+    expect(record.get_country_iso()).toBe('fr');
+    expect(record.get('city.name')).toBe('Paris');
 });
 
 test('warning if negative duration', () => {

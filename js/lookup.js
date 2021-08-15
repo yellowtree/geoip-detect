@@ -11,7 +11,8 @@ export const options = window.geoip_detect?.options || {
     ajaxurl: "/wp-admin/admin-ajax.php",
     default_locales: ['en'],
     cookie_duration_in_days: 7,
-    cookie_name: 'geoip-detect-result'
+    cookie_name: 'geoip-detect-result',
+    do_body_classes: false
 };
 
 let ajaxPromise = null;
@@ -39,7 +40,7 @@ async function get_info_cached() {
 
     // 1) Load Info from localstorage cookie cache, if possible
     if (options.cookie_name) {
-        storedResponse = getLocalStorage(options.cookie_name)
+        storedResponse = get_info_stored_locally()
         if (storedResponse && storedResponse.extra) {
             if (storedResponse.extra.override === true) {
                 console.info('Geolocation IP Detection: Using cached response (override)');
@@ -62,7 +63,7 @@ async function get_info_cached() {
     if (options.cookie_name) {
 
         // Check if Override has been set now
-        storedResponse = getLocalStorage(options.cookie_name)
+        storedResponse = get_info_stored_locally()
         if (storedResponse?.extra?.override === true) {
             console.info('Geolocation IP Detection: Using cached response (override)');
             return storedResponse;
@@ -85,7 +86,7 @@ async function get_info_cached() {
  * @param {number} duration_in_days 
  */
 export function set_override_with_merge(property, value, duration_in_days) {
-    let record = getLocalStorage(options.cookie_name);
+    let record = get_info_stored_locally();
     _set(record, property, value);
     set_override(record, duration_in_days);
 }
@@ -120,7 +121,7 @@ function set_override_data(newData, duration_in_days) {
     }
     newData.extra.override = true;
 
-    const oldData = getLocalStorage(options.cookie_name);
+    const oldData = get_info_stored_locally();
     setLocalStorage(options.cookie_name, newData, duration_in_days * 24 * 60 * 60);
     if (!_compare(newData, oldData)) {
         // if data has changed, trigger re-evaluation for shortcodes etc
@@ -159,4 +160,13 @@ export async function get_info() {
 
     const record = new Record(response, options.default_locales);
     return record;
+}
+
+// Sync function in case it is known that no AJAX will occur
+export function get_info_stored_locally() {
+    return getLocalStorage(options.cookie_name);
+}
+
+export function get_info_stored_locally_record() {
+    return new Record(get_info_stored_locally(), options.default_locales);
 }
