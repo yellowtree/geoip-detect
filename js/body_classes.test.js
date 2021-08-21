@@ -3,9 +3,9 @@
  */
 
 import { getTestRecord, getTestRecordError } from "./test-lib/test-records";
-import { add_body_classes, add_classes_to_body, calc_classes } from "./body_classes";
+import { add_classes_to_body, calc_classes } from "./body_classes";
 import Record from "./models/record";
-import { options, set_override, set_override_with_merge } from "./lookup";
+import { get_info_stored_locally_record, options, set_override, set_override_with_merge } from "./lookup";
 
 const emptyRecord = new Record();
 const defaultRecord = getTestRecord();
@@ -40,7 +40,10 @@ test('css_classes', () => {
     expect(body.classList.contains('geoip-country-DE')).toBe(true);
     expect(body.classList.contains('geoip-country-FR')).toBe(false);
 
-    set_override_with_merge('country.iso_code', 'FR'); // add_body_classes is calculated again implicitely
+    set_override_with_merge('country.iso_code', 'FR');
+    let record = get_info_stored_locally_record();
+    add_classes_to_body(record); 
+
     expect(body.classList.contains('geoip-country-FR')).toBe(true);
     expect(body.classList.contains('geoip-country-DE')).toBe(false);
 });

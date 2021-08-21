@@ -59,6 +59,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @return string The generated HTML
  */
 function geoip_detect2_shortcode_country_select($attr) {
+	$attr['property'] = 'country.iso_code';
 	$shortcode_options = _geoip_detect2_shortcode_options($attr);
 
 	$select_attrs = array(
@@ -74,7 +75,7 @@ function geoip_detect2_shortcode_country_select($attr) {
 	if (geoip_detect2_shortcode_is_ajax_mode($attr) && !isset($attr['selected']) ) {
 		geoip_detect2_enqueue_javascript('shortcode');
 		$select_attrs['class'] .= ' js-geoip-detect-country-select';
-		if (!empty($shortcode_options['autosave'])) {
+		if (!empty($attr['autosave'])) {
 			$select_attrs['class'] .= ' js-geoip-detect-input-autosave';
 		}
 		$select_attrs['data-options'] = wp_json_encode($shortcode_options);

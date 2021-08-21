@@ -16,6 +16,7 @@ test('override', async () => {
     record = await get_info();
 
     expect(record.get_country_iso()).toBe('de');
+    expect(record.get('extra.override')).toBe(true);
 
     set_override(emptyRecord);
     record = await get_info();
@@ -59,6 +60,10 @@ test('override data', () => {
     record = get_info_stored_locally_record();
     expect(record.get_country_iso()).toBe('fr');
     expect(record.get('city.name')).toBe('Paris');
+
+    set_override_with_merge('a.b.c', 'd');
+    record = get_info_stored_locally_record();
+    expect(record.get('a.b.c')).toBe('d');
 });
 
 test('warning if negative duration', () => {

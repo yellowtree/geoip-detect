@@ -1,4 +1,4 @@
-import Record from './models/record';
+import Record, { camelToUnderscore } from './models/record';
 import { getLocalStorage, setLocalStorage } from './lib/localStorageAccess';
 import { makeJSONRequest } from './lib/xhr';
 import _set from 'just-safe-set';
@@ -40,7 +40,7 @@ async function get_info_cached() {
 
     // 1) Load Info from localstorage cookie cache, if possible
     if (options.cookie_name) {
-        storedResponse = get_info_stored_locally()
+        storedResponse = getRecordDataFromLocalStorage()
         if (storedResponse && storedResponse.extra) {
             if (storedResponse.extra.override === true) {
                 console.info('Geolocation IP Detection: Using cached response (override)');
@@ -63,7 +63,7 @@ async function get_info_cached() {
     if (options.cookie_name) {
 
         // Check if Override has been set now
-        storedResponse = get_info_stored_locally()
+        storedResponse = getRecordDataFromLocalStorage()
         if (storedResponse?.extra?.override === true) {
             console.info('Geolocation IP Detection: Using cached response (override)');
             return storedResponse;
@@ -86,7 +86,8 @@ async function get_info_cached() {
  * @param {number} duration_in_days 
  */
 export function set_override_with_merge(property, value, duration_in_days) {
-    let record = get_info_stored_locally();
+    let record = getRecordDataFromLocalStorage() || {};
+    property = camelToUnderscore(property);
     _set(record, property, value);
     set_override(record, duration_in_days);
 }
@@ -97,7 +98,7 @@ export function set_override_with_merge(property, value, duration_in_days) {
  * @api
  * @param {*} record 
  * @param {number} duration_in_days When this override expires (default: 1 week later)
- * @return boolean
+ * @return boolean TRUE if override data changed
  */
 export function set_override(record, duration_in_days) {
     if (record && typeof(record.serialize) === 'function') {
@@ -113,21 +114,21 @@ export function set_override(record, duration_in_days) {
     return set_override_data(record, duration_in_days);
 }
 function set_override_data(newData, duration_in_days) {
-    if (!newData) {
-        newData = {};
-    }
-    if (!newData.extra) {
-        newData.extra = {};
-    }
-    newData.extra.override = true;
+    newData = newData || {};
+    _set(newData, 'extra.override', true);
 
-    const oldData = get_info_stored_locally();
+    const oldData = getRecordDataFromLocalStorage();
     setLocalStorage(options.cookie_name, newData, duration_in_days * 24 * 60 * 60);
+
     if (!_compare(newData, oldData)) {
         // if data has changed, trigger re-evaluation for shortcodes etc
-        main();
+        setTimeout(function() {
+            main();
+        }, 10);
+        return true;
     }
-    return true;
+    
+    return false;
 }
 
 /**
@@ -163,10 +164,10 @@ export async function get_info() {
 }
 
 // Sync function in case it is known that no AJAX will occur
-export function get_info_stored_locally() {
+function getRecordDataFromLocalStorage() {
     return getLocalStorage(options.cookie_name);
 }
 
 export function get_info_stored_locally_record() {
-    return new Record(get_info_stored_locally(), options.default_locales);
+    return new Record(getRecordDataFromLocalStorage(), options.default_locales);
 }

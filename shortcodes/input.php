@@ -48,7 +48,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @param string $ip            Lookup the data of a specific IP instead of the current client IP (this parameter does not work in AJAX mode)
  * @param string $placeholder	HZML attribute "plaecholer"
  * @param bool   $ajax          1: Execute this shortcode as AJAX | 0: Execute this shortcode on the server | Unset: Use the global settings (execute as AJAX if both 'AJAX' and 'Resolve shortcodes (via Ajax)' are enabled)
-
+ * @param bool   $autosave      1: In Ajax mode, when the user changes the country, save his choice in his browser. (optional, Ajax mode only)
  *
  * @return string The generated HTML
  */
@@ -68,8 +68,8 @@ function geoip_detect2_shortcode_text_input($attr) {
 	if (geoip_detect2_shortcode_is_ajax_mode($attr)) {
 		geoip_detect2_enqueue_javascript('shortcode');
 		$html_attrs['class'] .= ' js-geoip-text-input';
-		if (!empty($shortcode_options['autosave'])) {
-			$select_attrs['class'] .= ' js-geoip-detect-input-autosave';
+		if (!empty($attr['autosave'])) {
+			$html_attrs['class'] .= ' js-geoip-detect-input-autosave';
 		}
 		$html_attrs['data-options'] = wp_json_encode(_geoip_detect2_shortcode_options($attr));
 	} else {
