@@ -1,4 +1,5 @@
-import { get_info, remove_override, set_override } from './lookup';
+import { get_info } from './lookup';
+import { remove_override, set_override } from './lookup_override';
 import { main } from './main';
 
 // Evaluate shortcodes, body classes, etc.

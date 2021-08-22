@@ -1,11 +1,12 @@
 import { domReady } from "../lib/html";
 import { action_on_elements } from "./helpers";
-import { do_shortcode_country_select, do_shortcode_flags, do_shortcode_normal, do_shortcode_text_input, event_listener_autosave_on_change } from "./normal";
+import { do_shortcode_country_select, do_shortcode_flags, do_shortcode_normal, do_shortcode_text_input } from "./normal";
+import { init as onchangeInit }  from "./onchange";
 import { do_shortcode_show_if } from "./show-if";
 
 
 export const do_shortcodes_init = function () {
-    document.addEventListener('change', event_listener_autosave_on_change, false);
+    onchangeInit();
 }
 
 export const do_shortcodes = async function do_shortcodes() {
