@@ -1,4 +1,4 @@
-import { get_info } from "../lookup";
+import { get_info } from "../lookup/get_info";
 
 // Get Options from data-options and json parse them
 export function get_options(el) {

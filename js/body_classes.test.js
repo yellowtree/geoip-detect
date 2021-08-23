@@ -5,8 +5,7 @@
 import { getTestRecord, getTestRecordError } from "./test-lib/test-records";
 import { add_classes_to_body, calc_classes } from "./body_classes";
 import Record from "./models/record";
-import { get_info_stored_locally_record } from "./lookup_override";
-import { set_override_with_merge } from "./lookup_override";
+import { set_override_with_merge, get_info_stored_locally_record } from "./lookup/override";
 
 const emptyRecord = new Record();
 const defaultRecord = getTestRecord();

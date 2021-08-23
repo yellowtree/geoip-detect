@@ -1,6 +1,6 @@
 import { do_shortcodes, do_shortcodes_init } from './shortcodes/index';
 import { add_body_classes } from './body_classes';
-import { options } from './lookup';
+import { options } from './lookup/get_info';
 
 let firstCall = true;
 

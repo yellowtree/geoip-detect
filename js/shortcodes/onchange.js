@@ -1,5 +1,5 @@
 import { isInternalEvent } from "../lib/html";
-import { set_override_with_merge } from "../lookup_override";
+import { set_override_with_merge } from "../lookup/override";
 
 let _listener_active = false; // for recursion detection (maybe remove later)
 let _change_counter = 0; // ToDo remove later!

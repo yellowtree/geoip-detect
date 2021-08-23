@@ -1,9 +1,9 @@
-import { getLocalStorage, setLocalStorage } from './lib/localStorageAccess';
-import { options } from './lookup';
-import Record, { camelToUnderscore } from './models/record';
+import { getLocalStorage, setLocalStorage } from '../lib/localStorageAccess';
+import { options } from './get_info';
+import Record, { camelToUnderscore } from '../models/record';
 import _set from 'just-safe-set';
 import _compare from 'just-compare';
-import { main } from './main';
+import { main } from '../main';
 
 /**
  * Override only one property, leave the other properties as-is.

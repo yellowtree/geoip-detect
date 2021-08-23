@@ -2,10 +2,10 @@
  * @jest-environment jsdom
  */
 
-import { set_override, set_override_with_merge, get_info_stored_locally_record } from "./lookup_override";
-import { getTestRecord } from "./test-lib/test-records";
-import Record from "./models/record";
-import { get_info } from "./lookup";
+import { set_override, set_override_with_merge, get_info_stored_locally_record } from "./override";
+import { getTestRecord } from "../test-lib/test-records";
+import Record from "../models/record";
+import { get_info } from "./get_info";
 
 const defaultRecord = getTestRecord();
 const emptyRecord = new Record();

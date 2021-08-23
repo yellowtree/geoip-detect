@@ -1,5 +1,5 @@
 import { domReady } from './lib/html';
-import { get_info } from './lookup';
+import { get_info } from './lookup/get_info';
 
 export function calc_classes(record) {
     return {
