@@ -23,10 +23,10 @@
     "@babel/core": "7.14.8",
     "@babel/plugin-transform-runtime": "7.14.5",
     "@babel/preset-env": "7.14.8",
-    "babel-jest": "27.0.6",
+    "babel-jest": "27.1.0",
     "babel-plugin-transform-class-properties": "6.24.1",
     "eslint": "7.32.0",
-    "jest": "27.0.6",
+    "jest": "27.1.0",
     "parcel-bundler": "1.12.5",
     "parcel-plugin-assets-list": "1.7.1"
   }
