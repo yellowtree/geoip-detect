@@ -1,4 +1,4 @@
 // babel.config.js
 module.exports = {
-    presets: [['@babel/preset-env', { targets: "> 0.25%, not dead" }]],
+    presets: [['@babel/preset-env', { targets: "> 0.25%, last 2 versions, not dead" }]],
 };

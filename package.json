@@ -2,14 +2,14 @@
   "name": "geoip-detect",
   "version": "2.11.0",
   "description": "Geolocation IP Detection - Wordpress Plugin (JS)",
-  "main": "index.js",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
   "repository": "git@github.com:yellowtree/geoip-detect.git",
   "author": "Benjamin Pick <benjaminpick@github.com>",
   "license": "GPL-3.0-or-later",
   "scripts": {
     "clean": "rm -rf .cache",
-    "start": "rm -rf js/dist && parcel parcel.urls --out-dir js/dist --public-url .",
-    "build": "rm -rf js/dist && parcel build parcel.urls --out-dir js/dist --public-url .",
+    "start": "rm -rf js/dist && parcel js/frontend.js --dist-dir js/dist --public-url .",
+    "build": "rm -rf js/dist && parcel build js/frontend.js --dist-dir js/dist --public-url .",
     "test": "jest --coverage"
   },
   "private": false,
@@ -29,7 +29,6 @@
     "babel-plugin-transform-class-properties": "6.24.1",
     "eslint": "7.31.0",
     "jest": "27.0.6",
-    "parcel-bundler": "1.12.5",
-    "parcel-plugin-assets-list": "1.7.1"
+    "parcel": "2.0.0-rc.0"
   }
 }
