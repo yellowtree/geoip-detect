@@ -3,6 +3,7 @@ import { options } from './get_info';
 import Record, { camelToUnderscore } from '../models/record';
 import _set from 'just-safe-set';
 import _get from 'just-safe-get';
+import _debounce from 'just-debounce-it';
 import _compare from 'just-compare';
 import { main } from '../main';
 
@@ -55,6 +56,7 @@ export function set_override(record, duration_in_days) {
 
     return set_override_data(record, duration_in_days);
 }
+
 function set_override_data(newData, duration_in_days) {
     newData = newData || {};
     _set(newData, 'extra.override', true);
@@ -63,10 +65,7 @@ function set_override_data(newData, duration_in_days) {
     setLocalStorage(options.cookie_name, newData, duration_in_days * 24 * 60 * 60);
 
     if (!_compare(newData, oldData)) {
-        // if data has changed, trigger re-evaluation for shortcodes etc
-        setTimeout(function () {
-            main();
-        }, 10);
+        _debounce(main, 50); // When many changes occur quickly one after the other, apply them later together
         return true;
     }
 

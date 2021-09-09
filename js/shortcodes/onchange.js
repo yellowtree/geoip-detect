@@ -27,6 +27,7 @@ function event_listener_autosave_on_change(event) {
                 return;
             } else {
                 _listener_active = true;
+
                 if (target.matches('select.js-geoip-detect-country-select')) {
                     const selected = target.options[target.selectedIndex];
                     const isoCode = selected?.getAttribute('data-c');
@@ -34,6 +35,7 @@ function event_listener_autosave_on_change(event) {
                         set_override_with_merge('country.iso_code', isoCode.toUpperCase());
                     }
                 }
+                
                 set_override_with_merge(property, value); // might call do_shortcodes etc.
 
                 _listener_active = false;
