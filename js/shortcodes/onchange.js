@@ -1,6 +1,7 @@
 
 import { isInternalEvent } from "../lib/events";
 import { set_override_with_merge } from "../lookup/override";
+import { get_options } from "./helpers";
 
 let _listener_active = false; // for recursion detection (maybe remove later)
 let _change_counter = 0; // ToDo remove later!
@@ -26,7 +27,15 @@ function event_listener_autosave_on_change(event) {
                 return;
             } else {
                 _listener_active = true;
+                if (target.matches('select.js-geoip-detect-country-select')) {
+                    const selected = target.options[target.selectedIndex];
+                    const isoCode = selected?.getAttribute('data-c');
+                    if (isoCode) {
+                        set_override_with_merge('country.iso_code', isoCode.toUpperCase());
+                    }
+                }
                 set_override_with_merge(property, value); // might call do_shortcodes etc.
+
                 _listener_active = false;
             }
         }

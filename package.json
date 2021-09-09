@@ -7,7 +7,7 @@
   "license": "GPL-3.0-or-later",
   "scripts": {
     "clean": "rm -rf .cache",
-    "start": "rm -rf js/dist && parcel js/frontend.js --dist-dir js/dist --public-url .",
+    "start": "parcel js/frontend.js --dist-dir js/dist --public-url .",
     "build": "rm -rf js/dist && parcel build js/frontend.js --dist-dir js/dist --public-url .",
     "test": "jest --coverage",
     "update-browserlist": "browserslist --update-db"

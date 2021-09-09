@@ -2,6 +2,7 @@ import { getLocalStorage, setLocalStorage } from '../lib/localStorageAccess';
 import { options } from './get_info';
 import Record, { camelToUnderscore } from '../models/record';
 import _set from 'just-safe-set';
+import _get from 'just-safe-get';
 import _compare from 'just-compare';
 import { main } from '../main';
 
@@ -13,9 +14,24 @@ import { main } from '../main';
  */
 export function set_override_with_merge(property, value, duration_in_days) {
     let record = getRecordDataFromLocalStorage() || {};
+    property = property || '';
+    
     property = camelToUnderscore(property);
+
+console.log('data before', record);
+    const oldData = _get(record, property);
+    if (typeof(oldData) == 'object' && typeof(oldData.names) == 'object') {
+        property += '.name';
+    }
+    if (property.endsWith('.name')) {
+        property += 's';
+        value = { 'en' : value };
+    }
+    
     _set(record, property, value);
     set_override(record, duration_in_days);
+
+console.log('data after', getRecordDataFromLocalStorage());
 }
 
 /**

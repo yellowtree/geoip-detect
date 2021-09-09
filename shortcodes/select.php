@@ -59,7 +59,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @return string The generated HTML
  */
 function geoip_detect2_shortcode_country_select($attr) {
-	$attr['property'] = 'country.iso_code';
+	$attr['property'] = 'country.name';
 	$shortcode_options = _geoip_detect2_shortcode_options($attr);
 
 	$select_attrs = array(
