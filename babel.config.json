@@ -1,0 +1,9 @@
+{
+    "plugins": [
+        "transform-class-properties",
+        "@babel/plugin-transform-runtime"
+    ],
+    "presets": [
+        "@babel/preset-env"
+    ]
+}
