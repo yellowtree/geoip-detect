@@ -5256,7 +5256,7 @@ just-compare@1.4.0:
   resolved "https://registry.yarnpkg.com/just-compare/-/just-compare-1.4.0.tgz#079b7f37312c7a22517b3bf2aa7131bfd24c29dd"
   integrity sha512-uNZ4VC7/WoBWAasr2FDOYtIb7S6e4K4ERJTnyYHSBltJQ3/Qg2c/HX+vFT4Zas5tw/e/jWxvaaOD84QcgCxRGw==
 
-just-debounce-it@^1.5.0:
+just-debounce-it@1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/just-debounce-it/-/just-debounce-it-1.5.0.tgz#2276448332dd5925e825ba3c524a71da707bf628"
   integrity sha512-itSWJS5d2DTSCizVJ2Z0Djx/dGmUGfZe7WNfUfVP23+htGcIcPHbEjL4eB8ljojTs/+oYwLexImRRCP0A2WXjA==
