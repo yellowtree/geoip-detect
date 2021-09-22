@@ -1,4 +1,5 @@
-import { selectItemByAttribute, triggerNativeEvent } from "../lib/html";
+import { triggerNativeEvent } from "../lib/events";
+import { selectItemByAttribute } from "../lib/html";
 import { get_value_from_record, get_options } from "./helpers";
 
 export function do_shortcode_normal(el, record) {
@@ -11,6 +12,7 @@ export function do_shortcode_flags(el, record) {
         el.classList.add('flag-icon-' + country)
     }
 }
+
 
 export function do_shortcode_country_select(el, record) {
     let country = record.get_country_iso();

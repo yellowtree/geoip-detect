@@ -1,15 +1,9 @@
-import { get_info, options, remove_override, set_override } from './lookup';
-import { do_shortcodes } from './shortcodes/index';
-import { add_body_classes } from './body_classes';
+import { get_info } from './lookup/get_info';
+import { remove_override, set_override } from './lookup/override';
+import { main } from './main';
 
-
-
-if (options.do_body_classes) {
-    add_body_classes();
-}
-
-// Do all the shortcodes that are in the HTML. Even if shortcodes is not enabled globally, they might be enabled for a specific shortcode.
-do_shortcodes();
+// Evaluate shortcodes, body classes, etc.
+main();
 
 
 // Extend window object 

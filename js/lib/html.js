@@ -31,14 +31,3 @@ export function selectItemByAttribute(el, attributeName, attributeValue) {
         }
     }
 }
-
-
-export function triggerNativeEvent(el, name) {
-    if (document.createEvent) {
-        const event = document.createEvent('HTMLEvents');
-        event.initEvent(name, true, false);
-        el.dispatchEvent(event);
-    } else {
-        el.fireEvent('on' + name);
-    }
-}

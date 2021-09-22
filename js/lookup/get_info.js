@@ -1,13 +1,15 @@
-import Record from './models/record';
-import { getLocalStorage, setLocalStorage } from './lib/localStorageAccess';
-import { makeJSONRequest } from './lib/xhr';
+import Record from '../models/record';
+
+import { makeJSONRequest } from '../lib/xhr';
+import { getRecordDataFromLocalStorage, setRecordDataToLocalStorage } from './override';
 
 
 export const options = window.geoip_detect?.options || {
     ajaxurl: "/wp-admin/admin-ajax.php",
     default_locales: ['en'],
     cookie_duration_in_days: 7,
-    cookie_name: 'geoip-detect-result'
+    cookie_name: 'geoip-detect-result',
+    do_body_classes: false
 };
 
 let ajaxPromise = null;
@@ -35,7 +37,7 @@ async function get_info_cached() {
 
     // 1) Load Info from localstorage cookie cache, if possible
     if (options.cookie_name) {
-        storedResponse = getLocalStorage(options.cookie_name)
+        storedResponse = getRecordDataFromLocalStorage()
         if (storedResponse && storedResponse.extra) {
             if (storedResponse.extra.override === true) {
                 console.info('Geolocation IP Detection: Using cached response (override)');
@@ -58,7 +60,7 @@ async function get_info_cached() {
     if (options.cookie_name) {
 
         // Check if Override has been set now
-        storedResponse = getLocalStorage(options.cookie_name)
+        storedResponse = getRecordDataFromLocalStorage()
         if (storedResponse?.extra?.override === true) {
             console.info('Geolocation IP Detection: Using cached response (override)');
             return storedResponse;
@@ -68,56 +70,10 @@ async function get_info_cached() {
         if (response?.extra?.error)
             cache_duration = 60; // Cache errors only for 1 minute, then try again
         
-        setLocalStorage(options.cookie_name, response, cache_duration);
+        setRecordDataToLocalStorage(response, cache_duration);
     }
 
     return response;
-}
-
-
-/**
- * This functions allows to override the geodetected data manually (e.g. a country selector)
- * 
- * @api
- * @param {*} record 
- * @param {number} duration_in_days When this override expires (default: 1 week later)
- * @return boolean
- */
-export function set_override(record, duration_in_days) {
-    if (record && typeof(record.serialize) === 'function') {
-        record = record.serialize();
-    }
-
-    duration_in_days = duration_in_days || options.cookie_duration_in_days;
-    if (duration_in_days < 0) {
-        console.warn('Geolocation IP Detection set_override_data() did nothing: A negative duration doesn\'t make sense. If you want to remove the override, use remove_override() instead.');
-        return false;
-    }
-
-    return set_override_data(record, duration_in_days);
-}
-function set_override_data(data, duration_in_days) {
-    if (!data) {
-        data = {};
-    }
-    if (!data.extra) {
-        data.extra = {};
-    }
-    data.extra.override = true;
-
-    setLocalStorage(options.cookie_name, data, duration_in_days * 24 * 60 * 60);
-    return true;
-}
-
-/**
- * Remove the override data.
- * On next page load, the record data will be loaded from the server again.
- * 
- * @return boolean
- */
-export function remove_override() {
-    setLocalStorage(options.cookie_name, {}, -1);
-    return true;
 }
 
 

@@ -13,6 +13,7 @@ wp-cli.local.yml
 /.vscode
 *.code
 /coverage
+/.parcel-cache
 
 /lib/vendor
 

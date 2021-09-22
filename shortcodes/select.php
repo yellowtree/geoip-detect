@@ -54,10 +54,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @param bool   $flag          If a flag should be added before the country name (In Windows, there are no flags, ISO-Country codes instead. This is a design choice by Windows.)
  * @param bool   $tel           If the international code should be added after the country name
  * @param bool   $ajax          1: Execute this shortcode as AJAX | 0: Execute this shortcode on the server | Unset: Use the global settings (execute as AJAX if both 'AJAX' and 'Resolve shortcodes (via Ajax)' are enabled)
+ * @param bool   $autosave      1: In Ajax mode, when the user changes the country, save his choice in his browser. (optional, Ajax mode only)
  *
  * @return string The generated HTML
  */
 function geoip_detect2_shortcode_country_select($attr) {
+	$attr['property'] = 'country.name';
 	$shortcode_options = _geoip_detect2_shortcode_options($attr);
 
 	$select_attrs = array(
@@ -73,6 +75,9 @@ function geoip_detect2_shortcode_country_select($attr) {
 	if (geoip_detect2_shortcode_is_ajax_mode($attr) && !isset($attr['selected']) ) {
 		geoip_detect2_enqueue_javascript('shortcode');
 		$select_attrs['class'] .= ' js-geoip-detect-country-select';
+		if (!empty($attr['autosave'])) {
+			$select_attrs['class'] .= ' js-geoip-detect-input-autosave';
+		}
 		$select_attrs['data-options'] = wp_json_encode($shortcode_options);
 	} else {
 		if (!empty($attr['selected'])) {

@@ -115,34 +115,13 @@ function _geoip_detect2_enqueue_javascript() {
 	return true;
 }
 
-function _geoip_detect_parcel_get_dist_js($handle) {
-	$urlFile = GEOIP_PLUGIN_DIR . '/js/dist/parcel.json';
-	if (!is_readable($urlFile)) return false;
-
-	$json = file_get_contents($urlFile);
-	$urls = json_decode($json, true);
-
-	if (isset($urls[$handle]))
-		return '/js/dist/' .$urls[$handle];
-	return false;
-}
-
 function _geoip_detect_register_javascript() {
 	// What about CORS usage?
 	// if (!get_option('geoip-detect-ajax_enabled')) {
 	// 	return;
 	// }
 
-	$file_uri = _geoip_detect_parcel_get_dist_js('frontendJS');
-	if (!$file_uri) {
-		if (WP_DEBUG) {
-			trigger_error('Warning by the geoip-detect-Plugin: the file frontend.js could not be found, JS API will not work.', E_USER_NOTICE);
-			die();
-		}
-		return;
-	}
-
-	wp_register_script('geoip-detect-js', GEOIP_DETECT_PLUGIN_URI . $file_uri, array(), GEOIP_DETECT_VERSION, true);
+	wp_register_script('geoip-detect-js', GEOIP_DETECT_PLUGIN_URI . 'js/dist/frontend.js', array(), GEOIP_DETECT_VERSION, true);
 	$data = [
 		'ajaxurl' => admin_url('/admin-ajax.php'),
 		'default_locales' => apply_filters('geoip_detect2_locales', null),
