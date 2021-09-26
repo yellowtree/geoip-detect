@@ -206,7 +206,7 @@ class FastahSource extends AbstractDataSource {
 $label_key <input type="text" autocomplete="off" size="20" name="options_fastah[key]" value="$key" /><br />
 $label_http2 <select name="options_fastah[http2]">
 HTML;
-        $html .= '<option value="0" ' . (!$this->params['http2'] ? ' selected="selected"' : '') . '">' . __('HTTP/2 turned off (slower but more compatible with older PHP versions)', 'geoip-detect') . '</option>';
+        $html .= '<option value="0" ' . (!$this->params['http2'] ? ' selected="selected"' : '') . '">' . __('HTTP/2 turned off (slower, but more compatible with older PHP versions)', 'geoip-detect') . '</option>';
         $html .= '<option value="1" ' . ($this->params['http2'] ? ' selected="selected"' : '') . '">' . __('HTTP/2 is ON (faster performance)', 'geoip-detect') . '</option>';
         $html .= '</select>';
 
@@ -223,7 +223,7 @@ HTML;
         }
 
         if (isset($post['options_fastah']['http2'])) {	
-            $ssl = (int) $post['options_fastah']['http2'];
+            $http2 = (int) $post['options_fastah']['http2'];
             update_option('geoip-detect-fastah_http2', $http2);
             $this->params['http2'] = $http2;
 		}
