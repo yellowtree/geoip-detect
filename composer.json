@@ -22,7 +22,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "7.5.20",
-        "roots/wordpress": "5.8",
+        "roots/wordpress": "5.8.1",
         "wp-phpunit/wp-phpunit": "5.8.1"
     },
     "scripts": {
