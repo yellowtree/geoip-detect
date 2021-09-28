@@ -26,7 +26,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 	const URL = 'ep.api.getfastah.com/whereis/v1/json/';
     protected $options = array();
     protected $params = array();
-    
+
 	function __construct($params, $locales, $options) {
         $this->params= $params;
         $this->params['language'] = reset($locales);
@@ -51,7 +51,6 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 
 	public function city($ip) {
 		$data = $this->api_call($ip);
-
 		if (!$data)
             return _geoip_detect2_get_new_empty_record();
             
@@ -145,7 +144,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
     }
 
 	private function api_call($ip) {
-        
+
 		try {
 			// Setting timeout limit to speed up sites
 			$context = stream_context_create(
@@ -174,11 +173,25 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 
 class FastahSource extends AbstractDataSource {
     protected $params = array();
+    // PHP-Curl with functional TLS 1.2 (secure ciphers) and HTTP 1.1 are minimum requirements
+    protected $bestAvailHTTP = CURL_HTTP_VERSION_1_1;
 
     public function __construct() {
         $this->params['key'] = get_option('geoip-detect-fastah_key', '');
-        $this->params['http2'] = get_option('geoip-detect-fastah_http2', 1);
 
+        // Set default by probing PHP/Curl capabilities - minimum is HTTP 1.1 over TLSv1.2
+        // HTTP/2 ought to be available in PHP-Curl > v7.47.0 @see https://curl.se/docs/http2.html
+        if (curl_version()["features"] & CURL_HTTP_VERSION_2_0  !== 0) {
+            $this->bestAvailHTTP = CURL_HTTP_VERSION_2_0;
+            if (curl_version()["features"] & CURL_HTTP_VERSION_2TLS  !== 0) {
+                $this->bestAvailHTTP = CURL_HTTP_VERSION_2TLS;
+            }
+        }
+        if ($this->bestAvailHTTP < CURL_HTTP_VERSION_2_0) {
+            $this->params['http2'] = get_option('geoip-detect-fastah_http2', 0);
+        } else {
+            $this->params['http2'] = get_option('geoip-detect-fastah_http2', 1);
+        }
     }
 
 	public function getId() { return 'fastah'; }
@@ -190,8 +203,13 @@ class FastahSource extends AbstractDataSource {
 
         $html .= \sprintf(__('HTTP2: %s', 'geoip-detect'), $this->params['http2'] ? __('Enabled', 'geoip-detect') : __('Disabled', 'geoip-detect')) . '<br />';
 
-        if (!$this->isWorking())
-            $html .= '<div class="geoip_detect_error">' . __('Fastah only works with an API key.', 'geoip-detect') . '</div>';
+        if (!$this->isWorking()) {
+            if (!is_callable('curl_init')) {
+                $html .= '<div class="geoip_detect_error">' . __('Fastah requires PHP-Curl for secure HTTPS requests.', 'geoip-detect') . '</div>';
+            } else {
+                $html .= '<div class="geoip_detect_error">' . __('Fastah only works with an API key.', 'geoip-detect') . '</div>';
+            }
+        }
 
         return $html; 
     }
@@ -226,12 +244,17 @@ HTML;
         if (isset($post['options_fastah']['http2'])) {	
             $http2 = (int) $post['options_fastah']['http2'];
             update_option('geoip-detect-fastah_http2', $http2);
+            // Show warning if HTTP/2 requested but actually not available via PHP-Curl
+            if ($http2 == 1 and $this->bestAvailHTTP < CURL_HTTP_VERSION_2_0) {
+                $message .= __('Fastah requires PHP-Curl with HTTP/2 support.<br>', 'geoip-detect');
+                $http2 = 0; // Turn it OFF forcefully
+            }
             $this->params['http2'] = $http2;
 		}
         
         if (geoip_detect2_is_source_active('fastah') && !$this->isWorking())
             $message .= __('Fastah only works with an API key.', 'geoip-detect');
-            
+
         return $message;
     }
 
@@ -239,8 +262,8 @@ HTML;
         return new Reader($this->params, $locales, $options);
     }
 
-	public function isWorking() { 
-        return !empty($this->params['key']);
+	public function isWorking() {
+        return (!empty($this->params['key']) and is_callable('curl_init'));
     }
 
 }
