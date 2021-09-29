@@ -150,7 +150,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 			$context = stream_context_create(
 					array(
 							'http' => array(
-                                    'protocol_version' => $this->params['http2'] ? 2.0 : 1.2,
+                                    'protocol_version' => ($this->params['http2'] === 1) ? 2.0 : 1.1,
 									'timeout' => $this->options['timeout'],
 							),
 					)
