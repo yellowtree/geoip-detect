@@ -50,75 +50,60 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
     }
 
 	public function city($ip) {
-		$data = $this->api_call($ip);
-		if (!$data)
-            return _geoip_detect2_get_new_empty_record();
-            
-        $r = array();
-
-        $r['extra']['original'] = $data;
-
-        // TODO: Check HTTP response code here. 
-        if (isset($data['success']) && $data['success'] === false) {
-            throw new \RuntimeException($data['error']);
-            // Example error:
-            /* @see https://docs.getfastah.com/reference/getlocationbyip
-            {
-                "error": {
-                    "message": "You did not specify a valid IP address."
+        try {
+            $requestArgs = array(
+                'method' => 'GET',
+                'httpversion' => ($this->params['http2'] === 1) ? 2.0 : 1.1,
+                'timeout' => $this->options['timeout'],
+                'headers' => array(
+                    'Fastah-Key' => $this->params['key']
+                )
+            );
+            echo("Hello");
+            $response = wp_remote_get($this->build_url($ip), $requestArgs);
+            $respCode = wp_remote_retrieve_response_code( $response );
+            if (is_wp_error($response)) {
+                return _geoip_detect2_get_new_empty_record($ip, $response->get_error_message());
+            }
+            $body = wp_remote_retrieve_body( $response );
+            $data = json_decode( $body, true );
+            if ($respCode !== 200) {
+                if ($data && isset($data['error']) && isset($data['error']['message'])) {
+                    return _geoip_detect2_get_new_empty_record($ip, $data['error']['message']);
+                }
+                if ($data && isset($data['message'])) {
+                    return _geoip_detect2_get_new_empty_record($ip, $data['message']);
                 }
             }
-            */
-        }
-
-        $locale = $this->params['language'];
-		if (!empty($data['continent_name']))
-			$r['continent']['names'] = $this->locales($locale, $data['continent_name']);
-		if (!empty($data['continent_code']))
-			$r['continent']['code'] = strtoupper($data['continent_code']);
-		if (!empty($data['country_name']))
-			$r['country']['names'] = $this->locales($locale, $data['country_name']);
-		if (!empty($data['country_code']))
-            $r['country']['iso_code'] = strtoupper($data['country_code']);
+		} catch (\Exception $e) {
+            return _geoip_detect2_get_new_empty_record($ip, $e->getMessage());
+		}
             
-            if (!empty($data['region_code'])) {
-            $r['subdivisions'][0] = array(
-                'iso_code' => $data['region_code'],
-                'names' => $this->locales($locale, $data['region_name']),
-            );
-        }
-        
-		if (!empty($data['city']))
-        $r['city']['names'] = $this->locales($locale, $data['city']);
-		if (!empty($data['latitude']))
-        $r['location']['latitude'] = $data['latitude'];
-		if (!empty($data['longitude']))
-        $r['location']['longitude'] = $data['longitude'];
-        
-        if (!empty($data['location']['is_eu'])) {
-            $r['country']['is_in_european_union'] = $data['location']['is_eu'];
-        }
-		if (isset($data['timezone']['id']))
-        $r['location']['time_zone'] = $data['timezone']['id'];
-        
-        if (isset($data['connection']['asn']))
-        $r['traits']['autonomous_system_number'] = $data['connection']['asn'];
-        if (isset($data['connection']['isp']))
-        $r['traits']['isp'] = $data['connection']['isp'];
-        if (isset($data['security']['is_proxy']))
-        $r['traits']['is_anonymous_vpn'] = $data['security']['is_proxy'] && $data['security']['proxy_type'] == 'vpn';
-        if (isset($data['security']['is_tor']))
-        $r['traits']['is_tor_exit_node'] = $data['security']['is_tor'];
-        
-        if (!empty($data['location']['country_flag_emoji']))
-            $r['extra']['flag'] = strtoupper($data['location']['country_flag_emoji']);
+        $r = array();
+        $r['extra']['original'] = $data;
 
-        if (!empty($data['currency']['code'])) {
-            $r['extra']['currency_code'] = $data['currency']['code'];
-        }
-        
+        $locale = 'en'; // The REST API only support English at this time
 
-		$r['traits']['ip_address'] = $ip;
+        if (!empty($data['locationData'])) {
+            // Continent
+            $r['continent']['code'] = strtoupper($data['locationData']['continentCode']);
+            // Country
+            $r['country']['names'] = $this->locales($locale, $data['locationData']['countryName']);
+            $r['country']['iso_code'] = strtoupper($data['locationData']['countryCode']);
+            // City
+            $r['city']['names'] = $this->locales($locale, $data['locationData']['cityName']);
+            $r['city']['geoname_id'] = $data['locationData']['cityGeonamesId'];
+            // Lat, Lng
+            $r['location']['latitude'] = $data['locationData']['lat'];
+            $r['location']['longitude'] = $data['locationData']['lng'];
+            // TZ
+            $r['location']['time_zone'] = $data['locationData']['tz'];
+        }
+
+        // EU flag
+        $r['country']['isInEuropeanUnion'] = $data['isEuropeanUnion'];
+        
+		$r['traits']['ip_address'] = $data['ip'];
 
 		$record = new \GeoIp2\Model\City($r, array('en'));
 
@@ -126,7 +111,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 	}
 
 	public function country($ip) {
-		return $this->city($ip); // too much info shouldn't hurt ...
+		return $this->city($ip);
 	}
 
 	public function close() {
@@ -136,38 +121,9 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
     private function build_url($ip) {
         $url = 'https';
         $url .= '://' . self::URL . $ip;
-
-        $params = [
-            'fastah-key' => $this->params['key'],
-        ];
         return $url . '?' . \http_build_query($params);
     }
 
-	private function api_call($ip) {
-
-		try {
-			// Setting timeout limit to speed up sites
-			$context = stream_context_create(
-					array(
-							'http' => array(
-                                    'protocol_version' => ($this->params['http2'] === 1) ? 2.0 : 1.1,
-									'timeout' => $this->options['timeout'],
-							),
-					)
-			);
-			// Using @file... to supress errors
-            // Example output: {"country_name":"UNITED STATES","country_code":"US","city":"Aurora, TX","ip":"12.215.42.19"}
-
-			$body = @file_get_contents($this->build_url($ip), false, $context);
-			$data = json_decode($body, true);
-
-			return $data;
-		} catch (\Exception $e) {
-            // If the API isn't available, we have to do this
-            throw $e;
-			return null;
-		}
-	}
 }
 
 
