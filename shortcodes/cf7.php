@@ -46,8 +46,9 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 
 	$class = wpcf7_form_controls_class( $tag->type );
 	$validation_error = wpcf7_get_validation_error( $tag->name );
-	if ($validation_error)
+	if ($validation_error) {
 		$class .= ' wpcf7-not-valid';
+	}
 
 	$attr = array(
 		'name' => $tag->name,
@@ -61,6 +62,7 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 		'default' => $tag->get_option('default', '', true),
 		'flag' => $tag->has_option('flag'),
 		'tel' => $tag->has_option('tel'),
+		'list' => strtr($tag->get_option('list', '[a-zA-Z_]+', true), ['_' => ',']),
 	);
 	
 	$html = geoip_detect2_shortcode_country_select($attr);

@@ -55,6 +55,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @param bool   $tel           If the international code should be added after the country name
  * @param bool   $ajax          1: Execute this shortcode as AJAX | 0: Execute this shortcode on the server | Unset: Use the global settings (execute as AJAX if both 'AJAX' and 'Resolve shortcodes (via Ajax)' are enabled)
  * @param bool   $autosave      1: In Ajax mode, when the user changes the country, save his choice in his browser. (optional, Ajax mode only)
+ * @param string $list			If used, only these countries will be shown. E.g. "it,de,uk"
  *
  * @return string The generated HTML
  */
@@ -96,6 +97,20 @@ function geoip_detect2_shortcode_country_select($attr) {
 	
 	$countryInfo = new YellowTree\GeoipDetect\Geonames\CountryInformation();
 	$countries = $countryInfo->getAllCountries($shortcode_options['lang']);
+
+	if (!empty($attr['list'])) {
+		$list = wp_parse_list($attr['list']);
+
+		$allCountries = $countries;
+
+		$countries = [];
+		foreach($list as $key) {
+			$key = strtoupper(trim($key));
+			if (isset($allCountries[$key])) {
+				$countries[$key] = $allCountries[$key];
+			}
+		}
+	}
 	
 	if (!empty($attr['flag'])) {
 		array_walk($countries, function(&$value, $key) use($countryInfo) {
