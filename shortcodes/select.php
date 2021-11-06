@@ -48,14 +48,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @param bool   $required If the field is required or not
  * @param string $class CSS Class of element
  * @param string $lang Language(s) (optional. If not set, current site language is used.)
- * @param string $selected Which country to select by default (2-letter ISO code.) (optional. If not set, the country will be detected by client ip.) (This parameter does not work with AJAX mode.)
- * @param string $default 		Default Value that will be used if country cannot be detected (optional)
+ * @param string $selected      Which country to select by default (2-letter ISO code.) (optional. If not set, the country will be detected by client ip.) (This parameter does not work with AJAX mode.)
+ * @param string $default 		Default Value that will be used if country cannot be detected, or the detected country is not in the list of possible countries (see parameter `list`) (optional)
  * @param string $include_blank If this value contains 'true', a empty value will be prepended ('---', i.e. no country) (optional)
  * @param bool   $flag          If a flag should be added before the country name (In Windows, there are no flags, ISO-Country codes instead. This is a design choice by Windows.)
  * @param bool   $tel           If the international code should be added after the country name
  * @param bool   $ajax          1: Execute this shortcode as AJAX | 0: Execute this shortcode on the server | Unset: Use the global settings (execute as AJAX if both 'AJAX' and 'Resolve shortcodes (via Ajax)' are enabled)
  * @param bool   $autosave      1: In Ajax mode, when the user changes the country, save his choice in his browser. (optional, Ajax mode only)
- * @param string $list			If used, only these countries will be shown. E.g. "it,de,uk"
+ * @param string $list			If used, only these countries will be shown. E.g. "it,de,uk" (optional)
  *
  * @return string The generated HTML
  */
@@ -99,15 +99,20 @@ function geoip_detect2_shortcode_country_select($attr) {
 	$countries = $countryInfo->getAllCountries($shortcode_options['lang']);
 
 	if (!empty($attr['list'])) {
-		$list = wp_parse_list($attr['list']);
+		$list = array_map('mb_strtoupper', wp_parse_list($attr['list']));
 
 		$allCountries = $countries;
 
 		$countries = [];
 		foreach($list as $key) {
-			$key = strtoupper(trim($key));
 			if (isset($allCountries[$key])) {
 				$countries[$key] = $allCountries[$key];
+			}
+		}
+
+		if ($selected && !isset($countries[$selected])) {
+			if (isset($attr['default'])) {
+				$selected = $attr['default'];
 			}
 		}
 	}
@@ -142,8 +147,9 @@ function geoip_detect2_shortcode_country_select($attr) {
 	$countries = apply_filters('geoip_detect2_shortcode_country_select_countries', $countries, $attr);
 
 	$html = '<select ' . _geoip_detect_flatten_html_attr($select_attrs) . '>';
-	if (!empty($attr['include_blank']) && $attr['include_blank'] !== 'false')
+	if (!empty($attr['include_blank']) && $attr['include_blank'] !== 'false') {
 		$html .= '<option value="">---</option>';
+	}
 	foreach ($countries as $code => $label) {
 		if (substr($code, 0, 6) == 'blank_')
 		{
@@ -151,7 +157,7 @@ function geoip_detect2_shortcode_country_select($attr) {
 		}
 		else
 		{
-			$html .= '<option data-c="' . esc_attr(mb_strtolower($code)).  '"' . ($code == $selected ? ' selected="selected"' : '') . '>' . esc_html($label) . '</option>';
+			$html .= '<option data-c="' . esc_attr(mb_strtolower($code)).  '"' . ($code == mb_strtoupper($selected) ? ' selected="selected"' : '') . '>' . esc_html($label) . '</option>';
 		}
 	}
 	$html .= '</select>';
