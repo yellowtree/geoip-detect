@@ -5331,10 +5331,10 @@ just-debounce-it@2.1.1:
   resolved "https://registry.yarnpkg.com/just-debounce-it/-/just-debounce-it-2.1.1.tgz#0aa3476385813c6c529b44b19c45d80f4eb0f1e2"
   integrity sha512-InUCAOTw6JIt8vL6gAMFhBa65uvw3R8dgtJKigrTx1F8xT/fbnSkxULu/hdEa1Ua/yTOvWZWCunam3uB24Lsjg==
 
-just-intersect@3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/just-intersect/-/just-intersect-3.2.0.tgz#c0394fd1cad272edfcbecc73046f0e2670b5f572"
-  integrity sha512-kx/uIY9RgMQQrlvDYl+Z0VDLp0bXp5G2tb+x/SBdh7TWfVBVLhGAS1z3gYUa58+adFYI7KzRwRii5fCyhli6NA==
+just-intersect@3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/just-intersect/-/just-intersect-3.4.1.tgz#c2af2ee15801214b70ec956fdab2190c41640493"
+  integrity sha512-lb3trXgUx69SCrgLF/j0dwKODGwFtqT3anNggUYe+kttalgo268HsldABsenMSpqbt2AXup2zskeWnffeQL+ew==
 
 just-safe-get@3.1.1:
   version "3.1.1"
