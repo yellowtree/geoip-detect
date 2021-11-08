@@ -5321,10 +5321,10 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
-just-compare@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/just-compare/-/just-compare-1.4.0.tgz#079b7f37312c7a22517b3bf2aa7131bfd24c29dd"
-  integrity sha512-uNZ4VC7/WoBWAasr2FDOYtIb7S6e4K4ERJTnyYHSBltJQ3/Qg2c/HX+vFT4Zas5tw/e/jWxvaaOD84QcgCxRGw==
+just-compare@1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/just-compare/-/just-compare-1.5.1.tgz#aed7e93e6bae9c3b69d79aea7805684132a0c0c5"
+  integrity sha512-xDEEFHNIyJNmN4uo/2RVeUcay9THtN/5ka/iw98Y/gsa8w9KXZQuyaf5eFUY6VlntA2+G+bdPmdhqqTs7T+BRw==
 
 just-debounce-it@2.1.1:
   version "2.1.1"
