@@ -281,7 +281,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 				if ($expected === 'ha') {
 					$expected = false;
 				} else {
-					$expected = !!$expected;
+					$expected = !! $expected;
 				}
 				$data_set[] = [$i, $input, $expected, $parsed, $opt ];
 

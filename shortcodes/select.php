@@ -151,13 +151,14 @@ function geoip_detect2_shortcode_country_select($attr) {
 		$html .= '<option value="">---</option>';
 	}
 	foreach ($countries as $code => $label) {
+		$code = mb_strtolower($code);
 		if (substr($code, 0, 6) == 'blank_')
 		{
 			$html .= '<option data-c="" value="">' . esc_html($label) . '</option>';
 		}
 		else
 		{
-			$html .= '<option data-c="' . esc_attr(mb_strtolower($code)).  '"' . ($code == mb_strtoupper($selected) ? ' selected="selected"' : '') . '>' . esc_html($label) . '</option>';
+			$html .= '<option data-c="' . esc_attr($code).  '"' . ($code == mb_strtolower($selected) ? ' selected="selected"' : '') . '>' . esc_html($label) . '</option>';
 		}
 	}
 	$html .= '</select>';
