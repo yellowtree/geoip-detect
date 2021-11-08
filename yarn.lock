@@ -5336,10 +5336,10 @@ just-intersect@3.2.0:
   resolved "https://registry.yarnpkg.com/just-intersect/-/just-intersect-3.2.0.tgz#c0394fd1cad272edfcbecc73046f0e2670b5f572"
   integrity sha512-kx/uIY9RgMQQrlvDYl+Z0VDLp0bXp5G2tb+x/SBdh7TWfVBVLhGAS1z3gYUa58+adFYI7KzRwRii5fCyhli6NA==
 
-just-safe-get@2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/just-safe-get/-/just-safe-get-2.1.2.tgz#82c2df6bbb929bf4de8d46c06ef79e1a4dd98918"
-  integrity sha512-DPWEh00QFgJNyfULPwgc9rTvdiPYVyt69hcgjWbN3lzKMmISW43Hwc+nlRAIo+su6PLVqUOMEUJNYR1xFog7xQ==
+just-safe-get@3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/just-safe-get/-/just-safe-get-3.1.1.tgz#2d4b85522fedd26d964e5e84c2ded5d740abe2c2"
+  integrity sha512-KdDlQZVScxBClIiauvDHz7VaZlYeABO69nXJjrOveiUvMjcaVs6fjaOBd0M6GtxAsOyeq6/BDMtKdM4W7RiztQ==
 
 just-safe-set@3.1.1:
   version "3.1.1"
