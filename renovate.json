@@ -6,6 +6,13 @@
   "packageRules": [
     {
       "matchPackagePatterns": [
+        "^just-"
+      ],
+      "groupName": "Just JS monorepo",
+
+    },
+    {
+      "matchPackagePatterns": [
         "eslint",
         "jest"
       ],
