@@ -7,9 +7,13 @@ export function do_shortcode_show_if(el, record) {
     const evaluated = geoip_detect2_shortcode_evaluate_conditions(opt.parsed, opt, record);
 
     if (!evaluated) {
-        el.style.display = "none !important";
+        el.style.display = "none";
+        el.classList.add('geoip-hidden');
+        el.classList.remove('geoip-shown');
     } else {
         el.style.display = '';
+        el.classList.remove('geoip-hidden');
+        el.classList.add('geoip-shown');
     }
 }
 
