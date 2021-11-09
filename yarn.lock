@@ -5341,10 +5341,10 @@ just-safe-get@3.1.1:
   resolved "https://registry.yarnpkg.com/just-safe-get/-/just-safe-get-3.1.1.tgz#2d4b85522fedd26d964e5e84c2ded5d740abe2c2"
   integrity sha512-KdDlQZVScxBClIiauvDHz7VaZlYeABO69nXJjrOveiUvMjcaVs6fjaOBd0M6GtxAsOyeq6/BDMtKdM4W7RiztQ==
 
-just-safe-set@3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/just-safe-set/-/just-safe-set-3.1.1.tgz#83df732af2aff3591ec3fac0466cb09a6d4796bf"
-  integrity sha512-uFMLlDW9hVV33H6vGkXg2j1EKtsaYJ+sBBYjsKOV6p6u0NgEG8o4HB7EhCO3uhzLsfOy3SOWeu0+kMFOIGV3Qw==
+just-safe-set@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/just-safe-set/-/just-safe-set-4.0.0.tgz#29951d287c4c487d168fe41bce33289038979c5f"
+  integrity sha512-rGmERiWTrmMc+Ce/31naYgzpZBlS56NBf2nINLUBC84MnWSWAxj85WcRKl+W9FEJY/BAZ3osxWgR2ERQ/j+9/w==
 
 kleur@^3.0.3:
   version "3.0.3"

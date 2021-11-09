@@ -20,7 +20,7 @@
     "just-debounce-it": "2.1.1",
     "just-intersect": "3.4.1",
     "just-safe-get": "3.1.1",
-    "just-safe-set": "3.1.1"
+    "just-safe-set": "4.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.16.0",
