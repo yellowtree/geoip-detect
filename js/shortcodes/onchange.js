@@ -32,7 +32,7 @@ function event_listener_autosave_on_change(event) {
                     const selected = target.options[target.selectedIndex];
                     const isoCode = selected?.getAttribute('data-c');
                     if (isoCode) {
-                        set_override_with_merge('country.iso_code', isoCode.toUpperCase());
+                        set_override_with_merge('country.iso_code', isoCode.toUpperCase(), {reevaluate: false});
                     }
                 }
                 
