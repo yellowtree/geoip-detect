@@ -55,7 +55,9 @@ function geoip_detect2_shortcode($orig_attr, $content = '', $shortcodeName = 'ge
 	
 	if (geoip_detect2_shortcode_is_ajax_mode($orig_attr) && !$attr['ip']) {
 		geoip_detect2_enqueue_javascript('shortcode');
-		return _geoip_detect2_create_placeholder('span', [ 'class' => 'js-geoip-detect-shortcode' ], $shortcode_options);
+		return _geoip_detect2_create_placeholder('span', [ 
+			'class' => 'js-geoip-detect-shortcode' 
+		], $shortcode_options);
 	}
 	
 	$options = array('skipCache' => $shortcode_options['skip_cache']);

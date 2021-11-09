@@ -90,12 +90,11 @@ function geoip_detect2_shortcode_show_if($attr, $content = '', $shortcodeName = 
 		
 		$shortcode_options['parsed'] = $parsed;
 		$span_attributes = [ 'class' => 'js-geoip-detect-show-if', 'style' => 'display: none !important' ];
-		$span_tagname = 'span'; // TODO: Should be 'div' under certain cirumstances, to test
 		
-		$span_if = _geoip_detect2_create_placeholder($span_tagname, $span_attributes, $shortcode_options, do_shortcode($content_if));
+		$span_if = _geoip_detect2_create_placeholder('span', $span_attributes, $shortcode_options, do_shortcode($content_if));
 
 		$shortcode_options['parsed']['not'] = ($shortcode_options['parsed']['not'] === 1 ? 0 : 1); // negate
-		$span_else = _geoip_detect2_create_placeholder($span_tagname, $span_attributes, $shortcode_options, do_shortcode($content_else));
+		$span_else = _geoip_detect2_create_placeholder('span', $span_attributes, $shortcode_options, do_shortcode($content_else));
 		
 		return $span_if . $span_else;
 	} else {
