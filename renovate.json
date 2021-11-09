@@ -8,8 +8,7 @@
       "matchPackagePatterns": [
         "^just-"
       ],
-      "groupName": "Just JS monorepo",
-
+      "groupName": "Just JS monorepo"
     },
     {
       "matchPackagePatterns": [
