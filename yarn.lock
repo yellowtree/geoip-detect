@@ -5326,10 +5326,10 @@ just-compare@1.5.1:
   resolved "https://registry.yarnpkg.com/just-compare/-/just-compare-1.5.1.tgz#aed7e93e6bae9c3b69d79aea7805684132a0c0c5"
   integrity sha512-xDEEFHNIyJNmN4uo/2RVeUcay9THtN/5ka/iw98Y/gsa8w9KXZQuyaf5eFUY6VlntA2+G+bdPmdhqqTs7T+BRw==
 
-just-debounce-it@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/just-debounce-it/-/just-debounce-it-2.1.1.tgz#0aa3476385813c6c529b44b19c45d80f4eb0f1e2"
-  integrity sha512-InUCAOTw6JIt8vL6gAMFhBa65uvw3R8dgtJKigrTx1F8xT/fbnSkxULu/hdEa1Ua/yTOvWZWCunam3uB24Lsjg==
+just-debounce-it@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/just-debounce-it/-/just-debounce-it-3.0.0.tgz#61e1667cb342aa669629a15799cf6b440b64ceb8"
+  integrity sha512-oFlSmGcXnUUy4e1LihoZAFgLqxLJ0F2ZolE+N6kXROP52IylDma89gLPUBQS0CSttAf/uaNq/EqzfaGuUnyXBQ==
 
 just-intersect@3.4.1:
   version "3.4.1"
