@@ -73,27 +73,31 @@ function _geoip_detect2_html_contains_block_elements($html) {
 	if (!$html) {
 		return false;
 	}
+	$html = mb_strtolower($html);
+
 	// There are more. But these are most common
 	$blocklevelElements = [
-		'<div>',
-		'<p>',
-		'<blockquote>',
-		'<figure>',
-		'<form>',
-		'<h1>',
-		'<h2>',
-		'<h3>',
-		'<h4>',
-		'<h5>',
-		'<h6>',
-		'<ul>',
-		'<ol>',
-		'<pre>',
-		'<table>',
+		'div',
+		'p',
+		'blockquote',
+		'figure',
+		'form',
+		'h1',
+		'h2',
+		'h3',
+		'h4',
+		'h5',
+		'h6',
+		'ul',
+		'ol',
+		'pre',
+		'table',
 	];
 	foreach ($blocklevelElements as $element) {
-		if (str_contains($html, $element)) {
-			return true;
+		if (strpos($html, '<' . $element) !== false) {
+			if (preg_match('#<' . $element . '[\s/>]#', $html)) {
+				return true;
+			}
 		}
 	}
 	return false;
