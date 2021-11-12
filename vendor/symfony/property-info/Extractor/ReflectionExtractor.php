@@ -85,9 +85,9 @@ class ReflectionExtractor implements PropertyListExtractorInterface, PropertyTyp
      */
     public function __construct(array $mutatorPrefixes = null, array $accessorPrefixes = null, array $arrayMutatorPrefixes = null, bool $enableConstructorExtraction = true, int $accessFlags = self::ALLOW_PUBLIC, InflectorInterface $inflector = null, int $magicMethodsFlags = self::ALLOW_MAGIC_GET | self::ALLOW_MAGIC_SET)
     {
-        $this->mutatorPrefixes = null !== $mutatorPrefixes ? $mutatorPrefixes : self::$defaultMutatorPrefixes;
-        $this->accessorPrefixes = null !== $accessorPrefixes ? $accessorPrefixes : self::$defaultAccessorPrefixes;
-        $this->arrayMutatorPrefixes = null !== $arrayMutatorPrefixes ? $arrayMutatorPrefixes : self::$defaultArrayMutatorPrefixes;
+        $this->mutatorPrefixes = $mutatorPrefixes ?? self::$defaultMutatorPrefixes;
+        $this->accessorPrefixes = $accessorPrefixes ?? self::$defaultAccessorPrefixes;
+        $this->arrayMutatorPrefixes = $arrayMutatorPrefixes ?? self::$defaultArrayMutatorPrefixes;
         $this->enableConstructorExtraction = $enableConstructorExtraction;
         $this->methodReflectionFlags = $this->getMethodsFlags($accessFlags);
         $this->propertyReflectionFlags = $this->getPropertyFlags($accessFlags);
@@ -156,20 +156,8 @@ class ReflectionExtractor implements PropertyListExtractorInterface, PropertyTyp
             return $fromConstructor;
         }
 
-        if ($fromDefaultValue = $this->extractFromDefaultValue($class, $property)) {
-            return $fromDefaultValue;
-        }
-
-        if (\PHP_VERSION_ID >= 70400) {
-            try {
-                $reflectionProperty = new \ReflectionProperty($class, $property);
-                $type = $reflectionProperty->getType();
-                if (null !== $type && $types = $this->extractFromReflectionType($type, $reflectionProperty->getDeclaringClass())) {
-                    return $types;
-                }
-            } catch (\ReflectionException $e) {
-                // noop
-            }
+        if ($fromPropertyDeclaration = $this->extractFromPropertyDeclaration($class, $property)) {
+            return $fromPropertyDeclaration;
         }
 
         return null;
@@ -530,10 +518,19 @@ class ReflectionExtractor implements PropertyListExtractorInterface, PropertyTyp
         return null;
     }
 
-    private function extractFromDefaultValue(string $class, string $property): ?array
+    private function extractFromPropertyDeclaration(string $class, string $property): ?array
     {
         try {
             $reflectionClass = new \ReflectionClass($class);
+
+            if (\PHP_VERSION_ID >= 70400) {
+                $reflectionProperty = $reflectionClass->getProperty($property);
+                $reflectionPropertyType = $reflectionProperty->getType();
+
+                if (null !== $reflectionPropertyType && $types = $this->extractFromReflectionType($reflectionPropertyType, $reflectionProperty->getDeclaringClass())) {
+                    return $types;
+                }
+            }
         } catch (\ReflectionException $e) {
             return null;
         }
@@ -547,7 +544,7 @@ class ReflectionExtractor implements PropertyListExtractorInterface, PropertyTyp
         $type = \gettype($defaultValue);
         $type = static::MAP_TYPES[$type] ?? $type;
 
-        return [new Type($type, false, null, Type::BUILTIN_TYPE_ARRAY === $type)];
+        return [new Type($type, $this->isNullableProperty($class, $property), null, Type::BUILTIN_TYPE_ARRAY === $type)];
     }
 
     private function extractFromReflectionType(\ReflectionType $reflectionType, \ReflectionClass $declaringClass): array
@@ -555,9 +552,9 @@ class ReflectionExtractor implements PropertyListExtractorInterface, PropertyTyp
         $types = [];
         $nullable = $reflectionType->allowsNull();
 
-        foreach ($reflectionType instanceof \ReflectionUnionType ? $reflectionType->getTypes() : [$reflectionType] as $type) {
-            $phpTypeOrClass = $reflectionType instanceof \ReflectionNamedType ? $reflectionType->getName() : (string) $type;
-            if ('null' === $phpTypeOrClass || 'mixed' === $phpTypeOrClass) {
+        foreach (($reflectionType instanceof \ReflectionUnionType || $reflectionType instanceof \ReflectionIntersectionType) ? $reflectionType->getTypes() : [$reflectionType] as $type) {
+            $phpTypeOrClass = $type->getName();
+            if ('null' === $phpTypeOrClass || 'mixed' === $phpTypeOrClass || 'never' === $phpTypeOrClass) {
                 continue;
             }
 
@@ -587,12 +584,31 @@ class ReflectionExtractor implements PropertyListExtractorInterface, PropertyTyp
         return $name;
     }
 
+    private function isNullableProperty(string $class, string $property): bool
+    {
+        try {
+            $reflectionProperty = new \ReflectionProperty($class, $property);
+
+            if (\PHP_VERSION_ID >= 70400) {
+                $reflectionPropertyType = $reflectionProperty->getType();
+
+                return null !== $reflectionPropertyType && $reflectionPropertyType->allowsNull();
+            }
+
+            return false;
+        } catch (\ReflectionException $e) {
+            // Return false if the property doesn't exist
+        }
+
+        return false;
+    }
+
     private function isAllowedProperty(string $class, string $property): bool
     {
         try {
             $reflectionProperty = new \ReflectionProperty($class, $property);
 
-            return $reflectionProperty->getModifiers() & $this->propertyReflectionFlags;
+            return (bool) ($reflectionProperty->getModifiers() & $this->propertyReflectionFlags);
         } catch (\ReflectionException $e) {
             // Return false if the property doesn't exist
         }
