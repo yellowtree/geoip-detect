@@ -163,10 +163,16 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 ## Changelog ##
 
 = 4.3.0 =
-* NEW: Drastically improving performance if the the lookup is performed for the current IP more than once (e.g. because of shortcodes)
+* NEW: In AJAX mode, the new property `autosave` saves the user input as local override for this browser. `[geoip_detect2_countries mycountry autosave]` and `[geoip_detect2_text_input city property:city autosave]`
+* FIX: In AJAX mode, calling the method `set_override(record, duration_in_days)` now refreshes the AJAX shortcodes and CSS body classes.
+-> Thus, it is now possible to quickly implement different content for different countries with an autodetected default country, see (TODO example)
+* FIX: In AJAX mode, the shortcode `[geoip_detect2_show_if]` renders as a `<div>` if it detects that the containing content has HTML block level elements
+
+* NEW: Drastically improving performance if the the lookup is performed for the current IP more than once (e.g. because of shortcodes without AJAX mode)
 * UI: Showing the time for the subsequent lookup on the Test Lookup page
+
 * Minimum Wordpress version is 5.4 now. 
-* Update some smaller libraries
+* Update some internal libraries & dev tools
 
 = 4.2.3 =
 * FIX: Further improve the Maxmind admin notice UI
@@ -182,7 +188,7 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 * NEW: Show a warning on the options page when there are incompatibilities with other plugins that also use the Maxmind libraries.
 * FIX: Remove an incompatibility of the libraries with Toolset or other Laravel-based plugins
 * NEW: In CF7, you can now add any property to the mail body with a special syntax, e.g. `[geoip_detect2_property_country__iso_code]`
-* FIX (JS): Replace the internally used library 'lodash' with 'just' to reduce the total file size
+* FIX (JS): Replace the internally used library 'lodash' with 'just' to reduce the JS file size
 * FIX (JS): Improve error handling in AJAX mode
 * FIX: Port numbers in reverse proxies are ignored now (removes incompatibility with Azure reverse proxies)
 * FIX: Prevent Cloudflare APO from caching when using AJAX mode or page caching is disabled in the plugin options
