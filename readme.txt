@@ -175,7 +175,7 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 * UI: Showing the time for the subsequent lookup on the Test Lookup page
 
 * Minimum Wordpress version is 5.4 now. 
-* Update some libraries & dev tools
+* Update some internal libraries & dev tools
 
 = 4.2.3 =
 * FIX: Further improve the Maxmind admin notice UI
