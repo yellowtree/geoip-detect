@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b00a30ca776a214a318db6b3aa8c94c4",
+    "content-hash": "6c4d26c86a6548dd864e0d2b2b430fa6",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1650,8 +1650,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPress/WordPress/zipball/refs/tags/5.8.1",
-                "reference": "5.8.1"
+                "url": "https://api.github.com/repos/WordPress/WordPress/zipball/refs/tags/5.8.1"
             },
             "require": {
                 "php": ">=5.3.2",
