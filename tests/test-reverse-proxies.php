@@ -98,4 +98,11 @@ class ReverseProxyTest extends WP_UnitTestCase_GeoIP_Detect {
 		$_SERVER['HTTP_X_FORWARDED_FOR'] = '3.4.5.6, '. GEOIP_DETECT_TEST_IP.', 2.2.2.2, fe80:0:0:0:202:b3ff:fe1e:8329';
 		$this->assertSame(GEOIP_DETECT_TEST_IP, geoip_detect2_get_client_ip());
 	}
+/*
+	function testTrustedProxiesWithInternalIps() {
+		
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = GEOIP_DETECT_TEST_IP.', 1.1.1.1, 172.26.26.26, 192.168.1.9';
+		$this->assertSame(GEOIP_DETECT_TEST_IP, geoip_detect2_get_client_ip());
+	}
+*/
 }

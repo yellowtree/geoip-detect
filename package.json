@@ -7,7 +7,7 @@
   "license": "GPL-3.0-or-later",
   "scripts": {
     "clean": "rm -rf .cache",
-    "start": "parcel js/frontend.js --dist-dir js/dist --public-url .",
+    "start": "parcel js/frontend.js --port 1234 --hmr-port 1236 --dist-dir js/dist --public-url .",
     "build": "rm -rf js/dist && parcel build js/frontend.js --dist-dir js/dist --public-url .",
     "test": "jest --coverage",
     "update-browserlist": "browserslist --update-db"
@@ -37,7 +37,7 @@
       "@babel/preset-env"
     ]
   },
-  "browserslist": "> 0.2%, last 2 versions, not dead",
+  "browserslist": "> 0.2%, last 2 versions,  Firefox ESR, not dead",
   "jest": {
     "transform": {
       ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",

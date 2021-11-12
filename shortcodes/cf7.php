@@ -35,6 +35,10 @@ function geoip_detect2_add_wpcf7_shortcodes() {
  *
  * `[geoip_detect2_countries mycountry default:US]`
  * Visitor's country is preselected, but in case the country is unknown, use "United States"
+ * 
+ * `[geoip_detect2_countries mycountry default:US country:US country:IT country:FR]`
+ * Visitor's country is preselected, only show US/IT/FR as possible selections, 
+ * but in case the country is unknown or not in the list, use "United States"
  *
  */
 function geoip_detect2_shortcode_country_select_wpcf7($tag) {
@@ -46,8 +50,9 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 
 	$class = wpcf7_form_controls_class( $tag->type );
 	$validation_error = wpcf7_get_validation_error( $tag->name );
-	if ($validation_error)
+	if ($validation_error) {
 		$class .= ' wpcf7-not-valid';
+	}
 
 	$attr = array(
 		'name' => $tag->name,
@@ -61,6 +66,7 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 		'default' => $tag->get_option('default', '', true),
 		'flag' => $tag->has_option('flag'),
 		'tel' => $tag->has_option('tel'),
+		'list' => implode(',', (array) $tag->get_option('country', '[a-zA-Z]+', false)),
 	);
 	
 	$html = geoip_detect2_shortcode_country_select($attr);

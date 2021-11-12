@@ -5,10 +5,15 @@ import { options } from './lookup/get_info';
 let firstCall = true;
 
 export function main() {
+    if (process.env.NODE_ENV !== 'production') {
+        console.log('Do Main');
+    }
+
     if (firstCall) {
         do_shortcodes_init();
         firstCall = false;        
     }
+
     if (options.do_body_classes) {
         add_body_classes();
     }

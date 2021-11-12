@@ -23,11 +23,18 @@ export function selectItemByValue(el, value) {
     }
 }
 
+/**
+ * @param {*} el                Select Tag
+ * @param {string} attributeName     HTML attribute name to search by
+ * @param {string} attributeValue    HTML attribute value to search by
+ * @returns boolean TRUE if Value found in select tag
+ */
 export function selectItemByAttribute(el, attributeName, attributeValue) {
-    for (var i = 0; i < el.options.length; i++) {
+    for (let i = 0; i < el.options.length; i++) {
         if (el.options[i].getAttribute(attributeName) === attributeValue) {
             el.selectedIndex = i;
-            break;
+            return true;
         }
     }
+    return false;
 }
