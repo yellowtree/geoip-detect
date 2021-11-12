@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a134b061400afd31471d6eaf321fee0e",
+    "content-hash": "b00a30ca776a214a318db6b3aa8c94c4",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1650,7 +1650,8 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPress/WordPress/zipball/refs/tags/5.8.1"
+                "url": "https://api.github.com/repos/WordPress/WordPress/zipball/refs/tags/5.8.1",
+                "reference": "5.8.1"
             },
             "require": {
                 "php": ">=5.3.2",
@@ -2470,16 +2471,16 @@
         },
         {
             "name": "wp-phpunit/wp-phpunit",
-            "version": "5.8.1",
+            "version": "5.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-phpunit/wp-phpunit.git",
-                "reference": "0b89ad32feae22f3a39e63e44117d6e56bdeed69"
+                "reference": "0cefcc49fd8a7e8c2f8d755e314532441618aee5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-phpunit/wp-phpunit/zipball/0b89ad32feae22f3a39e63e44117d6e56bdeed69",
-                "reference": "0b89ad32feae22f3a39e63e44117d6e56bdeed69",
+                "url": "https://api.github.com/repos/wp-phpunit/wp-phpunit/zipball/0cefcc49fd8a7e8c2f8d755e314532441618aee5",
+                "reference": "0cefcc49fd8a7e8c2f8d755e314532441618aee5",
                 "shasum": ""
             },
             "type": "library",
@@ -2509,7 +2510,7 @@
                 "test",
                 "wordpress"
             ],
-            "time": "2021-09-09T19:11:29+00:00"
+            "time": "2021-11-10T19:49:29+00:00"
         },
         {
             "name": "yoast/phpunit-polyfills",
