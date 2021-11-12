@@ -24,7 +24,7 @@ env:
     - WP_DB_USER=wp
     - WP_DB_PASS=password
     - WP_DB_NAME=wp_tests
-    - WP_VERSION=5.8.1
+    - WP_VERSION=*
 
 php:
   - 8.0
