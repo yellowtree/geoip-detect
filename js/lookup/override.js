@@ -3,7 +3,6 @@ import { options as globalOptions } from './get_info';
 import Record, { camelToUnderscore } from '../models/record';
 import _set from 'just-safe-set';
 import _get from 'just-safe-get';
-import _debounce from 'just-debounce-it';
 import _is_object_content_equal from 'just-compare';
 import { main } from '../main';
 
