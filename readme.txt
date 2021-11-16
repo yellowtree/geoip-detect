@@ -174,6 +174,7 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 * NEW: Drastically improving performance if the the lookup is performed for the current IP more than once (e.g. because of shortcodes without AJAX mode)
 * UI: Showing the time for the subsequent lookup on the Test Lookup page
 
+* Update the list of available APIs for getting the external IP
 * Minimum Wordpress version is 5.4 now. 
 * Update some internal libraries & dev tools
 
