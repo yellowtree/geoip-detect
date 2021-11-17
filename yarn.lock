@@ -5314,25 +5314,25 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
-just-compare@1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/just-compare/-/just-compare-1.5.1.tgz#aed7e93e6bae9c3b69d79aea7805684132a0c0c5"
-  integrity sha512-xDEEFHNIyJNmN4uo/2RVeUcay9THtN/5ka/iw98Y/gsa8w9KXZQuyaf5eFUY6VlntA2+G+bdPmdhqqTs7T+BRw==
+just-compare@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/just-compare/-/just-compare-2.0.1.tgz#adc6d75dd9747fa12a8e545e9280b05dd9bcfdd0"
+  integrity sha512-BWxD24tXN+NGf4S8klbSBZNp/xc/IoLeBAyorOPaiI2uYjLNMfR5flDV54MYoub3J2H8c2oxn8Vhoi7orMoLtQ==
 
-just-intersect@3.4.1:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/just-intersect/-/just-intersect-3.4.1.tgz#c2af2ee15801214b70ec956fdab2190c41640493"
-  integrity sha512-lb3trXgUx69SCrgLF/j0dwKODGwFtqT3anNggUYe+kttalgo268HsldABsenMSpqbt2AXup2zskeWnffeQL+ew==
+just-intersect@4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/just-intersect/-/just-intersect-4.0.2.tgz#67a026d44b69aac63784ddf1922ef57cbe311ecf"
+  integrity sha512-6E/XHd34Y2yOQa8eBeMYsl8F/GqiK/Wr/17uFv9Cbc6jXMdJGu1r9utBMp+emTnsBjxD4sJnBmGzOyx4LEGCwQ==
 
-just-safe-get@3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/just-safe-get/-/just-safe-get-3.1.1.tgz#2d4b85522fedd26d964e5e84c2ded5d740abe2c2"
-  integrity sha512-KdDlQZVScxBClIiauvDHz7VaZlYeABO69nXJjrOveiUvMjcaVs6fjaOBd0M6GtxAsOyeq6/BDMtKdM4W7RiztQ==
+just-safe-get@4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/just-safe-get/-/just-safe-get-4.0.1.tgz#b89db1d82e1df27723a4c679ba913474cfaa3cb6"
+  integrity sha512-Yet2Cf1s0h8Jh0A1CMBkR/C4nIN+pCJ4vN7aNk0Eo3d/QhnpWWPEMaxlIxAiH4bUdRCfdJonFabClf21Ls5NMA==
 
-just-safe-set@3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/just-safe-set/-/just-safe-set-3.1.1.tgz#83df732af2aff3591ec3fac0466cb09a6d4796bf"
-  integrity sha512-uFMLlDW9hVV33H6vGkXg2j1EKtsaYJ+sBBYjsKOV6p6u0NgEG8o4HB7EhCO3uhzLsfOy3SOWeu0+kMFOIGV3Qw==
+just-safe-set@4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/just-safe-set/-/just-safe-set-4.0.1.tgz#cbb19eff3b9eec8cffc44c0da3209bce49544b46"
+  integrity sha512-g5iB842qxKSvB0UfZtkDW4JBhDAvQtNxI5sUdkGwVEiYdi8d71nkhvhMhcP+iR5FmVUft190u/SBpNCVTg6zLw==
 
 kleur@^3.0.3:
   version "3.0.3"
