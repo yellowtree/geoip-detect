@@ -31,11 +31,6 @@
     "jest": "27.3.1",
     "parcel": "2.0.1"
   },
-  "babel": {
-    "presets": [
-      "@babel/preset-env"
-    ]
-  },
   "browserslist": "> 0.2%, last 2 versions, Firefox ESR, not dead",
   "jest": {
     "transform": {
