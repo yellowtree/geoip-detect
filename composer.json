@@ -24,7 +24,7 @@
         "phpunit/phpunit": "7.5.20",
         "roots/wordpress": "5.8.1",
         "wp-phpunit/wp-phpunit": "5.8.2",
-        "yoast/phpunit-polyfills": "1.0.2"
+        "yoast/phpunit-polyfills": "1.0.3"
     },
     "scripts": {
         "test": "phpunit"
