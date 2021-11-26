@@ -37,7 +37,8 @@ matrix:
       php: 7.2
       env: WP_VERSION=5.4
     - name: bleeding edge
-      php: master
+      php: nightly
+      dist: focal
   allow_failures:
     - name: bleeding edge
 
