@@ -1038,23 +1038,26 @@
     },
     {
         "name": "roots/wordpress",
-        "version": "5.8.1",
-        "version_normalized": "5.8.1.0",
+        "version": "5.8.2",
+        "version_normalized": "5.8.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/WordPress/WordPress.git",
-            "reference": "5.8.1"
+            "reference": "5.8.2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/WordPress/WordPress/zipball/refs/tags/5.8.1",
-            "reference": "5.8.1"
+            "url": "https://api.github.com/repos/WordPress/WordPress/zipball/refs/tags/5.8.2",
+            "reference": "5.8.2"
         },
         "require": {
             "php": ">=5.3.2",
             "roots/wordpress-core-installer": ">=1.0.0"
         },
-        "time": "2021-09-09T02:22:02+00:00",
+        "provide": {
+            "wordpress/core-implementation": "5.8.2"
+        },
+        "time": "2021-11-10T23:24:02+00:00",
         "type": "wordpress-core",
         "installation-source": "dist",
         "notification-url": "https://packagist.org/downloads/",
@@ -2593,17 +2596,17 @@
     },
     {
         "name": "yoast/phpunit-polyfills",
-        "version": "1.0.2",
-        "version_normalized": "1.0.2.0",
+        "version": "1.0.3",
+        "version_normalized": "1.0.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/Yoast/PHPUnit-Polyfills.git",
-            "reference": "1a582ab1d91e86aa450340c4d35631a85314ff9f"
+            "reference": "5ea3536428944955f969bc764bbe09738e151ada"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Yoast/PHPUnit-Polyfills/zipball/1a582ab1d91e86aa450340c4d35631a85314ff9f",
-            "reference": "1a582ab1d91e86aa450340c4d35631a85314ff9f",
+            "url": "https://api.github.com/repos/Yoast/PHPUnit-Polyfills/zipball/5ea3536428944955f969bc764bbe09738e151ada",
+            "reference": "5ea3536428944955f969bc764bbe09738e151ada",
             "shasum": ""
         },
         "require": {
@@ -2613,7 +2616,7 @@
         "require-dev": {
             "yoast/yoastcs": "^2.2.0"
         },
-        "time": "2021-10-03T08:40:26+00:00",
+        "time": "2021-11-23T01:37:03+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
