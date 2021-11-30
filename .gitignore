@@ -14,6 +14,7 @@ wp-cli.local.yml
 *.code
 /coverage
 /.parcel-cache
+/babel.config.json
 
 /lib/vendor
 
@@ -30,6 +31,7 @@ wp-cli.local.yml
 /vendor/theseer/
 /vendor/webmozart/
 /vendor/wp-phpunit/
+/vendor/yoast/phpunit-polyfills
 /vendor/nikic/php-parser/
 /vendor/bin/phpunit
 /vendor/bin/php-parse

@@ -281,7 +281,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 				if ($expected === 'ha') {
 					$expected = false;
 				} else {
-					$expected = !!$expected;
+					$expected = !! $expected;
 				}
 				$data_set[] = [$i, $input, $expected, $parsed, $opt ];
 
@@ -399,6 +399,31 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		];
 	}
 
+	/**
+	 * @dataProvider dataBlockElement
+	 */
+	function testBlockElement($expected, $html) {
+		$actual = _geoip_detect2_html_contains_block_elements($html);
+		$this->assertSame($expected, $actual, 'Check if HTML block element');
+	}
+
+	function dataBlockElement() {
+		return [
+			[ false, '' ],
+			[ false, '<span>bla</span>'],
+			[ false, 'asdf<span />bla'],
+			[ true,  '<P>Hallo</P>'],
+			[ true,  '<p >Hallo</p >'],
+			[ true,  '<div class="hu">hu</div>'],
+			[ true,  '<ol><li>hu</li></ol>'],
+			[ true,  '<div />'],
+			[ true,  '<div/>'],
+			[ false, '<pp/>'],
+			[ false, '<pp />'],
+			[ false, '<pp class=""></pp>'],
+			[ false, '<pp></pp>'],
+		];
+	}
 }
 
 /* Data of Test IP:

@@ -170,10 +170,14 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 * NEW: In AJAX mode, the new property `autosave` saves the user input as local override for this browser. `[geoip_detect2_countries mycountry autosave]` and `[geoip_detect2_text_input city property:city autosave]`
 * FIX: In AJAX mode, calling the method `set_override(record, duration_in_days)` now refreshes the AJAX shortcodes and CSS body classes.
 -> Thus, it is now possible to quickly implement different content for different countries with an autodetected default country, see (TODO example)
+* FIX: In AJAX mode, the shortcode `[geoip_detect2_show_if]` renders as a `<div>` if it detects that the containing content has HTML block level elements
+
 * NEW: Drastically improving performance if the the lookup is performed for the current IP more than once (e.g. because of shortcodes without AJAX mode)
 * UI: Showing the time for the subsequent lookup on the Test Lookup page
+
+* Update the list of available APIs for getting the external IP
 * Minimum Wordpress version is 5.4 now. 
-* Update some libraries & dev tools
+* Update some internal libraries & dev tools
 
 = 4.2.3 =
 * FIX: Further improve the Maxmind admin notice UI

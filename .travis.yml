@@ -10,9 +10,7 @@ cache:
   directories:
     - $HOME/.composer/cache
 
-jobs:
-  allow_failures:
-    - php: 8.0
+
 
 language: php
 
@@ -33,13 +31,21 @@ php:
   - 7.2
 
 matrix:
+  fast_finish: true
   include:
-    - php: 7.2
+    - name: legacy
+      php: 7.2
       env: WP_VERSION=5.4
+    - name: bleeding edge
+      php: nightly
+      dist: focal
+  allow_failures:
+    - name: bleeding edge
 
 before_script:
   - mysql -u root -e "GRANT ALL PRIVILEGES ON ${WP_DB_NAME}.* TO ${WP_DB_USER} IDENTIFIED BY '${WP_DB_PASS}';"
   - mysql -u root -e "CREATE DATABASE ${WP_DB_NAME};"
+  - phpenv config-rm xdebug.ini || return 0
 
 install:
   - composer validate

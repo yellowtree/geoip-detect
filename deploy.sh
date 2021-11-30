@@ -89,6 +89,7 @@ merge_branch_and_checkout develop beta
 cd $GITPATH
 
 echo "Re-generate JS ..."
+rm -rf js/dist
 yarn install && yarn clean && yarn build && git add js/dist
 if [ $? != 0 ]; then echo ; echo "Yarn Failed."; echo ; exit 1; fi 
 
@@ -117,7 +118,7 @@ if [ "$BETA" = 1 ] ; then
 	echo 
 	echo "OK. Beta version released."
 	echo
-	exit 0;git push origin master --tags
+	exit 0;
 fi
 
 # Merging all changes to master, then continue in master
@@ -167,10 +168,10 @@ svn propset svn:ignore '*' "$SVNPATH/trunk/lib/geonames/generators/"
 #if submodule exist, recursively check out their indexes (from benbalter)
 if [ -f ".gitmodules" ]
 then
-echo "Exporting the HEAD of each submodule from git to the trunk of SVN"
-git submodule init
-git submodule update
-git submodule foreach --recursive 'git checkout-index -a -f --prefix=$SVNPATH/trunk/$path/'
+	echo "Exporting the HEAD of each submodule from git to the trunk of SVN"
+	git submodule init
+	git submodule update
+	git submodule foreach --recursive 'git checkout-index -a -f --prefix=$SVNPATH/trunk/$path/'
 fi
 
 echo "Changing directory to SVN and adding new files, if any"

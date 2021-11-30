@@ -52,7 +52,7 @@ async function get_info_cached() {
     try {
         response = await get_info_raw();
     } catch (err) {
-        console.log('Uncaught ERROR ??');
+        console.log('Weird: Uncaught error...', err);
         response = err.responseJSON || err;
     }
 

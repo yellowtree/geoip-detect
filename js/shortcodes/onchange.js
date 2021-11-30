@@ -15,14 +15,18 @@ function event_listener_autosave_on_change(event) {
 
     const target = event.target;
     if (target.matches('.js-geoip-detect-input-autosave')) {
-        console.log('autosave on change', target);
+
+        if (process.env.NODE_ENV !== 'production') {
+            console.log('autosave on change', target);
+        }
+
         const property = get_options(target).property;
         const value = target.value;
 
         if (value) {
             _change_counter++;
             if (_listener_active || _change_counter > 100) {
-                console.warn('Thats weird! autosave change detected a recursion!');
+                console.warn('Error: Thats weird! autosave change detected a recursion! Please file a bug report about this.');
                 debugger;
                 return;
             } else {
@@ -32,7 +36,7 @@ function event_listener_autosave_on_change(event) {
                     const selected = target.options[target.selectedIndex];
                     const isoCode = selected?.getAttribute('data-c');
                     if (isoCode) {
-                        set_override_with_merge('country.iso_code', isoCode.toUpperCase());
+                        set_override_with_merge('country.iso_code', isoCode.toUpperCase(), {reevaluate: false});
                     }
                 }
                 

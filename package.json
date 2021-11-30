@@ -6,38 +6,32 @@
   "author": "Benjamin Pick <benjaminpick@github.com>",
   "license": "GPL-3.0-or-later",
   "scripts": {
-    "clean": "rm -rf .cache",
-    "start": "parcel js/frontend.js --dist-dir js/dist --public-url .",
-    "build": "rm -rf js/dist && parcel build js/frontend.js --dist-dir js/dist --public-url .",
-    "test": "jest --coverage",
+    "clean": "rm -rf .parcel-cache",
+    "start": "parcel js/frontend.js --port 1234 --hmr-port 1236 --dist-dir js/dist --public-url .",
+    "build": "rm -f babel.config.json ; rm -rf js/dist && parcel build js/frontend.js --dist-dir js/dist --public-url .",
+    "test": "cp tests/babel.config.json . && jest --coverage ; rm babel.config.json",
     "update-browserlist": "browserslist --update-db"
   },
   "private": false,
   "dependencies": {
-    "@babel/runtime": "7.15.4",
+    "@babel/runtime": "7.16.3",
     "emoji-flags": "1.3.0",
-    "just-compare": "1.4.0",
-    "just-debounce-it": "1.5.0",
-    "just-intersect": "3.2.0",
-    "just-safe-get": "2.1.2",
-    "just-safe-set": "2.2.3"
+    "just-compare": "2.0.1",
+    "just-intersect": "4.0.2",
+    "just-safe-get": "4.0.1",
+    "just-safe-set": "4.0.1"
   },
   "devDependencies": {
-    "@babel/core": "7.15.5",
-    "@babel/plugin-transform-runtime": "7.15.0",
-    "@babel/preset-env": "7.15.6",
-    "babel-jest": "27.1.1",
+    "@babel/core": "7.16.0",
+    "@babel/plugin-transform-runtime": "7.16.0",
+    "@babel/preset-env": "7.16.0",
+    "babel-jest": "27.3.1",
     "babel-plugin-transform-class-properties": "6.24.1",
     "eslint": "7.32.0",
-    "jest": "27.1.1",
-    "parcel": "2.0.0-rc.0"
+    "jest": "27.3.1",
+    "parcel": "2.0.1"
   },
-  "babel": {
-    "presets": [
-      "@babel/preset-env"
-    ]
-  },
-  "browserslist": "> 0.2%, last 2 versions, not dead",
+  "browserslist": "> 0.2%, last 2 versions, Firefox ESR, not dead",
   "jest": {
     "transform": {
       ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",

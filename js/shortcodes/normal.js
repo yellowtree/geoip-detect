@@ -17,8 +17,16 @@ export function do_shortcode_flags(el, record) {
 export function do_shortcode_country_select(el, record) {
     let country = record.get_country_iso();
 
-    selectItemByAttribute(el, 'data-c', country);
-    triggerNativeEvent(el, 'change');
+    if (selectItemByAttribute(el, 'data-c', country)) {
+        triggerNativeEvent(el, 'change');
+    } else {
+        const defaultValue = get_options(el).default;
+        if (get_options(el).default) {
+            if (selectItemByAttribute(el, 'data-c', defaultValue)) {
+                triggerNativeEvent(el, 'change');
+            }
+        }
+    }
 }
 
 export function do_shortcode_text_input(el, record) {

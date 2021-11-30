@@ -448,11 +448,13 @@ function _geoip_detect2_get_external_ip_services(int $nb = 3, bool $needsCORS = 
 	$ipservicesThatAllowCORS = array(
 			'http://ipv4.icanhazip.com',
 			'http://v4.ident.me',
+			'http://ipinfo.io/ip',
 	);
 	$ipservicesWithoutCORS = array(
 		'http://ipecho.net/plain',
-		'http://bot.whatismyipaddress.com',
+		'https://api.ipify.org',
 	);
+	// Also possible with parsing: http://checkip.dyndns.org
 
 	$ipservices = $ipservicesThatAllowCORS;
 	if (!$needsCORS) {
