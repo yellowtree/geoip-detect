@@ -1,0 +1,191 @@
+[
+    [
+        0,
+        "[geoip_detect2_test_show_if country=\"DE\"][else]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "de"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        1,
+        "[geoip_detect2_test_show_if country=\"\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": []
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        2,
+        "[geoip_detect2_test_show_if country=\"\"][else]yes[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": []
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        3,
+        "[geoip_detect2_test_show_if city=\"Berlin\"][else]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "city",
+                    "v": "berlin"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        4,
+        "[geoip_detect2_test_show_if city=\"\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": []
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        5,
+        "[geoip_detect2_test_show_if city=\"\" country=\"\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": []
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        6,
+        "[geoip_detect2_test_show_if city=\"DE\" country=\"\"][else]yes[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "city",
+                    "v": "de"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        7,
+        "[geoip_detect2_test_show_if property=\"isEmpty\" property_value=\"YES\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "isEmpty",
+                    "v": "yes"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": "",
+            "property": "isEmpty"
+        }
+    ],
+    [
+        8,
+        "[geoip_detect2_test_show_if property=\"isEmpty\" property_value=\"no\"]yes[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "isEmpty",
+                    "v": "no"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": "",
+            "property": "isEmpty"
+        }
+    ]
+]

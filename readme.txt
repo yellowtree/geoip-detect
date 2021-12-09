@@ -171,6 +171,8 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 -> Thus, it is now possible to quickly implement different content for different countries with an autodetected default country, see (TODO example)
 * FIX: In AJAX mode, the shortcode `[geoip_detect2_show_if]` renders as a `<div>` if it detects that the containing content has HTML block level elements
 
+* FIX: `[geoip_detect2_show_if country=""]yes[/geoip_detect2_show_if]` now shows "yes" when the record data is empty
+
 * NEW: Drastically improving performance if the the lookup is performed for the current IP more than once (e.g. because of shortcodes without AJAX mode)
 * UI: Showing the time for the subsequent lookup on the Test Lookup page
 

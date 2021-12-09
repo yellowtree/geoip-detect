@@ -20,6 +20,12 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		remove_filter('geoip_detect2_reader', 'shortcode_empty_reader', 101);
 		remove_filter('geoip2_detect_sources_not_cachable', array($this, 'filter_empty_array'), 101);
 		remove_filter('geoip_detect2_shortcode_country_select_countries', array($this, 'shortcodeFilter'), 101);
+		remove_filter('geoip_detect2_record_data_override_lookup', array($this, 'filterEmptyRecordData'), 101);
+	}
+
+	function filterEmptyRecordData() {
+		$record = _geoip_detect2_record_enrich_data([], GEOIP_DETECT_TEST_IP, 'empty', 'error string');
+		return $return;
 	}
 
 	function testShortcodeOneProperty() {
@@ -261,11 +267,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 
 	protected $last_atts = false;
 
-	public function testGenerateForJS() {
-		$data = $this->dataShortcodeShowIf();
-
-		add_shortcode('geoip_detect2_test_show_if', array($this, 'do_shortcode_geoip_detect2_test_show_if'));
-
+	private function getDataSet($data) {
 		$data_set = [];
 		$i = 0;
 		foreach ($data as $row) {
@@ -288,8 +290,19 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 			}
 			$i++;
 		}
+		return $data_set;
+	}
 
+	public function testGenerateForJS() {
+		add_shortcode('geoip_detect2_test_show_if', array($this, 'do_shortcode_geoip_detect2_test_show_if'));
+
+		$data = $this->dataShortcodeShowIf();
+		$data_set = $this->getDataSet($data);
 		file_put_contents(__DIR__ . '/fixture_shortcode_show_if.json', json_encode($data_set, JSON_PRETTY_PRINT));
+
+		$data = $this->dataShortcodeShowIfEmpty();
+		$data_set = $this->getDataSet($data);
+		file_put_contents(__DIR__ . '/fixture_shortcode_show_if_empty.json', json_encode($data_set, JSON_PRETTY_PRINT));
 
 		$this->assertSame(true, true);
 	}
@@ -363,6 +376,47 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		);
 	}
 
+	
+	/**
+	 * @dataProvider dataShortcodeShowIfEmpty
+	 */
+	function testShortcodeEmpty($result, $txt) {
+		add_filter('geoip_detect2_record_data_override_lookup', array($this, 'filterEmptyRecordData'), 101);
+		$return = do_shortcode($txt);
+		$this->assertSame($result, $return, "Shortcode failed: " . $txt);
+	}
+
+	/**
+	 * @dataProvider dataShortcodeShowIfEmpty
+	 */
+	public function testShortcodeHideIfEmpty($result, $txt) {
+		// Negate the tests
+		$txt = str_replace('geoip_detect2_show_if', 'geoip_detect2_hide_if', $txt);
+		if ($result === 'hu') {
+			$result = 'ha';
+		} elseif ($result === 'ha') {
+			$result = 'hu';
+		} else {
+			$result = $result ? '' : 'yes';
+		}
+
+		$return = do_shortcode($txt);
+		$this->assertSame($result, $return, "Shortcode failed: " . $txt);
+	}
+
+	function dataShortcodeShowIfEmpty() {
+		return [
+			/* #0 */ ['yes', '[geoip_detect2_show_if country="DE"][else]yes[/geoip_detect2_show_if]'],
+			/* #1 */ ['yes', '[geoip_detect2_show_if country=""]yes[/geoip_detect2_show_if]'],
+			/* #2 */ ['',    '[geoip_detect2_show_if country=""][else]yes[/geoip_detect2_show_if]'],
+			/* #3 */ ['yes', '[geoip_detect2_show_if city="Berlin"][else]yes[/geoip_detect2_show_if]'],
+			/* #4 */ ['yes', '[geoip_detect2_show_if city=""]yes[/geoip_detect2_show_if]'],
+			/* #5 */ ['yes', '[geoip_detect2_show_if city="" country=""]yes[/geoip_detect2_show_if]'],
+			/* #6 */ ['',    '[geoip_detect2_show_if city="DE" country=""][else]yes[/geoip_detect2_show_if]'],
+			/* #7 */ ['yes', '[geoip_detect2_show_if property="isEmpty" property_value="YES"]yes[/geoip_detect2_show_if]'],
+			/* #8 */ ['',    '[geoip_detect2_show_if property="isEmpty" property_value="no"]yes[/geoip_detect2_show_if]'],
+		];
+	}
 
 
 	function testShortcodeAjax() {
