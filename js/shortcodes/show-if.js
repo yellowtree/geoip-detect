@@ -81,6 +81,11 @@ function geoip_detect2_shortcode_check_subcondition(expectedValues, actualValues
     actualValues = actualValues.map(x => String(x).toLowerCase())
 
     expectedValues = expectedValues.split(',');
+    if (expectedValues.indexOf('') !== -1) {
+        if (actualValues.length === 0) {
+            return true;
+        }
+    }
 
     const intersect = _intersect(expectedValues, actualValues);
 
