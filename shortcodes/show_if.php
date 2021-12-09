@@ -268,6 +268,8 @@ function geoip_detect2_shortcode_check_subcondition(string $expectedValues, arra
 			$actualValues = ['true', 'yes', 'y', '1'];
 		} else if ($actualValues[0] === false) {
 			$actualValues = ['false', 'no', 'n', '0', ''];
+		} else if ($actualValues[0] === "") {
+			$actualValues = ['', null];
 		}
 	}
 
