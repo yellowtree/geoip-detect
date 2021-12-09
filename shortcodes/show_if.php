@@ -152,7 +152,7 @@ function geoip_detect2_shortcode_parse_conditions_from_attributes(array $attr, b
 
 
 	foreach ($attributeNames as $shortcodeParamName => $maxmindName) {
-		if (!empty($attr[$shortcodeParamName])) {
+		if (isset($attr[$shortcodeParamName])) {
 			$condition = [
 				'p' => $maxmindName,
 				'v' => geoip_detect2_shortcode_prepare_values($attr[$shortcodeParamName]),
@@ -166,13 +166,13 @@ function geoip_detect2_shortcode_parse_conditions_from_attributes(array $attr, b
 
 	// Custom property
 	if (!empty($attr['property'])) {
-		if (!empty($attr['property_value'])) {
+		if (isset($attr['property_value'])) {
 			$condition = [
 				'p' => $attr['property'],
 				'v' => geoip_detect2_shortcode_prepare_values($attr['property_value']),
 			];
 			$conditions[] = $condition;			
-		} else if (!empty($attr['not_property_value'])) {
+		} else if (isset($attr['not_property_value'])) {
 			$condition = [
 				'p' => $attr['property'],
 				'v' => geoip_detect2_shortcode_prepare_values($attr['not_property_value']),
@@ -190,6 +190,7 @@ function geoip_detect2_shortcode_parse_conditions_from_attributes(array $attr, b
 function geoip_detect2_shortcode_prepare_values(string $value) : string {
 	// Parse User Input Values of Attribute
 	$attributeValuesArray = explode(',', $value);
+	
 	$attributeValuesArray = array_map('trim', $attributeValuesArray);
 	$attributeValuesArray = array_map('mb_strtolower', $attributeValuesArray);
 
@@ -229,7 +230,7 @@ function geoip_detect2_shortcode_evaluate_conditions(array $parsed, \GeoIp2\Mode
 			} else {
 				$values = [ $value ];
 			}
-	
+
 			$subConditionMatching = geoip_detect2_shortcode_check_subcondition($condition['v'], $values);
 	
 		} catch (\Exception $e) {

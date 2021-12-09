@@ -52,7 +52,12 @@
         {
             "op": "and",
             "not": 0,
-            "conditions": []
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": ""
+                }
+            ]
         },
         {
             "skip_cache": false,
@@ -70,7 +75,12 @@
         {
             "op": "and",
             "not": 0,
-            "conditions": []
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": ""
+                }
+            ]
         },
         {
             "skip_cache": false,
@@ -111,7 +121,12 @@
         {
             "op": "and",
             "not": 0,
-            "conditions": []
+            "conditions": [
+                {
+                    "p": "city",
+                    "v": ""
+                }
+            ]
         },
         {
             "skip_cache": false,
@@ -129,7 +144,16 @@
         {
             "op": "and",
             "not": 0,
-            "conditions": []
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": ""
+                },
+                {
+                    "p": "city",
+                    "v": ""
+                }
+            ]
         },
         {
             "skip_cache": false,
@@ -148,6 +172,10 @@
             "op": "and",
             "not": 0,
             "conditions": [
+                {
+                    "p": "country",
+                    "v": ""
+                },
                 {
                     "p": "city",
                     "v": "de"
@@ -194,7 +222,36 @@
         {
             "op": "and",
             "not": 0,
-            "conditions": []
+            "conditions": [
+                {
+                    "p": "isEmpty",
+                    "v": "0"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": "",
+            "property": "isEmpty"
+        }
+    ],
+    [
+        10,
+        "[geoip_detect2_test_show_if property=\"isEmpty\" property_value=\"\"]yes[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "isEmpty",
+                    "v": ""
+                }
+            ]
         },
         {
             "skip_cache": false,

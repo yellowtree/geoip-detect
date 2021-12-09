@@ -417,6 +417,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 			/* #7 */ ['ha',  '[geoip_detect2_show_if city="DE" country=""]hu[else]ha[/geoip_detect2_show_if]'],
 			/* #8 */ ['yes', '[geoip_detect2_show_if property="isEmpty" property_value="1"]yes[/geoip_detect2_show_if]'],
 			/* #9 */ ['',    '[geoip_detect2_show_if property="isEmpty" property_value="0"]yes[/geoip_detect2_show_if]'],
+			/* #10 */['',    '[geoip_detect2_show_if property="isEmpty" property_value=""]yes[/geoip_detect2_show_if]'],
 		];
 	}
 
