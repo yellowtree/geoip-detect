@@ -165,7 +165,7 @@ function geoip_detect2_shortcode_parse_conditions_from_attributes(array $attr, b
 	}
 
 	// Custom property
-	if (!empty($attr['property'])) {
+	if (isset($attr['property'])) {
 		if (isset($attr['property_value'])) {
 			$condition = [
 				'p' => $attr['property'],
