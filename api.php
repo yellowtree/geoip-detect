@@ -153,6 +153,7 @@ function geoip_detect2_get_info_from_current_ip($locales = null, $options = arra
 		if (!is_null($cache)) {
 			$locales = apply_filters('geoip_detect2_locales', $locales);
 			$data = $cache->jsonSerialize();
+			$data = apply_filters('geoip_detect2_record_data_override_lookup', $data, $cache->traits->ipAddress, $options);
 			$data = apply_filters('geoip_detect2_record_data_after_cache', $data, $cache->traits->ipAddress);
 			$record = new \YellowTree\GeoipDetect\DataSources\City($data, $locales);
 			return $record;

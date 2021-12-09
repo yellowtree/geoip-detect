@@ -25,7 +25,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 
 	function filterEmptyRecordData() {
 		$record = _geoip_detect2_record_enrich_data([], GEOIP_DETECT_TEST_IP, 'empty', 'error string');
-		return $return;
+		return $record;
 	}
 
 	function testShortcodeOneProperty() {
@@ -390,6 +390,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	 * @dataProvider dataShortcodeShowIfEmpty
 	 */
 	public function testShortcodeHideIfEmpty($result, $txt) {
+		add_filter('geoip_detect2_record_data_override_lookup', array($this, 'filterEmptyRecordData'), 101);
 		// Negate the tests
 		$txt = str_replace('geoip_detect2_show_if', 'geoip_detect2_hide_if', $txt);
 		if ($result === 'hu') {
@@ -406,15 +407,16 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 
 	function dataShortcodeShowIfEmpty() {
 		return [
-			/* #0 */ ['yes', '[geoip_detect2_show_if country="DE"][else]yes[/geoip_detect2_show_if]'],
-			/* #1 */ ['yes', '[geoip_detect2_show_if country=""]yes[/geoip_detect2_show_if]'],
-			/* #2 */ ['',    '[geoip_detect2_show_if country=""][else]yes[/geoip_detect2_show_if]'],
-			/* #3 */ ['yes', '[geoip_detect2_show_if city="Berlin"][else]yes[/geoip_detect2_show_if]'],
-			/* #4 */ ['yes', '[geoip_detect2_show_if city=""]yes[/geoip_detect2_show_if]'],
-			/* #5 */ ['yes', '[geoip_detect2_show_if city="" country=""]yes[/geoip_detect2_show_if]'],
-			/* #6 */ ['',    '[geoip_detect2_show_if city="DE" country=""][else]yes[/geoip_detect2_show_if]'],
-			/* #7 */ ['yes', '[geoip_detect2_show_if property="isEmpty" property_value="YES"]yes[/geoip_detect2_show_if]'],
-			/* #8 */ ['',    '[geoip_detect2_show_if property="isEmpty" property_value="no"]yes[/geoip_detect2_show_if]'],
+			/* #0 */ ['ha',  '[geoip_detect2_show_if country="DE"]hu[else]ha[/geoip_detect2_show_if]'],
+			/* #1 */ ['',    '[geoip_detect2_show_if country="DE"]yes[/geoip_detect2_show_if]'],
+			/* #2 */ ['yes', '[geoip_detect2_show_if country=""]yes[/geoip_detect2_show_if]'],
+			/* #3 */ ['hu',  '[geoip_detect2_show_if country=""]hu[else]ha[/geoip_detect2_show_if]'],
+			/* #4 */ ['ha',  '[geoip_detect2_show_if city="Berlin"]hu[else]ha[/geoip_detect2_show_if]'],
+			/* #5 */ ['yes', '[geoip_detect2_show_if city=""]yes[/geoip_detect2_show_if]'],
+			/* #6 */ ['yes', '[geoip_detect2_show_if city="" country=""]yes[/geoip_detect2_show_if]'],
+			/* #7 */ ['ha',  '[geoip_detect2_show_if city="DE" country=""]hu[else]ha[/geoip_detect2_show_if]'],
+			/* #8 */ ['yes', '[geoip_detect2_show_if property="isEmpty" property_value="1"]yes[/geoip_detect2_show_if]'],
+			/* #9 */ ['',    '[geoip_detect2_show_if property="isEmpty" property_value="0"]yes[/geoip_detect2_show_if]'],
 		];
 	}
 
