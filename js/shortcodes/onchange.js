@@ -23,27 +23,25 @@ function event_listener_autosave_on_change(event) {
         const property = get_options(target).property;
         const value = target.value;
 
-        if (value) {
-            _change_counter++;
-            if (_listener_active || _change_counter > 100) {
-                console.warn('Error: Thats weird! autosave change detected a recursion! Please file a bug report about this.');
+        _change_counter++;
+        if (_listener_active || _change_counter > 100) {
+            console.warn('Error: Thats weird! autosave change detected a recursion! Please file a bug report about this.');
+            if (process.env.NODE_ENV !== 'production') {
                 debugger;
-                return;
-            } else {
-                _listener_active = true;
-
-                if (target.matches('select.js-geoip-detect-country-select')) {
-                    const selected = target.options[target.selectedIndex];
-                    const isoCode = selected?.getAttribute('data-c');
-                    if (isoCode) {
-                        set_override_with_merge('country.iso_code', isoCode.toUpperCase(), {reevaluate: false});
-                    }
-                }
-                
-                set_override_with_merge(property, value); // might call do_shortcodes etc.
-
-                _listener_active = false;
             }
+            return;
+        } else {
+            _listener_active = true;
+
+            if (target.matches('select.js-geoip-detect-country-select')) {
+                const selected = target.options[target.selectedIndex];
+                const isoCode = selected?.getAttribute('data-c');
+                set_override_with_merge('country.iso_code', isoCode.toUpperCase(), {reevaluate: false});
+            }
+            
+            set_override_with_merge(property, value); // might call do_shortcodes etc.
+
+            _listener_active = false;
         }
     }
 }

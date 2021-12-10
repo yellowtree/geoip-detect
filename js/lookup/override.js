@@ -48,6 +48,10 @@ export function set_override_with_merge(property, value, options) {
     
     _set(record, property, value);
     set_override(record, options);
+
+    if (process.env.NODE_ENV !== 'production') {
+        console.log("Override is now: ", getRecordDataFromLocalStorage());
+    }
 }
 
 /**
