@@ -220,7 +220,7 @@ HTML;
 
 	public function isWorking() {
 		$filename = $this->maxmindGetFilename();
-		if (!is_readable($filename))
+		if (!is_readable($filename) || !is_file($filename))
 			return false;
 
 		return true;
