@@ -99,14 +99,19 @@ function geoip_detect2_shortcode_country_select($attr) {
 	$countries = $countryInfo->getAllCountries($shortcode_options['lang']);
 
 	if (!empty($attr['list'])) {
-		$list = array_map('mb_strtoupper', wp_parse_list($attr['list']));
+		$list = wp_parse_list($attr['list']);
 
 		$allCountries = $countries;
 
 		$countries = [];
 		foreach($list as $key) {
-			if (isset($allCountries[$key])) {
-				$countries[$key] = $allCountries[$key];
+			if (str_starts_with($key,'blank_')) {
+				$countries[$key] = str_replace('_', ' ', mb_substr($key, 6));
+			} else {
+				$key = mb_strtoupper($key);
+				if (isset($allCountries[$key])) {
+					$countries[$key] = $allCountries[$key];
+				}
 			}
 		}
 
@@ -152,7 +157,7 @@ function geoip_detect2_shortcode_country_select($attr) {
 	}
 	foreach ($countries as $code => $label) {
 		$code = mb_strtolower($code);
-		if (substr($code, 0, 6) == 'blank_')
+		if (str_starts_with($code,'blank_'))
 		{
 			$html .= '<option data-c="" value="">' . esc_html($label) . '</option>';
 		}
