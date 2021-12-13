@@ -249,8 +249,9 @@ HTML;
 		if (file_exists(ABSPATH . $filename))
 			$filename = ABSPATH . $filename;
 
-		if (!is_readable($filename))
+		if (!is_readable($filename) || !is_file($filename)) {
 			return '';
+		}
 
 		try {
 			$reader = new \GeoIp2\Database\Reader($filename);

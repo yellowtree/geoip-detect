@@ -71,7 +71,7 @@ class DataSourceRegistry {
 		if (isset($this->sources[$id]))
 			return $this->sources[$id];
 
-		if (WP_DEBUG) {
+		if (WP_DEBUG && $id !== '') {
 			trigger_error('The source with id "' . $id . '" was requested, but no such source was found. Using default source instead.', E_USER_NOTICE);
 		}
 
