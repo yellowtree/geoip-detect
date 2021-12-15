@@ -2,7 +2,7 @@
 Contributors: benjaminpick
 Tags: geolocation, locator, geoip, maxmind, ipstack
 Requires at least: 5.0
-Tested up to: 5.8
+Tested up to: 5.9
 Requires PHP: 7.2
 Stable tag: trunk
 License: GPLv3 or later
@@ -166,7 +166,7 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 == Changelog ==
 
 = 4.3.0 =
-* FIX [!]: Empty attribute values such as `[geoip_detect2_show_if country=""]Country was not detected[/geoip_detect2_show_if]` are now evaluated (they were ignored before)
+* FIX [!]: Empty attribute values such as `[geoip_detect2_show_if country=""]Country was not detected[/geoip_detect2_show_if]` are now working (they were ignored before)
 * FIX: In AJAX mode, the shortcode `[geoip_detect2_show_if]` renders as a `<div>` if it detects that the containing content has HTML block level elements
 
 * NEW: In AJAX mode, the new property `autosave` saves the user input as local override for this browser. `[geoip_detect2_countries mycountry autosave]` and `[geoip_detect2_text_input city property:city autosave]`
@@ -175,6 +175,7 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 * NEW: Drastically improving performance if the the lookup is performed for the current IP more than once (e.g. because of shortcodes without AJAX mode)
 * UI: Showing the time for the subsequent lookup on the Test Lookup page
+* FIX: Maxmind: Check if the database file is really a file, not a directory
 
 * Update the list of available APIs for getting the external IP (as whatismyip went down)
 * Minimum Wordpress version is 5.4 now. 

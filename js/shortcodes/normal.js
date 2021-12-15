@@ -1,6 +1,7 @@
 import { triggerNativeEvent } from "../lib/events";
 import { selectItemByAttribute } from "../lib/html";
 import { get_value_from_record, get_options } from "./helpers";
+import { autosave_element } from "./onchange";
 
 export function do_shortcode_normal(el, record) {
     el.innerText = get_value_from_record(el, record);
@@ -19,14 +20,22 @@ export function do_shortcode_country_select(el, record) {
 
     if (selectItemByAttribute(el, 'data-c', country)) {
         triggerNativeEvent(el, 'change');
+        return;
     } else {
         const defaultValue = get_options(el).default;
         if (get_options(el).default) {
             if (selectItemByAttribute(el, 'data-c', defaultValue)) {
+                autosave_element(el);
                 triggerNativeEvent(el, 'change');
+                return;
             }
         }
     }
+    // Else
+    if (selectItemByAttribute(el, 'data-c', '')) {
+        autosave_element(el);
+        triggerNativeEvent(el, 'change');
+    } 
 }
 
 export function do_shortcode_text_input(el, record) {

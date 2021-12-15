@@ -64,6 +64,9 @@
  *
  * Show TEXT if the visitor is from Berlin, otherwise show OTHER (since 4.1.0)
  * 		`[geoip_detect2_show_if city="Berlin"]TEXT[else]OTHER[/geoip_detect2_show_if]`
+ * 
+ * Show NO COUNTRY if no country was detected (since 4.3.0)
+ * 		`[geoip_detect2_show_if country=""]NO COUNTRY[/geoip_detect2_show_if]`
  *
  * LIMITATIONS:
  * - You cannot nest several of these shortcodes within one another. Instead, seperate them into several blocks of shortcodes.

@@ -4,14 +4,18 @@ export function isInternalEvent() {
     return _internalEvent;
 }
 
-export function triggerNativeEvent(el, name) {
+export function triggerNativeEvent(el, eventName, options = null) {
     _internalEvent = true;
-    if (document.createEvent) {
-        const event = document.createEvent('HTMLEvents');
-        event.initEvent(name, true, false);
-        el.dispatchEvent(event);
+
+    let event;
+    if (window.CustomEvent && typeof window.CustomEvent === 'function') {
+        event = new CustomEvent(eventName, {detail : options});
     } else {
-        el.fireEvent('on' + name);
+        // Compat for IE
+        event = document.createEvent('CustomEvent');
+        event.initCustomEvent(eventName, true, true, options);
     }
+    el.dispatchEvent(event);
+
     _internalEvent = false;
 }

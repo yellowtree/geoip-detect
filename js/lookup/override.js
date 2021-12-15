@@ -95,8 +95,12 @@ function set_override_data(newData, options) {
  * 
  * @return boolean
  */
-export function remove_override() {
+export function remove_override(options) {
+    options = processOptions(options);
     setLocalStorage(globalOptions.cookie_name, {}, -1);
+    if (options.reevaluate) {
+        main();
+    }
     return true;
 }
 

@@ -9,30 +9,39 @@ export function init() {
 }
 
 function event_listener_autosave_on_change(event) {
-    if (isInternalEvent()) return;
+    if (event.type !== 'override') {
+        if (isInternalEvent()) {
+            return;
+        }
+    } else {
+        console.log('event override');
+    }
 
     const target = event.target;
-    if (target.matches('.js-geoip-detect-input-autosave')) {
-
+    if (target?.matches && target.matches('.js-geoip-detect-input-autosave')) {
         if (process.env.NODE_ENV !== 'production') {
             console.log('autosave on change', target);
         }
 
-        const property = get_options(target).property;
-        const value = target.value;
-
-        if (!check_recursive_before()) {
-            return;
-        }
-
-        if (target.matches('select.js-geoip-detect-country-select')) {
-            const selected = target.options[target.selectedIndex];
-            const isoCode = selected?.getAttribute('data-c');
-            set_override_with_merge('country.iso_code', isoCode.toUpperCase(), {reevaluate: false});
-        }
-        
-        set_override_with_merge(property, value); // might call do_shortcodes etc.
-
-        check_recursive_after();
+        autosave_element(target);
     }
+}
+
+export function autosave_element(el) {
+    const property = get_options(el).property;
+    const value = el.value;
+
+    if (!check_recursive_before()) {
+        return;
+    }
+
+    if (el.matches('select.js-geoip-detect-country-select')) {
+        const selected = el.options[el.selectedIndex];
+        const isoCode = selected?.getAttribute('data-c');
+        set_override_with_merge('country.iso_code', isoCode.toUpperCase(), { reevaluate: false });
+    }
+
+    set_override_with_merge(property, value); // might call do_shortcodes etc.
+
+    check_recursive_after();
 }
