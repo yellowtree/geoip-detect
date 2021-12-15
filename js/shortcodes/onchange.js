@@ -9,12 +9,8 @@ export function init() {
 }
 
 function event_listener_autosave_on_change(event) {
-    if (event.type !== 'override') {
-        if (isInternalEvent()) {
-            return;
-        }
-    } else {
-        console.log('event override');
+    if (isInternalEvent()) {
+        return;
     }
 
     const target = event.target;
@@ -38,10 +34,11 @@ export function autosave_element(el) {
     if (el.matches('select.js-geoip-detect-country-select')) {
         const selected = el.options[el.selectedIndex];
         const isoCode = selected?.getAttribute('data-c');
+
         set_override_with_merge('country.iso_code', isoCode.toUpperCase(), { reevaluate: false });
     }
 
-    set_override_with_merge(property, value); // might call do_shortcodes etc.
+    set_override_with_merge(property, value, { reevaluate: true }); // might call do_shortcodes etc.
 
     check_recursive_after();
 }

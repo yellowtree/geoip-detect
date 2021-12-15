@@ -31,7 +31,7 @@ export function do_shortcode_country_select(el, record) {
             }
         }
     }
-    // Else
+    // Fallback option
     if (selectItemByAttribute(el, 'data-c', '')) {
         autosave_element(el);
         triggerNativeEvent(el, 'change');
