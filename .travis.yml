@@ -52,7 +52,7 @@ install:
   - composer show
   - nvm install 12 && nvm use 12
   - yarn install
-  - if [[ ! -d contact-form-7 ]] ; then git clone https://github.com/takayukister/contact-form-7.git fi
+  - if [ ! -d contact-form-7 ]; then git clone https://github.com/takayukister/contact-form-7.git; fi
   - cd contact-form-7 ; git fetch --all ; git checkout ${CF7_VERSION}
   - cd "$TRAVIS_BUILD_DIR"
 
