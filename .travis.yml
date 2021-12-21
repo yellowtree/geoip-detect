@@ -1,4 +1,4 @@
-sudo: false
+version: ~> 1.0
 
 notifications:
   email:
@@ -11,9 +11,9 @@ cache:
     - $HOME/.composer/cache
     - contact-form-7
 
-
-
 language: php
+os: linux
+dist: xenial
 
 services:
   - mysql
@@ -32,14 +32,12 @@ php:
   - 7.3
   - 7.2
 
-matrix:
+jobs:
   fast_finish: true
   include:
     - name: legacy
       php: 7.2
-      env: |
-        - WP_VERSION=5.4
-        - CF7_VERSION=v5.1.6
+      env: WP_VERSION=5.4 CF7_VERSION=v5.1.6
     - name: bleeding edge
       php: nightly
       dist: focal
@@ -54,8 +52,9 @@ install:
   - composer show
   - nvm install 12 && nvm use 12
   - yarn install
-  - [ ! -d "contact-form-7" ] && git clone https://github.com/takayukister/contact-form-7.git
-  - cd contact-form-7 ; git fetch --all ; git checkout ${CF7_VERSION} ; cd ..
+  - git clone https://github.com/takayukister/contact-form-7.git
+  - cd contact-form-7 ; git fetch --all ; git checkout ${CF7_VERSION}
+  - cd "$TRAVIS_BUILD_DIR"
 
 before_script:
   - mysql -u root -e "CREATE USER ${WP_DB_USER} IDENTIFIED BY '${WP_DB_PASS}';"
