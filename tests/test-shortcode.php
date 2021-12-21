@@ -179,12 +179,18 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		];
 	}
 	
-	public function testShortcodeCF7Filter() {
-		$unknownTag = 'unknown';
-		$this->assertSame($unknownTag, apply_filters('wpcf7_special_mail_tags', $unknownTag, $unknownTag, false));
+	/**
+	 * @dataProvider dataShortcodeCF7Filter
+	 */
+	public function testShortcodeCF7Filter($expectedResult, $tagname) {
+		$this->assertContains($expectedResult, apply_filters('wpcf7_special_mail_tags', $tagname, $tagname, false, new \WPCF7_MailTag('', $tagname, '')));
+	}
 
-		$knownTag = 'geoip_detect2_get_client_ip';
-		$this->assertContains(GEOIP_DETECT_TEST_IP, apply_filters('wpcf7_special_mail_tags', $knownTag , $knownTag , false));
+	public function dataShortcodeCF7Filter() {
+		return [
+			 [ 'unknown', 'unknown' ],
+			 [ GEOIP_DETECT_TEST_IP, 'geoip_detect2_get_client_ip' ]
+		];
 	}
 
 	public function testShortcodeCountrySelect() {
@@ -233,6 +239,14 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertContains('name="postal"', $html);
 		$this->assertContains('type="hidden"', $html);
 		$this->assertContains('value="Europe/Berlin"', $html);
+	}
+
+	public function testShortcodeCF7() {
+		$countries = [ 'type' => 'geoip_detect2_countries', 'basetype' => 'geoip_detect2_countries', 'raw_name' => 'mycountry', 'name' => 'mycountry', 'options' => [ 
+			'include_blank', 'autosave', 'ajax:1', 'flag', 'tel' 
+		] ];
+		$html = geoip_detect2_shortcode_country_select_wpcf7($countries);
+		$this->assertContains('js-geoip-detect-country-select', $html );
 	}
 
 	/**

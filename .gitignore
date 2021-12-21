@@ -19,6 +19,7 @@ wp-cli.local.yml
 /lib/vendor
 
 /wordpress/
+/contact-form-7/
 
 /vendor/doctrine
 /vendor/myclabs

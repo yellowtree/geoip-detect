@@ -36,6 +36,9 @@ function geoip_detect2_add_wpcf7_shortcodes() {
  * `[geoip_detect2_countries mycountry default:US]`
  * Visitor's country is preselected, but in case the country is unknown, use "United States"
  * 
+ * `[geoip_detect2_countries mycountry autosave]`
+ * Visitor's country is preselected, but when the visitor changes the country, his choice is saved in his browser (in AJAX-mode only)
+ * 
  * `[geoip_detect2_countries mycountry default:US country:US country:IT country:FR]`
  * Visitor's country is preselected, only show US/IT/FR as possible selections, 
  * but in case the country is unknown or not in the list, use "United States"
@@ -43,6 +46,7 @@ function geoip_detect2_add_wpcf7_shortcodes() {
  */
 function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 	$tag = new WPCF7_FormTag( $tag );
+	if (WP_DEBUG) echo var_export(get_object_vars($tag), true);
 
 	$default = (string) reset( $tag->values );
 	$default = $tag->get_default_option($default, array('multiple' => false));
@@ -67,8 +71,13 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 		'flag' => $tag->has_option('flag'),
 		'tel' => $tag->has_option('tel'),
 		'list' => implode(',', (array) $tag->get_option('country', '[a-zA-Z]+', false)),
+		'ajax' => $tag->get_option('ajax', '', true),
+		'autosave' => $tag->has_option( 'autosave' ),
 	);
-	
+	if ($attr['ajax'] === false /* option not given */) {
+		unset($attr['ajax']);
+	} 
+
 	$html = geoip_detect2_shortcode_country_select($attr);
 
 	$html = sprintf(
@@ -98,6 +107,7 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
  */
 function geoip_detect2_shortcode_text_input_wpcf7($tag) {
 	$tag = new WPCF7_FormTag( $tag );
+	if (WP_DEBUG) echo var_export(get_object_vars($tag), true);
 
 	$default = (string) reset( $tag->values );
 	$default = $tag->get_default_option($default, array('multiple' => false));
@@ -118,7 +128,13 @@ function geoip_detect2_shortcode_text_input_wpcf7($tag) {
 		'lang' => $tag->get_option('lang', '', true),
 		'property' => $tag->get_option('property', '', true),
 		'default' => $tag->get_option('default', '', true),
+		'ajax' => $tag->get_option('ajax', '', true),
+		'autosave' => $tag->has_option( 'autosave' ),
 	);
+	if ($attr['ajax'] === false /* option not given */) {
+		unset($attr['ajax']);
+	} 
+
 	$html = geoip_detect2_shortcode_text_input($attr);
 
 	$html = sprintf(

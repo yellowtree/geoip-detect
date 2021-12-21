@@ -18,7 +18,8 @@ if ( ! file_exists( $_tests_dir . '/includes/functions.php' ) ) {
 require_once $_tests_dir . '/includes/functions.php';
 
 function _manually_load_plugin() {
-	require dirname( __FILE__ ) . '/../geoip-detect.php';
+	require __DIR__ . '/../geoip-detect.php';
+	require __DIR__ .'/../contact-form-7/wp-contact-form-7.php';
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
