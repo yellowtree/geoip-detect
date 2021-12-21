@@ -47,13 +47,6 @@ matrix:
   allow_failures:
     - name: bleeding edge
 
-before_script:
-  - mysql -u root -e "CREATE USER ${WP_DB_USER} IDENTIFIED BY '${WP_DB_PASS}';"
-  - mysql -u root -e "GRANT ALL PRIVILEGES ON ${WP_DB_NAME}.* TO ${WP_DB_USER};"
-  - mysql -u root -e "CREATE DATABASE ${WP_DB_NAME};"
-  - phpenv config-rm xdebug.ini || return 0
-  - git clone https://github.com/takayukister/contact-form-7.git
-
 install:
   - composer validate
   - composer require --ignore-platform-reqs --dev roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION}
@@ -61,7 +54,14 @@ install:
   - composer show
   - nvm install 12 && nvm use 12
   - yarn install
+  - [ ! -d "contact-form-7" ] && git clone https://github.com/takayukister/contact-form-7.git
   - cd contact-form-7 ; git fetch --all ; git checkout ${CF7_VERSION} ; cd ..
+
+before_script:
+  - mysql -u root -e "CREATE USER ${WP_DB_USER} IDENTIFIED BY '${WP_DB_PASS}';"
+  - mysql -u root -e "GRANT ALL PRIVILEGES ON ${WP_DB_NAME}.* TO ${WP_DB_USER};"
+  - mysql -u root -e "CREATE DATABASE ${WP_DB_NAME};"
+  - phpenv config-rm xdebug.ini || return 0
 
 script:
   - composer test
