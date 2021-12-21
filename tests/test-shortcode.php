@@ -241,12 +241,35 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertContains('value="Europe/Berlin"', $html);
 	}
 
-	public function testShortcodeCF7() {
+	public function testShortcodeCF7Countries() {
 		$countries = [ 'type' => 'geoip_detect2_countries', 'basetype' => 'geoip_detect2_countries', 'raw_name' => 'mycountry', 'name' => 'mycountry', 'options' => [ 
 			'include_blank', 'autosave', 'ajax:1', 'flag', 'tel' 
 		] ];
 		$html = geoip_detect2_shortcode_country_select_wpcf7($countries);
+		$this->assertContains('value=""', $html);
+		$this->assertContains('+49', $html);
 		$this->assertContains('js-geoip-detect-country-select', $html );
+
+		$countries = [ 'type' => 'geoip_detect2_countries', 'basetype' => 'geoip_detect2_countries', 'raw_name' => 'mycountry', 'name' => 'mycountry', 'options' => [ 
+			'include_blank', 'autosave', 'ajax:0', 'flag', 'tel' 
+		] ];
+		$html = geoip_detect2_shortcode_country_select_wpcf7($countries);
+		$this->assertNotContains('js-geoip-detect-country-select', $html );
+	}
+	public function testShortcodeCF7Input() {
+		$input = [ 'type' => 'geoip_detect2_text_input', 'basetype' => 'geoip_detect2_text_input', 'raw_name' => 'city', 'name' => 'city', 'options' => [ 
+			'property:city', 'lang:fr', 'id:id', 'class:testclass', 'ajax:1', 'autosave', 
+		] ];
+		$html = geoip_detect2_shortcode_text_input_wpcf7($input);
+		$this->assertContains('id="id"', $html);
+		$this->assertContains('testclass', $html);
+		$this->assertContains('js-geoip-text-input', $html );
+
+		$input = [ 'type' => 'geoip_detect2_text_input', 'basetype' => 'geoip_detect2_text_input', 'raw_name' => 'city', 'name' => 'city', 'options' => [ 
+			'property:city', 'lang:fr', 'id:id', 'class:testclass', 'ajax:0', 
+		] ];
+		$html = geoip_detect2_shortcode_text_input_wpcf7($input);
+		$this->assertNotContains('js-geoip-text-input', $html );
 	}
 
 	/**

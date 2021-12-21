@@ -46,7 +46,6 @@ function geoip_detect2_add_wpcf7_shortcodes() {
  */
 function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 	$tag = new WPCF7_FormTag( $tag );
-	if (WP_DEBUG) echo var_export(get_object_vars($tag), true);
 
 	$default = (string) reset( $tag->values );
 	$default = $tag->get_default_option($default, array('multiple' => false));
@@ -76,7 +75,10 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 	);
 	if ($attr['ajax'] === false /* option not given */) {
 		unset($attr['ajax']);
-	} 
+	}
+	if (empty($attr['selected'])) {
+		unset($attr['selected']);
+	}
 
 	$html = geoip_detect2_shortcode_country_select($attr);
 
@@ -107,7 +109,6 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
  */
 function geoip_detect2_shortcode_text_input_wpcf7($tag) {
 	$tag = new WPCF7_FormTag( $tag );
-	if (WP_DEBUG) echo var_export(get_object_vars($tag), true);
 
 	$default = (string) reset( $tag->values );
 	$default = $tag->get_default_option($default, array('multiple' => false));

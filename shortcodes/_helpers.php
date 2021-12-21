@@ -59,8 +59,10 @@ function _geoip_detect_flatten_html_attr($attr) {
  */
 function geoip_detect2_shortcode_is_ajax_mode($attr) {
 	if (isset($attr['ajax'])) {
-		$value = filter_var($attr['ajax'], FILTER_VALIDATE_BOOLEAN );
-		return $value;
+		$value = filter_var($attr['ajax'], FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE );
+		if (is_bool($value)) {
+			return $value;
+		}
 	}
 
 	if (get_option('geoip-detect-ajax_enabled') && get_option('geoip-detect-ajax_shortcodes')) {

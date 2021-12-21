@@ -63,14 +63,14 @@ function geoip_detect2_shortcode_country_select($attr) {
 	$attr['property'] = 'country.name';
 	$shortcode_options = _geoip_detect2_shortcode_options($attr);
 
-	$select_attrs = array(
-		'name' =>  !empty($attr['name']) ? $attr['name'] : 'geoip-countries',
-		'id' =>    !empty($attr['id']) ? $attr['id'] : '',
-		'class' => !empty($attr['class']) ? $attr['class'] : 'geoip_detect2_countries',
-		'aria-required' => !empty($attr['required']) ? 'required' : '',
-		'aria-invalid' => !empty($attr['invalid']) ? $attr['invalid'] : '',
+	$select_attrs = [
+		'name' =>  			!empty($attr['name'])  		? $attr['name'] 	: 'geoip-countries',
+		'id' =>    			!empty($attr['id'])    		? $attr['id'] 		: '',
+		'class' => 			!empty($attr['class']) 		? $attr['class'] 	: 'geoip_detect2_countries',
+		'aria-required' => 	!empty($attr['required']) 	? 'required' 		: '',
+		'aria-invalid' => 	!empty($attr['invalid']) 	? $attr['invalid'] 	: '',
 		'autocomplete' => 'off',
-	);
+	];
 
 	$selected = '';
 	if (geoip_detect2_shortcode_is_ajax_mode($attr) && !isset($attr['selected']) ) {
