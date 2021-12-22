@@ -36,8 +36,13 @@ function geoip_detect2_get_body_classes() {
 	if ($info->country->isoCode)
 		$classes[] = 'geoip-country-' . $info->country->isoCode;
 
-	if ($info->country->isInEuropeanUnion)
-		$classes[] = 'geoip-country-is-in-european-union';	
+	try {
+		// This attribute was added in later
+		if ($info->country->isInEuropeanUnion)
+			$classes[] = 'geoip-country-is-in-european-union';	
+	} catch (\Exception $e) { 
+		// ignore
+	}
 
 	if ($info->mostSpecificSubdivision->isoCode)
 		$classes[] = 'geoip-province-' . $info->mostSpecificSubdivision->isoCode;
