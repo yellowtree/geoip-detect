@@ -3,6 +3,10 @@ export const setLocalStorage = function (variable, value, ttl_sec) {
     localStorage.setItem(variable.toString(), JSON.stringify(data));
 };
 
+export function removeLocalStorage(variable) {
+    localStorage.removeItem(variable);
+}
+
 export const getLocalStorage = function (variable) {
     let data = null;
     try {

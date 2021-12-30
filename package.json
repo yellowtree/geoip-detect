@@ -10,6 +10,7 @@
     "start": "parcel js/frontend.js --port 1234 --hmr-port 1236 --dist-dir js/dist --public-url .",
     "build": "rm -f babel.config.json ; rm -rf js/dist && parcel build js/frontend.js --dist-dir js/dist --public-url .",
     "test": "cp tests/babel.config.json . && jest --coverage ; rm babel.config.json",
+    "test-ddd": "cp tests/babel.config.json . && jest -t ddd ; rm babel.config.json",
     "update-browserlist": "browserslist --update-db"
   },
   "private": false,

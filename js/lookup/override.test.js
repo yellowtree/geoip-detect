@@ -6,6 +6,7 @@ import { set_override, set_override_with_merge, get_info_stored_locally_record }
 import { getTestRecord } from "../test-lib/test-records";
 import Record from "../models/record";
 import { get_info } from "./get_info";
+import { options as globalOptions } from './get_info';
 
 const defaultRecord = getTestRecord();
 const emptyRecord = new Record();
@@ -34,6 +35,13 @@ test('override', async () => {
 
     expect(record.get_country_iso()).toBe('');
 })
+
+test('override if empty', () => {
+    localStorage.removeItem(globalOptions.cookie_name);
+    set_override_with_merge('country.iso_code', 'FR');
+    let record = get_info_stored_locally_record();
+    expect(record.get_country_iso()).toBe('fr');
+});
 
 test('override data', () => {
     let record;

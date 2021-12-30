@@ -1,6 +1,7 @@
 import { do_shortcodes, do_shortcodes_init } from './shortcodes/index';
 import { add_body_classes } from './body_classes';
 import { options } from './lookup/get_info';
+import { setRecordDataLastEvaluated } from './lookup/override';
 
 let firstCall = true;
 
@@ -8,6 +9,8 @@ export function main() {
     if (process.env.NODE_ENV !== 'production') {
         console.log('Do Main');
     }
+
+    setRecordDataLastEvaluated();
 
     if (firstCall) {
         do_shortcodes_init();

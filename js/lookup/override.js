@@ -26,27 +26,37 @@ function processOptions(options) {
 
     return options;
 }
+
+function changeRecord(record, property, value) {
+    record = record || {};
+    property = property || '';
+
+    property = camelToUnderscore(property);
+
+    const oldData = _get(record, property);
+    if (typeof (oldData) == 'object' && typeof (oldData.names) == 'object') {
+        property += '.name';
+    }
+    if (property.endsWith('.name')) {
+        property += 's'; // e.g. country.name -> country.names
+        value = { 'en': value };
+    }
+
+    _set(record, property, value);
+
+    return record;
+}
+
 /**
  * Override only one property, leave the other properties as-is.
  * @param {string} property 
  * @param {*} value 
  */
 export function set_override_with_merge(property, value, options) {
-    let record = getRecordDataFromLocalStorage() || {};
-    property = property || '';
-    
-    property = camelToUnderscore(property);
+    let record = getRecordDataFromLocalStorage();
 
-    const oldData = _get(record, property);
-    if (typeof(oldData) == 'object' && typeof(oldData.names) == 'object') {
-        property += '.name';
-    }
-    if (property.endsWith('.name')) {
-        property += 's';
-        value = { 'en' : value };
-    }
-    
-    _set(record, property, value);
+    record = changeRecord(record, property, value);
+
     set_override(record, options);
 
     if (process.env.NODE_ENV !== 'production') {
@@ -78,10 +88,9 @@ function set_override_data(newData, options) {
     newData = newData || {};
     _set(newData, 'extra.override', true);
 
-    const oldData = getRecordDataFromLocalStorage();
     setLocalStorage(globalOptions.cookie_name, newData, options.duration_in_days * 24 * 60 * 60);
 
-    if (options.reevaluate && !_is_object_content_equal(newData, oldData)) {
+    if (options.reevaluate && !_is_object_content_equal(newData, getRecordDataLastEvaluated())) {
         main();
         return true;
     }
@@ -108,6 +117,14 @@ export function remove_override(options) {
 // Sync function in case it is known that no AJAX will occur
 export function getRecordDataFromLocalStorage() {
     return getLocalStorage(globalOptions.cookie_name);
+}
+
+let lastEvaluated = {};
+export function getRecordDataLastEvaluated() {
+    return lastEvaluated;
+}
+export function setRecordDataLastEvaluated() {
+    lastEvaluated = getRecordDataFromLocalStorage();
 }
 
 export function setRecordDataToLocalStorage(data, cache_duration) {

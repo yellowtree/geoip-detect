@@ -1,11 +1,20 @@
+export function isUnitTesting() {
+    return process.env.JEST_WORKER_ID !== undefined;
+}
+
 export const domReady = new Promise(resolve => {
+    if (isUnitTesting()) {
+        resolve();
+    }
+
     if (document.readyState === "loading") {
         if (document.addEventListener) {
             document.addEventListener('DOMContentLoaded', resolve);
         } else {
             document.attachEvent('onreadystatechange', function () {
-                if (document.readyState != 'loading')
+                if (document.readyState != 'loading') {
                     resolve();
+                }
             });
         }
     } else {
