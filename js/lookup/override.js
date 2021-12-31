@@ -1,10 +1,11 @@
-import { getLocalStorage, setLocalStorage } from '../lib/localStorageAccess';
+import { setLocalStorage } from '../lib/localStorageAccess';
 import { options as globalOptions } from './get_info';
-import Record, { camelToUnderscore } from '../models/record';
+import { camelToUnderscore } from '../models/record';
 import _set from 'just-safe-set';
 import _get from 'just-safe-get';
 import _is_object_content_equal from 'just-compare';
 import { main } from '../main';
+import { getRecordDataFromLocalStorage, getRecordDataLastEvaluated } from './storage';
 
 function processOptions(options) {
     options = options || {};
@@ -114,23 +115,3 @@ export function remove_override(options) {
 }
 
 
-// Sync function in case it is known that no AJAX will occur
-export function getRecordDataFromLocalStorage() {
-    return getLocalStorage(globalOptions.cookie_name);
-}
-
-let lastEvaluated = {};
-export function getRecordDataLastEvaluated() {
-    return lastEvaluated;
-}
-export function setRecordDataLastEvaluated() {
-    lastEvaluated = getRecordDataFromLocalStorage();
-}
-
-export function setRecordDataToLocalStorage(data, cache_duration) {
-    setLocalStorage(globalOptions.cookie_name, data, cache_duration);
-}
-
-export function get_info_stored_locally_record() {
-    return new Record(getRecordDataFromLocalStorage(), globalOptions.default_locales);
-}

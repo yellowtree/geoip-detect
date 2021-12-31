@@ -1,7 +1,7 @@
 import Record from '../models/record';
 
 import { makeJSONRequest } from '../lib/xhr';
-import { getRecordDataFromLocalStorage, setRecordDataToLocalStorage } from './override';
+import { getRecordDataFromLocalStorage, setRecordDataToLocalStorage } from "./storage";
 
 
 export const options = window.geoip_detect?.options || {
