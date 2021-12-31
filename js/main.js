@@ -10,8 +10,6 @@ export function main() {
         console.log('Do Main');
     }
 
-    setRecordDataLastEvaluated();
-
     if (firstCall) {
         do_shortcodes_init();
         firstCall = false;        
@@ -23,4 +21,6 @@ export function main() {
 
     // Do all the shortcodes that are in the HTML. Even if shortcodes is not enabled globally, they might be enabled for a specific shortcode.
     do_shortcodes();
+
+    setRecordDataLastEvaluated();
 }
