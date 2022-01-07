@@ -184,7 +184,7 @@ AJAX mode:
 Other changes:
 * NEW: Drastically improving performance if the the lookup is performed for the current IP more than once (e.g. because of shortcodes without AJAX mode)
 * UI: Showing the time for the subsequent lookup on the Test Lookup page
-* FIX: Maxmind: Check if the database file is really a file, not a directory
+* FIX: Maxmind Datasource: Check if the database file is really a file, not a directory
 * NEW: Header Datasource: Now a custom HTTP header can be used via the wordpress filter `geoip_detect2_source_header_http_key`
 
 Other minor changes:
