@@ -116,6 +116,10 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 1. Lookup page (under Tools > Geolocation Lookup)
 2. Options page (under Preferences > Geolocation IP Detection)
 
+= 5.0.0 =
+
+If you are using AJAX mode, please read the changelog.
+
 = 4.0.1 =
 
 Hotfix - avoid fatal erros if another plugin also has the Maxmind library included
@@ -162,20 +166,23 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 ## Changelog ##
 
-= 4.3.0 =
+= 5.0.0 =
+In this release, there a small breaking changes marked by [!].
+
 AJAX mode:
 * FIX [!]: Empty attribute values such as `[geoip_detect2_show_if country=""]Country was not detected[/geoip_detect2_show_if]` are now working (they were ignored before)
 * FIX [!]: Shortcodes that have an invalid value for the property `ajax` (e.g. `[geoip_detect2_text_input ajax="invalid"]`) are now using the AJAX option instead of always disabling AJAX
-* FIX [!]: In CF7, the country selector can now be used in AJAX mode
+* FIX: In CF7, the country selector can now be used in AJAX mode
 * FIX: In AJAX mode, the shortcode `[geoip_detect2_show_if]` renders as a `<div>` if it detects that the containing content has HTML block level elements
-* NEW: In AJAX mode, the new property `autosave` saves the user input as local override for this browser. `[geoip_detect2_countries mycountry autosave]` and `[geoip_detect2_text_input city property:city autosave]`
+* NEW (Beta): In AJAX mode, the new property `autosave` saves the user input as local override for this browser. `[geoip_detect2_countries mycountry autosave]` and `[geoip_detect2_text_input city property:city autosave]`. (Please give feedback if this works as expected!)
 * FIX: In AJAX mode, calling the method `set_override(record, duration_in_days)` now refreshes the AJAX shortcodes and CSS body classes.
 -> Thus, it is now possible to quickly implement different content for different countries with an autodetected default country, see (TODO example)
 
 Other changes:
 * NEW: Drastically improving performance if the the lookup is performed for the current IP more than once (e.g. because of shortcodes without AJAX mode)
 * UI: Showing the time for the subsequent lookup on the Test Lookup page
-* FIX: Maxmind: Check if the database file is really a file, not a directory
+* FIX: Maxmind Datasource: Check if the database file is really a file, not a directory
+* NEW: Header Datasource: Now a custom HTTP header can be used via the wordpress filter `geoip_detect2_source_header_http_key`
 
 Other minor changes:
 * Update the list of available APIs for getting the external IP (as whatismyip went down)
