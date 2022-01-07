@@ -27,6 +27,7 @@
         "yoast/phpunit-polyfills": "1.0.3"
     },
     "scripts": {
-        "test": "phpunit"
+        "test": "phpunit",
+        "install-test": "composer install --ignore-platform-reqs"
     }
 }
