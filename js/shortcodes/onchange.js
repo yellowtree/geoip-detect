@@ -23,6 +23,10 @@ function event_listener_autosave_on_change(event) {
     }
 }
 
+/**
+ * When calling this method, be very careful not to introduce an infinite loop!
+ * @param {*} el 
+ */
 export function autosave_element(el) {
     const property = get_options(el).property;
     const value = el.value;

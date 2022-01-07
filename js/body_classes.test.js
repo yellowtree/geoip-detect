@@ -90,7 +90,7 @@ test('ddd body css_classes with reevaluate test', async () => {
     expect(body.classList.contains('geoip-country-DE')).toBe(true);
     expect(body.classList.contains('geoip-country-CZ')).toBe(false);
 
-    // Body classes should now be done even though there is no change in data
+    // Body classes should now be evaluated even though there is no change in data (because the change of CZ was not applied yet)
     set_override_with_merge('country.iso_code', 'CZ', { reevaluate: true });
     await waitSomeTime(100);
 
