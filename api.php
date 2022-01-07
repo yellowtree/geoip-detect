@@ -143,7 +143,7 @@ function geoip_detect2_get_info_from_ip(string $ip, $locales = null, $options = 
  * @since 2.4.0 New parameter $skipCache
  * @since 2.5.0 Parameter $skipCache has been renamed to $options with 'skipCache' property
  * @since 2.7.0 Parameter $options['source'] has been introduced
- * @since 4.3.0 The result of this function is cached for the duration of the PHP execution (except if you use skipLocalCache)
+ * @since 5.0.0 The result of this function is cached for the duration of the PHP execution (except if you use skipLocalCache)
  */
 function geoip_detect2_get_info_from_current_ip($locales = null, $options = array()) {
 	/** @var \YellowTree\GeoipDetect\DataSources\City  */

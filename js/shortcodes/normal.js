@@ -22,6 +22,11 @@ export function do_shortcode_country_select(el, record) {
         triggerNativeEvent(el, 'change');
         return;
     }
+
+    // The country is not the list of countries - select empty option instead
+    if (selectItemByAttribute(el, 'data-c', '')) {
+        triggerNativeEvent(el, 'change');
+    } 
 }
 
 export function do_shortcode_text_input(el, record) {
