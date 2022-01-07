@@ -179,10 +179,10 @@ AJAX mode:
 * FIX: In AJAX mode, the shortcode `[geoip_detect2_show_if]` renders as a `<div>` if it detects that the containing content has HTML block level elements
 * NEW (Beta): In AJAX mode, the new property `autosave` saves the user input as local override for this browser. `[geoip_detect2_countries mycountry autosave]` and `[geoip_detect2_text_input city property:city autosave]`. (Please give feedback if this works as expected!)
 * FIX: In AJAX mode, calling the method `set_override(record, duration_in_days)` now refreshes the AJAX shortcodes and CSS body classes.
--> Thus, it is now possible to quickly implement different content for different countries with an autodetected default country, see (TODO example)
+-> Thus, it is now possible to quickly implement different content for different countries with an autodetected default country, see https://github.com/yellowtree/geoip-detect/wiki/API-Usage-Examples#country-selector-that-can-be-overridden-by-the-user
 
 Other changes:
-* NEW: Drastically improving performance if the the lookup is performed for the current IP more than once (e.g. because of shortcodes without AJAX mode)
+* NEW: Drastically improving performance if the lookup is performed for the current IP more than once (e.g. because of shortcodes without AJAX mode)
 * UI: Showing the time for the subsequent lookup on the Test Lookup page
 * FIX: Maxmind Datasource: Check if the database file is really a file, not a directory
 * NEW: Header Datasource: Now a custom HTTP header can be used via the wordpress filter `geoip_detect2_source_header_http_key`
