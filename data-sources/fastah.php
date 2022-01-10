@@ -57,7 +57,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
                 'timeout' => $this->options['timeout'],
                 'headers' => array(
                     'Fastah-Key' => $this->params['key']
-                )
+                ),
             );
             $response = wp_remote_get($this->build_url($ip), $requestArgs);
             $respCode = wp_remote_retrieve_response_code( $response );
@@ -85,22 +85,40 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 
         if (!empty($data['locationData'])) {
             // Continent
-            $r['continent']['code'] = strtoupper($data['locationData']['continentCode']);
+            if (!empty($data['locationData']['continentCode'])) {
+                $r['continent']['code'] = strtoupper($data['locationData']['continentCode']);
+            }
             // Country
-            $r['country']['names'] = $this->locales($locale, $data['locationData']['countryName']);
-            $r['country']['iso_code'] = strtoupper($data['locationData']['countryCode']);
+            if (!empty($data['locationData']['countryName'])) {
+                $r['country']['names'] = $this->locales($locale, $data['locationData']['countryName']);
+            }
+            if (!empty($data['locationData']['countryCode'])) {
+                $r['country']['iso_code'] = strtoupper($data['locationData']['countryCode']);
+            }
             // City
-            $r['city']['names'] = $this->locales($locale, $data['locationData']['cityName']);
-            $r['city']['geoname_id'] = $data['locationData']['cityGeonamesId'];
+            if (!empty($data['locationData']['cityName'])) {
+                $r['city']['names'] = $this->locales($locale, $data['locationData']['cityName']);
+            }
+            if (!empty($data['locationData']['cityGeonamesId'])) {
+                $r['city']['geoname_id'] = $data['locationData']['cityGeonamesId'];
+            }
             // Lat, Lng
-            $r['location']['latitude'] = $data['locationData']['lat'];
-            $r['location']['longitude'] = $data['locationData']['lng'];
+            if (isset($data['locationData']['lat'])) {
+                $r['location']['latitude'] = $data['locationData']['lat'];
+            }
+            if (isset($data['locationData']['lng'])) {
+                $r['location']['longitude'] = $data['locationData']['lng'];
+            }
             // TZ
-            $r['location']['time_zone'] = $data['locationData']['tz'];
+            if (isset($data['locationData']['tz'])) {
+                $r['location']['time_zone'] = $data['locationData']['tz'];
+            }
         }
 
         // EU flag
-        $r['country']['isInEuropeanUnion'] = $data['isEuropeanUnion'];
+        if(isset($data['isEuropeanUnion'])) {
+            $r['country']['isInEuropeanUnion'] = $data['isEuropeanUnion'];
+        }
         
 		$r['traits']['ip_address'] = $data['ip'];
 
