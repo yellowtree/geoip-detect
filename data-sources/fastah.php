@@ -155,14 +155,16 @@ class FastahSource extends AbstractDataSource {
 
         // Set default by probing PHP/Curl capabilities - minimum is HTTP 1.1 over TLSv1.2
         // HTTP/2 ought to be available in PHP-Curl > v7.47.0 @see https://curl.se/docs/http2.html
+        /*
         if (curl_version()["features"] & CURL_HTTP_VERSION_2_0  !== 0) {
             $this->bestAvailHTTP = CURL_HTTP_VERSION_2_0;
             if (curl_version()["features"] & CURL_HTTP_VERSION_2TLS  !== 0) {
                 $this->bestAvailHTTP = CURL_HTTP_VERSION_2TLS;
             }
         }
+        */
         if ($this->bestAvailHTTP < CURL_HTTP_VERSION_2_0) {
-            $this->params['http2'] = get_option('geoip-detect-fastah_http2', 0);
+            $this->params['http2'] = 0;
         } else {
             $this->params['http2'] = get_option('geoip-detect-fastah_http2', 1);
         }
@@ -177,11 +179,15 @@ class FastahSource extends AbstractDataSource {
 
         $html .= \sprintf(__('HTTP2: %s', 'geoip-detect'), $this->params['http2'] ? __('Enabled', 'geoip-detect') : __('Disabled', 'geoip-detect')) . '<br />';
 
+        if ($this->bestAvailHTTP < CURL_HTTP_VERSION_2_0) {
+            $html .= '<i>' . __('Warning: HTTP2 is not supported by the curl version used by your PHP. This will make lookups slower.', 'geoip-detect') . '</i><br />';
+        }
+
         if (!$this->isWorking()) {
             if (!is_callable('curl_init')) {
-                $html .= '<div class="geoip_detect_error">' . __('Fastah requires PHP-Curl for secure HTTPS requests.', 'geoip-detect') . '</div>';
+                $html .= '<div class="geoip_detect_error">' . __('Error: Fastah requires PHP-Curl for secure HTTPS requests.', 'geoip-detect') . '</div>';
             } else {
-                $html .= '<div class="geoip_detect_error">' . __('Fastah only works with an API key.', 'geoip-detect') . '</div>';
+                $html .= '<div class="geoip_detect_error">' . __('Error: Fastah only works with an API key.', 'geoip-detect') . '</div>';
             }
         }
 
@@ -220,8 +226,8 @@ HTML;
             update_option('geoip-detect-fastah_http2', $http2);
             // Show warning if HTTP/2 requested but actually not available via PHP-Curl
             if ($http2 == 1 and $this->bestAvailHTTP < CURL_HTTP_VERSION_2_0) {
-                $message .= __('Fastah requires PHP-Curl with HTTP/2 support.<br>', 'geoip-detect');
-                $http2 = 0; // Turn it OFF forcefully
+                $message .= __('Warning: Turning off HTTP/2 because it is not supported by your server PHP / libcurl.<br>', 'geoip-detect');
+                $http2 = 0;
             }
             $this->params['http2'] = $http2;
 		}
