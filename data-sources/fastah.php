@@ -30,7 +30,8 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 	function __construct($params, $locales, $options) {
         $this->params= $params;
         $this->params['language'] = reset($locales);
-        // TODO: Fastah API responses only support 'en' at this time
+        
+        // TODO: Fastah API responses only support 'en' at this time - this parameter is currently not accepted by the REST API
         //if (empty($this->params['language'])) {
             $this->params['language'] = 'en';
         //}
@@ -43,7 +44,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 
     protected function locales($locale, $value) {
         $locales = array('en' => $value);
-        if ($locale != 'en') {
+        if ($locale !== 'en') {
             $locales[$locale] = $value;
         }
         return $locales;
