@@ -60,7 +60,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
                     'Fastah-Key' => $this->params['key']
                 ),
             );
-            $response = wp_remote_get($this->build_url($ip), $requestArgs);
+            $response = wp_remote_get($this->build_url($ip, $this->params), $requestArgs);
             $respCode = wp_remote_retrieve_response_code( $response );
             if (is_wp_error($response)) {
                 return _geoip_detect2_get_new_empty_record($ip, $response->get_error_message());
@@ -136,7 +136,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 
     }
     
-    private function build_url($ip) {
+    private function build_url($ip, $params) {
         $url = 'https';
         $url .= '://' . self::URL . $ip;
         return $url . '?' . \http_build_query($params);
