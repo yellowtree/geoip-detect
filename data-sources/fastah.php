@@ -49,35 +49,59 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
         }
         return $locales;
     }
+/*
+    protected function api_call($ip) {
+        $requestArgs = array(
+            'method' => 'GET',
+            'protocol_version' => ($this->params['http2'] === 1) ? 2.0 : 1.1,
+            'timeout' => $this->options['timeout'],
+            'header' => array(
+                'Fastah-Key' => $this->params['key']
+            ),
+        );
+        $context = stream_context_create(array('http' => $requestArgs));
+        $body = @file_get_contents($this->build_url($ip, ['language' => 'en']), false, $context);
+        $data = json_decode( $body, true );
+        return $data;
+    }
+*/
+
+    protected function api_call($ip) {
+        $requestArgs = array(
+            'method' => 'GET',
+            'httpversion' => ($this->params['http2'] === 1) ? 2.0 : 1.1,
+            'timeout' => $this->options['timeout'],
+            'headers' => array(
+                'Fastah-Key' => $this->params['key']
+            ),
+        );
+        $response = wp_remote_get($this->build_url($ip, $this->params), $requestArgs);
+        $respCode = wp_remote_retrieve_response_code( $response );
+        if (is_wp_error($response)) {
+            throw new \RuntimeException($response->get_error_message());
+        }
+        $body = wp_remote_retrieve_body( $response );
+        $data = json_decode( $body, true );
+        if ($respCode !== 200) {
+            if ($data && isset($data['error']) && isset($data['error']['message'])) {
+                throw new \RuntimeException($data['error']['message']);
+            }
+            if ($data && isset($data['message'])) {
+                throw new \RuntimeException($ip, $data['message']);
+            }
+        }
+        return $data;
+    }
 
 	public function city($ip) {
         try {
-            $requestArgs = array(
-                'method' => 'GET',
-                'httpversion' => ($this->params['http2'] === 1) ? 2.0 : 1.1,
-                'timeout' => $this->options['timeout'],
-                'headers' => array(
-                    'Fastah-Key' => $this->params['key']
-                ),
-            );
-            $response = wp_remote_get($this->build_url($ip, $this->params), $requestArgs);
-            $respCode = wp_remote_retrieve_response_code( $response );
-            if (is_wp_error($response)) {
-                return _geoip_detect2_get_new_empty_record($ip, $response->get_error_message());
-            }
-            $body = wp_remote_retrieve_body( $response );
-            $data = json_decode( $body, true );
-            if ($respCode !== 200) {
-                if ($data && isset($data['error']) && isset($data['error']['message'])) {
-                    return _geoip_detect2_get_new_empty_record($ip, $data['error']['message']);
-                }
-                if ($data && isset($data['message'])) {
-                    return _geoip_detect2_get_new_empty_record($ip, $data['message']);
-                }
-            }
+            $data = $this->api_call($ip);
 		} catch (\Exception $e) {
             return _geoip_detect2_get_new_empty_record($ip, $e->getMessage());
 		}
+        if (!$data) {
+            return _geoip_detect2_get_new_empty_record($ip, 'No data found.');
+        }
             
         $r = array();
         $r['extra']['original'] = $data;
@@ -121,7 +145,11 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
             $r['country']['isInEuropeanUnion'] = $data['isEuropeanUnion'];
         }
         
-		$r['traits']['ip_address'] = $data['ip'];
+        if (isset($data['ip'])) {
+            $r['traits']['ip_address'] = $data['ip'];
+        } else {
+            $r['traits']['ip_address'] = $ip;
+        }
 
 		$record = new \GeoIp2\Model\City($r, array('en'));
 
@@ -136,7 +164,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 
     }
     
-    private function build_url($ip, $params) {
+    private function build_url($ip, $params = array()) {
         $url = 'https';
         $url .= '://' . self::URL . $ip;
         return $url . '?' . \http_build_query($params);
