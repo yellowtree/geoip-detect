@@ -155,14 +155,14 @@ class FastahSource extends AbstractDataSource {
 
         // Set default by probing PHP/Curl capabilities - minimum is HTTP 1.1 over TLSv1.2
         // HTTP/2 ought to be available in PHP-Curl > v7.47.0 @see https://curl.se/docs/http2.html
-        /*
+
         if (curl_version()["features"] & CURL_HTTP_VERSION_2_0  !== 0) {
             $this->bestAvailHTTP = CURL_HTTP_VERSION_2_0;
             if (curl_version()["features"] & CURL_HTTP_VERSION_2TLS  !== 0) {
                 $this->bestAvailHTTP = CURL_HTTP_VERSION_2TLS;
             }
         }
-        */
+
         if ($this->bestAvailHTTP < CURL_HTTP_VERSION_2_0) {
             $this->params['http2'] = 0;
         } else {
