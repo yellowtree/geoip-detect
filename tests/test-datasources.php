@@ -34,7 +34,7 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
 		$source_ids = array_keys($sources);
 		sort($source_ids);
 		
-		$this->assertSame(array('auto', 'header', 'hostinfo', 'ipstack', 'manual', 'precision'), $source_ids);
+		$this->assertSame(array('auto', 'fastah', 'header','hostinfo', 'ipstack', 'manual', 'precision'), $source_ids);
 	}
 	
 	public function testInvalidDatasources() {
