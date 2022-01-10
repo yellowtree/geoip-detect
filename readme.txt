@@ -169,6 +169,11 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 == Changelog ==
 
+= 5.1.0 =
+
+AJAX mode:
+* NEW: The JS function `geoip_detect.set_override_with_merge` can modify the override record in one property, merging it with the currently saved property
+
 = 5.0.0 =
 In this release, there a small breaking changes marked by [!].
 
