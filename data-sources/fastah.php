@@ -23,7 +23,7 @@ use YellowTree\GeoipDetect\DataSources\AbstractDataSource;
 
 class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 
-	const URL = 'ep.api.getfastah.com/whereis/v1/json/';
+	const URL = 'https://ep.api.getfastah.com/whereis/v1/json/';
     protected $options = array();
     protected $params = array();
 
@@ -83,11 +83,12 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
         $body = wp_remote_retrieve_body( $response );
         $data = json_decode( $body, true );
         if ($respCode !== 200) {
-            if ($data && isset($data['error']) && isset($data['error']['message'])) {
+            if (isset($data['error']['message'])) {
                 throw new \RuntimeException($data['error']['message']);
-            }
-            if ($data && isset($data['message'])) {
-                throw new \RuntimeException($ip, $data['message']);
+            } elseif (isset($data['message'])) {
+                throw new \RuntimeException($data['message']);
+            } else {
+                throw new \RuntimeException('Invalid HTTP Status Code ' . $respCode);
             }
         }
         return $data;
@@ -165,8 +166,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
     }
     
     private function build_url($ip, $params = array()) {
-        $url = 'https';
-        $url .= '://' . self::URL . $ip;
+        $url = self::URL . $ip;
         return $url . '?' . \http_build_query($params);
     }
 
