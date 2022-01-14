@@ -153,7 +153,7 @@ HTML;
 		return $html;
 	}
 
-	public function getReader($locales = array('en'), $options = array()) {
+	public function getReader($locales = array('en'), $options = []) {
 		$reader = null;
 		
 		$provider = get_option('geoip-detect-header-provider');

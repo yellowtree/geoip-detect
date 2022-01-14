@@ -161,7 +161,7 @@ function geoip_detect2_cf7_property_underscore_to_normal($name) {
 }
 
 function geoip_detect2_shortcode_user_info_wpcf7($output, $name, $isHtml) {
-	$lines = array();
+	$lines = [];
 
 	// Custom property, e.g. `[geoip_detect2_property_extra__flag]`
 	$parts = explode('geoip_detect2_property_', $name);

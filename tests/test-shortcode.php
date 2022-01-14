@@ -113,8 +113,8 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertContains('default', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"city\"] should use default: " . $string);
 	}
 
-	function filter_empty_array() {
-		return array();
+	function filter_empty_[] {
+		return [];
 	}
 
 	function testSkipCache() {

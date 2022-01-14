@@ -25,7 +25,7 @@ class DataSourceRegistry {
 	private static $instance;
 	/* singleton */
 	private function __construct() {
-		$this->sources = array();
+		$this->sources = [];
 	}
 	public static function getInstance() {
 		if (!self::$instance) {

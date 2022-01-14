@@ -33,7 +33,7 @@ abstract class AbstractDataSource {
 	public function deactivate() { }
 	public function uninstall() {}
 	
-	public function getReader($locales = array('en'), $options = array()) { return null; }
+	public function getReader($locales = array('en'), $options = []) { return null; }
 	
 	public function isWorking() { return false; }
 }
@@ -94,7 +94,7 @@ interface ReaderInterface extends \GeoIp2\ProviderInterface {
 abstract class AbstractReader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 	protected $options;
 	
-	public function __construct($options = array()) {
+	public function __construct($options = []) {
 		$this->options = $options;	
 	}
 	

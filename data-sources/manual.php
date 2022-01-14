@@ -32,7 +32,7 @@ class ManualDataSource extends AbstractDataSource {
 	public function getDescriptionHTML() { return __('<a href="http://dev.maxmind.com/geoip/geoip2/geolite2/" target="_blank">Free version</a> - <a href="https://www.maxmind.com/en/geoip2-country-database" target="_blank">Commercial Version</a>', 'geoip-detect'); }
 	public function getStatusInformationHTML() {
 		$built = $last_update = 0;
-		$html = array();
+		$html = [];
 
 		$file = $this->maxmindGetFilename();
 
@@ -201,7 +201,7 @@ HTML;
 
 	public function getShortLabel() { return $this->maxmindGetFileDescription(); }
 
-	public function getReader($locales = array('en'), $options = array()) {
+	public function getReader($locales = array('en'), $options = []) {
 		$reader = null;
 
 		$data_file = $this->maxmindGetFilename();

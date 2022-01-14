@@ -148,7 +148,7 @@ HTML;
 		return $message;
 	}
 	
-	public function getReader($locales = array('en'), $options = array()) {
+	public function getReader($locales = array('en'), $options = []) {
 		if (!$this->isWorking())
 			return null;
 

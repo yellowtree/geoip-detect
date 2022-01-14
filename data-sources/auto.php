@@ -149,7 +149,7 @@ HTML;
 		if ( ! $tmpfname )
 			return new \WP_Error('http_no_file', __('Could not create temporary file.', 'geoip-detect'));
 
-		$headers = array();
+		$headers = [];
 		$headers['User-Agent'] = GEOIP_DETECT_USER_AGENT;
 		if ($modified) {
 			$headers['If-Modified-Since'] = date('r', $modified);

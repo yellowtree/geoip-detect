@@ -28,7 +28,7 @@ add_filter('body_class', 'geoip_detect2_add_body_classes_if_needed');
 
 function geoip_detect2_get_body_classes() {
 	$info = geoip_detect2_get_info_from_current_ip();
-	$classes = array();
+	$classes = [];
 
 	if ($info->continent->code)
 		$classes[] = 'geoip-continent-' . $info->continent->code;
@@ -65,7 +65,7 @@ add_filter('geoip_detect2_locales', 'geoip_detect2_convert_locale_format', 7);
 
 function geoip_detect2_add_default_locales($locales) {
 	if (is_null($locales) || $locales === false) {
-		$locales = array();
+		$locales = [];
 
 		/* Needed? should be in get_locale()
 		if (defined('ICL_LANGUAGE_CODE'))

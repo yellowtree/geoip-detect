@@ -29,7 +29,7 @@ class Logger {
 
     // Other errors to log: lookup, API
 
-    public static function logIfError($str, $category = '', $data = array()) {
+    public static function logIfError($str, $category = '', $data = []) {
         if (is_wp_error($str)) {
             $code = $str->get_error_code();
             if ($code && in_array($code, self::$ignoreErrorCodes)) {
@@ -47,7 +47,7 @@ class Logger {
         }
     }
 
-    public static function log($str, $category = '', $data = array()) {
+    public static function log($str, $category = '', $data = []) {
         $str = sanitize_text_field($str);
 
         // For now, only log the last error

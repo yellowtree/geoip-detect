@@ -37,7 +37,7 @@ function _geoip_detect2_process_options($options) {
 	if (is_bool($options)) {
 		_doing_it_wrong('Geolocation IP Detection Plugin: geoip_detect2_get_info_from_ip()', '$skipCache has been renamed to $options. Instead of TRUE, now use "[\'skipCache\' => TRUE]".', '2.5.0');
 		$value = $options;
-		$options = array();
+		$options = [];
 		$options['skipCache'] = $value;
 	}
 
@@ -76,7 +76,7 @@ function _geoip_detect2_process_options($options) {
  * @return GeoIp2\Database\Reader 	The reader, ready to do its work. Don't forget to `close()` it afterwards. NULL if file not found (or other problems).
  * NULL if initialization went wrong (e.g., File not found.)
  */
-function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &$sourceId = '', $options = array()) {
+function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &$sourceId = '', $options = []) {
 	if (! $skipLocaleFilter) {
 		/**
 		 * Filter: geoip_detect2_locales
@@ -325,7 +325,7 @@ function geoip_detect_normalize_ip(string $ip) : string {
 
 function geoip_detect_sanitize_ip_list(string $ip_list) : string {
 	$list = explode(',', $ip_list);
-	$ret = array();
+	$ret = [];
 	foreach ($list as $ip) {
 		$ip = trim($ip);
 		$parts = explode('/', $ip, 2);

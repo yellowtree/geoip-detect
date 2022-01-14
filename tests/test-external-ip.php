@@ -138,6 +138,6 @@ class ExternalIpTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	function filterProviderNone() {
-		return array();	
+		return [];	
 	}
 }

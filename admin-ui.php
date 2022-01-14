@@ -157,7 +157,7 @@ function geoip_detect_option_page() {
 	$registry = DataSourceRegistry::getInstance();
 	$sources = $registry->getAllSources();
 
-	$messages = array();
+	$messages = [];
 
 	$numeric_options = array('set_css_country', 'has_reverse_proxy', 'disable_pagecache', 'ajax_enabled', 'ajax_enqueue_js', 'ajax_set_css_country', 'ajax_shortcodes');
 	$text_options = array('external_ip', 'trusted_proxy_ips');
@@ -241,7 +241,7 @@ function geoip_detect_option_page() {
 
     $currentSource = $registry->getCurrentSource();
 
-	$wp_options = array();
+	$wp_options = [];
 	foreach ($option_names as $opt_name) {
 		$wp_options[$opt_name] = get_option('geoip-detect-'. $opt_name);
 	}

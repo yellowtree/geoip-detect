@@ -85,7 +85,7 @@ class CcpaBlacklistOnLookup {
         // Only load once        
         if (!is_null(self::$list)) return;
 
-        $list = array();
+        $list = [];
 
         /**
          * Filter: geoip_detect2_maxmind_ccpa_blacklist_ip_subnets
