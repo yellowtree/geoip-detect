@@ -145,7 +145,7 @@ class DataSourceRegistry {
 
 		// Delete all options from this plugin
 		foreach ( wp_load_alloptions() as $option => $value ) {
-			if ( strpos( $option, 'geoip-detect-' ) === 0 ) {
+			if ( \str_starts_with( $option, 'geoip-detect-' ) ) {
 				delete_option( $option );
 			}
 		}

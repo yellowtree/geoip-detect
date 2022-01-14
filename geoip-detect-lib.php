@@ -353,7 +353,7 @@ function geoip_detect_sanitize_ip_list(string $ip_list) : string {
 function geoip_detect_ip_remove_port(string $ip) : string {
 	$ip = trim($ip);
 	
-	if (mb_strpos($ip, '.')) {  // IPv4 
+	if (str_contains($ip, '.')) {  // IPv4 
 		// 1.1.1.1:80
 		$end = mb_stripos($ip, ':');
 		if ($end) {

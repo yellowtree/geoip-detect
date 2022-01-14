@@ -177,7 +177,7 @@ HTML;
 		//$download_url = 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&suffix=tar.gz';
 		
 		$download_url = apply_filters('geoip_detect2_download_url', $download_url);
-		if (strpos($download_url, 'license_key=') === false) {
+		if (!\str_contains($download_url, 'license_key=')) {
 			$key = get_option('geoip-detect-auto_license_key', '');
 			if (!$key) {
 				return __('Error: Before updating, you need to enter a license key from maxmind.com.', 'geoip-detect');

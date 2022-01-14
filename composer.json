@@ -28,6 +28,7 @@
     },
     "scripts": {
         "test": "phpunit",
-        "install-test": "composer install --ignore-platform-reqs"
+        "install-test": "composer install --ignore-platform-reqs",
+        "test-install": "composer install --ignore-platform-reqs"
     }
 }
