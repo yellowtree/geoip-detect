@@ -107,7 +107,7 @@ class CcpaBlacklistOnLookup {
 (new CcpaBlacklistOnLookup)->addFilters();
 
 /*
-if (WP_DEBUG) {
+if (GEOIP_DETECT_DEBUG) {
 
     add_filter('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', function() {
         $ccpaBlacklistStub = [];

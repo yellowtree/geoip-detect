@@ -484,11 +484,11 @@ function _geoip_detect_get_external_ip_adress_without_cache() : string
 		$ret = wp_remote_get($url, array('timeout' => defined('WP_TESTS_TITLE') ? 3 : 1.5));
 
 		if (is_wp_error($ret)) {
-			if (WP_DEBUG || defined('WP_TESTS_TITLE')) {
+			if (GEOIP_DETECT_DEBUG || defined('WP_TESTS_TITLE')) {
 				trigger_error('_geoip_detect_get_external_ip_adress_without_cache(): Curl error (' . $url . '): ' . $ret->get_error_message(), E_USER_NOTICE);
 			}
 		} else if (isset($ret['response']['code']) && $ret['response']['code'] != 200) {
-			if (WP_DEBUG || defined('WP_TESTS_TITLE')) {
+			if (GEOIP_DETECT_DEBUG || defined('WP_TESTS_TITLE')) {
 				trigger_error('_geoip_detect_get_external_ip_adress_without_cache(): HTTP error (' . $url . '): Returned code ' . $ret['response']['code'], E_USER_NOTICE);
 			}
 		} else {
@@ -497,7 +497,7 @@ function _geoip_detect_get_external_ip_adress_without_cache() : string
 				if (geoip_detect_is_ip($ip))
 					return $ip;
 			}
-			if (WP_DEBUG || defined('WP_TESTS_TITLE')) {
+			if (GEOIP_DETECT_DEBUG || defined('WP_TESTS_TITLE')) {
 				trigger_error('_geoip_detect_get_external_ip_adress_without_cache(): HTTP error (' . $url . '): Did not return an IP: ' . $ret['body'], E_USER_NOTICE);
 			}
 		}

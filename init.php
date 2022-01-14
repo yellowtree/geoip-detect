@@ -20,6 +20,10 @@ function geoip_detect_defines() {
 
 	if (!defined('GEOIP_DETECT_USER_AGENT'))
 		define('GEOIP_DETECT_USER_AGENT', 'Geolocation Detect ' . GEOIP_DETECT_VERSION);
+
+	if (!defined('GEOIP_DETECT_DEBUG')) {
+		define('GEOIP_DETECT_DEBUG', WP_DEBUG);
+	}
 }
 add_action('plugins_loaded', 'geoip_detect_defines');
 
@@ -214,7 +218,7 @@ register_uninstall_hook(GEOIP_PLUGIN_FILE, __NAMESPACE__ . '\\on_uninstall');
 
 // For Debugging purposes ...
 /*
-if (WP_DEBUG && isset($_GET['uninstall']) && $_GET['uninstall'] == 'asdf') {
+if (GEOIP_DETECT_DEBUG && isset($_GET['uninstall']) && $_GET['uninstall'] == 'asdf') {
 
 add_action('plugins_loaded', function() {
 	on_uninstall();

@@ -41,7 +41,7 @@ function geoip_detect_version_check() {
 		return true;
 	}
 
-	if (WP_DEBUG) {
+	if (GEOIP_DETECT_DEBUG) {
 		trigger_error($message);
 	}
 
@@ -79,7 +79,7 @@ function geoip_detect_version_check_after_plugins_loaded() {
 		return true;
 	}
 
-	if (WP_DEBUG) {
+	if (GEOIP_DETECT_DEBUG) {
 		trigger_error($message);
 	}
 

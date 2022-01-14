@@ -68,7 +68,7 @@ class ManualDataSource extends AbstractDataSource {
 		if ($entries) {
 			$html .= ' ' . sprintf(__('(has %d entries)', 'geoip-detect'), count($entries));
 		}
-		if (WP_DEBUG) {
+		if (GEOIP_DETECT_DEBUG) {
 			$html .= '<br>' . sprintf(__('Privacy Exclusions next Update: %s', 'geoip-detect'), geoip_detect_format_localtime($next_update) );
 		}
 
@@ -209,7 +209,7 @@ HTML;
 			try {
 				$reader = new \GeoIp2\Database\Reader ( $data_file, $locales );
 			} catch ( \Exception $e ) {
-				if (WP_DEBUG) {
+				if (GEOIP_DETECT_DEBUG) {
 					trigger_error(sprintf(__('Error while creating reader for "%s": %s', 'geoip-detect'), $data_file, $e->getMessage()), E_USER_NOTICE);
 				}
 			}

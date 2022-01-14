@@ -103,7 +103,7 @@ function geoip_detect2_shortcode_get_property_simplified($userInfo, $propertyNam
 	try {
 		$return = geoip_detect2_shortcode_get_property($userInfo, $propertyName);
 	} catch (\RuntimeException $e) {
-		if (WP_DEBUG) {
+		if (GEOIP_DETECT_DEBUG) {
 			trigger_error('Undefined property `' . $propertyName . '`');
 		}
 		$return = $defaultValue;

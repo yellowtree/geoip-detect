@@ -67,7 +67,7 @@ class HeaderReader extends \YellowTree\GeoipDetect\DataSources\AbstractReader {
 			return _geoip_detect2_get_new_empty_record($ip);
 		}
 		if (mb_strlen($isoCode) !== 2) {
-			$errorMessage = 'Invalid country code' . (WP_DEBUG ? (': "' . $isoCode . '"') : '.');
+			$errorMessage = 'Invalid country code' . (GEOIP_DETECT_DEBUG ? (': "' . $isoCode . '"') : '.');
 			return _geoip_detect2_get_new_empty_record($ip, $errorMessage);
 		}
 		
@@ -163,7 +163,7 @@ HTML;
 					'provider' => $provider,
 				) );
 			} catch ( \Exception $e ) {
-				if (WP_DEBUG) {
+				if (GEOIP_DETECT_DEBUG) {
 					trigger_error(sprintf(__('Error while creating reader for "%s": %s', 'geoip-detect'), $filename, $e->getMessage ()), E_USER_NOTICE);
 				}
 			}

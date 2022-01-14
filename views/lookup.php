@@ -285,7 +285,7 @@ function var_export_short($data, $return=true)
 	<p class="short"><a href="#" onclick="geoip_properties_toggle('all', 'short'); return false;"><?= __('Show all available properties', 'geoip-detect') ?></a></p>
 	<p><?= __('(More properties might be available for other IPs and with other data sources.)', 'geoip-detect'); ?></p>
 
-	<?php if (WP_DEBUG) { var_dump($data); } ?>
+	<?php if (GEOIP_DETECT_DEBUG) { var_dump($data); } ?>
 		<?php elseif ($ip_lookup_result === 0 || is_null($ip_lookup_result)) : ?>
 			<p>
 				<?= __('No information found about this IP.', 'geoip-detect')?>

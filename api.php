@@ -84,13 +84,14 @@ function geoip_detect2_get_info_from_ip(string $ip, $locales = null, $options = 
 
 		$data   = _geoip_detect2_record_enrich_data($record, $ip, $outSourceId, $lookupError);
 
-		if (WP_DEBUG && !GEOIP_DETECT_DOING_UNIT_TESTS && $lookupError) {
+		if (GEOIP_DETECT_DEBUG && !defined('GEOIP_DETECT_DOING_UNIT_TESTS') && $lookupError) {
 			trigger_error($lookupError, E_USER_NOTICE);
 		}
 
 		// Save result to cache, but no "IP not found in database" or similar errors
-		if (!$lookupError)
+		if (!$lookupError) {
 			_geoip_detect2_add_data_to_cache($data, $ip);
+		}
 	}
 
 	/**
