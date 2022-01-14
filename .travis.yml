@@ -9,7 +9,6 @@ notifications:
 cache:
   directories:
     - $HOME/.composer/cache
-    - contact-form-7
 
 language: php
 os: linux
@@ -52,9 +51,7 @@ install:
   - composer show
   - nvm install 12 && nvm use 12
   - yarn install
-  - if [ ! -d contact-form-7 ]; then git clone https://github.com/takayukister/contact-form-7.git; fi
-  - cd contact-form-7 ; git fetch --all ; git checkout ${CF7_VERSION}
-  - cd "$TRAVIS_BUILD_DIR"
+  - git clone --depth=50 --branch=${CF7_VERSION} https://github.com/takayukister/contact-form-7.git
 
 before_script:
   - mysql -u root -e "CREATE USER ${WP_DB_USER} IDENTIFIED BY '${WP_DB_PASS}';"
