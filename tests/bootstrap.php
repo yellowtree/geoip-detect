@@ -48,9 +48,9 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 	private $setup_was_called = false;
 	public function setUp() {
 		// Use Test File
-		add_filter('geoip_detect_get_abs_db_filename', array($this, 'filter_set_test_database'), 101);
-		add_filter('pre_option_geoip-detect-source', array($this, 'filter_set_default_source'), 101);
-		add_filter('pre_transient_geoip_detect_external_ip', array($this, 'filter_set_external_ip'), 101);
+		add_filter('geoip_detect_get_abs_db_filename', [ $this, 'filter_set_test_database' ], 101);
+		add_filter('pre_option_geoip-detect-source', [ $this, 'filter_set_default_source' ], 101);
+		add_filter('pre_transient_geoip_detect_external_ip', [ $this, 'filter_set_external_ip' ], 101);
 		
 		$this->setup_was_called = true;
 	}
@@ -74,9 +74,9 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 	}
 	
 	public function tearDown() {
-		remove_filter('geoip_detect_get_abs_db_filename', array($this, 'filter_set_test_database'), 101);
-		remove_filter('pre_option_geoip-detect-source', array($this, 'filter_set_default_source'), 101);
-		remove_filter('pre_transient_geoip_detect_external_ip', array($this, 'filter_set_external_ip'), 101);
+		remove_filter('geoip_detect_get_abs_db_filename', [ $this, 'filter_set_test_database' ], 101);
+		remove_filter('pre_option_geoip-detect-source', [ $this, 'filter_set_default_source' ], 101);
+		remove_filter('pre_transient_geoip_detect_external_ip', [ $this, 'filter_set_external_ip' ], 101);
 		$this->setup_was_called = false;
 	}
 	
@@ -93,7 +93,7 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 		$this->assertEquals(3, strlen($record->country_code3), $assert_text);
 		$this->assertEquals(2, strlen($record->continent_code), $assert_text);
 		
-		$properties = array('country_code', 'country_code3', 'country_name', 'latitude', 'longitude', 'continent_code');
+		$properties = [ 'country_code', 'country_code3', 'country_name', 'latitude', 'longitude', 'continent_code' ];
 
 		foreach ($properties as $name) {
 			$this->assertObjectHasAttribute($name, $record);

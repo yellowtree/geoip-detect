@@ -29,7 +29,7 @@ class HostinfoSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	 * @group external-http
 	 */
 	function testLookup() {
-		$ret = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, array('en'), array('skipCache' => true));
+		$ret = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, [ 'en' ], [ 'skipCache' => true ]);
 		
 		$this->assertValidGeoIP2Record($ret, GEOIP_DETECT_TEST_IP, true);
 		$this->assertSame('hostinfo', $ret->extra->source);
@@ -41,7 +41,7 @@ class HostinfoSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	 * @group external-http
 	 */
 	function testLookupV6() {
-		$ret = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP_V_6, array('en'), array('skipCache' => true));
+		$ret = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP_V_6, [ 'en' ], [ 'skipCache' => true ]);
 		$this->assertNotEmpty($ret->extra->error); // Ipv6 is not supported
 	}
 	
@@ -50,7 +50,7 @@ class HostinfoSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	 */
 	function testLookupTimeout() {
 		$before = microtime(true);
-		$ret = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, array('en'), array('timeout' => 0.01, 'skipCache' => true));
+		$ret = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, [ 'en' ], [ 'timeout' => 0.01, 'skipCache' => true ]);
 		$after = microtime(true);
 		$this->assertLessThan(0.2, $after - $before, 'Timeout option was not respected?');
 		$this->assertEmptyGeoIP2Record($ret, 'timed out');

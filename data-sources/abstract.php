@@ -33,7 +33,7 @@ abstract class AbstractDataSource {
 	public function deactivate() { }
 	public function uninstall() {}
 	
-	public function getReader($locales = array('en'), $options = []) { return null; }
+	public function getReader($locales = [ 'en' ], $options = []) { return null; }
 	
 	public function isWorking() { return false; }
 }
@@ -81,7 +81,7 @@ class ExtraInformation extends \GeoIp2\Record\AbstractRecord {
 	/**
 	 * @ignore
 	 */
-	protected $validAttributes = array('source', 'cached', 'error', 'original', 'flag', 'tel', 'countryIsoCode3', 'currencyCode');
+	protected $validAttributes = [ 'source', 'cached', 'error', 'original', 'flag', 'tel', 'countryIsoCode3', 'currencyCode' ];
 }
 
 interface ReaderInterface extends \GeoIp2\ProviderInterface {

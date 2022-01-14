@@ -17,8 +17,8 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	public function tearDown() {
 		parent::tearDown();
-		remove_filter('pre_option_geoip-detect-source', array($this, 'filter_set_invalid_default_source'), 105);
-		remove_filter('pre_option_geoip-detect-source', array($this, 'filter_set_wrong_default_source'), 106);
+		remove_filter('pre_option_geoip-detect-source', [ $this, 'filter_set_invalid_default_source' ], 105);
+		remove_filter('pre_option_geoip-detect-source', [ $this, 'filter_set_wrong_default_source' ], 106);
 	}
 	
 	public function filter_set_invalid_default_source() {
@@ -34,7 +34,7 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
 		$source_ids = array_keys($sources);
 		sort($source_ids);
 		
-		$this->assertSame(array('auto', 'header', 'hostinfo', 'ipstack', 'manual', 'precision'), $source_ids);
+		$this->assertSame([ 'auto', 'header', 'hostinfo', 'ipstack', 'manual', 'precision' ], $source_ids);
 	}
 	
 	public function testInvalidDatasources() {
@@ -51,7 +51,7 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	public function testInvalidCurrentDatasource() {
-		add_filter('pre_option_geoip-detect-source', array($this, 'filter_set_invalid_default_source'), 105);
+		add_filter('pre_option_geoip-detect-source', [ $this, 'filter_set_invalid_default_source' ], 105);
 		
 		try {
 			$source = $this->registry->getCurrentSource();
@@ -66,12 +66,12 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	public function testManualOverrideDatasource() {
-		add_filter('pre_option_geoip-detect-source', array($this, 'filter_set_wrong_default_source'), 106);
+		add_filter('pre_option_geoip-detect-source', [ $this, 'filter_set_wrong_default_source' ], 106);
 		$source = $this->registry->getCurrentSource();
 		$this->assertEquals('header', $source->getId());
 			
 		// Test lookup with manual source name
-		$record =  geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, array('en'), array('source' => 'manual'));
+		$record =  geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, [ 'en' ], [ 'source' => 'manual' ]);
 		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
 		$this->assertEquals('Germany', $record->country->name);
 	}
@@ -100,7 +100,7 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
      * @ticket 22
      *
     public function testAdminNoticeDatabaseMissingRequiresManageOptionsCapability () {
-        $args = array('role' => 'subscriber');
+        $args = [ 'role' => 'subscriber' ];
         if (!$this->factory) {
             $this->factory = new WP_UnitTest_Factory();
             $args['user_login'] = hash('md5', uniqid() . microtime());
@@ -118,7 +118,7 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
      * @ticket 22
      */
     public function testAdminNoticeDatabaseMissingPrintsOutputWithManageOptionsCapability () {
-        $args = array('role' => 'administrator');
+        $args = [ 'role' => 'administrator' ];
         if (!$this->factory) {
             $this->factory = new WP_UnitTest_Factory();
             $args['user_login'] = hash('md5', uniqid() . microtime());

@@ -208,7 +208,7 @@ function _geoip_detect2_get_record_from_reader($reader, $ip, &$error) {
 }
 
 function _geoip_detect2_get_new_empty_record($ip = '', $error = '') {
-	$data = array('traits' => array('ip_address' => $ip), 'is_empty' => true);
+	$data = [ 'traits' => [ 'ip_address' => $ip ], 'is_empty' => true ];
 	if ($error) {
 		$data['extra']['error'] = $error;
 	}
@@ -220,7 +220,7 @@ function _geoip_detect2_record_enrich_data($record, $ip, $sourceId, $error) : ar
 	if (is_object($record) && method_exists($record, 'jsonSerialize')) {
 		$data = $record->jsonSerialize();
 	} else {
-		$data = array('traits' => array('ip_address' => $ip), 'is_empty' => true);
+		$data = [ 'traits' => [ 'ip_address' => $ip ], 'is_empty' => true ];
 	}
 
 	if (!isset($data['is_empty'])) {

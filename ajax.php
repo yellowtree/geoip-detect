@@ -80,7 +80,7 @@ function _geoip_detect_get_domain_name($url) {
 }
 
 function _geoip_detect_ajax_error($error) {
-	$data = array('extra' => array('error' => $error));
+	$data = [ 'extra' => [ 'error' => $error ] ];
 	$data['is_empty'] = true;
 	_geoip_detect_disable_pagecache();
 	wp_send_json($data, 412);

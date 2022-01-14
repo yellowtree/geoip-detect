@@ -34,7 +34,7 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 class PrecisionReader extends \GeoIp2\WebService\Client implements \YellowTree\GeoipDetect\DataSources\ReaderInterface 
 {
 	public function __construct($userId, $licenseKey, $options) {
-		parent::__construct($userId, $licenseKey, array('en'), $options);
+		parent::__construct($userId, $licenseKey, [ 'en' ], $options);
 	}
 	
 	public function city($ip = 'me') {
@@ -42,7 +42,7 @@ class PrecisionReader extends \GeoIp2\WebService\Client implements \YellowTree\G
 		
 		$ret = null;
 		
-		$callback = array($this, $method);
+		$callback = [ $this, $method ];
 		if (!is_callable($callback)) {
 			throw new \RuntimeException('Precision API: Unsupported method ' . $method);
 		}
@@ -50,7 +50,7 @@ class PrecisionReader extends \GeoIp2\WebService\Client implements \YellowTree\G
 		if ($method == 'city')
 			$ret = parent::city($ip);
 		else
-			$ret = call_user_func_array($callback, array($ip));
+			$ret = call_user_func_array($callback, [ $ip ]);
 		
 			/* Web-API-specific exceptions:
 			} catch (AuthenticationException $e) {
@@ -71,9 +71,9 @@ class PrecisionReader extends \GeoIp2\WebService\Client implements \YellowTree\G
 class PrecisionDataSource extends AbstractDataSource {
 	
 	protected $known_api_types = array(
-			'country' => array('label' => 'Country'), 
-			'city' => array('label' => 'City'), 
-			'insights' => array('label' => 'Insights'));
+			'country' => [ 'label' => 'Country' ], 
+			'city' => [ 'label' => 'City' ], 
+			'insights' => [ 'label' => 'Insights' ]);
 	
 	public function __construct() {
 		parent::__construct();
@@ -148,7 +148,7 @@ HTML;
 		return $message;
 	}
 	
-	public function getReader($locales = array('en'), $options = []) {
+	public function getReader($locales = [ 'en' ], $options = []) {
 		if (!$this->isWorking())
 			return null;
 

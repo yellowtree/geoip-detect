@@ -60,7 +60,7 @@ function geoip_detect2_shortcode($orig_attr, $content = '', $shortcodeName = 'ge
 		], $shortcode_options);
 	}
 	
-	$options = array('skipCache' => $shortcode_options['skip_cache']);
+	$options = [ 'skipCache' => $shortcode_options['skip_cache'] ];
 	
 	$ip = $attr['ip'] ?: geoip_detect2_get_client_ip();
 	

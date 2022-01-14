@@ -31,7 +31,7 @@ class CcpaBlacklistOnLookup {
     }
 
     public function addFilters() {
-        add_filter('geoip_detect2_record_data_override_lookup', array($this, 'onBeforeLookup'), 9, 3);
+        add_filter('geoip_detect2_record_data_override_lookup', [ $this, 'onBeforeLookup' ], 9, 3);
     }
 
     public function onBeforeLookup($data, $ip, $options) {
@@ -137,8 +137,8 @@ class RetrieveCcpaBlacklist {
     }
 
     public function addFilters() {
-        add_filter('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', array($this, 'onBlacklistLoad'));
-        add_action('geoip_detect2_maxmind_ccpa_blacklist_do_upate', array($this, 'doUpdate'));
+        add_filter('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', [ $this, 'onBlacklistLoad' ]);
+        add_action('geoip_detect2_maxmind_ccpa_blacklist_do_upate', [ $this, 'doUpdate' ]);
     }
 
     public function onBlacklistLoad($list) {
@@ -245,7 +245,7 @@ class RetrieveCcpaBlacklist {
 
 class CcpaBlacklistCron {
     public function addFilter() {
-        add_action('geoipdetectccpaupdate', array($this, 'hook_cron', 10, 1));
+        add_action('geoipdetectccpaupdate', [ $this, 'hook_cron', 10, 1 ]);
     }
 
     public function hook_cron() {

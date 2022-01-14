@@ -41,12 +41,12 @@ class CcpaTest extends WP_UnitTestCase_GeoIP_Detect {
         parent::setUp();
         $this->createBlacklist();
         YellowTree\GeoipDetect\Lib\CcpaBlacklistOnLookup::resetList();
-        add_filter   ('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', array($this, 'setBlacklist'), 101);
+        add_filter   ('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', [ $this, 'setBlacklist' ], 101);
 	}
 	public function tearDown() {
         parent::tearDown();
         
-        remove_filter('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', array($this, 'setBlacklist'), 101);
+        remove_filter('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', [ $this, 'setBlacklist' ], 101);
 	}
 
 
@@ -124,7 +124,7 @@ class CcpaTest extends WP_UnitTestCase_GeoIP_Detect {
         $this->assertInternalType('array', $ret['exclusions']);
         $row = reset($ret['exclusions']);
         $rowKeys = array_keys($row);
-        $this->assertSame(array('exclusion_type', 'data_type', 'value', 'last_updated'), $rowKeys);
+        $this->assertSame([ 'exclusion_type', 'data_type', 'value', 'last_updated' ], $rowKeys);
         $this->assertNotEmpty(geoip_detect_sanitize_ip_list($row['value']));
     }
 

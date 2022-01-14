@@ -13,7 +13,7 @@ class CodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	function testIfShorttagsAreUsed() {
-		$folders = array('data-sources', 'views');
+		$folders = [ 'data-sources', 'views' ];
 		
 		$plugin_dir = dirname(dirname(__FILE__));
 		foreach ($folders as $f) {

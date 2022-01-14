@@ -46,8 +46,8 @@ class IpLibTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertTrue(geoip_detect_is_ip_equal('::ffff:192.0.2.128', '::ffff:c000:0280'));
 		$this->assertFalse(geoip_detect_is_ip_equal('2001:0DB8:0:0:2::1', '2001:0db8:0000:0000:1:0000:0000:0001'));
 
-		$this->assertTrue(geoip_detect_is_ip_equal('8.8.8.8', array('1.1.1.1', '::8', '8.8.8.8') ));
-		$this->assertFalse(geoip_detect_is_ip_equal('8.8.8.7', array('1.1.1.1', '::4', '8.8.8.8') ));
+		$this->assertTrue(geoip_detect_is_ip_equal('8.8.8.8', [ '1.1.1.1', '::8', '8.8.8.8' ] ));
+		$this->assertFalse(geoip_detect_is_ip_equal('8.8.8.7', [ '1.1.1.1', '::4', '8.8.8.8' ] ));
 
 	}
 
@@ -57,11 +57,11 @@ class IpLibTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertTrue(geoip_detect_is_ip_equal('[2001:0DB8:0:0:1::1]:15', '[2001:0db8:0000:0000:0001:0000:0000:0001]:15', true));
 		$this->assertFalse(geoip_detect_is_ip_equal('[2001:0DB8:0:0:1::2]:15', '2001:0db8:0000:0000:0001:0000:0000:0001', true));
 
-		$this->assertTrue(geoip_detect_is_ip_equal('8.8.8.8:56', array('1.1.1.1', '::8', '8.8.8.8'), true ));
-		$this->assertFalse(geoip_detect_is_ip_equal('8.8.8.8:56', array('1.1.1.1', '::8', '8.8.8.8'), false ));
+		$this->assertTrue(geoip_detect_is_ip_equal('8.8.8.8:56', [ '1.1.1.1', '::8', '8.8.8.8' ], true ));
+		$this->assertFalse(geoip_detect_is_ip_equal('8.8.8.8:56', [ '1.1.1.1', '::8', '8.8.8.8' ], false ));
 // Not supported
-//		$this->assertTrue(geoip_detect_is_ip_equal('8.8.8.8', array('1.1.1.1', '::8', '8.8.8.8:80'), true ));
-//		$this->assertFalse(geoip_detect_is_ip_equal('8.8.8.7', array('1.1.1.1', '::8', '8.8.8.8:80'), true ));
+//		$this->assertTrue(geoip_detect_is_ip_equal('8.8.8.8', [ '1.1.1.1', '::8', '8.8.8.8:80' ], true ));
+//		$this->assertFalse(geoip_detect_is_ip_equal('8.8.8.7', [ '1.1.1.1', '::8', '8.8.8.8:80' ], true ));
 	}
 
 	function testStripPort() {

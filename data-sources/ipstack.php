@@ -42,7 +42,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 	}
 
     protected function locales($locale, $value) {
-        $locales = array('en' => $value);
+        $locales = [ 'en' => $value ];
         if ($locale != 'en') {
             $locales[$locale] = $value;
         }
@@ -123,7 +123,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 
 		$r['traits']['ip_address'] = $ip;
 
-		$record = new \GeoIp2\Model\City($r, array('en'));
+		$record = new \GeoIp2\Model\City($r, [ 'en' ]);
 
 		return $record;
 	}
@@ -236,7 +236,7 @@ HTML;
         return $message;
     }
 
-	public function getReader($locales = array('en'), $options = []) { 
+	public function getReader($locales = [ 'en' ], $options = []) { 
         return new Reader($this->params, $locales, $options);
     }
 

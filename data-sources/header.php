@@ -75,7 +75,7 @@ class HeaderReader extends \YellowTree\GeoipDetect\DataSources\AbstractReader {
 		
 		$r['traits']['ip_address'] = $ip;
 		
-		$record = new \GeoIp2\Model\City($r, array('en'));
+		$record = new \GeoIp2\Model\City($r, [ 'en' ]);
 		
 		return $record;
 	}
@@ -153,7 +153,7 @@ HTML;
 		return $html;
 	}
 
-	public function getReader($locales = array('en'), $options = []) {
+	public function getReader($locales = [ 'en' ], $options = []) {
 		$reader = null;
 		
 		$provider = get_option('geoip-detect-header-provider');

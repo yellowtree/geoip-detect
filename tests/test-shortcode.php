@@ -8,19 +8,19 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 
 	function setUp() {
 		parent::setUp();
-		add_filter('geoip_detect_get_external_ip_adress', array($this, 'filter_set_test_ip'), 101);
+		add_filter('geoip_detect_get_external_ip_adress', [ $this, 'filter_set_test_ip' ], 101);
 		$this->assertEquals(GEOIP_DETECT_TEST_IP, geoip_detect_get_external_ip_adress());
 		setlocale(LC_NUMERIC, 'C'); // Set locale to always use . as decimal point
 	}
 
 	function tearDown() {
 		parent::tearDown();
-		remove_filter('geoip_detect_get_external_ip_adress', array($this, 'filter_set_test_ip'), 101);
-        remove_filter('geoip2_detect2_client_ip', array($this, 'filter_set_test_ip'), 101);
+		remove_filter('geoip_detect_get_external_ip_adress', [ $this, 'filter_set_test_ip' ], 101);
+        remove_filter('geoip2_detect2_client_ip', [ $this, 'filter_set_test_ip' ], 101);
 		remove_filter('geoip_detect2_reader', 'shortcode_empty_reader', 101);
-		remove_filter('geoip2_detect_sources_not_cachable', array($this, 'filter_empty_array'), 101);
-		remove_filter('geoip_detect2_shortcode_country_select_countries', array($this, 'shortcodeFilter'), 101);
-		remove_filter('geoip_detect2_record_data_override_lookup', array($this, 'filterEmptyRecordData'), 101);
+		remove_filter('geoip2_detect_sources_not_cachable', [ $this, 'filter_empty_array' ], 101);
+		remove_filter('geoip_detect2_shortcode_country_select_countries', [ $this, 'shortcodeFilter' ], 101);
+		remove_filter('geoip_detect2_record_data_override_lookup', [ $this, 'filterEmptyRecordData' ], 101);
 	}
 
 	function filterEmptyRecordData() {
@@ -113,13 +113,13 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertContains('default', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"city\"] should use default: " . $string);
 	}
 
-	function filter_empty_[] {
+	function filter_empty_array() {
 		return [];
 	}
 
 	function testSkipCache() {
 		// enable caching
-		add_filter('geoip2_detect_sources_not_cachable', array($this, 'filter_empty_array'), 101);
+		add_filter('geoip2_detect_sources_not_cachable', [ $this, 'filter_empty_array' ], 101);
 
 		// Make sure this is in the cache
 		do_shortcode('[geoip_detect2 property="extra.cached"]');
@@ -136,7 +136,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 
     public function testShortcodeCF7UserInfo() {
-        add_filter('geoip_detect2_client_ip', array($this, 'filter_set_test_ip'), 101);
+        add_filter('geoip_detect2_client_ip', [ $this, 'filter_set_test_ip' ], 101);
 
         $this->assertEquals('', geoip_detect2_shortcode_user_info_wpcf7('', 'asdfsadf', false));
 
@@ -201,7 +201,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertContains('Germany', $html);
 		$this->assertContains('"selected">Germany', $html);
 
-		$html = geoip_detect2_shortcode_country_select(array('include_blank' => false));
+		$html = geoip_detect2_shortcode_country_select([ 'include_blank' => false ]);
 		$this->assertNotContains('---', $html, 'Should not contain blank');
 
 		$html = do_shortcode('[geoip_detect2_countries include_blank="true"]');
@@ -212,7 +212,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 
 	public function testShortcodeCountryFilter() {
-		add_filter('geoip_detect2_shortcode_country_select_countries', array($this, 'shortcodeFilter'), 101, 2);
+		add_filter('geoip_detect2_shortcode_country_select_countries', [ $this, 'shortcodeFilter' ], 101, 2);
 
 		$html = do_shortcode('[geoip_detect2_countries selected="aa"]');
 		$this->assertNotContains('Germany', $html);
@@ -331,7 +331,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 
 	public function testGenerateForJS() {
-		add_shortcode('geoip_detect2_test_show_if', array($this, 'do_shortcode_geoip_detect2_test_show_if'));
+		add_shortcode('geoip_detect2_test_show_if', [ $this, 'do_shortcode_geoip_detect2_test_show_if' ]);
 
 		$data = $this->dataShortcodeShowIf();
 		$data_set = $this->getDataSet($data);
@@ -346,59 +346,59 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 
 	public function dataShortcodeShowIf() {
 		return array(
-		/* #0 */		array('no condition', '[geoip_detect2_show_if]no condition[/geoip_detect2_show_if]' ),
+		/* #0 */		[ 'no condition', '[geoip_detect2_show_if]no condition[/geoip_detect2_show_if]'  ],
 
-		/* #1 */		array('yes', '[geoip_detect2_show_if country="DE"]yes[/geoip_detect2_show_if]' ),
-		/* #2 */		array('yes', '[geoip_detect2_show_if country="de"]yes[/geoip_detect2_show_if]' ),
-		/* #3 */		array('yes', '[geoip_detect2_show_if country="Germany"]yes[/geoip_detect2_show_if]' ),
-		/* #4 */		array('yes', '[geoip_detect2_show_if country="germany"]yes[/geoip_detect2_show_if]' ),
-		/* #5 */		array('',    '[geoip_detect2_show_if country="US"]yes[/geoip_detect2_show_if]' ),
+		/* #1 */		[ 'yes', '[geoip_detect2_show_if country="DE"]yes[/geoip_detect2_show_if]'  ],
+		/* #2 */		[ 'yes', '[geoip_detect2_show_if country="de"]yes[/geoip_detect2_show_if]'  ],
+		/* #3 */		[ 'yes', '[geoip_detect2_show_if country="Germany"]yes[/geoip_detect2_show_if]'  ],
+		/* #4 */		[ 'yes', '[geoip_detect2_show_if country="germany"]yes[/geoip_detect2_show_if]'  ],
+		/* #5 */		[ '',    '[geoip_detect2_show_if country="US"]yes[/geoip_detect2_show_if]'  ],
 
-		/* #6 */		array('',    '[geoip_detect2_show_if country="DE" city="Munic" lang="en"]yes[/geoip_detect2_show_if]' ),
-		/* #7 */		array('yes', '[geoip_detect2_show_if country="DE" city="Eschborn"]yes[/geoip_detect2_show_if]' ),
-		/* #8 */		array('yes', '[geoip_detect2_show_if country="DE" city="2929134"]yes[/geoip_detect2_show_if]' ),
+		/* #6 */		[ '',    '[geoip_detect2_show_if country="DE" city="Munic" lang="en"]yes[/geoip_detect2_show_if]'  ],
+		/* #7 */		[ 'yes', '[geoip_detect2_show_if country="DE" city="Eschborn"]yes[/geoip_detect2_show_if]'  ],
+		/* #8 */		[ 'yes', '[geoip_detect2_show_if country="DE" city="2929134"]yes[/geoip_detect2_show_if]'  ],
 
-		/* #9 */		array('yes', '[geoip_detect2_show_if continent="EU" not_country="FR" city="Eschborn"]yes[/geoip_detect2_show_if]' ),
+		/* #9 */		[ 'yes', '[geoip_detect2_show_if continent="EU" not_country="FR" city="Eschborn"]yes[/geoip_detect2_show_if]'  ],
 		
-		/* #10 */		array('lang', '[geoip_detect2_show_if lang="es" country="Alemania"]lang[/geoip_detect2_show_if]' ),
-		/* #11 */		array('',     '[geoip_detect2_show_if lang="en" country="Alemania"]yes[/geoip_detect2_show_if]' ),
+		/* #10 */		[ 'lang', '[geoip_detect2_show_if lang="es" country="Alemania"]lang[/geoip_detect2_show_if]'  ],
+		/* #11 */		[ '',     '[geoip_detect2_show_if lang="en" country="Alemania"]yes[/geoip_detect2_show_if]'  ],
 		
-		/* #12 */		array('yes', '[geoip_detect2_show_if state="HE"]yes[/geoip_detect2_show_if]' ),
-		/* #13 */		array('yes', '[geoip_detect2_show_if region="HE"]yes[/geoip_detect2_show_if]' ),
-		/* #14 */		array('yes', '[geoip_detect2_show_if most_specific_subdivision="HE"]yes[/geoip_detect2_show_if]' ),
-		/* #15 */		array('',    '[geoip_detect2_show_if state="NN"]yes[/geoip_detect2_show_if]' ),
-		/* #16 */		array('yes', '[geoip_detect2_show_if continent="EU"]yes[/geoip_detect2_show_if]' ),
+		/* #12 */		[ 'yes', '[geoip_detect2_show_if state="HE"]yes[/geoip_detect2_show_if]'  ],
+		/* #13 */		[ 'yes', '[geoip_detect2_show_if region="HE"]yes[/geoip_detect2_show_if]'  ],
+		/* #14 */		[ 'yes', '[geoip_detect2_show_if most_specific_subdivision="HE"]yes[/geoip_detect2_show_if]'  ],
+		/* #15 */		[ '',    '[geoip_detect2_show_if state="NN"]yes[/geoip_detect2_show_if]'  ],
+		/* #16 */		[ 'yes', '[geoip_detect2_show_if continent="EU"]yes[/geoip_detect2_show_if]'  ],
 		
-		/* #17 */		array('yes', '[geoip_detect2_show_if property="location.timeZone" property_value="Europe/Berlin"]yes[/geoip_detect2_show_if]' ),
-		/* #18 */		array('',    '[geoip_detect2_show_if property="location.timeZone" not_property_value="Europe/Berlin"]yes[/geoip_detect2_show_if]' ),
-		/* #19 */		array('',    '[geoip_detect2_show_if property="invalid.property" property_value="Europe/Berlin"]yes[/geoip_detect2_show_if]' ),
-		/* #20 */		array('yes', '[geoip_detect2_show_if property="invalid.property" not_property_value="Europe/Berlin"]yes[/geoip_detect2_show_if]' ),
+		/* #17 */		[ 'yes', '[geoip_detect2_show_if property="location.timeZone" property_value="Europe/Berlin"]yes[/geoip_detect2_show_if]'  ],
+		/* #18 */		[ '',    '[geoip_detect2_show_if property="location.timeZone" not_property_value="Europe/Berlin"]yes[/geoip_detect2_show_if]'  ],
+		/* #19 */		[ '',    '[geoip_detect2_show_if property="invalid.property" property_value="Europe/Berlin"]yes[/geoip_detect2_show_if]'  ],
+		/* #20 */		[ 'yes', '[geoip_detect2_show_if property="invalid.property" not_property_value="Europe/Berlin"]yes[/geoip_detect2_show_if]'  ],
 		
-		/* #21 */		array('not_country', '[geoip_detect2_show_if not_country="FR"]not_country[/geoip_detect2_show_if]' ),
-		/* #22 */		array('',    '[geoip_detect2_show_if not_country="DE"]yes[/geoip_detect2_show_if]' ),
-		/* #23 */		array('',    '[geoip_detect2_show_if continent="EU" not_country="DE"]yes[/geoip_detect2_show_if]' ),
-		/* #24 */		array('yes', '[geoip_detect2_show_if country="US, DE"]yes[/geoip_detect2_show_if]' ),
-		/* #25 */		array('yes', '[geoip_detect2_show_if country="US,DE , FR"]yes[/geoip_detect2_show_if]' ),
-		/* #26 */		array('',    '[geoip_detect2_show_if country="US,FR"]yes[/geoip_detect2_show_if]' ),
+		/* #21 */		[ 'not_country', '[geoip_detect2_show_if not_country="FR"]not_country[/geoip_detect2_show_if]'  ],
+		/* #22 */		[ '',    '[geoip_detect2_show_if not_country="DE"]yes[/geoip_detect2_show_if]'  ],
+		/* #23 */		[ '',    '[geoip_detect2_show_if continent="EU" not_country="DE"]yes[/geoip_detect2_show_if]'  ],
+		/* #24 */		[ 'yes', '[geoip_detect2_show_if country="US, DE"]yes[/geoip_detect2_show_if]'  ],
+		/* #25 */		[ 'yes', '[geoip_detect2_show_if country="US,DE , FR"]yes[/geoip_detect2_show_if]'  ],
+		/* #26 */		[ '',    '[geoip_detect2_show_if country="US,FR"]yes[/geoip_detect2_show_if]'  ],
 
 		// Boolean values
-		/* #27 */		array('',    '[geoip_detect2_show_if property="isEmpty" property_value="1"]yes[/geoip_detect2_show_if]' ),
-		/* #28 */		array('yes', '[geoip_detect2_show_if property="isEmpty" property_value="false"]yes[/geoip_detect2_show_if]' ),
-		/* #29 */		array('yes', '[geoip_detect2_show_if property="isEmpty" property_value="no"]yes[/geoip_detect2_show_if]' ),
-		/* #30 */		array('',    '[geoip_detect2_show_if property="isEmpty" property_value="YES"]yes[/geoip_detect2_show_if]' ),
-		/* #31 */		// array('yes', '[geoip_detect2_show_if property="country.isInEuropeanUnion" property_value="true"]yes[/geoip_detect2_show_if]' ),
-		/* #32 */		// array('', '[geoip_detect2_show_if property="country.isInEuropeanUnion" property_value="0"]yes[/geoip_detect2_show_if]' ),
+		/* #27 */		[ '',    '[geoip_detect2_show_if property="isEmpty" property_value="1"]yes[/geoip_detect2_show_if]'  ],
+		/* #28 */		[ 'yes', '[geoip_detect2_show_if property="isEmpty" property_value="false"]yes[/geoip_detect2_show_if]'  ],
+		/* #29 */		[ 'yes', '[geoip_detect2_show_if property="isEmpty" property_value="no"]yes[/geoip_detect2_show_if]'  ],
+		/* #30 */		[ '',    '[geoip_detect2_show_if property="isEmpty" property_value="YES"]yes[/geoip_detect2_show_if]'  ],
+		/* #31 */		// [ 'yes', '[geoip_detect2_show_if property="country.isInEuropeanUnion" property_value="true"]yes[/geoip_detect2_show_if]'  ],
+		/* #32 */		// [ '', '[geoip_detect2_show_if property="country.isInEuropeanUnion" property_value="0"]yes[/geoip_detect2_show_if]'  ],
 
 		// Operator OR
-		/* #33 */		array('', '[geoip_detect2_show_if operator="or"]yes[/geoip_detect2_show_if]' ), /* weird input, weird output. But actually consistent. */
-		/* #34 */		array('yes', '[geoip_detect2_show_if region="HE" operator="or" country="France"]yes[/geoip_detect2_show_if]' ),
-		/* #35 */		array('',    '[geoip_detect2_show_if region="BY" operator="or" country="France"]yes[/geoip_detect2_show_if]' ),
-		/* #36 */		array('yes', '[geoip_detect2_show_if region="BY" operator="or" country="Germany"]yes[/geoip_detect2_show_if]' ),
-		/* #37 */		array('yes', '[geoip_detect2_show_if region="BY" operator="or" country="France" property="extra.countryIsoCode3" property_value="DEU"]yes[/geoip_detect2_show_if]' ),
+		/* #33 */		[ '', '[geoip_detect2_show_if operator="or"]yes[/geoip_detect2_show_if]'  ], /* weird input, weird output. But actually consistent. */
+		/* #34 */		[ 'yes', '[geoip_detect2_show_if region="HE" operator="or" country="France"]yes[/geoip_detect2_show_if]'  ],
+		/* #35 */		[ '',    '[geoip_detect2_show_if region="BY" operator="or" country="France"]yes[/geoip_detect2_show_if]'  ],
+		/* #36 */		[ 'yes', '[geoip_detect2_show_if region="BY" operator="or" country="Germany"]yes[/geoip_detect2_show_if]'  ],
+		/* #37 */		[ 'yes', '[geoip_detect2_show_if region="BY" operator="or" country="France" property="extra.countryIsoCode3" property_value="DEU"]yes[/geoip_detect2_show_if]'  ],
 
 		// Else
-		/* #36 */		array('hu', '[geoip_detect2_show_if country="DE"]hu[else]ha[/geoip_detect2_show_if]' ),
-		/* #37 */		array('ha',  '[geoip_detect2_show_if country="EN"]hu[else]ha[/geoip_detect2_show_if]' ),
+		/* #36 */		[ 'hu', '[geoip_detect2_show_if country="DE"]hu[else]ha[/geoip_detect2_show_if]'  ],
+		/* #37 */		[ 'ha',  '[geoip_detect2_show_if country="EN"]hu[else]ha[/geoip_detect2_show_if]'  ],
 
 
 		);
@@ -418,7 +418,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	 * @dataProvider dataShortcodeShowIfEmpty
 	 */
 	function testShortcodeEmpty($result, $txt) {
-		add_filter('geoip_detect2_record_data_override_lookup', array($this, 'filterEmptyRecordData'), 101);
+		add_filter('geoip_detect2_record_data_override_lookup', [ $this, 'filterEmptyRecordData' ], 101);
 		$return = do_shortcode($txt);
 		$this->assertSame($result, $return, "Shortcode failed: " . $txt);
 	}
@@ -427,7 +427,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	 * @dataProvider dataShortcodeShowIfEmpty
 	 */
 	public function testShortcodeHideIfEmpty($result, $txt) {
-		add_filter('geoip_detect2_record_data_override_lookup', array($this, 'filterEmptyRecordData'), 101);
+		add_filter('geoip_detect2_record_data_override_lookup', [ $this, 'filterEmptyRecordData' ], 101);
 		// Negate the tests
 		$txt = str_replace('geoip_detect2_show_if', 'geoip_detect2_hide_if', $txt);
 		if ($result === 'hu') {
@@ -521,13 +521,13 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 }
 
 /* Data of Test IP:
-array(7) {
+[ 7 ] {
   ["city"]=>
-  array(2) {
+  [ 2 ] {
     ["geoname_id"]=>
     int(2929134)
     ["names"]=>
-    array(4) {
+    [ 4 ] {
       ["en"]=>
       string(8) "Eschborn"
       ["ja"]=>
@@ -539,13 +539,13 @@ array(7) {
     }
   }
   ["continent"]=>
-  array(3) {
+  [ 3 ] {
     ["code"]=>
     string(2) "EU"
     ["geoname_id"]=>
     int(6255148)
     ["names"]=>
-    array(8) {
+    [ 8 ] {
       ["de"]=>
       string(6) "Europa"
       ["en"]=>
@@ -565,13 +565,13 @@ array(7) {
     }
   }
   ["country"]=>
-  array(3) {
+  [ 3 ] {
     ["geoname_id"]=>
     int(2921044)
     ["iso_code"]=>
     string(2) "DE"
     ["names"]=>
-    array(8) {
+    [ 8 ] {
       ["de"]=>
       string(11) "Deutschland"
       ["en"]=>
@@ -591,7 +591,7 @@ array(7) {
     }
   }
   ["location"]=>
-  array(3) {
+  [ 3 ] {
     ["latitude"]=>
     float(50,1333)
     ["longitude"]=>
@@ -600,13 +600,13 @@ array(7) {
     string(13) "Europe/Berlin"
   }
   ["registered_country"]=>
-  array(3) {
+  [ 3 ] {
     ["geoname_id"]=>
     int(2921044)
     ["iso_code"]=>
     string(2) "DE"
     ["names"]=>
-    array(8) {
+    [ 8 ] {
       ["de"]=>
       string(11) "Deutschland"
       ["en"]=>
@@ -626,15 +626,15 @@ array(7) {
     }
   }
   ["subdivisions"]=>
-  array(1) {
+  [ 1 ] {
     [0]=>
-    array(3) {
+    [ 3 ] {
       ["geoname_id"]=>
       int(2905330)
       ["iso_code"]=>
       string(2) "HE"
       ["names"]=>
-      array(4) {
+      [ 4 ] {
         ["de"]=>
         string(6) "Hessen"
         ["en"]=>
@@ -647,7 +647,7 @@ array(7) {
     }
   }
   ["traits"]=>
-  array(1) {
+  [ 1 ] {
     ["ip_address"]=>
     string(11) "88.64.140.3"
   }

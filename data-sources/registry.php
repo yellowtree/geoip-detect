@@ -118,7 +118,7 @@ class DataSourceRegistry {
 
 	public function isSourceCachable($source) {
 		// Don't cache for file access based sources (not worth the effort/time)
-		$sources_not_cachable = apply_filters('geoip2_detect_sources_not_cachable', array('auto', 'manual', 'header'));
+		$sources_not_cachable = apply_filters('geoip2_detect_sources_not_cachable', [ 'auto', 'manual', 'header' ]);
 		return !in_array($source, $sources_not_cachable);
 	}
 

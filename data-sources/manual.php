@@ -201,7 +201,7 @@ HTML;
 
 	public function getShortLabel() { return $this->maxmindGetFileDescription(); }
 
-	public function getReader($locales = array('en'), $options = []) {
+	public function getReader($locales = [ 'en' ], $options = []) {
 		$reader = null;
 
 		$data_file = $this->maxmindGetFilename();

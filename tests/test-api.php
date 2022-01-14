@@ -75,19 +75,19 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	function testLocale() {
-		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, array('en'));
+		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, [ 'en' ]);
 		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
 		$this->assertEquals('Germany', $record->country->name);
 		
-		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, array('de'));
+		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, [ 'de' ]);
 		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
 		$this->assertEquals('Deutschland', $record->country->name);
 
-		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, array('nn', 'mm', 'de'));
+		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, [ 'nn', 'mm', 'de' ]);
 		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
 		$this->assertEquals('Deutschland', $record->country->name);
 		
-		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, array('nn', 'mm'));
+		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, [ 'nn', 'mm' ]);
 		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
 		$this->assertSame(null, $record->country->name);	
 	}
