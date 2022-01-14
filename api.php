@@ -169,6 +169,23 @@ function geoip_detect2_get_info_from_current_ip($locales = null, $options = []) 
 	return $ret;
 }
 
+/**
+ * 
+ */
+function geoip_detect2_set_override() {
+	if (headers_sent()) {
+		trigger_error(__("Setting a custom user override is not possible. You need to call this function before starting to send the HTML body of the request.", 'geoip-detect'));
+		return false;
+	}
+
+	// TODO make sure the value is not too big
+	if (setcookie(/* ... */)) {
+		_geoip_detect_disable_pagecache(); // or with maybe option ?
+		return true;
+	}
+	return false;
+}
+
 
 /**
  * Get the Reader class of the currently chosen source.
