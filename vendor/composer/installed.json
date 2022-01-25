@@ -2565,20 +2565,20 @@
     },
     {
         "name": "wp-phpunit/wp-phpunit",
-        "version": "5.8.3",
-        "version_normalized": "5.8.3.0",
+        "version": "5.9.0",
+        "version_normalized": "5.9.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/wp-phpunit/wp-phpunit.git",
-            "reference": "0cefcc49fd8a7e8c2f8d755e314532441618aee5"
+            "reference": "02d98f9d5f15442489b5d98c1f4c486901e3e110"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/wp-phpunit/wp-phpunit/zipball/0cefcc49fd8a7e8c2f8d755e314532441618aee5",
-            "reference": "0cefcc49fd8a7e8c2f8d755e314532441618aee5",
+            "url": "https://api.github.com/repos/wp-phpunit/wp-phpunit/zipball/02d98f9d5f15442489b5d98c1f4c486901e3e110",
+            "reference": "02d98f9d5f15442489b5d98c1f4c486901e3e110",
             "shasum": ""
         },
-        "time": "2021-11-10T19:49:29+00:00",
+        "time": "2022-01-25T20:37:14+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
