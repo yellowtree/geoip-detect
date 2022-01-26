@@ -24,8 +24,8 @@ use YellowTree\GeoipDetect\DataSources\AbstractDataSource;
 class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 
 	const URL = 'https://ep.api.getfastah.com/whereis/v1/json/';
-    protected $options = array();
-    protected $params = array();
+    protected $options = [];
+    protected $params = [];
 
 	function __construct($params, $locales, $options) {
         $this->params= $params;
@@ -36,14 +36,14 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
             $this->params['language'] = 'en';
         //}
 
-		$default_options = array(
-            'timeout' => 1,
-		);
+		$default_options = [
+            'timeout' => 2,
+        ];
 		$this->options = $options + $default_options;
 	}
 
     protected function locales($locale, $value) {
-        $locales = array('en' => $value);
+        $locales = ['en' => $value];
         if ($locale !== 'en') {
             $locales[$locale] = $value;
         }
@@ -67,15 +67,16 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 */
 
     protected function api_call($ip) {
-        $requestArgs = array(
+        $requestArgs = [
             'method' => 'GET',
             'httpversion' => ($this->params['http2'] === 1) ? 2.0 : 1.1,
             'timeout' => $this->options['timeout'],
-            'headers' => array(
-                'Fastah-Key' => $this->params['key']
-            ),
-        );
-        $response = wp_remote_get($this->build_url($ip, $this->params), $requestArgs);
+            'headers' => [
+                'Fastah-Key' => $this->params['key'],
+		        'User-Agent' => GEOIP_DETECT_USER_AGENT,
+            ],
+        ];
+        $response = wp_safe_remote_get($this->build_url($ip, $this->params), $requestArgs);
         $respCode = wp_remote_retrieve_response_code( $response );
         if (is_wp_error($response)) {
             throw new \RuntimeException($response->get_error_message());
@@ -104,7 +105,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
             return _geoip_detect2_get_new_empty_record($ip, 'No data found.');
         }
             
-        $r = array();
+        $r = [];
         $r['extra']['original'] = $data;
 
         $locale = 'en'; // The REST API only support English at this time
@@ -152,7 +153,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
             $r['traits']['ip_address'] = $ip;
         }
 
-		$record = new \GeoIp2\Model\City($r, array('en'));
+		$record = new \GeoIp2\Model\City($r, ['en']);
 
 		return $record;
 	}
@@ -165,7 +166,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 
     }
     
-    private function build_url($ip, $params = array()) {
+    private function build_url($ip, $params = []) {
         $url = self::URL . $ip;
         return $url . '?' . \http_build_query($params);
     }
@@ -174,7 +175,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 
 
 class FastahSource extends AbstractDataSource {
-    protected $params = array();
+    protected $params = [];
     // PHP-Curl with functional TLS 1.2 (secure ciphers) and HTTP 1.1 are minimum requirements
     protected $bestAvailHTTP = CURL_HTTP_VERSION_1_1;
 
@@ -266,7 +267,7 @@ HTML;
         return $message;
     }
 
-	public function getReader($locales = array('en'), $options = array()) { 
+	public function getReader($locales = ['en'], $options = []) { 
         return new Reader($this->params, $locales, $options);
     }
 
