@@ -37,7 +37,7 @@ function _geoip_detect2_process_options($options) {
 	if (is_bool($options)) {
 		_doing_it_wrong('Geolocation IP Detection Plugin: geoip_detect2_get_info_from_ip()', '$skipCache has been renamed to $options. Instead of TRUE, now use "[\'skipCache\' => TRUE]".', '2.5.0');
 		$value = $options;
-		$options = array();
+		$options = [];
 		$options['skipCache'] = $value;
 	}
 
@@ -76,7 +76,7 @@ function _geoip_detect2_process_options($options) {
  * @return GeoIp2\Database\Reader 	The reader, ready to do its work. Don't forget to `close()` it afterwards. NULL if file not found (or other problems).
  * NULL if initialization went wrong (e.g., File not found.)
  */
-function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &$sourceId = '', $options = array()) {
+function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &$sourceId = '', $options = []) {
 	if (! $skipLocaleFilter) {
 		/**
 		 * Filter: geoip_detect2_locales
@@ -208,7 +208,7 @@ function _geoip_detect2_get_record_from_reader($reader, $ip, &$error) {
 }
 
 function _geoip_detect2_get_new_empty_record($ip = '', $error = '') {
-	$data = array('traits' => array('ip_address' => $ip), 'is_empty' => true);
+	$data = [ 'traits' => [ 'ip_address' => $ip ], 'is_empty' => true ];
 	if ($error) {
 		$data['extra']['error'] = $error;
 	}
@@ -220,7 +220,7 @@ function _geoip_detect2_record_enrich_data($record, $ip, $sourceId, $error) : ar
 	if (is_object($record) && method_exists($record, 'jsonSerialize')) {
 		$data = $record->jsonSerialize();
 	} else {
-		$data = array('traits' => array('ip_address' => $ip), 'is_empty' => true);
+		$data = [ 'traits' => [ 'ip_address' => $ip ], 'is_empty' => true ];
 	}
 
 	if (!isset($data['is_empty'])) {
@@ -325,7 +325,7 @@ function geoip_detect_normalize_ip(string $ip) : string {
 
 function geoip_detect_sanitize_ip_list(string $ip_list) : string {
 	$list = explode(',', $ip_list);
-	$ret = array();
+	$ret = [];
 	foreach ($list as $ip) {
 		$ip = trim($ip);
 		$parts = explode('/', $ip, 2);
@@ -353,7 +353,7 @@ function geoip_detect_sanitize_ip_list(string $ip_list) : string {
 function geoip_detect_ip_remove_port(string $ip) : string {
 	$ip = trim($ip);
 	
-	if (mb_strpos($ip, '.')) {  // IPv4 
+	if (str_contains($ip, '.')) {  // IPv4 
 		// 1.1.1.1:80
 		$end = mb_stripos($ip, ':');
 		if ($end) {
@@ -484,11 +484,11 @@ function _geoip_detect_get_external_ip_adress_without_cache() : string
 		$ret = wp_remote_get($url, array('timeout' => defined('WP_TESTS_TITLE') ? 3 : 1.5));
 
 		if (is_wp_error($ret)) {
-			if (WP_DEBUG || defined('WP_TESTS_TITLE')) {
+			if (GEOIP_DETECT_DEBUG || defined('WP_TESTS_TITLE')) {
 				trigger_error('_geoip_detect_get_external_ip_adress_without_cache(): Curl error (' . $url . '): ' . $ret->get_error_message(), E_USER_NOTICE);
 			}
 		} else if (isset($ret['response']['code']) && $ret['response']['code'] != 200) {
-			if (WP_DEBUG || defined('WP_TESTS_TITLE')) {
+			if (GEOIP_DETECT_DEBUG || defined('WP_TESTS_TITLE')) {
 				trigger_error('_geoip_detect_get_external_ip_adress_without_cache(): HTTP error (' . $url . '): Returned code ' . $ret['response']['code'], E_USER_NOTICE);
 			}
 		} else {
@@ -497,7 +497,7 @@ function _geoip_detect_get_external_ip_adress_without_cache() : string
 				if (geoip_detect_is_ip($ip))
 					return $ip;
 			}
-			if (WP_DEBUG || defined('WP_TESTS_TITLE')) {
+			if (GEOIP_DETECT_DEBUG || defined('WP_TESTS_TITLE')) {
 				trigger_error('_geoip_detect_get_external_ip_adress_without_cache(): HTTP error (' . $url . '): Did not return an IP: ' . $ret['body'], E_USER_NOTICE);
 			}
 		}

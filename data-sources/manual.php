@@ -32,7 +32,7 @@ class ManualDataSource extends AbstractDataSource {
 	public function getDescriptionHTML() { return __('<a href="http://dev.maxmind.com/geoip/geoip2/geolite2/" target="_blank">Free version</a> - <a href="https://www.maxmind.com/en/geoip2-country-database" target="_blank">Commercial Version</a>', 'geoip-detect'); }
 	public function getStatusInformationHTML() {
 		$built = $last_update = 0;
-		$html = array();
+		$html = [];
 
 		$file = $this->maxmindGetFilename();
 
@@ -68,7 +68,7 @@ class ManualDataSource extends AbstractDataSource {
 		if ($entries) {
 			$html .= ' ' . sprintf(__('(has %d entries)', 'geoip-detect'), count($entries));
 		}
-		if (WP_DEBUG) {
+		if (GEOIP_DETECT_DEBUG) {
 			$html .= '<br>' . sprintf(__('Privacy Exclusions next Update: %s', 'geoip-detect'), geoip_detect_format_localtime($next_update) );
 		}
 
@@ -201,7 +201,7 @@ HTML;
 
 	public function getShortLabel() { return $this->maxmindGetFileDescription(); }
 
-	public function getReader($locales = array('en'), $options = array()) {
+	public function getReader($locales = [ 'en' ], $options = []) {
 		$reader = null;
 
 		$data_file = $this->maxmindGetFilename();
@@ -209,7 +209,7 @@ HTML;
 			try {
 				$reader = new \GeoIp2\Database\Reader ( $data_file, $locales );
 			} catch ( \Exception $e ) {
-				if (WP_DEBUG) {
+				if (GEOIP_DETECT_DEBUG) {
 					trigger_error(sprintf(__('Error while creating reader for "%s": %s', 'geoip-detect'), $data_file, $e->getMessage()), E_USER_NOTICE);
 				}
 			}

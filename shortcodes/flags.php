@@ -52,7 +52,7 @@ function geoip_detect2_shortcode_current_flag($orig_attr, $content = '', $shortc
 	), $orig_attr, $shortcodeName);
 
 	$skipCache = filter_var($attr['skip_cache'], FILTER_VALIDATE_BOOLEAN );
-	$options = array('skipCache' => $skipCache);
+	$options = [ 'skipCache' => $skipCache ];
 
 	$style = '';
 	$processCssProperty = function($name, $value) {

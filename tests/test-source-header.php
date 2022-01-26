@@ -6,15 +6,15 @@ class HeaderSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	public function setUp() {
 		parent::setUp();
 		
-		add_filter('pre_option_geoip-detect-header-provider', array($this, 'filter_set_provider'), 101);
+		add_filter('pre_option_geoip-detect-header-provider', [ $this, 'filter_set_provider' ], 101);
 	}
 
 	public function tearDown() {
 		unset($_SERVER['CloudFront-Viewer-Country']);
 		unset($_SERVER["HTTP_CF_IPCOUNTRY"]);
 		
-		remove_filter('pre_option_geoip-detect-header-provider', array($this, 'filter_set_provider'), 101);
-		remove_filter('pre_option_geoip-detect-header-provider', array($this, 'filter_set_provider_cloudflare'), 102);
+		remove_filter('pre_option_geoip-detect-header-provider', [ $this, 'filter_set_provider' ], 101);
+		remove_filter('pre_option_geoip-detect-header-provider', [ $this, 'filter_set_provider_cloudflare' ], 102);
 	}
 
 	function filter_set_default_source() {
@@ -82,7 +82,7 @@ class HeaderSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	function testLookupCloudflare() {
-		add_filter('pre_option_geoip-detect-header-provider', array($this, 'filter_set_provider_cloudflare'), 102);
+		add_filter('pre_option_geoip-detect-header-provider', [ $this, 'filter_set_provider_cloudflare' ], 102);
 		$_SERVER['HTTP_CF_IPCOUNTRY'] = 'us';
 		$ret = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		

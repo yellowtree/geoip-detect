@@ -75,7 +75,7 @@
  */
 function geoip_detect2_shortcode_show_if($attr, $content = '', $shortcodeName = '') {
 	$shortcode_options = _geoip_detect2_shortcode_options($attr);
-	$options = array('skipCache' => $shortcode_options['skip_cache']);
+	$options = [ 'skipCache' => $shortcode_options['skip_cache'] ];
 	
 	$showContentIfMatch = ($shortcodeName === 'geoip_detect2_show_if');
 	

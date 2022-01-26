@@ -6,12 +6,12 @@ add_action( 'wpcf7_init', 'geoip_detect2_add_wpcf7_shortcodes' );
 function geoip_detect2_add_wpcf7_shortcodes() {
 	if (function_exists('wpcf7_add_form_tag')) {
 		// >=CF 4.6
-		wpcf7_add_form_tag(array('geoip_detect2_countries', 'geoip_detect2_countries*'), 'geoip_detect2_shortcode_country_select_wpcf7', true);
-		wpcf7_add_form_tag(array('geoip_detect2_text_input', 'geoip_detect2_text_input*'), 'geoip_detect2_shortcode_text_input_wpcf7', true);
+		wpcf7_add_form_tag([ 'geoip_detect2_countries', 'geoip_detect2_countries*' ], 'geoip_detect2_shortcode_country_select_wpcf7', true);
+		wpcf7_add_form_tag([ 'geoip_detect2_text_input', 'geoip_detect2_text_input*' ], 'geoip_detect2_shortcode_text_input_wpcf7', true);
 	} else if (function_exists('wpcf7_add_shortcode')) {
 		// < CF 4.6
-		wpcf7_add_shortcode(array('geoip_detect2_countries', 'geoip_detect2_countries*'), 'geoip_detect2_shortcode_country_select_wpcf7', true);
-		wpcf7_add_shortcode(array('geoip_detect2_text_input', 'geoip_detect2_text_input*'), 'geoip_detect2_shortcode_text_input_wpcf7', true);
+		wpcf7_add_shortcode([ 'geoip_detect2_countries', 'geoip_detect2_countries*' ], 'geoip_detect2_shortcode_country_select_wpcf7', true);
+		wpcf7_add_shortcode([ 'geoip_detect2_text_input', 'geoip_detect2_text_input*' ], 'geoip_detect2_shortcode_text_input_wpcf7', true);
 	}
 }
 
@@ -48,7 +48,7 @@ function geoip_detect2_shortcode_country_select_wpcf7($tag) {
 	$tag = new WPCF7_FormTag( $tag );
 
 	$default = (string) reset( $tag->values );
-	$default = $tag->get_default_option($default, array('multiple' => false));
+	$default = $tag->get_default_option($default, [ 'multiple' => false ]);
 	$default = wpcf7_get_hangover( $tag->name, $default ); // Get from $_POST if available
 
 	$class = wpcf7_form_controls_class( $tag->type );
@@ -111,7 +111,7 @@ function geoip_detect2_shortcode_text_input_wpcf7($tag) {
 	$tag = new WPCF7_FormTag( $tag );
 
 	$default = (string) reset( $tag->values );
-	$default = $tag->get_default_option($default, array('multiple' => false));
+	$default = $tag->get_default_option($default, [ 'multiple' => false ]);
 	$default = wpcf7_get_hangover( $tag->name, $default ); // Get from $_POST if available
 
 	$class = wpcf7_form_controls_class( $tag->type );
@@ -161,7 +161,7 @@ function geoip_detect2_cf7_property_underscore_to_normal($name) {
 }
 
 function geoip_detect2_shortcode_user_info_wpcf7($output, $name, $isHtml) {
-	$lines = array();
+	$lines = [];
 
 	// Custom property, e.g. `[geoip_detect2_property_extra__flag]`
 	$parts = explode('geoip_detect2_property_', $name);

@@ -25,7 +25,7 @@ class DataSourceRegistry {
 	private static $instance;
 	/* singleton */
 	private function __construct() {
-		$this->sources = array();
+		$this->sources = [];
 	}
 	public static function getInstance() {
 		if (!self::$instance) {
@@ -71,7 +71,7 @@ class DataSourceRegistry {
 		if (isset($this->sources[$id]))
 			return $this->sources[$id];
 
-		if (WP_DEBUG && $id !== '') {
+		if (GEOIP_DETECT_DEBUG && $id !== '') {
 			trigger_error('The source with id "' . $id . '" was requested, but no such source was found. Using default source instead.', E_USER_NOTICE);
 		}
 
@@ -118,7 +118,7 @@ class DataSourceRegistry {
 
 	public function isSourceCachable($source) {
 		// Don't cache for file access based sources (not worth the effort/time)
-		$sources_not_cachable = apply_filters('geoip2_detect_sources_not_cachable', array('auto', 'manual', 'header'));
+		$sources_not_cachable = apply_filters('geoip2_detect_sources_not_cachable', [ 'auto', 'manual', 'header' ]);
 		return !in_array($source, $sources_not_cachable);
 	}
 
@@ -128,7 +128,7 @@ class DataSourceRegistry {
 
 	public function clearCache() {
 		if (wp_using_ext_object_cache()) {
-			if (WP_DEBUG) {
+			if (GEOIP_DETECT_DEBUG) {
 				\trigger_error('Object caching is active, so transient deletion routine does not do anything ...', E_USER_NOTICE);
 			}
 			return 'Object caching is active, so transient deletion routine does not do anything ...';
@@ -145,7 +145,7 @@ class DataSourceRegistry {
 
 		// Delete all options from this plugin
 		foreach ( wp_load_alloptions() as $option => $value ) {
-			if ( strpos( $option, 'geoip-detect-' ) === 0 ) {
+			if ( \str_starts_with( $option, 'geoip-detect-' ) ) {
 				delete_option( $option );
 			}
 		}

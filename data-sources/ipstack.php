@@ -25,8 +25,8 @@ use YellowTree\GeoipDetect\DataSources\AbstractDataSource;
 class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 
 	const URL = 'api.ipstack.com/';
-    protected $options = array();
-    protected $params = array();
+    protected $options = [];
+    protected $params = [];
     
 	function __construct($params, $locales, $options) {
         $this->params= $params;
@@ -42,7 +42,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 	}
 
     protected function locales($locale, $value) {
-        $locales = array('en' => $value);
+        $locales = [ 'en' => $value ];
         if ($locale != 'en') {
             $locales[$locale] = $value;
         }
@@ -55,7 +55,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 		if (!$data)
             return _geoip_detect2_get_new_empty_record();
             
-        $r = array();
+        $r = [];
 
         $r['extra']['original'] = $data;
 
@@ -123,7 +123,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 
 		$r['traits']['ip_address'] = $ip;
 
-		$record = new \GeoIp2\Model\City($r, array('en'));
+		$record = new \GeoIp2\Model\City($r, [ 'en' ]);
 
 		return $record;
 	}
@@ -175,7 +175,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 
 
 class IpstackSource extends AbstractDataSource {
-    protected $params = array();
+    protected $params = [];
 
     public function __construct() {
         $this->params['key'] = get_option('geoip-detect-ipstack_key', '');
@@ -236,7 +236,7 @@ HTML;
         return $message;
     }
 
-	public function getReader($locales = array('en'), $options = array()) { 
+	public function getReader($locales = [ 'en' ], $options = []) { 
         return new Reader($this->params, $locales, $options);
     }
 

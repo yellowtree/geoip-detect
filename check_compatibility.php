@@ -68,7 +68,7 @@ class Maxmind {
 
         $md5_whitelist = [];
         foreach($localFiles as $file) {
-            if (!is_file(GEOIP_PLUGIN_DIR . $file) && WP_DEBUG) {
+            if (!is_file(GEOIP_PLUGIN_DIR . $file) && GEOIP_DETECT_DEBUG) {
                 \trigger_error('Weird. The file ' . $file . ' missing.');
                 continue;
             }

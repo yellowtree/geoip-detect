@@ -73,7 +73,7 @@ function geoip_detect2_shortcode_text_input($attr) {
 		}
 		$html_attrs['data-options'] = wp_json_encode(_geoip_detect2_shortcode_options($attr));
 	} else {
-		$html_attrs['value'] = geoip_detect2_shortcode($attr + array('add_error' => false));
+		$html_attrs['value'] = geoip_detect2_shortcode($attr + [ 'add_error' => false ]);
 	}
 
 	$html = '<input ' . _geoip_detect_flatten_html_attr($html_attrs) . '/>';

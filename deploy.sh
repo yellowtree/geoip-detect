@@ -146,6 +146,7 @@ README.md
 CHANGELOG.md
 .git
 .gitignore
+.githooks
 tests
 test
 phpunit.xml

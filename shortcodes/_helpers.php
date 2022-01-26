@@ -96,7 +96,7 @@ function _geoip_detect2_html_contains_block_elements($html) {
 		'table',
 	];
 	foreach ($blocklevelElements as $element) {
-		if (strpos($html, '<' . $element) !== false) {
+		if (str_contains($html, '<' . $element)) {
 			if (preg_match('#<' . $element . '[\s/>]#', $html)) {
 				return true;
 			}

@@ -104,8 +104,8 @@ HTML;
 
 	public function __construct() {
 		parent::__construct();
-		add_action('geoipdetectupdate', array($this, 'hook_cron'), 10, 1);
-		add_action('plugins_loaded', array($this, 'on_plugins_loaded'));
+		add_action('geoipdetectupdate', [ $this, 'hook_cron' ], 10, 1);
+		add_action('plugins_loaded', [ $this, 'on_plugins_loaded' ]);
 	}
 
 	public function on_plugins_loaded() {
@@ -149,13 +149,13 @@ HTML;
 		if ( ! $tmpfname )
 			return new \WP_Error('http_no_file', __('Could not create temporary file.', 'geoip-detect'));
 
-		$headers = array();
+		$headers = [];
 		$headers['User-Agent'] = GEOIP_DETECT_USER_AGENT;
 		if ($modified) {
 			$headers['If-Modified-Since'] = date('r', $modified);
 		}
 
-		$response = wp_safe_remote_get( $url, array('timeout' => 300, 'stream' => true, 'filename' => $tmpfname, 'headers' => $headers ) );
+		$response = wp_safe_remote_get( $url, [ 'timeout' => 300, 'stream' => true, 'filename' => $tmpfname, 'headers' => $headers  ] );
 		$http_response_code = wp_remote_retrieve_response_code( $response );
 		if (304 === $http_response_code) {
 			return new \WP_Error( 'http_304', __('It has not changed since the last update.', 'geoip-detect') );
@@ -177,7 +177,7 @@ HTML;
 		//$download_url = 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&suffix=tar.gz';
 		
 		$download_url = apply_filters('geoip_detect2_download_url', $download_url);
-		if (strpos($download_url, 'license_key=') === false) {
+		if (!\str_contains($download_url, 'license_key=')) {
 			$key = get_option('geoip-detect-auto_license_key', '');
 			if (!$key) {
 				return __('Error: Before updating, you need to enter a license key from maxmind.com.', 'geoip-detect');
@@ -335,7 +335,7 @@ HTML;
 }
 
 /*
-if (WP_DEBUG && !empty($_GET['test_auto_update_now'])) {
+if (GEOIP_DETECT_DEBUG && !empty($_GET['test_auto_update_now'])) {
 	add_filter('plugins_loaded', function() {
 		if (current_user_can('manage_options')) {
 			do_action('geoipdetectupdate');

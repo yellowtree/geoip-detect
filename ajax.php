@@ -80,14 +80,14 @@ function _geoip_detect_get_domain_name($url) {
 }
 
 function _geoip_detect_ajax_error($error) {
-	$data = array('extra' => array('error' => $error));
+	$data = [ 'extra' => [ 'error' => $error ] ];
 	$data['is_empty'] = true;
 	_geoip_detect_disable_pagecache();
 	wp_send_json($data, 412);
 }
 
 
-function _geoip_detect_ajax_get_data($options = array()) {
+function _geoip_detect_ajax_get_data($options = []) {
 	$info = geoip_detect2_get_info_from_current_ip(['en'], $options);
 	$data = $info->jsonSerialize();
 
@@ -121,7 +121,7 @@ function _geoip_detect_register_javascript() {
 	// 	return;
 	// }
 
-	wp_register_script('geoip-detect-js', GEOIP_DETECT_PLUGIN_URI . 'js/dist/frontend.js', array(), GEOIP_DETECT_VERSION, true);
+	wp_register_script('geoip-detect-js', GEOIP_DETECT_PLUGIN_URI . 'js/dist/frontend.js', [], GEOIP_DETECT_VERSION, true);
 	$data = [
 		'ajaxurl' => admin_url('/admin-ajax.php'),
 		'default_locales' => apply_filters('geoip_detect2_locales', null),

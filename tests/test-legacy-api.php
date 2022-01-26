@@ -10,7 +10,7 @@ class LegacyApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	function tearDown()
 	{
 		parent::tearDown();
-		remove_filter('geoip_detect_get_external_ip_adress', array($this, 'filter_set_test_ip'), 101);
+		remove_filter('geoip_detect_get_external_ip_adress', [ $this, 'filter_set_test_ip' ], 101);
 	}
 	
 	function testLookup() {
@@ -57,7 +57,7 @@ class LegacyApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	function testShortcode() {
-		add_filter('geoip_detect_get_external_ip_adress', array($this, 'filter_set_test_ip'), 101);
+		add_filter('geoip_detect_get_external_ip_adress', [ $this, 'filter_set_test_ip' ], 101);
 		$this->assertEquals(GEOIP_DETECT_TEST_IP, geoip_detect_get_external_ip_adress());
 		
 		$string = do_shortcode('[geoip_detect property="country_name"]');

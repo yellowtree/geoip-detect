@@ -39,7 +39,7 @@ class GeonamesTest extends WP_UnitTestCase_GeoIP_Detect {
 		foreach ($keys as $id) {
 			$country = $this->countryInformation->getInformationAboutCountry($id);
 
-			$record = new \YellowTree\GeoipDetect\DataSources\City($country, array('en'));
+			$record = new \YellowTree\GeoipDetect\DataSources\City($country, [ 'en' ]);
 			$this->assertValidGeoIP2Record($record, 'Geonames Country Info of ' . $id, false /* Check continent: YES */, true /* Check Extra Info: NO */);
 		}
 	}
@@ -75,16 +75,16 @@ class GeonamesTest extends WP_UnitTestCase_GeoIP_Detect {
 		}
 		
 		// Fallback order
-		$lang = $this->countryInformation->getAllCountries(array('zz', 'qq', 'de'));
+		$lang = $this->countryInformation->getAllCountries([ 'zz', 'qq', 'de' ]);
 		$this->assertSame($lang['AE'], 'Vereinigte Arabische Emirate');
 		
 		// Use 'en' as fallback
-		$lang = $this->countryInformation->getAllCountries(array('zz'));
+		$lang = $this->countryInformation->getAllCountries([ 'zz' ]);
 		$this->assertSame($lang['AE'], 'United Arab Emirates');
 	}
 	
 	public function testEnrichData() {
-		$data = array();
+		$data = [];
 		$data['country']['iso_code'] = 'AE';
 		$data['continent']['code'] = 'ZZ'; // This is wrong, of course. Existing data should not be overwritten.
 		

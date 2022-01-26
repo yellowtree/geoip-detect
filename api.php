@@ -41,7 +41,7 @@ use YellowTree\GeoipDetect\Lib\GetClientIp;
  * @since 2.5.0 Parameter $skipCache has been renamed to $options with 'skipCache' property
  * @since 2.7.0 Parameter $options['source'] has been introduced
  */
-function geoip_detect2_get_info_from_ip(string $ip, $locales = null, $options = array()) : \YellowTree\GeoipDetect\DataSources\City {
+function geoip_detect2_get_info_from_ip(string $ip, $locales = null, $options = []) : \YellowTree\GeoipDetect\DataSources\City {
 	if(defined('GEOIP_DETECT_LOOKUP_DISABLED') && GEOIP_DETECT_LOOKUP_DISABLED) {
 		trigger_error('Geolocation IP Detection: The lookup is currently disabled (Error: could not initialize the plugin).');
 		return _geoip_detect2_get_new_empty_record('', 'The lookup is currently disabled (Error: could not initialize the plugin).');
@@ -60,7 +60,7 @@ function geoip_detect2_get_info_from_ip(string $ip, $locales = null, $options = 
 
 
 	// 2) Doing the Lookup
-	$data = array();
+	$data = [];
 	/**
 	 * Filter: geoip_detect2_record_data_override_lookup
 	 * Before doing the lookup, changing the data (similar to a cache but also when skipCache is on).
@@ -84,13 +84,14 @@ function geoip_detect2_get_info_from_ip(string $ip, $locales = null, $options = 
 
 		$data   = _geoip_detect2_record_enrich_data($record, $ip, $outSourceId, $lookupError);
 
-		if (WP_DEBUG && !GEOIP_DETECT_DOING_UNIT_TESTS && $lookupError) {
+		if (GEOIP_DETECT_DEBUG && !defined('GEOIP_DETECT_DOING_UNIT_TESTS') && $lookupError) {
 			trigger_error($lookupError, E_USER_NOTICE);
 		}
 
 		// Save result to cache, but no "IP not found in database" or similar errors
-		if (!$lookupError)
+		if (!$lookupError) {
 			_geoip_detect2_add_data_to_cache($data, $ip);
+		}
 	}
 
 	/**
@@ -145,7 +146,7 @@ function geoip_detect2_get_info_from_ip(string $ip, $locales = null, $options = 
  * @since 2.7.0 Parameter $options['source'] has been introduced
  * @since 5.0.0 The result of this function is cached for the duration of the PHP execution (except if you use skipLocalCache)
  */
-function geoip_detect2_get_info_from_current_ip($locales = null, $options = array()) {
+function geoip_detect2_get_info_from_current_ip($locales = null, $options = []) {
 	/** @var \YellowTree\GeoipDetect\DataSources\City  */
 	static $cache = null;
 
@@ -184,7 +185,7 @@ function geoip_detect2_get_info_from_current_ip($locales = null, $options = arra
  * @since 2.5.0 new parameter $options
  * @since 2.7.0 Parameter $options['source'] has been introduced
  */
-function geoip_detect2_get_reader($locales = null, $options = array()) {
+function geoip_detect2_get_reader($locales = null, $options = []) {
 	_geoip_maybe_disable_pagecache();
 	$options = _geoip_detect2_process_options($options);
 
