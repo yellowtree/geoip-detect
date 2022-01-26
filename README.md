@@ -22,7 +22,6 @@ Provides geographic information detected by an IP adress. This can be used in th
   * Hosting-Provider dependent: [Cloudflare](https://support.cloudflare.com/hc/en-us/articles/200168236-What-does-CloudFlare-IP-Geolocation-do-) or [Amazon AWS CloudFront](https://aws.amazon.com/blogs/aws/enhanced-cloudfront-customization/) (Country)
   * Free or Commercial Web-API: [Ipstack](https://ipstack.com)
   * Commercial Web-API via AWS Marketplace: [Fastah](https://aws.amazon.com/marketplace/pp/prodview-k5gjowexrefl2)
-
 * Provides these 5 functions (see [API Documentation](https://github.com/yellowtree/geoip-detect/wiki/API:-PHP)):
   * `geoip_detect2_get_info_from_ip($ip, $locales = array('en'), $options = array())`: Lookup Geo-Information of the specified IP
   * `geoip_detect2_get_info_from_current_ip($locales = array('en'), $options = array())`: Lookup Geo-Information of the current website user
@@ -168,6 +167,16 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 ## Changelog ##
 
+= 5.1.0 =
+
+New Datasource: Fastah Web API, see https://aws.amazon.com/marketplace/pp/prodview-k5gjowexrefl2
+
+AJAX mode:
+* NEW: The JS function `geoip_detect.set_override_with_merge` can modify the override record in one property, merging it with the currently saved property
+
+Other minor changes:
+* If you want to enable more Warnings (e.g. while debugging), you can add `define('GEOIP_DETECT_DEBUG', true)` to your wp-config.php or so.
+
 = 5.0.0 =
 In this release, there a small breaking changes marked by [!].
 
@@ -178,10 +187,10 @@ AJAX mode:
 * FIX: In AJAX mode, the shortcode `[geoip_detect2_show_if]` renders as a `<div>` if it detects that the containing content has HTML block level elements
 * NEW (Beta): In AJAX mode, the new property `autosave` saves the user input as local override for this browser. `[geoip_detect2_countries mycountry autosave]` and `[geoip_detect2_text_input city property:city autosave]`. (Please give feedback if this works as expected!)
 * FIX: In AJAX mode, calling the method `set_override(record, duration_in_days)` now refreshes the AJAX shortcodes and CSS body classes.
--> Thus, it is now possible to quickly implement different content for different countries with an autodetected default country, see (TODO example)
+-> Thus, it is now possible to quickly implement different content for different countries with an autodetected default country, see https://github.com/yellowtree/geoip-detect/wiki/API-Usage-Examples#country-selector-that-can-be-overridden-by-the-user
 
 Other changes:
-* NEW: Drastically improving performance if the the lookup is performed for the current IP more than once (e.g. because of shortcodes without AJAX mode)
+* NEW: Drastically improving performance if the lookup is performed for the current IP more than once (e.g. because of shortcodes without AJAX mode)
 * UI: Showing the time for the subsequent lookup on the Test Lookup page
 * FIX: Maxmind Datasource: Check if the database file is really a file, not a directory
 * NEW: Header Datasource: Now a custom HTTP header can be used via the wordpress filter `geoip_detect2_source_header_http_key`
