@@ -3,13 +3,6 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 
 class HostinfoSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 
-	public function setUp() {
-		parent::setUp();
-	}
-
-	public function tearDown() {
-	}
-
 	function filter_set_default_source() {
 		return 'hostinfo';
 	}

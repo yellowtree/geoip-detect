@@ -6,21 +6,22 @@ function shortcode_empty_reader() {
 
 class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 
-	function setUp() {
-		parent::setUp();
+	function set_up() {
+		parent::set_up();
+
 		add_filter('geoip_detect_get_external_ip_adress', [ $this, 'filter_set_test_ip' ], 101);
 		$this->assertEquals(GEOIP_DETECT_TEST_IP, geoip_detect_get_external_ip_adress());
 		setlocale(LC_NUMERIC, 'C'); // Set locale to always use . as decimal point
 	}
 
-	function tearDown() {
-		parent::tearDown();
+	function tear_down() {
 		remove_filter('geoip_detect_get_external_ip_adress', [ $this, 'filter_set_test_ip' ], 101);
         remove_filter('geoip2_detect2_client_ip', [ $this, 'filter_set_test_ip' ], 101);
 		remove_filter('geoip_detect2_reader', 'shortcode_empty_reader', 101);
 		remove_filter('geoip2_detect_sources_not_cachable', [ $this, 'filter_empty_array' ], 101);
 		remove_filter('geoip_detect2_shortcode_country_select_countries', [ $this, 'shortcodeFilter' ], 101);
 		remove_filter('geoip_detect2_record_data_override_lookup', [ $this, 'filterEmptyRecordData' ], 101);
+		parent::tear_down();
 	}
 
 	function filterEmptyRecordData() {

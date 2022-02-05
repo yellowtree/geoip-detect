@@ -14,19 +14,19 @@ class GetClientIpTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		add_filter('pre_option_geoip-detect-has_reverse_proxy', [ $this, 'option_use_proxy' ], 101);
 		add_filter('pre_option_geoip-detect-trusted_proxy_ips', [ $this, 'set_trusted_proxies' ], 101);
 		$this->trusted = '';
 	}
-	public function tearDown() {
-		parent::tearDown();
+	public function tear_down() {
 		remove_filter('pre_option_geoip-detect-has_reverse_proxy', [ $this, 'option_use_proxy' ], 101);
 		remove_filter('pre_option_geoip-detect-trusted_proxy_ips', [ $this, 'set_trusted_proxies' ], 101);
 		unset($_SERVER['REMOTE_ADDR']);
 		unset($_SERVER['HTTP_X_FORWARDED_FOR']);
 		$this->useProxy = 0;
+		parent::tear_down();
 	}
 	
 	/**

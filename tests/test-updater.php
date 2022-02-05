@@ -2,9 +2,8 @@
 
 class UpdateTest extends WP_UnitTestCase_GeoIP_Detect {
 
-	function setUp() {
-		parent::setUp();
-		
+	function set_up() {
+		parent::set_up();
 		
 		// unlink uploads file if exists
 		if (function_exists('geoip_detect_get_database_upload_filename')) {

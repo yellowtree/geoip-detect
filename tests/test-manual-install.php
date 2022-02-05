@@ -4,15 +4,17 @@ define('TEST_GEOIP_PLUGIN_DATA_FILENAME', dirname(__FILE__) . '/../' . GEOIP_DET
 
 class ManualInstallTest extends WP_UnitTestCase_GeoIP_Detect {
 
-	function setUp() {
-		parent::setUp();
-		if (file_exists(TEST_GEOIP_PLUGIN_DATA_FILENAME))
+	function set_up() {
+		parent::set_up();
+		if (file_exists(TEST_GEOIP_PLUGIN_DATA_FILENAME)) {
 			unlink(TEST_GEOIP_PLUGIN_DATA_FILENAME);
+		}
 	}
 	
 	function testNoDatabaseFound() {
-		if (file_exists(TEST_GEOIP_PLUGIN_DATA_FILENAME))
+		if (file_exists(TEST_GEOIP_PLUGIN_DATA_FILENAME)) {
 			$this->markTestSkipped('Test could not be executed: ' . TEST_GEOIP_PLUGIN_DATA_FILENAME . ' could not be deleted.');
+		}
 		
 		$thrown = false;
 		try {

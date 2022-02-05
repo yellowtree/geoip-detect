@@ -46,7 +46,8 @@ define('GEOIP_DETECT_TEST_IP_SERIVCE_PROVIDER', 'https://raw.githubusercontent.c
 class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 {
 	private $setup_was_called = false;
-	public function setUp() {
+	public function set_up() {
+		parent::set_up();
 		// Use Test File
 		add_filter('geoip_detect_get_abs_db_filename', [ $this, 'filter_set_test_database' ], 101);
 		add_filter('pre_option_geoip-detect-source', [ $this, 'filter_set_default_source' ], 101);
@@ -73,7 +74,7 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 		return 'manual';
 	}
 	
-	public function tearDown() {
+	public function tear_down() {
 		remove_filter('geoip_detect_get_abs_db_filename', [ $this, 'filter_set_test_database' ], 101);
 		remove_filter('pre_option_geoip-detect-source', [ $this, 'filter_set_default_source' ], 101);
 		remove_filter('pre_transient_geoip_detect_external_ip', [ $this, 'filter_set_external_ip' ], 101);
@@ -81,7 +82,7 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 	}
 	
 	public function testDatabaseLocation() {
-		$this->assertSame(true, $this->setup_was_called, 'parent::setUp() has not been called.');
+		$this->assertSame(true, $this->setup_was_called, 'parent::set_up() has not been called.');
 	}
 	
 	protected function assertValidGeoIPRecord($record, $ip)

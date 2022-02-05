@@ -2,9 +2,9 @@
 
 class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	
-	function tearDown() {
-		parent::tearDown();
+	function tear_down() {
 		$_SERVER['REMOTE_ADDR'] = '';
+		parent::tear_down();
 	}
 	
 	function testCurrentIp() {			

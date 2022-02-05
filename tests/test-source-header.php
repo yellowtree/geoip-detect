@@ -3,13 +3,13 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 
 class HeaderSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		
 		add_filter('pre_option_geoip-detect-header-provider', [ $this, 'filter_set_provider' ], 101);
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		unset($_SERVER['CloudFront-Viewer-Country']);
 		unset($_SERVER["HTTP_CF_IPCOUNTRY"]);
 		

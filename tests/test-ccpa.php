@@ -37,16 +37,16 @@ class CcpaTest extends WP_UnitTestCase_GeoIP_Detect {
         return $this->ccpaBlacklistStub;
     }
 
-	public function setUp() {
-        parent::setUp();
+	public function set_up() {
+        parent::set_up();
         $this->createBlacklist();
         YellowTree\GeoipDetect\Lib\CcpaBlacklistOnLookup::resetList();
         add_filter   ('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', [ $this, 'setBlacklist' ], 101);
 	}
-	public function tearDown() {
-        parent::tearDown();
+	public function tear_down() {
         
         remove_filter('geoip_detect2_maxmind_ccpa_blacklist_ip_subnets', [ $this, 'setBlacklist' ], 101);
+        parent::tear_down();
 	}
 
 

@@ -2,15 +2,15 @@
 
 class LegacyApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	
-	function setUp()
+	function set_up()
 	{
-		parent::setUp();
+		parent::set_up();
 	}
 	
-	function tearDown()
+	function tear_down()
 	{
-		parent::tearDown();
 		remove_filter('geoip_detect_get_external_ip_adress', [ $this, 'filter_set_test_ip' ], 101);
+		parent::tear_down();
 	}
 	
 	function testLookup() {
