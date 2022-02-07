@@ -36,7 +36,7 @@ jobs:
   include:
     - name: legacy
       php: 7.2
-      env: WP_VERSION=5.4 CF7_VERSION=v5.1.6
+      env: WP_VERSION=5.4.9 CF7_VERSION=v5.1.6
     - name: bleeding edge
       php: 8.1.0
       dist: focal
