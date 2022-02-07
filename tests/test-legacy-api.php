@@ -63,7 +63,7 @@ class LegacyApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$string = do_shortcode('[geoip_detect property="country_name"]');
 		$this->assertNotEmpty($string, '[geoip_detect property="country_name"]', "The Geolocation IP Detection shortcode did not generate any output");
 		$this->assertNotEquals($string, '[geoip_detect property="country_name"]', "The Geolocation IP Detection shortcode does not seem to be called");
-		$this->assertNotStringContainsString('<!--', $string, "Geolocation IP Detection shortcode threw an error: " . $string);
+		$this->assertStringNotContainsString('<!--', $string, "Geolocation IP Detection shortcode threw an error: " . $string);
 		
 		$string = do_shortcode('[geoip_detect property="INVALID"]');
 		$this->assertStringContainsString('<!--', $string, "Geolocation IP Detection Shortcode threw no error in spite of invalid property name: " . $string);
