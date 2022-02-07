@@ -26,9 +26,6 @@ class LegacyApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$actualRecord = geoip_detect_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		$this->assertValidGeoIPRecord($actualRecord, GEOIP_DETECT_TEST_IP);
 
-		$this->assertEquals(51, $actualRecord->latitude, 'Record is not in Germany', 5);
-		$this->assertEquals(10, $actualRecord->longitude, 'Record is not in Germany', 7);
-		
 		$record = new stdClass();
 		$record->country_code 	= 'DE';
 		$record->country_code3 	= 'DEU';

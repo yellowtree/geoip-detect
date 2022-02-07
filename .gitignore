@@ -15,6 +15,7 @@ wp-cli.local.yml
 /coverage
 /.parcel-cache
 /babel.config.json
+/.phpunit.result.cache
 
 /lib/vendor
 
