@@ -95,7 +95,7 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 	{
 		$assert_text = 'When looking up info for IP ' . $ip . ':';
 		$this->assertInstanceOf('geoiprecord', $record, $assert_text);
-		$this->assertInternalType('string', $record->country_code, $assert_text);
+		$this->assertIsString($record->country_code, $assert_text);
 		$this->assertEquals(2, strlen($record->country_code), $assert_text);
 		$this->assertEquals(3, strlen($record->country_code3), $assert_text);
 		$this->assertEquals(2, strlen($record->continent_code), $assert_text);
@@ -127,11 +127,11 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 			$this->assertNotEmpty($record->traits->ipAddress, $assert_text . 'requested IP should not be empty');
 		}
 		
-		$this->assertInternalType('string', $record->country->isoCode, $assert_text . 'country->isoCode should not be empty');
+		$this->assertIsString($record->country->isoCode, $assert_text . 'country->isoCode should not be empty');
 		$this->assertEquals(2, strlen($record->country->isoCode), $assert_text . 'country->isoCode should be 2 chars long');
 		if (!$skipContinentTest)
 			$this->assertEquals(2, strlen($record->continent->code), $assert_text  . 'continent->code should be 2 chars long');
-		$this->assertInternalType('array', $record->country->names, $assert_text . 'country->names should be an array');
+		$this->assertIsArray($record->country->names, $assert_text . 'country->names should be an array');
 		
 		if (geoip_detect_is_ip($ip))
 			$this->assertSame(geoip_detect_normalize_ip($ip), geoip_detect_normalize_ip($record->traits->ipAddress), $assert_text);
