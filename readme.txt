@@ -172,7 +172,7 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 = 5.1.0 =
 
-New Datasource: Fastah Web API, see https://aws.amazon.com/marketplace/pp/prodview-k5gjowexrefl2
+New Datasource: Fastah Web API (beta), see https://aws.amazon.com/marketplace/pp/prodview-k5gjowexrefl2
 
 AJAX mode:
 * NEW: The JS function `geoip_detect.set_override_with_merge` can modify the override record in one property, merging it with the currently saved property
