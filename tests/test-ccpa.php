@@ -69,12 +69,12 @@ class CcpaTest extends WP_UnitTestCase_GeoIP_Detect {
         $this->assertStringContainsString('mytest', $record->extra->error);
         
         $record = geoip_detect2_get_info_from_ip('2.2.3.2');
-        $this->assertNotContains('mytest', $record->extra->error);
+        $this->assertNotStringContainsString('mytest', $record->extra->error);
 
         $record = geoip_detect2_get_info_from_ip('1.2.3.5');
-        $this->assertNotContains('mytest', $record->extra->error);
+        $this->assertNotStringContainsString('mytest', $record->extra->error);
         $record = geoip_detect2_get_info_from_ip('1.2.3.3');
-        $this->assertNotContains('mytest', $record->extra->error);
+        $this->assertNotStringContainsString('mytest', $record->extra->error);
     }
 
     public function testOtherIpsV6() {
@@ -90,11 +90,11 @@ class CcpaTest extends WP_UnitTestCase_GeoIP_Detect {
         $ipv4 = '8.8.8.8';
         $record = geoip_detect2_get_info_from_ip($ipv4);
         $this->assertValidGeoIP2Record($record, $ipv4);
-        $this->assertNotContains('mytest', $record->extra->error);
+        $this->assertNotStringContainsString('mytest', $record->extra->error);
 
         $ipv6 = '2:2:3:2::2';
         $record = geoip_detect2_get_info_from_ip($ipv6);
-        $this->assertNotContains('mytest', $record->extra->error);
+        $this->assertNotStringContainsString('mytest', $record->extra->error);
     }
 
     public function testRetrieveBlacklistWrongPassword() {
@@ -119,7 +119,7 @@ class CcpaTest extends WP_UnitTestCase_GeoIP_Detect {
         $retrieve->setCredentials($user, $password);
 
         $ret = $retrieve->retrieveBlacklist();
-        $this->assertNotContains('could not be authenticated', $ret);
+        $this->assertNotStringContainsString('could not be authenticated', $ret);
         $this->assertIsArray($ret);
         $this->assertIsArray($ret['exclusions']);
         $row = reset($ret['exclusions']);
