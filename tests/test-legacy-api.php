@@ -43,7 +43,7 @@ class LegacyApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	{
 		$record = geoip_detect_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 				
-		$this->assertContains('/', $record->timezone, 'Timezone: ' . $record->timezone);
+		$this->assertStringContainsString('/', $record->timezone, 'Timezone: ' . $record->timezone);
 		try {
 			new DateTimeZone($record->timezone);
 		} catch (Exception $e) {
@@ -66,9 +66,9 @@ class LegacyApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertNotContains('<!--', $string, "Geolocation IP Detection shortcode threw an error: " . $string);
 		
 		$string = do_shortcode('[geoip_detect property="INVALID"]');
-		$this->assertContains('<!--', $string, "Geolocation IP Detection Shortcode threw no error in spite of invalid property name: " . $string);
+		$this->assertStringContainsString('<!--', $string, "Geolocation IP Detection Shortcode threw no error in spite of invalid property name: " . $string);
 		$string = do_shortcode('[geoip_detect property="INVALID" default="here"]');
-		$this->assertContains('here', $string, "Geolocation IP Detection Shortcode does not contain default value: " . $string);
+		$this->assertStringContainsString('here', $string, "Geolocation IP Detection Shortcode does not contain default value: " . $string);
 	}
 }
 

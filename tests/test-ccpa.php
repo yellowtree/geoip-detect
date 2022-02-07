@@ -55,18 +55,18 @@ class CcpaTest extends WP_UnitTestCase_GeoIP_Detect {
         $this->assertEmptyGeoIP2Record($record, '1.1.1.1');
         $this->assertEmpty($record->country->name, 'The CCPA blacklist didnt work');
         $this->assertNotEmpty($record->extra->error);
-        $this->assertContains('mytest', $record->extra->error);
+        $this->assertStringContainsString('mytest', $record->extra->error);
     }
 
     public function testOtherIps() {
         $record = geoip_detect2_get_info_from_ip('2.2.2.2');
-        $this->assertContains('mytest', $record->extra->error);
+        $this->assertStringContainsString('mytest', $record->extra->error);
 
         $record = geoip_detect2_get_info_from_ip('2.2.2.254');
-        $this->assertContains('mytest', $record->extra->error);
+        $this->assertStringContainsString('mytest', $record->extra->error);
 
         $record = geoip_detect2_get_info_from_ip('1.2.3.4');
-        $this->assertContains('mytest', $record->extra->error);
+        $this->assertStringContainsString('mytest', $record->extra->error);
         
         $record = geoip_detect2_get_info_from_ip('2.2.3.2');
         $this->assertNotContains('mytest', $record->extra->error);
@@ -80,10 +80,10 @@ class CcpaTest extends WP_UnitTestCase_GeoIP_Detect {
     public function testOtherIpsV6() {
         $record = geoip_detect2_get_info_from_ip('2:2:2:2::2');
         $this->assertEmptyGeoIP2Record($record, '2:2:2:2::2');
-        $this->assertContains('mytest', $record->extra->error);
+        $this->assertStringContainsString('mytest', $record->extra->error);
 
         $record = geoip_detect2_get_info_from_ip('2:2:2:2::1');
-        $this->assertContains('mytest', $record->extra->error);
+        $this->assertStringContainsString('mytest', $record->extra->error);
     }
 
     public function testIpsThatAreNotBlacklisted() {
@@ -102,7 +102,7 @@ class CcpaTest extends WP_UnitTestCase_GeoIP_Detect {
         $retrieve->setCredentials('1', 'wrong');
 
         $ret = $retrieve->retrieveBlacklist();
-        $this->assertContains('could not be authenticated', $ret);
+        $this->assertStringContainsString('could not be authenticated', $ret);
     }
 
     /**

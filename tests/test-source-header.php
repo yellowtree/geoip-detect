@@ -65,7 +65,7 @@ class HeaderSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 		$ret = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		
 		$this->assertEmptyGeoIP2Record($ret, GEOIP_DETECT_TEST_IP);
-		$this->assertContains('bla', $ret->extra->error);
+		$this->assertStringContainsString('bla', $ret->extra->error);
 	}
 	function testSpecialCountryCode() {
 		$_SERVER['CloudFront-Viewer-Country'] = 'xx';

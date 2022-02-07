@@ -119,7 +119,7 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 		
 		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		$this->assertTrue($record->isEmpty);
-		$this->assertContains('authenticated', $record->extra->error);
+		$this->assertStringContainsString('authenticated', $record->extra->error);
 	}
 	
 	/**
@@ -145,7 +145,7 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 		add_filter('pre_option_geoip-detect-precision_api_type', [ $this, 'filter_set_precision_method_insights' ], 102);
 		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		$this->assertTrue($record->isEmpty);
-		$this->assertContains('out of queries', $record->extra->error);
+		$this->assertStringContainsString('out of queries', $record->extra->error);
 	}
 	*/
 

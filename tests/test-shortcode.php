@@ -59,8 +59,8 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	function testSubdivisionProperties() {
 		$this->assertEquals('HE', do_shortcode('[geoip_detect2 property="subdivisions.0.isoCode"]'));
 		$this->assertEquals('Hesse', do_shortcode('[geoip_detect2 property="subdivisions.0"]'));
-		$this->assertContains('<!--',do_shortcode('[geoip_detect2 property="subdivisions.1"]'));
-		$this->assertContains('<!--',do_shortcode('[geoip_detect2 property="subdivisions.wrong"]'));
+		$this->assertStringContainsString('<!--',do_shortcode('[geoip_detect2 property="subdivisions.1"]'));
+		$this->assertStringContainsString('<!--',do_shortcode('[geoip_detect2 property="subdivisions.wrong"]'));
 	}
 	function testNonStringProperties() {
 		$this->assertEquals('2929134', do_shortcode('[geoip_detect2 property="city.geonameId"]'));
@@ -90,18 +90,18 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 
 	function testInvalidShortcode() {
-		$this->assertContains('sub-property missing', do_shortcode('[geoip_detect2 property="location"]'));
+		$this->assertStringContainsString('sub-property missing', do_shortcode('[geoip_detect2 property="location"]'));
 
 		$string = do_shortcode('[geoip_detect2 property="INVALID"]');
-		$this->assertContains('<!--', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"INVALID\"] threw no error in spite of invalid property name: " . $string);
+		$this->assertStringContainsString('<!--', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"INVALID\"] threw no error in spite of invalid property name: " . $string);
 		$string = do_shortcode('[geoip_detect2 property="city.INVALID"]');
-		$this->assertContains('<!--', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"city.INVALID\"] threw no error in spite of invalid property name: " . $string);
+		$this->assertStringContainsString('<!--', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"city.INVALID\"] threw no error in spite of invalid property name: " . $string);
 		$string = do_shortcode('[geoip_detect2 property="INVALID.city"]');
-		$this->assertContains('<!--', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"INVALID.city\"] threw no error in spite of invalid property name: " . $string);
+		$this->assertStringContainsString('<!--', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"INVALID.city\"] threw no error in spite of invalid property name: " . $string);
 		$string = do_shortcode('[geoip_detect2 property="city.names.INVALID"]');
-		$this->assertContains('<!--', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"city.names.INVALID\"] threw no error in spite of invalid property name: " . $string);
+		$this->assertStringContainsString('<!--', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"city.names.INVALID\"] threw no error in spite of invalid property name: " . $string);
 		$string = do_shortcode('[geoip_detect2 property="INVALID" default="here"]');
-		$this->assertContains('here', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"INVALID\" default=\"here\"]does not contain default value: " . $string);
+		$this->assertStringContainsString('here', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"INVALID\" default=\"here\"]does not contain default value: " . $string);
 	}
 
 	function testEmptyData() {
@@ -110,8 +110,8 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		add_filter('geoip_detect2_reader', 'shortcode_empty_reader', 101);
 
 		$string = do_shortcode('[geoip_detect2 property="city" default="default"]');
-		$this->assertContains('No information found', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"city\"] should inform when no information accessible to this IP: " . $string);
-		$this->assertContains('default', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"city\"] should use default: " . $string);
+		$this->assertStringContainsString('No information found', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"city\"] should inform when no information accessible to this IP: " . $string);
+		$this->assertStringContainsString('default', $string, "Geolocation IP Detection Shortcode [geoip_detect2 property=\"city\"] should use default: " . $string);
 	}
 
 	function filter_empty_array() {
@@ -143,11 +143,11 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 
         $userInfo = geoip_detect2_shortcode_user_info_wpcf7('', 'geoip_detect2_user_info', false);
         $this->assertNotEmpty($userInfo);
-        $this->assertContains(GEOIP_DETECT_TEST_IP, $userInfo);
-        $this->assertContains('Country: Germany', $userInfo);
-        $this->assertContains('State or region: Hesse' , $userInfo);
-        $this->assertContains('City: Eschborn' , $userInfo);
-		$this->assertContains('Data from: GeoLite2 City database' , $userInfo);
+        $this->assertStringContainsString(GEOIP_DETECT_TEST_IP, $userInfo);
+        $this->assertStringContainsString('Country: Germany', $userInfo);
+        $this->assertStringContainsString('State or region: Hesse' , $userInfo);
+        $this->assertStringContainsString('City: Eschborn' , $userInfo);
+		$this->assertStringContainsString('Data from: GeoLite2 City database' , $userInfo);
 	}
 
 	/**
@@ -184,7 +184,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	 * @dataProvider dataShortcodeCF7Filter
 	 */
 	public function testShortcodeCF7Filter($expectedResult, $tagname) {
-		$this->assertContains($expectedResult, apply_filters('wpcf7_special_mail_tags', $tagname, $tagname, false, new \WPCF7_MailTag('', $tagname, '')));
+		$this->assertStringContainsString($expectedResult, apply_filters('wpcf7_special_mail_tags', $tagname, $tagname, false, new \WPCF7_MailTag('', $tagname, '')));
 	}
 
 	public function dataShortcodeCF7Filter() {
@@ -198,18 +198,18 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$html = do_shortcode('[geoip_detect2_countries include_blank="false"]');
 		$this->assertNotContains('---', $html, 'Should not contain blank');
 		$this->assertNotContains('[geoip_detect2_countries', $html, 'Shortcode was not found.');
-		$this->assertContains('name="geoip-countries"', $html);
-		$this->assertContains('Germany', $html);
-		$this->assertContains('"selected">Germany', $html);
+		$this->assertStringContainsString('name="geoip-countries"', $html);
+		$this->assertStringContainsString('Germany', $html);
+		$this->assertStringContainsString('"selected">Germany', $html);
 
 		$html = geoip_detect2_shortcode_country_select([ 'include_blank' => false ]);
 		$this->assertNotContains('---', $html, 'Should not contain blank');
 
 		$html = do_shortcode('[geoip_detect2_countries include_blank="true"]');
-		$this->assertContains('---', $html, 'Should contain blank but didn\'t');
+		$this->assertStringContainsString('---', $html, 'Should contain blank but didn\'t');
 
 		$html = do_shortcode('[geoip_detect2_countries selected="US"]');
-		$this->assertContains('"selected">United', $html);
+		$this->assertStringContainsString('"selected">United', $html);
 	}
 
 	public function testShortcodeCountryFilter() {
@@ -218,28 +218,28 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$html = do_shortcode('[geoip_detect2_countries selected="aa"]');
 		$this->assertNotContains('Germany', $html);
 		$this->assertNotContains('<option>----', $html);
-		$this->assertContains('value="">----', $html);
-		$this->assertContains('value="">*', $html);
-		$this->assertContains('A', $html);
-		$this->assertContains('"selected">A', $html);
+		$this->assertStringContainsString('value="">----', $html);
+		$this->assertStringContainsString('value="">*', $html);
+		$this->assertStringContainsString('A', $html);
+		$this->assertStringContainsString('"selected">A', $html);
 	}
 
 	public function testShortcodeTextInput() {
 		$html = do_shortcode('[geoip_detect2_text_input name="yourcity" property="city" lang="fr" id="thisismyid" class="myclassname" default="Paris" required="true"]');
-		$this->assertContains('<input', $html);
-		$this->assertContains('value="Eschborn"', $html);
-		$this->assertContains('class="myclassname"', $html);
-		$this->assertContains('id="thisismyid"', $html);
-		$this->assertContains('name="yourcity"', $html);
-		$this->assertContains('required', $html);
+		$this->assertStringContainsString('<input', $html);
+		$this->assertStringContainsString('value="Eschborn"', $html);
+		$this->assertStringContainsString('class="myclassname"', $html);
+		$this->assertStringContainsString('id="thisismyid"', $html);
+		$this->assertStringContainsString('name="yourcity"', $html);
+		$this->assertStringContainsString('required', $html);
 
 		$html = do_shortcode('[geoip_detect2_text_input name="yourcity" property="country" lang="fr" id="thisismyid" class="myclassname" default="Paris" required="true"]');
-		$this->assertContains('value="Allemagne"', $html);
+		$this->assertStringContainsString('value="Allemagne"', $html);
 
 		$html = do_shortcode('[geoip_detect2_text_input name="postal" property="location.timeZone" type="hidden"]');
-		$this->assertContains('name="postal"', $html);
-		$this->assertContains('type="hidden"', $html);
-		$this->assertContains('value="Europe/Berlin"', $html);
+		$this->assertStringContainsString('name="postal"', $html);
+		$this->assertStringContainsString('type="hidden"', $html);
+		$this->assertStringContainsString('value="Europe/Berlin"', $html);
 	}
 
 	public function testShortcodeCF7Countries() {
@@ -247,9 +247,9 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 			'include_blank', 'autosave', 'ajax:1', 'flag', 'tel' 
 		] ];
 		$html = geoip_detect2_shortcode_country_select_wpcf7($countries);
-		$this->assertContains('value=""', $html);
-		$this->assertContains('+49', $html);
-		$this->assertContains('js-geoip-detect-country-select', $html );
+		$this->assertStringContainsString('value=""', $html);
+		$this->assertStringContainsString('+49', $html);
+		$this->assertStringContainsString('js-geoip-detect-country-select', $html );
 
 		$countries = [ 'type' => 'geoip_detect2_countries', 'basetype' => 'geoip_detect2_countries', 'raw_name' => 'mycountry', 'name' => 'mycountry', 'options' => [ 
 			'include_blank', 'autosave', 'ajax:0', 'flag', 'tel' 
@@ -262,9 +262,9 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 			'property:city', 'lang:fr', 'id:id', 'class:testclass', 'ajax:1', 'autosave', 
 		] ];
 		$html = geoip_detect2_shortcode_text_input_wpcf7($input);
-		$this->assertContains('id="id"', $html);
-		$this->assertContains('testclass', $html);
-		$this->assertContains('js-geoip-text-input', $html );
+		$this->assertStringContainsString('id="id"', $html);
+		$this->assertStringContainsString('testclass', $html);
+		$this->assertStringContainsString('js-geoip-text-input', $html );
 
 		$input = [ 'type' => 'geoip_detect2_text_input', 'basetype' => 'geoip_detect2_text_input', 'raw_name' => 'city', 'name' => 'city', 'options' => [ 
 			'property:city', 'lang:fr', 'id:id', 'class:testclass', 'ajax:0', 
@@ -461,17 +461,17 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 
 
 	function testShortcodeAjax() {
-		$this->assertContains('traits.ipAddress', do_shortcode('[geoip_detect2 property="traits.ipAddress" ajax="1"]'));
-		$this->assertContains('js-geoip-detect-shortcode', do_shortcode('[geoip_detect2 property="traits.ipAddress" ajax="1"]'));
+		$this->assertStringContainsString('traits.ipAddress', do_shortcode('[geoip_detect2 property="traits.ipAddress" ajax="1"]'));
+		$this->assertStringContainsString('js-geoip-detect-shortcode', do_shortcode('[geoip_detect2 property="traits.ipAddress" ajax="1"]'));
 		
-		$this->assertContains('data-options', do_shortcode('[geoip_detect2_countries_select name="mycountry" lang="fr" ajax="1"]'));
-		$this->assertContains('js-geoip-detect-country-select', do_shortcode('[geoip_detect2_countries_select name="mycountry" lang="fr" ajax="1"]'));
+		$this->assertStringContainsString('data-options', do_shortcode('[geoip_detect2_countries_select name="mycountry" lang="fr" ajax="1"]'));
+		$this->assertStringContainsString('js-geoip-detect-country-select', do_shortcode('[geoip_detect2_countries_select name="mycountry" lang="fr" ajax="1"]'));
 		
-		$this->assertContains('postal.code', do_shortcode('[geoip_detect2_text_input name="postal" property="postal.code" type="hidden" ajax="1"]'));
-		$this->assertContains('js-geoip-text-input', do_shortcode('[geoip_detect2_text_input name="postal" property="postal.code" type="hidden" ajax="true"]'));
+		$this->assertStringContainsString('postal.code', do_shortcode('[geoip_detect2_text_input name="postal" property="postal.code" type="hidden" ajax="1"]'));
+		$this->assertStringContainsString('js-geoip-text-input', do_shortcode('[geoip_detect2_text_input name="postal" property="postal.code" type="hidden" ajax="true"]'));
 		
-		$this->assertContains('it', do_shortcode('[geoip_detect2_current_flag height="10% !important", width="30" class="extra-flag-class" squared="0" default="it" ajax="1"]'));
-		$this->assertContains('js-geoip-detect-flag', do_shortcode('[geoip_detect2_current_flag height="10% !important", width="30" class="extra-flag-class" squared="0" default="it" ajax="1"]'));
+		$this->assertStringContainsString('it', do_shortcode('[geoip_detect2_current_flag height="10% !important", width="30" class="extra-flag-class" squared="0" default="it" ajax="1"]'));
+		$this->assertStringContainsString('js-geoip-detect-flag', do_shortcode('[geoip_detect2_current_flag height="10% !important", width="30" class="extra-flag-class" squared="0" default="it" ajax="1"]'));
 	}
 
 	/**
@@ -480,11 +480,11 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	function testShortcodeAjaxElse($expected, $shortcode) {
 		$output = do_shortcode($shortcode);
 
-		$this->assertContains('hu', $output);
-		$this->assertContains('ha', $output);
+		$this->assertStringContainsString('hu', $output);
+		$this->assertStringContainsString('ha', $output);
 		$this->assertSame(2, substr_count($output, '<span'));
-		$this->assertContains('&quot;not&quot;:0', $output);
-		$this->assertContains('&quot;not&quot;:1', $output);
+		$this->assertStringContainsString('&quot;not&quot;:0', $output);
+		$this->assertStringContainsString('&quot;not&quot;:1', $output);
 	}
 
 	function dataShortcodeAjaxElse() {
