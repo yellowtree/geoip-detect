@@ -84,7 +84,7 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
 		}
 		foreach ($sources as $source) {
 			$id = $source->getId();
-			$this->assertRegExp('/^[-_a-z0-9]+$/i', $id, 'Invalid chars in id name');
+			$this->assertMatchesRegularExpression('/^[-_a-z0-9]+$/i', $id, 'Invalid chars in id name');
 			
 			$label = $source->getLabel();
 			$this->assertNotEmpty($label, 'Label of "' . $id . '" missing.');
