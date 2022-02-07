@@ -1,13 +1,13 @@
 <?php
+
 if (!defined('GEOIP_DETECT_IP_EMPTY_CACHE_TIME'))
 	define('GEOIP_DETECT_IP_EMPTY_CACHE_TIME', 1);
 
 define('GEOIP_DETECT_DOING_UNIT_TESTS', true);
 
 require_once dirname( dirname( __FILE__ ) ) . '/vendor/autoload.php';
-$_tests_dir = getenv( 'WP_TESTS_DIR' ) ?: getenv( 'WP_PHPUNIT__DIR' );
 
-if ( !$_tests_dir ) $_tests_dir = dirname( dirname( __FILE__ ) ) . '/vendor/wp-phpunit/wp-phpunit';
+$_tests_dir = dirname( dirname( __FILE__ ) ) . '/vendor/wp-phpunit/wp-phpunit';
 
 if ( ! file_exists( $_tests_dir . '/includes/functions.php' ) ) {
 	echo "Could not find $_tests_dir/includes/functions.php, have you run bin/install-wp-tests.sh ?" . PHP_EOL; // WPCS: XSS ok.
@@ -25,6 +25,12 @@ tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
 // Start up the WP testing environment.
 require $_tests_dir . '/includes/bootstrap.php';
+
+echo_wordpress_version();
+function echo_wordpress_version() {
+	global $wp_version;
+	echo "\nUsing Wordpress " . $wp_version . "\n\n";
+}
 
 ini_set('error_reporting', ini_get('error_reporting') | E_USER_NOTICE);
 
