@@ -133,7 +133,7 @@ function geoip_detect2_shortcode_get_property($userInfo, $propertyName) {
     	->enableExceptionOnInvalidIndex()
     	->getPropertyAccessor();
 
-	if (_geoip_str_begins_with($propertyName, 'extra.original.')) {
+	if (str_starts_with($propertyName, 'extra.original.')) {
 		$properties = explode('.', $propertyName);
 		$properties = array_slice($properties, 2);
 		$propertyName = 'extra.original[' . implode('][', $properties) . ']';

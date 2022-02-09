@@ -560,7 +560,7 @@ function _geoip_detect_disable_pagecache() {
 
 	if (!headers_sent()) {
 		header('Cache-Control: private, proxy-revalidate, s-maxage=0');
-		header( 'cf-edge-cache: no-cache' ); // Disable Cloudflare APO
+		header('cf-edge-cache: no-cache' ); // Disable Cloudflare APO
 	}
 }
 
@@ -586,16 +586,3 @@ function geoip_detect_format_localtime($timestamp = -1) : string {
 
 	return get_date_from_gmt ( date( 'Y-m-d H:i:s', $timestamp ),  $format);
 }
-
-function _geoip_str_begins_with($string, $startString) : bool
-{ 
-    $len = mb_strlen($startString); 
-    return (mb_substr($string, 0, $len) === $startString); 
-} 
-
-function _geoip_str_ends_with($string, $startString) : bool
-{ 
-	$len = mb_strlen($startString); 
-	//if ($len === 0) return true; // Not sure what is "expected behavior"
-    return (mb_substr($string, -$len) === $startString); 
-} 
