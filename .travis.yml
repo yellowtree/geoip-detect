@@ -34,10 +34,10 @@ php:
 jobs:
   fast_finish: true
   include:
-    - name: old_php
+    - name: php_7_2
       php: 7.2
       env: PHPUNIT_VERSION=^7.0
-    - name: legacy
+    - name: php_7_2_and_wp_5_4
       php: 7.2
       env: WP_VERSION=5.4.9 CF7_VERSION=v5.1.6 PHPUNIT_VERSION=^7.0
     - name: bleeding edge
@@ -49,8 +49,7 @@ jobs:
 
 install:
   - composer validate
-  - composer require --dev roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION}
-  - if [ "$PHPUNIT_VERSION" -ne "" ]; then composer require --dev phpunit/phpunit:^7.0; fi
+  - composer require --dev roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION} phpunit/phpunit
   - composer install
   - composer show
   - nvm install 12 && nvm use 12
