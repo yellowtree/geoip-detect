@@ -184,7 +184,7 @@ function var_export_short($data, $return=true)
 						show_row(null, $new_key_1, $key_3, $v, $class);
 					}
 				}
-				if (_geoip_str_ends_with($key_1, 'original')) {
+				if (str_ends_with($key_1, 'original')) {
 					// Level 2 and counting
 					$new_key_1 = $key_1 . ( ($syntax === 'php') ? '["' . $key_2 . '"]' : '.' . $key_2);
 					foreach($value as $key_3 => $v) {
