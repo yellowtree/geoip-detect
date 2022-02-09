@@ -178,6 +178,7 @@ AJAX mode:
 * NEW: The JS function `geoip_detect.set_override_with_merge` can modify the override record in one property, merging it with the currently saved property
 
 Other minor changes:
+* FIX: In non-AJAX mode, properties such as "extra.original.zip" can be accessed again
 * If you want to enable more Warnings (e.g. while debugging), you can add `define('GEOIP_DETECT_DEBUG', true)` to your wp-config.php or so.
 
 = 5.0.0 =
