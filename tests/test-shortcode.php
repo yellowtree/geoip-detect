@@ -47,7 +47,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 
 	function testShortcodeExtraProperty() {
-		$this->assertContains('<!--', do_shortcode('[geoip_detect2 property="extra.original.location.capital"]'));
+		$this->assertStringContainsString('<!--', do_shortcode('[geoip_detect2 property="extra.original.location.capital"]'));
 	}
 
 	/* Does not work.
