@@ -2,6 +2,7 @@
   "extends": [
     "config:base"
   ],
+  "dependencyDashboardApproval": true,
   "ignoreDeps": ["geoip2/geoip2", "maxmind-db/reader", "maxmind/web-service-common"],
   "packageRules": [
     {
@@ -15,34 +16,20 @@
         "eslint",
         "jest"
       ],
-      "groupName": "testing (JS)",
-      "schedule": [
-        "before 2am on monday"
-      ],
-      "automerge": true,
-      "automergeType": "branch"
+      "groupName": "testing (JS)"
     },
     {
       "matchPackagePatterns": [
         "roots/wordpress",
         "yoast/phpunit-polyfills"
       ],
-      "groupName": "testing (PHP)",
-      "schedule": [
-        "before 2am on monday"
-      ],
-      "automerge": true,
-      "automergeType": "branch"
+      "groupName": "testing (PHP)"
     },
     {
       "matchPackagePatterns": [
         "symfony"
       ],
-      "groupName": "symfony",
-      "schedule": [
-        "before 3am on the first day of the month"
-      ],
-      "automerge": false
+      "groupName": "symfony"
     }
   ]
 }
