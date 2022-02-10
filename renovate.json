@@ -1,0 +1,35 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "dependencyDashboardApproval": true,
+  "ignoreDeps": ["geoip2/geoip2", "maxmind-db/reader", "maxmind/web-service-common"],
+  "packageRules": [
+    {
+      "matchPackagePatterns": [
+        "^just-"
+      ],
+      "groupName": "Just JS monorepo"
+    },
+    {
+      "matchPackagePatterns": [
+        "eslint",
+        "jest"
+      ],
+      "groupName": "testing (JS)"
+    },
+    {
+      "matchPackagePatterns": [
+        "roots/wordpress",
+        "yoast/phpunit-polyfills"
+      ],
+      "groupName": "testing (PHP)"
+    },
+    {
+      "matchPackagePatterns": [
+        "symfony"
+      ],
+      "groupName": "symfony"
+    }
+  ]
+}
