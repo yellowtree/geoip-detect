@@ -4740,10 +4740,10 @@ just-safe-get@4.0.1:
   resolved "https://registry.yarnpkg.com/just-safe-get/-/just-safe-get-4.0.1.tgz#b89db1d82e1df27723a4c679ba913474cfaa3cb6"
   integrity sha512-Yet2Cf1s0h8Jh0A1CMBkR/C4nIN+pCJ4vN7aNk0Eo3d/QhnpWWPEMaxlIxAiH4bUdRCfdJonFabClf21Ls5NMA==
 
-just-safe-set@4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/just-safe-set/-/just-safe-set-4.0.1.tgz#cbb19eff3b9eec8cffc44c0da3209bce49544b46"
-  integrity sha512-g5iB842qxKSvB0UfZtkDW4JBhDAvQtNxI5sUdkGwVEiYdi8d71nkhvhMhcP+iR5FmVUft190u/SBpNCVTg6zLw==
+just-safe-set@4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/just-safe-set/-/just-safe-set-4.0.2.tgz#554225c2a03785db645914d993d9de8a69f762cc"
+  integrity sha512-tAIYsHB6pC7o2/+UtquHOYT4jaboA97W+9nYij0boNnjK66G5avPZpHYIpj99dCzOSNWBO8/+k9+gdgadHF2Mw==
 
 kleur@^3.0.3:
   version "3.0.3"
