@@ -27,7 +27,6 @@
     },
     "scripts": {
         "test": "phpunit",
-        "test-fast": "phpunit --order-by=defects --stop-on-defect",
         "install-test": "composer install --ignore-platform-reqs",
         "install-prod": "composer install --ignore-platform-reqs --no-dev",
         "test-install": "composer install --ignore-platform-reqs && git update-index --assume-unchanged vendor/composer/autoload_*"

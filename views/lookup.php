@@ -14,6 +14,9 @@ if (!empty($request_ip)) {
 		$code .= "geoip_detect2_get_info_from_ip('" . esc_html($request_ip) . "', ";
 	}
 	$code .= var_export_short($request_locales, true) . ($request_skipCache ? ', [ \'skipCache\' => TRUE ]' : '') .");</code>";
+} else {
+	$code = '';
+	$message = 'This IP is empty or not in a valid format (IPv4 or IPv6)';
 }
 
 $is_ajax_enabled = !!get_option('geoip-detect-ajax_enabled');

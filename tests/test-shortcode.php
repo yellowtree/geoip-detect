@@ -21,6 +21,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		remove_filter('geoip2_detect_sources_not_cachable', [ $this, 'filter_empty_array' ], 101);
 		remove_filter('geoip_detect2_shortcode_country_select_countries', [ $this, 'shortcodeFilter' ], 101);
 		remove_filter('geoip_detect2_record_data_override_lookup', [ $this, 'filterEmptyRecordData' ], 101);
+		remove_filter('geoip_detect2_record_data_override_lookup', [ $this, 'filterIpStackData' ], 101);
 		parent::tear_down();
 	}
 
@@ -46,8 +47,17 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertEquals('EU', do_shortcode('[geoip_detect2 property="continent.code"]'));
 	}
 
+	function filterIpStackData() {
+		return array ( 'is_empty' => false, 'city' => array ( 'names' => array ( 'en' => 'Düsseldorf', ), ), 'subdivisions' => array ( 0 => array ( 'iso_code' => 'NW', 'names' => array ( 'en' => 'North Rhine-Westphalia', ), ), ), 'country' => array ( 'iso_code' => 'DE', 'iso_code3' => 'DEU', 'geoname_id' => 2921044, 'names' => array ( 'en' => 'Germany', 'de' => 'Deutschland', 'it' => 'Germania', 'es' => 'Alemania', 'fr' => 'Allemagne', 'ja' => 'ドイツ', 'pt-BR' => 'Alemanha', 'ru' => 'Германия', 'zh-CN' => '德国', ), 'is_in_european_union' => true, ), 'continent' => array ( 'code' => 'EU', 'names' => array ( 'en' => 'Europe', 'de' => 'Europa', 'it' => 'Europa', 'es' => 'Europa', 'fr' => 'Europe', 'ja' => 'ヨーロッパ', 'pt-BR' => 'Europa', 'ru' => 'Европа', 'zh-CN' => '欧洲', ), ), 'location' => array ( 'latitude' => 51.227699279785156, 'longitude' => 6.773499965667725, 'time_zone' => 'Europe/Berlin', ), 'traits' => array ( 'ip_address' => '88.64.140.3', ), 'extra' => array ( 'currency_code' => 'EUR', 'original' => array ( 'ip' => '88.64.140.3', 'type' => 'ipv4', 'continent_code' => 'EU', 'continent_name' => 'Europe', 'country_code' => 'DE', 'country_name' => 'Germany', 'region_code' => 'NW', 'region_name' => 'North Rhine-Westphalia', 'city' => 'Düsseldorf', 'zip' => '40213', 'latitude' => 51.227699279785156, 'longitude' => 6.773499965667725, 'location' => array ( 'geoname_id' => 2934246, 'capital' => 'Berlin', 'languages' => array ( 0 => array ( 'code' => 'de', 'name' => 'German', 'native' => 'Deutsch', ), ), 'country_flag' => 'https://assets.ipstack.com/flags/de.svg', 'country_flag_emoji' => '🇩🇪', 'country_flag_emoji_unicode' => 'U+1F1E9 U+1F1EA', 'calling_code' => '49', 'is_eu' => true, ), ), 'flag' => '🇩🇪', 'source' => 'ipstack', 'cached' => 1644569224, 'error' => '', 'country_iso_code3' => 'DEU', 'tel' => '+49', ), ) ;
+	}
+
 	function testShortcodeExtraProperty() {
 		$this->assertStringContainsString('<!--', do_shortcode('[geoip_detect2 property="extra.original.location.capital"]'));
+		add_filter('geoip_detect2_record_data_override_lookup', [$this, 'filterIpStackData'], 101);
+		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
+		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
+		$this->assertStringContainsString('Berlin', do_shortcode('[geoip_detect2 property="extra.original.location.capital"]'));
+		$this->assertStringContainsString('de', do_shortcode('[geoip_detect2 property="extra.original.location.languages.0.code"]'));
 	}
 
 	/* Does not work.
