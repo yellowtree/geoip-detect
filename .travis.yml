@@ -28,7 +28,6 @@ env:
 
 php:
   - 8.0
-  - 7.4
   - 7.3
 
 jobs:
@@ -49,7 +48,7 @@ jobs:
 
 install:
   - composer validate
-  - composer require --dev roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION} phpunit/phpunit:*
+  - composer require --dev --with-dependencies roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION} phpunit/phpunit:*
   - composer install
   - composer show
   - nvm install 12 && nvm use 12
