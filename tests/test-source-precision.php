@@ -4,14 +4,14 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 
 class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 
-	public function setUp() {
+	public function set_up() {
 		add_filter('pre_option_geoip-detect-precision-user_id', [ $this, 'filter_set_user_id' ], 101);
 		add_filter('pre_option_geoip-detect-precision-user_secret', [ $this, 'filter_set_user_secret' ], 101);
 		
-		parent::setUp();
+		parent::set_up();
 	}
 	
-	public function tearDown() {
+	public function tear_down() {
 		remove_filter('pre_option_geoip-detect-precision-user_id', [ $this, 'filter_set_user_id' ], 101);
 		remove_filter('pre_option_geoip-detect-precision-user_secret', [ $this, 'filter_set_user_secret' ], 101);
 		remove_filter('pre_option_geoip-detect-precision-user_secret', [ $this, 'filter_set_wrong_user_secret' ], 102);
@@ -119,7 +119,7 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 		
 		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		$this->assertTrue($record->isEmpty);
-		$this->assertContains('authenticated', $record->extra->error);
+		$this->assertStringContainsString('authenticated', $record->extra->error);
 	}
 	
 	/**
@@ -145,7 +145,7 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 		add_filter('pre_option_geoip-detect-precision_api_type', [ $this, 'filter_set_precision_method_insights' ], 102);
 		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		$this->assertTrue($record->isEmpty);
-		$this->assertContains('out of queries', $record->extra->error);
+		$this->assertStringContainsString('out of queries', $record->extra->error);
 	}
 	*/
 

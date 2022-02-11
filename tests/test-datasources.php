@@ -10,15 +10,15 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
 	 */
 	private $registry; 
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		$this->registry = DataSourceRegistry::getInstance();
 	} 
 	
-	public function tearDown() {
-		parent::tearDown();
+	public function tear_down() {
 		remove_filter('pre_option_geoip-detect-source', [ $this, 'filter_set_invalid_default_source' ], 105);
 		remove_filter('pre_option_geoip-detect-source', [ $this, 'filter_set_wrong_default_source' ], 106);
+		parent::tear_down();
 	}
 	
 	public function filter_set_invalid_default_source() {
@@ -84,7 +84,7 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
 		}
 		foreach ($sources as $source) {
 			$id = $source->getId();
-			$this->assertRegExp('/^[-_a-z0-9]+$/i', $id, 'Invalid chars in id name');
+			$this->assertMatchesRegularExpression('/^[-_a-z0-9]+$/i', $id, 'Invalid chars in id name');
 			
 			$label = $source->getLabel();
 			$this->assertNotEmpty($label, 'Label of "' . $id . '" missing.');

@@ -6,8 +6,8 @@ class GeonamesTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	protected $countryInformation;
 	
-	public function setUp() {	
-		parent::setUp();
+	public function set_up() {	
+		parent::set_up();
 		$this->countryInformation = new \YellowTree\GeoipDetect\Geonames\CountryInformation;
 	}
 	

@@ -2,9 +2,9 @@
 
 class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	
-	function tearDown() {
-		parent::tearDown();
+	function tear_down() {
 		$_SERVER['REMOTE_ADDR'] = '';
+		parent::tear_down();
 	}
 	
 	function testCurrentIp() {			
@@ -21,7 +21,7 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertInstanceOf('GeoIp2\Model\City', $record, 'Garbage IP did not return a record object');
 		$this->assertInstanceOf('YellowTree\GeoipDetect\DataSources\City', $record, 'Garbage IP did not return a wordpress record object');
 		$this->assertNotEmpty($record->extra->error);
-		$this->assertContains('is not a valid IP', $record->extra->error);
+		$this->assertStringContainsString('is not a valid IP', $record->extra->error);
 		
 		$this->assertSame(true, $record->isEmpty);
 		$this->assertSame(null, $record->country->name);
@@ -32,7 +32,7 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertInstanceOf('GeoIp2\Model\City', $record, 'Garbage IP did not return a record object');
 		$this->assertInstanceOf('YellowTree\GeoipDetect\DataSources\City', $record, 'Garbage IP did not return a wordpress record object');
 		$this->assertNotEmpty($record->extra->error);
-		$this->assertContains('is not a valid IP', $record->extra->error);
+		$this->assertStringContainsString('is not a valid IP', $record->extra->error);
 		
 		$this->assertSame(true, $record->isEmpty);
 		$this->assertSame(null, $record->country->name);	

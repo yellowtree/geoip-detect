@@ -11,18 +11,18 @@ function ipTestServiceInvalidProvider() {
 
 class ExternalIpTest extends WP_UnitTestCase_GeoIP_Detect {
 	
-	function setUp()
+	function set_up()
 	{
-		parent::setUp();
+		parent::set_up();
 	}
 	
-	function tearDown()
+	function tear_down()
 	{
-		parent::tearDown();
 		remove_filter('geiop_detect_ipservices','ipTestServiceProvider', 101);
 		remove_filter('geiop_detect_ipservices', [ $this, 'externalIpProvidersFilter' ], 101);
 		remove_filter('geiop_detect_ipservices', 'ipTestServiceInvalidProvider', 101);
 		remove_filter('geiop_detect_ipservices', [ $this, 'filterProviderNone' ], 199);
+		parent::tear_down();
 	}
 	
 	/**
