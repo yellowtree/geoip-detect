@@ -49,7 +49,7 @@ jobs:
 
 install:
   - composer validate
-  - composer require --dev roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION} phpunit/phpunit
+  - composer require --dev roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION} phpunit/phpunit:*
   - composer install
   - composer show
   - nvm install 12 && nvm use 12
