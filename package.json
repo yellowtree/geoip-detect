@@ -15,7 +15,7 @@
   },
   "private": false,
   "dependencies": {
-    "@babel/runtime": "7.16.7",
+    "@babel/runtime": "7.17.2",
     "emoji-flags": "1.3.0",
     "just-compare": "2.0.1",
     "just-intersect": "4.0.2",
@@ -23,8 +23,8 @@
     "just-safe-set": "4.0.1"
   },
   "devDependencies": {
-    "@babel/core": "7.16.12",
-    "@babel/plugin-transform-runtime": "7.16.10",
+    "@babel/core": "7.17.2",
+    "@babel/plugin-transform-runtime": "7.17.0",
     "@babel/preset-env": "7.16.11",
     "babel-jest": "27.3.1",
     "babel-plugin-transform-class-properties": "6.24.1",
