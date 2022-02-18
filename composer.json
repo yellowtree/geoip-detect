@@ -27,9 +27,10 @@
     },
     "scripts": {
         "test": "phpunit",
-        "install-test": "composer install --ignore-platform-reqs",
-        "install-prod": "composer install --ignore-platform-reqs --no-dev",
-        "test-install": "composer install --ignore-platform-reqs && git update-index --assume-unchanged vendor/composer/autoload_*"
+        "test-external": "phpunit --group external-http",
+        "install-test": "composer install",
+        "install-prod": "composer install --prefer-dist --optimize-autoloader --no-dev",
+        "test-install": "composer install && git update-index --assume-unchanged vendor/composer/autoload_*"
     },
     "config": {
         "allow-plugins": {

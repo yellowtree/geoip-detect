@@ -5,10 +5,11 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 
 	public function set_up() {
+		parent::set_up();
+
 		add_filter('pre_option_geoip-detect-precision-user_id', [ $this, 'filter_set_user_id' ], 101);
 		add_filter('pre_option_geoip-detect-precision-user_secret', [ $this, 'filter_set_user_secret' ], 101);
 		
-		parent::set_up();
 	}
 	
 	public function tear_down() {
@@ -16,6 +17,8 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 		remove_filter('pre_option_geoip-detect-precision-user_secret', [ $this, 'filter_set_user_secret' ], 101);
 		remove_filter('pre_option_geoip-detect-precision-user_secret', [ $this, 'filter_set_wrong_user_secret' ], 102);
 		remove_filter('pre_option_geoip-detect-precision_api_type', [ $this, 'filter_set_precision_method_insights' ], 102);
+
+		parent::tear_down();
 	}
 	
 	function filter_set_default_source() {
@@ -64,27 +67,27 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	/**
 	 * @group external-http
-	 * @expectedException \GeoIp2\Exception\AuthenticationException
 	 */
 	function testMaxmindApiPasswordWrong() {
+		$this->expectException(\GeoIp2\Exception\AuthenticationException::class);
 		$client = new Client('17', 'sadf');		
 		$client->city('8.8.8.8');
 	}
 	
 	/**
 	 * @group external-http
-	 * @expectedException \GeoIp2\Exception\AuthenticationException
 	 */
 	function testMaxmindApiPasswordWrong2() {
+		$this->expectException(\GeoIp2\Exception\AuthenticationException::class);
 		$client = new Client('', '');
 		$client->city('8.8.8.8');
 	}
 	
 	/**
 	 * @group external-http
-	 * @expectedException \GeoIp2\Exception\AuthenticationException
 	 */
 	function testNoPasswordManualLookup() {
+		$this->expectException(\GeoIp2\Exception\AuthenticationException::class);
 		remove_filter('pre_option_geoip-detect-precision-user_secret', [ $this, 'filter_set_user_secret' ], 101);
 		add_filter('pre_option_geoip-detect-precision-user_secret', [ $this, 'filter_set_wrong_user_secret' ], 102);
 		

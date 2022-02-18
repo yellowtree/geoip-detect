@@ -119,7 +119,6 @@ class CcpaTest extends WP_UnitTestCase_GeoIP_Detect {
         $retrieve->setCredentials($user, $password);
 
         $ret = $retrieve->retrieveBlacklist();
-        $this->assertStringNotContainsString('could not be authenticated', $ret);
         $this->assertIsArray($ret);
         $this->assertIsArray($ret['exclusions']);
         $row = reset($ret['exclusions']);
