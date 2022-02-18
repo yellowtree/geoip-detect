@@ -93,8 +93,13 @@ rm -rf js/dist
 yarn install && yarn clean && yarn build && git add js/dist
 if [ $? != 0 ]; then echo ; echo "Yarn Failed."; echo ; exit 1; fi 
 
+echo "Run tests ..."
+composer install-test
+composer test
+composer test-external
+
 echo "Set composer for production use ..."
-composer install --prefer-dist --optimize-autoloader --no-dev --ignore-platform-reqs
+composer install-prod
 
 
 echo "Generate README.md from readme.txt"

@@ -5,7 +5,7 @@
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'defc6e1674a83848fcd54c002e9af1e0696db9b3',
+        'reference' => '253daf3d1b28c05c7fa036a37d7fdab0967bb37f',
         'name' => 'yellowtree/geoip-detect',
         'dev' => true,
     ),
@@ -69,9 +69,6 @@
             'aliases' => array(),
             'reference' => '776f831124e9c62e1a2c601ecc52e776d8bb7220',
             'dev_requirement' => true,
-            'replaced' => array(
-                0 => '1.10.2',
-            ),
         ),
         'nikic/php-parser' => array(
             'pretty_version' => 'v4.13.2',
@@ -92,12 +89,12 @@
             'dev_requirement' => true,
         ),
         'phar-io/version' => array(
-            'pretty_version' => '3.1.0',
-            'version' => '3.1.0.0',
+            'pretty_version' => '3.1.1',
+            'version' => '3.1.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phar-io/version',
             'aliases' => array(),
-            'reference' => 'bae7c545bef187884426f042434e561ab1ddb182',
+            'reference' => '15a90844ad40f127afd244c0cad228de2a80052a',
             'dev_requirement' => true,
         ),
         'phpdocumentor/reflection-common' => array(
@@ -137,12 +134,12 @@
             'dev_requirement' => true,
         ),
         'phpunit/php-code-coverage' => array(
-            'pretty_version' => '9.2.10',
-            'version' => '9.2.10.0',
+            'pretty_version' => '9.2.11',
+            'version' => '9.2.11.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpunit/php-code-coverage',
             'aliases' => array(),
-            'reference' => 'd5850aaf931743067f4bfc1ae4cbd06468400687',
+            'reference' => '665a1ac0a763c51afc30d6d130dac0813092b17f',
             'dev_requirement' => true,
         ),
         'phpunit/php-file-iterator' => array(
@@ -182,12 +179,12 @@
             'dev_requirement' => true,
         ),
         'phpunit/phpunit' => array(
-            'pretty_version' => '9.5.13',
-            'version' => '9.5.13.0',
+            'pretty_version' => '9.5.14',
+            'version' => '9.5.14.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpunit/phpunit',
             'aliases' => array(),
-            'reference' => '597cb647654ede35e43b137926dfdfef0fb11743',
+            'reference' => '1883687169c017d6ae37c58883ca3994cfc34189',
             'dev_requirement' => true,
         ),
         'roots/wordpress' => array(
@@ -281,12 +278,12 @@
             'dev_requirement' => true,
         ),
         'sebastian/global-state' => array(
-            'pretty_version' => '5.0.3',
-            'version' => '5.0.3.0',
+            'pretty_version' => '5.0.5',
+            'version' => '5.0.5.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../sebastian/global-state',
             'aliases' => array(),
-            'reference' => '23bd5951f7ff26f12d4e3242864df3e08dec4e49',
+            'reference' => '0ca8db5a5fc9c8646244e629625ac486fa286bf2',
             'dev_requirement' => true,
         ),
         'sebastian/lines-of-code' => array(
@@ -353,12 +350,12 @@
             'dev_requirement' => true,
         ),
         'symfony/deprecation-contracts' => array(
-            'pretty_version' => 'v2.2.0',
-            'version' => '2.2.0.0',
+            'pretty_version' => 'v2.5.0',
+            'version' => '2.5.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/deprecation-contracts',
             'aliases' => array(),
-            'reference' => '5fa56b4074d1ae755beb55617ddafe6f5d78f665',
+            'reference' => '6f981ee24cf69ee7ce9736146d1c57c2780598a8',
             'dev_requirement' => false,
         ),
         'symfony/http-foundation' => array(
@@ -481,7 +478,7 @@
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'defc6e1674a83848fcd54c002e9af1e0696db9b3',
+            'reference' => '253daf3d1b28c05c7fa036a37d7fdab0967bb37f',
             'dev_requirement' => false,
         ),
         'yoast/phpunit-polyfills' => array(
