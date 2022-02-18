@@ -168,6 +168,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	 * @dataProvider dataShortcodeCF7UserInfo
 	 */
 	public function testDataShortcodeCF7UserInfo($expected, $name) {
+		add_filter('geoip_detect2_client_ip', [ $this, 'filter_set_test_ip' ], 101);
 		$userInfo = geoip_detect2_shortcode_user_info_wpcf7('', $name, false);
 		$this->assertSame($expected, $userInfo, 'Wrong output for CF7 special Tag [' . $name .']');
 	}
@@ -198,6 +199,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
 	 * @dataProvider dataShortcodeCF7Filter
 	 */
 	public function testShortcodeCF7Filter($expectedResult, $tagname) {
+		add_filter('geoip_detect2_client_ip', [ $this, 'filter_set_test_ip' ], 101);
 		$this->assertStringContainsString($expectedResult, apply_filters('wpcf7_special_mail_tags', $tagname, $tagname, false, new \WPCF7_MailTag('', $tagname, '')));
 	}
 
