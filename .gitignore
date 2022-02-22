@@ -22,6 +22,8 @@ wp-cli.local.yml
 /wordpress/
 /contact-form-7/
 
+/vendor/composer/installed.json
+
 /vendor/doctrine
 /vendor/myclabs
 /vendor/phar-io/
