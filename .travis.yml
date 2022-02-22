@@ -24,7 +24,7 @@ env:
     - WP_DB_NAME=wp_tests
     - WP_VERSION=*
     - CF7_VERSION=v5.5.3
-    - PHPUNIT_VERSION=*
+    - PHPUNIT_VERSION=^9.0
 
 php:
   - 8.0

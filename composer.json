@@ -23,7 +23,8 @@
     "require-dev": {
         "roots/wordpress": "5.9",
         "wp-phpunit/wp-phpunit": "5.9.0",
-        "yoast/phpunit-polyfills": "1.0.3"
+        "yoast/phpunit-polyfills": "1.0.3",
+        "phpunit/phpunit": "^9.0"
     },
     "scripts": {
         "test": "phpunit",
