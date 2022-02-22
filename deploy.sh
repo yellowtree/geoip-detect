@@ -58,11 +58,11 @@ echo
 
 # Check version in readme.txt is the same as plugin file
 NEWVERSION=`grep "^Version" $GITPATH/$MAINFILE | awk -F' ' '{print $2}'`
-echo "$MAINFILE version: $NEWVERSION"
+echo "$MAINFILE header version: $NEWVERSION"
 NEWVERSION2=`grep "^define.*GEOIP_DETECT_VERSION" $GITPATH/$MAINFILE | awk -F"'" '{print $4}'`
-echo "$MAINFILE define version: $NEWVERSION"
+echo "$MAINFILE define version: $NEWVERSION2"
 
-if [ "$NEWVERSION" != "$NEWVERSION2" ] ; then echo "Versions don't match. (php: '$NEWVERSION', define: '$NEWVERSION2') Exiting...."; exit 1; fi
+if [ "$NEWVERSION" != "$NEWVERSION2" ] ; then echo "Versions don't match. Exiting...."; exit 1; fi
 
 echo "Versions match in PHP file. Let's proceed..."
 
