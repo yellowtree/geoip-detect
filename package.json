@@ -30,7 +30,7 @@
     "babel-plugin-transform-class-properties": "6.24.1",
     "eslint": "8.8.0",
     "jest": "27.5.1",
-    "parcel": "2.2.1"
+    "parcel": "2.3.2"
   },
   "browserslist": "> 0.2%, last 2 versions, Firefox ESR, not dead",
   "jest": {
