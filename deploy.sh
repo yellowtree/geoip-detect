@@ -93,10 +93,11 @@ rm -rf js/dist
 yarn install && yarn clean && yarn build && git add js/dist
 if [ $? != 0 ]; then echo ; echo "Yarn Failed."; echo ; exit 1; fi 
 
-echo "Run tests ..."
+echo "Run Phpunit tests ..."
 composer install-test
-composer test
-composer test-external
+# git checkout vendor
+composer test && composer test-external
+if [ $? != 0 ]; then echo ; echo "Phpunit Failed. (Maybe try running 'composer install-test'"; echo ; exit 1; fi 
 
 echo "Set composer for production use ..."
 composer install-prod
@@ -107,9 +108,11 @@ bin/readme.sh "$SVNURL"
 bin/changelog.sh
 
 COMMITMSG_DEFAULT="Release $NEWVERSION"
+git status
 echo -e "Enter a commit message for this new version (default: $COMMITMSG_DEFAULT): \c"
 read COMMITMSG
 : ${COMMITMSG:=$COMMITMSG_DEFAULT}
+git add vendor/composer/platform_check.php
 git commit -am "$COMMITMSG"
 
 # Merging back into develop

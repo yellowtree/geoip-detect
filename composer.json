@@ -29,9 +29,8 @@
     "scripts": {
         "test": "phpunit",
         "test-external": "phpunit --group external-http",
-        "install-test": "composer install",
-        "install-prod": "composer install --prefer-dist --optimize-autoloader --no-dev",
-        "test-install": "composer install && git update-index --assume-unchanged vendor/composer/autoload_*"
+        "install-test": "composer install --ignore-platform-req=php",
+        "install-prod": "composer install --prefer-dist --optimize-autoloader --no-dev"
     },
     "config": {
         "allow-plugins": {

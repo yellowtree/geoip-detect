@@ -169,13 +169,15 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 = 5.1.0 =
 
-New Datasource: Fastah Web API, see https://aws.amazon.com/marketplace/pp/prodview-k5gjowexrefl2
+New Datasource: Fastah Web API (beta), see https://aws.amazon.com/marketplace/pp/prodview-k5gjowexrefl2
 
 AJAX mode:
 * NEW: The JS function `geoip_detect.set_override_with_merge` can modify the override record in one property, merging it with the currently saved property
 
 Other minor changes:
+* FIX: In non-AJAX mode, properties such as "extra.original.zip" can be accessed again
 * If you want to enable more Warnings (e.g. while debugging), you can add `define('GEOIP_DETECT_DEBUG', true)` to your wp-config.php or so.
+* Library updates
 
 = 5.0.0 =
 In this release, there a small breaking changes marked by [!].
