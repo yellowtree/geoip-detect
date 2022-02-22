@@ -11,6 +11,9 @@
 
 use Symfony\Polyfill\Mbstring as p;
 
+
+/* Note YellowTree: In order to commit this to the plugin SVN of Wordpress, I needed to remove the args typing */
+
 if (!function_exists('mb_convert_encoding')) {
     function mb_convert_encoding($string, ?string $to_encoding, $from_encoding = null) { return p\Mbstring::mb_convert_encoding($string ?? '', (string) $to_encoding, $from_encoding); }
 }
