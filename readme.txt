@@ -180,6 +180,7 @@ AJAX mode:
 Other minor changes:
 * FIX: In non-AJAX mode, properties such as "extra.original.zip" can be accessed again
 * If you want to enable more Warnings (e.g. while debugging), you can add `define('GEOIP_DETECT_DEBUG', true)` to your wp-config.php or so.
+* Library updates
 
 = 5.0.0 =
 In this release, there a small breaking changes marked by [!].

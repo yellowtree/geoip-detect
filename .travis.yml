@@ -46,8 +46,7 @@ jobs:
 
 install:
   - composer validate
-  - composer require --dev --with-dependencies roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION} phpunit/phpunit:${PHPUNIT_VERSION}
-  - composer install
+  - composer require --ignore-platform-req=php --dev --with-dependencies roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION} phpunit/phpunit:${PHPUNIT_VERSION}
   - composer show
   - nvm install 12 && nvm use 12
   - yarn install
