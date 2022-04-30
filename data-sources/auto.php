@@ -235,11 +235,9 @@ HTML;
 		$outDir = get_temp_dir() . 'geoip-detect/';
 
 		global $wp_filesystem;
-		if (!$wp_filesystem) {
-			$ret = \WP_Filesystem(false, get_temp_dir(), true);
-			if (!$ret) {
-				return __('WP Filesystem could not be initialized (does not support FTP credential access. Can you upload files to the media library?).', 'geoip-detect');
-			}
+		$ret = \WP_Filesystem(false, get_temp_dir(), true);
+		if (!$ret) {
+			return __('WP Filesystem could not be initialized (does not support FTP credential access. Can you upload files to the media library?).', 'geoip-detect');
 		}
 		if (\is_dir($outDir)) {
 			$wp_filesystem->rmdir($outDir, true);
