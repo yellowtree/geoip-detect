@@ -179,6 +179,7 @@ AJAX mode:
 
 Other minor changes:
 * FIX: In non-AJAX mode, properties such as "extra.original.zip" can be accessed again
+* FIX: Automatic download of Maxmind database now also works when the temp folder is group/world writeable (as in AWS configurations)
 * If you want to enable more Warnings (e.g. while debugging), you can add `define('GEOIP_DETECT_DEBUG', true)` to your wp-config.php or so.
 * Library updates
 
