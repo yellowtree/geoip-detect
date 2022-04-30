@@ -2,10 +2,10 @@
 /*
 Plugin Name:     Geolocation IP Detection
 Plugin URI:      http://www.yellowtree.de
-Description:     Retrieving Geo-Information using the Maxmind GeoIP (Lite) Database.
+Description:     Provides geographic information detected by an IP adress.
 Author:          Yellow Tree (Benjamin Pick)
 Author URI:      http://www.yellowtree.de
-Version:         5.1.0-beta2
+Version:         5.1.0-beta3
 License:         GPLv3 or later
 License URI:     http://www.gnu.org/licenses/gpl-3.0.html
 Text Domain:     geoip-detect
@@ -16,7 +16,7 @@ Requires WP:     5.4
 Requires PHP:    7.2.5
 */
 
-define('GEOIP_DETECT_VERSION', '5.1.0-beta2');
+define('GEOIP_DETECT_VERSION', '5.1.0-beta3');
 
 /*
 Copyright 2013-2021 Yellow Tree, Siegen, Germany
@@ -114,7 +114,7 @@ include_once(GEOIP_PLUGIN_DIR . '/data-sources/fastah.php');
 //define('GEOIP_DETECT_IP_EMPTY_CACHE_TIME', 2 * HOUR_IN_SECONDS);
 
 /**
- * How long the data of the IP is cached. This applies to the Web-APIs (Maxmind Precision and HostIP.info)
+ * How long the data of the IP is cached. This applies to the Web-APIs (Maxmind Precision, HostIP.info, ipstack, ...)
  * Only successful lookups will be cached.
  */
 //define('GEOIP_DETECT_READER_CACHE_TIME', 7 * DAY_IN_SECONDS);

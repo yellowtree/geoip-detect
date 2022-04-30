@@ -97,7 +97,7 @@ echo "Run Phpunit tests ..."
 composer install-test
 # git checkout vendor
 composer test && composer test-external
-if [ $? != 0 ]; then echo ; echo "Phpunit Failed. (Maybe try running 'composer install-test'"; echo ; exit 1; fi 
+if [ $? != 0 ]; then echo ; echo "Phpunit Failed. (Maybe try running 'composer install-test')"; echo ; exit 1; fi 
 
 echo "Set composer for production use ..."
 composer install-prod
@@ -169,7 +169,10 @@ vendor/phpspec
 vendor/phpunit
 vendor/wp-phpunit
 vendor/webmozart
+vendor/theseer
 vendor/sebastian
+vendor/yoast/phpunit-polyfills
+vendor/nikic/php-parser
 " "$SVNPATH/trunk/"
 
 svn propset svn:ignore '*' "$SVNPATH/trunk/lib/geonames/generators/"
