@@ -169,7 +169,7 @@ HTML;
 		return $tmpfname;
 	}
 
-	public function maxmindUpdate()
+	public function maxmindUpdate($forceUpdate = false)
 	{
 		require_once(ABSPATH.'/wp-admin/includes/file.php');
 
@@ -187,7 +187,7 @@ HTML;
 
 		$outFile = $this->maxmindGetUploadFilename();
 		$modified = 0;
-		if (\is_readable($outFile)) {
+		if (\is_readable($outFile) && !$forceUpdate) {
 			$modified = filemtime($outFile);
 		} 
 
@@ -235,9 +235,11 @@ HTML;
 		$outDir = get_temp_dir() . 'geoip-detect/';
 
 		global $wp_filesystem;
-		$ret = \WP_Filesystem(false, get_temp_dir(), true);
-		if (!$ret) {
-			return __('WP Filesystem could not be initialized (does not support FTP credential access. Can you upload files to the media library?).', 'geoip-detect');
+		if (! $wp_filesystem) {
+			$ret = \WP_Filesystem(false, get_temp_dir(), true /* allow group/world-writeable folder */);
+			if (!$ret) {
+				return __('WP Filesystem could not be initialized (does not support FTP credential access. Can you upload files to the media library?).', 'geoip-detect');
+			}
 		}
 		if (\is_dir($outDir)) {
 			$wp_filesystem->rmdir($outDir, true);
