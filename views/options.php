@@ -46,7 +46,7 @@ $currentSourceId = $currentSource->getId();
 	<?php endif; ?>
 	<br/>
 
-	<a name="choose-source" />
+	<a name="choose-source"></a>
 	<br /><br />
 	<form method="post" action="#">
 		<input type="hidden" name="action" value="choose" />
@@ -65,19 +65,23 @@ $currentSourceId = $currentSource->getId();
 	<form method="post" action="#">
 		<input type="hidden" name="action" value="options" />
 		<?php wp_nonce_field( 'geoip_detect_options' ); ?>
+
 		<h3><?php _e('General Options', 'geoip-detect'); ?></h3>
+
+	
 		<p>
 			<label><input type="checkbox" name="options[set_css_country]" value="1" <?php if (!empty($wp_options['set_css_country'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Add a country-specific CSS class to the &lt;body&gt;-Tag on every page.', 'geoip-detect'); ?></label><br />
 		</p>
+
 		<p>
 			<label><input type="checkbox" name="options[disable_pagecache]" value="1" <?php if (!empty($wp_options['disable_pagecache'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('Disable caching a page that contains a shortcode or API call to geo-dependent functions.', 'geoip-detect'); ?></label><br />
 			<span class="detail-box">
 				<?php _e('At least WP SuperCache, W3TotalCache and ZenCache are supported.', 'geoip-detect'); ?>
 			</span>
-				<?php if (!empty($wp_options['set_css_country']) && !empty($wp_options['disable_pagecache']) && empty($wp_options['ajax_enabled'])): ?>
-				<span class="geoip_detect_error"><?php _e('Warning: As the CSS option above is active, this means that all pages are not cached.', 'geoip-detect'); ?></span>
-				<?php endif; ?>
-		<
+			<?php if (!empty($wp_options['set_css_country']) && !empty($wp_options['disable_pagecache']) && empty($wp_options['ajax_enabled'])): ?>
+			<span class="geoip_detect_error"><?php _e('Warning: As the CSS option above is active, this means that all pages are not cached.', 'geoip-detect'); ?></span>
+			<?php endif; ?>
+		</p>
 
 		<p>
 			<label><input type="checkbox" name="options[ajax_enabled]" value="1" <?php if (!empty($wp_options['ajax_enabled'])) { echo 'checked="checked"'; } ?>> <?php _e('Enable AJAX endpoint to get the information for the current IP even on cached pages.', 'geoip-detect'); ?></label>
@@ -98,8 +102,8 @@ $currentSourceId = $currentSource->getId();
 			<span class="detail-box">
 				<?php _e('(JS Helper functions are added automatically for pages that contain ajax shortcodes.)', 'geoip-detect'); ?><br>
 			</span>
-
 		</p>
+
 		<p>
 
 			<label><input type="checkbox" name="options[has_reverse_proxy]" value="1" <?php if (!empty($wp_options['has_reverse_proxy'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php _e('The server is behind a reverse proxy', 'geoip-detect')?></label>

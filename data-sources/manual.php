@@ -84,7 +84,7 @@ class ManualDataSource extends AbstractDataSource {
 
 
 		$html = <<<HTML
-$label_id <input type="number" autocomplete="off" size="10" name="options_auto[license_id]" value="$id" /><br />
+$label_id <input type="number" autocomplete="off" name="options_auto[license_id]" value="$id" /><br />
 $label_key <input type="text" autocomplete="off" size="20" name="options_auto[license_key]" value="$key" /><br />
 HTML;
 		return $html;
