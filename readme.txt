@@ -170,6 +170,10 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 == Changelog ==
 
+= 5.1.1 =
+
+* FIX: Some server configurations showed this warning: Use of undefined constant CURL_HTTP_VERSION_2_0
+
 = 5.1.0 =
 
 New Datasource: Fastah Web API (beta), see https://aws.amazon.com/marketplace/pp/prodview-k5gjowexrefl2
