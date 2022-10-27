@@ -34,6 +34,11 @@ function merge_branch_and_checkout()
 	echo 
 }
 
+useConfirm=true
+
+confirm() {
+   [ "$useConfirm" = true ] && read -p "Do you want to continue? (Enter) - (^C to abort)"
+}
 
 
 if [ "$1" = "checkout" ] ; then
@@ -95,8 +100,10 @@ if [ $? != 0 ]; then echo ; echo "Yarn Failed."; echo ; exit 1; fi
 
 echo "Run Phpunit tests ..."
 composer install-test
-composer test && composer test-external
-if [ $? != 0 ]; then echo ; echo "Phpunit Failed. (Maybe try running 'composer install-test')"; echo ; exit 1; fi 
+composer test 
+if [ $? != 0 ]; then echo ; echo "Phpunit Failed."; echo ; exit 1; fi 
+composer test-external
+if [ $? != 0 ]; then echo ; echo "Phpunit for HTTP requests failed."; confirm ; fi 
 
 echo "Set composer for production use ..."
 composer install-prod
@@ -191,37 +198,19 @@ cd $SVNPATH/trunk/
 svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn add
 echo "Committing to trunk"
 svn commit --username=$SVNUSER -m "$COMMITMSG"
-if [ $? != 0 ] ; then
-	echo "Error while committing to TRUNK ... Exiting!"
-	echo
-#	echo "Removing temporary directory $SVNPATH"
-#	rm -fr $SVNPATH/
-#	echo
-
-	exit 1;
-fi
-
+if [ $? != 0 ]; then echo ; echo "Error while committing to TRUNK."; confirm ; fi 
 
 echo "Creating new SVN tag & committing it"
 cd $SVNPATH
 svn copy trunk/ tags/$NEWVERSION/
 cd $SVNPATH/tags/$NEWVERSION
 svn commit --username=$SVNUSER -m "Tagging version $NEWVERSION"
-if [ $? != 0 ] ; then
-	echo "Error while committing to TAGS ... Exiting!"
-	echo
-#	echo "Removing temporary directory $SVNPATH"
-#	rm -fr $SVNPATH/
-#	echo
-
-	exit 1;
-fi
+if [ $? != 0 ]; then echo ; echo "Error while committing to TAGS."; confirm ; fi 
 
 echo "Tagging new version in git"
 cd "$CURRENTDIR"
 git tag -a "$NEWVERSION" -m "Tagging version $NEWVERSION"
 git push origin master --tags
-
 
 echo "Removing temporary directory $SVNPATH"
 rm -fr $SVNPATH/
