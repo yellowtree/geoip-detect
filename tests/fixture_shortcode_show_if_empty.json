@@ -1,0 +1,266 @@
+[
+    [
+        0,
+        "[geoip_detect2_test_show_if country=\"DE\"]hu[else]ha[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "de"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        1,
+        "[geoip_detect2_test_show_if country=\"DE\"]yes[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "de"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        2,
+        "[geoip_detect2_test_show_if country=\"\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": ""
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        3,
+        "[geoip_detect2_test_show_if country=\"\"]hu[else]ha[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": ""
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        4,
+        "[geoip_detect2_test_show_if city=\"Berlin\"]hu[else]ha[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "city",
+                    "v": "berlin"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        5,
+        "[geoip_detect2_test_show_if city=\"\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "city",
+                    "v": ""
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        6,
+        "[geoip_detect2_test_show_if city=\"\" country=\"\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": ""
+                },
+                {
+                    "p": "city",
+                    "v": ""
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        7,
+        "[geoip_detect2_test_show_if city=\"DE\" country=\"\"]hu[else]ha[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": ""
+                },
+                {
+                    "p": "city",
+                    "v": "de"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        8,
+        "[geoip_detect2_test_show_if property=\"isEmpty\" property_value=\"1\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "isEmpty",
+                    "v": "1"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": "",
+            "property": "isEmpty"
+        }
+    ],
+    [
+        9,
+        "[geoip_detect2_test_show_if property=\"isEmpty\" property_value=\"0\"]yes[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "isEmpty",
+                    "v": "0"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": "",
+            "property": "isEmpty"
+        }
+    ],
+    [
+        10,
+        "[geoip_detect2_test_show_if property=\"isEmpty\" property_value=\"\"]yes[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "isEmpty",
+                    "v": ""
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": "",
+            "property": "isEmpty"
+        }
+    ]
+]

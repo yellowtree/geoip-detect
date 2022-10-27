@@ -23,8 +23,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 
-// This file is outside composer root in order to not distribute all the other symfony files
-require_once(__DIR__ . '/lib/vendor/symfony/http-foundation/IpUtils.php');
 use Symfony\Component\HttpFoundation\IpUtils;
 
 /**
@@ -39,7 +37,7 @@ function _geoip_detect2_process_options($options) {
 	if (is_bool($options)) {
 		_doing_it_wrong('Geolocation IP Detection Plugin: geoip_detect2_get_info_from_ip()', '$skipCache has been renamed to $options. Instead of TRUE, now use "[\'skipCache\' => TRUE]".', '2.5.0');
 		$value = $options;
-		$options = array();
+		$options = [];
 		$options['skipCache'] = $value;
 	}
 
@@ -78,7 +76,7 @@ function _geoip_detect2_process_options($options) {
  * @return GeoIp2\Database\Reader 	The reader, ready to do its work. Don't forget to `close()` it afterwards. NULL if file not found (or other problems).
  * NULL if initialization went wrong (e.g., File not found.)
  */
-function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &$sourceId = '', $options = array()) {
+function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &$sourceId = '', $options = []) {
 	if (! $skipLocaleFilter) {
 		/**
 		 * Filter: geoip_detect2_locales
@@ -111,7 +109,7 @@ function _geoip_detect2_get_reader($locales = null, $skipLocaleFilter = false, &
 	return $reader;
 }
 
-function _ip_to_s($ip) {
+function _ip_to_s($ip) : string {
 	$binary = '';
 	try {
 		$binary = @inet_pton($ip);
@@ -165,12 +163,15 @@ function _geoip_detect2_add_data_to_cache($data, $ip) {
 
 function _geoip_detect2_empty_cache() {
 	// This does not work for memcache. But it doesn't hurt either
-	// ToDo expose to UI if Source is cacheable
 	global $wpdb;
 
 	$wpdb->query( "DELETE FROM `$wpdb->options` WHERE `option_name` LIKE ('_transient_geoip_detect_c_%')" );
+	return true;
 }
 
+/**
+ * @return \GeoIp2\Model\Country
+ */
 function _geoip_detect2_get_record_from_reader($reader, $ip, &$error) {
 	$record = null;
 
@@ -199,15 +200,37 @@ function _geoip_detect2_get_record_from_reader($reader, $ip, &$error) {
 		$error = 'No reader was found. Check if the configuration is complete and correct.';
 	}
 
+	if (is_null($record)) {
+		return _geoip_detect2_get_new_empty_record();
+	}
+
 	return $record;
 }
 
-function _geoip_detect2_record_enrich_data($record, $ip, $sourceId, $error) {
-	$data = array('traits' => array('ip_address' => $ip), 'is_empty' => true);
+function _geoip_detect2_get_new_empty_record($ip = '', $error = '') {
+	$data = [ 'traits' => [ 'ip_address' => $ip ], 'is_empty' => true ];
+	if ($error) {
+		$data['extra']['error'] = $error;
+	}
+
+	return new  \YellowTree\GeoipDetect\DataSources\City($data, []);
+}
+
+function _geoip_detect2_record_enrich_data($record, $ip, $sourceId, $error) : array {
 	if (is_object($record) && method_exists($record, 'jsonSerialize')) {
 		$data = $record->jsonSerialize();
+	} else {
+		$data = [ 'traits' => [ 'ip_address' => $ip ], 'is_empty' => true ];
+	}
+
+	if (!isset($data['is_empty'])) {
 		$data['is_empty'] = false;
 	}
+	
+	if (empty($data['traits']['ip_address'])) {
+		$data['traits']['ip_address'] = $ip;
+	}
+	
 	$data['extra']['source'] = $sourceId;
 	$data['extra']['cached'] = 0;
 	
@@ -239,7 +262,7 @@ function _geoip_detect2_try_to_fix_timezone($data) {
 		return $data;
 
 	if (!function_exists('_geoip_detect_get_time_zone')) {
-		require_once(GEOIP_PLUGIN_DIR . '/vendor/timezone.php');
+		require_once(GEOIP_PLUGIN_DIR . '/lib/timezone.php');
 	}
 
 	if (!empty($data['country']['iso_code'])) {
@@ -287,7 +310,7 @@ add_filter('geoip_detect2_record_data', '_geoip_detect2_add_geonames_data');
  * IPv6-Adresses can be written in different formats. Make sure they are standardized.
  * For IPv4-Adresses, spaces are removed.
  */
-function geoip_detect_normalize_ip($ip) {
+function geoip_detect_normalize_ip(string $ip) : string {
 	$ip = trim($ip);
 	$binary = '';
 	try {
@@ -300,9 +323,9 @@ function geoip_detect_normalize_ip($ip) {
 	return $ip;
 }
 
-function geoip_detect_sanitize_ip_list($ip_list) {
+function geoip_detect_sanitize_ip_list(string $ip_list) : string {
 	$list = explode(',', $ip_list);
-	$ret = array();
+	$ret = [];
 	foreach ($list as $ip) {
 		$ip = trim($ip);
 		$parts = explode('/', $ip, 2);
@@ -323,17 +346,49 @@ function geoip_detect_sanitize_ip_list($ip_list) {
 }
 
 /**
+ * Remove port from IP string
+ * @param string
+ * @return string
+ */
+function geoip_detect_ip_remove_port(string $ip) : string {
+	$ip = trim($ip);
+	
+	if (str_contains($ip, '.')) {  // IPv4 
+		// 1.1.1.1:80
+		$end = mb_stripos($ip, ':');
+		if ($end) {
+			$ip = mb_substr($ip, 0, $end);
+		}
+	} else {
+		// [::1]:8080
+		$end = mb_stripos($ip, ']:');
+		if ($ip[0] === '[' && $end) {
+			$ip = mb_substr($ip, 1, $end - 1);
+		}
+	}
+
+	return $ip;
+}
+
+/**
  * Check if the expected IP left matches the actual IP
  * @param string $actual IP
  * @param string|array $expected IP (can include subnet)
+ * @param boolean $stripPort Remove ports if it is given (Limitation: not from $expected if array)
  * @return boolean
  */
-function geoip_detect_is_ip_equal($actual, $expected) {
+function geoip_detect_is_ip_equal(string $actual, $expected, bool $stripPort = false ) : bool {
+	if ($stripPort) {
+		$actual = geoip_detect_ip_remove_port($actual);
+		if (is_string($expected)) {
+			$expected = geoip_detect_ip_remove_port($expected);
+		}
+	}
 	try {
 		return IpUtils::checkIp($actual, $expected);
 	} catch(\Exception $e) {
 		// IPv6 not supported by PHP
-		// Do string comparison instead (very rough: no subnet, no IP noramlization)
+		// Do string comparison instead (very rough: no subnet, no IP normalization)
 		if (is_array($expected)) {
 			return in_array($actual, $expected, true);
 		} else {
@@ -342,7 +397,7 @@ function geoip_detect_is_ip_equal($actual, $expected) {
 	}
 }
 
-function geoip_detect_is_ip($ip, $noIpv6 = false) {
+function geoip_detect_is_ip(string $ip, bool $noIpv6 = false) : bool {
 	$flags = FILTER_FLAG_IPV4;
 
 	if (GEOIP_DETECT_IPV6_SUPPORTED && !$noIpv6)
@@ -351,7 +406,7 @@ function geoip_detect_is_ip($ip, $noIpv6 = false) {
 	return filter_var($ip, FILTER_VALIDATE_IP, $flags) !== false;
 }
 
-function geoip_detect_is_ip_in_range($ip, $range_start, $range_end) {
+function geoip_detect_is_ip_in_range(string $ip, string $range_start, string $range_end) : bool {
 	$long_ip = ip2long($ip);
 	if ($long_ip === false) // Not IPv4
 		return false;
@@ -366,7 +421,7 @@ function geoip_detect_is_ip_in_range($ip, $range_start, $range_end) {
  * @param string $ip	IP (IPv4 or IPv6)
  * @return boolean TRUE if private
  */
-function geoip_detect_is_public_ip($ip) {
+function geoip_detect_is_public_ip(string $ip) : bool {
 	// filver_var only detects 127.0.0.1 as local ...
 	if (geoip_detect_is_ip_equal($ip, '127.0.0.0/8'))
 		return false;
@@ -385,19 +440,21 @@ function geoip_detect_is_public_ip($ip) {
 	return $is_public;
 }
 
-function geoip_detect_is_internal_ip($ip) {
+function geoip_detect_is_internal_ip(string $ip) : bool {
 	return geoip_detect_is_ip($ip) && !geoip_detect_is_public_ip($ip);
 }
 
-function _geoip_detect2_get_external_ip_services($nb = 3, $needsCORS = false) {
+function _geoip_detect2_get_external_ip_services(int $nb = 3, bool $needsCORS = false) : array {
 	$ipservicesThatAllowCORS = array(
 			'http://ipv4.icanhazip.com',
 			'http://v4.ident.me',
+			'http://ipinfo.io/ip',
 	);
 	$ipservicesWithoutCORS = array(
 		'http://ipecho.net/plain',
-		'http://bot.whatismyipaddress.com',
+		'https://api.ipify.org',
 	);
+	// Also possible with parsing: http://checkip.dyndns.org
 
 	$ipservices = $ipservicesThatAllowCORS;
 	if (!$needsCORS) {
@@ -418,7 +475,7 @@ function _geoip_detect2_get_external_ip_services($nb = 3, $needsCORS = false) {
  *
  * @return string The detected IPv4 Adress. If none is found, '0.0.0.0' is returned instead.
  */
-function _geoip_detect_get_external_ip_adress_without_cache()
+function _geoip_detect_get_external_ip_adress_without_cache() : string 
 {
 	$ipservices = _geoip_detect2_get_external_ip_services();
 
@@ -427,11 +484,11 @@ function _geoip_detect_get_external_ip_adress_without_cache()
 		$ret = wp_remote_get($url, array('timeout' => defined('WP_TESTS_TITLE') ? 3 : 1.5));
 
 		if (is_wp_error($ret)) {
-			if (WP_DEBUG || defined('WP_TESTS_TITLE')) {
+			if (GEOIP_DETECT_DEBUG || defined('WP_TESTS_TITLE')) {
 				trigger_error('_geoip_detect_get_external_ip_adress_without_cache(): Curl error (' . $url . '): ' . $ret->get_error_message(), E_USER_NOTICE);
 			}
 		} else if (isset($ret['response']['code']) && $ret['response']['code'] != 200) {
-			if (WP_DEBUG || defined('WP_TESTS_TITLE')) {
+			if (GEOIP_DETECT_DEBUG || defined('WP_TESTS_TITLE')) {
 				trigger_error('_geoip_detect_get_external_ip_adress_without_cache(): HTTP error (' . $url . '): Returned code ' . $ret['response']['code'], E_USER_NOTICE);
 			}
 		} else {
@@ -440,7 +497,7 @@ function _geoip_detect_get_external_ip_adress_without_cache()
 				if (geoip_detect_is_ip($ip))
 					return $ip;
 			}
-			if (WP_DEBUG || defined('WP_TESTS_TITLE')) {
+			if (GEOIP_DETECT_DEBUG || defined('WP_TESTS_TITLE')) {
 				trigger_error('_geoip_detect_get_external_ip_adress_without_cache(): HTTP error (' . $url . '): Did not return an IP: ' . $ret['body'], E_USER_NOTICE);
 			}
 		}
@@ -482,10 +539,15 @@ function geoip_detect_get_relative_path($from, $to)
 	return implode('/', $relPath);
 }
 
-function _geoip_maybe_disable_pagecache() {
+function _geoip_maybe_disable_pagecache() : bool {
 	if (!get_option('geoip-detect-disable_pagecache'))
 		return false;
 
+	_geoip_detect_disable_pagecache();
+	return true;
+}
+
+function _geoip_detect_disable_pagecache() {
 	// WP Super Cache, W3 Total Cache
 	if (!defined('DONOTCACHEPAGE'))
 		define('DONOTCACHEPAGE', true);
@@ -498,12 +560,11 @@ function _geoip_maybe_disable_pagecache() {
 
 	if (!headers_sent()) {
 		header('Cache-Control: private, proxy-revalidate, s-maxage=0');
+		header('cf-edge-cache: no-cache' ); // Disable Cloudflare APO
 	}
-
-	return true;
 }
 
-function _geoip_dashes_to_camel_case($string, $capitalizeFirstCharacter = false) {
+function _geoip_dashes_to_camel_case(string $string, bool $capitalizeFirstCharacter = false) : string {
     $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));
 
     if (!$capitalizeFirstCharacter) {
@@ -513,7 +574,7 @@ function _geoip_dashes_to_camel_case($string, $capitalizeFirstCharacter = false)
     return $str;
 }
 
-function geoip_detect_format_localtime($timestamp = -1) {
+function geoip_detect_format_localtime($timestamp = -1) : string {
 	if ($timestamp === -1) {
 		$timestamp = time();
 	}
@@ -525,16 +586,3 @@ function geoip_detect_format_localtime($timestamp = -1) {
 
 	return get_date_from_gmt ( date( 'Y-m-d H:i:s', $timestamp ),  $format);
 }
-
-function _geoip_str_begins_with($string, $startString) 
-{ 
-    $len = mb_strlen($startString); 
-    return (mb_substr($string, 0, $len) === $startString); 
-} 
-
-function _geoip_str_ends_with($string, $startString) 
-{ 
-	$len = mb_strlen($startString); 
-	//if ($len === 0) return true; // Not sure what is "expected behavior"
-    return (mb_substr($string, -$len) === $startString); 
-} 

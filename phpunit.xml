@@ -1,15 +1,20 @@
 <phpunit
 	bootstrap="tests/bootstrap.php"
 	backupGlobals="false"
+	cacheResult="true"
 	colors="true"
 	convertErrorsToExceptions="true"
 	convertNoticesToExceptions="true"
 	convertWarningsToExceptions="true"
 	>
 	<testsuites>
-		<testsuite>
+		<testsuite name="all">
 			<directory prefix="test-" suffix=".php">./tests/</directory>
 		</testsuite>
 	</testsuites>
 	<groups><exclude><group>ajax</group><group>external-http</group></exclude></groups>
+
+	<php>
+        <env name="WP_PHPUNIT__TESTS_CONFIG" value="tests/wp-config.php" />
+    </php>
 </phpunit>

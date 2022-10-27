@@ -4,17 +4,40 @@
     "type": "wordpress-plugin",
     "authors": [
         {
-            "name": "Benjamin Pick (wp-geoip-detect| |posteo.de)"
+            "name": "Benjamin Pick (wp-geoip-detect posteo de)"
         }
     ],
     "keywords": [],
     "homepage": "http://www.yellowtree.de",
     "license": [
-        "GPL-3.0+"
+        "GPL-3.0-or-later"
     ],
     "require": {
-        "geoip2/geoip2": "~2.0",
-        "php": ">=5.6",
-        "symfony/property-access": "^3.4"
+        "php": ">=7.2.5",
+        "geoip2/geoip2": "2.10.0",
+        "maxmind-db/reader": "1.6.0",
+        "maxmind/web-service-common": "0.7.0",
+        "symfony/property-access": "5.2.4",
+        "symfony/http-foundation": "5.2.4"
+    },
+    "require-dev": {
+        "roots/wordpress": "5.9",
+        "wp-phpunit/wp-phpunit": "5.9.0",
+        "yoast/phpunit-polyfills": "1.0.3",
+        "phpunit/phpunit": "^9.0"
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test-external": "phpunit --group external-http",
+        "install-test": "composer install --ignore-platform-req=php",
+        "install-prod": "composer install --prefer-dist --optimize-autoloader --no-dev"
+    },
+    "config": {
+        "allow-plugins": {
+            "roots/wordpress-core-installer": true
+        },
+        "platform": {
+            "php": "7.2.5"
+        }
     }
 }

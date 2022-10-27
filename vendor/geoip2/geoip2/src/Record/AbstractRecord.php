@@ -51,9 +51,10 @@ abstract class AbstractRecord implements \JsonSerializable
 
     private function validAttribute($attr)
     {
-        return in_array($attr, $this->validAttributes, true);
+        return \in_array($attr, $this->validAttributes, true);
     }
 
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->record;

@@ -27,12 +27,12 @@ define('GEOIP_DETECT_DATA_FILENAME', 'GeoLite2-City.mmdb');
 class ManualDataSource extends AbstractDataSource {
 
 	public function getId() { return 'manual'; }
-	public function getLabel() { return __('Manual download & update of a Maxmind City or Country database', 'geoip-detect'); }
+	public function getLabel() { return __('Maxmind City or Country database (Manual download & update)', 'geoip-detect'); }
 
 	public function getDescriptionHTML() { return __('<a href="http://dev.maxmind.com/geoip/geoip2/geolite2/" target="_blank">Free version</a> - <a href="https://www.maxmind.com/en/geoip2-country-database" target="_blank">Commercial Version</a>', 'geoip-detect'); }
 	public function getStatusInformationHTML() {
 		$built = $last_update = 0;
-		$html = array();
+		$html = [];
 
 		$file = $this->maxmindGetFilename();
 
@@ -62,13 +62,17 @@ class ManualDataSource extends AbstractDataSource {
 		$html = '';
 		$last_update = get_option('geoip_detect2_maxmind_ccpa_blacklist_last_updated', 0);
 		$entries = get_option('geoip_detect2_maxmind_ccpa_blacklist');
+		$next_update = wp_next_scheduled('geoipdetectccpaupdate');
 
 		$html .= sprintf(__('Privacy Exclusions last updated: %s', 'geoip-detect'), geoip_detect_format_localtime($last_update) );
 		if ($entries) {
 			$html .= ' ' . sprintf(__('(has %d entries)', 'geoip-detect'), count($entries));
 		}
+		if (GEOIP_DETECT_DEBUG) {
+			$html .= '<br>' . sprintf(__('Privacy Exclusions next Update: %s', 'geoip-detect'), geoip_detect_format_localtime($next_update) );
+		}
 
-		return $html;
+		return apply_filters('geoip_detect_source_get_status_HTML_maxmind', $html, $this->getId());
 	}
 
 	protected function getParameterHTMLMaxmindAccount() {
@@ -80,10 +84,29 @@ class ManualDataSource extends AbstractDataSource {
 
 
 		$html = <<<HTML
-$label_id <input type="number" autocomplete="off" size="10" name="options_auto[license_id]" value="$id" /><br />
+$label_id <input type="number" autocomplete="off" name="options_auto[license_id]" value="$id" /><br />
 $label_key <input type="text" autocomplete="off" size="20" name="options_auto[license_key]" value="$key" /><br />
 HTML;
 		return $html;
+	}
+
+	protected function scheduleCcpa($forceRunNow = false) {
+		if (!class_exists('\\YellowTree\\GeoipDetect\\Lib\\CcpaBlacklistCron')) {
+			return;
+		}
+		$ccpaCronScheduler = new \YellowTree\GeoipDetect\Lib\CcpaBlacklistCron;
+		$ccpaCronScheduler->schedule(true);
+	}
+
+	protected function unscheduleCcpa() {
+		wp_clear_scheduled_hook('geoipdetectccpaupdate');
+	}
+
+	public function activate() {
+		$this->scheduleCcpa();
+	}
+	public function deactivate() {
+		$this->unscheduleCcpa();
 	}
 
 	protected function saveParametersMaxmindAccount($post) {
@@ -104,14 +127,9 @@ HTML;
 				$message .= __('This is not a valid Maxmind Account ID.', 'geoip-detect');
 			}
 			$idChanged = update_option('geoip-detect-auto_license_id', $id);
-			if ($id && class_exists('\\YellowTree\\GeoipDetect\\Lib\\CcpaBlacklistCron')) {
-				$ccpaCronScheduler = new \YellowTree\GeoipDetect\Lib\CcpaBlacklistCron;
-				if ($idChanged || $keyChanged) {
-					// Re-schedule and run it right now
-					$ccpaCronScheduler->schedule(true);
-				} else {
-					$ccpaCronScheduler->schedule();
-				}
+			$forceRunNow = $idChanged || $keyChanged;
+			if ($id) {
+				$this->scheduleCcpa($forceRunNow);
 			}
 		}
 
@@ -183,7 +201,7 @@ HTML;
 
 	public function getShortLabel() { return $this->maxmindGetFileDescription(); }
 
-	public function getReader($locales = array('en'), $options = array()) {
+	public function getReader($locales = [ 'en' ], $options = []) {
 		$reader = null;
 
 		$data_file = $this->maxmindGetFilename();
@@ -191,8 +209,9 @@ HTML;
 			try {
 				$reader = new \GeoIp2\Database\Reader ( $data_file, $locales );
 			} catch ( \Exception $e ) {
-				if (WP_DEBUG)
+				if (GEOIP_DETECT_DEBUG) {
 					trigger_error(sprintf(__('Error while creating reader for "%s": %s', 'geoip-detect'), $data_file, $e->getMessage()), E_USER_NOTICE);
+				}
 			}
 		}
 
@@ -201,7 +220,7 @@ HTML;
 
 	public function isWorking() {
 		$filename = $this->maxmindGetFilename();
-		if (!is_readable($filename))
+		if (!is_readable($filename) || !is_file($filename))
 			return false;
 
 		return true;
@@ -230,8 +249,9 @@ HTML;
 		if (file_exists(ABSPATH . $filename))
 			$filename = ABSPATH . $filename;
 
-		if (!is_readable($filename))
+		if (!is_readable($filename) || !is_file($filename)) {
 			return '';
+		}
 
 		try {
 			$reader = new \GeoIp2\Database\Reader($filename);
@@ -262,3 +282,49 @@ HTML;
 }
 
 geoip_detect2_register_source(new ManualDataSource());
+
+add_filter('geoip_detect_source_get_status_HTML_maxmind', function($html) {
+	$maxmind = new \YellowTree\GeoipDetect\CheckCompatibility\Maxmind;
+	$maxmind->filesChecksums();
+	
+	if ($maxmind->filesByOthers) {
+
+		$id = 'maxmind-conflict-' . $maxmind->getId();
+	
+		if (geoip_detect_is_ignored_notice($id))
+			return;
+
+		// Which files are conflicting?
+		$files = '';
+		$sameVersion = true;
+		foreach($maxmind->checksumResult as $file => $result) {
+			$file = $maxmind->makePathRelative($file);
+			$files .= '&nbsp;&nbsp;-&nbsp;&nbsp;' . $file . ' (' . ($result ? 'same version' : 'different version' ).  ')<br>';
+			$sameVersion = $sameVersion && $result;
+		}
+
+		// Ok, create warning / error message now
+		$html = '<div style="clear:both"></div>'; 
+		if ($sameVersion) {
+			$html .= '<div class="notice is-dismissible">';
+			$html .= '<p style="float: right">';
+			$html .= '<a href="tools.php?page=' . GEOIP_PLUGIN_BASENAME . '&geoip_detect_dismiss_notice=' . $id . '">' . __('Dismiss notice', 'geoip-detect') . '</a>';
+			$html .= '</p>';
+		
+			$html .= '<b>' . __('Notice') . ':</b><br>';
+			$html .= __('Another plugin has loaded Maxmind files already that are included with this plugin as well:', 'geoip-detect') . '<br />';
+			$html .= $files;
+			$html .= '<i>(' . __('Be careful when you update that plugin as it might break the Maxmind functionality of Geolocation IP Detection.', 'geoip-detect') . ')</i>';
+			$html .= '</div>';
+		} else {
+			// Higher risk, so not dismissible
+			$html .= '<div class="geoip_detect_error">';
+			$html .= '<b>' . __('Warning: These Maxmind files were loaded from other plugins:', 'geoip-detect') . '</b><br />';
+			$html .= $files;
+			$html .= '<i>(' . __('This can result in errors.', 'geoip-detect') . ')</i>';
+			$html .= '</div>';
+		}
+
+	}
+	return $html;
+});

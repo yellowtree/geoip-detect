@@ -4,18 +4,21 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 
 class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 
-	public function setUp() {
-		add_filter('pre_option_geoip-detect-precision-user_id', array($this, 'filter_set_user_id'), 101);
-		add_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_user_secret'), 101);
+	public function set_up() {
+		parent::set_up();
+
+		add_filter('pre_option_geoip-detect-precision-user_id', [ $this, 'filter_set_user_id' ], 101);
+		add_filter('pre_option_geoip-detect-precision-user_secret', [ $this, 'filter_set_user_secret' ], 101);
 		
-		parent::setUp();
 	}
 	
-	public function tearDown() {
-		remove_filter('pre_option_geoip-detect-precision-user_id', array($this, 'filter_set_user_id'), 101);
-		remove_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_user_secret'), 101);
-		remove_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_wrong_user_secret'), 102);
-		remove_filter('pre_option_geoip-detect-precision_api_type', array($this, 'filter_set_precision_method_insights'), 102);
+	public function tear_down() {
+		remove_filter('pre_option_geoip-detect-precision-user_id', [ $this, 'filter_set_user_id' ], 101);
+		remove_filter('pre_option_geoip-detect-precision-user_secret', [ $this, 'filter_set_user_secret' ], 101);
+		remove_filter('pre_option_geoip-detect-precision-user_secret', [ $this, 'filter_set_wrong_user_secret' ], 102);
+		remove_filter('pre_option_geoip-detect-precision_api_type', [ $this, 'filter_set_precision_method_insights' ], 102);
+
+		parent::tear_down();
 	}
 	
 	function filter_set_default_source() {
@@ -49,8 +52,8 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	function testDataSourceExists() {
-		remove_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_user_secret'), 101);
-		add_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_wrong_user_secret'), 102);
+		remove_filter('pre_option_geoip-detect-precision-user_secret', [ $this, 'filter_set_user_secret' ], 101);
+		add_filter('pre_option_geoip-detect-precision-user_secret', [ $this, 'filter_set_wrong_user_secret' ], 102);
 		
 		$registry = DataSourceRegistry::getInstance();
 		
@@ -64,29 +67,29 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	/**
 	 * @group external-http
-	 * @expectedException \GeoIp2\Exception\AuthenticationException
 	 */
 	function testMaxmindApiPasswordWrong() {
+		$this->expectException(\GeoIp2\Exception\AuthenticationException::class);
 		$client = new Client('17', 'sadf');		
 		$client->city('8.8.8.8');
 	}
 	
 	/**
 	 * @group external-http
-	 * @expectedException \GeoIp2\Exception\AuthenticationException
 	 */
 	function testMaxmindApiPasswordWrong2() {
+		$this->expectException(\GeoIp2\Exception\AuthenticationException::class);
 		$client = new Client('', '');
 		$client->city('8.8.8.8');
 	}
 	
 	/**
 	 * @group external-http
-	 * @expectedException \GeoIp2\Exception\AuthenticationException
 	 */
 	function testNoPasswordManualLookup() {
-		remove_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_user_secret'), 101);
-		add_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_wrong_user_secret'), 102);
+		$this->expectException(\GeoIp2\Exception\AuthenticationException::class);
+		remove_filter('pre_option_geoip-detect-precision-user_secret', [ $this, 'filter_set_user_secret' ], 101);
+		add_filter('pre_option_geoip-detect-precision-user_secret', [ $this, 'filter_set_wrong_user_secret' ], 102);
 		
 		$reader = geoip_detect2_get_reader();
 		
@@ -98,11 +101,11 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	 * @group external-http
 	 */
 	function testTimeout() {
-		remove_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_user_secret'), 101);
-		add_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_wrong_user_secret'), 102);
+		remove_filter('pre_option_geoip-detect-precision-user_secret', [ $this, 'filter_set_user_secret' ], 101);
+		add_filter('pre_option_geoip-detect-precision-user_secret', [ $this, 'filter_set_wrong_user_secret' ], 102);
 		
 		$before = microtime(true);
-		$ret = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, array('en'), array('timeout' => 0.01, 'skipCache' => true));
+		$ret = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, [ 'en' ], [ 'timeout' => 0.01, 'skipCache' => true ]);
 		$after = microtime(true);
 		
 		$this->assertLessThan(0.1, $after - $before);
@@ -114,12 +117,12 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	 * @group external-http
 	 */
 	function testNoPassword() {
-		remove_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_user_secret'), 101);
-		add_filter('pre_option_geoip-detect-precision-user_secret', array($this, 'filter_set_wrong_user_secret'), 102);
+		remove_filter('pre_option_geoip-detect-precision-user_secret', [ $this, 'filter_set_user_secret' ], 101);
+		add_filter('pre_option_geoip-detect-precision-user_secret', [ $this, 'filter_set_wrong_user_secret' ], 102);
 		
 		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		$this->assertTrue($record->isEmpty);
-		$this->assertContains('authenticated', $record->extra->error);
+		$this->assertStringContainsString('authenticated', $record->extra->error);
 	}
 	
 	/**
@@ -142,10 +145,10 @@ class PrecisionSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	 */
 	/*
 	function testInsightsNotWorking() {
-		add_filter('pre_option_geoip-detect-precision_api_type', array($this, 'filter_set_precision_method_insights'), 102);
+		add_filter('pre_option_geoip-detect-precision_api_type', [ $this, 'filter_set_precision_method_insights' ], 102);
 		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		$this->assertTrue($record->isEmpty);
-		$this->assertContains('out of queries', $record->extra->error);
+		$this->assertStringContainsString('out of queries', $record->extra->error);
 	}
 	*/
 

@@ -1,6 +1,27 @@
 CHANGELOG
 =========
 
+1.6.0 (2019-12-19)
+------------------
+
+* 1.5.0 and 1.5.1 contained a possible memory corruptions when using
+  `getWithPrefixLen`. This has been fixed. Reported by proton-ab.
+  GitHub #96.
+* The `composer.json` file now conflicts with all versions of the
+  `maxminddb` C extension less than the Composer version. This is to
+  reduce the chance of having an older, conflicting version of the
+  extension installed. You will need to upgrade the extension before
+  running `composer update`. Pull request by Benoît Burnichon. GitHub
+  #97.
+
+1.5.1 (2019-12-12)
+------------------
+
+* Minor performance improvements.
+* Make tests pass with older versions of libmaxminddb. PR by Remi
+  Collet. GitHub #90.
+* Test enhancements. PR by Chun-Sheng, Li. GitHub #91.
+
 1.5.0 (2019-09-30)
 ------------------
 

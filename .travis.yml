@@ -1,7 +1,4 @@
-sudo: false
-dist: trusty
-
-language: php
+version: ~> 1.0
 
 notifications:
   email:
@@ -13,52 +10,55 @@ cache:
   directories:
     - $HOME/.composer/cache
 
-jobs:
-  allow_failures:
-    - php: 8.0
-      env: WP_VERSION=latest
+language: php
+os: linux
+dist: xenial
 
-matrix:
+services:
+  - mysql
+
+env:
+  global:
+    - WP_DB_USER=wp
+    - WP_DB_PASS=password
+    - WP_DB_NAME=wp_tests
+    - WP_VERSION=*
+    - CF7_VERSION=v5.5.3
+    - PHPUNIT_VERSION=^9.0
+
+php:
+  - 8.0
+  - 7.3
+
+jobs:
+  fast_finish: true
   include:
-    - php: 8.0
-      env: WP_VERSION=latest
-    - php: 7.4
-      env: WP_VERSION=latest
-    - php: 7.3
-      env: WP_VERSION=latest
-    - php: 7.2
-      env: WP_VERSION=trunk
-    - php: 7.2
-      env: WP_VERSION=latest WP_MULTISITE=1
-    - php: 7.2
-      env: WP_VERSION=latest WP_MULTISITE=0
-    - php: 7.1
-      env: WP_VERSION=latest
-    - php: 7.0
-      env: WP_VERSION=latest
-    - php: 5.6
-      env: WP_VERSION=4.5
-    - php: 5.6
-      env: WP_VERSION=latest
+    - name: php_7_2
+      php: 7.2
+      env: PHPUNIT_VERSION=^7.0
+    - name: php_7_2_and_wp_5_4
+      php: 7.2
+      env: WP_VERSION=5.4.9 CF7_VERSION=v5.1.6 PHPUNIT_VERSION=^7.0
+    - name: bleeding edge
+      php: 8.1.0
+      dist: focal
+      env: CF7_VERSION=master
+
+install:
+  - composer validate
+  - composer require --ignore-platform-req=php --dev --with-dependencies roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION} phpunit/phpunit:${PHPUNIT_VERSION}
+  - composer show
+  - nvm install 12 && nvm use 12
+  - yarn install
+  - git clone --depth=50 --branch=${CF7_VERSION} https://github.com/takayukister/contact-form-7.git
 
 before_script:
-  - export PATH="$HOME/.composer/vendor/bin:$PATH"
-  - |
-    if [ -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
-      phpenv config-rm xdebug.ini
-    else
-      echo "xdebug.ini does not exist"
-    fi
-  - |
-    if [[ ! -z "$WP_VERSION" ]] ; then
-      bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
-      composer global require "phpunit/phpunit=4.8.*|5.7.*"
-    fi
-  - |
-    if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
-      composer global require wp-coding-standards/wpcs
-      phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
-    fi
+  - mysql -u root -e "CREATE USER ${WP_DB_USER} IDENTIFIED BY '${WP_DB_PASS}';"
+  - mysql -u root -e "GRANT ALL PRIVILEGES ON ${WP_DB_NAME}.* TO ${WP_DB_USER};"
+  - mysql -u root -e "CREATE DATABASE ${WP_DB_NAME};"
+  - phpenv config-rm xdebug.ini || return 0
 
-script: 
-    - phpunit --verbose
+script:
+  - composer test
+  - yarn test
+  - yarn build

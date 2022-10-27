@@ -3,18 +3,18 @@ use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 
 class HeaderSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		
-		add_filter('pre_option_geoip-detect-header-provider', array($this, 'filter_set_provider'), 101);
+		add_filter('pre_option_geoip-detect-header-provider', [ $this, 'filter_set_provider' ], 101);
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		unset($_SERVER['CloudFront-Viewer-Country']);
 		unset($_SERVER["HTTP_CF_IPCOUNTRY"]);
 		
-		remove_filter('pre_option_geoip-detect-header-provider', array($this, 'filter_set_provider'), 101);
-		remove_filter('pre_option_geoip-detect-header-provider', array($this, 'filter_set_provider_cloudflare'), 102);
+		remove_filter('pre_option_geoip-detect-header-provider', [ $this, 'filter_set_provider' ], 101);
+		remove_filter('pre_option_geoip-detect-header-provider', [ $this, 'filter_set_provider_cloudflare' ], 102);
 	}
 
 	function filter_set_default_source() {
@@ -59,9 +59,30 @@ class HeaderSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertSame(null, $ret->country->isoCode);
 		$this->assertSame(GEOIP_DETECT_TEST_IP, $ret->traits->ipAddress);
 	}
+
+	function testInvalidCountryCode() {
+		$_SERVER['CloudFront-Viewer-Country'] = 'bla';
+		$ret = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
+		
+		$this->assertEmptyGeoIP2Record($ret, GEOIP_DETECT_TEST_IP);
+		$this->assertStringContainsString('bla', $ret->extra->error);
+	}
+	function testSpecialCountryCode() {
+		$_SERVER['CloudFront-Viewer-Country'] = 'xx';
+		$ret = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
+		
+		$this->assertSame(null, $ret->country->isoCode);
+		$this->assertEmptyGeoIP2Record($ret, GEOIP_DETECT_TEST_IP);
+
+		$_SERVER['CloudFront-Viewer-Country'] = 'XX';
+		$ret = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
+		
+		$this->assertSame(null, $ret->country->isoCode);
+		$this->assertEmptyGeoIP2Record($ret, GEOIP_DETECT_TEST_IP);
+	}
 	
 	function testLookupCloudflare() {
-		add_filter('pre_option_geoip-detect-header-provider', array($this, 'filter_set_provider_cloudflare'), 102);
+		add_filter('pre_option_geoip-detect-header-provider', [ $this, 'filter_set_provider_cloudflare' ], 102);
 		$_SERVER['HTTP_CF_IPCOUNTRY'] = 'us';
 		$ret = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		

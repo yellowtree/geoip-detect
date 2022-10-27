@@ -1,0 +1,923 @@
+[
+    [
+        0,
+        "[geoip_detect2_test_show_if]no condition[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": []
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        1,
+        "[geoip_detect2_test_show_if country=\"DE\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "de"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        2,
+        "[geoip_detect2_test_show_if country=\"de\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "de"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        3,
+        "[geoip_detect2_test_show_if country=\"Germany\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "germany"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        4,
+        "[geoip_detect2_test_show_if country=\"germany\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "germany"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        5,
+        "[geoip_detect2_test_show_if country=\"US\"]yes[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "us"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        6,
+        "[geoip_detect2_test_show_if country=\"DE\" city=\"Munic\" lang=\"en\"]yes[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "de"
+                },
+                {
+                    "p": "city",
+                    "v": "munic"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        7,
+        "[geoip_detect2_test_show_if country=\"DE\" city=\"Eschborn\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "de"
+                },
+                {
+                    "p": "city",
+                    "v": "eschborn"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        8,
+        "[geoip_detect2_test_show_if country=\"DE\" city=\"2929134\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "de"
+                },
+                {
+                    "p": "city",
+                    "v": "2929134"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        9,
+        "[geoip_detect2_test_show_if continent=\"EU\" not_country=\"FR\" city=\"Eschborn\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "continent",
+                    "v": "eu"
+                },
+                {
+                    "p": "country",
+                    "v": "fr",
+                    "not": 1
+                },
+                {
+                    "p": "city",
+                    "v": "eschborn"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        10,
+        "[geoip_detect2_test_show_if lang=\"es\" country=\"Alemania\"]lang[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "alemania"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "es",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        11,
+        "[geoip_detect2_test_show_if lang=\"en\" country=\"Alemania\"]yes[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "alemania"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        12,
+        "[geoip_detect2_test_show_if state=\"HE\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "mostSpecificSubdivision",
+                    "v": "he"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        13,
+        "[geoip_detect2_test_show_if region=\"HE\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "mostSpecificSubdivision",
+                    "v": "he"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        14,
+        "[geoip_detect2_test_show_if most_specific_subdivision=\"HE\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "mostSpecificSubdivision",
+                    "v": "he"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        15,
+        "[geoip_detect2_test_show_if state=\"NN\"]yes[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "mostSpecificSubdivision",
+                    "v": "nn"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        16,
+        "[geoip_detect2_test_show_if continent=\"EU\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "continent",
+                    "v": "eu"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        17,
+        "[geoip_detect2_test_show_if property=\"location.timeZone\" property_value=\"Europe\/Berlin\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "location.timeZone",
+                    "v": "europe\/berlin"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": "",
+            "property": "location.timeZone"
+        }
+    ],
+    [
+        18,
+        "[geoip_detect2_test_show_if property=\"location.timeZone\" not_property_value=\"Europe\/Berlin\"]yes[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "location.timeZone",
+                    "v": "europe\/berlin",
+                    "not": 1
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": "",
+            "property": "location.timeZone"
+        }
+    ],
+    [
+        19,
+        "[geoip_detect2_test_show_if property=\"invalid.property\" property_value=\"Europe\/Berlin\"]yes[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "invalid.property",
+                    "v": "europe\/berlin"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": "",
+            "property": "invalid.property"
+        }
+    ],
+    [
+        20,
+        "[geoip_detect2_test_show_if property=\"invalid.property\" not_property_value=\"Europe\/Berlin\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "invalid.property",
+                    "v": "europe\/berlin",
+                    "not": 1
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": "",
+            "property": "invalid.property"
+        }
+    ],
+    [
+        21,
+        "[geoip_detect2_test_show_if not_country=\"FR\"]not_country[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "fr",
+                    "not": 1
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        22,
+        "[geoip_detect2_test_show_if not_country=\"DE\"]yes[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "de",
+                    "not": 1
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        23,
+        "[geoip_detect2_test_show_if continent=\"EU\" not_country=\"DE\"]yes[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "continent",
+                    "v": "eu"
+                },
+                {
+                    "p": "country",
+                    "v": "de",
+                    "not": 1
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        24,
+        "[geoip_detect2_test_show_if country=\"US, DE\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "us,de"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        25,
+        "[geoip_detect2_test_show_if country=\"US,DE , FR\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "us,de,fr"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        26,
+        "[geoip_detect2_test_show_if country=\"US,FR\"]yes[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "us,fr"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        27,
+        "[geoip_detect2_test_show_if property=\"isEmpty\" property_value=\"1\"]yes[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "isEmpty",
+                    "v": "1"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": "",
+            "property": "isEmpty"
+        }
+    ],
+    [
+        28,
+        "[geoip_detect2_test_show_if property=\"isEmpty\" property_value=\"false\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "isEmpty",
+                    "v": "false"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": "",
+            "property": "isEmpty"
+        }
+    ],
+    [
+        29,
+        "[geoip_detect2_test_show_if property=\"isEmpty\" property_value=\"no\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "isEmpty",
+                    "v": "no"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": "",
+            "property": "isEmpty"
+        }
+    ],
+    [
+        30,
+        "[geoip_detect2_test_show_if property=\"isEmpty\" property_value=\"YES\"]yes[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "isEmpty",
+                    "v": "yes"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": "",
+            "property": "isEmpty"
+        }
+    ],
+    [
+        31,
+        "[geoip_detect2_test_show_if operator=\"or\"]yes[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "or",
+            "not": 0,
+            "conditions": []
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        32,
+        "[geoip_detect2_test_show_if region=\"HE\" operator=\"or\" country=\"France\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "or",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "france"
+                },
+                {
+                    "p": "mostSpecificSubdivision",
+                    "v": "he"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        33,
+        "[geoip_detect2_test_show_if region=\"BY\" operator=\"or\" country=\"France\"]yes[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "or",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "france"
+                },
+                {
+                    "p": "mostSpecificSubdivision",
+                    "v": "by"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        34,
+        "[geoip_detect2_test_show_if region=\"BY\" operator=\"or\" country=\"Germany\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "or",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "germany"
+                },
+                {
+                    "p": "mostSpecificSubdivision",
+                    "v": "by"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        35,
+        "[geoip_detect2_test_show_if region=\"BY\" operator=\"or\" country=\"France\" property=\"extra.countryIsoCode3\" property_value=\"DEU\"]yes[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "or",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "france"
+                },
+                {
+                    "p": "mostSpecificSubdivision",
+                    "v": "by"
+                },
+                {
+                    "p": "extra.countryIsoCode3",
+                    "v": "deu"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": "",
+            "property": "extra.countryIsoCode3"
+        }
+    ],
+    [
+        36,
+        "[geoip_detect2_test_show_if country=\"DE\"]hu[else]ha[\/geoip_detect2_test_show_if]",
+        true,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "de"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ],
+    [
+        37,
+        "[geoip_detect2_test_show_if country=\"EN\"]hu[else]ha[\/geoip_detect2_test_show_if]",
+        false,
+        {
+            "op": "and",
+            "not": 0,
+            "conditions": [
+                {
+                    "p": "country",
+                    "v": "en"
+                }
+            ]
+        },
+        {
+            "skip_cache": false,
+            "lang": [
+                "en",
+                "en"
+            ],
+            "default": ""
+        }
+    ]
+]

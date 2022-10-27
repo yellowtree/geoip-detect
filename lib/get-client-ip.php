@@ -60,14 +60,14 @@ class GetClientIp {
 			$ip_list_reverse = array_filter($ip_list_reverse, function($value) {
 				$value = trim($value);
 				if (!$value) return false;
-				return false === geoip_detect_is_ip_equal($value, $this->proxyWhitelist);
+				return false === geoip_detect_is_ip_equal($value, $this->proxyWhitelist, true);
 			});
 		}
 		
 		return $ip_list_reverse;
 	}
 	
-	public function getIp($useReverseProxy = false) {
+	public function getIp($useReverseProxy = false) : string {
 		$ip_list = $this->getIpsFromRemoteAddr();
 
 		if ($useReverseProxy)

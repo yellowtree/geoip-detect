@@ -15,6 +15,7 @@
 	font-size: 80%;
 	font-style: italic;
 }
+
 .geoip_detect_error {
 	display:block;
 	clear: both;

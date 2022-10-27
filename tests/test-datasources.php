@@ -10,15 +10,15 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
 	 */
 	private $registry; 
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		$this->registry = DataSourceRegistry::getInstance();
 	} 
 	
-	public function tearDown() {
-		parent::tearDown();
-		remove_filter('pre_option_geoip-detect-source', array($this, 'filter_set_invalid_default_source'), 105);
-		remove_filter('pre_option_geoip-detect-source', array($this, 'filter_set_wrong_default_source'), 106);
+	public function tear_down() {
+		remove_filter('pre_option_geoip-detect-source', [ $this, 'filter_set_invalid_default_source' ], 105);
+		remove_filter('pre_option_geoip-detect-source', [ $this, 'filter_set_wrong_default_source' ], 106);
+		parent::tear_down();
 	}
 	
 	public function filter_set_invalid_default_source() {
@@ -34,13 +34,14 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
 		$source_ids = array_keys($sources);
 		sort($source_ids);
 		
-		$this->assertSame(array('auto', 'header', 'hostinfo', 'ipstack', 'manual', 'precision'), $source_ids);
+		$this->assertSame([ 'auto', 'fastah', 'header', 'hostinfo', 'ipstack', 'manual', 'precision' ], $source_ids);
 	}
 	
 	public function testInvalidDatasources() {
 		try {
-			$this->assertNotNull($this->registry->getSource('invalid'));
+			$ret = $this->registry->getSource('invalid');
 		} catch (PHPUnit_Framework_Error_Notice $e) {
+			$this->assertSame(false, false);
 			$msg = $e->getMessage();
 			if (strpos($msg, 'no such source was found') !== false)
 				return;
@@ -50,11 +51,12 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	public function testInvalidCurrentDatasource() {
-		add_filter('pre_option_geoip-detect-source', array($this, 'filter_set_invalid_default_source'), 105);
+		add_filter('pre_option_geoip-detect-source', [ $this, 'filter_set_invalid_default_source' ], 105);
 		
 		try {
 			$source = $this->registry->getCurrentSource();
 		} catch (PHPUnit_Framework_Error_Notice $e) {
+			$this->assertSame(false, false);
 			$msg = $e->getMessage();
 			if (strpos($msg, 'no such source was found') !== false)
 				return;
@@ -64,12 +66,12 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	public function testManualOverrideDatasource() {
-		add_filter('pre_option_geoip-detect-source', array($this, 'filter_set_wrong_default_source'), 106);
+		add_filter('pre_option_geoip-detect-source', [ $this, 'filter_set_wrong_default_source' ], 106);
 		$source = $this->registry->getCurrentSource();
 		$this->assertEquals('header', $source->getId());
 			
 		// Test lookup with manual source name
-		$record =  geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, array('en'), array('source' => 'manual'));
+		$record =  geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, [ 'en' ], [ 'source' => 'manual' ]);
 		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
 		$this->assertEquals('Germany', $record->country->name);
 	}
@@ -77,9 +79,12 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
 	public function testEachSourceForFormalValidity() {
 		$sources = $this->registry->getAllSources();
 		
+		if (!count($sources)) {
+			$this->fail('There should be at least one source available?!');
+		}
 		foreach ($sources as $source) {
 			$id = $source->getId();
-			$this->assertRegExp('/^[-_a-z0-9]+$/i', $id, 'Invalid chars in id name');
+			$this->assertMatchesRegularExpression('/^[-_a-z0-9]+$/i', $id, 'Invalid chars in id name');
 			
 			$label = $source->getLabel();
 			$this->assertNotEmpty($label, 'Label of "' . $id . '" missing.');
@@ -95,7 +100,7 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
      * @ticket 22
      *
     public function testAdminNoticeDatabaseMissingRequiresManageOptionsCapability () {
-        $args = array('role' => 'subscriber');
+        $args = [ 'role' => 'subscriber' ];
         if (!$this->factory) {
             $this->factory = new WP_UnitTest_Factory();
             $args['user_login'] = hash('md5', uniqid() . microtime());
@@ -113,7 +118,7 @@ class DataSourcesTest extends WP_UnitTestCase_GeoIP_Detect {
      * @ticket 22
      */
     public function testAdminNoticeDatabaseMissingPrintsOutputWithManageOptionsCapability () {
-        $args = array('role' => 'administrator');
+        $args = [ 'role' => 'administrator' ];
         if (!$this->factory) {
             $this->factory = new WP_UnitTest_Factory();
             $args['user_login'] = hash('md5', uniqid() . microtime());

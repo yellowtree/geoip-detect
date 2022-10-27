@@ -1,6 +1,36 @@
 CHANGELOG
 =========
 
+5.2.0
+-----
+
+ * deprecated passing a boolean as the first argument of `PropertyAccessor::__construct()`, expecting a combination of bitwise flags instead
+ * added the ability to disable usage of the magic `__get` & `__set` methods
+
+5.1.0
+-----
+
+ * Added an `UninitializedPropertyException`
+ * Linking to PropertyInfo extractor to remove a lot of duplicate code
+
+4.4.0
+-----
+
+ * deprecated passing `null` as `$defaultLifetime` 2nd argument of `PropertyAccessor::createCache()` method,
+   pass `0` instead
+
+4.3.0
+-----
+
+ * added a `$throwExceptionOnInvalidPropertyPath` argument to the PropertyAccessor constructor.
+ * added `enableExceptionOnInvalidPropertyPath()`, `disableExceptionOnInvalidPropertyPath()` and
+   `isExceptionOnInvalidPropertyPath()` methods to `PropertyAccessorBuilder`
+
+4.0.0
+-----
+
+ * removed the `StringUtil` class, use `Symfony\Component\Inflector\Inflector`
+
 3.1.0
 -----
 

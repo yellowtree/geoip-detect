@@ -1,12 +1,13 @@
 <?php
+
 if (!defined('GEOIP_DETECT_IP_EMPTY_CACHE_TIME'))
 	define('GEOIP_DETECT_IP_EMPTY_CACHE_TIME', 1);
 
 define('GEOIP_DETECT_DOING_UNIT_TESTS', true);
-require_once 'vendor/autoload.php';
 
-$_tests_dir = getenv('WP_TESTS_DIR');
-if ( !$_tests_dir ) $_tests_dir = '/tmp/wordpress-tests-lib';
+require_once dirname( dirname( __FILE__ ) ) . '/vendor/autoload.php';
+
+$_tests_dir = dirname( dirname( __FILE__ ) ) . '/vendor/wp-phpunit/wp-phpunit';
 
 if ( ! file_exists( $_tests_dir . '/includes/functions.php' ) ) {
 	echo "Could not find $_tests_dir/includes/functions.php, have you run bin/install-wp-tests.sh ?" . PHP_EOL; // WPCS: XSS ok.
@@ -17,12 +18,19 @@ if ( ! file_exists( $_tests_dir . '/includes/functions.php' ) ) {
 require_once $_tests_dir . '/includes/functions.php';
 
 function _manually_load_plugin() {
-	require dirname( __FILE__ ) . '/../geoip-detect.php';
+	require __DIR__ . '/../geoip-detect.php';
+	require __DIR__ .'/../contact-form-7/wp-contact-form-7.php';
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
 // Start up the WP testing environment.
 require $_tests_dir . '/includes/bootstrap.php';
+
+echo_wordpress_version();
+function echo_wordpress_version() {
+	global $wp_version;
+	echo "\nUsing Wordpress " . $wp_version . "\n\n";
+}
 
 ini_set('error_reporting', ini_get('error_reporting') | E_USER_NOTICE);
 
@@ -44,11 +52,12 @@ define('GEOIP_DETECT_TEST_IP_SERIVCE_PROVIDER', 'https://raw.githubusercontent.c
 class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 {
 	private $setup_was_called = false;
-	public function setUp() {
+	public function set_up() {
+		parent::set_up();
 		// Use Test File
-		add_filter('geoip_detect_get_abs_db_filename', array($this, 'filter_set_test_database'), 101);
-		add_filter('pre_option_geoip-detect-source', array($this, 'filter_set_default_source'), 101);
-		add_filter('pre_transient_geoip_detect_external_ip', array($this, 'filter_set_external_ip'), 101);
+		add_filter('geoip_detect_get_abs_db_filename', [ $this, 'filter_set_test_database' ], 101);
+		add_filter('pre_option_geoip-detect-source', [ $this, 'filter_set_default_source' ], 101);
+		add_filter('pre_transient_geoip_detect_external_ip', [ $this, 'filter_set_external_ip' ], 101);
 		
 		$this->setup_was_called = true;
 	}
@@ -71,27 +80,27 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 		return 'manual';
 	}
 	
-	public function tearDown() {
-		remove_filter('geoip_detect_get_abs_db_filename', array($this, 'filter_set_test_database'), 101);
-		remove_filter('pre_option_geoip-detect-source', array($this, 'filter_set_default_source'), 101);
-		remove_filter('pre_transient_geoip_detect_external_ip', array($this, 'filter_set_external_ip'), 101);
+	public function tear_down() {
+		remove_filter('geoip_detect_get_abs_db_filename', [ $this, 'filter_set_test_database' ], 101);
+		remove_filter('pre_option_geoip-detect-source', [ $this, 'filter_set_default_source' ], 101);
+		remove_filter('pre_transient_geoip_detect_external_ip', [ $this, 'filter_set_external_ip' ], 101);
 		$this->setup_was_called = false;
 	}
 	
 	public function testDatabaseLocation() {
-		$this->assertSame(true, $this->setup_was_called, 'parent::setUp() has not been called.');
+		$this->assertSame(true, $this->setup_was_called, 'parent::set_up() has not been called.');
 	}
 	
 	protected function assertValidGeoIPRecord($record, $ip)
 	{
 		$assert_text = 'When looking up info for IP ' . $ip . ':';
 		$this->assertInstanceOf('geoiprecord', $record, $assert_text);
-		$this->assertInternalType('string', $record->country_code, $assert_text);
+		$this->assertIsString($record->country_code, $assert_text);
 		$this->assertEquals(2, strlen($record->country_code), $assert_text);
 		$this->assertEquals(3, strlen($record->country_code3), $assert_text);
 		$this->assertEquals(2, strlen($record->continent_code), $assert_text);
 		
-		$properties = array('country_code', 'country_code3', 'country_name', 'latitude', 'longitude', 'continent_code');
+		$properties = [ 'country_code', 'country_code3', 'country_name', 'latitude', 'longitude', 'continent_code' ];
 
 		foreach ($properties as $name) {
 			$this->assertObjectHasAttribute($name, $record);
@@ -118,11 +127,11 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 			$this->assertNotEmpty($record->traits->ipAddress, $assert_text . 'requested IP should not be empty');
 		}
 		
-		$this->assertInternalType('string', $record->country->isoCode, $assert_text . 'country->isoCode should not be empty');
+		$this->assertIsString($record->country->isoCode, $assert_text . 'country->isoCode should not be empty');
 		$this->assertEquals(2, strlen($record->country->isoCode), $assert_text . 'country->isoCode should be 2 chars long');
 		if (!$skipContinentTest)
 			$this->assertEquals(2, strlen($record->continent->code), $assert_text  . 'continent->code should be 2 chars long');
-		$this->assertInternalType('array', $record->country->names, $assert_text . 'country->names should be an array');
+		$this->assertIsArray($record->country->names, $assert_text . 'country->names should be an array');
 		
 		if (geoip_detect_is_ip($ip))
 			$this->assertSame(geoip_detect_normalize_ip($ip), geoip_detect_normalize_ip($record->traits->ipAddress), $assert_text);

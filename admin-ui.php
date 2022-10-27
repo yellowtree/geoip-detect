@@ -1,4 +1,4 @@
-<?php
+<?php 
 /*
 Copyright 2013-2021 Yellow Tree, Siegen, Germany
 Author: Benjamin Pick (wp-geoip-detect| |posteo.de)
@@ -59,25 +59,34 @@ function geoip_detect_lookup_page()
 	$message = '';
 	$action = isset($_POST['action']) ? sanitize_key($_POST['action']) : '';
 	$ip = isset($_POST['ip']) ? sanitize_text_field($_POST['ip']) : '';
+	$current_ip = geoip_detect2_get_client_ip();
 
 	if (geoip_detect_verify_nonce($action)) {
 		switch($action) {
+			case 'clear_cache':
+				$registry = DataSourceRegistry::getInstance();
+				$ret = $registry->clearCache();
+				if ($ret === true) {
+					$message = __('The cache has been emptied successfully.', 'geoip-detect');
+				} else {
+					$message = $ret;
+				}
+				break;
 			case 'lookup':
 				if ($ip)
 				{
 					$request_ip = geoip_detect_is_ip($ip) ? $ip : '';
 					$request_skipCache = !empty($_POST['skip_cache']);
-					$options = array('skipCache' => $request_skipCache);
+					$request_skipLocalCache = !empty($_POST['skip_local_cache']);
+					$options = [ 'skipCache' => $request_skipCache, 'skipLocalCache' => $request_skipLocalCache ];
 
 					$request_locales = null;
 					if (!empty($_POST['locales'])) {
 						$request_locales = explode(',', sanitize_text_field($_POST['locales']));
 					}
 
-					$start = microtime(true);
-					$ip_lookup_result = geoip_detect2_get_info_from_ip($request_ip, $request_locales, $options);
-					$end = microtime(true);
-					$ip_lookup_duration = $end - $start;
+					$ip_lookup_result = geoip_detect_lookup_page_timed_lookup($request_ip, $request_locales, $options, $current_ip, $ip_lookup_duration);
+					geoip_detect_lookup_page_timed_lookup($request_ip, $request_locales, $options, $current_ip, $ip_lookup_2nd_duration);
 				}
 				break;
 		}
@@ -86,17 +95,30 @@ function geoip_detect_lookup_page()
 	include_once(GEOIP_PLUGIN_DIR . '/views/lookup.php');
 }
 
+function geoip_detect_lookup_page_timed_lookup($request_ip, $request_locales, $options, $current_ip, &$ip_lookup_duration) {
+	$start = microtime(true);
+	if ($request_ip === $current_ip) {
+		$ip_lookup_result = geoip_detect2_get_info_from_current_ip($request_locales, $options);
+	} else {
+		$ip_lookup_result = geoip_detect2_get_info_from_ip($request_ip, $request_locales, $options);
+	}
+	$end = microtime(true);
+	$ip_lookup_duration = $end - $start;
+
+	return $ip_lookup_result;
+}
+
 function geoip_detect_sanitize_option($opt_name, $opt_value, &$message = '') {
 	$opt_value = sanitize_text_field($opt_value);
 	switch($opt_name) {
 		case 'external_ip':
 			if ($opt_value) {
 				if (!geoip_detect_is_ip($opt_value)) {
-					$message .= 'The external IP "' . esc_html($opt_value) . '" is not a valid IP.';
+					$message .= sprintf(__('The external IP "%s" is not a valid IP.', 'geoip-detect'), esc_html($opt_value));
 					return false;
 				} else {
 					if (!geoip_detect_is_public_ip($opt_value)) {
-						$message .= 'Warning: The external IP "' . esc_html($opt_value) . '" is not a public internet IP, so it will probably not work.';
+						$message .= sprintf(__('Warning: The external IP "%s" is not a public internet IP, so it will probably not work.', 'geoip-detect'), esc_html($opt_value));
 					}
 					$opt_value = (string) $opt_value;
 				}
@@ -113,6 +135,7 @@ function geoip_detect_sanitize_option($opt_name, $opt_value, &$message = '') {
 function geoip_detect_option_page() {
 	if (!is_admin() || !current_user_can('manage_options'))
 		return;
+
 
 	if (isset($_GET['geoip_detect_part'])) {
 		switch ($_GET['geoip_detect_part']) {
@@ -134,10 +157,10 @@ function geoip_detect_option_page() {
 	$registry = DataSourceRegistry::getInstance();
 	$sources = $registry->getAllSources();
 
-	$messages = array();
+	$messages = [];
 
-	$numeric_options = array('set_css_country', 'has_reverse_proxy', 'disable_pagecache', 'ajax_enabled', 'ajax_enqueue_js', 'ajax_set_css_country', 'ajax_shortcodes');
-	$text_options = array('external_ip', 'trusted_proxy_ips');
+	$numeric_options = [ 'set_css_country', 'has_reverse_proxy', 'disable_pagecache', 'ajax_enabled', 'ajax_enqueue_js', 'ajax_set_css_country', 'ajax_shortcodes' ];
+	$text_options = [ 'external_ip', 'trusted_proxy_ips' ];
 	$option_names = array_merge($numeric_options, $text_options);
 
 	$action = isset($_POST['action']) ? sanitize_key($_POST['action']) : '';
@@ -218,7 +241,7 @@ function geoip_detect_option_page() {
 
     $currentSource = $registry->getCurrentSource();
 
-	$wp_options = array();
+	$wp_options = [];
 	foreach ($option_names as $opt_name) {
 		$wp_options[$opt_name] = get_option('geoip-detect-'. $opt_name);
 	}

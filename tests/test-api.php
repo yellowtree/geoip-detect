@@ -2,9 +2,9 @@
 
 class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	
-	function tearDown() {
-		parent::tearDown();
+	function tear_down() {
 		$_SERVER['REMOTE_ADDR'] = '';
+		parent::tear_down();
 	}
 	
 	function testCurrentIp() {			
@@ -21,7 +21,7 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertInstanceOf('GeoIp2\Model\City', $record, 'Garbage IP did not return a record object');
 		$this->assertInstanceOf('YellowTree\GeoipDetect\DataSources\City', $record, 'Garbage IP did not return a wordpress record object');
 		$this->assertNotEmpty($record->extra->error);
-		$this->assertContains('is not a valid IP', $record->extra->error);
+		$this->assertStringContainsString('is not a valid IP', $record->extra->error);
 		
 		$this->assertSame(true, $record->isEmpty);
 		$this->assertSame(null, $record->country->name);
@@ -32,7 +32,7 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertInstanceOf('GeoIp2\Model\City', $record, 'Garbage IP did not return a record object');
 		$this->assertInstanceOf('YellowTree\GeoipDetect\DataSources\City', $record, 'Garbage IP did not return a wordpress record object');
 		$this->assertNotEmpty($record->extra->error);
-		$this->assertContains('is not a valid IP', $record->extra->error);
+		$this->assertStringContainsString('is not a valid IP', $record->extra->error);
 		
 		$this->assertSame(true, $record->isEmpty);
 		$this->assertSame(null, $record->country->name);	
@@ -75,19 +75,19 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 	
 	function testLocale() {
-		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, array('en'));
+		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, [ 'en' ]);
 		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
 		$this->assertEquals('Germany', $record->country->name);
 		
-		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, array('de'));
+		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, [ 'de' ]);
 		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
 		$this->assertEquals('Deutschland', $record->country->name);
 
-		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, array('nn', 'mm', 'de'));
+		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, [ 'nn', 'mm', 'de' ]);
 		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
 		$this->assertEquals('Deutschland', $record->country->name);
 		
-		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, array('nn', 'mm'));
+		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP, [ 'nn', 'mm' ]);
 		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
 		$this->assertSame(null, $record->country->name);	
 	}
@@ -132,5 +132,6 @@ class ApiTest extends WP_UnitTestCase_GeoIP_Detect {
 
 	function testEnqueue() {
 		geoip_detect2_enqueue_javascript();
+		$this->assertSame(true, true);
 	}
 }

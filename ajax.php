@@ -31,6 +31,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 function geoip_detect_ajax_get_info_from_current_ip() {
+	// Enabled in preferences? If not, do as if the plugin doesn't even exist.
+	if (!get_option('geoip-detect-ajax_enabled')) {
+        return;
+    }
+
 	// Do not cache this response!
 	if (!headers_sent()) {
 		header('Cache-Control: no-cache, no-store, must-revalidate');
@@ -38,11 +43,6 @@ function geoip_detect_ajax_get_info_from_current_ip() {
         header('Expires: 0');
         header('Content-Type: application/json');
 	}
-
-	// Enabled in preferences? If not, do as if the plugin doesn't even exist.
-	if (!get_option('geoip-detect-ajax_enabled')) {
-        return;
-    }
 	
 	if (!defined( 'DOING_AJAX' ))	
 		_geoip_detect_ajax_error('This method is for AJAX only.');
@@ -65,12 +65,9 @@ function geoip_detect_ajax_get_info_from_current_ip() {
 	$data = _geoip_detect_ajax_get_data($options);
 	
 	$data = apply_filters('geoip_detect2_ajax_record_data', $data, isset($data['traits']['ip_address']) ? $data['traits']['ip_address'] : '' ) ;
-	
-	if ($data['extra']['error'])
-		http_response_code(500);
-	
-	echo json_encode($data);
-	exit;
+
+	_geoip_detect_disable_pagecache();
+	wp_send_json($data, !empty($data['extra']['error']) ? 500 : 200 );
 }
 
 add_action(        'wp_ajax_geoip_detect2_get_info_from_current_ip', 'geoip_detect_ajax_get_info_from_current_ip' );
@@ -83,24 +80,21 @@ function _geoip_detect_get_domain_name($url) {
 }
 
 function _geoip_detect_ajax_error($error) {
-	http_response_code(412);
-
-	$data = array('extra' => array('error' => $error));
+	$data = [ 'extra' => [ 'error' => $error ] ];
 	$data['is_empty'] = true;
-	echo json_encode($data);
-
-	exit;
+	_geoip_detect_disable_pagecache();
+	wp_send_json($data, 412);
 }
 
 
-function _geoip_detect_ajax_get_data($options = array()) {
+function _geoip_detect_ajax_get_data($options = []) {
 	$info = geoip_detect2_get_info_from_current_ip(['en'], $options);
 	$data = $info->jsonSerialize();
 
 	// For privacy reasons, do not emit the nb of credits left (Maxmind Precision)
 	unset($data['maxmind']);
 
-	if (is_array($data['subdivisions'])) {
+	if (isset($data['subdivisions']) && is_array($data['subdivisions'])) {
 		$data['most_specific_subdivision'] = end($data['subdivisions']);
 	}
 
@@ -118,18 +112,7 @@ function _geoip_detect2_enqueue_javascript() {
 			wp_enqueue_script('geoip-detect-js');
 		});
 	}
-}
-
-function _geoip_detect_parcel_get_dist_js($handle) {
-	$urlFile = GEOIP_PLUGIN_DIR . '/js/dist/parcel.json';
-	if (!is_readable($urlFile)) return false;
-
-	$json = file_get_contents($urlFile);
-	$urls = json_decode($json, true);
-
-	if (isset($urls[$handle]))
-		return '/js/dist/' .$urls[$handle];
-	return false;
+	return true;
 }
 
 function _geoip_detect_register_javascript() {
@@ -138,33 +121,20 @@ function _geoip_detect_register_javascript() {
 	// 	return;
 	// }
 
-	if (!get_option('geoip-detect-ajax_enabled')) {
-		return;
-	}
-
-	$file_uri = _geoip_detect_parcel_get_dist_js('frontendJS');
-	if (!$file_uri) {
-		if (WP_DEBUG) {
-			trigger_error('Warning by the geoip-detect-Plugin: the file frontend.js could not be found, JS API will not work.', E_USER_NOTICE);
-			die();
-		}
-		return;
-	}
-
-	wp_register_script('geoip-detect-js', GEOIP_DETECT_PLUGIN_URI . $file_uri, array(), GEOIP_DETECT_VERSION, true);
+	wp_register_script('geoip-detect-js', GEOIP_DETECT_PLUGIN_URI . 'js/dist/frontend.js', [], GEOIP_DETECT_VERSION, true);
 	$data = [
 		'ajaxurl' => admin_url('/admin-ajax.php'),
 		'default_locales' => apply_filters('geoip_detect2_locales', null),
 		'do_body_classes' => (bool) get_option('geoip-detect-ajax_set_css_country'),
 		'do_shortcodes' => (bool) get_option('geoip-detect-ajax_shortcodes'),
-		'cookie_name' => 'geoip-detect-result', /* If you don't want to use the cookie cache, empty this value via the filter */
+		'cookie_name' => 'geoip-detect-result', /* If you don't want to use the cookie cache (localstorage), empty this value via the filter */
 		'cookie_duration_in_days' => 1, /* If you set this to 0, then the cookie will expire when the window closes. */
 	];
 	$data = apply_filters('geoip_detect2_ajax_localize_script_data', $data);
 	wp_localize_script('geoip-detect-js', 'geoip_detect', [ 'options' => $data ] );
 
 	if (get_option('geoip-detect-ajax_enqueue_js') && !is_admin()) {
-		geoip_detect2_enqueue_javascript();
+		geoip_detect2_enqueue_javascript('option');
 	}
 }
 

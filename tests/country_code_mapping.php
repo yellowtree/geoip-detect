@@ -519,7 +519,7 @@ $GEOIP_COUNTRY_CODES3 = array(
 "O1"
 );
 
-$mapping = array();
+$mapping = [];
 
 foreach ($GEOIP_COUNTRY_CODES as $i => $value) {
 	$mapping[$value] = $GEOIP_COUNTRY_CODES3[$i];

@@ -20,8 +20,13 @@ function geoip_detect_defines() {
 
 	if (!defined('GEOIP_DETECT_USER_AGENT'))
 		define('GEOIP_DETECT_USER_AGENT', 'Geolocation Detect ' . GEOIP_DETECT_VERSION);
+
+	if (!defined('GEOIP_DETECT_DEBUG')) {
+		define('GEOIP_DETECT_DEBUG', WP_DEBUG);
+	}
 }
 add_action('plugins_loaded', 'geoip_detect_defines');
+
 
 
 function geoip_detect_check_ipv6_support() {
@@ -78,7 +83,7 @@ function geoip_detect_is_ignored_notice($id) {
 	return false;
 }
 
-function geoip_detect_admin_notice_template($id, $title, $body) {
+function geoip_detect_admin_notice_template($id, $title, $body, $addButtonDismiss = false) {
 	if (geoip_detect_is_ignored_notice($id))
 		return;
 ?>
@@ -90,6 +95,11 @@ function geoip_detect_admin_notice_template($id, $title, $body) {
 	<h3><?php echo $title; ?></h3>
 
 	<?php echo $body; ?>
+	<?php if ($addButtonDismiss) : ?>
+	<p>
+		<a class="button button-secondary" href="?geoip_detect_dismiss_notice=<?= $id ?>">Hide this notice</a>
+	</p>
+	<?php endif; ?>
 </div>
 <?php
 }
@@ -152,7 +162,7 @@ function geoip_detect_dismiss_message() {
 		$ignored_notices = (array) get_user_meta(get_current_user_id(), 'geoip_detect_dismissed_notices', true);
 
 		if ($dismiss == '-1') { // Undocumented feature: reset dismissed messages
-			$ignored_notices = array();
+			$ignored_notices = [];
 		} else if (!in_array($dismiss, $ignored_notices)) {
 			$ignored_notices[] = $dismiss;
 		}
@@ -208,7 +218,7 @@ register_uninstall_hook(GEOIP_PLUGIN_FILE, __NAMESPACE__ . '\\on_uninstall');
 
 // For Debugging purposes ...
 /*
-if (WP_DEBUG && isset($_GET['uninstall']) && $_GET['uninstall'] == 'asdf') {
+if (GEOIP_DETECT_DEBUG && isset($_GET['uninstall']) && $_GET['uninstall'] == 'asdf') {
 
 add_action('plugins_loaded', function() {
 	on_uninstall();

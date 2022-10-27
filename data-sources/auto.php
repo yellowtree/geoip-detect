@@ -28,7 +28,7 @@ define('GEOIP_DETECT_DATA_UPDATE_FILENAME', 'GeoLite2-City.mmdb');
 class AutoDataSource extends ManualDataSource
 {
 	public function getId() { return 'auto'; }
-	public function getLabel() { return __('Automatic download & update of Maxmind GeoIP Lite City', 'geoip-detect'); }
+	public function getLabel() { return __('Maxmind GeoIP Lite City (Automatic download & update)', 'geoip-detect'); }
 	public function getShortLabel() { return sprintf(__('%s (updated weekly)', 'geoip-detect'), parent::getShortLabel()); }
 	public function getDescriptionHTML() { 
 		return __('(License: See <a href="https://www.maxmind.com/en/site-license-overview" target="_blank">Site Licence Overview</a> or <a href="https://www.maxmind.com/en/end-user-license-agreement" target="_blank">End User Licence Agreement</a>.)', 'geoip-detect'); }
@@ -104,8 +104,8 @@ HTML;
 
 	public function __construct() {
 		parent::__construct();
-		add_action('geoipdetectupdate', array($this, 'hook_cron'), 10, 1);
-		add_action('plugins_loaded', array($this, 'on_plugins_loaded'));
+		add_action('geoipdetectupdate', [ $this, 'hook_cron' ], 10, 1);
+		add_action('plugins_loaded', [ $this, 'on_plugins_loaded' ]);
 	}
 
 	public function on_plugins_loaded() {
@@ -116,7 +116,7 @@ HTML;
 
 	public function maxmindGetFilename() {
 		$data_filename = $this->maxmindGetUploadFilename();
-		if (!is_readable($data_filename))
+		if (!is_readable($data_filename) || !is_file($data_filename))
 			$data_filename = '';
 
 		/**
@@ -149,13 +149,13 @@ HTML;
 		if ( ! $tmpfname )
 			return new \WP_Error('http_no_file', __('Could not create temporary file.', 'geoip-detect'));
 
-		$headers = array();
+		$headers = [];
 		$headers['User-Agent'] = GEOIP_DETECT_USER_AGENT;
 		if ($modified) {
 			$headers['If-Modified-Since'] = date('r', $modified);
 		}
 
-		$response = wp_safe_remote_get( $url, array('timeout' => 300, 'stream' => true, 'filename' => $tmpfname, 'headers' => $headers ) );
+		$response = wp_safe_remote_get( $url, [ 'timeout' => 300, 'stream' => true, 'filename' => $tmpfname, 'headers' => $headers  ] );
 		$http_response_code = wp_remote_retrieve_response_code( $response );
 		if (304 === $http_response_code) {
 			return new \WP_Error( 'http_304', __('It has not changed since the last update.', 'geoip-detect') );
@@ -169,7 +169,7 @@ HTML;
 		return $tmpfname;
 	}
 
-	public function maxmindUpdate()
+	public function maxmindUpdate($forceUpdate = false)
 	{
 		require_once(ABSPATH.'/wp-admin/includes/file.php');
 
@@ -177,7 +177,7 @@ HTML;
 		//$download_url = 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&suffix=tar.gz';
 		
 		$download_url = apply_filters('geoip_detect2_download_url', $download_url);
-		if (strpos($download_url, 'license_key=') === false) {
+		if (!\str_contains($download_url, 'license_key=')) {
 			$key = get_option('geoip-detect-auto_license_key', '');
 			if (!$key) {
 				return __('Error: Before updating, you need to enter a license key from maxmind.com.', 'geoip-detect');
@@ -187,7 +187,7 @@ HTML;
 
 		$outFile = $this->maxmindGetUploadFilename();
 		$modified = 0;
-		if (\is_readable($outFile)) {
+		if (\is_readable($outFile) && !$forceUpdate) {
 			$modified = filemtime($outFile);
 		} 
 
@@ -215,6 +215,9 @@ HTML;
 		if (!is_readable($outFile)) {
 			return 'Error: Something went wrong: the unpacked file cannot be found.';
 		}
+		if (!is_file($outFile)) {
+			return 'Error: Something went wrong: the unpacked file is a folder.';
+		}
 
 		update_option('geoip-detect-auto_downloaded_file', '');
 		unlink($tmpFile);
@@ -224,7 +227,7 @@ HTML;
 
 	// Ungzip File
 	protected function unpackArchive($downloadedFilename, $outFile) {
-		if (!is_readable($downloadedFilename))
+		if (!is_readable($downloadedFilename) || !is_file($downloadedFilename))
 			return __('Downloaded file could not be opened for reading.', 'geoip-detect');
 		if (!\is_writable(dirname($outFile)))
 			return sprintf(__('Database could not be written (%s).', 'geoip-detect'), $outFile);
@@ -232,8 +235,8 @@ HTML;
 		$outDir = get_temp_dir() . 'geoip-detect/';
 
 		global $wp_filesystem;
-		if (!$wp_filesystem) {
-			$ret = \WP_Filesystem(false, get_temp_dir());
+		if (! $wp_filesystem) {
+			$ret = \WP_Filesystem(false, get_temp_dir(), true /* allow group/world-writeable folder */);
 			if (!$ret) {
 				return __('WP Filesystem could not be initialized (does not support FTP credential access. Can you upload files to the media library?).', 'geoip-detect');
 			}
@@ -264,7 +267,7 @@ HTML;
 			}
 		}
 
-		if (!\is_readable($inFile))
+		if (!\is_readable($inFile) || !\is_file($inFile))
 			return __('Downloaded file could not be opened for reading.', 'geoip-detect');
 	
 		$ret = copy($inFile, $outFile);
@@ -312,11 +315,13 @@ HTML;
 	}
 
 	public function activate() {
+		parent::activate();
 		$this->set_cron_schedule();
 	}
 
 	public function deactivate()
 	{
+		parent::deactivate();
 		wp_clear_scheduled_hook('geoipdetectupdate');
 	}
 
@@ -330,7 +335,7 @@ HTML;
 }
 
 /*
-if (WP_DEBUG && !empty($_GET['test_auto_update_now'])) {
+if (GEOIP_DETECT_DEBUG && !empty($_GET['test_auto_update_now'])) {
 	add_filter('plugins_loaded', function() {
 		if (current_user_can('manage_options')) {
 			do_action('geoipdetectupdate');

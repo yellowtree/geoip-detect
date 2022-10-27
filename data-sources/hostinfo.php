@@ -24,24 +24,24 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 		$data = $this->api_call($ip);
 
 		if (!$data)
-			return null;
+			return _geoip_detect2_get_new_empty_record();
 
-		$r = array();
+		$r = [];
 
 		$r['traits']['original'] = $data;
 
 		if ($data['country_name'])
-			$r['country']['names'] = array('en' => $data['country_name']);
+			$r['country']['names'] = [ 'en' => $data['country_name'] ];
 		if ($data['country_code'])
 			$r['country']['iso_code'] = strtoupper($data['country_code']);
 
 		if ($data['city']) {
-			$r['city']['names'] = array('en' => $data['city']);
+			$r['city']['names'] = [ 'en' => $data['city'] ];
 		}
 
 		$r['traits']['ip_address'] = $ip;
 
-		$record = new \GeoIp2\Model\City($r, array('en'));
+		$record = new \GeoIp2\Model\City($r, [ 'en' ]);
 
 		return $record;
 	}
@@ -102,7 +102,7 @@ class HostInfoDataSource extends AbstractDataSource {
 	public function getStatusInformationHTML() { return __('You can choose a different data source below.', 'geoip-detect'); }
 	public function getParameterHTML() { return ''; }
 
-	public function getReader($locales = array('en'), $options = array()) { return new Reader($options); }
+	public function getReader($locales = [ 'en' ], $options = []) { return new Reader($options); }
 
 	public function isWorking() { return true; }
 

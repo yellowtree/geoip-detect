@@ -17,6 +17,25 @@ SVNURL="http://plugins.svn.wordpress.org/geoip-detect/" # Remote SVN repo on wor
 SVNUSER="benjamin4" # your svn username
 
 
+# This also changes the current branch to MERGE_TO
+function merge_branch_and_checkout()
+{
+	local MERGE_FROM=$1
+	local MERGE_TO=$2
+
+	echo
+	echo "Merging $MERGE_FROM into $MERGE_TO ..."
+	git checkout "$MERGE_TO" && git merge --ff-only "$MERGE_FROM"
+	if [ $? != 0 ] ; then 
+		echo "No merge possible with fast-forward, please merge $MERGE_FROM into $MERGE_TO manually ..."
+		echo
+		exit 1;
+	fi
+	echo 
+}
+
+
+
 if [ "$1" = "checkout" ] ; then
 	echo "Only Checkout"
 	echo 
@@ -32,57 +51,94 @@ fi
 # Let's begin...
 echo ".........................................."
 echo 
-echo "Preparing to deploy wordpress plugin"
+echo "Start the deploying process ..."
 echo 
 echo ".........................................."
 echo 
 
 # Check version in readme.txt is the same as plugin file
-#NEWVERSION1=`grep "^Stable tag" $GITPATH/readme.txt | awk -F' ' '{print $3}'`
-#echo "readme version: $NEWVERSION1"
-NEWVERSION2=`grep "^Version" $GITPATH/$MAINFILE | awk -F' ' '{print $2}'`
-NEWVERSION="$NEWVERSION2"
+NEWVERSION=`grep "^Version" $GITPATH/$MAINFILE | awk -F' ' '{print $2}'`
+echo "$MAINFILE header version: $NEWVERSION"
+NEWVERSION2=`grep "^define.*GEOIP_DETECT_VERSION" $GITPATH/$MAINFILE | awk -F"'" '{print $4}'`
+echo "$MAINFILE define version: $NEWVERSION2"
 
-echo "$MAINFILE version: $NEWVERSION2"
-NEWVERSION3=`grep "^define.*GEOIP_DETECT_VERSION" $GITPATH/$MAINFILE | awk -F"'" '{print $4}'`
-echo "$MAINFILE define version: $NEWVERSION3"
-
-# if [ "$NEWVERSION1" != "$NEWVERSION2" ] || [ "$NEWVERSION1" != "$NEWVERSION3" ]; then echo "Versions don't match. Exiting...."; exit 1; fi
-if [ "$NEWVERSION2" != "$NEWVERSION3" ]; then echo "Versions don't match. (php: '$NEWVERSION2', define: '$NEWVERSION3') Exiting...."; exit 1; fi
+if [ "$NEWVERSION" != "$NEWVERSION2" ] ; then echo "Versions don't match. Exiting...."; exit 1; fi
 
 echo "Versions match in PHP file. Let's proceed..."
 
-#echo "Compressing JS files..."
-#java -jar ~/bin/yuicompressor.jar --nomunge --preserve-semi -o "$GITPATH/tinymce/editor_plugin.js" $GITPATH/tinymce/editor_plugin_src.js
-#java -jar ~/bin/yuicompressor.jar --nomunge --preserve-semi -o "$GITPATH/tinymce/wpcf-select-box.js" $GITPATH/tinymce/wpcf-select-box_src.js
+BETA=0
+case "$NEWVERSION" in
+	*beta*)
+		BETA=1
+		;;
+esac
+if [ "$1" = "beta" ] ; then 
+	BETA=1 
+fi
+
+
+if [ "$BETA" = 1 ] ; then 
+	echo
+	echo "Releasing Beta version only."
+	echo
+fi
+
+
+merge_branch_and_checkout develop beta
 
 cd $GITPATH
 
 echo "Re-generate JS ..."
-yarn install
-yarn clean
-yarn build
-git add js/dist
+rm -rf js/dist
+yarn install && yarn clean && yarn build && git add js/dist
+if [ $? != 0 ]; then echo ; echo "Yarn Failed."; echo ; exit 1; fi 
 
-echo "Re-generate composer autoload for prod ..."
-composer install --no-dev --optimize-autoloader
+echo "Run Phpunit tests ..."
+composer install-test
+# git checkout vendor
+composer test && composer test-external
+if [ $? != 0 ]; then echo ; echo "Phpunit Failed. (Maybe try running 'composer install-test')"; echo ; exit 1; fi 
+
+echo "Set composer for production use ..."
+composer install-prod
+
 
 echo "Generate README.md from readme.txt"
 bin/readme.sh "$SVNURL"
 bin/changelog.sh
 
-echo -e "Enter a commit message for this new version: \c"
+COMMITMSG_DEFAULT="Release $NEWVERSION"
+git status
+echo -e "Enter a commit message for this new version (default: $COMMITMSG_DEFAULT): \c"
 read COMMITMSG
+: ${COMMITMSG:=$COMMITMSG_DEFAULT}
+git add vendor/composer/platform_check.php
 git commit -am "$COMMITMSG"
 
-echo "Tagging new version in git"
-git tag -a "$NEWVERSION" -m "Tagging version $NEWVERSION"
+# Merging back into develop
+merge_branch_and_checkout beta develop
 
-echo "Pushing latest commit to origin, with tags"
+echo "Pushing latest commit to origin"
 git push origin --all
-git push origin master --tags
 
-echo 
+if [ "$BETA" = 1 ] ; then
+	git checkout develop
+	echo 
+	echo "OK. Beta version released."
+	echo
+	exit 0;
+fi
+
+# Merging all changes to master, then continue in master
+merge_branch_and_checkout beta master
+
+git push origin master 
+
+# ---------------------- now updating SVN -----------------------
+
+echo
+echo "--------------------------------------------------"
+echo
 echo "Creating local copy of SVN repo ..."
 svn co $SVNURL -N $SVNPATH
 svn up $SVNPATH/trunk
@@ -95,11 +151,28 @@ echo "Ignoring github specific files, tests and deployment script"
 svn propset svn:ignore "deploy.sh
 bin
 README.md
+CHANGELOG.md
 .git
 .gitignore
+.githooks
 tests
 test
 phpunit.xml
+babel.config.js
+jest.config.js
+renovate.json
+parcel.urls
+composer.lock
+yarn.lock
+vendor/symfony/property-access/Tests
+vendor/phpspec
+vendor/phpunit
+vendor/wp-phpunit
+vendor/webmozart
+vendor/theseer
+vendor/sebastian
+vendor/yoast/phpunit-polyfills
+vendor/nikic/php-parser
 " "$SVNPATH/trunk/"
 
 svn propset svn:ignore '*' "$SVNPATH/trunk/lib/geonames/generators/"
@@ -107,10 +180,10 @@ svn propset svn:ignore '*' "$SVNPATH/trunk/lib/geonames/generators/"
 #if submodule exist, recursively check out their indexes (from benbalter)
 if [ -f ".gitmodules" ]
 then
-echo "Exporting the HEAD of each submodule from git to the trunk of SVN"
-git submodule init
-git submodule update
-git submodule foreach --recursive 'git checkout-index -a -f --prefix=$SVNPATH/trunk/$path/'
+	echo "Exporting the HEAD of each submodule from git to the trunk of SVN"
+	git submodule init
+	git submodule update
+	git submodule foreach --recursive 'git checkout-index -a -f --prefix=$SVNPATH/trunk/$path/'
 fi
 
 echo "Changing directory to SVN and adding new files, if any"
@@ -119,15 +192,41 @@ cd $SVNPATH/trunk/
 svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn add
 echo "Committing to trunk"
 svn commit --username=$SVNUSER -m "$COMMITMSG"
+if [ $? != 0 ] ; then
+	echo "Error while committing to TRUNK ... Exiting!"
+	echo
+#	echo "Removing temporary directory $SVNPATH"
+#	rm -fr $SVNPATH/
+#	echo
+
+	exit 1;
+fi
+
 
 echo "Creating new SVN tag & committing it"
 cd $SVNPATH
 svn copy trunk/ tags/$NEWVERSION/
 cd $SVNPATH/tags/$NEWVERSION
 svn commit --username=$SVNUSER -m "Tagging version $NEWVERSION"
+if [ $? != 0 ] ; then
+	echo "Error while committing to TAGS ... Exiting!"
+	echo
+#	echo "Removing temporary directory $SVNPATH"
+#	rm -fr $SVNPATH/
+#	echo
+
+	exit 1;
+fi
+
+echo "Tagging new version in git"
+cd "$CURRENTDIR"
+git tag -a "$NEWVERSION" -m "Tagging version $NEWVERSION"
+git push origin master --tags
+
 
 echo "Removing temporary directory $SVNPATH"
 rm -fr $SVNPATH/
 
-echo "*** FIN ***"
+git checkout develop
+echo "---- FIN ----"
 
