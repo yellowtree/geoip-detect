@@ -130,7 +130,7 @@ if [ "$BETA" = 1 ] ; then
 fi
 
 # Merging all changes to master, then continue in master
-merge beta master
+merge_branch_and_checkout beta master
 
 git push origin master 
 
@@ -192,12 +192,12 @@ cd $SVNPATH/trunk/
 svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn add
 echo "Committing to trunk"
 svn commit --username=$SVNUSER -m "$COMMITMSG"
-if [ $? != 0 ] ; then 
+if [ $? != 0 ]; then 
 	echo "Error while committing to TRUNK ... Exiting!"
 	echo
-	echo "Removing temporary directory $SVNPATH"
-	rm -fr $SVNPATH/
-	echo
+#	echo "Removing temporary directory $SVNPATH"
+#	rm -fr $SVNPATH/
+#	echo
 
 	exit 1;
 fi
@@ -208,12 +208,12 @@ cd $SVNPATH
 svn copy trunk/ tags/$NEWVERSION/
 cd $SVNPATH/tags/$NEWVERSION
 svn commit --username=$SVNUSER -m "Tagging version $NEWVERSION"
-if [ $? != 0 ] ; then 
+if [ $? != 0 ]; then 
 	echo "Error while committing to TAGS ... Exiting!"
 	echo
-	echo "Removing temporary directory $SVNPATH"
-	rm -fr $SVNPATH/
-	echo
+#	echo "Removing temporary directory $SVNPATH"
+#	rm -fr $SVNPATH/
+#	echo
 
 	exit 1;
 fi
