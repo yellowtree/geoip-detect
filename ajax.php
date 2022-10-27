@@ -31,6 +31,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 function geoip_detect_ajax_get_info_from_current_ip() {
+	// Enabled in preferences? If not, do as if the plugin doesn't even exist.
+	if (!get_option('geoip-detect-ajax_enabled')) {
+        return;
+    }
+
 	// Do not cache this response!
 	if (!headers_sent()) {
 		header('Cache-Control: no-cache, no-store, must-revalidate');
@@ -38,11 +43,6 @@ function geoip_detect_ajax_get_info_from_current_ip() {
         header('Expires: 0');
         header('Content-Type: application/json');
 	}
-
-	// Enabled in preferences? If not, do as if the plugin doesn't even exist.
-	if (!get_option('geoip-detect-ajax_enabled')) {
-        return;
-    }
 	
 	if (!defined( 'DOING_AJAX' ))	
 		_geoip_detect_ajax_error('This method is for AJAX only.');
