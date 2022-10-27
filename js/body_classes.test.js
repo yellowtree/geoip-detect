@@ -20,18 +20,21 @@ test('calc_classes', () => {
         "country": "DE",
         "country-is-in-european-union": false, /* because the test data set has EU not set yet */
         "province": "HE",
+        "city": "Eschborn",
     });
     expect(calc_classes(errorRecord)).toStrictEqual({
         "continent": "",
         "country": "",
         "country-is-in-european-union": false,
         "province": "",
+        "city": "",
     });
     expect(calc_classes(emptyRecord)).toStrictEqual({
         "continent": "",
         "country": "",
         "country-is-in-european-union": false,
         "province": "",
+        "city": "",
     });
 });
 

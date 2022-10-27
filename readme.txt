@@ -172,6 +172,7 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 = 5.1.1 =
 * NEW: For the reverse proxy configuration, internal adresses (such as 10.0.0.0/8) are now whitelisted by default. You can override this behaviour by using the wordpress filter `geoip_detect2_client_ip_whitelist_internal_ips`.
+* NEW: Body classes now include the city name in English (e.g. geoip-city-Munich)
 
 = 5.1.0 =
 

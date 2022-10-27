@@ -47,6 +47,10 @@ function geoip_detect2_get_body_classes() {
 	if ($info->mostSpecificSubdivision->isoCode)
 		$classes[] = 'geoip-province-' . $info->mostSpecificSubdivision->isoCode;
 
+	if ($info->city->name) {
+		$classes[] = 'geoip-name-' . sanitize_html_class($info->city->names['en']);
+	}
+
 	return $classes;
 }
 
