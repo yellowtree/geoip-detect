@@ -95,13 +95,12 @@ if [ $? != 0 ]; then echo ; echo "Yarn Failed."; echo ; exit 1; fi
 
 echo "Run Phpunit tests ..."
 composer install-test
-# git checkout vendor
 composer test && composer test-external
 if [ $? != 0 ]; then echo ; echo "Phpunit Failed. (Maybe try running 'composer install-test')"; echo ; exit 1; fi 
 
 echo "Set composer for production use ..."
 composer install-prod
-
+git checkout vendor
 
 echo "Generate README.md from readme.txt"
 bin/readme.sh "$SVNURL"

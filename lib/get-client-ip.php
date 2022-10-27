@@ -27,7 +27,19 @@ class GetClientIp {
 	
 	public function __construct() {
 		$this->proxyWhitelist[] = '::1';
-		$this->proxyWhitelist[] = '127.0.0.1';
+		
+		/**
+		 * By default, all internal IPs may be reverse proxies.
+		 * @api
+		 */
+		if (apply_filters('geoip_detect2_client_ip_whitelist_internal_ips', true)) {
+			$this->proxyWhitelist[] = '127.0.0.0/8';
+			$this->proxyWhitelist[] = '10.0.0.0/8';
+			$this->proxyWhitelist[] = '172.16.0.0/12';
+			$this->proxyWhitelist[] = '192.168.0.0/16';
+		} else {
+			$this->proxyWhitelist[] = '127.0.0.1';
+		}
 	}
 	
 	public function addProxiesToWhitelist($trusted_proxies) {

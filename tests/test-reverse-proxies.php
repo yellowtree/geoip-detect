@@ -99,6 +99,23 @@ class ReverseProxyTest extends WP_UnitTestCase_GeoIP_Detect {
 		$_SERVER['HTTP_X_FORWARDED_FOR'] = '3.4.5.6, '. GEOIP_DETECT_TEST_IP.', 2.2.2.2, fe80:0:0:0:202:b3ff:fe1e:8329';
 		$this->assertSame(GEOIP_DETECT_TEST_IP, geoip_detect2_get_client_ip());
 	}
+
+	function testPrivateIps() {
+		add_filter('pre_option_geoip-detect-trusted_proxy_ips', 'test_set_trusted_proxies', 101);
+
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = GEOIP_DETECT_TEST_IP.', 1.1.1.1, 127.0.0.1';
+		$this->assertSame(GEOIP_DETECT_TEST_IP, geoip_detect2_get_client_ip());
+
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = GEOIP_DETECT_TEST_IP.', 1.1.1.1, 127.0.0.9';
+		$this->assertSame(GEOIP_DETECT_TEST_IP, geoip_detect2_get_client_ip());
+
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = GEOIP_DETECT_TEST_IP.', 1.1.1.1, 10.2.2.2';
+		$this->assertSame(GEOIP_DETECT_TEST_IP, geoip_detect2_get_client_ip());
+
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = GEOIP_DETECT_TEST_IP.', 1.1.1.1, 172.16.0.3';
+		$this->assertSame(GEOIP_DETECT_TEST_IP, geoip_detect2_get_client_ip());
+
+	}
 /*
 	function testTrustedProxiesWithInternalIps() {
 		
