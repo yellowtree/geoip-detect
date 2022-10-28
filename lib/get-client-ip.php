@@ -41,7 +41,8 @@ class GetClientIp {
 			$this->proxyWhitelist[] = '127.0.0.1';
 		}
 
-		$this->proxyWhitelist = apply_filters('geoip_detect2_client_ip_whitelist', $this->proxyWhitelist);
+		$this->proxyWhitelist    = apply_filters('geoip_detect2_client_ip_whitelist', $this->proxyWhitelist);
+		$this->useProxyWhitelist = apply_filters('geoip_detect2_client_ip_use_whitelist', false);
 	}
 	
 	public function addProxiesToWhitelist($trusted_proxies) {

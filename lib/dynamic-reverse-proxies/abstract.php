@@ -14,6 +14,7 @@ function init() : void {
     if (!$enabled) return;
 
     add_filter('geoip_detect2_client_ip_whitelist', __NAMESPACE__ . '\addDynamicIps');
+    add_filter('geoip_detect2_client_ip_use_whitelist', '__return_true');
 }
 add_filter('plugins_loaded', function() {
     init();
