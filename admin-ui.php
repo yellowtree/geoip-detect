@@ -159,8 +159,8 @@ function geoip_detect_option_page() {
 
 	$messages = [];
 
-	$numeric_options = [ 'set_css_country', 'has_reverse_proxy', 'disable_pagecache', 'ajax_enabled', 'ajax_enqueue_js', 'ajax_set_css_country', 'ajax_shortcodes' ];
-	$text_options = [ 'external_ip', 'trusted_proxy_ips' ];
+	$numeric_options = [ 'set_css_country', 'has_reverse_proxy', 'disable_pagecache', 'ajax_enabled', 'ajax_enqueue_js', 'ajax_set_css_country', 'ajax_shortcodes', 'dynamic_reverse_proxies' ];
+	$text_options = [ 'external_ip', 'trusted_proxy_ips', 'dynamic_reverse_proxy_type' ];
 	$option_names = array_merge($numeric_options, $text_options);
 
 	$action = isset($_POST['action']) ? sanitize_key($_POST['action']) : '';
