@@ -8,8 +8,6 @@ function test_set_trusted_proxies() {
 	return '1.1.1.1, 2.2.2.2, 3.3.3.3, FE80::0202:B3FF:FE1E:8329';
 }
 
-require_once(GEOIP_PLUGIN_DIR . '/lib/dynamic-reverse-proxies/abstract.php');
-
 class ReverseProxyTest extends WP_UnitTestCase_GeoIP_Detect {
 	
 	
@@ -119,26 +117,5 @@ class ReverseProxyTest extends WP_UnitTestCase_GeoIP_Detect {
 
 	}
 
-	/**
-	 * @group external-http
-	 */
-	function testDynamicAws() {
-		$object = new DynamicReverseProxiesAws;
-		$ips = $object->getIps();
 
-		$this->assertGreaterThan(40, count($ips));
-		$this->assertContains('120.52.22.96/27', $ips);
-	}
-	
-	/**
-	 * @group external-http
-	 */
-	function testDynamicCloudflare() {
-		$object = new DynamicReverseProxiesCloudflare;
-		$ips = $object->getIps();
-
-		$this->assertGreaterThan(15, count($ips));
-		$this->assertContains('190.93.240.0/20', $ips);
-		$this->assertContains('2405:b500::/32', $ips);
-	}
 }
