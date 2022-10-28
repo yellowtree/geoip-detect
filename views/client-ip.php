@@ -41,6 +41,11 @@ This needs to be known to the plugin to choose the correct IP adress.
 		<li>Whitelist for known reverse proxies (optional if only one): <b><?php echo get_option('geoip-detect-trusted_proxy_ips') ?: '(none)'; ?></b>
 			<span class="detail-box">All IPs in HTTP_X_FORWARDED_FOR that are not the correct client IP are probably known reverse proxies.<br>(For security reasons, this is not assumed by default: maybe the reverse proxy is not of the server, but a Man-In-The-Middle-Attack ... not very probable but possible.)</span>
 		</li>
+
+		<li>Add known proxies of a cloud provider enabled: <b><?php echo get_option('geoip-detect-dynamic_reverse_proxies') ? 'Yes, ' . ucfirst(get_option('geoip-detect-dynamic_reverse_proxy_type', '')) : 'No'; ?></b>
+			<span class="detail-box">If your site is hosted by CloudFlare or AWS, this should probably be enabled. It will automatically retrieve the many IP adresses that a reverse proxy of this provider can have, and update the list daily.</span>
+			<span class="detail-box">Here is the current list of IP adresses: <b><?= implode(', ', \YellowTree\GeoipDetect\DynamicReverseProxies\addDynamicIps()) ?: '(Empty)' ?></b></span>
+		</li>
 	</ul>
 
 <script>

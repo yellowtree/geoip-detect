@@ -9,13 +9,33 @@ interface DataProvider {
     function getIps() : array;
 }
 
+function init() : void {
+    $enabled = get_option('geoip-detect-dynamic_reverse_proxies', 0);
+    if (!$enabled) return;
+
+    add_filter('geoip_detect2_client_ip_whitelist', __NAMESPACE__ . '\addDynamicIps');
+}
+add_filter('plugins_loaded', function() {
+    init();
+});
+
+function addDynamicIps($ipList = []) : array {
+    $type = get_option('geoip-detect-dynamic_reverse_proxy_type', '');
+    if (!$type) return $ipList;
+
+    $manager = new DataManager($type);
+    $ipList = array_merge($ipList, $manager->getIpsFromCache());
+
+    return $ipList;
+}
+
 class DataManager {
     protected $name;
 
     protected const CACHE_OPTION_NAME = 'geoip_detect_dynamic_rp_ips';
 
     public function __construct(string $name) {
-        $this->name = $name;
+        $this->name = sanitize_key($name);
     }
 
     public static function getDataProvider(string $name) : ?DataProvider {
@@ -39,7 +59,7 @@ class DataManager {
             }
             return false;
         }
-        update_option(self::CACHE_OPTION_NAME, $ip_list);
+        update_option(self::CACHE_OPTION_NAME, $this->name . '|' . $ip_list);
 
         return true;
     }
@@ -49,6 +69,14 @@ class DataManager {
         if ($cache === false) {
             return [];
         }
-        return explode(',', $cache);
+        list($name, $list) = explode('|', $cache, 2);
+        if ($name != $this->name) {
+            if (GEOIP_DETECT_DEBUG) {
+                trigger_error('Weird! Requesting ips for "' . $this->name . '", but found IPs for "' . $name . " in the database. This should not happen. Please file a bug report.");
+            }
+            return [];
+        }
+        return explode(',', $list);
     }
 }
+

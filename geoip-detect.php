@@ -71,6 +71,7 @@ require_once(GEOIP_PLUGIN_DIR . '/check_compatibility.php');
 require_once(GEOIP_PLUGIN_DIR . '/geoip-detect-lib.php');
 require_once(GEOIP_PLUGIN_DIR . '/lib/geonames/geonames-country-info.php');
 require_once(GEOIP_PLUGIN_DIR . '/lib/get-client-ip.php');
+require_once(GEOIP_PLUGIN_DIR . '/lib/dynamic-reverse-proxies/abstract.php');
 require_once(GEOIP_PLUGIN_DIR . '/lib/logger.php');
 require_once(GEOIP_PLUGIN_DIR . '/lib/ccpa.php');
 
