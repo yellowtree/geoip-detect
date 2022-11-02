@@ -2,14 +2,15 @@
 
 namespace YellowTree\GeoipDetect\DynamicReverseProxies;
 
-require_once(__DIR__ . '/aws.php');
-require_once(__DIR__ . '/cloudflare.php');
-
 interface DataProvider {
     function getIps() : array;
 }
 
-function init() : void {
+require_once(__DIR__ . '/aws.php');
+require_once(__DIR__ . '/cloudflare.php');
+
+
+function initFilters() : void {
     $enabled = get_option('geoip-detect-dynamic_reverse_proxies', 0);
     if (!$enabled) return;
 
@@ -17,17 +18,25 @@ function init() : void {
     add_filter('geoip_detect2_client_ip_use_whitelist', '__return_true');
 }
 add_filter('plugins_loaded', function() {
-    init();
+    initFilters();
 });
 
-function addDynamicIps($ipList = []) : array {
-    $type = get_option('geoip-detect-dynamic_reverse_proxy_type', '');
-    if (!$type) return $ipList;
 
-    $manager = new DataManager($type);
+function addDynamicIps($ipList = []) : array {
+    $manager = getDataManager();
+    if (!$manager) return $ipList;
+
     $ipList = array_merge($ipList, $manager->getIpsFromCache());
 
     return $ipList;
+}
+
+
+function getDataManager() : ?DataManager {
+    $type = get_option('geoip-detect-dynamic_reverse_proxy_type', '');
+    if (!$type) return null;
+
+    return new DataManager($type);
 }
 
 class DataManager {
@@ -61,6 +70,7 @@ class DataManager {
             return false;
         }
         update_option(self::CACHE_OPTION_NAME, $this->name . '|' . $ip_list);
+        update_option('geoip_detect2_dynamic-reverse-proxies_last_updated', time());
 
         return true;
     }
@@ -81,3 +91,58 @@ class DataManager {
     }
 }
 
+
+class UpdateDynamicReverseProxiesCron {
+    public function addFilter() {
+        add_action('geoipdetectdynamicproxiesupdate', [ $this, 'hook_cron', 10, 1 ]);
+    }
+
+    public function hook_cron() {
+		/**
+		 * Filter:
+		 * Cron has fired.
+		 * Find out if dynamic reverse proxy data should be updated now.
+		 *
+		 * @param $do_it 
+		 */
+        $do_it = apply_filters('geoip_detect2_dynamic-reverse-proxies_do_automatic_update', true);
+        
+        $this->schedule();
+
+        if ($do_it) {
+            $this->run();
+        }
+    }
+
+    public function run() {
+        $last = get_option('geoip_detect2_dynamic-reverse-proxies_last_updated');
+        $now = time();
+        if( $now - $last < HOUR_IN_SECONDS) {
+            return false;
+        }
+
+        $manager = getDataManager();
+        if ($manager) {
+            $manager->reload();
+        }
+    }
+
+    public function schedule($forceReschedule = false) {
+        $next = wp_next_scheduled('geoipdetectdynamicproxiesupdate');
+
+        if (!$next || $forceReschedule) {
+            $this->schedule_next_cron_run();
+        }
+
+        if ($forceReschedule) {
+            $this->run();
+        }
+    }
+
+    protected function schedule_next_cron_run() {
+        $next = time() + DAY_IN_SECONDS;
+        $next += mt_rand(1, HOUR_IN_SECONDS);
+        wp_schedule_single_event($next, 'geoipdetectdynamicproxiesupdate');
+    }
+}
+(new UpdateDynamicReverseProxiesCron)->addFilter();
