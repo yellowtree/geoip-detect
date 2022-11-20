@@ -35,7 +35,7 @@ class HeaderReader extends \YellowTree\GeoipDetect\DataSources\AbstractReader {
 		$isoCode = '';
 
 		$provider = [
-			'aws' => 'CloudFront-Viewer-Country',
+			'aws' => 'HTTP_CLOUDFRONT_VIEWER_COUNTRY',
 			'cloudflare' => 'HTTP_CF_IPCOUNTRY',
 		];
 
