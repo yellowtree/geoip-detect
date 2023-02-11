@@ -10,7 +10,7 @@ class HeaderSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 
 	public function tear_down() {
-		unset($_SERVER['CloudFront-Viewer-Country']);
+		unset($_SERVER['HTTP_CLOUDFRONT_VIEWER_COUNTRY']);
 		unset($_SERVER["HTTP_CF_IPCOUNTRY"]);
 		
 		remove_filter('pre_option_geoip-detect-header-provider', [ $this, 'filter_set_provider' ], 101);
@@ -41,7 +41,7 @@ class HeaderSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 
 	function testLookupAws() {
-		$_SERVER['CloudFront-Viewer-Country'] = 'de';
+		$_SERVER['HTTP_CLOUDFRONT_VIEWER_COUNTRY'] = 'de';
 		$ret = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		
 		$this->assertValidGeoIP2Record($ret, GEOIP_DETECT_TEST_IP, true);
@@ -51,7 +51,7 @@ class HeaderSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertSame('Germany', $ret->country->name);
 		$this->assertSame(GEOIP_DETECT_TEST_IP, $ret->traits->ipAddress);
 		
-		$_SERVER['CloudFront-Viewer-Country'] = '';
+		$_SERVER['HTTP_CLOUDFRONT_VIEWER_COUNTRY'] = '';
 		$ret = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		
 		$this->assertEmptyGeoIP2Record($ret, GEOIP_DETECT_TEST_IP);
@@ -61,20 +61,20 @@ class HeaderSourceTest extends WP_UnitTestCase_GeoIP_Detect {
 	}
 
 	function testInvalidCountryCode() {
-		$_SERVER['CloudFront-Viewer-Country'] = 'bla';
+		$_SERVER['HTTP_CLOUDFRONT_VIEWER_COUNTRY'] = 'bla';
 		$ret = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		
 		$this->assertEmptyGeoIP2Record($ret, GEOIP_DETECT_TEST_IP);
 		$this->assertStringContainsString('bla', $ret->extra->error);
 	}
 	function testSpecialCountryCode() {
-		$_SERVER['CloudFront-Viewer-Country'] = 'xx';
+		$_SERVER['HTTP_CLOUDFRONT_VIEWER_COUNTRY'] = 'xx';
 		$ret = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		
 		$this->assertSame(null, $ret->country->isoCode);
 		$this->assertEmptyGeoIP2Record($ret, GEOIP_DETECT_TEST_IP);
 
-		$_SERVER['CloudFront-Viewer-Country'] = 'XX';
+		$_SERVER['HTTP_CLOUDFRONT_VIEWER_COUNTRY'] = 'XX';
 		$ret = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		
 		$this->assertSame(null, $ret->country->isoCode);
