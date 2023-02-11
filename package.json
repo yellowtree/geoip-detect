@@ -26,10 +26,10 @@
     "@babel/core": "7.20.12",
     "@babel/plugin-transform-runtime": "7.19.6",
     "@babel/preset-env": "7.20.2",
-    "babel-jest": "27.5.1",
+    "babel-jest": "29.4.2",
     "babel-plugin-transform-class-properties": "6.24.1",
     "eslint": "8.8.0",
-    "jest": "27.5.1",
+    "jest": "29.4.2",
     "parcel": "2.8.3"
   },
   "browserslist": "> 0.2%, last 2 versions, Firefox ESR, not dead",
