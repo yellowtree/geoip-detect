@@ -48,7 +48,7 @@ install:
   - composer validate
   - composer require --ignore-platform-req=php --dev --with-dependencies roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION} phpunit/phpunit:${PHPUNIT_VERSION}
   - composer show
-  - nvm install 12 && nvm use 12
+  - nvm install 16 && nvm use 16
   - yarn install
   - git clone --depth=50 --branch=${CF7_VERSION} https://github.com/takayukister/contact-form-7.git
 
