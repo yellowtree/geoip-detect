@@ -170,6 +170,7 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 == Changelog ==
 
+* FIX [!]: Cloudfront header name
 
 = 5.1.1 =
 * NEW: For the reverse proxy configuration, internal adresses (such as 10.0.0.0/8) are now whitelisted by default. You can override this behaviour by using the wordpress filter `geoip_detect2_client_ip_whitelist_internal_ips`.
