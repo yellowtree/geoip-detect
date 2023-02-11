@@ -12,7 +12,7 @@ cache:
 
 language: php
 os: linux
-dist: xenial
+dist: focal
 
 services:
   - mysql
@@ -27,6 +27,7 @@ env:
     - PHPUNIT_VERSION=^9.0
 
 php:
+  - 8.2
   - 8.1
   - 8.0
 
@@ -34,14 +35,16 @@ jobs:
   fast_finish: true
   include:
     - name: php_7_2
+      dist: xenial
       php: 7.2
       env: PHPUNIT_VERSION=^7.0
     - name: php_7_2_and_wp_5_4
+      dist: xenial
       php: 7.2
       env: WP_VERSION=5.4.9 CF7_VERSION=v5.1.6 PHPUNIT_VERSION=^7.0
     - name: bleeding edge
-      php: 8.1.0
-      dist: focal
+      php: 8.2
+      dist: jammy
       env: CF7_VERSION=master
 
 install:

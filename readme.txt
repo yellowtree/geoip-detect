@@ -170,6 +170,8 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 == Changelog ==
 
+= 5.2.0 =
+
 * FIX [!]: Cloudfront header name
 * Library updates
 
