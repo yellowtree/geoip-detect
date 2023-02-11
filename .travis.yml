@@ -27,13 +27,18 @@ env:
     - PHPUNIT_VERSION=^9.0
 
 php:
-  - 8.2.0
   - 8.1
   - 8.0
 
 jobs:
   fast_finish: true
   include:
+    - name: php_8_2
+      php: 8.2
+      addons:
+        apt:
+          packages:
+            - libonig5
     - name: php_7_2
       dist: xenial
       php: 7.2
@@ -46,6 +51,10 @@ jobs:
       php: 8.2
       dist: jammy
       env: CF7_VERSION=master
+      addons:
+        apt:
+          packages:
+            - libonig5
 
 install:
   - composer validate
