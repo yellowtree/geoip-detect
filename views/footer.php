@@ -35,6 +35,10 @@
     padding-top: 11px;
     text-align: left;
 }
+.geoip_detect_success {
+	border-left: #00a32a solid 4px;
+}
+
 .detail-box {
 	display: block;
 	margin-left: 50px;

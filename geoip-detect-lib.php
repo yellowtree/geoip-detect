@@ -323,24 +323,30 @@ function geoip_detect_normalize_ip(string $ip) : string {
 	return $ip;
 }
 
+function geoip_detect_sanitize_ip_cidr(string $ip): string {
+	$ip = trim($ip);
+	$parts = explode('/', $ip, 2);
+	if (isset($parts[1])) {
+		if (!is_numeric($parts[1])) {
+			unset($parts[1]);
+		}
+	}
+	if (!geoip_detect_is_ip($parts[0])) {
+		return '';
+	}
+
+	$ip = $parts[0] . (isset($parts[1]) ? ('/' . (int) $parts[1]) : '');
+	return $ip;
+}
+
 function geoip_detect_sanitize_ip_list(string $ip_list) : string {
 	$list = explode(',', $ip_list);
 	$ret = [];
 	foreach ($list as $ip) {
-		$ip = trim($ip);
-		$parts = explode('/', $ip, 2);
-		if (isset($parts[1])) {
-			if (!is_numeric($parts[1])) {
-				unset($parts[1]);
-			}
+		$ip = geoip_detect_sanitize_ip_cidr($ip);
+		if ($ip) {
+			$ret[] = $ip;
 		}
-		if (!geoip_detect_is_ip($parts[0])) {
-			continue;
-		}
-
-		$ip = $parts[0] . (isset($parts[1]) ? ('/' . (int) $parts[1]) : '');
-
-		$ret[] = $ip;
 	}
 	return implode(', ', $ret);
 }

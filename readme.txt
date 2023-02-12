@@ -172,6 +172,7 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 = 5.2.0 =
 
+* NEW: The list of reverse proxies of AWS CloudFront or CloudFlare can now be added as "known proxy"
 * FIX [!]: Cloudfront header name
 * Library updates
 

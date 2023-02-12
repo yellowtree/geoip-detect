@@ -1,7 +1,9 @@
 <?php
 
-class DynamicReverseProxiesCloudflare {
-    public function getIps() {
+namespace YellowTree\GeoipDetect\DynamicReverseProxies;
+
+class DataCloudflare implements DataProvider {
+    public function getIps() : array {
         $urls = apply_filters('geoip_detect2_dynamic_reverse_proxies_cloudflare_urls', ['https://www.cloudflare.com/ips-v4', 'https://www.cloudflare.com/ips-v6']);
 
         $ips = [];

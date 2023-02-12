@@ -102,6 +102,7 @@ class HeaderDataSource extends AbstractDataSource {
 		}
         if ($link) {
 			$html = sprintf(__('This needs to be enabled in the admin panel: see <a href="%s">Help</a>.', 'geoip-detect'), $link);
+			$html .= '<br>' . sprintf(__('Probably you will want to enable "%s".', 'geoip-detect'), __('Add known proxies of this provider:', 'geoip-detect'));
 		}
 		return $html;
 	}

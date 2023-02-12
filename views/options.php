@@ -127,6 +127,24 @@ $currentSourceId = $currentSource->getId();
 				<?php _e('If specified, only IPs in this list will be treated as proxy.', 'geoip-detect'); ?><br>
 				<?php _e('Make sure to add both IPv4 and IPv6 adresses of the proxy!', 'geoip-detect'); ?>
 			</span>
+			<label><input type="checkbox" name="options[dynamic_reverse_proxies]" value="1" <?php if (!empty($wp_options['dynamic_reverse_proxies'])) { echo 'checked="checked"'; } ?>>
+					<?php _e('Add known proxies of this provider:', 'geoip-detect'); ?></label>
+			<select name="options[dynamic_reverse_proxy_type]">
+				<option value="cloudflare" <?= (!empty($wp_options['dynamic_reverse_proxy_type']) && $wp_options['dynamic_reverse_proxy_type'] == 'cloudflare') ? 'selected="selected"': '' ?>>Cloudflare</option>
+				<option value="aws"        <?= (!empty($wp_options['dynamic_reverse_proxy_type']) && $wp_options['dynamic_reverse_proxy_type'] == 'aws'       ) ? 'selected="selected"': '' ?>>AWS CloudFront</option>
+			</select>
+			<span class="detail-box">
+				<?php if (empty($wp_options['has_reverse_proxy']) && !empty($wp_options['dynamic_reverse_proxies'])) : ?>
+					<span style="color:red">
+						<?php printf(__('Warning: As you didn\'t tick the option "%s" above, setting trusted IPs has no effect. This is only used for reverse proxies.', 'geoip-detect'), __('The server is behind a reverse proxy', 'geoip-detect') ); ?>
+					</span><br>
+				<?php endif; ?>
+				<?php _e('The list of know proxies will be automatically updated daily.', 'geoip-detect'); ?>
+				<?php if (!empty($wp_options['dynamic_reverse_proxies'])) {
+					printf(__('(%d IPs of known proxies found.)', 'geoip-detect'), count(\YellowTree\GeoipDetect\DynamicReverseProxies\addDynamicIps()));
+				} ?>
+				<br>
+			</span>
 		</p>
 
 		<p>

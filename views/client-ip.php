@@ -1,4 +1,16 @@
 <div class="wrap geoip-detect-wrap">
+
+	<?php if (!empty($errorMessage)): ?>
+			<p class="geoip_detect_error">
+			<?php echo $errorMessage; ?>
+			</p>
+	<?php endif; ?>
+	<?php if (!empty($successMessage)): ?>
+			<p class="geoip_detect_error geoip_detect_success">
+			<?php echo $successMessage; ?>
+			</p>
+	<?php endif; ?>
+
 	<!-- This page cannot be translated yet, as I am not sure how it will look like in the long-term.
 The final goal would be to have a step-by-step wizard helping to set all the relevant options semi-automatically. -->
 	<h1><?php _e('Geolocation IP Detection', 'geoip-detect');?> - Client IP Debug Panel</h1>
@@ -40,6 +52,22 @@ This needs to be known to the plugin to choose the correct IP adress.
 
 		<li>Whitelist for known reverse proxies (optional if only one): <b><?php echo get_option('geoip-detect-trusted_proxy_ips') ?: '(none)'; ?></b>
 			<span class="detail-box">All IPs in HTTP_X_FORWARDED_FOR that are not the correct client IP are probably known reverse proxies.<br>(For security reasons, this is not assumed by default: maybe the reverse proxy is not of the server, but a Man-In-The-Middle-Attack ... not very probable but possible.)</span>
+		</li>
+
+		<li>Add known proxies of a cloud provider enabled: <b><?php echo get_option('geoip-detect-dynamic_reverse_proxies') ? 'Yes, ' . ucfirst(get_option('geoip-detect-dynamic_reverse_proxy_type', '')) : 'No'; ?></b>
+			<span class="detail-box">If your site is hosted by CloudFlare or AWS, this should probably be enabled. It will automatically retrieve the many IP adresses that a reverse proxy of this provider can have, and update the list daily.</span>
+			<span class="detail-box">Here is the current list of IP adresses: <b><?= implode(', ', \YellowTree\GeoipDetect\DynamicReverseProxies\addDynamicIps()) ?: '(Empty)' ?></b></span>
+			<span class="detail-box">
+				Last updated: <b><?= geoip_detect_format_localtime($last_update); ?></b><br>
+				Next update:  <b><?= geoip_detect_format_localtime(wp_next_scheduled('geoipdetectdynamicproxiesupdate')); ?></b>
+				<?php if(get_option('geoip-detect-dynamic_reverse_proxies')) : ?>
+				<form method="POST">
+					<?php wp_nonce_field( 'geoip_detect_reload-proxies' ); ?>
+					<input type="hidden" name="action" value="reload-proxies" />
+					<input type="submit" class="button button-primary" value="Reload now" />
+				</form>
+				<?php endif; ?>
+			</span>
 		</li>
 	</ul>
 

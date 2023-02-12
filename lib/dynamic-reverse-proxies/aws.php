@@ -1,7 +1,9 @@
 <?php
 
-class DynamicReverseProxiesAws {
-    public function getIps() {
+namespace YellowTree\GeoipDetect\DynamicReverseProxies;
+
+class DataAws implements DataProvider {
+    public function getIps() : array {
         $url = apply_filters('geoip_detect2_dynamic_reverse_proxies_aws_urls', 'https://ip-ranges.amazonaws.com/ip-ranges.json');
         $types = apply_filters('geoip_detect2_dynamic_reverse_proxies_aws_types', ['CLOUDFRONT']);
 
