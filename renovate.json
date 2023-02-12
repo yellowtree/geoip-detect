@@ -21,7 +21,8 @@
     {
       "matchPackagePatterns": [
         "roots/wordpress",
-        "yoast/phpunit-polyfills"
+        "yoast/phpunit-polyfills",
+        "wp-phpunit/wp-phpunit"
       ],
       "groupName": "testing (PHP)"
     },
