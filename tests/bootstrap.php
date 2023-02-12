@@ -19,7 +19,14 @@ require_once $_tests_dir . '/includes/functions.php';
 
 function _manually_load_plugin() {
 	require __DIR__ . '/../geoip-detect.php';
-	require __DIR__ .'/../contact-form-7/wp-contact-form-7.php';
+	if (file_exists(__DIR__ . '/../contact-form-7/wp-contact-form-7.php')) {
+		require __DIR__ . '/../contact-form-7/wp-contact-form-7.php';
+	} else if (file_exists(__DIR__ . '/../../contact-form-7/wp-contact-form-7.php')) {
+		require __DIR__ . '/../../contact-form-7/wp-contact-form-7.php';
+	} else {
+		echo ('These unit tests require the plugin contact-form-7. Please run in the plugin directory: git clone https://github.com/takayukister/contact-form-7.git' . PHP_EOL);
+		exit( 1 );
+	}
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
