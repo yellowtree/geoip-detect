@@ -151,7 +151,7 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 	protected function assertAtLeastTheseProperties($expected, $actual) {
 		$checkObject = new stdClass;
 		foreach ($expected as $name => $value) {
-			$this->assertObjectHasAttribute($name, $actual);
+			$this->assertTrue(property_exists($actual, $name));
 			
 			$checkObject->$name = $actual->$name;
 		}
