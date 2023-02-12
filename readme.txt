@@ -120,6 +120,10 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 
 == Upgrade Notice ==
 
+= 5.2.0 =
+
+Running your site on AWS or CloudFlare? This update is for you.
+
 = 5.0.0 =
 
 If you are using AJAX mode, please read the changelog.
