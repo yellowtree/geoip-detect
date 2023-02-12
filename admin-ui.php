@@ -159,8 +159,8 @@ function geoip_detect_option_page() {
 
 	$messages = [];
 
-	$numeric_options = [ 'set_css_country', 'has_reverse_proxy', 'disable_pagecache', 'ajax_enabled', 'ajax_enqueue_js', 'ajax_set_css_country', 'ajax_shortcodes' ];
-	$text_options = [ 'external_ip', 'trusted_proxy_ips' ];
+	$numeric_options = [ 'set_css_country', 'has_reverse_proxy', 'disable_pagecache', 'ajax_enabled', 'ajax_enqueue_js', 'ajax_set_css_country', 'ajax_shortcodes', 'dynamic_reverse_proxies' ];
+	$text_options = [ 'external_ip', 'trusted_proxy_ips', 'dynamic_reverse_proxy_type' ];
 	$option_names = array_merge($numeric_options, $text_options);
 
 	$action = isset($_POST['action']) ? sanitize_key($_POST['action']) : '';
@@ -229,6 +229,9 @@ function geoip_detect_option_page() {
 						update_option('geoip-detect-' . $opt_name, $opt_value);
 					}
 				}
+
+				do_action('geoip_detect2_options_changed');
+
 				break;
 		}
 	}
@@ -252,6 +255,33 @@ function geoip_detect_option_page() {
 }
 
 function geoip_detect_option_client_ip_page() {
+	if (!is_admin() || !current_user_can('manage_options'))
+		return;
+
+	$last_update = get_option('geoip_detect2_dynamic-reverse-proxies_last_updated');
+
+	$successMessage = '';
+	$errorMessage = '';
+	$action = isset($_POST['action']) ? sanitize_key($_POST['action']) : '';
+	if (geoip_detect_verify_nonce($action)) {
+		switch($action)
+		{
+			case 'reload-proxies':
+				$manager = \YellowTree\GeoipDetect\DynamicReverseProxies\getDataManager();
+				if ($manager)  {
+					$success = $manager->reload(true);
+					if ($success) {
+						$successMessage = 'Dynamic Reverse Proxy list was reloaded successfully.';
+					} else {
+						$errorMessage = 'There was an error reloading the dynamic reverse proxy list.';
+					}
+				} else {
+					$errorMessage = 'No DataManager found.';
+				}
+				break;
+		}
+	}
+
 	include_once(GEOIP_PLUGIN_DIR . '/views/client-ip.php');
 }
 

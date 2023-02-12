@@ -103,7 +103,7 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 		$properties = [ 'country_code', 'country_code3', 'country_name', 'latitude', 'longitude', 'continent_code' ];
 
 		foreach ($properties as $name) {
-			$this->assertObjectHasAttribute($name, $record);
+			$this->assertTrue(property_exists($record, $name));
 		}
 	}
 	
@@ -151,7 +151,7 @@ class WP_UnitTestCase_GeoIP_Detect extends WP_UnitTestCase
 	protected function assertAtLeastTheseProperties($expected, $actual) {
 		$checkObject = new stdClass;
 		foreach ($expected as $name => $value) {
-			$this->assertObjectHasAttribute($name, $actual);
+			$this->assertTrue(property_exists($actual, $name));
 			
 			$checkObject->$name = $actual->$name;
 		}
