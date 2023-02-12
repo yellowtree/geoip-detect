@@ -229,6 +229,9 @@ function geoip_detect_option_page() {
 						update_option('geoip-detect-' . $opt_name, $opt_value);
 					}
 				}
+
+				do_action('geoip_detect2_options_changed');
+
 				break;
 		}
 	}

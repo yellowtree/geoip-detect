@@ -60,11 +60,13 @@ This needs to be known to the plugin to choose the correct IP adress.
 			<span class="detail-box">
 				Last updated: <b><?= geoip_detect_format_localtime($last_update); ?></b><br>
 				Next update:  <b><?= geoip_detect_format_localtime(wp_next_scheduled('geoipdetectdynamicproxiesupdate')); ?></b>
+				<?php if(get_option('geoip-detect-dynamic_reverse_proxies')) : ?>
 				<form method="POST">
 					<?php wp_nonce_field( 'geoip_detect_reload-proxies' ); ?>
 					<input type="hidden" name="action" value="reload-proxies" />
 					<input type="submit" class="button button-primary" value="Reload now" />
 				</form>
+				<?php endif; ?>
 			</span>
 		</li>
 	</ul>

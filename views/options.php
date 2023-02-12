@@ -139,7 +139,11 @@ $currentSourceId = $currentSource->getId();
 						<?php printf(__('Warning: As you didn\'t tick the option "%s" above, setting trusted IPs has no effect. This is only used for reverse proxies.', 'geoip-detect'), __('The server is behind a reverse proxy', 'geoip-detect') ); ?>
 					</span><br>
 				<?php endif; ?>
-				<?php _e('The list of know proxies will be automatically updated daily.', 'geoip-detect'); ?><br>
+				<?php _e('The list of know proxies will be automatically updated daily.', 'geoip-detect'); ?>
+				<?php if (!empty($wp_options['dynamic_reverse_proxies'])) {
+					printf(__('(%d IPs of known proxies found.)', 'geoip-detect'), count(\YellowTree\GeoipDetect\DynamicReverseProxies\addDynamicIps()));
+				} ?>
+				<br>
 			</span>
 		</p>
 

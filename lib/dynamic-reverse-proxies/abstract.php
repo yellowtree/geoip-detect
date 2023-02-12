@@ -48,6 +48,10 @@ class DataManager {
         $this->name = sanitize_key($name);
     }
 
+    public function getName() : string {
+        return $this->name;
+    }
+
     public static function getDataProvider(string $name) : ?DataProvider {
         $className = '\YellowTree\GeoipDetect\DynamicReverseProxies\Data' . ucfirst($name);
         if (!class_exists($className)) {
@@ -65,7 +69,7 @@ class DataManager {
 
         if (empty($ip_list)) {
             if ($foceSave) {
-                delete_option(self::CACHE_OPTION_NAME);
+                self::deleteCache();
             }
             return false;
         }
@@ -73,6 +77,11 @@ class DataManager {
         update_option('geoip_detect2_dynamic-reverse-proxies_last_updated', time());
 
         return true;
+    }
+
+    public static function deleteCache() {
+        delete_option(self::CACHE_OPTION_NAME);
+        delete_option('geoip_detect2_dynamic-reverse-proxies_last_updated');
     }
 
     public function getIpsFromCache() : array {
@@ -83,7 +92,7 @@ class DataManager {
         list($name, $list) = explode('|', $cache, 2);
         if ($name != $this->name) {
             if (GEOIP_DETECT_DEBUG) {
-                trigger_error('Weird! Requesting ips for "' . $this->name . '", but found IPs for "' . $name . " in the database. This should not happen. Please file a bug report.");
+                trigger_error('Weird! Requesting IPs for "' . $this->name . '", but found IPs for "' . $name . " in the database. This should not happen. Please file a bug report.");
             }
             return [];
         }
@@ -94,7 +103,21 @@ class DataManager {
 
 class UpdateDynamicReverseProxiesCron {
     public function addFilter() {
-        add_action('geoipdetectdynamicproxiesupdate', [ $this, 'hook_cron', 10, 1 ]);
+        add_action('geoipdetectdynamicproxiesupdate', [ $this, 'hook_cron' ]);
+
+        add_action('geoip_detect2_options_changed', [ $this, 'options_changed']);
+    }
+
+    /** 
+     * This function is called when options are changed via UI
+     */
+    public function options_changed() {
+        DataManager::deleteCache();
+        if (get_option('geoip-detect-dynamic_reverse_proxies')) {
+            $this->schedule(true);
+        } else {
+            $this->unschedule();
+        }
     }
 
     public function hook_cron() {
@@ -120,7 +143,7 @@ class UpdateDynamicReverseProxiesCron {
         if( $now - $last < HOUR_IN_SECONDS) {
             return false;
         }
-
+        
         $manager = getDataManager();
         if ($manager) {
             $manager->reload();
@@ -137,6 +160,10 @@ class UpdateDynamicReverseProxiesCron {
         if ($forceReschedule) {
             $this->run();
         }
+    }
+
+    public function unschedule() {
+        wp_clear_scheduled_hook('geoipdetectdynamicproxiesupdate');
     }
 
     protected function schedule_next_cron_run() {
