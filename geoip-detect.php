@@ -5,7 +5,7 @@ Plugin URI:      http://www.yellowtree.de
 Description:     Provides geographic information detected by an IP adress.
 Author:          Yellow Tree (Benjamin Pick)
 Author URI:      http://www.yellowtree.de
-Version:         5.1.1
+Version:         5.2.0-beta1
 License:         GPLv3 or later
 License URI:     http://www.gnu.org/licenses/gpl-3.0.html
 Text Domain:     geoip-detect
@@ -16,10 +16,10 @@ Requires WP:     5.4
 Requires PHP:    7.2.5
 */
 
-define('GEOIP_DETECT_VERSION', '5.1.1');
+define('GEOIP_DETECT_VERSION', '5.2.0-beta1');
 
 /*
-Copyright 2013-2021 Yellow Tree, Siegen, Germany
+Copyright 2013-2023 Yellow Tree, Siegen, Germany
 Author: Benjamin Pick (wp-geoip-detect| |posteo.de)
 
 This program is free software; you can redistribute it and/or modify
