@@ -120,10 +120,6 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 
 == Upgrade Notice ==
 
-= 5.2.0 =
-
-Running your site on AWS or CloudFlare? This update is for you.
-
 = 5.0.0 =
 
 If you are using AJAX mode, please read the changelog.
@@ -177,7 +173,8 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 = 5.2.0 =
 
 * NEW: The list of reverse proxies of AWS CloudFront or CloudFlare can now be added as "known proxy"
-* FIX [!]: Cloudfront header name
+* FIX [!]: AWS Cloudfront header name changed to HTTP_CLOUDFRONT_VIEWER_COUNTRY
+* Reduced JS size (AJAX mode)
 * Library updates
 
 = 5.1.1 =
