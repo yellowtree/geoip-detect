@@ -123,7 +123,8 @@ class CcpaTest extends WP_UnitTestCase_GeoIP_Detect {
         $this->assertIsArray($ret['exclusions']);
         $row = reset($ret['exclusions']);
         $rowKeys = array_keys($row);
-        $this->assertSame([ 'exclusion_type', 'data_type', 'value', 'last_updated' ], $rowKeys);
+        sort($rowKeys);
+        $this->assertSame([ 'data_type', 'exclusion_type', 'last_updated', 'value' ], $rowKeys);
         $this->assertNotEmpty(geoip_detect_sanitize_ip_list($row['value']));
     }
 
