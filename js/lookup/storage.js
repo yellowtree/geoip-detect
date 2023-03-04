@@ -3,23 +3,22 @@ import { options as globalOptions } from './get_info';
 import Record from '../models/record';
 
 // Sync function in case it is known that no AJAX will occur
-export function getRecordDataFromLocalStorage() {
+export const getRecordDataFromLocalStorage = () => {
     return getLocalStorage(globalOptions.cookie_name);
 }
 
-export function setRecordDataToLocalStorage(data, cache_duration) {
+export const setRecordDataToLocalStorage = (data, cache_duration) => {
     setLocalStorage(globalOptions.cookie_name, data, cache_duration);
 }
 
 let lastEvaluated = {};
-export function getRecordDataLastEvaluated() {
+export const getRecordDataLastEvaluated = () => {
     return lastEvaluated;
 }
-export function setRecordDataLastEvaluated() {
+export const setRecordDataLastEvaluated = () => {
     lastEvaluated = getRecordDataFromLocalStorage();
 }
 
-
-export function get_info_stored_locally_record() {
+export const get_info_stored_locally_record = () => {
     return new Record(getRecordDataFromLocalStorage(), globalOptions.default_locales);
 }
