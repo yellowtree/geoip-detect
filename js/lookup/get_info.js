@@ -87,12 +87,30 @@ async function get_info_cached() {
  */
 export async function get_info() {
     let response = await get_info_cached();
+    assert_valid_response(response);
 
+    const record = new Record(response, options.default_locales);
+    return record;
+}
+
+function assert_valid_response(response) {
     if (typeof (response) !== 'object') {
         console.error('Geolocation IP Detection Error: Record should be an object, not a ' + typeof (response), response);
         response = { 'extra': { 'error': response || 'Network error, look at the original server response ...' } };
     }
+}
 
-    const record = new Record(response, options.default_locales);
-    return record;
+/**
+ * Load data - but leave away some functionality to get a minimal bundle size
+ * 
+ * Does not include:
+ * - LocalStorage caching
+ * - Accessing the data via the Record class
+ * 
+ * @api
+ * @returns Promise(object|string)
+ */
+export async function get_info_minimal() {
+    let response = await get_info_raw();
+    return response;
 }
