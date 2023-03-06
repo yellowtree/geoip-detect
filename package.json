@@ -6,7 +6,8 @@
   "author": "Benjamin Pick <benjaminpick@github.com>",
   "license": "GPL-3.0-or-later",
   "source": [
-    "js/frontend.js",
+    "js/frontend_full.js",
+    "js/frontend_base.js",
     "js/frontend_minimal.js"
   ],
   "scripts": {

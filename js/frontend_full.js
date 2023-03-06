@@ -1,3 +1,10 @@
+/*
+ Variant "Full": 
+
+ All the features, biggest filesize
+*/
+
+
 import { get_info } from './lookup/get_info';
 import { remove_override, set_override, set_override_with_merge } from './lookup/override';
 import { main } from './main';

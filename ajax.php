@@ -115,13 +115,23 @@ function _geoip_detect2_enqueue_javascript() {
 	return true;
 }
 
+function _geoip_detect2_get_variant() {
+	if (defined('GEOIP_DETECT_JS_VARIANT')) {
+		if (file_exists(GEOIP_PLUGIN_DIR . 'js/dist/frontend_' . $variant . '.js')) {
+			return $variant;
+		}
+	}
+	return 'full';
+}
+
 function _geoip_detect_register_javascript() {
 	// What about CORS usage?
 	// if (!get_option('geoip-detect-ajax_enabled')) {
 	// 	return;
 	// }
+	$variant = _geoip_detect2_get_variant();
 
-	wp_register_script('geoip-detect-js', GEOIP_DETECT_PLUGIN_URI . 'js/dist/frontend.js', [], GEOIP_DETECT_VERSION, true);
+	wp_register_script('geoip-detect-js', GEOIP_DETECT_PLUGIN_URI . 'js/dist/frontend_' . $variant . '.js', [], GEOIP_DETECT_VERSION, true);
 	$data = [
 		'ajaxurl' => admin_url('/admin-ajax.php'),
 		'default_locales' => apply_filters('geoip_detect2_locales', null),
