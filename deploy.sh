@@ -88,8 +88,16 @@ if [ "$BETA" = 1 ] ; then
 	echo
 fi
 
-
-merge_branch_and_checkout develop beta
+if [ `git branch --show-current` = "beta" ] ; then
+	echo
+	echo "Already on beta branch. If you continue, changes from the develop branch will not be merged in."
+	echo
+	confirm 
+else
+	echo "Not on beta branch, merging develop into beta..."
+	exit 1
+	#merge_branch_and_checkout develop beta
+fi
 
 cd $GITPATH
 
