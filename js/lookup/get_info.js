@@ -38,7 +38,7 @@ async function get_info_cached() {
     // 1) Load Info from localstorage cookie cache, if possible
     if (options.cookie_name) {
         storedResponse = getRecordDataFromLocalStorage()
-        if (storedResponse && storedResponse.extra) {
+        if (storedResponse?.extra /* this is the only property that is guarantueed */) {
             if (storedResponse.extra.override === true) {
                 console.info('Geolocation IP Detection: Using cached response (override)');
             } else {
@@ -56,6 +56,10 @@ async function get_info_cached() {
         response = err.responseJSON || err;
     }
 
+    if (process.env.NODE_ENV !== 'production') {
+        console.log('Got response:', response);
+    }
+
     // 3) Save info to localstorage cookie cache
     if (options.cookie_name) {
 
@@ -67,8 +71,9 @@ async function get_info_cached() {
         }
 
         let cache_duration = options.cookie_duration_in_days * 24 * 60 * 60;
-        if (response?.extra?.error)
+        if (response?.extra?.error) {
             cache_duration = 60; // Cache errors only for 1 minute, then try again
+        }
         
         setRecordDataToLocalStorage(response, cache_duration);
     }
@@ -94,9 +99,6 @@ export async function get_info() {
 
     const record = new Record(response, options.default_locales);
     return record;
-}
-
-function assert_valid_response(response) {
 }
 
 /**
