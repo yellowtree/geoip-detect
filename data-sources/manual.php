@@ -139,16 +139,16 @@ HTML;
 	public function validateApiKey($key) {
 		$message = '';
 		$key = trim($key);
-		if (mb_strlen($key) != 16) {
-			$message = __('The license key usually is a 16-char alphanumeric string. Are you sure this is the right key?', 'geoip-detect');
+		if (mb_strlen($key) < 16) {
+			$message = __('The license key is at least 16-char long. Are you sure this is the right key?', 'geoip-detect');
 			if (mb_strlen($key) < 16) {
 				$message .= ' ' . __('Do not use the "unhashed format" when generating the license key.', 'geoip-detect');
 				// Unhashed: 13char alphanumeric
 			}
 			$message .= ' ' . sprintf(__('This key is %d chars long.', 'geoip-detect'), mb_strlen($key));
-		} else if (1 !== preg_match('/^[a-z0-9]+$/i', $key)) {
-			$message = __('The license key usually is a 16-char alphanumeric string. Are you sure this is the right key?', 'geoip-detect');
-			$message .= ' ' . __('This key contains characters other than a-z and 0-9.', 'geoip-detect');
+		} else if (1 !== preg_match('/^[a-z0-9_]+$/i', $key)) {
+			$message = __('The license key usually is an alphanumeric string. Are you sure this is the right key?', 'geoip-detect');
+			$message .= ' ' . __('This key contains characters other than _ a-z and 0-9.', 'geoip-detect');
 		}
 		if ($message) return $message;
 
