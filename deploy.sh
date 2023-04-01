@@ -121,13 +121,13 @@ read COMMITMSG
 git add vendor/composer/platform_check.php
 git commit -am "$COMMITMSG"
 
-# Merging back into develop
-merge_branch_and_checkout beta develop
-
-echo "Pushing latest commit to origin"
-git push origin --all
-
 if [ "$BETA" = 1 ] ; then
+	# Merging back into develop
+	merge_branch_and_checkout beta develop
+
+	echo "Pushing latest commit to origin"
+	git push origin --all
+
 	git checkout develop
 	echo 
 	echo "OK. Beta version released."
@@ -215,6 +215,12 @@ git push origin master --tags
 
 echo "Removing temporary directory $SVNPATH"
 rm -fr $SVNPATH/
+
+# Merging back into develop
+merge_branch_and_checkout beta develop
+
+echo "Pushing latest commit to origin"
+git push origin --all
 
 git checkout develop
 echo "---- FIN ----"
