@@ -170,13 +170,12 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 == Changelog ==
 
-= 5.2.1 =
-
 * NEW: JS file variants - if you are using only a subset of the AJAX features, you can opt into a smaller file variant via the constant GEOIP_DETECT_JS_VARIANT - see https://github.com/yellowtree/geoip-detect/wiki/API:-AJAX#JS-Variants
+
+= 5.2.1 =
 * FIX: Maxmind licence key format changed. Existing licence keys will continue to work.
 
 = 5.2.0 =
-
 * NEW: The list of reverse proxies of AWS CloudFront or CloudFlare can now be added as "known proxy"
 * FIX [!]: AWS Cloudfront header name changed to HTTP_CLOUDFRONT_VIEWER_COUNTRY
 * Reduced JS size (AJAX mode)
@@ -188,7 +187,6 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 * FIX: Some server configurations showed this warning: Use of undefined constant CURL_HTTP_VERSION_2_0
 
 = 5.1.0 =
-
 New Datasource: Fastah Web API (beta), see https://aws.amazon.com/marketplace/pp/prodview-k5gjowexrefl2
 
 AJAX mode:
