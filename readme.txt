@@ -2,7 +2,7 @@
 Contributors: benjaminpick
 Tags: geolocation, locator, geoip, maxmind, ipstack
 Requires at least: 5.0
-Tested up to: 6.1
+Tested up to: 6.2
 Requires PHP: 7.2
 Stable tag: trunk
 License: GPLv3 or later
@@ -170,8 +170,10 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 == Changelog ==
 
-= 5.2.0 =
+= 5.2.1 =
+* FIX: The format for new Maxmind licence keys has changed. (Existing licence keys will continue to work.)
 
+= 5.2.0 =
 * NEW: The list of reverse proxies of AWS CloudFront or CloudFlare can now be added as "known proxy"
 * FIX [!]: AWS Cloudfront header name changed to HTTP_CLOUDFRONT_VIEWER_COUNTRY
 * Reduced JS size (AJAX mode)
