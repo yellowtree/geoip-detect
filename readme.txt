@@ -2,7 +2,7 @@
 Contributors: benjaminpick
 Tags: geolocation, locator, geoip, maxmind, ipstack
 Requires at least: 5.0
-Tested up to: 6.1
+Tested up to: 6.2
 Requires PHP: 7.2
 Stable tag: trunk
 License: GPLv3 or later
@@ -169,6 +169,11 @@ The Plugin was renamed to Geolocation IP Detection in order to prevent trademark
 If you use Maxmind "Automatic download" then you need to upgrade to this plugin version in order to continue to receive database update. The Database license changed and you will need to register at their website and agree to the EULA.
 
 == Changelog ==
+
+= 5.2.1 =
+
+* NEW: JS file variants - if you are using only a subset of the AJAX features, you can opt into a smaller file variant via the constant GEOIP_DETECT_JS_VARIANT - see https://github.com/yellowtree/geoip-detect/wiki/API:-AJAX#JS-Variants
+* FIX: Maxmind licence key format changed. Existing licence keys will continue to work.
 
 = 5.2.0 =
 
