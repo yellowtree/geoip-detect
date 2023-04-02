@@ -167,6 +167,9 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 ## Changelog ##
 
+* NEW: You can now specify to use a JS file variant if you are only using a subset of the features (see https://github.com/yellowtree/geoip-detect/wiki/API:-AJAX#JS-Variants) 
+* Note[!]: frontend.js has now been renamed to frontend_full.js
+
 = 5.2.2 =
 * FIX: The format for new Maxmind licence keys has changed. (Existing licence keys will continue to work.)
 (5.2.1 was a broken release, sorry ...)
@@ -183,7 +186,6 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 * FIX: Some server configurations showed this warning: Use of undefined constant CURL_HTTP_VERSION_2_0
 
 = 5.1.0 =
-
 New Datasource: Fastah Web API (beta), see https://aws.amazon.com/marketplace/pp/prodview-k5gjowexrefl2
 
 AJAX mode:
