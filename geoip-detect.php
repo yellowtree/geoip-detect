@@ -120,6 +120,15 @@ include_once(GEOIP_PLUGIN_DIR . '/data-sources/fastah.php');
  */
 //define('GEOIP_DETECT_READER_CACHE_TIME', 7 * DAY_IN_SECONDS);
 
-
+/**
+ * AJAX mode: 
+ * If you want to reduce the filesize of the used JS file, consider using a JS file variant:
+ * 
+ * - full: All features (default)
+ * - base: Only get_info, no shortcodes, no body_class, no overrides ...
+ * - minimal: base, but without the Record class (get_info is returning raw json data instead)
+ * 
+ */
+//defined'GEOIP_DETECT_JS_VARIANT', 'full');
 
 require_once(GEOIP_PLUGIN_DIR . '/admin-ui.php');
