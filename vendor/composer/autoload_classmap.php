@@ -58,6 +58,7 @@ return array(
     'MaxMind\\WebService\\Http\\Request' => $vendorDir . '/maxmind/web-service-common/src/WebService/Http/Request.php',
     'MaxMind\\WebService\\Http\\RequestFactory' => $vendorDir . '/maxmind/web-service-common/src/WebService/Http/RequestFactory.php',
     'Normalizer' => $vendorDir . '/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php',
+    'PhpToken' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
     'Stringable' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
     'Symfony\\Component\\HttpFoundation\\AcceptHeader' => $vendorDir . '/symfony/http-foundation/AcceptHeader.php',
     'Symfony\\Component\\HttpFoundation\\AcceptHeaderItem' => $vendorDir . '/symfony/http-foundation/AcceptHeaderItem.php',
@@ -205,6 +206,7 @@ return array(
     'Symfony\\Polyfill\\Intl\\Normalizer\\Normalizer' => $vendorDir . '/symfony/polyfill-intl-normalizer/Normalizer.php',
     'Symfony\\Polyfill\\Mbstring\\Mbstring' => $vendorDir . '/symfony/polyfill-mbstring/Mbstring.php',
     'Symfony\\Polyfill\\Php80\\Php80' => $vendorDir . '/symfony/polyfill-php80/Php80.php',
+    'Symfony\\Polyfill\\Php80\\PhpToken' => $vendorDir . '/symfony/polyfill-php80/PhpToken.php',
     'UnhandledMatchError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
     'ValueError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
 );

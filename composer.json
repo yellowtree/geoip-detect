@@ -18,6 +18,7 @@
         "maxmind-db/reader": "1.6.0",
         "maxmind/web-service-common": "0.7.0",
         "symfony/property-access": "5.2.4",
+        "symfony/string": "^5.1",
         "symfony/http-foundation": "5.2.4"
     },
     "require-dev": {
