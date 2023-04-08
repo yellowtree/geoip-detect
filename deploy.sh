@@ -216,6 +216,23 @@ cd $SVNPATH/tags/$NEWVERSION
 svn commit --username=$SVNUSER -m "Tagging version $NEWVERSION"
 if [ $? != 0 ]; then echo ; echo "Error while committing to TAGS."; confirm ; fi 
 
+
+echo
+echo "Last chance to verify everything before it's really live ..."
+confirm
+
+function set_stable_tag_in_readme() {
+	local NEW_VERSION=$1
+	sed -i "s/^Stable tag:\s.*$/Stable tag: $NEW_VERSION/g" readme.txt
+}
+
+cd $SVNPATH
+set_stable_tag_in_readme $NEWVERSION
+cd $SVNPATH/tags/$NEWVERSION
+set_stable_tag_in_readme $NEWVERSION
+svn commit --username=$SVNUSER -m "Setting stable tag to $NEWVERSION"
+
+
 echo "Tagging new version in git"
 cd "$CURRENTDIR"
 git tag -a "$NEWVERSION" -m "Tagging version $NEWVERSION"
