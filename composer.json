@@ -17,9 +17,11 @@
         "geoip2/geoip2": "2.10.0",
         "maxmind-db/reader": "1.6.0",
         "maxmind/web-service-common": "0.7.0",
-        "symfony/property-access": "5.2.4",
+        "symfony/property-access": "5.4.22",
+        "symfony/property-info": "^5.4",
         "symfony/string": "^5.1",
-        "symfony/http-foundation": "5.2.4"
+        "symfony/deprecation-contracts": "^2.5",
+        "symfony/http-foundation": "5.4.22"
     },
     "require-dev": {
         "roots/wordpress": "5.9.5",
