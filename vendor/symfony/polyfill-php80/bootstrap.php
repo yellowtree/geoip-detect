@@ -26,6 +26,7 @@ if (!function_exists('preg_last_error_msg')) {
     function preg_last_error_msg(): string { return p\Php80::preg_last_error_msg(); }
 }
 if (!function_exists('str_contains')) {
+    // Note YellowTree - Changed method signature to make it compatible
     function str_contains($haystack, $needle): bool { 
         if (!is_string($haystack) || !is_string($needle)) { return false; } 
         return p\Php80::str_contains($haystack, $needle); 

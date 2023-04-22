@@ -170,10 +170,12 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 == Changelog ==
 
-* NEW: JS file variants - if you are using only a subset of the AJAX features, you can opt into a smaller file variant via the constant GEOIP_DETECT_JS_VARIANT - see https://github.com/yellowtree/geoip-detect/wiki/API:-AJAX#JS-Variants
+* NEW: You can now specify to use a JS file variant if you are only using a subset of the features (see https://github.com/yellowtree/geoip-detect/wiki/API:-AJAX#JS-Variants) 
+* Note[!]: frontend.js has now been renamed to frontend_full.js
 
-= 5.2.1 =
+= 5.2.2 =
 * FIX: The format for new Maxmind licence keys has changed. (Existing licence keys will continue to work.)
+(5.2.1 was a broken release, sorry ...)
 
 = 5.2.0 =
 * NEW: The list of reverse proxies of AWS CloudFront or CloudFlare can now be added as "known proxy"
