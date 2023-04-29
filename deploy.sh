@@ -53,6 +53,18 @@ if [ "$1" = "checkout" ] ; then
 	exit 0;
 fi
 
+if [ "$1" = "checkout-with-tags" ] ; then
+	echo "Only Checkout"
+	echo 
+	echo "Creating local copy of SVN repo ..."
+	svn co $SVNURL -N $SVNPATH
+	svn up $SVNPATH/trunk
+	svn up --set-depth empty $SVNPATH/tags
+
+	echo "SVN Repo was checked out to $SVNPATH"
+	exit 0;
+fi
+
 # Let's begin...
 echo ".........................................."
 echo 
