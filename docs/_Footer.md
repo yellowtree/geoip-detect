@@ -1,0 +1,1 @@
+_Content of this documentation is available under [Creative Commons Attribution-Share Alike 3.0 Unported License](http://creativecommons.org/licenses/by-sa/3.0/). Feel free to improve it by logging in with a Github user and editing it._
