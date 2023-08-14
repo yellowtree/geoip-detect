@@ -14,7 +14,7 @@ GITPATH="$CURRENTDIR/" # this file should be in the base of your git repository
 # svn config
 SVNPATH="/tmp/$PLUGINSLUG" # path to a temp SVN repo. No trailing slash required and don't add trunk.
 SVNURL="http://plugins.svn.wordpress.org/geoip-detect/" # Remote SVN repo on wordpress.org, with no trailing slash
-SVNUSER="benjamin4" # your svn username
+SVNUSER="benjaminpick" # your svn username
 
 
 # This also changes the current branch to MERGE_TO
@@ -78,8 +78,13 @@ NEWVERSION=`grep "^Version" $GITPATH/$MAINFILE | awk -F' ' '{print $2}'`
 echo "$MAINFILE header version: $NEWVERSION"
 NEWVERSION2=`grep "^define.*GEOIP_DETECT_VERSION" $GITPATH/$MAINFILE | awk -F"'" '{print $4}'`
 echo "$MAINFILE define version: $NEWVERSION2"
+OLDVERSION=`grep "^Stable tag:" $GITPATH/readme.txt | awk -F' ' '{print $NF}'`
+echo "readme.txt Stable (old) version: $OLDVERSION"
+echo
 
-if [ "$NEWVERSION" != "$NEWVERSION2" ] ; then echo "Versions don't match. Exiting...."; exit 1; fi
+if [ "$NEWVERSION" != "$NEWVERSION2" ] ; then echo "Oh no! Versions don't match. Exiting...."; exit 1; fi
+if [ "$NEWVERSION" == "$OLDVERSION" ] ;  then echo "Oh no! Versions match (trunk must be smaller than new version). Exiting...."; exit 1; fi
+if [ "trunk" == "$OLDVERSION" ] ;  then echo "Oh no! Stable tag is on trunk. Use the currently live version instead. Exiting...."; exit 1; fi
 
 echo "Versions match in PHP file. Let's proceed..."
 
@@ -175,6 +180,7 @@ git checkout-index -a -f --prefix=$SVNPATH/trunk/
 echo "Ignoring github specific files, tests and deployment script"
 svn propset svn:ignore "deploy.sh
 bin
+docs
 README.md
 CHANGELOG.md
 .git
@@ -237,7 +243,7 @@ function set_stable_tag_in_readme() {
 	sed -i "s/^Stable tag:\s.*$/Stable tag: $NEW_VERSION/g" readme.txt
 }
 
-cd $SVNPATH
+cd $SVNPATH/trunk
 set_stable_tag_in_readme $NEWVERSION
 cd $SVNPATH/tags/$NEWVERSION
 set_stable_tag_in_readme $NEWVERSION
@@ -259,5 +265,9 @@ echo "Pushing latest commit to origin"
 git push origin --all
 
 git checkout develop
+
+echo "Composer Autoload back to dev"
+composer dump
+git commit -a -m "After Deployment"
 echo "---- FIN ----"
 
