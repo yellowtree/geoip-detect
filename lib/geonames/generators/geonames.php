@@ -31,8 +31,13 @@ define('OUTPUT_FILE_NAMES', __DIR__ . '/../data/country-names.php');
 define('OUTPUT_FILE_INFO', __DIR__ . '/../data/country-info.php');
 
 $username = @$argv[1];
-if (!$username)
-	die("1st parameter missing: You need to get a free geonames.org-User here: http://www.geonames.org/login\n");
+if (!$username) {
+	$username = getenv('WP_GEONAMES_USERNAME');
+}
+if (!$username) {
+	echo "1st parameter missing: You need to get a free geonames.org-User here: https://www.geonames.org/login \n";
+	exit;
+}
 
 // List of languages that the Maxmind Database support
 $langs = ['en', 'de', 'it', 'es', 'fr', 'ja', 'pt-BR', 'ru', 'zh-CN'];
@@ -44,6 +49,7 @@ $lang_geonames['zh-CN'] = 'zh';
 
 $continents = [];
 $all_records = [];
+$has_error = false;
 output_to_stderr("Getting Country Information from geonames.org with API username " . $username . ":" . PHP_EOL);
 foreach ($lang_geonames as $lang_maxmind => $lang_geoname) {
 	// Load country information of all countries
@@ -96,14 +102,21 @@ foreach ($lang_geonames as $lang_maxmind => $lang_geoname) {
 				$records[$id] = $r;
 			}
 		} else {
+			$has_error = true;
 			output_to_stderr('Fehler: ' . $response['message'] . PHP_EOL);
 		}
 	} catch (\RuntimeException $e) {
+		$has_error = true;
 		output_to_stderr('Fehler:' . $e->getMessage() . PHP_EOL);
 	}
 	
 	// Merge the languages together
 	$all_records = array_replace_recursive($all_records, $records);
+}
+
+if ($has_error) {
+	echo "\n\nAborting (because there were errors) ...\n";
+	exit;
 }
 
 ksort($all_records);
@@ -160,4 +173,4 @@ echo <<<'PHP'
 
 PHP;
 */
-output_to_stderr("Done. You should now run 'phpunit' now to see if the file data is valid." . PHP_EOL);
+output_to_stderr("Done. You should now run 'composer test' now to see if the file data is valid." . PHP_EOL);
