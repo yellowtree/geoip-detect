@@ -52,7 +52,7 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 * Be careful to comply to the applicable laws. For example Regulation (EU) 2018/302 ...
 * If you need to get the user's timezone, it is more accurate to use JS solutions.
 
-**System Requirements**: You will need at least PHP 7.2.5 If you use the plugin WooCommerce, you'll need at least WooCommerce 3.9.0 .
+**System Requirements**: You will need at least PHP 7.2.5 . Also, if you use the plugin WooCommerce, you'll need at least WooCommerce 3.9.0 .
 
 *GDPR: See [Is this plugin GDPR-compliant?](https://github.com/yellowtree/geoip-detect/wiki/FAQ#is-this-plugin-gdpr-compliant)*
 
@@ -167,12 +167,14 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 ## Changelog ##
 
+= 5.3.0 =
 * NEW: You can now specify to use a JS file variant if you are only using a subset of the features (see https://github.com/yellowtree/geoip-detect/wiki/API:-AJAX#JS-Variants) 
 * Note[!]: frontend.js has now been renamed to frontend_full.js
+* Library updates
 
 = 5.2.2 =
 * FIX: The format for new Maxmind licence keys has changed. (Existing licence keys will continue to work.)
-(5.2.1 was a broken release, sorry ...)
+(5.2.1 was a broken release)
 
 = 5.2.0 =
 * NEW: The list of reverse proxies of AWS CloudFront or CloudFlare can now be added as "known proxy"
