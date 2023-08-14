@@ -267,7 +267,9 @@ git push origin --all
 git checkout develop
 
 echo "Composer Autoload back to dev"
+composer install-test
 composer dump
 git commit -a -m "After Deployment"
+git push
 echo "---- FIN ----"
 
