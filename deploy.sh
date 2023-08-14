@@ -107,8 +107,7 @@ if [ `git branch --show-current` = "beta" ] ; then
 	confirm 
 else
 	echo "Not on beta branch, merging develop into beta..."
-	exit 1
-	#merge_branch_and_checkout develop beta
+	merge_branch_and_checkout develop beta
 fi
 
 cd $GITPATH
