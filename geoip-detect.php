@@ -16,7 +16,7 @@ Requires WP:     5.4
 Requires PHP:    7.2.5
 */
 
-define('GEOIP_DETECT_VERSION', '5.2.2');
+define('GEOIP_DETECT_VERSION', '5.3.0');
 
 /*
 Copyright 2013-2023 Yellow Tree, Siegen, Germany
@@ -129,6 +129,6 @@ include_once(GEOIP_PLUGIN_DIR . '/data-sources/fastah.php');
  * - minimal: base, but without the Record class (get_info is returning raw json data instead)
  * 
  */
-//defined'GEOIP_DETECT_JS_VARIANT', 'full');
+//define('GEOIP_DETECT_JS_VARIANT', 'full');
 
 require_once(GEOIP_PLUGIN_DIR . '/admin-ui.php');
