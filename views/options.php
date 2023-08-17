@@ -92,7 +92,8 @@ $currentSourceId = $currentSource->getId();
 		<p style="margin-left: 30px;">
 			<label><input type="checkbox" name="options[ajax_enqueue_js]" value="1" <?php if (!empty($wp_options['ajax_enqueue_js'])) { echo 'checked="checked"'; } ?>> <?php _e('Add JS Helper functions to all pages.', 'geoip-detect'); ?></label>
 			<span class="detail-box">
-				<?php _e('This enables you code geo-dependent behavior in JS (see <a href="https://github.com/yellowtree/geoip-detect/wiki/API%3A-AJAX" target="_blank">documentation</a>)', 'geoip-detect'); ?>
+				<?php _e('This enables you code geo-dependent behavior in JS (see <a href="https://github.com/yellowtree/geoip-detect/wiki/API%3A-AJAX" target="_blank">documentation</a>)', 'geoip-detect'); ?><br>
+				<?= sprintf(__('You are using the <code>%s</code> variant - see <a href="%s" target="_blank">documentation</a>', 'geoip-detect'), _geoip_detect2_get_variant(), 'https://github.com/yellowtree/geoip-detect/wiki/API:-AJAX#js-variants' ); ?>
 			</span>
 			<label><input type="checkbox" name="options[ajax_set_css_country]" value="1" <?php if (!empty($wp_options['ajax_set_css_country'])) { echo 'checked="checked"'; } ?>> <?php _e('Add a country-specific CSS class to the &lt;body&gt;-Tag (via AJAX).', 'geoip-detect'); ?></label>
 			<span class="detail-box">

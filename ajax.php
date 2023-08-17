@@ -117,8 +117,8 @@ function _geoip_detect2_enqueue_javascript() {
 
 function _geoip_detect2_get_variant() {
 	if (defined('GEOIP_DETECT_JS_VARIANT')) {
-		if (file_exists(GEOIP_PLUGIN_DIR . 'js/dist/frontend_' . $variant . '.js')) {
-			return $variant;
+		if (file_exists(GEOIP_PLUGIN_DIR . '/js/dist/frontend_' . GEOIP_DETECT_JS_VARIANT . '.js')) {
+			return GEOIP_DETECT_JS_VARIANT;
 		}
 	}
 	return 'full';
