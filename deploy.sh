@@ -243,6 +243,8 @@ function set_stable_tag_in_readme() {
 	sed -i "s/^Stable tag:\s.*$/Stable tag: $NEW_VERSION/g" readme.txt
 }
 
+cd "$CURRENTDIR"
+set_stable_tag_in_readme $NEWVERSION
 cd $SVNPATH/trunk
 set_stable_tag_in_readme $NEWVERSION
 cd $SVNPATH/tags/$NEWVERSION
