@@ -167,8 +167,13 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 ## Changelog ##
 
+= 5.3.1 =
+* FIX: Respect JS file variant
+* UI: Show selected file variant in backend options
+* Library updates
+
 = 5.3.0 =
-* NEW: You can now specify to use a JS file variant if you are only using a subset of the features (see https://github.com/yellowtree/geoip-detect/wiki/API:-AJAX#JS-Variants) 
+* NEW: You can now specify to use a JS file variant if you are only using a subset of the features (see https://github.com/yellowtree/geoip-detect/wiki/API:-AJAX#js-variants) 
 * Note[!]: frontend.js has now been renamed to frontend_full.js
 * Library updates
 
