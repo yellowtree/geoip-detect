@@ -170,6 +170,9 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 == Changelog ==
 
+= 5.3.2 =
+* FIX: Some country codes such as "PT" were missing in the (deprecated) legacy API mapping.
+
 = 5.3.1 =
 * FIX: Respect JS file variant
 * UI: Show selected file variant in backend options
