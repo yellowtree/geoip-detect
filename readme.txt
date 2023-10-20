@@ -172,6 +172,7 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 = 5.3.2 =
 * FIX: Some country codes such as "PT" were missing in the (deprecated) legacy API mapping.
+* Library updates
 
 = 5.3.1 =
 * FIX: Respect JS file variant
