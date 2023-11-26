@@ -43,5 +43,8 @@
     "transform": {
       "^.+\\.js$": "babel-jest"
     }
+  },
+  "engines": {
+    "node": ">=16.0.0 <17.0.0"
   }
 }
