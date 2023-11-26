@@ -285,7 +285,7 @@ geoip_detect2_register_source(new ManualDataSource());
 
 add_filter('geoip_detect_source_get_status_HTML_maxmind', function($html) {
 	$maxmind = new \YellowTree\GeoipDetect\CheckCompatibility\Maxmind;
-	$maxmind->filesChecksums();
+	$maxmind->doFileChecksums();
 	
 	if ($maxmind->filesByOthers) {
 
@@ -299,6 +299,9 @@ add_filter('geoip_detect_source_get_status_HTML_maxmind', function($html) {
 		$sameVersion = true;
 		foreach($maxmind->checksumResult as $file => $result) {
 			$file = $maxmind->makePathRelative($file);
+			if (GEOIP_DETECT_DEBUG) {
+				var_dump($file);
+			}
 			$files .= '&nbsp;&nbsp;-&nbsp;&nbsp;' . $file . ' (' . ($result ? 'same version' : 'different version' ).  ')<br>';
 			$sameVersion = $sameVersion && $result;
 		}

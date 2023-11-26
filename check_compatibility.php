@@ -13,7 +13,7 @@ class Maxmind {
      * Get a unique Id for the situation
      */
     function getId() {
-        $this->filesChecksums();
+        $this->doFileChecksums();
 
         $encoded = md5(serialize($this->checksumResult));
         return $encoded;
@@ -36,7 +36,7 @@ class Maxmind {
             return str_ends_with($value, 'Reader.php');
         });
         $this->filesByOthers = array_filter($this->files, function($value) {
-            return !str_contains($value, '/plugins/geoip-detect/');
+            return !str_starts_with($value, GEOIP_PLUGIN_DIR);
         });
 
         return $this->filesByOthers;
@@ -50,7 +50,7 @@ class Maxmind {
             return $absolutePath;
         }
 
-    function filesChecksums() {
+    function doFileChecksums() {
         if ($this->checksumResult) {
             return;
         }

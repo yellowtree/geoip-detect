@@ -2,7 +2,7 @@
 Contributors: benjaminpick
 Tags: geolocation, locator, geoip, maxmind, ipstack
 Requires at least: 5.0
-Tested up to: 6.3
+Tested up to: 6.4
 Requires PHP: 7.2
 Stable tag: 5.3.1
 License: GPLv3 or later
@@ -172,6 +172,7 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 = 5.3.2 =
 * FIX: Some country codes such as "PT" were missing in the (deprecated) legacy API mapping.
+* FIX: Maxmind compability does not show a notice anymore when the plugin folder is non-standard (e.g. due to symlinks)
 * Library updates
 
 = 5.3.1 =
