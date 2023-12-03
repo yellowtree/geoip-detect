@@ -48,7 +48,7 @@ jobs:
       php: 7.2
       env: WP_VERSION=5.4.9 CF7_VERSION=v5.1.6 PHPUNIT_VERSION=^7.0
     - name: bleeding edge
-      php: 8.2
+      php: 8.3
       dist: jammy
       env: CF7_VERSION=master
       addons:
