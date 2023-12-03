@@ -94,9 +94,6 @@ function geoip_redirect(){
 	if (!is_home())
 		return;
 
-	if (!function_exists('geoip_detect2_get_info_from_current_ip'))
-		return;
-
 	$userInfo = geoip_detect2_get_info_from_current_ip();
 	$countryCode = $userInfo->country->isoCode;
 	switch ($countryCode) {
