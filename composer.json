@@ -40,7 +40,7 @@
             "roots/wordpress-core-installer": true
         },
         "platform": {
-            "php": "7.2.5"
+            "php": "7.3"
         }
     }
 }
