@@ -251,7 +251,7 @@ cd $SVNPATH/tags/$NEWVERSION
 set_stable_tag_in_readme $NEWVERSION
 svn commit --username=$SVNUSER -m "Setting stable tag to $NEWVERSION"
 
-
+echo
 echo "Tagging new version in git"
 cd "$CURRENTDIR"
 git tag -a "$NEWVERSION" -m "Tagging version $NEWVERSION"
@@ -263,15 +263,18 @@ rm -fr $SVNPATH/
 # Merging back into develop
 merge_branch_and_checkout beta develop
 
+echo
 echo "Pushing latest commit to origin"
 git push origin --all
 
 git checkout develop
 
+echo
 echo "Composer Autoload back to dev"
 composer install-test
 composer dump
 git commit -a -m "After Deployment"
 git push
+echo
 echo "---- FIN ----"
 
