@@ -172,7 +172,7 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 = 5.3.2 =
 * FIX: Some country codes such as "PT" were missing in the (deprecated) legacy API mapping.
-* FIX: Maxmind compability does not show a notice anymore when the plugin folder is non-standard (e.g. due to symlinks)
+* FIX: Maxmind compatibility does not show a notice anymore when the plugin folder is non-standard (e.g. due to symlinks) or the Filename ends with Reader.php
 * Library updates
 
 = 5.3.1 =

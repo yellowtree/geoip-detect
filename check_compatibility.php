@@ -33,8 +33,9 @@ class Maxmind {
     
         $loaded = get_included_files();
         $this->files = array_filter($loaded, function($value) {
-            return str_ends_with($value, 'Reader.php');
+            return str_ends_with($value, '/Reader.php');
         });
+
         $this->filesByOthers = array_filter($this->files, function($value) {
             return !str_starts_with($value, GEOIP_PLUGIN_DIR);
         });
