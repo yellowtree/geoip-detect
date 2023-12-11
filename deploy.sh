@@ -222,7 +222,7 @@ cd $SVNPATH/trunk/
 composer dump -o
 # Add all new files that are not set to be ignored
 svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn add
-echo "Committing to trunk"
+echo "Committing to trunk"	
 svn commit --username=$SVNUSER -m "$COMMITMSG"
 if [ $? != 0 ]; then echo ; echo "Error while committing to TRUNK."; confirm ; fi 
 
