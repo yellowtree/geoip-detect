@@ -153,7 +153,7 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
     public function testShortcodeCF7UserInfo() {
         add_filter('geoip_detect2_client_ip', [ $this, 'filter_set_test_ip' ], 101);
 
-        $this->assertEquals('', geoip_detect2_shortcode_user_info_wpcf7('', 'asdfsadf', false));
+        $this->assertEquals('a', geoip_detect2_shortcode_user_info_wpcf7('a', 'asdfsadf', false));
 
         $userInfo = geoip_detect2_shortcode_user_info_wpcf7('', 'geoip_detect2_user_info', false);
         $this->assertNotEmpty($userInfo);
@@ -162,6 +162,31 @@ class ShortcodeTest extends WP_UnitTestCase_GeoIP_Detect {
         $this->assertStringContainsString('State or region: Hesse' , $userInfo);
         $this->assertStringContainsString('City: Eschborn' , $userInfo);
 		$this->assertStringContainsString('Data from: GeoLite2 City database' , $userInfo);
+
+		$userInfo = geoip_detect2_shortcode_user_info_wpcf7('', 'geoip_detect2_property_country__iso_code', false);
+		$this->assertNotEmpty($userInfo);
+		$this->assertStringContainsString('DE', $userInfo);
+
+		$userInfo = geoip_detect2_shortcode_user_info_wpcf7('', 'geoip_detect2_property_extra__country_iso_code_3', false);
+		$this->assertNotEmpty($userInfo);
+		$this->assertStringContainsString('DEU', $userInfo);
+	}
+
+	public function testShortcodeWPForms() {
+		add_filter('geoip_detect2_client_ip', [ $this, 'filter_set_test_ip' ], 101);
+		$this->assertEquals('a', geoip_detect2_shortcode_process_smarttag('a', 'asdfsadf'));
+
+		$userInfo = geoip_detect2_shortcode_process_smarttag('{geoip_detect2_user_info}', 'geoip_detect2_user_info');
+        $this->assertNotEmpty($userInfo);
+        $this->assertStringContainsString(GEOIP_DETECT_TEST_IP, $userInfo);
+        $this->assertStringContainsString('Country: Germany', $userInfo);
+        $this->assertStringContainsString('State or region: Hesse' , $userInfo);
+        $this->assertStringContainsString('City: Eschborn' , $userInfo);
+		$this->assertStringContainsString('Data from: GeoLite2 City database' , $userInfo);
+
+		$userInfo = geoip_detect2_shortcode_process_smarttag('{geoip_detect2_property_country__iso_code}', 'geoip_detect2_property_country__iso_code', false);
+		$this->assertNotEmpty($userInfo);
+		$this->assertStringContainsString('DE', $userInfo);
 	}
 
 	/**
