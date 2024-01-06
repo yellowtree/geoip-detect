@@ -39,6 +39,8 @@ Provides geographic information detected by an IP adress. This can be used in th
   * A select input with all countries, the detected country being selected by default: `[geoip_detect2_countries mycountry]`
   * A text input that is pre-filled with the detected city (or other property): `[geoip_detect2_text_input city property:city lang:fr id:id class:class default:Paris]`
   * Geolocation information for the email text: `[geoip_detect2_user_info]`
+* If you are using [WP Forms](https://wordpress.org/plugins/wpforms-lite/), you can use this shortcode:
+  * Geolocation information for the email text: `[geoip_detect2_user_info]`
 * Together with [SVG Flags](https://wordpress.org/plugins/svg-flags-lite/) you can show the flag of the detected country: `[geoip_detect2_current_flag]` (see [documentation](https://github.com/yellowtree/geoip-detect/wiki/API:-Shortcodes#add-a-flag-of-the-visitors-country))
 
 See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more info.
@@ -169,6 +171,9 @@ The Plugin was renamed to Geolocation IP Detection in order to prevent trademark
 If you use Maxmind "Automatic download" then you need to upgrade to this plugin version in order to continue to receive database update. The Database license changed and you will need to register at their website and agree to the EULA.
 
 == Changelog ==
+
+= 5.4.0 =
+* NEW: Infos can be added to a mail sent by WPForms (with Smart Tag `{geoip_detect2_user_info}`)
 
 = 5.3.2 =
 * FIX: Some country codes such as "PT" were missing in the (deprecated) legacy API mapping.

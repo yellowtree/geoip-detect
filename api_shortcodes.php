@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 require_once(GEOIP_PLUGIN_DIR . '/shortcodes/_helpers.php');
 require_once(GEOIP_PLUGIN_DIR . '/shortcodes/main.php');
 require_once(GEOIP_PLUGIN_DIR . '/shortcodes/cf7.php');
+require_once(GEOIP_PLUGIN_DIR . '/shortcodes/wpforms.php');
 require_once(GEOIP_PLUGIN_DIR . '/shortcodes/show_if.php');
 require_once(GEOIP_PLUGIN_DIR . '/shortcodes/other.php');
 require_once(GEOIP_PLUGIN_DIR . '/shortcodes/select.php');

@@ -249,6 +249,7 @@ cd $SVNPATH/trunk
 set_stable_tag_in_readme $NEWVERSION
 cd $SVNPATH/tags/$NEWVERSION
 set_stable_tag_in_readme $NEWVERSION
+cd $SVNPATH
 svn commit --username=$SVNUSER -m "Setting stable tag to $NEWVERSION"
 
 echo
