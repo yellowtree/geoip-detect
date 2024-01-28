@@ -132,7 +132,7 @@ if [ $? != 0 ]; then echo ; echo "Phpunit for HTTP requests failed."; confirm ; 
 echo "Set composer for production use ..."
 composer install-prod
 git checkout vendor
-composer dump
+composer dump -o
 
 echo "Generate README.md from readme.txt"
 bin/readme.sh "$SVNURL"
