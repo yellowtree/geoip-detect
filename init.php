@@ -211,6 +211,8 @@ add_action( 'admin_init', 'geoip_detect_add_privacy_policy_content' );
  * This function is called when the user clicks on "Remove" in the wp-admin
  */
 function on_uninstall() {
+	geoip_detect_defines();
+	
 	$registry = DataSourceRegistry::getInstance();
 	$registry->uninstall();
 }
