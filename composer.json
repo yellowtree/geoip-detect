@@ -24,10 +24,10 @@
         "symfony/http-foundation": "5.4.22"
     },
     "require-dev": {
-        "roots/wordpress": "5.9.8",
-        "wp-phpunit/wp-phpunit": "5.9.8",
-        "yoast/phpunit-polyfills": "1.1.0",
-        "phpunit/phpunit": "9.6.15"
+        "roots/wordpress": "6.5.2",
+        "wp-phpunit/wp-phpunit": "6.5.2",
+        "yoast/phpunit-polyfills": "2.0.1",
+        "phpunit/phpunit": "11.1.2"
     },
     "scripts": {
         "test": "phpunit",
