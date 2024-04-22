@@ -27,13 +27,14 @@
         "roots/wordpress": "6.5.2",
         "wp-phpunit/wp-phpunit": "6.5.2",
         "yoast/phpunit-polyfills": "2.0.1",
-        "phpunit/phpunit": "11.1.2"
+        "phpunit/phpunit": "9.6.19"
     },
     "scripts": {
         "test": "phpunit",
         "test-external": "phpunit --group external-http",
         "install-test": "composer install --ignore-platform-req=php",
-        "install-prod": "composer install --prefer-dist --optimize-autoloader --no-dev"
+        "install-prod": "composer install --prefer-dist --optimize-autoloader --no-dev",
+        "migrate": "phpunit --migrate-configuration"
     },
     "config": {
         "allow-plugins": {

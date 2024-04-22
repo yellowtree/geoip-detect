@@ -25,6 +25,7 @@ if (!class_exists('geoiprecord')) {
 		public $country_code3;
 		public $country_name;
 		public $region;
+		public $region_name;
 		public $city;
 		public $postal_code;
 		public $latitude;
@@ -33,6 +34,7 @@ if (!class_exists('geoiprecord')) {
 		public $dma_code;
 		public $metro_code;
 		public $continent_code;
+		public $timezone;
 	}
 }
 
