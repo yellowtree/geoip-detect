@@ -1,3 +1,4 @@
+import { triggerNativeEvent } from './lib/events';
 import { domReady } from './lib/html';
 import { get_info } from './lookup/get_info';
 
@@ -55,4 +56,6 @@ export function add_classes_to_body(record) {
             }
         }
     }
+
+    triggerNativeEvent(body, 'geoip-detect-body-classes-done');
 }
