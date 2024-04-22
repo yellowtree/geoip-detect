@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'yellowtree/geoip-detect',
-        'pretty_version' => 'dev-renovate/major-testing-(php)',
-        'version' => 'dev-renovate/major-testing-(php)',
-        'reference' => '9c1749fd3c4c1b95f5e9642e4bc3e429e941379d',
+        'pretty_version' => 'dev-develop',
+        'version' => 'dev-develop',
+        'reference' => 'a6fd59e665e8ed38c36542039a6a9daa4af02de2',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -437,9 +437,9 @@
             'dev_requirement' => true,
         ),
         'yellowtree/geoip-detect' => array(
-            'pretty_version' => 'dev-renovate/major-testing-(php)',
-            'version' => 'dev-renovate/major-testing-(php)',
-            'reference' => '9c1749fd3c4c1b95f5e9642e4bc3e429e941379d',
+            'pretty_version' => 'dev-develop',
+            'version' => 'dev-develop',
+            'reference' => 'a6fd59e665e8ed38c36542039a6a9daa4af02de2',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
