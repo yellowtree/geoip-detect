@@ -43,10 +43,10 @@ jobs:
       dist: xenial
       php: 7.2
       env: PHPUNIT_VERSION=^7.0
-    - name: php_7_2_and_wp_5_4
+    - name: php_7_2_and_wp_5_9
       dist: xenial
       php: 7.2
-      env: WP_VERSION=5.9.9 CF7_VERSION=v5.1.6 PHPUNIT_VERSION=^9.0
+      env: WP_VERSION=5.9.9 CF7_VERSION=v5.1.6 PHPUNIT_VERSION=^8.0
     - name: bleeding edge
       php: 8.2
       dist: jammy
