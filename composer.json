@@ -24,16 +24,17 @@
         "symfony/http-foundation": "5.4.22"
     },
     "require-dev": {
-        "roots/wordpress": "5.9.8",
-        "wp-phpunit/wp-phpunit": "5.9.8",
-        "yoast/phpunit-polyfills": "1.1.0",
-        "phpunit/phpunit": "9.6.15"
+        "roots/wordpress": "6.5.2",
+        "wp-phpunit/wp-phpunit": "6.5.2",
+        "yoast/phpunit-polyfills": "2.0.1",
+        "phpunit/phpunit": "9.6.19"
     },
     "scripts": {
         "test": "phpunit",
         "test-external": "phpunit --group external-http",
         "install-test": "composer install --ignore-platform-req=php",
-        "install-prod": "composer install --prefer-dist --optimize-autoloader --no-dev"
+        "install-prod": "composer install --prefer-dist --optimize-autoloader --no-dev",
+        "migrate": "phpunit --migrate-configuration"
     },
     "config": {
         "allow-plugins": {

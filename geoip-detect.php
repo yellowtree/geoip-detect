@@ -39,7 +39,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 define('GEOIP_REQUIRED_PHP_VERSION', '7.2.5');
 
-// In theory, it should still run in 3.5 . But officially supported is only WP 5.4 and above.
+// In theory, it should still run in 3.5 . But officially supported is only WP 5.9 and above.
 define('GEOIP_REQUIRED_WP_VERSION', '3.5');
 
 // We need this requirement because WooCommerce hardcoded Maxmind code instead of using composer. This would result in an PHP fatal error when there is a lookup.
