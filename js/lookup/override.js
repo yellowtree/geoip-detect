@@ -1,5 +1,5 @@
 import { setLocalStorage } from '../lib/localStorageAccess';
-import { options as globalOptions } from './get_info';
+import { options as globalOptions } from './options';
 import { camelToUnderscore } from '../models/record';
 import _set from 'just-safe-set';
 import _get from 'just-safe-get';

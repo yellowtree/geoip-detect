@@ -2,10 +2,8 @@
  * @jest-environment jsdom
  */
 
-import { options } from "./get_info";
+import { options } from "./options";
 
 test('options', () => {
-    options
-
     expect(options.do_body_classes).toBe(false);
 });

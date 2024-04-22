@@ -6,7 +6,7 @@ import { getTestRecord, getTestRecordError } from "./test-lib/test-records";
 import { add_classes_to_body, calc_classes } from "./body_classes";
 import Record from "./models/record";
 import { set_override_with_merge } from "./lookup/override";
-import { options } from './lookup/get_info';
+import { options } from './lookup/options';
 import { domReady, isUnitTesting } from "./lib/html";
 import { get_info_stored_locally_record } from "./lookup/storage";
 

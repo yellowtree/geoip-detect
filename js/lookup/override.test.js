@@ -6,7 +6,7 @@ import { set_override, set_override_with_merge } from "./override";
 import { getTestRecord } from "../test-lib/test-records";
 import Record from "../models/record";
 import { get_info } from "./get_info";
-import { options as globalOptions } from './get_info';
+import { options as globalOptions } from './options';
 import { get_info_stored_locally_record } from "./storage";
 
 const defaultRecord = getTestRecord();

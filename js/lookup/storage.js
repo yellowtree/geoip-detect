@@ -1,5 +1,5 @@
 import { getLocalStorage, setLocalStorage } from '../lib/localStorageAccess';
-import { options as globalOptions } from './get_info';
+import { options as globalOptions } from './options';
 import Record from '../models/record';
 
 // Sync function in case it is known that no AJAX will occur
