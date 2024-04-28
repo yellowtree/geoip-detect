@@ -155,7 +155,7 @@ HTML;
 			$headers['If-Modified-Since'] = date('r', $modified);
 		}
 
-		$response = wp_safe_remote_get( $url, [ 'timeout' => 300, 'stream' => true, 'filename' => $tmpfname, 'headers' => $headers  ] );
+		$response = wp_safe_remote_get( $url, [ 'timeout' => 300, 'stream' => true, 'filename' => $tmpfname, 'headers' => $headers, 'redirection' => 5 ] );
 		$http_response_code = wp_remote_retrieve_response_code( $response );
 		if (304 === $http_response_code) {
 			return new \WP_Error( 'http_304', __('It has not changed since the last update.', 'geoip-detect') );
