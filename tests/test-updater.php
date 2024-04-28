@@ -67,4 +67,8 @@ class UpdateTest extends WP_UnitTestCase_GeoIP_Detect {
 		$this->assertUpdateWorks();
 	}
 
+	function testUrlConsideredSafe() {
+		$url = 'https://mm-prod-geoip-databases.a2649acb697e2c09b632799562c076f2.r2.cloudflarestorage.com/bla.tar.gz';
+		$this->assertSame(wp_http_validate_url($url), $url, 'URL ' . $url . ' is not considered safe by wordpress, update of Maxmind data will fail');
+	}
 }
