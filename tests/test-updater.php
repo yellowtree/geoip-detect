@@ -5,8 +5,6 @@ class UpdateTest extends WP_UnitTestCase_GeoIP_Detect {
 	function set_up() {
 		parent::set_up();
 		
-		add_filter('pre_option_geoip-detect-auto_license_key', [ $this, 'filter_set_user_secret' ], 101);
-
 		// unlink uploads file if exists
 		if (function_exists('geoip_detect_get_database_upload_filename')) {
 			$filename = geoip_detect_get_database_upload_filename();
@@ -17,8 +15,14 @@ class UpdateTest extends WP_UnitTestCase_GeoIP_Detect {
 
 	function tear_down() {
 		remove_filter('pre_option_geoip-detect-auto_license_key', [ $this, 'filter_set_user_secret' ], 101);
+		remove_filter('pre_option_geoip-detect-auto_license_key', [ $this, 'filter_set_invalid_user_secret' ], 100);
+		remove_filter('geoip_detect2_download_url', [ $this, 'filter_set_test_file' ], 101);
 
 		parent::tear_down();
+	}
+
+	function filter_set_invalid_user_secret() { 
+		return 'bla';
 	}
 
 	function filter_set_user_secret() {
@@ -30,11 +34,21 @@ class UpdateTest extends WP_UnitTestCase_GeoIP_Detect {
 			return 'asdfsadf';
 		}
 	}
+
+	function filter_set_test_file() {
+		// Yes, use http instead of https to test redirect
+		return 'http://github.com/yellowtree/geoip-detect/raw/develop/tests/GeoLite2-Country.mmdb.tar.gz';
+	}
 	
 	/**
 	 * @group external-http
 	 */
 	function testUpdate() {
+		add_filter('pre_option_geoip-detect-auto_license_key', [ $this, 'filter_set_user_secret' ], 101);
+		$this->assertUpdateWorks();
+	}
+
+	function assertUpdateWorks() {
 		$s = new \YellowTree\GeoipDetect\DataSources\Auto\AutoDataSource();
 
 		$this->assertTrue( $s->maxmindUpdate(true) );
@@ -43,4 +57,14 @@ class UpdateTest extends WP_UnitTestCase_GeoIP_Detect {
 		$record = geoip_detect2_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		$this->assertValidGeoIP2Record($record, GEOIP_DETECT_TEST_IP);
 	}
+
+	/**
+	 * @group external-http
+	 */
+	function testUpdateWithTestFile() {
+		add_filter('pre_option_geoip-detect-auto_license_key', [ $this, 'filter_set_invalid_user_secret' ], 100);
+		add_filter('geoip_detect2_download_url', [ $this, 'filter_set_test_file' ], 101);
+		$this->assertUpdateWorks();
+	}
+
 }
