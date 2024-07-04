@@ -2,12 +2,14 @@
 Contributors: benjaminpick
 Tags: geolocation, locator, geoip, maxmind, ipstack
 Requires at least: 5.0
-Tested up to: 6.4
+Tested up to: 6.6
 Requires PHP: 7.2
-Stable tag: 5.3.2
+Stable tag: 5.4.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYUZHS8FH3CL
+
+Provides geographic information detected by an IP adress.
 
 == Description ==
 

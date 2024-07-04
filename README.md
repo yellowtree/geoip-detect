@@ -8,6 +8,8 @@ Tests: [![Build Status](https://api.travis-ci.org/yellowtree/geoip-detect.svg?br
 
 * **Donate Link:** https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYUZHS8FH3CL
 
+Provides geographic information detected by an IP adress.
+
 ## Description ##
 
 Provides geographic information detected by an IP adress. This can be used in themes or other plugins, as a shortcode, or via CSS body classes. The city & country names are translated in different languages ([supported languages](https://dev.maxmind.com/geoip/geoip2/web-services/#Languages-8)).
@@ -171,6 +173,8 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 = 5.4.0 =
 * NEW: Infos can be added to a mail sent by WPForms (with Smart Tag `{geoip_detect2_user_info}`)
+* FIX: Remove Fatal Error on uninstall ("Undefined constand GEOIP_DETECT_DEBUG")
+* Library updates
 
 = 5.3.2 =
 * FIX: Some country codes such as "PT" were missing in the (deprecated) legacy API mapping.
