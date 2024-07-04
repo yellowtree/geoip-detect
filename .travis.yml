@@ -63,7 +63,7 @@ install:
   - composer show
   - nvm install 16 && nvm use 16
   - yarn install
-  - git clone --depth=50 --branch=${CF7_VERSION} https://github.com/takayukister/contact-form-7.git
+  - git clone --depth=50 --branch=${CF7_VERSION} https://github.com/rocklobster-in/contact-form-7
 
 before_script:
   - mysql -u root -e "CREATE USER ${WP_DB_USER} IDENTIFIED BY '${WP_DB_PASS}';"
