@@ -1,3 +1,6 @@
+---
+title: Frequently Asked Quetions
+---
 ## Something doesn't work. What can I do?
 
 See [Troubleshooting](./Troubleshooting.md).

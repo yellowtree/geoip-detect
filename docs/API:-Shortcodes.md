@@ -1,3 +1,6 @@
+---
+title: "API: Shortcodes"
+---
 ### Geolocation Information
 
 Examples:

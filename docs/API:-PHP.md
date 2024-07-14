@@ -1,3 +1,6 @@
+---
+title: "API: PHP"
+---
 These are the PHP functions that you can use in your theme or plugin:
 
 ```php

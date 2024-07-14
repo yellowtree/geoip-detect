@@ -1,3 +1,6 @@
+---
+title: "Beta Testing"
+---
 New bug fixes and features usually sit in the repository for a while as beta before I release it to everybody.
 
 So it would be great if you can install the beta version in your development install and tell me if everything works, especially the features that have changed recently! And consider joining the conversation at the [Beta Testing Team](https://github.com/yellowtree/geoip-detect/discussions/100)!

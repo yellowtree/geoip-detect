@@ -1,3 +1,6 @@
+---
+title: Troubleshooting
+---
 *Here is a list of common problems and how to debug them.*
 
 ## General

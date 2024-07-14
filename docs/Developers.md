@@ -1,3 +1,6 @@
+---
+title: "To Developers"
+---
 So you are a developer looking on how to get started to modify this plugin? Great! Here are some hints:
 
 ## About the project

@@ -1,3 +1,6 @@
+---
+title: "API: Shortcodes for Contact Form 7"
+---
 These shortcodes you can use in forms created with [WP ContactForm7](http://wordpress.org/plugins/contact-form-7/):
 
 ### Create a select input with all countries

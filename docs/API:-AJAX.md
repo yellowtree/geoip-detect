@@ -1,3 +1,6 @@
+---
+title: "API: AJAX"
+---
 You are using a site cache? This is what AJAX mode is made for. It needs to be enabled in the options.
 
 If the cached HTML is geo-independent, yet it should be customized depending on the geo-data, then now you can use this AJAX call to figure out the user's location. You can then use this information to show/hide content, inject the country name into a field, redirect to a different page, etc.

@@ -1,3 +1,7 @@
+---
+title: Record Properties
+---
+
 # Properties added by the plugin
 
 Additional to the [Maxmind properties](http://dev.maxmind.com/geoip/geoip2/web-services/), this wordpress plugin adds some properties:

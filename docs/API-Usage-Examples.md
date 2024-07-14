@@ -1,3 +1,6 @@
+---
+title: API Usage Examples
+---
 _(Feel free to add your own examples on this page.)_
 
 ## Basic Use
