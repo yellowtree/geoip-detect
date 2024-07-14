@@ -6,7 +6,7 @@ If the cached HTML is geo-independent, yet it should be customized depending on 
 
 GET `https://example.com/wp-admin/admin-ajax.php?action=geoip_detect2_get_info_from_current_ip`
 
-The function `geoip_detect2_get_info_from_current_ip()` can be called via JS and returns the JSON data. This only works if the option "Enable JS API" is checked. 
+The function `geoip_detect2_get_info_from_current_ip()` can be called via JS and returns the JSON data. This only works if the option "Enable JS API" is checked.
 
 ## HTTP Response Codes
 
@@ -18,7 +18,7 @@ The function `geoip_detect2_get_info_from_current_ip()` can be called via JS and
 
 ## JSON Response object
 
-The result from the datasource. See [Record Properties](./Record Properties.md) for all available properties. No property name is guaranteed to exist:
+The result from the datasource. See [Record Properties](./Record-Properties.md) for all available properties. No property name is guaranteed to exist:
 
 ```js
 var city = record.city && record.city.names && record.city.names.en;
@@ -52,21 +52,21 @@ jQuery(document).ready(function($) {
     // console.log('Record', record.data);
 
     // If no locales are given, use the website language
-    $('.geo-continent').text(record.get('continent')); 
+    $('.geo-continent').text(record.get('continent'));
 
     // Second parameter is the default value if the property value is empty or non-existent. For example, the IP might be from a satellite connection.
     $('.geo-continent').text(record.get('continent', 'Weird: no country detected.'));
-    
+
     // Return the German name of the country, if not available, use English
     $('.geo-country').text(record.get_with_locales('country', ['de']));
-    
+
     // Return the German name of the country, if not available, show "default text"
     $('.geo-country-de').text(record.get('country.names.de', 'default text'));
-    
+
     // Try French first, then German, then English. The pseudo-property "name" is also supported ('city' would result in the same return value).
     $('.geo-city').text(record.get_with_locales('city.name', ['fr', 'de', 'en'], 'No city detected.'));
-    
-    // The same property names can be used as in the shortcode syntax 
+
+    // The same property names can be used as in the shortcode syntax
     $('.geo-city-id').text(record.get('city.geoname_id'));
     $('.geo-ip').text(record.get('traits.ip_address'));
 
@@ -75,7 +75,7 @@ jQuery(document).ready(function($) {
   // This will return the same JS promise as above, so that this will not result in a second AJAX request.
   geoip_detect.get_info().then(function(record) {
     $('.geo-country-2').text(record.get_with_locales('country', ['en']));
-  }); 
+  });
 
 });
 ```
@@ -104,7 +104,7 @@ add_filter('geoip_detect2_ajax_localize_script_data', function($data) {
 ### JS Variants
 (Since 5.3.0)
 
-If you are only using the method geoip_detect.get_info(), then you can opt in to a smaller JS file variant. 
+If you are only using the method geoip_detect.get_info(), then you can opt in to a smaller JS file variant.
 
 ```php
 define('GEOIP_DETECT_JS_VARIANT', 'base');
@@ -119,7 +119,7 @@ There are three possible variants:
 ### Storing data that overrides detected data
 (Since 4.0.0)
 
-It is best practise to give the user the option to override the geo-detected data, for example when showing different currencies in different countries. 
+It is best practise to give the user the option to override the geo-detected data, for example when showing different currencies in different countries.
 This how you can set a new record manually in JavaScript:
 
 ```js
@@ -131,7 +131,7 @@ geoip_detect.set_override(new_record, { duration_in_days: 1 });
 geoip_detect.set_override_with_merge('country.iso_code', 'en', { duration_in_days: 1 });
 ```
 
-If you want to undo this override, simply call `geoip_detect.remove_override()`. 
+If you want to undo this override, simply call `geoip_detect.remove_override()`.
 
 (If you want to remove all overrides server-side, the easiest method to do this is renaming the cookie name.)
 
@@ -146,7 +146,7 @@ geoip_detect.set_override_with_merge('country.iso_code', 'en', { duration_in_day
 
 If you only need this JS on some sites, enqueue the JS file manually and uncheck the option `Add JS to make the access to the AJAX endpoint easier.`.
 
-You can add the shortcode `[geoip_detect2_enqueue_javascript]` (since 3.3.0) on the pages/posts where you have geo-dependent content. 
+You can add the shortcode `[geoip_detect2_enqueue_javascript]` (since 3.3.0) on the pages/posts where you have geo-dependent content.
 
 Or, if you need a more general solution:
 

@@ -12,7 +12,7 @@ if ($userInfo->country->isoCode == 'de')
     echo 'Hallo! Schön dass Sie hier sind!';
 ```
 
-To see which property names are supported, refer to the list of [Record Properties](./Record Properties.md) or to the plugin's Lookup page.
+To see which property names are supported, refer to the list of [Record Properties](./Record-Properties.md) or to the plugin's Lookup page.
 
 ## How can I show text only if the visitor is coming from Germany?
 
@@ -30,7 +30,7 @@ Shipping to Germany is especially cheap!
 ```
 
 You need to enable the option `Add a country-specific CSS class to the <body>-Tag` to make this work.
-See [API Usage Examples#css-use](./API Usage Examples#css-use.md) for a more elaborate example.
+See [API Usage Examples#css-use](./API-Usage-Examples#css-use.md) for a more elaborate example.
 
 ## How can I add the current country name as text in my page?
 
@@ -38,7 +38,7 @@ Add this plugin shortcode somewhere in the page or post content:
 
     Wie ist das Wetter in [geoip_detect2 property="country.name" lang="de" default="ihrem Land"] ?
 
-For more information, check the [API: Shortcodes]] documentation and [[API Usage Examples](./API: Shortcodes]] documentation and [[API Usage Examples.md).  
+For more information, check the [API: Shortcodes](API:-Shortcodes) documentation and [API Usage Examples](API-Usage-Examples).
 
 ## Which data source should I choose?
 
@@ -57,11 +57,11 @@ Each source has its advantages and disadvantages:
 Legend:
 * Column _Cost_: The price can depend on several factors: if you need city or country data, if pay per month, per year, or per query, etc. A price per query, of course, is helpful if you use a low amount of queries per month.
 * Column _Precision_: To compare the commercial and the free data of Maxmind, see [accuracy stats per country](https://www.maxmind.com/en/geoip2-city-database-accuracy). Accuracy between data sources may differ according to your main target country.
-* Column _Performance_: There are great differences how long a lookup can take. The Web-APIs take 0.5-1 second per Lookup (that's why they are cached for new each IP you request data from), the File-based APIs only about 0.01 second. 
+* Column _Performance_: There are great differences how long a lookup can take. The Web-APIs take 0.5-1 second per Lookup (that's why they are cached for new each IP you request data from), the File-based APIs only about 0.01 second.
 * Column _Registration_: Some services require you to sign up at their website before you can use this datasource.
 
 Additional Notes for certain sources:
-* If you choose "DB-IP", you must include a link back to DB-IP.com on pages that display or use results from the database. 
+* If you choose "DB-IP", you must include a link back to DB-IP.com on pages that display or use results from the database.
 * If you choose "automatic" and enter the account's license key, this plugin will install "Maxmind GeoIP2 Lite City" and update it weekly. This is the easiest option.
 * If you choose "manual", you can use any of the file-based Maxmind-Databases. It's recommended that you update the database regularly, for example by using the [shell script provided by Maxmind](http://dev.maxmind.com/geoip/geoipupdate/).
 * If you choose "ipstack", note that the free plan does not allow HTTPS-Encryption of their lookup – which is bad if you have to comply to GDPR.
@@ -79,7 +79,7 @@ if (!defined('GEOIP_DETECT_READER_CACHE_TIME'))
 
 In general, no. Read the information by Maxmind:
 
-* [Site Licence Overview](https://www.maxmind.com/en/site-license-overview) 
+* [Site Licence Overview](https://www.maxmind.com/en/site-license-overview)
 * Details: [End User Licence Agreement](https://www.maxmind.com/en/end-user-license-agreement#internal-restricted-business-purposes)
 
 (This changed on Dec 30, 2019. Before, the databases were licensed "Creative Commons ShareAlike-Attribution" - this is not the case anymore.)
@@ -92,7 +92,7 @@ There seem to be no issues with WordPress multisite, but it is not officially su
 
 If your website is available in EU-countries, it must comply to GDPR-Regulations for privacy. Using this plugin is not GDPR-compliant per se, because it all depends on your use case and whether you explain it in your privacy policy.
 
-1. If you use a web-based source (hostip.info, Maxmind Precision, ipstack), the plugin stores all IPs that visited the site in a cache (by default for 7 days) for performance reasons. If you want to disable this behavior, add `define('GEOIP_DETECT_READER_CACHE_TIME', 0);` in your theme's `function.php`. 
+1. If you use a web-based source (hostip.info, Maxmind Precision, ipstack), the plugin stores all IPs that visited the site in a cache (by default for 7 days) for performance reasons. If you want to disable this behavior, add `define('GEOIP_DETECT_READER_CACHE_TIME', 0);` in your theme's `function.php`.
 
 2. If you use the source Ipstack.com, you must use encryption (thus you need to pay to ipstack.com because their free plans currently do not allow encryption).
 
@@ -119,7 +119,7 @@ Due to the California Consumer Privacy Act (CCPA), Maxmind has created an EULA t
 
 You can choose to disable that behavior.
 
-```php 
+```php
 // Make sure you are compliant to the EULA in a different way!
 add_filter('geoip_detect2_maxmind_ccpa_do_update', '__return_false');
 add_filter('geoip_detect2_maxmind_ccpa_enabled',   '__return_false');
@@ -134,9 +134,9 @@ I have decided against trying to make this plugin profitable. Also, the work pro
 [Paypal Donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYUZHS8FH3CL)
 
 ## How can I test that my geoip-implementation works?
-You can use a VPN provider to get an IP in your desired country and test using that output. 
+You can use a VPN provider to get an IP in your desired country and test using that output.
 Alternatively, you can use tools dedicated for Geo-IP testing such as [GeoScreenshot](https://www.geoscreenshot.com/)
 
 ## How can I install a beta version of this plugin?
 
-See [Beta Testing](./Beta Testing.md).
+See [Beta Testing](./Beta-Testing.md).

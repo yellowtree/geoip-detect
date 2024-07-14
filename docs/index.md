@@ -4,6 +4,7 @@ Documentation (How to use it):
 * [API: PHP](./API:-PHP.md) - for themes or plugins
 * [API: Shortcodes](./API:-Shortcodes.md) - if you don't know how to code PHP
 * [API: Shortcodes for Contact Form 7](./API:-Shortcodes-for-Contact-Form-7.md) - Integration into CF7 forms
+* [API: Shortcodes for WPForms](./API:-Shortcodes-for-WPForms.md) - Integration into WPForms
 * [API: AJAX](./API:-AJAX.md) - if you are using a page cache, this is a great option. You need to code in JS, though.
 
 Other documentation:
