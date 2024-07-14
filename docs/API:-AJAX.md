@@ -101,6 +101,20 @@ add_filter('geoip_detect2_ajax_localize_script_data', function($data) {
     return $data;
 });
 ```
+### JS Variants
+(Since 5.3.0)
+
+If you are only using the method geoip_detect.get_info(), then you can opt in to a smaller JS file variant. 
+
+```php
+define('GEOIP_DETECT_JS_VARIANT', 'base');
+```
+
+There are three possible variants:
+
+ * `full`: All features (default)
+ * `base`: Only get_info, no shortcodes, no body_class, no overrides ...
+ * `minimal`: Only get_info, but without the Record class (get_info is returning raw json data instead)
 
 ### Storing data that overrides detected data
 (Since 4.0.0)
@@ -179,3 +193,22 @@ Execute this shortcode as AJAX even if the option `Resolve shortcodes (via AJAX)
 `[geoip_detect2_countries name="mycountry" ajax="0"]`
 
 Generate a countries select with the current country selected in the HTML (no AJAX), even if the option `Resolve shortcodes (via AJAX)` is enabled.
+
+# Events
+
+(Since 5.4.1)
+
+* `geoip-detect-shortcodes-done` - Fired after the shortcode values have been set or updated
+* `geoip-detect-body-classes-done` - Fired after the body classes have been set or updated
+
+Example:
+
+```js
+document.getElementsByTagName('body')[0].addEventListener('geoip-detect-body-classes-done', function() { console.log('body class done') });
+document.getElementsByTagName('body')[0].addEventListener('geoip-detect-shortcodes-done', function() { console.log('shortcodes done') });
+```
+
+Note that:
+
+* Both events get fired only if the corresponding feature is enabled in the backend options
+* Both events potentially get fired more than once, e.g. after a call to [set_override](./API:-AJAX#storing-data-that-overrides-detected-data) or when used in combination with [autosave](./API:-Shortcodes).

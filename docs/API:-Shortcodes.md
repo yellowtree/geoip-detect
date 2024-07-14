@@ -235,4 +235,4 @@ Check the HTML to see error messages that are commented out (`<!-- ... -->`).
 
 ## WP ContactForm7 Shortcodes
 
-See [https://github.com/yellowtree/geoip-detect/wiki/API:-Shortcodes-for-Contact-Form-7](CF7 Shortcodes API Documentation)
+See [CF7 Shortcodes API Documentation](./API:-Shortcodes-for-Contact-Form-7)
