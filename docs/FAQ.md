@@ -1,6 +1,6 @@
 ## Something doesn't work. What can I do?
 
-See [[Troubleshooting]].
+See [Troubleshooting](./Troubleshooting.md).
 
 ## Technically speaking, how could I verify if my visitor comes from Germany?
 
@@ -12,7 +12,7 @@ if ($userInfo->country->isoCode == 'de')
     echo 'Hallo! Schön dass Sie hier sind!';
 ```
 
-To see which property names are supported, refer to the list of [[Record Properties]] or to the plugin's Lookup page.
+To see which property names are supported, refer to the list of [Record Properties](./Record Properties.md) or to the plugin's Lookup page.
 
 ## How can I show text only if the visitor is coming from Germany?
 
@@ -30,7 +30,7 @@ Shipping to Germany is especially cheap!
 ```
 
 You need to enable the option `Add a country-specific CSS class to the <body>-Tag` to make this work.
-See [[API Usage Examples#css-use]] for a more elaborate example.
+See [API Usage Examples#css-use](./API Usage Examples#css-use.md) for a more elaborate example.
 
 ## How can I add the current country name as text in my page?
 
@@ -38,7 +38,7 @@ Add this plugin shortcode somewhere in the page or post content:
 
     Wie ist das Wetter in [geoip_detect2 property="country.name" lang="de" default="ihrem Land"] ?
 
-For more information, check the [[API: Shortcodes]] documentation and [[API Usage Examples]].  
+For more information, check the [API: Shortcodes]] documentation and [[API Usage Examples](./API: Shortcodes]] documentation and [[API Usage Examples.md).  
 
 ## Which data source should I choose?
 
@@ -139,4 +139,4 @@ Alternatively, you can use tools dedicated for Geo-IP testing such as [GeoScreen
 
 ## How can I install a beta version of this plugin?
 
-See [[Beta Testing]].
+See [Beta Testing](./Beta Testing.md).

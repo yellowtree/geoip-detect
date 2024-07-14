@@ -18,7 +18,7 @@ The function `geoip_detect2_get_info_from_current_ip()` can be called via JS and
 
 ## JSON Response object
 
-The result from the datasource. See [[Record Properties]] for all available properties. No property name is guaranteed to exist:
+The result from the datasource. See [Record Properties](./Record Properties.md) for all available properties. No property name is guaranteed to exist:
 
 ```js
 var city = record.city && record.city.names && record.city.names.en;

@@ -24,7 +24,7 @@ These are the PHP functions that you can use in your theme or plugin:
 function geoip_detect2_get_info_from_ip($ip, $locales = null, $options = array()) { ... }
 ```
 
-```YellowTree\GeoipDetect\DataSources\City``` is a subclass of ```GeoIp2\Model\City``` and yes, for simplicity this object type is always used even if one of the country data sources is used. See [[Record Properties]] for all possible property names (all from Maxmind plus a few from this plugin).
+```YellowTree\GeoipDetect\DataSources\City``` is a subclass of ```GeoIp2\Model\City``` and yes, for simplicity this object type is always used even if one of the country data sources is used. See [Record Properties](./Record Properties.md) for all possible property names (all from Maxmind plus a few from this plugin).
 
 ```php
 /**
@@ -109,7 +109,7 @@ function geoip_detect2_get_client_ip() { ... }
 ```
 
 ## Shortcodes
-(See [[API: Shortcodes]])
+(See [API: Shortcodes](./API: Shortcodes.md))
 
 ## JS API
-(See [[API: AJAX]])
+(See [API: AJAX](./API: AJAX.md))
