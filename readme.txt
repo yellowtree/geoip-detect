@@ -176,6 +176,7 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 = 5.4.1 =
 * NEW: JS now emit events 'geoip-detect-shortcodes-done' and 'geoip-detect-body-classes-done', see https://github.com/yellowtree/geoip-detect/wiki/API:-AJAX#events
+* FIX: Remove Fatal Error in check_requirements ("Undefined constand GEOIP_DETECT_DEBUG")
 
 = 5.4.0 =
 * NEW: Infos can be added to a mail sent by WPForms (with Smart Tag `{geoip_detect2_user_info}`)
