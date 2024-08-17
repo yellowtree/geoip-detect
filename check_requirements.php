@@ -79,7 +79,7 @@ function geoip_detect_version_check_after_plugins_loaded() {
 		return true;
 	}
 
-	if (GEOIP_DETECT_DEBUG) {
+	if (defined('GEOIP_DETECT_DEBUG') && GEOIP_DETECT_DEBUG ) {
 		trigger_error($message);
 	}
 

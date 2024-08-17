@@ -25,7 +25,7 @@ function geoip_detect_defines() {
 		define('GEOIP_DETECT_DEBUG', WP_DEBUG);
 	}
 }
-add_action('plugins_loaded', 'geoip_detect_defines');
+add_action('plugins_loaded', 'geoip_detect_defines', 1); // Run as early as possible
 
 
 
