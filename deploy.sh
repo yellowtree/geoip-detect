@@ -182,6 +182,7 @@ echo "Ignoring github specific files, tests and deployment script"
 svn propset svn:ignore "deploy.sh
 bin
 docs
+_config.yml
 README.md
 CHANGELOG.md
 .git

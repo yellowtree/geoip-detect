@@ -25,13 +25,22 @@ description: >- # this means to ignore newlines until "baseurl:"
   The city & country names are translated in different languages.
 baseurl: "/geoip-detect/" # the subpath of your site, e.g. /blog
 url: "https://yellowtree.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: jekyllrb
-github_username: jekyll
+github_username: benjaminpick
 
 # Build settings
 theme: minima
 plugins:
   - jekyll-feed
+#  - jekyll-paginate
+  - jekyll-sitemap
+#  - jekyll-gist
+#  - jemoji
+  - jekyll-include-cache
+#  - jekyll-avatar
+#  - jekyll-redirect-from
+  - jekyll-remote-theme
+  - jekyll-github-metadata
+
 
 # Exclude from processing.
 # The following items will not be processed, by default.
@@ -53,4 +62,26 @@ plugins:
 #   - vendor/gems/
 #   - vendor/ruby/
 
+
 markdown: GFM
+
+remote_theme: mmistakes/minimal-mistakes@4.24.0 
+
+defaults:
+  - scope:
+      path: "wiki"
+      type: pages
+    values:
+      layout: wiki
+
+footer:
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/yellowtree/geoip-detect"
+    - label: "WordPress"
+      icon: "fab fa-fw fa-wordpress-simple"
+      url: "http://wordpress.org/plugins/geoip-detect/"
+    - label: "PayPal"
+      icon: "fab fa-fw fa-paypal"
+      url: "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYUZHS8FH3CL"
