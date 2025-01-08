@@ -171,6 +171,9 @@ If you use Maxmind "Automatic download" then you need to upgrade to this plugin 
 
 ## Changelog ##
 
+= 5.5.0 =
+* FIX [!]: In the datasource "hostip.info", the region code (i.e. CA) is now correctly moved to the property `mostSpecificSubdivision` (previously, it was part of the property `city`)
+
 = 5.4.1 =
 * NEW: JS now emit events 'geoip-detect-shortcodes-done' and 'geoip-detect-body-classes-done', see https://github.com/yellowtree/geoip-detect/wiki/API:-AJAX#events
 * FIX: Remove Fatal Error in check_requirements ("Undefined constand GEOIP_DETECT_DEBUG")
