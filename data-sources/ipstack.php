@@ -84,7 +84,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 		if (!empty($data['country_code']))
             $r['country']['iso_code'] = strtoupper($data['country_code']);
             
-            if (!empty($data['region_code'])) {
+        if (!empty($data['region_code'])) {
             $r['subdivisions'][0] = array(
                 'iso_code' => $data['region_code'],
                 'names' => $this->locales($locale, $data['region_name']),
