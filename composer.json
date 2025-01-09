@@ -21,7 +21,7 @@
         "symfony/property-info": "^5.4",
         "symfony/string": "^5.1",
         "symfony/deprecation-contracts": "^2.5",
-        "symfony/http-foundation": "5.4.22"
+        "symfony/http-foundation": "5.4.46"
     },
     "require-dev": {
         "roots/wordpress": "6.5.2",
