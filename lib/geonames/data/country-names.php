@@ -1,5 +1,5 @@
 <?php
-// Generated at Mon, 14 Aug 2023 10:51:50 +0200 
+// Generated at Mon, 13 Jan 2025 15:06:50 +0000 
 return array (
   'en' => 
   array (
@@ -156,7 +156,6 @@ return array (
     'NA' => 'Namibia',
     'NR' => 'Nauru',
     'NP' => 'Nepal',
-    'NL' => 'Netherlands',
     'NC' => 'New Caledonia',
     'NZ' => 'New Zealand',
     'NI' => 'Nicaragua',
@@ -224,16 +223,17 @@ return array (
     'TZ' => 'Tanzania',
     'TH' => 'Thailand',
     'GM' => 'The Gambia',
+    'NL' => 'The Netherlands',
     'TL' => 'Timor-Leste',
     'TG' => 'Togo',
     'TK' => 'Tokelau',
     'TO' => 'Tonga',
     'TT' => 'Trinidad and Tobago',
     'TN' => 'Tunisia',
-    'TR' => 'Turkey',
     'TM' => 'Turkmenistan',
     'TC' => 'Turks and Caicos Islands',
     'TV' => 'Tuvalu',
+    'TR' => 'Türkiye',
     'UM' => 'U.S. Outlying Islands',
     'VI' => 'U.S. Virgin Islands',
     'UG' => 'Uganda',

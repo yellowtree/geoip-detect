@@ -18,7 +18,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-// Usage: $ php lib/geonames/generators/geonames.php {api_username}
+// Usage: $ php lib/geonames/generators/geonames.php [api_username]
 // Requires PHP 5.4
 
 if (php_sapi_name() != "cli")
