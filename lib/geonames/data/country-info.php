@@ -1,5 +1,5 @@
 <?php
-// Generated at Mon, 14 Aug 2023 10:51:50 +0200 
+// Generated at Mon, 13 Jan 2025 15:06:50 +0000 
 return array (
   'countries' => 
   array (
@@ -3246,7 +3246,7 @@ return array (
       'continent' => 'AS',
       'location' => 
       array (
-        'latitude' => 21.131296248312502,
+        'latitude' => 21.2152279209553,
         'longitude' => 82.93322521645375,
       ),
       'extra' => 
@@ -4796,8 +4796,8 @@ return array (
       'continent' => 'AS',
       'location' => 
       array (
-        'latitude' => 3.1953621375,
-        'longitude' => 73.152777619,
+        'latitude' => 3.195189949496238,
+        'longitude' => 73.1527255694414,
       ),
       'extra' => 
       array (
@@ -5123,7 +5123,7 @@ return array (
         'geoname_id' => 2750405,
         'names' => 
         array (
-          'en' => 'Netherlands',
+          'en' => 'The Netherlands',
           'de' => 'Niederlande',
           'it' => 'Paesi Bassi',
           'es' => 'Holanda',
@@ -6952,7 +6952,7 @@ return array (
         'geoname_id' => 298795,
         'names' => 
         array (
-          'en' => 'Turkey',
+          'en' => 'Türkiye',
           'de' => 'Türkei',
           'it' => 'Turchia',
           'es' => 'Turquía',

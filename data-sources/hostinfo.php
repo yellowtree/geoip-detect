@@ -36,6 +36,19 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 			$r['country']['iso_code'] = strtoupper($data['country_code']);
 
 		if ($data['city']) {
+			// In USA, region code is part of the city parameter
+			$cityParts = explode(',', $data['city']);
+			$data['city'] = trim($cityParts[0]);
+			if (!empty($cityParts[1])) {
+				$region = trim($cityParts[1]);
+				if (!empty($region)) {
+					$r['subdivisions'][0] = array(
+						'iso_code' => $region,
+						'names' => array('en' => $region),
+					);
+				}
+			}
+
 			$r['city']['names'] = [ 'en' => $data['city'] ];
 		}
 
@@ -80,6 +93,7 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 					if ($key == 'country_code' && $value == 'XX')
 						$value = '';
 				}
+				
 				$hasInfo = $data['country_name'] || $data['country_code'] || $data['city'];
 			}
 

@@ -16,7 +16,7 @@
     "build": "rm -f babel.config.json ; rm -rf js/dist && parcel build --dist-dir js/dist --public-url .",
     "test": "cp tests/babel.config.json . && jest --coverage",
     "test-ddd": "cp tests/babel.config.json . && jest -t ddd",
-    "update-browserlist": "browserslist --update-db"
+    "update-browserlist": "npx update-browserslist-db@latest"
   },
   "private": false,
   "dependencies": {
@@ -43,8 +43,5 @@
     "transform": {
       "^.+\\.js$": "babel-jest"
     }
-  },
-  "engines": {
-    "node": ">=16.0.0 <17.0.0"
   }
 }
