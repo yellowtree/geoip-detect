@@ -134,6 +134,9 @@ If you are using AJAX mode, please read the changelog.
 
 == Changelog ==
 
+= 5.5.1 =
+* FIX: Compatibility with Wordpress 6.7 (Textdomain loading)
+
 = 5.5.0 =
 * FIX [!]: In the datasource "hostip.info", the region code (i.e. CA) is now correctly moved to the property `mostSpecificSubdivision` (previously, it was part of the property `city`)
 * Library updates
