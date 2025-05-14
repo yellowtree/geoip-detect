@@ -40,7 +40,7 @@ function geoip_detect_check_ipv6_support() {
 function geoip_detect_load_textdomain() {
   load_plugin_textdomain( 'geoip-detect', false, GEOIP_PLUGIN_DIR . '/languages' );
 }
-add_action( 'plugins_loaded', 'geoip_detect_load_textdomain' );
+add_action( 'init', 'geoip_detect_load_textdomain' );
 
 
 function geoip_detect_enqueue_admin_notices() {
