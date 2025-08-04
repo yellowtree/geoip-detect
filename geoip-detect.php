@@ -94,6 +94,7 @@ include_once(GEOIP_PLUGIN_DIR . '/data-sources/precision.php');
 include_once(GEOIP_PLUGIN_DIR . '/data-sources/header.php');
 include_once(GEOIP_PLUGIN_DIR . '/data-sources/ipstack.php');
 include_once(GEOIP_PLUGIN_DIR . '/data-sources/fastah.php');
+include_once(GEOIP_PLUGIN_DIR . '/data-sources/ip2locationio.php');
 
 // You can define these constants in your theme/plugin if you like.
 
@@ -121,13 +122,13 @@ include_once(GEOIP_PLUGIN_DIR . '/data-sources/fastah.php');
 //define('GEOIP_DETECT_READER_CACHE_TIME', 7 * DAY_IN_SECONDS);
 
 /**
- * AJAX mode: 
+ * AJAX mode:
  * If you want to reduce the filesize of the used JS file, consider using a JS file variant:
- * 
+ *
  * - full: All features (default)
  * - base: Only get_info, no shortcodes, no body_class, no overrides ...
  * - minimal: base, but without the Record class (get_info is returning raw json data instead)
- * 
+ *
  */
 //define('GEOIP_DETECT_JS_VARIANT', 'full');
 
