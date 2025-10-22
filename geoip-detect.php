@@ -9,7 +9,6 @@ Version:         5.5.1-beta1
 License:         GPLv3 or later
 License URI:     http://www.gnu.org/licenses/gpl-3.0.html
 Text Domain:     geoip-detect
-Domain Path:     /languages
 GitHub Plugin URI: https://github.com/yellowtree/geoip-detect
 GitHub Branch:   master
 Requires WP:     5.4

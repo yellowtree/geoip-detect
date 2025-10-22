@@ -288,7 +288,7 @@ class CcpaBlacklistCron {
 
     protected function schedule_next_cron_run() {
         $next = time() + DAY_IN_SECONDS;
-        $next += mt_rand(1, HOUR_IN_SECONDS);
+        $next += wp_rand(1, HOUR_IN_SECONDS);
         wp_schedule_single_event($next, 'geoipdetectccpaupdate');
     }
 }
