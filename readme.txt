@@ -136,6 +136,7 @@ If you are using AJAX mode, please read the changelog.
 
 = 5.5.1 =
 * FIX: Compatibility with Wordpress 6.7 (Textdomain loading)
+* FIX [!]: Remove deprecated shortcode [geoip_detect] (Security - CVE-2025-57993)
 
 = 5.5.0 =
 * FIX [!]: In the datasource "hostip.info", the region code (i.e. CA) is now correctly moved to the property `mostSpecificSubdivision` (previously, it was part of the property `city`)
