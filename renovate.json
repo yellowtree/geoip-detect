@@ -1,37 +1,41 @@
 {
   "extends": [
-    "config:base"
+    "config:recommended"
   ],
   "dependencyDashboardApproval": true,
-  "ignoreDeps": ["geoip2/geoip2", "maxmind-db/reader", "maxmind/web-service-common"],
+  "ignoreDeps": [
+    "geoip2/geoip2",
+    "maxmind-db/reader",
+    "maxmind/web-service-common"
+  ],
   "packageRules": [
     {
-      "matchPackagePatterns": [
-        "^just-"
-      ],
-      "groupName": "Just JS monorepo"
+      "groupName": "Just JS monorepo",
+      "matchPackageNames": [
+        "/^just-/"
+      ]
     },
     {
-      "matchPackagePatterns": [
-        "eslint",
-        "jest"
-      ],
-      "groupName": "testing (JS)"
+      "groupName": "testing (JS)",
+      "matchPackageNames": [
+        "/eslint/",
+        "/jest/"
+      ]
     },
     {
-      "matchPackagePatterns": [
-        "roots/wordpress",
-        "yoast/phpunit-polyfills",
-        "wp-phpunit/wp-phpunit",
-        "phpunit/phpunit"
-      ],
-      "groupName": "testing (PHP)"
+      "groupName": "testing (PHP)",
+      "matchPackageNames": [
+        "/roots/wordpress/",
+        "/yoast/phpunit-polyfills/",
+        "/wp-phpunit/wp-phpunit/",
+        "/phpunit/phpunit/"
+      ]
     },
     {
-      "matchPackagePatterns": [
-        "symfony"
-      ],
-      "groupName": "symfony"
+      "groupName": "symfony",
+      "matchPackageNames": [
+        "/symfony/"
+      ]
     }
   ]
 }
