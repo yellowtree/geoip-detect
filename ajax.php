@@ -49,7 +49,7 @@ function geoip_detect_ajax_get_info_from_current_ip() {
 	
 	// Referer check
 	
-    $referer = _geoip_detect_get_domain_name($_SERVER['HTTP_REFERER']);
+    $referer = _geoip_detect_get_domain_name(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '');
     if (!$referer) {
         _geoip_detect_ajax_error('This AJAX call does not work when called directly. Do an AJAX call via JS instead.');
 	}
@@ -75,7 +75,7 @@ add_action( 'wp_ajax_nopriv_geoip_detect2_get_info_from_current_ip', 'geoip_dete
 
 
 function _geoip_detect_get_domain_name($url) {
-	$result = parse_url($url);
+	$result = wp_parse_url($url);
 	return $result['host'];
 }
 

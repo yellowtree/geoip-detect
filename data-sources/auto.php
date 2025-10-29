@@ -143,7 +143,7 @@ HTML;
 
 	protected function download_url($url, $modified = 0) {
 		// Similar to wordpress download_url, but with custom UA
-		$url_filename = basename( parse_url( $url, PHP_URL_PATH ) );
+		$url_filename = basename( wp_parse_url( $url, PHP_URL_PATH ) );
 
 		$tmpfname = wp_tempnam( $url_filename );
 		if ( ! $tmpfname )
@@ -161,7 +161,7 @@ HTML;
 			return new \WP_Error( 'http_304', __('It has not changed since the last update.', 'geoip-detect') );
 		}
 		if (is_wp_error( $response ) || 200 !=  $http_response_code) {
-			unlink($tmpfname);
+			wp_delete_file($tmpfname);
 			$body = wp_remote_retrieve_body($response);
 			return new \WP_Error( 'http_404', $http_response_code . ': ' . trim( wp_remote_retrieve_response_message( $response ) ) . ' ' . $body );
 		}
@@ -220,7 +220,7 @@ HTML;
 		}
 
 		update_option('geoip-detect-auto_downloaded_file', '');
-		unlink($tmpFile);
+		wp_delete_file($tmpFile);
 
 		return true;
 	}
@@ -252,7 +252,7 @@ HTML;
 			$phar->extractTo($outDir, null, true);
 		} catch(\Throwable $e) {
 			// Fallback method of unpacking?
-			unlink($downloadedFilename); // Do not try to unpack this file again, instead re-download
+			wp_delete_file($downloadedFilename); // Do not try to unpack this file again, instead re-download
 			return __('The downloaded file seems to be corrupt. Try again ...', 'geoip-detect');
 		}
 
@@ -309,7 +309,7 @@ HTML;
 	public function schedule_next_cron_run() {
 		// Try to update every 1-2 weeks
 		$next = time() + WEEK_IN_SECONDS;
-		$next += mt_rand(1, WEEK_IN_SECONDS);
+		$next += \wp_rand(1, WEEK_IN_SECONDS);
 
 		wp_schedule_single_event($next, 'geoipdetectupdate');
 	}
@@ -329,7 +329,7 @@ HTML;
 		// Delete the automatically downloaded file, if it exists
 		$filename = $this->maxmindGetFilename();
 		if ($filename) {
-			unlink($filename);
+			wp_delete_file($filename);
 		}
 	}
 }

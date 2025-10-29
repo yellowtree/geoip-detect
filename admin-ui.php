@@ -195,7 +195,7 @@ function geoip_detect_option_page() {
 				break;
 
 			case 'choose':
-				$sourceId = sanitize_text_field($_POST['options']['source']);
+				$sourceId = sanitize_text_field(isset($_POST['options']['source']) ? $_POST['options']['source'] : '' );
 				$registry->setCurrentSource($sourceId);
 				break;
 
@@ -219,7 +219,7 @@ function geoip_detect_option_page() {
 					if (in_array($opt_name, $numeric_options))
 						$opt_value = isset($_POST['options'][$opt_name]) ? (int) $_POST['options'][$opt_name] : 0;
 					else {
-						$opt_value = geoip_detect_sanitize_option($opt_name, @$_POST['options'][$opt_name], $m);
+						$opt_value = geoip_detect_sanitize_option($opt_name, isset($_POST['options'][$opt_name]) ? $_POST['options'][$opt_name] : '', $m);
 					}
 					if ($m) {
 						$messages[] = $m;

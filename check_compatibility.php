@@ -96,11 +96,11 @@ class Maxmind {
             $line2 = __('These incompatible files have been found to be loaded from another plugin: ', 'geoip-detect') . $data;
             $line3 = __('Please test if looking up an IP adress works without an PHP Error. If it works, you can dismiss this notice. It will appear again when their libraries are changed.', 'geoip-detect');
 
-            $body = <<<BODY
+            $body = "
 <p><i>$line1</i></p>
 <p>$line2</p>
 <p>$line3</p>
-BODY;
+";
             $this->adminNotices[] = [
                 'id' => 'maxmind_vendor_old_' . md5($data),
                 'title' => __('Geolocation IP Detection: Warning: Old Maxmind Libraries detected.', 'geoip-detect'),

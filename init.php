@@ -36,12 +36,6 @@ function geoip_detect_check_ipv6_support() {
 	return @inet_pton('::1') !== false;
 }
 
-// Load Locales
-function geoip_detect_load_textdomain() {
-  load_plugin_textdomain( 'geoip-detect', false, GEOIP_PLUGIN_DIR . '/languages' );
-}
-add_action( 'plugins_loaded', 'geoip_detect_load_textdomain' );
-
 
 function geoip_detect_enqueue_admin_notices() {
 	// Nobody would see these notices them anyway.
@@ -89,7 +83,7 @@ function geoip_detect_admin_notice_template($id, $title, $body, $addButtonDismis
 ?>
 <div class="error notice is-dismissible">
 	<p style="float: right">
-		<a href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_dismiss_notice=<?php echo $id ?>"><?php _e('Dismiss notice', 'geoip-detect'); ?></a>
+		<a href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_dismiss_notice=<?php echo esc_attr($id) ?>"><?php _e('Dismiss notice', 'geoip-detect'); ?></a>
 	</p>
 
 	<h3><?php echo $title; ?></h3>
@@ -97,7 +91,7 @@ function geoip_detect_admin_notice_template($id, $title, $body, $addButtonDismis
 	<?php echo $body; ?>
 	<?php if ($addButtonDismiss) : ?>
 	<p>
-		<a class="button button-secondary" href="?geoip_detect_dismiss_notice=<?= $id ?>">Hide this notice</a>
+		<a class="button button-secondary" href="?geoip_detect_dismiss_notice=<?php echo esc_attr($id) ?>">Hide this notice</a>
 	</p>
 	<?php endif; ?>
 </div>

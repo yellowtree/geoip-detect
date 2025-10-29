@@ -69,4 +69,6 @@ class Logger {
 
 
 }
-Logger::init();
+add_action('init', function () {
+    Logger::init();
+});

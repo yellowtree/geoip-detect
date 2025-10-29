@@ -2,9 +2,9 @@
 Contributors: benjaminpick
 Tags: geolocation, locator, geoip, maxmind, ipstack
 Requires at least: 5.0
-Tested up to: 6.7
-Requires PHP: 7.2
-Stable tag: 5.4.1
+Tested up to: 6.8
+Requires PHP: 7.2.5
+Stable tag: 5.5.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYUZHS8FH3CL
@@ -124,6 +124,10 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 
 == Upgrade Notice ==
 
+= 5.6.0 = 
+
+This update removes the deprecated shortcode [geoip_detect ...] (read the changelog for more details)
+
 = 5.5.0 =
 
 When using the default datasource "hostip.info", the region code (i.e. CA) is now correctly moved to the property `mostSpecificSubdivision` (previously, it was part of the property `city`)
@@ -133,6 +137,11 @@ When using the default datasource "hostip.info", the region code (i.e. CA) is no
 If you are using AJAX mode, please read the changelog.
 
 == Changelog ==
+
+= 5.6.0 =
+* FIX [!]: Remove deprecated shortcode [geoip_detect] (Security - CVE-2025-57993). If you are still using it, use [geoip_detect2 ...] instead, you might have to change the property name.
+* FIX: Compatibility with Wordpress 6.7 (Textdomain loading)
+* Library updates
 
 = 5.5.0 =
 * FIX [!]: In the datasource "hostip.info", the region code (i.e. CA) is now correctly moved to the property `mostSpecificSubdivision` (previously, it was part of the property `city`)

@@ -36,9 +36,9 @@ This needs to be known to the plugin to choose the correct IP adress.
 		</span>
 	</p>
 	<p>
-		REMOTE_ADDR: <b><?php echo $_SERVER['REMOTE_ADDR']; ?></b><br>
+		REMOTE_ADDR: <b><?php echo esc_html($_SERVER['REMOTE_ADDR']); ?></b><br>
 		<span class="detail-box">In server configurations without reverse proxy, this will equal to the "detected client IP". Otherwise, this is the IP of the reverse proxy.</span>
-		HTTP_X_FORWARDED_FOR: <b><?php echo isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : __('(unset)', 'geoip-detect'); ?></b><br>
+		HTTP_X_FORWARDED_FOR: <b><?php echo isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? esc_html($_SERVER["HTTP_X_FORWARDED_FOR"]) : __('(unset)', 'geoip-detect'); ?></b><br>
 		<span class="detail-box">Reverse proxies usually add this header to indicate the original IP. If several IPs are given here (seperated by a comma), the correct user IP usually is the leftmost one.</span>
 		<?php if (isset($_SERVER["HTTP_X_FORWARDED_FOR"]) && !get_option('geoip-detect-has_reverse_proxy')): ?>
 		<i>(Probably you should enable the reverse proxy option.)</i>
@@ -56,10 +56,10 @@ This needs to be known to the plugin to choose the correct IP adress.
 
 		<li>Add known proxies of a cloud provider enabled: <b><?php echo get_option('geoip-detect-dynamic_reverse_proxies') ? 'Yes, ' . ucfirst(get_option('geoip-detect-dynamic_reverse_proxy_type', '')) : 'No'; ?></b>
 			<span class="detail-box">If your site is hosted by CloudFlare or AWS, this should probably be enabled. It will automatically retrieve the many IP adresses that a reverse proxy of this provider can have, and update the list daily.</span>
-			<span class="detail-box">Here is the current list of IP adresses: <b><?= implode(', ', \YellowTree\GeoipDetect\DynamicReverseProxies\addDynamicIps()) ?: '(Empty)' ?></b></span>
+			<span class="detail-box">Here is the current list of IP adresses: <b><?php echo implode(', ', \YellowTree\GeoipDetect\DynamicReverseProxies\addDynamicIps()) ?: '(Empty)' ?></b></span>
 			<span class="detail-box">
-				Last updated: <b><?= geoip_detect_format_localtime($last_update); ?></b><br>
-				Next update:  <b><?= geoip_detect_format_localtime(wp_next_scheduled('geoipdetectdynamicproxiesupdate')); ?></b>
+				Last updated: <b><?php echo geoip_detect_format_localtime($last_update); ?></b><br>
+				Next update:  <b><?php echo geoip_detect_format_localtime(wp_next_scheduled('geoipdetectdynamicproxiesupdate')); ?></b>
 				<?php if(get_option('geoip-detect-dynamic_reverse_proxies')) : ?>
 				<form method="POST">
 					<?php wp_nonce_field( 'geoip_detect_reload-proxies' ); ?>

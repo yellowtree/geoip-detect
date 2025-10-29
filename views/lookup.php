@@ -16,7 +16,7 @@ if (!empty($request_ip)) {
 	$code .= var_export_short($request_locales, true) . ($request_skipCache ? ', [ \'skipCache\' => TRUE ]' : '') .");</code>";
 } else {
 	$code = '';
-	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
 		$message = 'This IP is empty or not in a valid format (IPv4 or IPv6)';
 	}
 }
@@ -50,9 +50,9 @@ function var_export_short($data, $return=true)
 
 ?>
 <div class="wrap geoip-detect-wrap">
-	<h1><?= __('Geolocation IP Detection', 'geoip-detect');?></h1>
+	<h1><?php esc_html_e('Geolocation IP Detection', 'geoip-detect');?></h1>
 	<p>
-		<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>"><?= __('Options', 'geoip-detect');?></a>
+		<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>"><?php esc_html_e('Options', 'geoip-detect');?></a>
 	</p>
 
 <?php if (!empty($message)): ?>
@@ -71,36 +71,36 @@ function var_export_short($data, $return=true)
 	</p>
 
 	<p>
-		<b><?= __('Your current IP:', 'geoip-detect');?></b> <?php echo $current_ip; ?>
-		<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_part=client-ip">(<?= __('Not correct?', 'geoip-detect');?>)</a>
+		<b><?php esc_html_e('Your current IP:', 'geoip-detect');?></b> <?php echo $current_ip; ?>
+		<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_part=client-ip">(<?php esc_html_e('Not correct?', 'geoip-detect');?>)</a>
 		<?php if (geoip_detect_is_internal_ip(geoip_detect2_get_client_ip())) : ?>
 		<br><i>(<?php printf(__('This is an IP internal to your network. When looking up this IP, it will use the external IP of the server instead: %s', 'geoip-detect'), geoip_detect2_get_external_ip_adress()); ?>)</i>
 		<?php endif; ?>
 	</p>
 
-	<h2><?= __('Test IP Detection Lookup ', 'geoip-detect');?></h2>
+	<h2><?php esc_html_e('Test IP Detection Lookup ', 'geoip-detect');?></h2>
 	<form method="post" action="#">
 		<?php wp_nonce_field( 'geoip_detect_lookup' ); ?>
 		<input type="hidden" name="action" value="lookup" />
-		<?= __('IP', 'geoip-detect')?>: <input type="text" placeholder="<?= __('Enter an IP (v4 or v6)', 'geoip-detect')?>" name="ip" value="<?php echo isset($_REQUEST['ip']) ? esc_attr($ip) : esc_attr(geoip_detect2_get_client_ip()); ?>" /><br />
-		<label><?= __('Use these locales:', 'geoip-detect'); ?>
+		<?php esc_html_e('IP', 'geoip-detect')?>: <input type="text" placeholder="<?php esc_html_e('Enter an IP (v4 or v6)', 'geoip-detect')?>" name="ip" value="<?php echo isset($_REQUEST['ip']) ? esc_attr($ip) : esc_attr(geoip_detect2_get_client_ip()); ?>" /><br />
+		<label><?php esc_html_e('Use these locales:', 'geoip-detect'); ?>
 			<select name="locales">
-				<option value="" <?php if (empty($_POST['locales'])) echo 'selected="selected"'?>><?= __('Default (Current site language, English otherwise)', 'geoip-detect')?></option>
-				<option value="en" <?php if (!empty($_POST['locales']) && $_POST['locales'] == 'en') echo 'selected="selected"'?>><?= __('English only', 'geoip-detect')?></option>
-				<option value="fr,en" <?php if (!empty($_POST['locales']) && $_POST['locales'] == 'fr,en') echo 'selected="selected"'?>><?= __('French, English otherwise', 'geoip-detect')?></option>
+				<option value="" <?php if (empty($_POST['locales'])) echo 'selected="selected"'?>><?php esc_html_e('Default (Current site language, English otherwise)', 'geoip-detect')?></option>
+				<option value="en" <?php if (!empty($_POST['locales']) && $_POST['locales'] == 'en') echo 'selected="selected"'?>><?php esc_html_e('English only', 'geoip-detect')?></option>
+				<option value="fr,en" <?php if (!empty($_POST['locales']) && $_POST['locales'] == 'fr,en') echo 'selected="selected"'?>><?php esc_html_e('French, English otherwise', 'geoip-detect')?></option>
 			</select> 
 		</label><br />
-		<label><?= __('Which syntax:', 'geoip-detect'); ?>
+		<label><?php esc_html_e('Which syntax:', 'geoip-detect'); ?>
 			<select name="syntax">
-				<option value="php" <?php if (empty($_POST['syntax']) || $_POST['syntax'] === 'php') echo 'selected="selected"'?>><?= __('PHP Syntax') ?></option>
-				<option value="shortcode" <?php if (!empty($_POST['syntax']) && $_POST['syntax'] === 'shortcode') echo 'selected="selected"'?>><?= __('Shortcode Syntax') ?></option>
-				<option value="js" <?php if (!empty($_POST['syntax']) && $_POST['syntax'] === 'js') echo 'selected="selected"'?>><?= __('JS Syntax') ?></option>
+				<option value="php" <?php if (empty($_POST['syntax']) || $_POST['syntax'] === 'php') echo 'selected="selected"'?>><?php esc_html_e('PHP Syntax') ?></option>
+				<option value="shortcode" <?php if (!empty($_POST['syntax']) && $_POST['syntax'] === 'shortcode') echo 'selected="selected"'?>><?php esc_html_e('Shortcode Syntax') ?></option>
+				<option value="js" <?php if (!empty($_POST['syntax']) && $_POST['syntax'] === 'js') echo 'selected="selected"'?>><?php esc_html_e('JS Syntax') ?></option>
 			</select>
 		</label><br>
-		<label><input type="checkbox" name="skip_cache" value="1" <?php if (!empty($_POST['skip_cache'])) echo 'checked="checked"'?>/><?= __('Skip cache', 'geoip-detect')?></label><br />
-		<label><input type="checkbox" name="skip_local_cache" value="1" <?php if (!empty($_POST['skip_local_cache'])) echo 'checked="checked"'?>/><?= __('Skip local cache (only works for <code>geoip_detect2_get_info_from_current_ip</code>)', 'geoip-detect')?></label><br />
+		<label><input type="checkbox" name="skip_cache" value="1" <?php if (!empty($_POST['skip_cache'])) echo 'checked="checked"'?>/><?php esc_html_e('Skip cache', 'geoip-detect')?></label><br />
+		<label><input type="checkbox" name="skip_local_cache" value="1" <?php if (!empty($_POST['skip_local_cache'])) echo 'checked="checked"'?>/><?php esc_html_e('Skip local cache (only works for <code>geoip_detect2_get_info_from_current_ip</code>)', 'geoip-detect')?></label><br />
 		<br />
-		<input type="submit" class="button button-primary" value="<?= __('Lookup', 'geoip-detect'); ?>" />
+		<input type="submit" class="button button-primary" value="<?php esc_html_e('Lookup', 'geoip-detect'); ?>" />
 	</form>
 
 	<?php if ($ip_lookup_result !== false) :
@@ -110,7 +110,7 @@ function var_export_short($data, $return=true)
 				$data_short = _geoip_detect_improve_data_for_lookup($record->jsonSerialize(), true);
 
 			?>
-	<h3><?= __('Lookup Result', 'geoip-detect'); ?></h3>
+	<h3><?php esc_html_e('Lookup Result', 'geoip-detect'); ?></h3>
 	<?php if ($record->extra->cached) : ?>
 		<p>
 			<i><?php printf(__('(Served from cache. Was cached %s ago)', 'geoip-detect'), human_time_diff($record->extra->cached));?></i>
@@ -125,18 +125,18 @@ function var_export_short($data, $return=true)
 	<p>
 		<?php if ($_POST['syntax'] == 'php') : ?>
 		<?php printf(__('The function %s returns an object:', 'geoip-detect'), $code); ?><br />
-		<?= sprintf(__('See %s for more information.', 'geoip-detect'), '<a href="https://github.com/yellowtree/geoip-detect/wiki/API:-PHP">API: PHP</a>'); ?>
+		<?php echo sprintf(__('See %s for more information.', 'geoip-detect'), '<a href="https://github.com/yellowtree/geoip-detect/wiki/API:-PHP">API: PHP</a>'); ?>
 		<?php elseif ($_POST['syntax'] == 'shortcode') : ?>
-		<?= sprintf(__('You can use the following shortcodes.', 'geoip-detect')); ?><br />
-		<?= sprintf(__('See %s for more information.', 'geoip-detect'), '<a href="https://github.com/yellowtree/geoip-detect/wiki/API:-Shortcodes">API: Shortcodes</a>'); ?>
+		<?php echo sprintf(__('You can use the following shortcodes.', 'geoip-detect')); ?><br />
+		<?php echo sprintf(__('See %s for more information.', 'geoip-detect'), '<a href="https://github.com/yellowtree/geoip-detect/wiki/API:-Shortcodes">API: Shortcodes</a>'); ?>
 		<?php elseif ($_POST['syntax'] == 'js') : ?>
-		<?= sprintf(__('AJAX and JS must be enabled in the preferences!', 'geoip-detect')); ?><br />
-		<?= sprintf(__('See %s for more information.', 'geoip-detect'), '<a href="https://github.com/yellowtree/geoip-detect/wiki/API:-AJAX">API: AJAX</a>'); ?>
+		<?php echo sprintf(__('AJAX and JS must be enabled in the preferences!', 'geoip-detect')); ?><br />
+		<?php echo sprintf(__('See %s for more information.', 'geoip-detect'), '<a href="https://github.com/yellowtree/geoip-detect/wiki/API:-AJAX">API: AJAX</a>'); ?>
 		<?php endif; ?>
 	</p>
 	<p>
 		<?php printf(__('Lookup duration: %.2f ms', 'geoip-detect'), $ip_lookup_duration * 1000); ?>
-		<?php if ($record->extra->cached) : ?><i><?= __('(From cache.)', 'geoip-detect');?></i><?php endif; ?><br>
+		<?php if ($record->extra->cached) : ?><i><?php esc_html_e('(From cache.)', 'geoip-detect');?></i><?php endif; ?><br>
 		<?php printf(__('Lookup duration when called for the second time in the same request: %.4f ms', 'geoip-detect'), $ip_lookup_2nd_duration * 1000); ?>
 	</p>
 	<?php if ($record->isEmpty) : ?>
@@ -153,13 +153,13 @@ function var_export_short($data, $return=true)
 	<table>
 		<tr>
 			<th></th>
-			<th style="text-align: left"><?= __('Value', 'geoip-detect'); ?></th>
+			<th style="text-align: left"><?php esc_html_e('Value', 'geoip-detect'); ?></th>
 		</tr>
 
 		<?php 
 		function show_row($record, $key_1, $key_2, $value = null, $class = '') {
-			$syntax = sanitize_key($_POST['syntax']);
-			$locales = sanitize_text_field(@$_POST['locales']);
+			$syntax = sanitize_key(isset($_POST['syntax']) ? $_POST['syntax'] : '');
+			$locales = sanitize_text_field(isset($_POST['locales']) ? $_POST['locales'] : '');
 
 			if (is_array($value)) {
 				if ($key_2 === 'names') {
@@ -257,9 +257,9 @@ function var_export_short($data, $return=true)
 					break;
 			}
 ?>
-		<tr class="<?= $class ?>">
-			<td><code><?= esc_html($access) ?></code></td>
-			<td><?= esc_html($value);?></td>
+		<tr class="<?php echo $class ?>">
+			<td><code><?php echo esc_html($access) ?></code></td>
+			<td><?php echo esc_html($value);?></td>
 		</tr>
 
 <?php
@@ -286,14 +286,14 @@ function var_export_short($data, $return=true)
 
 	</table>
 
-	<p class="all"><a href="#" onclick="geoip_properties_toggle('short', 'all'); return false;"><?= __('Show only the most common properties', 'geoip-detect') ?></a></p>
-	<p class="short"><a href="#" onclick="geoip_properties_toggle('all', 'short'); return false;"><?= __('Show all available properties', 'geoip-detect') ?></a></p>
-	<p><?= __('(More properties might be available for other IPs and with other data sources.)', 'geoip-detect'); ?></p>
+	<p class="all"><a href="#" onclick="geoip_properties_toggle('short', 'all'); return false;"><?php esc_html_e('Show only the most common properties', 'geoip-detect') ?></a></p>
+	<p class="short"><a href="#" onclick="geoip_properties_toggle('all', 'short'); return false;"><?php esc_html_e('Show all available properties', 'geoip-detect') ?></a></p>
+	<p><?php esc_html_e('(More properties might be available for other IPs and with other data sources.)', 'geoip-detect'); ?></p>
 
 	<?php if (GEOIP_DETECT_DEBUG) { var_dump($data); } ?>
 		<?php elseif ($ip_lookup_result === 0 || is_null($ip_lookup_result)) : ?>
 			<p>
-				<?= __('No information found about this IP.', 'geoip-detect')?>
+				<?php esc_html_e('No information found about this IP.', 'geoip-detect')?>
 			</p>
 		<?php endif; ?>
 	<?php endif; ?>
@@ -304,12 +304,12 @@ function var_export_short($data, $return=true)
 	</p>
 
 	<?php if ($can_be_cached && GEOIP_DETECT_READER_CACHE_TIME) : ?>
-	<p><br />(<?= sprintf(__('All record data from this source is cached locally for %s', 'geoip-detect'), human_time_diff(0, GEOIP_DETECT_IP_CACHE_TIME));?>.)<br />
+	<p><br />(<?php echo sprintf(__('All record data from this source is cached locally for %s', 'geoip-detect'), human_time_diff(0, GEOIP_DETECT_IP_CACHE_TIME));?>.)<br />
 		<?php if (current_user_can('manage_options') && !wp_using_ext_object_cache()) : ?>
 			<form method="post" action="#">
 				<?php wp_nonce_field( 'geoip_detect_clear_cache' ); ?>
 				<input type="hidden" name="action" value="clear_cache" />
-				<input class="button button-secondary" type="submit" value="<?= __('Empty cache', 'geoip-detect')?>" />
+				<input class="button button-secondary" type="submit" value="<?php esc_html_e('Empty cache', 'geoip-detect')?>" />
 			</form>
 		<?php endif; ?>
 	</p>
