@@ -124,6 +124,10 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 
 == Upgrade Notice ==
 
+= 5.6.0 = 
+
+This update removes the deprecated shortcode [geoip_detect ...] (read the changelog for more details)
+
 = 5.5.0 =
 
 When using the default datasource "hostip.info", the region code (i.e. CA) is now correctly moved to the property `mostSpecificSubdivision` (previously, it was part of the property `city`)
@@ -134,9 +138,10 @@ If you are using AJAX mode, please read the changelog.
 
 == Changelog ==
 
-= 5.5.1 =
+= 5.6.0 =
+* FIX [!]: Remove deprecated shortcode [geoip_detect] (Security - CVE-2025-57993). If you are still using it, use [geoip_detect2 ...] instead, you might have to change the property name.
 * FIX: Compatibility with Wordpress 6.7 (Textdomain loading)
-* FIX [!]: Remove deprecated shortcode [geoip_detect] (Security - CVE-2025-57993)
+* Library updates
 
 = 5.5.0 =
 * FIX [!]: In the datasource "hostip.info", the region code (i.e. CA) is now correctly moved to the property `mostSpecificSubdivision` (previously, it was part of the property `city`)
