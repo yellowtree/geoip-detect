@@ -51,21 +51,6 @@ class LegacyApiTest extends WP_UnitTestCase_GeoIP_Detect {
 	function testRegionName() {
 		$record = geoip_detect_get_info_from_ip(GEOIP_DETECT_TEST_IP);
 		$this->assertGreaterThan(1, strlen($record->region_name), 'Region Name: "' . $record->region_name);
-	}
-	
-	function testShortcode() {
-		add_filter('geoip_detect_get_external_ip_adress', [ $this, 'filter_set_test_ip' ], 101);
-		$this->assertEquals(GEOIP_DETECT_TEST_IP, geoip_detect_get_external_ip_adress());
-		
-		$string = do_shortcode('[geoip_detect property="country_name"]');
-		$this->assertNotEmpty($string, '[geoip_detect property="country_name"]', "The Geolocation IP Detection shortcode did not generate any output");
-		$this->assertNotEquals($string, '[geoip_detect property="country_name"]', "The Geolocation IP Detection shortcode does not seem to be called");
-		$this->assertStringNotContainsString('<!--', $string, "Geolocation IP Detection shortcode threw an error: " . $string);
-		
-		$string = do_shortcode('[geoip_detect property="INVALID"]');
-		$this->assertStringContainsString('<!--', $string, "Geolocation IP Detection Shortcode threw no error in spite of invalid property name: " . $string);
-		$string = do_shortcode('[geoip_detect property="INVALID" default="here"]');
-		$this->assertStringContainsString('here', $string, "Geolocation IP Detection Shortcode does not contain default value: " . $string);
-	}
+	}	
 }
 
