@@ -8,11 +8,11 @@ Tests: [![Build Status](https://api.travis-ci.org/yellowtree/geoip-detect.svg?br
 
 * **Donate Link:** https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYUZHS8FH3CL
 
-Provides geographic information detected by an IP address.
+Provides geographic information detected by an IP adress.
 
 ## Description ##
 
-Provides geographic information detected by an IP address. This can be used in themes or other plugins, as a shortcode, or via CSS body classes. The city & country names are translated in different languages ([supported languages](https://dev.maxmind.com/geoip/geoip2/web-services/#Languages-8)).
+Provides geographic information detected by an IP adress. This can be used in themes or other plugins, as a shortcode, or via CSS body classes. The city & country names are translated in different languages ([supported languages](https://dev.maxmind.com/geoip/geoip2/web-services/#Languages-8)).
 
 = Features: =
 
@@ -28,7 +28,7 @@ Provides geographic information detected by an IP address. This can be used in t
   * `geoip_detect2_get_info_from_ip($ip, $locales = array('en'), $options = array())`: Lookup Geo-Information of the specified IP
   * `geoip_detect2_get_info_from_current_ip($locales = array('en'), $options = array())`: Lookup Geo-Information of the current website user
   * `geoip_detect2_get_current_source_description(...)`: Return a human-readable label of the currently chosen source.
-  * `geoip_detect2_get_external_ip_adress()`: Fetch the internet address of the webserver
+  * `geoip_detect2_get_external_ip_adress()`: Fetch the internet adress of the webserver
   * `geoip_detect2_get_client_ip()`: Get client IP (even if it is behind a reverse proxy)
 * For the property names, see the results of a specific IP in the wordpress backend (under *Tools > Geolocation IP Detection*).
 * You can include these properties into your posts and pages by using the shortcode `[geoip_detect2 property="country.name" default="(country could not be detected)" lang="en"]` (where 'country.name' can be one of the other property names as well, and 'default' and 'lang' are optional).
@@ -121,6 +121,10 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 1. Lookup page (under Tools > Geolocation Lookup)
 2. Options page (under Preferences > Geolocation IP Detection)
 
+= 5.6.0 = 
+
+This update removes the deprecated shortcode [geoip_detect ...] (read the changelog for more details)
+
 = 5.5.0 =
 
 When using the default datasource "hostip.info", the region code (i.e. CA) is now correctly moved to the property `mostSpecificSubdivision` (previously, it was part of the property `city`)
@@ -131,8 +135,10 @@ If you are using AJAX mode, please read the changelog.
 
 ## Changelog ##
 
-= 5.5.1 =
+= 5.6.0 =
+* FIX [!]: Remove deprecated shortcode [geoip_detect] (Security - CVE-2025-57993). If you are still using it, use [geoip_detect2 ...] instead, you might have to change the property name.
 * FIX: Compatibility with Wordpress 6.7 (Textdomain loading)
+* Library updates
 
 = 5.5.0 =
 * FIX [!]: In the datasource "hostip.info", the region code (i.e. CA) is now correctly moved to the property `mostSpecificSubdivision` (previously, it was part of the property `city`)
