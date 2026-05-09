@@ -2,7 +2,7 @@
 Contributors: benjaminpick
 Tags: geolocation, locator, geoip, maxmind, ipstack
 Requires at least: 5.0
-Tested up to: 6.8
+Tested up to: 7.0
 Requires PHP: 7.2.5
 Stable tag: 5.6.1
 License: GPLv3 or later
@@ -137,6 +137,10 @@ When using the default datasource "hostip.info", the region code (i.e. CA) is no
 If you are using AJAX mode, please read the changelog.
 
 == Changelog ==
+
+= 5.6.2 =
+* UI: Showing dates now respect the wordpress timezone setting
+* Library updates
 
 = 5.6.1 =
 * FIX [!]: Remove deprecated shortcode [geoip_detect] (Security - CVE-2025-57993). If you are still using it, use [geoip_detect2 ...] instead, you might have to change the property name.
