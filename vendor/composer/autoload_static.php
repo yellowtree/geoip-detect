@@ -17,7 +17,7 @@ class ComposerStaticInit18fc54d84025f2e5d2b2ac2dd487f107
     );
 
     public static $prefixLengthsPsr4 = array (
-        'S' => 
+        'S' =>
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
@@ -29,76 +29,76 @@ class ComposerStaticInit18fc54d84025f2e5d2b2ac2dd487f107
             'Symfony\\Component\\PropertyAccess\\' => 33,
             'Symfony\\Component\\HttpFoundation\\' => 33,
         ),
-        'M' => 
+        'M' =>
         array (
             'MaxMind\\WebService\\' => 19,
             'MaxMind\\Exception\\' => 18,
             'MaxMind\\Db\\' => 11,
         ),
-        'G' => 
+        'G' =>
         array (
             'GeoIp2\\' => 7,
         ),
-        'C' => 
+        'C' =>
         array (
             'Composer\\CaBundle\\' => 18,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Symfony\\Polyfill\\Php80\\' => 
+        'Symfony\\Polyfill\\Php80\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
         ),
-        'Symfony\\Polyfill\\Mbstring\\' => 
+        'Symfony\\Polyfill\\Mbstring\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
         ),
-        'Symfony\\Polyfill\\Intl\\Normalizer\\' => 
+        'Symfony\\Polyfill\\Intl\\Normalizer\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer',
         ),
-        'Symfony\\Polyfill\\Intl\\Grapheme\\' => 
+        'Symfony\\Polyfill\\Intl\\Grapheme\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme',
         ),
-        'Symfony\\Polyfill\\Ctype\\' => 
+        'Symfony\\Polyfill\\Ctype\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
-        'Symfony\\Component\\String\\' => 
+        'Symfony\\Component\\String\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/string',
         ),
-        'Symfony\\Component\\PropertyInfo\\' => 
+        'Symfony\\Component\\PropertyInfo\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/property-info',
         ),
-        'Symfony\\Component\\PropertyAccess\\' => 
+        'Symfony\\Component\\PropertyAccess\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/property-access',
         ),
-        'Symfony\\Component\\HttpFoundation\\' => 
+        'Symfony\\Component\\HttpFoundation\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/http-foundation',
         ),
-        'MaxMind\\WebService\\' => 
+        'MaxMind\\WebService\\' =>
         array (
             0 => __DIR__ . '/..' . '/maxmind/web-service-common/src/WebService',
         ),
-        'MaxMind\\Exception\\' => 
+        'MaxMind\\Exception\\' =>
         array (
             0 => __DIR__ . '/..' . '/maxmind/web-service-common/src/Exception',
         ),
-        'MaxMind\\Db\\' => 
+        'MaxMind\\Db\\' =>
         array (
             0 => __DIR__ . '/..' . '/maxmind-db/reader/src/MaxMind/Db',
         ),
-        'GeoIp2\\' => 
+        'GeoIp2\\' =>
         array (
             0 => __DIR__ . '/..' . '/geoip2/geoip2/src',
         ),
-        'Composer\\CaBundle\\' => 
+        'Composer\\CaBundle\\' =>
         array (
             0 => __DIR__ . '/..' . '/composer/ca-bundle/src',
         ),

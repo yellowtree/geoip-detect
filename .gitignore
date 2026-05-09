@@ -24,6 +24,7 @@ wp-cli.local.yml
 
 /vendor/composer/installed.json
 
+# Do not commit phpunit dependencies
 /vendor/doctrine
 /vendor/myclabs
 /vendor/phar-io/

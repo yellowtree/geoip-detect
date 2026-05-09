@@ -33,10 +33,10 @@ if (!function_exists('str_contains')) {
     }
 }
 if (!function_exists('str_starts_with')) {
-    function str_starts_with(string $haystack, string $needle): bool { return p\Php80::str_starts_with($haystack, $needle); }
+    function str_starts_with(?string $haystack, ?string $needle): bool { return p\Php80::str_starts_with($haystack ?? '', $needle ?? ''); }
 }
 if (!function_exists('str_ends_with')) {
-    function str_ends_with(string $haystack, string $needle): bool { return p\Php80::str_ends_with($haystack, $needle); }
+    function str_ends_with(?string $haystack, ?string $needle): bool { return p\Php80::str_ends_with($haystack ?? '', $needle ?? ''); }
 }
 if (!function_exists('get_debug_type')) {
     function get_debug_type($value): string { return p\Php80::get_debug_type($value); }
