@@ -1,4 +1,6 @@
 <?php
+namespace YellowTree\GeoipDetect\DataSources\Precision;
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 /*
 Copyright 2013-2023 Yellow Tree, Siegen, Germany
 Author: Benjamin Pick (wp-geoip-detect| |posteo.de)
@@ -26,7 +28,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * - error logging
  */
 
-namespace YellowTree\GeoipDetect\DataSources\Precision;
 
 use YellowTree\GeoipDetect\DataSources\AbstractDataSource;
 use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;

@@ -16,8 +16,9 @@ if ($record->extra->source == $this->getId()) { ...
 */
 
 namespace YellowTree\GeoipDetect\DataSources {
+	if (! defined('ABSPATH')) exit; // Exit if accessed directly
 
-abstract class AbstractDataSource {
+	abstract class AbstractDataSource {
 	public function __construct() {}
 	
 	abstract public function getId();

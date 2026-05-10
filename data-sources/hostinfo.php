@@ -1,6 +1,7 @@
 <?php
-
 namespace YellowTree\GeoipDetect\DataSources\HostInfo;
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 
 use YellowTree\GeoipDetect\DataSources\AbstractDataSource;
 use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;

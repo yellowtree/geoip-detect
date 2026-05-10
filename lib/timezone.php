@@ -1,4 +1,6 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 // From: https://github.com/maxmind/geoip-api-php/blob/master/src/timezone.php
 // Licenced GNU GPL 2.1+
 

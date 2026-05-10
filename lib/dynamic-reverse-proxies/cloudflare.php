@@ -1,6 +1,7 @@
 <?php
-
 namespace YellowTree\GeoipDetect\DynamicReverseProxies;
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 
 class DataCloudflare implements DataProvider {
     public function getIps() : array {

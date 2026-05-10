@@ -1,5 +1,8 @@
 <?php
 use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+
 $date_format = get_option('date_format') . ' ' . get_option('time_format');
 
 $registry = DataSourceRegistry::getInstance();

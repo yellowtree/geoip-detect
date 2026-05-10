@@ -1,4 +1,6 @@
 <?php
+if (! defined('ABSPATH')) exit; // Exit if accessed directly
+
 /*
 Plugin Name:     Geolocation IP Detection
 Plugin URI:      http://www.yellowtree.de

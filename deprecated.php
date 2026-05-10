@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 /**
  * @deprecated If you really need to do that manually, use the AutoDataSource-Class instead.
  */

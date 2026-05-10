@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 if (!defined('GEOIP_DETECT_IP_EMPTY_CACHE_TIME'))
 	define('GEOIP_DETECT_IP_EMPTY_CACHE_TIME', 1);

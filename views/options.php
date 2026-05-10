@@ -17,7 +17,7 @@ $currentSourceId = $currentSource->getId();
 		<a href="options-general.php?page=<?php echo esc_attr(GEOIP_PLUGIN_BASENAME) ?>&geoip_detect_dismiss_log_notice=cron"><?php esc_html_e('Dismiss notice', 'geoip-detect'); ?></a>
 	</p>
 	<p>
-			<b><?php esc_html_e('An error occured on Cron Execution (background task):', 'geoip-detect'); ?></b><br>
+		<b><?php esc_html_e('An error occured on Cron Execution (background task):', 'geoip-detect'); ?></b><br>
 		<?php echo esc_html($last_cron_error_msg); ?>
 		<p>
 			<a class="button button-secondary" href="options-general.php?page=<?php echo esc_attr(GEOIP_PLUGIN_BASENAME) ?>&geoip_detect_dismiss_log_notice=cron"><?php esc_html_e('Dismiss notice', 'geoip-detect'); ?></a>
@@ -54,7 +54,7 @@ $currentSourceId = $currentSource->getId();
 		<h2><?php esc_html_e('Choose data source:', 'geoip-detect'); ?></h2>
 		<a href="https://github.com/yellowtree/wp-geoip-detect/wiki/FAQ#which-data-source-should-i-choose"><?php esc_html_e('Help', 'geoip-detect'); ?></a>
 		<?php foreach ($sources as $s) : $id = $s->getId();?>
-			<p><label><input type="radio" name="options[source]" value="<?php echo $id ?>" <?php if ($currentSourceId == $id) { echo 'checked="checked"'; } ?> /><?php echo $s->getLabel(); ?></label></p>
+			<p><label><input type="radio" name="options[source]" value="<?php echo esc_attr($id) ?>" <?php if ($currentSourceId === $id) { echo 'checked="checked"'; } ?> /><?php echo esc_html($s->getLabel()); ?></label></p>
 			<span class="detail-box">
 				<?php echo $s->getDescriptionHTML(); ?>
 			</span>
@@ -93,7 +93,7 @@ $currentSourceId = $currentSource->getId();
 			<label><input type="checkbox" name="options[ajax_enqueue_js]" value="1" <?php if (!empty($wp_options['ajax_enqueue_js'])) { echo 'checked="checked"'; } ?>> <?php esc_html_e('Add JS Helper functions to all pages.', 'geoip-detect'); ?></label>
 			<span class="detail-box">
 				<?php esc_html_e('This enables you code geo-dependent behavior in JS (see <a href="https://github.com/yellowtree/geoip-detect/wiki/API%3A-AJAX" target="_blank">documentation</a>)', 'geoip-detect'); ?><br>
-				<?php printf(__('You are using the <code>%s</code> variant - see <a href="%s" target="_blank">documentation</a>', 'geoip-detect'), _geoip_detect2_get_variant(), 'https://github.com/yellowtree/geoip-detect/wiki/API:-AJAX#js-variants' ); ?>
+				<?php printf(__('You are using the <code>%s</code> variant - see <a href="%s" target="_blank">documentation</a>', 'geoip-detect'), esc_html(_geoip_detect2_get_variant()), 'https://github.com/yellowtree/geoip-detect/wiki/API:-AJAX#js-variants' ); ?>
 			</span>
 			<label><input type="checkbox" name="options[ajax_set_css_country]" value="1" <?php if (!empty($wp_options['ajax_set_css_country'])) { echo 'checked="checked"'; } ?>> <?php esc_html_e('Add a country-specific CSS class to the &lt;body&gt;-Tag (via AJAX).', 'geoip-detect'); ?></label>
 			<span class="detail-box">

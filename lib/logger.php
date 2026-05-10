@@ -1,6 +1,6 @@
 <?php
-
 namespace YellowTree\GeoipDetect;
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
  * This API is experimental and WILL change in future versions. Beware!

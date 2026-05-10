@@ -1,5 +1,9 @@
 <?php
 
+namespace YellowTree\GeoipDetect\Lib;
+
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 /*
 Copyright 2013-2023 Yellow Tree, Siegen, Germany
 Author: Benjamin Pick (wp-geoip-detect| |posteo.de)
@@ -18,8 +22,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
-namespace YellowTree\GeoipDetect\Lib;
 
 use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 use  YellowTree\GeoipDetect\Logger;

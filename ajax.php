@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /*
 Copyright 2013-2023 Yellow Tree, Siegen, Germany

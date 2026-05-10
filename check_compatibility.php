@@ -1,6 +1,7 @@
 <?php
-
 namespace YellowTree\GeoipDetect\CheckCompatibility;
+
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class Maxmind {
     public $files = null;

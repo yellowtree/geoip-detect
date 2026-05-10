@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 // This file contains dummy method in case the requirements are not met.
 // Those functions don't do anything but at least there is no Fatal Error or so.
 
