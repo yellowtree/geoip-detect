@@ -149,7 +149,7 @@ class AutoDataSource extends ManualDataSource
 		$headers = [];
 		$headers['User-Agent'] = GEOIP_DETECT_USER_AGENT;
 		if ($modified) {
-			$headers['If-Modified-Since'] = date('r', $modified);
+			$headers['If-Modified-Since'] = gmdate('r', $modified);
 		}
 
 		$response = wp_safe_remote_get( $url, [ 'timeout' => 300, 'stream' => true, 'filename' => $tmpfname, 'headers' => $headers, 'redirection' => 5 ] );
@@ -224,13 +224,6 @@ class AutoDataSource extends ManualDataSource
 
 	// Ungzip File
 	protected function unpackArchive($downloadedFilename, $outFile) {
-		if (!is_readable($downloadedFilename) || !is_file($downloadedFilename))
-			return __('Downloaded file could not be opened for reading.', 'geoip-detect');
-		if (!\is_writable(dirname($outFile)))
-			return sprintf(__('Database could not be written (%s).', 'geoip-detect'), $outFile);
-
-		$outDir = get_temp_dir() . 'geoip-detect/';
-
 		global $wp_filesystem;
 		if (! $wp_filesystem) {
 			$ret = \WP_Filesystem(false, get_temp_dir(), true /* allow group/world-writeable folder */);
@@ -238,11 +231,19 @@ class AutoDataSource extends ManualDataSource
 				return __('WP Filesystem could not be initialized (does not support FTP credential access. Can you upload files to the media library?).', 'geoip-detect');
 			}
 		}
-		if (\is_dir($outDir)) {
+
+		if (!$wp_filesystem->is_readable($downloadedFilename) || !$wp_filesystem->is_file($downloadedFilename))
+			return __('Downloaded file could not be opened for reading.', 'geoip-detect');
+		if (!$wp_filesystem->is_writable(dirname($outFile)))
+			return sprintf(__('Database could not be written (%s).', 'geoip-detect'), $outFile);
+
+		$outDir = get_temp_dir() . 'geoip-detect/';
+
+		if ($wp_filesystem->is_dir($outDir)) {
 			$wp_filesystem->rmdir($outDir, true);
 		}
 
-		mkdir($outDir);
+		$wp_filesystem->mkdir($outDir);
 
 		try {
 			$phar = new \PharData( $downloadedFilename );
@@ -264,10 +265,10 @@ class AutoDataSource extends ManualDataSource
 			}
 		}
 
-		if (!\is_readable($inFile) || !\is_file($inFile))
+		if (!$wp_filesystem->is_readable($inFile) || !$wp_filesystem->is_file($inFile))
 			return __('Downloaded file could not be opened for reading.', 'geoip-detect');
 	
-		$ret = copy($inFile, $outFile);
+		$ret = $wp_filesystem->copy($inFile, $outFile);
 		if (!$ret)
 			return sprintf(__('Downloaded file could not write or overwrite %s.', 'geoip-detect'), $outFile);
 

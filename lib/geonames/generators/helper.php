@@ -9,7 +9,7 @@ function output_to_stderr($text) {
 }
 
 function array_to_php($data) {
-	$date_now = date('r');
+	$date_now = gmdate('r');
 	$data = var_export($data, true);
 
 	$file = "
