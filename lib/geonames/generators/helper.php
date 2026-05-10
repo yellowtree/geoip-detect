@@ -12,11 +12,11 @@ function array_to_php($data) {
 	$date_now = date('r');
 	$data = var_export($data, true);
 
-	$file = <<<PHP
+	$file = "
 <?php
-// Generated at {$date_now} 
+// Generated at $date_now 
 return $data;
-PHP;
+";
 	$data = '';
 	return $file;
 }

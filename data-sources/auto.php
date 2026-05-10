@@ -59,7 +59,7 @@ class AutoDataSource extends ManualDataSource
 
 	protected function updateHTML() {
 		$html = $error = '';
-		$disabled = '';
+		$disabled = false;
 
 		$keyAvailable = !! get_option('geoip-detect-auto_license_key', '');
 		if (!$keyAvailable) {
@@ -67,7 +67,7 @@ class AutoDataSource extends ManualDataSource
 				__('Maxmind Automatic Download only works with a given license key.', 'geoip-detect') .
 				'<p>' . sprintf(__('You can signup for a free Maxmind-Account here: <a href="%s" target="_blank">Sign Up</a>.', 'geoip-detect'), 'https://www.maxmind.com/en/geolite2/signup') . '<br>' .
 				__('After logging in, generate a license key and copy the Account ID and the key to the options below.', 'geoip-detect') . '</p>';
-			$disabled = ' disabled="disabled"';
+			$disabled = true;
 		} else {
 			$keyValidationMessage = $this->validateApiKey(get_option('geoip-detect-auto_license_key', ''));
 			if ($keyValidationMessage !== true) {
@@ -81,17 +81,14 @@ class AutoDataSource extends ManualDataSource
 			}
 		}
 
-
-		$text_update = __('Update now', 'geoip-detect');
-		$nonce_field = wp_nonce_field( 'geoip_detect_update' );
 		if (current_user_can('manage_options')) {
-			$html .= <<<HTML
+			$html .= '
 <form method="post" action="options-general.php?page=geoip-detect%2Fgeoip-detect.php">
-		$nonce_field
+		' . wp_nonce_field('geoip_detect_update') . '
 		<input type="hidden" name="action" value="update" />
-		<input type="submit" class="button button-secondary" value="$text_update" $disabled />
+		<input type="submit" class="button button-secondary" value="' . __('Update now', 'geoip-detect') . '" ' . ($disabled ? 'disabled="disabled"' : '') . ' />
 </form>
-HTML;
+';
 		}
 
 		if ($error) {

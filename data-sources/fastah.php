@@ -229,11 +229,11 @@ class FastahSource extends AbstractDataSource {
 
         $key = esc_attr($this->params['key']);
 
-        $html = <<<HTML
-$label_key <input type="text" autocomplete="off" size="20" name="options_fastah[key]" value="$key" /> <br />
+        $html = '
+' . $label_key . ' <input type="text" autocomplete="off" size="20" name="options_fastah[key]" value="' . $key . '" /> <br />
 <a href="https://aws.amazon.com/marketplace/pp/prodview-k5gjowexrefl2" target="_blank">Sign-up for a 30-day trial key</a>, <a href="https://console.api.getfastah.com" target="_blank">API usage dashboard</a><br><br>
-$label_http2 <select name="options_fastah[http2]">
-HTML;
+' . $label_http2 . ' <select name="options_fastah[http2]">
+';
         $html .= '<option value="0" ' . (!$this->params['http2'] ? ' selected="selected"' : '') . '">' . __('HTTP/2 is OFF (slower, but more compatible with older PHP versions)', 'geoip-detect') . '</option>';
         $html .= '<option value="1" ' . ($this->params['http2'] ? ' selected="selected"' : '') . '">' . __('HTTP/2 is ON (faster performance)', 'geoip-detect') . '</option>';
         $html .= '</select>';

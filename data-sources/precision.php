@@ -108,11 +108,11 @@ class PrecisionDataSource extends AbstractDataSource {
 		$label_user_secret = __('License key:', 'geoip-detect');
 		$label_api_type = __('API Type:', 'geoip-detect');
 		
-		$html = <<<HTML
-$label_user_id <input type="text" size="10" name="options_precision[user_id]" value="$user_id" /><br />		
-$label_user_secret <input type="text" autocomplete="off" size="20" name="options_precision[user_secret]" value="$user_secret" /><br />
-$label_api_type <select name="options_precision[api_type]">
-HTML;
+		$html = '
+' . $label_user_id . ' <input type="text" size="10" name="options_precision[user_id]" value="' . $user_id . '" /><br />		
+' . $label_user_secret . ' <input type="text" autocomplete="off" size="20" name="options_precision[user_secret]" value="' . $user_secret . '" /><br />
+' . $label_api_type . ' <select name="options_precision[api_type]">
+';
 		
 		foreach ($this->known_api_types as $name => $api_type) {
 			$html .= '<option ';

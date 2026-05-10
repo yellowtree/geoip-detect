@@ -115,14 +115,14 @@ class HeaderDataSource extends AbstractDataSource {
 
 		$label = __('Which Hosting Provider:', 'geoip-detect');
 		$label_other = __('Custom', 'geoip-detect');
-		$html = <<<HTML
-		<p>$label<br> 
-			<label><input type="radio" name="options_header[provider]" value="cloudflare" $checked_cloudflare /> Cloudflare</label>
-			<label><input type="radio" name="options_header[provider]" value="aws" $checked_aws /> Amazon AWS CloudFront</label>
-			<label><input type="radio" name="options_header[provider]" value="other" $checked_other /> $label_other</label>
+		$html = '
+		<p>' . $label . '<br> 
+			<label><input type="radio" name="options_header[provider]" value="cloudflare" ' . $checked_cloudflare . ' /> Cloudflare</label>
+			<label><input type="radio" name="options_header[provider]" value="aws" ' . $checked_aws . ' /> Amazon AWS CloudFront</label>
+			<label><input type="radio" name="options_header[provider]" value="other" ' . $checked_other . ' /> ' . $label_other . '</label>
 	    </p>
 		<br />	
-HTML;
+';
 		
 		return $html;
 	}

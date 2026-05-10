@@ -145,32 +145,4 @@ file_put_contents(OUTPUT_FILE_NAMES, array_to_php($all_names));
 
 output_to_stderr('OK.' . PHP_EOL);
 
-
-/* Takes up as much memory (around 700kb)
-$getDataOfCountrySwitchCases = '';
-foreach ($all_records as $id => $r) {
-	$id_exported = var_export($id, true);
-	$r_exported = var_export($r, true);
-	$getDataOfCountrySwitchCases .= "case $id_exported: return $r_exported;" . PHP_EOL;
-}
-
-echo <<<'PHP'
-namespace YellowTree\GeoipDetect\Geonames;
-
-if (!class_exists('CountryInformationData')) {
-	class CountryInformationData {
-		public function getDataOfCountry($country) {
-			switch($country) {
-			
-PHP;
-echo $getDataOfCountrySwitchCases;
-echo <<<'PHP'
-			}
-			return ''; // Country not found
-		}
-	}
-
-
-PHP;
-*/
 output_to_stderr("Done. You should now run 'composer test' now to see if the file data is valid." . PHP_EOL);
