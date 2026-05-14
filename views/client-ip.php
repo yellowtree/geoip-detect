@@ -37,7 +37,7 @@ This needs to be known to the plugin to choose the correct IP adress.
 		</span>
 	</p>
 	<p>
-		REMOTE_ADDR: <b><?php echo esc_html($_SERVER['REMOTE_ADDR']); ?></b><br>
+		REMOTE_ADDR: <b><?php echo isset($_SERVER['REMOTE_ADDR']) ? esc_html($_SERVER['REMOTE_ADDR']) : __('(unset)', 'geoip-detect'); ?></b><br>
 		<span class="detail-box">In server configurations without reverse proxy, this will equal to the "detected client IP". Otherwise, this is the IP of the reverse proxy.</span>
 		HTTP_X_FORWARDED_FOR: <b><?php echo isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? esc_html($_SERVER["HTTP_X_FORWARDED_FOR"]) : __('(unset)', 'geoip-detect'); ?></b><br>
 		<span class="detail-box">Reverse proxies usually add this header to indicate the original IP. If several IPs are given here (seperated by a comma), the correct user IP usually is the leftmost one.</span>
