@@ -121,7 +121,7 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 1. Lookup page (under Tools > Geolocation Lookup)
 2. Options page (under Preferences > Geolocation IP Detection)
 
-= 5.6.0 = 
+= 5.6.1 = 
 
 This update removes the deprecated shortcode [geoip_detect ...] (read the changelog for more details)
 
@@ -135,10 +135,16 @@ If you are using AJAX mode, please read the changelog.
 
 ## Changelog ##
 
-= 5.6.0 =
+= 5.6.2 =
+* UI: Showing dates now respect the wordpress timezone setting
+* Library updates
+
+= 5.6.1 =
 * FIX [!]: Remove deprecated shortcode [geoip_detect] (Security - CVE-2025-57993). If you are still using it, use [geoip_detect2 ...] instead, you might have to change the property name.
 * FIX: Compatibility with Wordpress 6.7 (Textdomain loading)
 * Library updates
+
+(5.6.0 was not released)
 
 = 5.5.0 =
 * FIX [!]: In the datasource "hostip.info", the region code (i.e. CA) is now correctly moved to the property `mostSpecificSubdivision` (previously, it was part of the property `city`)
