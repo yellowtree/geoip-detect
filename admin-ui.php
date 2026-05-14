@@ -27,8 +27,8 @@ function geoip_detect_menu() {
 		require_once ABSPATH . '/wp-admin/admin.php';
 	}
 	
-	add_submenu_page('tools.php', __('Geolocation IP Detection Lookup', 'geoip-detect'), __('Geolocation Lookup', 'geoip-detect'), 'activate_plugins', GEOIP_PLUGIN_BASENAME, 'geoip_detect_lookup_page');
-	add_options_page(__('Geolocation IP Detection', 'geoip-detect'), __('Geolocation IP Detection', 'geoip-detect'), 'manage_options', GEOIP_PLUGIN_BASENAME, 'geoip_detect_option_page');
+	add_submenu_page('tools.php', __('Geolocation IP Detection Lookup', 'geoip-detect'), __('Geolocation Lookup', 'geoip-detect'), 'activate_plugins', 'geoip-detect', 'geoip_detect_lookup_page');
+	add_options_page(__('Geolocation IP Detection', 'geoip-detect'), __('Geolocation IP Detection', 'geoip-detect'), 'manage_options', 'geoip-detect-settings', 'geoip_detect_option_page');
 }
 add_action('admin_menu', 'geoip_detect_menu');
 
