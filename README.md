@@ -135,6 +135,9 @@ If you are using AJAX mode, please read the changelog.
 
 ## Changelog ##
 
+= 5.6.3 =
+* FIX: Compatibility with Wordpress 7.0 (Command Palette)
+
 = 5.6.2 =
 * UI: Showing dates now respect the wordpress timezone setting
 * Library updates
