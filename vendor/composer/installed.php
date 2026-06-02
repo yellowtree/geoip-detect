@@ -3,7 +3,7 @@
         'name' => 'yellowtree/geoip-detect',
         'pretty_version' => 'dev-develop',
         'version' => 'dev-develop',
-        'reference' => 'f265aedaee5a665649fc3dc45f9494ecec0bc0f3',
+        'reference' => '07ff4a424699ab7149cb0e5f6f853a92a6f0341f',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -439,7 +439,7 @@
         'yellowtree/geoip-detect' => array(
             'pretty_version' => 'dev-develop',
             'version' => 'dev-develop',
-            'reference' => 'f265aedaee5a665649fc3dc45f9494ecec0bc0f3',
+            'reference' => '07ff4a424699ab7149cb0e5f6f853a92a6f0341f',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
