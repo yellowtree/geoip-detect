@@ -5,7 +5,7 @@ $currentSourceId = $currentSource->getId();
 
 <div class="wrap">
 	<h1><?php esc_html_e('Geolocation IP Detection', 'geoip-detect');?></h1>
-	<p><a href="tools.php?page=<?php echo esc_attr(GEOIP_PLUGIN_BASENAME) ?>"><?php esc_html_e('Test IP Detection Lookup', 'geoip-detect')?></a></p>
+	<p><a href="<?php echo GEOIP_DETECT_TOOLS_PAGE ?>"><?php esc_html_e('Test IP Detection Lookup', 'geoip-detect')?></a></p>
 <?php if (!empty($message)): ?>
 		<p class="geoip_detect_error">
 		<?php echo $message; ?>
@@ -14,13 +14,13 @@ $currentSourceId = $currentSource->getId();
 <?php if (!empty($last_cron_error_msg)): ?>
 <div class="error notice is-dismissible">
 	<p style="float: right">
-		<a href="options-general.php?page=<?php echo esc_attr(GEOIP_PLUGIN_BASENAME) ?>&geoip_detect_dismiss_log_notice=cron"><?php esc_html_e('Dismiss notice', 'geoip-detect'); ?></a>
+		<a href="<?php echo GEOIP_DETECT_OPTIONS_PAGE ?>&geoip_detect_dismiss_log_notice=cron"><?php esc_html_e('Dismiss notice', 'geoip-detect'); ?></a>
 	</p>
 	<p>
 		<b><?php esc_html_e('An error occured on Cron Execution (background task):', 'geoip-detect'); ?></b><br>
 		<?php echo esc_html($last_cron_error_msg); ?>
 		<p>
-			<a class="button button-secondary" href="options-general.php?page=<?php echo esc_attr(GEOIP_PLUGIN_BASENAME) ?>&geoip_detect_dismiss_log_notice=cron"><?php esc_html_e('Dismiss notice', 'geoip-detect'); ?></a>
+			<a class="button button-secondary" href="<?php echo GEOIP_DETECT_OPTIONS_PAGE ?>&geoip_detect_dismiss_log_notice=cron"><?php esc_html_e('Dismiss notice', 'geoip-detect'); ?></a>
 		</p>
 	</p>
 </div>
@@ -108,7 +108,7 @@ $currentSourceId = $currentSource->getId();
 		<p>
 
 			<label><input type="checkbox" name="options[has_reverse_proxy]" value="1" <?php if (!empty($wp_options['has_reverse_proxy'])) { echo 'checked="checked"'; } ?>>&nbsp;<?php esc_html_e('The server is behind a reverse proxy', 'geoip-detect')?></label>
-			<a href="options-general.php?page=<?php echo esc_attr(GEOIP_PLUGIN_BASENAME) ?>&geoip_detect_part=client-ip">(<?php esc_html_e('Client IP debug panel', 'geoip-detect');?>)</a>
+			<a href="<?php echo GEOIP_DETECT_OPTIONS_PAGE ?>&geoip_detect_part=client-ip">(<?php esc_html_e('Client IP debug panel', 'geoip-detect');?>)</a>
 			<span class="detail-box">
 			<?php if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) : ?>
 			<?php printf(__('(With Proxy: %s - Without Proxy: %s - Client IP with current configuration: %s)', 'geoip-detect'), esc_html($_SERVER['HTTP_X_FORWARDED_FOR']), isset($_SERVER['REMOTE_ADDR']) ? esc_html($_SERVER['REMOTE_ADDR']) :'', geoip_detect2_get_client_ip()); ?><br />

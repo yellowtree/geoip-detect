@@ -84,7 +84,7 @@ function geoip_detect_admin_notice_template($id, $title, $body, $addButtonDismis
 ?>
 <div class="error notice is-dismissible">
 	<p style="float: right">
-		<a href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_dismiss_notice=<?php echo esc_attr($id) ?>"><?php _e('Dismiss notice', 'geoip-detect'); ?></a>
+		<a href="<?php echo GEOIP_DETECT_TOOLS_PAGE ?>&geoip_detect_dismiss_notice=<?php echo esc_attr($id) ?>"><?php _e('Dismiss notice', 'geoip-detect'); ?></a>
 	</p>
 
 	<h3><?php echo $title; ?></h3>

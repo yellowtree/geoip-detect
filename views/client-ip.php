@@ -16,9 +16,9 @@
 The final goal would be to have a step-by-step wizard helping to set all the relevant options semi-automatically. -->
 	<h1><?php _e('Geolocation IP Detection', 'geoip-detect');?> - Client IP Debug Panel</h1>
 	<p>
-		<a href="tools.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>"><?php _e('Test IP Detection Lookup', 'geoip-detect')?></a>
+		<a href="<?php echo GEOIP_DETECT_TOOLS_PAGE ?>"><?php _e('Test IP Detection Lookup', 'geoip-detect')?></a>
 		|
-		<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>"><?php _e('Options', 'geoip-detect');?></a>
+		<a href="<?php echo GEOIP_DETECT_OPTIONS_PAGE ?>"><?php _e('Options', 'geoip-detect');?></a>
 	</p>
 <pre>This debug panel is listing all relevant informations to debug when the detected client ip is wrong (in case of reverse proxies etc.)
 Sometimes, there are proxies between your user and the wordpress server application (e.g. a <abbr title="Content Delivery Network: Amazon, Cloudflare, etc.">CDN</abbr>, reverse proxies).

@@ -84,7 +84,7 @@ class AutoDataSource extends ManualDataSource
 
 		if (current_user_can('manage_options')) {
 			$html .= '
-<form method="post" action="options-general.php?page=geoip-detect%2Fgeoip-detect.php">
+<form method="post" action="' . GEOIP_DETECT_OPTIONS_PAGE . '">
 		' . wp_nonce_field('geoip_detect_update') . '
 		<input type="hidden" name="action" value="update" />
 		<input type="submit" class="button button-secondary" value="' . __('Update now', 'geoip-detect') . '" ' . ($disabled ? 'disabled="disabled"' : '') . ' />

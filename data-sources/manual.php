@@ -312,7 +312,7 @@ add_filter('geoip_detect_source_get_status_HTML_maxmind', function($html) {
 		if ($sameVersion) {
 			$html .= '<div class="notice is-dismissible">';
 			$html .= '<p style="float: right">';
-			$html .= '<a href="tools.php?page=' . GEOIP_PLUGIN_BASENAME . '&geoip_detect_dismiss_notice=' . $id . '">' . __('Dismiss notice', 'geoip-detect') . '</a>';
+			$html .= '<a href="' . GEOIP_DETECT_TOOLS_PAGE . '&geoip_detect_dismiss_notice=' . $id . '">' . __('Dismiss notice', 'geoip-detect') . '</a>';
 			$html .= '</p>';
 		
 			$html .= '<b>' . __('Notice') . ':</b><br>';

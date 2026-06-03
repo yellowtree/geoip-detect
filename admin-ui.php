@@ -22,6 +22,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 use YellowTree\GeoipDetect\DataSources\DataSourceRegistry;
 use YellowTree\GeoipDetect\Logger;
 
+define('GEOIP_DETECT_TOOLS_PAGE', 'tools.php?page=geoip-detect');
+define('GEOIP_DETECT_OPTIONS_PAGE', 'options-general.php?page=geoip-detect-settings');
+
 function geoip_detect_menu() {
 	if (!function_exists('add_submenu_page')) {
 		require_once ABSPATH . '/wp-admin/admin.php';
@@ -33,10 +36,10 @@ function geoip_detect_menu() {
 add_action('admin_menu', 'geoip_detect_menu');
 
 function geoip_detect_add_settings_link( $links ) {
-	$link = '<a href="tools.php?page=' . GEOIP_PLUGIN_BASENAME . '">' . __('Lookup', 'geoip-detect') . '</a>';
+	$link = '<a href="' . GEOIP_DETECT_TOOLS_PAGE . '">' . __('Lookup', 'geoip-detect') . '</a>';
 	array_push( $links, $link );
 
-	$link = '<a href="options-general.php?page=' . GEOIP_PLUGIN_BASENAME . '">' . __('Options', 'geoip-detect') . '</a>';
+	$link = '<a href="' . GEOIP_DETECT_OPTIONS_PAGE . '">' . __('Options', 'geoip-detect') . '</a>';
 	array_push( $links, $link );
 
 	return $links;

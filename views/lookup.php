@@ -55,7 +55,7 @@ function var_export_short($data, $return=true)
 <div class="wrap geoip-detect-wrap">
 	<h1><?php esc_html_e('Geolocation IP Detection', 'geoip-detect');?></h1>
 	<p>
-		<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>"><?php esc_html_e('Options', 'geoip-detect');?></a>
+		<a href="<?php echo GEOIP_DETECT_OPTIONS_PAGE ?>"><?php esc_html_e('Options', 'geoip-detect');?></a>
 	</p>
 
 <?php if (!empty($message)): ?>
@@ -75,7 +75,7 @@ function var_export_short($data, $return=true)
 
 	<p>
 		<b><?php esc_html_e('Your current IP:', 'geoip-detect');?></b> <?php echo $current_ip; ?>
-		<a href="options-general.php?page=<?php echo GEOIP_PLUGIN_BASENAME ?>&geoip_detect_part=client-ip">(<?php esc_html_e('Not correct?', 'geoip-detect');?>)</a>
+		<a href="<?php echo GEOIP_DETECT_OPTIONS_PAGE ?>&geoip_detect_part=client-ip">(<?php esc_html_e('Not correct?', 'geoip-detect');?>)</a>
 		<?php if (geoip_detect_is_internal_ip(geoip_detect2_get_client_ip())) : ?>
 		<br><i>(<?php printf(__('This is an IP internal to your network. When looking up this IP, it will use the external IP of the server instead: %s', 'geoip-detect'), geoip_detect2_get_external_ip_adress()); ?>)</i>
 		<?php endif; ?>

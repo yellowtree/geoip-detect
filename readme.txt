@@ -138,6 +138,10 @@ If you are using AJAX mode, please read the changelog.
 
 == Changelog ==
 
+= 5.6.3.1 =
+* FIX: Lookup / Settings pages do not say "Sorry, you are not allowed to access this page" anymore (Regression of 5.6.3)
+* FIX: Automatic update works again (Regression of 5.6.2)
+
 = 5.6.3 =
 * FIX: Compatibility with Wordpress 7.0 (Command Palette)
 
