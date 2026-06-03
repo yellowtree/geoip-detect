@@ -121,6 +121,10 @@ See [Documentation](https://github.com/yellowtree/geoip-detect/wiki) for more in
 1. Lookup page (under Tools > Geolocation Lookup)
 2. Options page (under Preferences > Geolocation IP Detection)
 
+= 5.6.4 =
+
+Automatic update & links to the backend pages now work again.
+
 = 5.6.1 = 
 
 This update removes the deprecated shortcode [geoip_detect ...] (read the changelog for more details)
@@ -134,6 +138,10 @@ When using the default datasource "hostip.info", the region code (i.e. CA) is no
 If you are using AJAX mode, please read the changelog.
 
 ## Changelog ##
+
+= 5.6.4 =
+* FIX: Lookup / Settings pages do not say "Sorry, you are not allowed to access this page" anymore (Regression of 5.6.3)
+* FIX: Automatic update works again (Regression of 5.6.2)
 
 = 5.6.3 =
 * FIX: Compatibility with Wordpress 7.0 (Command Palette)
