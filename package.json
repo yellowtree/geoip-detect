@@ -28,7 +28,7 @@
     "just-safe-set": "4.2.1"
   },
   "devDependencies": {
-    "@babel/core": "7.29.0",
+    "@babel/core": "7.29.6",
     "@babel/plugin-transform-runtime": "7.29.0",
     "@babel/preset-env": "7.29.5",
     "babel-jest": "29.7.0",
