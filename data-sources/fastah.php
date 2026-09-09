@@ -174,6 +174,11 @@ class Reader implements \YellowTree\GeoipDetect\DataSources\ReaderInterface {
 
 }
 
+// Compat with old curl versions
+if (!defined('CURL_HTTP_VERSION_1_1')) {
+    define('CURL_HTTP_VERSION_1_1', 2);
+}
+
 
 class FastahSource extends AbstractDataSource {
     protected $params = [];
