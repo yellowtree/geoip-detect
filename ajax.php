@@ -50,15 +50,17 @@ function geoip_detect_ajax_get_info_from_current_ip() {
 	
 	// Referer check
 	
-    $referer = _geoip_detect_get_domain_name(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '');
-    if (!$referer) {
-        _geoip_detect_ajax_error('This AJAX call does not work when called directly. Do an AJAX call via JS instead.');
+	if (!get_option('geoip-detect-ajax_skip-referer-check')) {
+		$referer = _geoip_detect_get_domain_name(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '');
+		if (!$referer) {
+			_geoip_detect_ajax_error('This AJAX call does not work when called directly. Do an AJAX call via JS instead.');
+		}
+		$allowed_domains = [ _geoip_detect_get_domain_name(get_site_url()) ];
+		$allowed_domains = apply_filters('geoip_detect2_ajax_allowed_domains', $allowed_domains);
+		if (!in_array($referer, $allowed_domains)) {
+			_geoip_detect_ajax_error('Incorrect referer.'); // Ajax only works if coming from the same site. No CORS even if headers are enabled.
+		}
 	}
-	$allowed_domains = [ _geoip_detect_get_domain_name(get_site_url()) ];
-	$allowed_domains = apply_filters('geoip_detect2_ajax_allowed_domains', $allowed_domains);
-	if (!in_array($referer, $allowed_domains)) {
-		_geoip_detect_ajax_error('Incorrect referer.'); // Ajax only works if coming from the same site. No CORS even if headers are enabled.
-    }
 	
 	$options = apply_filters('geoip_detect2_ajax_options', []);
 
@@ -77,7 +79,10 @@ add_action( 'wp_ajax_nopriv_geoip_detect2_get_info_from_current_ip', 'geoip_dete
 
 function _geoip_detect_get_domain_name($url) {
 	$result = wp_parse_url($url);
-	return $result['host'];
+	if ($result === false) {
+		return '';
+	}
+	return $result['host'] ?? '';
 }
 
 function _geoip_detect_ajax_error($error) {
